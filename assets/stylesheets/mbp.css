@@ -1,0 +1,9 @@
+.logo #nama{
+    color: #660F13;
+    font-weight: bold;
+    font-size:110%;
+}
+
+.logo-container a:link, .logo-container a:visited, .logo-container a:active, .logo-container a:hover {
+    text-decoration: none;
+}

@@ -1,0 +1,74 @@
+/* GENERAL ---------------------------------------------------------------------------------------------*/
+
+
+/*PERENCANAAN PRODUKSI PPIC ----------------------------------------------------------------------------*/
+/* BAGIAN PO 1 ---*/
+
+    .input_bgpo1{
+        border:none;
+        background:transparent;
+        text-align: center; 
+    }
+
+    .id_po1{
+        width:20px;
+        height:10px;
+    }
+
+    .jumlah_produk1{
+        width:17px;
+        height:15px;
+    }
+
+    .btn1{
+        padding:2px;
+        font-size:10px;
+    }
+
+    .search_prop{
+        font-size:12px;
+        height:20px;
+    }
+
+/* BAGIAN PRODUK 2 ---*/
+
+.input_bgproduk2{
+    width:43px;
+    height:15px;
+    font-size:10px;
+    border:none;
+    background:transparent;
+    text-align: center; 
+}
+
+/* BAGIAN PERENCANAAN 3  ---*/
+
+
+/* BAGIAN EFISIENSI 4  ---*/
+.input_tanggal_pp{
+    border:none;
+    background:transparent;
+    width:1px;
+}
+
+.input_line_pp{
+    border:none;
+    background:transparent;
+    width:65px;
+}
+
+.table_efisiensi_pp , .po_table, .produk_table{
+    font-size:9px;
+}
+
+.row_efisiensi{
+    border:none;
+    background:transparent;
+    width:30px;
+}
+
+/* HASIL PRODUKSI ADMIN HASIL PRODUKSI ------------------------------------------------------ */
+.button_print:hover{
+    background-color:white;
+    color:white;
+}
