@@ -7,7 +7,6 @@ class Akses extends CI_Controller {
         date_default_timezone_set('Asia/Jakarta');
 
         $this->load->model('M_Akses');
-        $this->load->model('M_Line');
     }
 
 	public function index(){
