@@ -39,16 +39,19 @@
                     <ul class="list-unstyled">
                         <li class="divider"></li>
                         <li>
-                            <a class="modal-sizes" role="menuitem" tabindex="-1" href="#myprofile"><i class="fa fa-user"></i> Profil Saya</a>
+                            <a class="modal-sizes" role="menuitem" tabindex="-1" href="#myprofile"><i class="fa fa-user"></i>  Profil Saya</a>
                         </li>
                         <li>
-                            <a class="modal-sizes" role="menuitem" tabindex="-1" href="#editprofile"><i class="fa fa-pencil-square-o"></i> Edit Profil</a>
+                            <a class="modal-sizes" role="menuitem" tabindex="-1" href="#editprofile"><i class="fa fa-pencil-square-o"></i>  Edit Profil</a>
                         </li>
                         <li>
-                            <a class="modal-sizes" role="menuitem" tabindex="-1" href="#changepassword"><i class="fa fa-cog"></i> Ganti Kata Sandi</a>
+                            <a class="modal-sizes" role="menuitem" tabindex="-1" href="#changepassword"><i class="fa fa-key"></i>  Ganti Kata Sandi</a>
                         </li>
                         <li>
-                            <a role="menuitem" tabindex="-1" href="<?php echo base_url()?>akses/logout"><i class="fa fa-power-off"></i> Logout</a>
+                            <a class="modal-sizes" role="menuitem" tabindex="-1" href="#kelolaakun"><i class="fa fa-cog"></i>  Kelola Akun</a>
+                        </li>
+                        <li>
+                            <a role="menuitem" tabindex="-1" href="<?php echo base_url()?>akses/logout"><i class="fa fa-power-off"></i>  Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -141,6 +144,51 @@
                             <div class="col-sm-9">
                                 <input type="email" name="email_user" id="email_user" class="form-control"
                                 onchange="cek_email_edit()" placeholder="ketik email" value="<?php echo $_SESSION['email_user'];?>" required>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <input type="submit" class="btn btn-primary" value="Simpan">
+                                <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                            </div>
+                        </div>
+                    </footer>
+                </section>
+            </form>
+        </div>
+
+        <div id='kelolaakun' class="modal-block modal-block-primary mfp-hide">
+            <form method="POST" action="<?= base_url()?>akses/ganti_login">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <h2 class="panel-title">Kelola Akun</h2>
+                    </header>
+                    <div class="panel-body">
+                        <div class="form-group mt-lg">
+                            <label class="col-sm-5 control-label">Login Sebagai:</label>
+                            <div class="col-sm-7">
+                                <?php for($i=0;$i<$_SESSION['jumlah_jabatan'];$i++){
+                                    if($_SESSION['jabatan_user'][$i]['id_jabatan_karyawan'] == $_SESSION['id_jabatan_karyawan']){?>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="login_sebagai" checked
+                                                value="<?= $_SESSION['jabatan_user'][$i]['id_jabatan_karyawan']?>">
+                                                <?= $_SESSION['jabatan_user'][$i]['nama_departemen']?> -
+                                                <?= $_SESSION['jabatan_user'][$i]['nama_jabatan']?>
+                                            </label>
+                                        </div>
+                                    <?php } else {?>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="login_sebagai" 
+                                                value="<?= $_SESSION['jabatan_user'][$i]['id_jabatan_karyawan']?>">
+                                                <?= $_SESSION['jabatan_user'][$i]['nama_departemen']?> -
+                                                <?= $_SESSION['jabatan_user'][$i]['nama_jabatan']?>
+                                            </label>
+                                        </div>
+                                <?php } }?>
                             </div>
                         </div>
                     </div>

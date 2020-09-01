@@ -37,11 +37,11 @@
 				</span>
 				<form class="login100-form p-b-33 p-t-5">
 					<div class="wrap-input100">
-						<p style="margin:5px;padding:10px;text-align: center;vertical-align: middle;">Maaf <b>Username</b> atau <b>Password</b> yang anda masukkan tidak tepat. Silakan coba lagi. </p>
+						<p style="margin:5px;padding:10px;text-align: center;vertical-align: middle;">Maaf <b>Email</b> atau <b>Password</b> yang anda masukkan tidak tepat. Silakan coba lagi. </p>
 					</div>
 
 					<div class="container-login100-form-btn m-t-32">
-						<a class="login100-form-btn" href="<?= base_url()?>warna">
+						<a class="login100-form-btn" href="<?= base_url()?>akses">
 							Kembali ke Login
 						</a>
 					</div>
