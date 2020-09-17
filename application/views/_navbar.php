@@ -207,6 +207,28 @@
 											<span>Inventory Line</span>
 										</a>
 									</li>
+
+
+
+
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+											<span>Permintaan Pembelian</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'inventory/PermintaanPembelianMaterial/baru'?>">
+													Buat Baru
+												</a>
+											</li>
+										</ul>
+									</li>
+
+
+
+
+
 									<li class="nav-parent">
 										<a title="Permintaan Material">
 											<span>Permintaan Material</span>
