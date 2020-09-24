@@ -57,32 +57,31 @@ class JenisMaterial extends CI_Controller {
     }
 
 
-    public function edit_supplier(){
+    public function edit_jenis_material(){
         $where = array(
-            "id_supplier" => $this->input->post("id_supplier"),
+            "id_jenis_material" => $this->input->post("id_jenis_material"),
         );
+        
         $data = array(
-            "nama_supplier"=>$this->input->post("nama_supplier"),
-            "no_telp_supplier"=>$this->input->post("no_telp_supplier"),
-            "email_supplier"=>$this->input->post("email_supplier"),
-            "alamat_supplier"=>$this->input->post("alamat_supplier"),
+            "nama_jenis_material"=>$this->input->post("nama_jenis_material"),
+            "kode_jenis_material"=>$this->input->post("kode_jenis_material"),
             "waktu_edit"=>date('Y-m-d H:i:s'),
             "user_edit"=>$_SESSION['id_user']
         );
-        $this->M_Supplier->editSupplier($data, $where);
-        redirect('Supplier');
+        $this->M_JenisMaterial->editJenisMaterial($data, $where);
+        redirect('JenisMaterial');
     }
 
-    public function hapus_supplier(){
+    public function hapus_jenis_material(){
         $where = array(
-            "id_supplier" => $this->input->post("id_supplier"),
+            "id_jenis_material" => $this->input->post("id_jenis_material"),
         );
         $data = array(
             "status_delete"=>"1",
             "user_delete"=>$_SESSION['id_user'],
             "waktu_delete"=>date('Y-m-d H:i:s')
         );
-        $this->M_Supplier->hapusSupplier($data, $where);
-        redirect('Supplier');
+        $this->M_JenisMaterial->hapusJenisMaterial($data, $where);
+        redirect('JenisMaterial');
     }
 }
