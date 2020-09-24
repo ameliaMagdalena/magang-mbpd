@@ -36,13 +36,8 @@
 								</a>
 								<ul class="nav nav-children">
 									<li>
-										<a href="">
+										<a href="<?= base_url()?>user">
 											User
-										</a>
-									</li>
-									<li>
-										<a href="<?= base_url()?>jabatan">
-											Jabatan
 										</a>
 									</li>
 									<li>
@@ -51,7 +46,17 @@
 										</a>
 									</li>
 									<li>
-										<a href="">
+										<a href="<?= base_url()?>jabatan">
+											Jabatan
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>spesifikasiJabatan">
+											Spesifikasi Jabatan
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>karyawan">
 											Karyawan
 										</a>
 									</li>
@@ -88,6 +93,11 @@
 									<li>
 										<a href="<?= base_url()?>jenisProduk">
 											Jenis Produk
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>ukuranProduk">
+											Ukuran Produk
 										</a>
 									</li>
 									<li>
@@ -511,11 +521,6 @@
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>perencanaanProduksi/percprod1_sem">
-											+ Perencanaan Produksi Sementara
-										</a>
-									</li>
-									<li>
 										<a href="<?= base_url()?>perencanaanProduksi/semua_perencanaan_produksi">
 											Semua Perencanaan Produksi
 										</a>
@@ -625,7 +630,7 @@
 						<!--  -->
 
 						<!-- PIC -->
-						<?php if(($_SESSION['nama_jabatan'] == "PIC") && ($_SESSION['nama_departemen'] == "Produksi")){?>
+						<?php if(($_SESSION['nama_jabatan'] == "PIC Line Cutting") && ($_SESSION['nama_departemen'] == "Produksi") || ($_SESSION['nama_jabatan'] == "PIC Line Bonding") && ($_SESSION['nama_departemen'] == "Produksi") || ($_SESSION['nama_jabatan'] == "PIC Line Sewing") && ($_SESSION['nama_departemen'] == "Produksi") || ($_SESSION['nama_jabatan'] == "PIC Line Assy") && ($_SESSION['nama_departemen'] == "Produksi")){?>
 							<li>
 								<a href="">
 									<i class="fa  fa-cubes" aria-hidden="true"></i>
@@ -861,6 +866,11 @@
 										</a>
 									</li>
 								</ul>
+							</li>
+							<li>
+								<a href="<?= base_url()?>POS">
+									<span>PO Sementara</span>
+								</a>
 							</li>
 						<?php }?>
 						<!--  -->
