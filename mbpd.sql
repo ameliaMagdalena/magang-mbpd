@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2020 at 10:53 AM
+-- Generation Time: Sep 30, 2020 at 02:50 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -1006,7 +1006,8 @@ INSERT INTO `detail_surat_perintah_lembur` (`id_detail_surat_perintah_lembur`, `
 ('DSPL-5', 'SPL-3', 'KAR-15', 1, '16:00:00', '17:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-9', '2020-09-28 21:48:22', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('DSPL-6', 'SPL-3', 'KAR-24', 2, '16:00:00', '18:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-9', '2020-09-28 21:48:22', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('DSPL-7', 'SPL-3', 'KAR-25', 3, '16:00:00', '19:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-9', '2020-09-28 21:48:22', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DSPL-8', 'SPL-4', 'KAR-18', 3, '16:00:00', '19:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-9', '2020-09-28 21:49:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+('DSPL-8', 'SPL-4', 'KAR-18', 3, '16:00:00', '19:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-9', '2020-09-28 21:49:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DSPL-9', 'SPL-5', 'KAR-19', 2, '16:00:00', '18:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-10', '2020-09-30 16:26:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 --
 -- Triggers `detail_surat_perintah_lembur`
@@ -1067,7 +1068,8 @@ INSERT INTO `detail_surat_perintah_lembur_logs` (`id_detail_surat_perintah_lembu
 (11, 'Edit\r\nData', 'DSPL-1', 'SPL-1', 'KAR-15', 2, '16:00:00', '18:00:00', '', 2, '16:00:00', '18:00:00', 'Lebih 1 jam', 'USER-9', '2020-09-28 21:24:00', 'USER-9', '2020-09-29 07:29:12', '', '0000-00-00 00:00:00', 0),
 (12, 'Edit\r\nData', 'DSPL-2', 'SPL-1', 'KAR-16', 2, '16:30:00', '18:30:00', '', 3, '16:00:00', '19:00:00', 'Lebih 1 jam', 'USER-9', '2020-09-28 21:24:00', 'USER-9', '2020-09-29 07:29:12', '', '0000-00-00 00:00:00', 0),
 (13, 'Edit\r\nData', 'DSPL-3', 'SPL-2', 'KAR-17', 5, '16:00:00', '21:00:00', '', 5, '16:00:00', '21:00:00', 'Sesuai', 'USER-9', '2020-09-28 21:25:05', 'USER-9', '2020-09-29 07:30:23', '', '0000-00-00 00:00:00', 0),
-(14, 'Edit\r\nData', 'DSPL-4', 'SPL-2', 'KAR-18', 5, '16:00:00', '21:00:00', '', 4, '16:00:00', '20:00:00', 'Harus pulang cepat jadi -1jam', 'USER-9', '2020-09-28 21:25:05', 'USER-9', '2020-09-29 07:30:23', '', '0000-00-00 00:00:00', 0);
+(14, 'Edit\r\nData', 'DSPL-4', 'SPL-2', 'KAR-18', 5, '16:00:00', '21:00:00', '', 4, '16:00:00', '20:00:00', 'Harus pulang cepat jadi -1jam', 'USER-9', '2020-09-28 21:25:05', 'USER-9', '2020-09-29 07:30:23', '', '0000-00-00 00:00:00', 0),
+(15, 'Insert Data', 'DSPL-9', 'SPL-5', 'KAR-19', 2, '16:00:00', '18:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-10', '2020-09-30 16:26:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2821,7 +2823,7 @@ INSERT INTO `surat_perintah_lembur` (`id_surat_perintah_lembur`, `id_line`, `tan
 ('SPL-2', 'LINE-2', '2020-09-29', 'Hari Produksi', '', 'Berjalan lancar', 4, 0, 'USER-7', '2020-09-28 20:53:15', 'USER-9', '2020-09-29 07:30:23', '', '0000-00-00 00:00:00', 0),
 ('SPL-3', 'LINE-1', '2020-10-03', 'Hari Libur', '', '', 3, 0, 'USER-7', '2020-09-28 20:53:15', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('SPL-4', 'LINE-2', '2020-10-03', 'Hari Libur', '', '', 3, 0, 'USER-7', '2020-09-28 20:53:15', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SPL-5', 'LINE-3', '2020-10-03', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-09-28 20:53:15', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SPL-5', 'LINE-3', '2020-10-03', 'Hari Libur', '', '', 1, 0, 'USER-7', '2020-09-28 20:53:15', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('SPL-6', 'LINE-4', '2020-10-03', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-09-28 20:53:15', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('SPL-7', 'LINE-3', '2020-09-29', 'Hari Produksi', 'Coba batal', '', 6, 1, 'USER-7', '2020-09-29 08:01:50', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
@@ -2891,7 +2893,8 @@ INSERT INTO `surat_perintah_lembur_logs` (`id_surat_perintah_lembur_logs`, `kete
 (283, 'Edit Data', 'SPL-2', 'LINE-2', '2020-09-29', 'Hari Produksi', '', 'Berjalan lancar', 4, 0, 'USER-7', '2020-09-28 20:53:15', 'USER-9', '2020-09-29 07:30:23', '', '0000-00-00 00:00:00', 0),
 (284, 'Edit Data', 'SPL-1', 'LINE-1', '2020-09-29', 'Hari Produksi', '', 'Dibutuhkan tambahan 1 jam dikarenakan ada task yang tertunda', 5, 0, 'USER-7', '2020-09-28 20:53:15', 'USER-7', '2020-09-29 07:31:08', '', '0000-00-00 00:00:00', 0),
 (285, 'Insert Data', 'SPL-7', 'LINE-3', '2020-09-29', 'Hari Produksi', 'Coba batal', '', 0, 1, 'USER-7', '2020-09-29 08:01:50', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(286, 'Edit Data', 'SPL-7', 'LINE-3', '2020-09-29', 'Hari Produksi', 'Coba batal', '', 6, 1, 'USER-7', '2020-09-29 08:01:50', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+(286, 'Edit Data', 'SPL-7', 'LINE-3', '2020-09-29', 'Hari Produksi', 'Coba batal', '', 6, 1, 'USER-7', '2020-09-29 08:01:50', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(287, 'Edit Data', 'SPL-5', 'LINE-3', '2020-10-03', 'Hari Libur', '', '', 1, 0, 'USER-7', '2020-09-28 20:53:15', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -3727,7 +3730,7 @@ ALTER TABLE `detail_produk_logs`
 -- AUTO_INCREMENT for table `detail_surat_perintah_lembur_logs`
 --
 ALTER TABLE `detail_surat_perintah_lembur_logs`
-  MODIFY `id_detail_surat_perintah_lembur_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_detail_surat_perintah_lembur_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `invoice_logs`
@@ -3811,7 +3814,7 @@ ALTER TABLE `surat_jalan_logs`
 -- AUTO_INCREMENT for table `surat_perintah_lembur_logs`
 --
 ALTER TABLE `surat_perintah_lembur_logs`
-  MODIFY `id_surat_perintah_lembur_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=287;
+  MODIFY `id_surat_perintah_lembur_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=288;
 
 --
 -- AUTO_INCREMENT for table `tetapan_logs`
