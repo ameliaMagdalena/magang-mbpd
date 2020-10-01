@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2020 at 03:03 PM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.0
+-- Generation Time: Oct 01, 2020 at 09:15 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.3.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -914,6 +914,7 @@ CREATE TABLE `detail_purchase_order_customer` (
   `id_purchase_order_customer` varchar(10) NOT NULL,
   `id_produk` varchar(10) NOT NULL,
   `jumlah_produk` int(11) NOT NULL,
+  `harga_satuan` int(11) NOT NULL,
   `total_harga` int(11) NOT NULL,
   `tanggal_penerimaan` datetime NOT NULL,
   `user_add` varchar(10) NOT NULL,
@@ -1596,6 +1597,13 @@ CREATE TABLE `jenis_material` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `jenis_material`
+--
+
+INSERT INTO `jenis_material` (`id_jenis_material`, `kode_jenis_material`, `nama_jenis_material`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('JM-1', 'FOAM00', 'Foam', 'USER-1', '2020-10-01 10:58:08', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2435,6 +2443,7 @@ CREATE TABLE `purchase_order_customer` (
   `harga_sebelum_pajak` int(11) NOT NULL,
   `ppn` int(11) NOT NULL,
   `total_harga_akhir` int(11) NOT NULL,
+  `keterangan` varchar(500) NOT NULL,
   `status_po` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
@@ -2616,6 +2625,13 @@ CREATE TABLE `sub_customer` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sub_customer`
+--
+
+INSERT INTO `sub_customer` (`id_sub_customer`, `nama_sub_customer`, `id_customer`, `nama_pic`, `no_telp_pic`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('SUBCUST-1', 'PT Techno', 'CUST-1', 'Amelia', '089812345678', 'USER-1', '2020-09-30 22:49:35', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -3579,6 +3595,12 @@ ALTER TABLE `produk_logs`
   ADD PRIMARY KEY (`id_produk_logs`);
 
 --
+-- Indexes for table `purchase_order_customer`
+--
+ALTER TABLE `purchase_order_customer`
+  ADD PRIMARY KEY (`id_purchase_order_customer`);
+
+--
 -- Indexes for table `rekening`
 --
 ALTER TABLE `rekening`
@@ -3595,6 +3617,12 @@ ALTER TABLE `rekening_logs`
 --
 ALTER TABLE `spesifikasi_jabatan`
   ADD PRIMARY KEY (`id_spesifikasi_jabatan`);
+
+--
+-- Indexes for table `supplier`
+--
+ALTER TABLE `supplier`
+  ADD PRIMARY KEY (`id_supplier`);
 
 --
 -- Indexes for table `surat_jalan`
