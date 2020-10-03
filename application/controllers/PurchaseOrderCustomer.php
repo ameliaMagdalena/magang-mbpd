@@ -37,7 +37,9 @@ class PurchaseOrderCustomer extends CI_Controller {
     public function baru(){
         $data['jumlah_po_customer'] = $this->M_PurchaseOrderCustomer->selectAllPOCustomer()->num_rows();
         $data['customer'] = $this->M_Customer->selectCustomerAktif()->result_array();
-        $data['produk'] = $this->M_Produk->select_all_aktif()->result_array();
+        $data['produk'] = $this->M_PurchaseOrderCustomer->selectDetailProduk()->result_array();
+        $data['ukuran'] = $this->M_PurchaseOrderCustomer->selectUkuranProduk()->result_array();
+        $data['warna'] = $this->M_PurchaseOrderCustomer->selectWarnaProduk()->result_array();
         
 		$this->load->view('v_po_customer_baru', $data);
     }

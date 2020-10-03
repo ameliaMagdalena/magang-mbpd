@@ -43,8 +43,8 @@
             <thead>
                 <tr>
                     <th class="col-lg-2">No. PO</th>
-                    <th class="col-lg-1">Tanggal PO</th>
-                    <th class="col-lg-3">Customer</th>
+                    <th class="col-lg-2">Tanggal PO</th>
+                    <th class="col-lg-2">Customer</th>
                     <th class="col-lg-2">Status</th>
                     <th class="col-lg-3">Aksi</th>
                 </tr>

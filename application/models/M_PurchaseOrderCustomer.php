@@ -73,12 +73,27 @@ class M_PurchaseOrderCustomer extends CI_Model {
 
 
 
+    function selectDetailProduk(){
+        return $this->db->query("SELECT * FROM detail_produk a
+        JOIN produk b ON a.id_produk = b.id_produk
+        WHERE a.status_delete='0'");
+    }
 
+    function selectUkuranProduk(){
+        return $this->db->query("SELECT * FROM ukuran_produk
+        WHERE status_delete='0'");
+    }
+    
+    function selectWarnaProduk(){
+        return $this->db->query("SELECT * FROM warna
+        WHERE status_delete='0'");
+    }
 
 
     
     function selectHargaProduk($id){
         return $this->db->query("SELECT harga_produk FROM produk WHERE status_delete=0 AND id_produk='$id'");
     }
+
 
 }
