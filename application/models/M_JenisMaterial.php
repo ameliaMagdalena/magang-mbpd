@@ -8,12 +8,20 @@ class M_JenisMaterial extends CI_Model {
         date_default_timezone_set('Asia/Jakarta');
     }
 
+    
+    //********************************* JENIS MATERIAL ******************************* */
+    //******************************************************************************** */
     function selectAllJenisMaterial(){
         return $this->db->query("SELECT * FROM jenis_material");
     }
 
     function selectJenisMaterialAktif(){
         return $this->db->query("SELECT * FROM jenis_material WHERE status_delete=0");
+    }
+    
+    function selectSatuJenisMaterialAktif($id){
+        return $this->db->query("SELECT * FROM jenis_material
+        WHERE status_delete=0 AND id_jenis_material='" . $id['id_jenis_material'] . "'");
     }
 
     function insertJenisMaterial($data){
@@ -29,15 +37,16 @@ class M_JenisMaterial extends CI_Model {
     }
 
 
-    //*********************************** SUB CUSTOMER ******************************* */
+    //************************************ SUB JENIS ********************************* */
     //******************************************************************************** */
     function selectAllSubJenisMaterial(){
         return $this->db->query("SELECT * FROM sub_jenis_material");
     }
 
-    function selectSubJenisMaterialAktif(){
+    function selectSubJenisMaterialAktif($id){
         return $this->db->query("SELECT * FROM sub_jenis_material a
-        JOIN jenis_material b ON a.id_jenis_material=b.id_jenis_material WHERE a.status_delete=0");
+        JOIN jenis_material b ON a.id_jenis_material=b.id_jenis_material
+        WHERE a.status_delete=0 AND a.id_jenis_material='" . $id['id_jenis_material'] . "'");
     }
 
     function insertSubJenisMaterial($data){
@@ -50,6 +59,16 @@ class M_JenisMaterial extends CI_Model {
 
     function hapusSubJenisMaterial($data,$where){
         $this->db->update('sub_jenis_material', $data, $where);
+    }
+
+
+    
+
+    function selectMaterial(){
+        return $this->db->query("SELECT * FROM material a
+        JOIN sub_jenis_material b ON a.id_sub_jenis_material=b.id_sub_jenis_material
+        JOIN jenis_material c ON b.id_jenis_material = c.id_jenis_material
+        WHERE a.status_delete=0");
     }
 
 }
