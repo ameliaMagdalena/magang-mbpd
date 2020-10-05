@@ -18,9 +18,9 @@ class Customer extends CI_Controller {
         $data['customer'] = $this->M_Customer->selectCustomerAktif()->result_array();
         $data['jumlah_cust'] = $this->M_Customer->selectAllCustomer()->num_rows();
         
-        $data['sub_customer'] = $this->M_Customer->selectSubCustomerAktif()->result_array(); //result
-        $data['sub_join'] = $this->M_Customer->selectSubCustomerAktif()->num_rows(); //total sub custnya
-        $data['jumlah_sub_cust'] = $this->M_Customer->selectAllSubCustomer()->num_rows(); //total semua sub cust
+        //$data['sub_customer'] = $this->M_Customer->selectSubCustomerAktif()->result_array(); //result
+        //$data['sub_join'] = $this->M_Customer->selectSubCustomerAktif()->num_rows(); //total sub custnya
+        //$data['jumlah_sub_cust'] = $this->M_Customer->selectAllSubCustomer()->num_rows(); //total semua sub cust
 
 		$this->load->view('v_customer', $data);
     }
@@ -41,21 +41,15 @@ class Customer extends CI_Controller {
         redirect('Customer');
     }
 
-
-    public function tambah_sub_customer(){
-        $data = array(
-            "id_sub_customer"=>$this->input->post("id_sub_customer"),
-            "nama_sub_customer"=>$this->input->post("nama_sub_customer"),
-            "nama_pic"=>$this->input->post("nama_pic"),
-            "no_telp_pic"=>$this->input->post("no_telp_pic"),
-            "id_customer"=>$this->input->post("id_customer"),
-            "user_add"=>$_SESSION['id_user'],
-            "waktu_add"=>date('Y-m-d H:i:s'),
-            "user_edit"=>"0",
-            "user_delete"=>"0"
+    public function detail_customer($id){
+        $id_cust = array(
+            "id_customer" => $id
         );
-        $this->M_Customer->insertSubCustomer($data);
-        redirect('Customer');
+        $data['customer'] = $this->M_Customer->selectSatuCustomer($id_cust)->result_array();
+        $data['sub_customer'] = $this->M_Customer->selectSubCustomerAktif($id_cust)->result_array(); //result
+        $data['jumlah_sub_cust'] = $this->M_Customer->selectAllSubCustomer()->num_rows(); //total semua sub cust
+
+		$this->load->view('v_detail_customer', $data);
     }
 
     public function edit_customer(){
@@ -84,10 +78,33 @@ class Customer extends CI_Controller {
             "waktu_delete"=>date('Y-m-d H:i:s')
         );
         $this->M_Customer->hapusCustomer($data, $where);
+        $this->M_Customer->hapusSubCustomer($data, $where);
         redirect('Customer');
     }
 
+    
+    //******************************* DETAIL CUSTOMER **************************** */
+    //***************************************************************************** */
+
+    public function tambah_sub_customer(){
+        $id=$this->input->post("id_customer");
+        $data = array(
+            "id_sub_customer"=>$this->input->post("id_sub_customer"),
+            "nama_sub_customer"=>$this->input->post("nama_sub_customer"),
+            "nama_pic"=>$this->input->post("nama_pic"),
+            "no_telp_pic"=>$this->input->post("no_telp_pic"),
+            "id_customer"=>$id,
+            "user_add"=>$_SESSION['id_user'],
+            "waktu_add"=>date('Y-m-d H:i:s'),
+            "user_edit"=>"0",
+            "user_delete"=>"0"
+        );
+        $this->M_Customer->insertSubCustomer($data);
+        redirect('Customer/detail_customer/'.$id);
+    }
+
     public function edit_sub_customer(){
+        $id=$this->input->post("id_customer");
         $where = array(
             "id_sub_customer" => $this->input->post("id_sub_customer"),
         );
@@ -100,10 +117,11 @@ class Customer extends CI_Controller {
             "user_edit"=>$_SESSION['id_user']
         );
         $this->M_Customer->editSubCustomer($data, $where);
-        redirect('Customer');
+        redirect('Customer/detail_customer/'.$id);
     }
 
     public function hapus_sub_customer(){
+        $id=$this->input->post("id_customer");
         $where = array(
             "id_sub_customer" => $this->input->post("id_sub_customer"),
         );
@@ -113,7 +131,7 @@ class Customer extends CI_Controller {
             "waktu_delete"=>date('Y-m-d H:i:s')
         );
         $this->M_Customer->hapusSubCustomer($data, $where);
-        redirect('Customer');
+        redirect('Customer/detail_customer/'.$id);
     }
 
     
