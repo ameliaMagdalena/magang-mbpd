@@ -10,6 +10,7 @@ class Produk extends CI_Controller {
         $this->load->model('M_Produk');
         $this->load->model('M_Line');
         $this->load->model('M_Warna');
+        $this->load->model('M_UkuranProduk');
         $this->load->model('M_JenisProduk');
 
         if($this->session->userdata('status_login') != "login"){
@@ -19,13 +20,14 @@ class Produk extends CI_Controller {
 
     public function index(){
         $data['produk']        = $this->M_Produk->select_all_aktif()->result();
+        $data['detail_produk'] = $this->M_Produk->select_all_detail_produk()->result();
         $data['jenis_produk']  = $this->M_JenisProduk->select_all_aktif()->result();
         $data['line']          = $this->M_Line->select_all_aktif()->result();
         $data['warna']         = $this->M_Warna->select_all_aktif()->result();
         $data['jumlah_warna']  = $this->M_Warna->select_all_aktif()->num_rows();
         $data['cycle_time']    = $this->M_Produk->select_all_ct()->result();
         $data['detail_produk'] = $this->M_Produk->select_all_detail_produk()->result();
-        $data['jenis_material'] = $this->M_Produk->select_all_material()->result();
+        $data['jenis_material'] = $this->M_Produk->select_all_jenis_material()->result();
 
 		$this->load->view('v_produk',$data);
     }
@@ -34,6 +36,18 @@ class Produk extends CI_Controller {
         $nama_produk = $this->input->post('nama_produk_input');
 
         $hasil_cari_produk = $this->M_Produk->cari_produk($nama_produk)->num_rows();
+
+        if($hasil_cari_produk > 0){
+            $data['res'] = 1;
+        }
+
+        echo json_encode($data);
+    }
+
+    public function cek_kode_produk_input(){
+        $kode_produk = $this->input->post('kode_produk');
+
+        $hasil_cari_produk = $this->M_Produk->cari_produk_by_kode($kode_produk)->num_rows();
 
         if($hasil_cari_produk > 0){
             $data['res'] = 1;
@@ -150,7 +164,7 @@ class Produk extends CI_Controller {
                     'id_produk'            => $id_produk,
                     'id_sub_jenis_material'=> $id_material,
                     'id_line'              => $id_line,
-                    'jumlah_material'      => $jumlah_material,
+                    'jumlah_konsumsi'      => $jumlah_material,
                     'user_add'             => $_SESSION['id_user'],
                     'waktu_add'            => $now,
                     'status_delete'        => 0
@@ -249,7 +263,7 @@ class Produk extends CI_Controller {
             'nama_produk'       => $nama_produk,
             'harga_produk'      => $harga_produk,
             'kode_produk'       => $kode_produk,
-            'keterangan'        => $keterangan,
+            'keterangan_produksi'=> $keterangan,
             'user_add'          => $_SESSION['id_user'],
             'waktu_add'         => $now
         );
@@ -262,6 +276,21 @@ class Produk extends CI_Controller {
     public function detail_produk(){
         $id_produk = $this->input->post('id');
 
+        $data['produk']           = $this->M_Produk->dcari_produk($id_produk)->result_array();
+        $data['detail_produk']    = $this->M_Produk->dcari_detail_produk($id_produk)->result_array();
+        $data['jm_detail_produk'] = $this->M_Produk->dcari_detail_produk($id_produk)->num_rows();
+
+        $data['warna']      = $this->M_Warna->select_all_aktif()->result_array();
+        $data['jmwarna']    = $this->M_Warna->select_all_aktif()->num_rows();
+        $data['ukuran']     = $this->M_UkuranProduk->select_all_aktif()->result_array();
+        $data['jmukuran']   = $this->M_UkuranProduk->select_all_aktif()->num_rows();
+
+        $data['cycle_time']        = $this->M_Produk->dcari_ct($id_produk)->result_array();
+        $data['jumlah_ct']         = $this->M_Produk->dcari_ct($id_produk)->num_rows();
+        $data['konsumsi_material'] = $this->M_Produk->dcari_km($id_produk)->result_array();
+        $data['jumlah_km']         = $this->M_Produk->dcari_km($id_produk)->num_rows();
+
+        /*
         $data['produk']            = $this->M_Produk->dcari_produk($id_produk)->result_array();
         $data['warna']             = $this->M_Produk->dcari_warna($id_produk)->result_array();
         $data['jumlah_warna']      = $this->M_Produk->dcari_warna($id_produk)->num_rows();
@@ -278,6 +307,7 @@ class Produk extends CI_Controller {
 
         $data['semua_warna_aktif_tidak']         = $this->M_Warna->select_all()->result();
         $data['jumlah_semua_warna_aktif_tidak']  = $this->M_Warna->select_all()->num_rows();
+        */
 
         echo json_encode($data);
     }

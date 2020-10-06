@@ -40,6 +40,7 @@
                     <tr>
                         <th style="text-align: center;vertical-align: middle;">No</th>
                         <th style="text-align: center;vertical-align: middle;">Kode Produk</th>
+                        <th style="text-align: center;vertical-align: middle;">Jenis Produk</th>
                         <th style="text-align: center;vertical-align: middle;">Nama Produk</th>
                         <th style="text-align: center;vertical-align: middle;">Keterangan Produk</th>
                         <th style="text-align: center;vertical-align: middle;">Keterangan Produksi</th>
@@ -55,17 +56,38 @@
                         <tr>
                             <td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
                             <td style="text-align: center;vertical-align: middle;"><?= $x->kode_produk;?></td>
+                            <td style="text-align: center;vertical-align: middle;"><?= $x->nama_jenis_produk;?></td>
                             <td style="text-align: center;vertical-align: middle;"><?= $x->nama_produk; ?></td>
                             <td style="text-align: center;vertical-align: middle;">
-                                <?php if($x->keterangan_warna == 0){echo "Tidak Memiliki Warna";} else{
-                                    echo "Memiliki Warna";
-                                } ?>
+                                <?php 
+                                    $ukwar = "";
+                                    foreach($detail_produk as $dp){
+                                        if($dp->id_produk == $x->id_produk){
+                                            if($dp->keterangan == 0){
+                                                $ukwar = "Memiliki Warna & Ukuran";
+                                            }
+                                            else if ($dp->keterangan == 1){
+                                                $ukwar = "Memiliki Ukuran";
+                                            }
+                                            else if($dp->keterangan == 2){
+                                                $ukwar = "Memiliki Warna";
+                                            }
+                                            else{
+                                                $ukwar = "Tidak Memiliki Warna & Ukuran";
+                                            }
+                                        }
+                                    } 
+                                    echo $ukwar;
+                                ?>
                             </td>
                             <td style="text-align: center;vertical-align: middle;">
-                                <?php if($x->keterangan == 0){echo "Full Produksi";} else{
-                                    echo "Purchase Cover";
-                                } ?>
-                            </td>
+                                <?php if($x->keterangan_produksi == 0){
+                                        echo "Full Produksi";
+                                    } else{
+                                        echo "Purchase Cover";
+                                    }
+                                ?>
+                            </td>   
                             <td>
                                 <?php if(($_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi")){?>
                                     <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
@@ -134,7 +156,7 @@
                         <label class="col-sm-5 control-label">Kode Produk</label>
                         <div class="col-sm-7">
                             <input type="text" name="kode_produk" id="kode_produk"  
-                            class="form-control" onchange="cek_terisi()">
+                            class="form-control" onchange="cek_kode_produk_input()">
                         </div>
                     </div>
                     <div class="form-group mt-lg">
@@ -176,7 +198,7 @@
                     <div id="isi_ketprod"></div>
 
                     <div id="table_ketprod"></div>
-
+                    <input type="hidden" id="jm_ketpod" value="0">
                     <br>
                     <div id="tab_ketprod0" style="display:none">
                         <table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">
@@ -236,7 +258,7 @@
                             <div class="form-group mt-lg">
                                 <label class="col-sm-5 control-label">Cycle Time <?= $x->nama_line;?> (s)</label>
                                 <div class="col-sm-7">
-                                    <input type="hidden" name="lnpc_<?= $no; ?>" value="<?= $x->id_line;?>" class="form-control">
+                                    <input type="hidden" name="lnpc_<?= $no; ?>" id="pc_ln<?= $no;?>" value="<?= $x->id_line;?>" class="form-control">
                                     <input type="number" name="ctpc_<?= $no; ?>" id="pc_ct<?= $no;?>" class="form-control" onchange="cek_terisi()">
                                 </div>
                             </div>
@@ -250,7 +272,7 @@
                             <div class="form-group mt-lg">
                                 <label class="col-sm-5 control-label">Cycle Time <?= $x->nama_line;?> (s)</label>
                                 <div class="col-sm-7">
-                                    <input type="hidden" name="lnfull_<?= $no; ?>" value="<?= $x->id_line;?>" class="form-control">
+                                    <input type="hidden" name="lnfull_<?= $no; ?>" id="fp_ln<?= $no;?>" value="<?= $x->id_line;?>" class="form-control">
                                     <input type="number" name="ctfull_<?= $no; ?>" id="fp_ct<?= $no; ?>" class="form-control" onchange="cek_terisi()">
                                 </div>
                             </div>
@@ -275,8 +297,7 @@
                         </div>
 
                         <div class="col-md-5 form-group" id="ganti_nm">
-                            <select class="form-control" name="nama_material" id="nama_material"
-                            >
+                            <select class="form-control" name="nama_material" id="nama_material">
                                 <option value="Nama Material">Nama Material</option>
                             </select>
                         </div>
@@ -285,11 +306,19 @@
                             <select class="form-control" name="line" id="line"
                             >
                                 <option value="Nama Line">Nama Line</option>
-                                <?php foreach($line as $l){?>
-                                    <option value="<?= $l->id_line;?>">
+                                <?php 
+                                    $m=1;
+                                    foreach($line as $l){
+                                        if($l->nama_line == "Line Sewing"){
+                                ?> 
+                                    <option id="idline_select<?= $m?>" value="<?= $l->id_line;?>" disabled>
                                         <?= $l->nama_line;?>
                                     </option>
-                                <?php } ?>
+                                <?php } else{?>
+                                    <option id="idline_select<?= $m?>" value="<?= $l->id_line;?>">
+                                        <?= $l->nama_line;?>
+                                    </option>
+                                <?php } $m++; } ?>
                             </select>
                             <?php foreach ($line as $l){?>
                                 <input type="hidden" id="nmline<?= $l->id_line?>"
@@ -316,22 +345,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <!--
-                                <tr>
-                                    <td style="text-align: center;vertical-align: middle;">1</td>
-                                    <td style="text-align: center;vertical-align: middle;">Junaedi</td>
-                                    <td style="text-align: center;vertical-align: middle;">2</td>
-                                    <td style="text-align: center;vertical-align: middle;">16:00</td>
-                                    <td style="text-align: center;vertical-align: middle;">18:00</td>
-                                    <td style="text-align: center;vertical-align: middle;">keterangan disini</td>
-                                </tr>
-                            -->
                             </tbody>
                         </table>
                     </div>
 
                     <input type="hidden" name="jumlah_km" id="jumlah_km">
-
+                    <input type="hidden" id="pc_cek_line1" value="0">
+                    <input type="hidden" id="pc_cek_line2" value="0">
+                    <input type="hidden" id="pc_cek_line3" value="0">
+                    <br>
+                    <input type="hidden" id="fp_cek_line1" value="0">
+                    <input type="hidden" id="fp_cek_line2" value="0">
+                    <input type="hidden" id="fp_cek_line3" value="0">
+                    <input type="hidden" id="fp_cek_line4" value="0">
                 </div>
                 <footer class="panel-footer">
                     <div class="row">
@@ -381,17 +407,13 @@
                             </div>
                         </div>
                         <div class="form-group mt-lg">
-                            <label class="col-sm-5 control-label">Keterangan Warna</label>
+                            <label class="col-sm-5 control-label">Detail Produk</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" id="dketerangan_warna" readonly>
+                                <input type="text" class="form-control"
+                                id="ddetail_produk" readonly>
                             </div>
                         </div>
-                        <div class="form-group mt-lg">
-                            <label class="col-sm-5 control-label">Warna Produk</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="dwarna_produk" readonly>
-                            </div>
-                        </div>
+                        <div id="dtable_detprod"></div>
 
                         <hr>
                         <h5><b>Data Cycle Time Produksi</b></h5>
@@ -489,23 +511,63 @@
 <!--*****************************-->
 <!--*****************************-->
 
-
 <script>
     function reload() {
         location.reload();
     }
 </script>
 
+<!-- ketika keterangan cycle_time diganti -->
 <script>
 	function show_div_ct(){
 		var keterangan = $('#keterangan').val();
 		if(keterangan === '0'){
 			$('#div_ct_full').show();
             $('#div_ct_pc').hide();
+
+            for($i=1;$i<=4;$i++){
+                $idline_select = $("#idline_select"+$i).val();
+                
+                $count_idline = 0;
+                for($k=1;$k<=4;$k++){
+                    $idline = $("#fp_ln"+$k).val();
+
+                    if($idline == $idline_select){
+                        $count_idline++;
+                    }
+                }
+
+                if($count_idline > 0){
+                    $("#idline_select"+$i).prop('disabled',false);
+                } else{
+                    $("#idline_select"+$i).prop('disabled',true);
+                }
+            }
 		}
 		else{
             $('#div_ct_full').hide();
             $('#div_ct_pc').show();
+
+            
+            for($i=1;$i<=4;$i++){
+                $idline_select = $("#idline_select"+$i).val();
+                
+                $count_idline = 0;
+                for($k=1;$k<=3;$k++){
+                    $idline = $("#pc_ln"+$k).val();
+
+                    if($idline == $idline_select){
+                        $count_idline++;
+                    }
+                }
+
+                if($count_idline > 0){
+                    $("#idline_select"+$i).prop('disabled',false);
+                } else{
+                    $("#idline_select"+$i).prop('disabled',true);
+                }
+                //alert($idline);
+            }
 		}
         cek_terisi();
 	}
@@ -547,6 +609,29 @@
             success: function(respond){
                 if(respond['res'] == 1){
                     alert("Mohon maaf, produk dengan nama tersebut tidak dapat didaftarkan lagi karena sudah terdaftar");
+                }
+                reload();
+            }
+        });
+
+        cek_terisi();
+    }
+</script>
+
+<!-- cek kode produk ketika + produk -->
+<script>
+    function cek_kode_produk_input(){
+        var kode_produk = $("#kode_produk").val();
+        
+        $.ajax({
+            type:"post",
+            url:"<?php echo base_url() ?>produk/cek_kode_produk_input",
+            dataType: "JSON",
+            data: {kode_produk:kode_produk},
+
+            success: function(respond){
+                if(respond['res'] == 1){
+                    alert("Mohon maaf, kode produk tersebut tidak dapat didaftarkan lagi karena sudah terdaftar");
                 }
                 reload();
             }
@@ -728,10 +813,11 @@
                 $("#jumlah_uw0").val("");
                 $("#jumlah_uw1").val("");
                 $("#jumlah_uw2").val("");
+
+                $("#jm_ketpod").val(0);
+                cek_terisi();
             }
         });
-
-        cek_terisi();
     }
 </script>
 
@@ -740,6 +826,7 @@
     function add_ukwar(){
         //0,1,2 or 3
         $keterangan = $("#keterangan_produk").val();
+        $jm_ketpod  = $("#jm_ketpod").val();
 
         if($keterangan == 0){
             $ukuran = $("#select_ukuran").val();
@@ -795,6 +882,7 @@
                             '</div>';
 
                             $("#jumlah_uw0").val($jumlah_uw+1);
+                            $("#jm_ketpod").val(parseInt($jm_ketpod)+parseInt(1));
                         }
                         else{
                             $jumlah_uw   = $("#jumlah_uw0").val();
@@ -860,6 +948,7 @@
                                     '</div>';
                                 
                                     $("#jumlah_uw0").val($jumlah_uw+1);
+                                    $("#jm_ketpod").val(parseInt($jm_ketpod)+parseInt(1));
                             }
                             else{
                                 $tampung_isi ="";
@@ -909,12 +998,10 @@
                         '</table>';
                         
                         $("#tab_ketprod0").html($tablenya);
-
+                        cek_terisi();
                     }
                 });
-
-
-
+                
             }
             else{
                 alert("Silahkan pilih ukuran dan warna terlebih dahulu");
@@ -963,6 +1050,7 @@
                             '</div>';
 
                             $("#jumlah_uw1").val($jumlah_uw+1);
+                            $("#jm_ketpod").val(parseInt($jm_ketpod)+parseInt(1));
                         }
                         else{
                             $jumlah_uw   = $("#jumlah_uw1").val();
@@ -1015,6 +1103,7 @@
                                     '</div>';
                                 
                                     $("#jumlah_uw1").val($jumlah_uw+1);
+                                    $("#jm_ketpod").val(parseInt($jm_ketpod)+parseInt(1));
                             }
                             else{
                                 $tampung_isi ="";
@@ -1057,7 +1146,7 @@
                         '</table>';
                         
                         $("#tab_ketprod1").html($tablenya);
-
+                        cek_terisi();
                     }
                 });
             }
@@ -1107,6 +1196,7 @@
                             '</div>';
 
                             $("#jumlah_uw2").val($jumlah_uw+1);
+                            $("#jm_ketpod").val(parseInt($jm_ketpod)+parseInt(1));
                         }
                         else{
                             $jumlah_uw   = $("#jumlah_uw2").val();
@@ -1162,6 +1252,7 @@
                                     '</div>';
                                 
                                     $("#jumlah_uw2").val($jumlah_uw+1);
+                                    $("#jm_ketpod").val(parseInt($jm_ketpod)+parseInt(1));
                             }
                             else{
                                 $tampung_isi ="";
@@ -1205,7 +1296,7 @@
                         '</table>';
                         
                         $("#tab_ketprod2").html($tablenya);
-
+                        cek_terisi();
                     }
                 });
             }
@@ -1234,8 +1325,8 @@
                 $tampung_material = "";
                 $tampung_nama_material = "";
                 for($i=0;$i<$jumlah_material;$i++){
-                    $id_material   = respond['materials'][$i]['id_material'];
-                    $nama_material = respond['materials'][$i]['nama_material'];
+                    $id_material   = respond['materials'][$i]['id_sub_jenis_material'];
+                    $nama_material = respond['materials'][$i]['nama_sub_jenis_material'];
 
                     $tampung_material = $tampung_material + 
                     '<option value="'+$id_material+'">'+
@@ -1293,7 +1384,7 @@
                             $nama_line+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            '<input type="number" class="form-control" name="jmmat'+$jumlah_saat_ini+'" id="jmmat'+$jumlah_saat_ini+'" required>'+
+                            '<input type="number" min="1" class="form-control" name="jmmat'+$jumlah_saat_ini+'" id="jmmat'+$jumlah_saat_ini+'" required>'+
                         '</td>'+
                     '</tr>'+
                 '</div>';
@@ -1338,7 +1429,7 @@
                                     $tampung_nmline+
                                 '</td>'+
                                 '<td style="text-align: center;vertical-align: middle;">'+
-                                    '<input type="number" class="form-control" name="jmmat'+$i+'" id="jmmat'+$i+'" value="'+$tampung_jmmat+'" required>'+
+                                    '<input type="number" min="1" class="form-control" name="jmmat'+$i+'" id="jmmat'+$i+'" value="'+$tampung_jmmat+'" required>'+
                                 '</td>'+
                             '</tr>'+
                         '</div>';
@@ -1364,7 +1455,7 @@
                                 $nama_line+
                             '</td>'+
                             '<td style="text-align: center;vertical-align: middle;">'+
-                                '<input type="number" class="form-control" name="jmmat'+$jumlah_saat_ini+'" id="jmmat'+$jumlah_saat_ini+'" required>'+
+                                '<input type="number" min="1" class="form-control" name="jmmat'+$jumlah_saat_ini+'" id="jmmat'+$jumlah_saat_ini+'" required>'+
                             '</td>'+
                         '</tr>'+
                     '</div>';
@@ -1405,41 +1496,156 @@
 <!-- cek terisi (add produk) -->
 <script>
     function cek_terisi(){
+        $("#pc_cek_line1").val(0);
+        $("#pc_cek_line2").val(0);
+        $("#pc_cek_line3").val(0);
+        $("#fp_cek_line1").val(0);
+        $("#fp_cek_line2").val(0);
+        $("#fp_cek_line3").val(0);
+        $("#fp_cek_line4").val(0);
+
+
         if($("#kode_produk").val() != "" && $("#nama_produk_input").val() != "" && $("#harga_produk").val() != "" ){
-           if($("#keterangan").val() == 1){
-                if($("#pc_ct1").val() != "" && $("#pc_ct2").val() != "" && $("#pc_ct3").val() != ""){
-                    if($("#jumlah_km").val() != ""){
-                        $("#simpan").prop('disabled',false);
+            if($("#keterangan_produk").val() == 0 || $("#keterangan_produk").val() == 1 || $("#keterangan_produk").val() == 2){
+                if($("#jm_ketpod").val() > 0){
+                    //jika purchase cover
+                    if($("#keterangan").val() == 1){
+                            if($("#pc_ct1").val() != "" && $("#pc_ct2").val() != "" && $("#pc_ct3").val() != ""){
+                                //cek apakah konsumsi material yg diinput sudah mencakup line2 berdasarkan full produksi/purchase cover
+
+                                if($("#jumlah_km").val() != ""){
+                                    $jumlah_km = $("#jumlah_km").val();
+
+                                    for($i=1;$i<=$jumlah_km.length;$i++){
+                                        $idline = $("#idline"+$i).val();
+
+                                        for($k=1;$k<=3;$k++){
+                                            if($idline ==  $("#pc_ln"+$k).val()){
+                                                $cekline = parseInt($("#pc_cek_line"+$k).val());
+                                                $cekline++;
+
+                                                $("#pc_cek_line"+$k).val($cekline);
+                                            }
+                                        }
+                                    }
+
+                                    if($("#pc_cek_line1").val() != 0 && $("#pc_cek_line2").val() != 0 && $("#pc_cek_line3").val() != 0){
+                                        $("#simpan").prop('disabled',false);
+                                    } else{
+                                        $("#simpan").prop('disabled',true);
+                                    }
+                                }
+                                else{
+                                    $("#simpan").prop('disabled',true);
+                                }
+                            }
+                            else{
+                                $("#simpan").prop('disabled',true);
+                            }
+                    }
+                    //jika full produksi
+                    else if($("#keterangan").val() == 0){
+                        if($("#fp_ct1").val() != "" && $("#fp_ct2").val() != "" && $("#fp_ct3").val() != "" && $("#fp_ct4").val() != ""){
+                            if($("#jumlah_km").val() != ""){
+                                $jumlah_km = $("#jumlah_km").val();
+
+                                for($i=1;$i<=$jumlah_km.length;$i++){
+                                    $idline = $("#idline"+$i).val();
+
+                                    for($k=1;$k<=4;$k++){
+                                        if($idline ==  $("#fp_ln"+$k).val()){
+                                            $cekline = parseInt($("#fp_cek_line"+$k).val());
+                                            $cekline++;
+
+                                            $("#fp_cek_line"+$k).val($cekline);
+                                        }
+                                    }
+                                }
+
+                                if($("#fp_cek_line1").val() != 0 && $("#fp_cek_line2").val() != 0 && $("#fp_cek_line3").val() != 0 && $("#fp_cek_line4").val() != 0){
+                                    $("#simpan").prop('disabled',false);
+                                } else{
+                                    $("#simpan").prop('disabled',true);
+                                }
+                            }
+                        }
+                        else{
+                            $("#simpan").prop('disabled',true);
+                        }
                     }
                 }
                 else{
                     $("#simpan").prop('disabled',true);
                 }
-           }
-           else if($("#keterangan").val() == 0){
-                if($("#fp_ct1").val() != "" && $("#fp_ct2").val() != "" && $("#fp_ct3").val() != "" && $("#fp_ct4").val() != ""){
-                    if($("#jumlah_km").val() != ""){
-                        $("#simpan").prop('disabled',false);
-                    }
+            }
+            //keterangan = 3
+            else{
+                //jika purchase cover
+                if($("#keterangan").val() == 1){
+                        if($("#pc_ct1").val() != "" && $("#pc_ct2").val() != "" && $("#pc_ct3").val() != ""){
+                            if($("#jumlah_km").val() != ""){
+                                $jumlah_km = $("#jumlah_km").val();
+
+                                for($i=1;$i<=$jumlah_km.length;$i++){
+                                    $idline = $("#idline"+$i).val();
+
+                                    for($k=1;$k<=3;$k++){
+                                        if($idline ==  $("#pc_ln"+$k).val()){
+                                            $cekline = parseInt($("#pc_cek_line"+$k).val());
+                                            $cekline++;
+
+                                            $("#pc_cek_line"+$k).val($cekline);
+                                        }
+                                    }
+                                }
+
+                                if($("#pc_cek_line1").val() != 0 && $("#pc_cek_line2").val() != 0 && $("#pc_cek_line3").val() != 0){
+                                    $("#simpan").prop('disabled',false);
+                                } else{
+                                    $("#simpan").prop('disabled',true);
+                                }
+                            }
+                            else{
+                                $("#simpan").prop('disabled',true);
+                            }
+                        }
+                        else{
+                            $("#simpan").prop('disabled',true);
+                        }
                 }
-                else{
-                    $("#simpan").prop('disabled',true);
+                //jika full produksi
+                else if($("#keterangan").val() == 0){
+                        if($("#fp_ct1").val() != "" && $("#fp_ct2").val() != "" && $("#fp_ct3").val() != "" && $("#fp_ct4").val() != ""){
+                            if($("#jumlah_km").val() != ""){
+                                $jumlah_km = $("#jumlah_km").val();
+
+                                for($i=1;$i<=$jumlah_km.length;$i++){
+                                    $idline = $("#idline"+$i).val();
+
+                                    for($k=1;$k<=4;$k++){
+                                        if($idline ==  $("#fp_ln"+$k).val()){
+                                            $cekline = parseInt($("#fp_cek_line"+$k).val());
+                                            $cekline++;
+
+                                            $("#fp_cek_line"+$k).val($cekline);
+                                        }
+                                    }
+                                }
+
+                                if($("#fp_cek_line1").val() != 0 && $("#fp_cek_line2").val() != 0 && $("#fp_cek_line3").val() != 0 && $("#fp_cek_line4").val() != 0){
+                                    $("#simpan").prop('disabled',false);
+                                } else{
+                                    $("#simpan").prop('disabled',true);
+                                }
+                            }
+                        }
+                        else{
+                            $("#simpan").prop('disabled',true);
+                        }
                 }
-           }
-           
-           
-           
-           //alert($("#keterangan").val());
-            
-            
-            
-            
-            //alert($("#keterangan_produk").val());
-            
-            //$("#simpan").prop('disabled',false);
-        }
-        else{
-            //$("#simpan").prop('disabled',true);
+            }
+        } else{
+            $("#simpan").prop('disabled',true);
         }
     
     }
@@ -1471,15 +1677,14 @@
                     $ketprod = "Purchase Cover";
                 }
 
-                $jumlah_warna = respond['jumlah_warna'];
-                $tampung_warna = "";
-                for($i=0;$i<$jumlah_warna;$i++){
-                    if($tampung_warna == ""){
-                        $tampung_warna = respond['warna'][$i]['nama_warna'];
-                    }
-                    else{
-                        $tampung_warna = $tampung_warna + "," + respond['warna'][$i]['nama_warna'];
-                    }
+                if(respond['detail_produk'][0]['keterangan'] == 0){
+                    $ukwar = "Memiliki Warna & Ukuran";
+                } else if(respond['detail_produk'][0]['keterangan'] == 1){
+                    $ukwar = "Memiliki Ukuran";
+                } else if(respond['detail_produk'][0]['keterangan'] == 2){
+                    $ukwar = "Memiliki Warna";
+                } else{
+                    $ukwar = "Tidak Memiliki Warna & Ukuran";
                 }
 
                 $("#dkode_produk").val($kode_produk);
@@ -1487,6 +1692,141 @@
                 $("#dnama_produk").val($nama_produk);
                 $("#dharga_produk").val($harga_produk);
                 $("#dketerangan_produksi").val($ketprod);
+                $("#ddetail_produk").val($ukwar);
+
+                $isi_ukwar = "";
+
+                if(respond['detail_produk'][0]['keterangan'] == 0){
+                    for($i=0;$i<respond['jm_detail_produk'];$i++){
+
+                        $id_ukuran = respond['detail_produk'][$i]['id_ukuran'];
+                        $id_warna  = respond['detail_produk'][$i]['id_warna'];
+
+                        for($l=0;$l<respond['jmukuran'];$l++){
+                            if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
+                                $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
+                                $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
+
+                                $ukurannya = $nama_ukuran +" "+ $satuan_ukuran;
+                            }
+                        }
+
+                        for($k=0;$k<respond['jmwarna'];$k++){
+                            if(respond['warna'][$k]['id_warna'] == $id_warna){
+                                $warnanya = respond['warna'][$k]['nama_warna'];
+                            }
+                        }
+
+                        $isi_ukwar = $isi_ukwar + 
+                        '<tr>'+
+                            '<td style="text-align: center;vertical-align: middle;">'+
+                                ($i+1)+
+                            '</td>'+
+                            '<td style="text-align: center;vertical-align: middle;">'+
+                                $ukurannya+
+                            '</td>'+
+                            '<td style="text-align: center;vertical-align: middle;">'+
+                                $warnanya+
+                            '</td>'+
+                        '</tr>';
+                    }
+                    
+
+                    $table_ukwar = 
+                    '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
+                        '<thead>'+
+                            '<tr>'+
+                                '<th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>'+
+                                '<th class="col-md-5" style="text-align: center;vertical-align: middle;">Ukuran Produk</th>'+
+                                '<th class="col-md-3" style="text-align: center;vertical-align: middle;">Warna Produk</th>'+
+                            '</tr>'+
+                        '</thead>'+
+                        '<tbody>'+
+                            $isi_ukwar+
+                        '</tbody>'+
+                    '</table>';
+
+                    
+                    $("#dtable_detprod").html($table_ukwar);
+                } else if(respond['detail_produk'][0]['keterangan'] == 1){
+                    for($i=0;$i<respond['jm_detail_produk'];$i++){
+
+                        $id_ukuran = respond['detail_produk'][$i]['id_ukuran'];
+
+                        for($l=0;$l<respond['jmukuran'];$l++){
+                            if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
+                                $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
+                                $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
+
+                                $ukurannya = $nama_ukuran +" "+ $satuan_ukuran;
+                            }
+                        }
+
+
+                        $isi_ukwar = $isi_ukwar + 
+                        '<tr>'+
+                            '<td style="text-align: center;vertical-align: middle;">'+
+                                ($i+1)+
+                            '</td>'+
+                            '<td style="text-align: center;vertical-align: middle;">'+
+                                $ukurannya+
+                            '</td>'+
+                        '</tr>';
+                    }
+
+                    $table_ukwar = 
+                    '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
+                        '<thead>'+
+                            '<tr>'+
+                                '<th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>'+
+                                '<th class="col-md-5" style="text-align: center;vertical-align: middle;">Ukuran Produk</th>'+
+                            '</tr>'+
+                        '</thead>'+
+                        '<tbody>'+
+                            $isi_ukwar+
+                        '</tbody>'+
+                    '</table>';
+
+                    
+                    $("#dtable_detprod").html($table_ukwar);
+                } else if(respond['detail_produk'][0]['keterangan'] == 2){
+                    for($i=0;$i<respond['jm_detail_produk'];$i++){
+                        $id_warna  = respond['detail_produk'][$i]['id_warna'];
+
+                        for($k=0;$k<respond['jmwarna'];$k++){
+                            if(respond['warna'][$k]['id_warna'] == $id_warna){
+                                $warnanya = respond['warna'][$k]['nama_warna'];
+                            }
+                        }
+
+                        $isi_ukwar = $isi_ukwar + 
+                        '<tr>'+
+                            '<td style="text-align: center;vertical-align: middle;">'+
+                                ($i+1)+
+                            '</td>'+
+                            '<td style="text-align: center;vertical-align: middle;">'+
+                                $warnanya+
+                            '</td>'+
+                        '</tr>';
+                    }
+
+                    $table_ukwar = 
+                    '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
+                        '<thead>'+
+                            '<tr>'+
+                                '<th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>'+
+                                '<th class="col-md-5" style="text-align: center;vertical-align: middle;">Warna Produk</th>'+
+                            '</tr>'+
+                        '</thead>'+
+                        '<tbody>'+
+                            $isi_ukwar+
+                        '</tbody>'+
+                    '</table>';
+
+                    $("#dtable_detprod").html($table_ukwar);
+                } else{
+                    $("#dtable_detprod").html("");
+                }
 
                 //.........................................
                 $isi_ct = "";
@@ -1534,13 +1874,13 @@
                             $i+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['konsumsi_material'][$i-1]['nama_material']+
+                            respond['konsumsi_material'][$i-1]['nama_sub_jenis_material']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['konsumsi_material'][$i-1]['nama_line']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['konsumsi_material'][$i-1]['jumlah_material']+
+                            respond['konsumsi_material'][$i-1]['jumlah_konsumsi']+
                         '</td>'+
                     '</tr>';
                 }
@@ -1561,7 +1901,6 @@
                 '</table>';
 
                 $("#dtable_km").html($km);
-
                 $("#modaldetail").modal();
             }
         });
@@ -1875,13 +2214,13 @@
                             $i+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['konsumsi_material'][$i-1]['nama_material']+
+                            respond['konsumsi_material'][$i-1]['nama_sub_jenis_material']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['konsumsi_material'][$i-1]['nama_line']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['konsumsi_material'][$i-1]['jumlah_material']+
+                            respond['konsumsi_material'][$i-1]['jumlah_konsumsi']+
                         '</td>'+
                     '</tr>';
                 }
@@ -1948,3 +2287,82 @@
         //alert(id_warna);
     }
 </script>
+
+<!-- cek terisi (add produk)
+<script>
+    function cek_terisi(){
+        if($("#kode_produk").val() != "" && $("#nama_produk_input").val() != "" && $("#harga_produk").val() != "" ){
+            if($("#keterangan_produk").val() == 0 || $("#keterangan_produk").val() == 1 || $("#keterangan_produk").val() == 2){
+                if($("#jm_ketpod").val() > 0){
+                    //jika purchase cover
+                    if($("#keterangan").val() == 1){
+                            if($("#pc_ct1").val() != "" && $("#pc_ct2").val() != "" && $("#pc_ct3").val() != ""){
+                                //cek apakah konsumsi material yg diinput sudah mencakup line2 berdasarkan full produksi/purchase cover
+                                $id_cekline1 = $("#pc_ln1").val();
+                                $id_cekline2 = $("#pc_ln2").val();
+                                $id_cekline3 = $("#pc_ln3").val();
+                                
+                                $cekline1 = 0;
+                                $cekline2 = 0;
+                                $cekline3 = 0;
+
+                                //alert($id_cekline1+"<br>"+$id_cekline2+"<br>"+$id_cekline3);
+
+                                for($i=1;$i<$jumlah_km.length;$i++){
+
+                                }
+
+                                if($("#jumlah_km").val() != ""){
+                                    $("#simpan").prop('disabled',false);
+                                }
+                            }
+                            else{
+                                $("#simpan").prop('disabled',true);
+                            }
+                    }
+                    //jika full produksi
+                    else if($("#keterangan").val() == 0){
+                            if($("#fp_ct1").val() != "" && $("#fp_ct2").val() != "" && $("#fp_ct3").val() != "" && $("#fp_ct4").val() != ""){
+                                if($("#jumlah_km").val() != ""){
+                                    $("#simpan").prop('disabled',false);
+                                }
+                            }
+                            else{
+                                $("#simpan").prop('disabled',true);
+                            }
+                    }
+                }
+                else{
+                    $("#simpan").prop('disabled',true);
+                }
+            }
+            //keterangan = 3
+            else{
+                //jika purchase cover
+                if($("#keterangan").val() == 1){
+                        if($("#pc_ct1").val() != "" && $("#pc_ct2").val() != "" && $("#pc_ct3").val() != ""){
+                            if($("#jumlah_km").val() != ""){
+                                $("#simpan").prop('disabled',false);
+                            }
+                        }
+                        else{
+                            $("#simpan").prop('disabled',true);
+                        }
+                }
+                //jika full produksi
+                else if($("#keterangan").val() == 0){
+                        if($("#fp_ct1").val() != "" && $("#fp_ct2").val() != "" && $("#fp_ct3").val() != "" && $("#fp_ct4").val() != ""){
+                            if($("#jumlah_km").val() != ""){
+                                $("#simpan").prop('disabled',false);
+                            }
+                        }
+                        else{
+                            $("#simpan").prop('disabled',true);
+                        }
+                }
+            }
+        }
+    
+    }
+</script>
+ -->
