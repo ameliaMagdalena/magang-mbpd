@@ -166,29 +166,29 @@
 <script>
     function addNewRow(){
         var counter = $(".new_row").length;
-        html = '<tr class = "new_row"><td class="col-lg-3"><input type ="hidden" name = "row" value = '+counter+'><select data-plugin-selectTwo class="form-control" name="produk'+counter+'" id="produk'+counter+'" onchange="getHargaSatuan('+counter+')" required><?php for($b=0; $b<count($produk); $b++){ ?><option value="<?php echo $produk[$b]['id_produk']?>"><?php echo $produk[$b]['kode_produk'] . ' - ' . $produk[$b]['nama_produk']; if ($produk[$b]['keterangan'] == 0 || $produk[$b]['keterangan'] == 1){ for ($c=0; $c<count($ukuran); $c++){ if ($produk[$b]['id_ukuran_produk'] == $ukuran[$c]['id_ukuran_produk']){ echo ' ' . $ukuran[$c]['ukuran_produk'];}}} if($produk[$b]['keterangan'] == 0 || $produk[$b]['keterangan'] == 2){ for ($d=0; $d<count($warna); $d++){ if ($produk[$b]['id_warna'] == $warna[$d]['id_warna']){ echo ' '. $warna[$d]['nama_warna'];}}} ?></option><?php } ?></select></td><td class="col-lg-1"><input class="form-control" type="number" name="jumlah'+counter+'" id="jumlah'+counter+'" min="0" onkeyup="countHargaTotal('+counter+'); totalHarga();" onclick="countHargaTotal('+counter+'); totalHarga();" required></td><td class="col-lg-1"><input class="form-control" type="text" name="satuan'+counter+'" id="satuan'+counter+'" readonly></td><td class="col-3"><input class="form-control" type="date" name="tgl_terima'+counter+'" id="tgl_terima'+counter+'" required></td><td class="col-2"><input class="form-control" type="number" name="harga_satuan'+counter+'" id="harga_satuan'+counter+'" readonly></td><td class="col-2"><input class="form-control" type="number" nama="harga_total'+counter+'" id="harga_total'+counter+'" readonly></td></tr>';
+        html = '<tr class = "new_row"><td class="col-lg-3"><input type ="hidden" name = "row" value = '+counter+'><select data-plugin-selectTwo class="form-control" name="produk'+counter+'" id="produk'+counter+'" onchange="getHargaSatuan('+counter+')" required><?php for($b=0; $b<count($produk); $b++){ ?><option value="<?php echo $produk[$b]['id_detail_produk']?>"><?php echo $produk[$b]['kode_produk'] . ' - ' . $produk[$b]['nama_produk']; if ($produk[$b]['keterangan'] == 0 || $produk[$b]['keterangan'] == 1){ for ($c=0; $c<count($ukuran); $c++){ if ($produk[$b]['id_ukuran_produk'] == $ukuran[$c]['id_ukuran_produk']){ echo ' ' . $ukuran[$c]['ukuran_produk'];}}} if($produk[$b]['keterangan'] == 0 || $produk[$b]['keterangan'] == 2){ for ($d=0; $d<count($warna); $d++){ if ($produk[$b]['id_warna'] == $warna[$d]['id_warna']){ echo ' '. $warna[$d]['nama_warna'];}}} ?></option><?php } ?></select></td><td class="col-lg-1"><input class="form-control" type="number" name="jumlah'+counter+'" id="jumlah'+counter+'" min="0" onkeyup="countHargaTotal('+counter+'); totalHarga();" onclick="countHargaTotal('+counter+'); totalHarga();" required></td><td class="col-lg-1"><input class="form-control" type="text" name="satuan'+counter+'" id="satuan'+counter+'" readonly></td><td class="col-3"><input class="form-control" type="date" name="tgl_terima'+counter+'" id="tgl_terima'+counter+'" required></td><td class="col-2"><input class="form-control" type="number" name="harga_satuan'+counter+'" id="harga_satuan'+counter+'" readonly></td><td class="col-2"><input class="form-control" type="number" nama="harga_total'+counter+'" id="harga_total'+counter+'" readonly></td></tr>';
         $("#print_new_row").append(html);
-        var id_produk = $("#produk"+counter).val();
+        /* var id_detail_produk = $("#produk"+counter).val();
         $.ajax({
             url:"<?php echo base_url();?>PurchaseOrderCustomer/harga_produk",
             type:"POST",
             dataType:"JSON",
-            data:{id_produk:id_produk},
+            data:{id_detail_produk:id_detail_produk},
             success:function(respond){
                 $("#harga_satuan"+counter).val(respond[0]["harga_produk"]);
             }
-        });
+        }); */
     }
 </script>
 
 <script>
     function getHargaSatuan(countt){
-        var id_produk = $("#produk"+countt).val();
+        var id_detail_produk = $("#produk"+countt).val();
         $.ajax({
             url:"<?php echo base_url();?>PurchaseOrderCustomer/harga_produk",
             type:"POST",
             dataType:"JSON",
-            data:{id_produk:id_produk},
+            data:{id_detail_produk:id_detail_produk},
             success:function(respond){
                 $("#harga_satuan"+countt).val(respond[0]["harga_produk"]);
                 countHargaTotal(countt);

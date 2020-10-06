@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 06, 2020 at 05:52 AM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.0
+-- Generation Time: Oct 06, 2020 at 01:58 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.3.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -938,7 +938,7 @@ INSERT INTO `detail_produk_logs` (`id_detail_produk_logs`, `keterangan_log`, `id
 CREATE TABLE `detail_purchase_order_customer` (
   `id_detail_purchase_order_customer` varchar(10) NOT NULL,
   `id_purchase_order_customer` varchar(10) NOT NULL,
-  `id_produk` varchar(10) NOT NULL,
+  `id_detail_produk` varchar(10) NOT NULL,
   `jumlah_produk` int(11) NOT NULL,
   `harga_satuan` int(11) NOT NULL,
   `total_harga` int(11) NOT NULL,
@@ -2115,8 +2115,6 @@ INSERT INTO `line_logs` (`id_line_logs`, `keterangan_log`, `id_line`, `nama_line
 
 CREATE TABLE `material` (
   `id_material` varchar(10) NOT NULL,
-  `kode_material` varchar(10) NOT NULL,
-  `nama_material` varchar(30) NOT NULL,
   `id_sub_jenis_material` varchar(10) NOT NULL,
   `id_invoice` varchar(10) NOT NULL,
   `id_supplier` varchar(10) NOT NULL,
@@ -2170,7 +2168,8 @@ CREATE TABLE `pemasukan_material` (
   `id_sub_jenis_material` varchar(10) NOT NULL,
   `tanggal_masuk` datetime NOT NULL,
   `jumlah_masuk` int(11) NOT NULL,
-  `keterangan_masuk` varchar(100) NOT NULL,
+  `keterangan_masuk` int(11) NOT NULL,
+  `catatan` varchar(500) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
   `user_edit` varchar(10) NOT NULL,
@@ -2825,7 +2824,6 @@ CREATE TABLE `sub_jenis_material` (
   `satuan_ukuran` varchar(30) NOT NULL,
   `min_stok` int(11) NOT NULL,
   `max_stok` int(11) NOT NULL,
-  `jumlah_material` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
   `user_edit` varchar(10) NOT NULL,
@@ -2839,16 +2837,16 @@ CREATE TABLE `sub_jenis_material` (
 -- Dumping data for table `sub_jenis_material`
 --
 
-INSERT INTO `sub_jenis_material` (`id_sub_jenis_material`, `kode_sub_jenis_material`, `nama_sub_jenis_material`, `id_jenis_material`, `satuan_ukuran`, `min_stok`, `max_stok`, `jumlah_material`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('SUBJM-1', 'F001', 'REB55', 'JM-1', 'm3', 10, 20, 0, 'USER-1', '2020-10-05 23:02:35', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-2', 'F002', 'REB70', 'JM-1', 'm3', 10, 20, 0, 'USER-1', '2020-10-05 23:03:04', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-3', 'L001', 'Lem Spray', 'JM-2', 'blek', 5, 10, 0, 'USER-1', '2020-10-05 23:04:24', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-4', 'R001', 'Rets Hitam', 'JM-3', 'pcs', 10, 20, 0, 'USER-1', '2020-10-05 23:05:24', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-5', 'R002', 'Rets Putih', 'JM-3', 'pcs', 10, 20, 0, 'USER-1', '2020-10-05 23:05:44', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-6', 'P001', 'Plastic Medium', 'JM-4', 'pcs ', 0, 0, 0, 'USER-1', '2020-10-05 23:06:17', 'USER-1', '2020-10-05 23:06:40', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-7', 'P002', 'Plastic Large', 'JM-4', 'pcs', 10, 20, 0, 'USER-1', '2020-10-05 23:06:32', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-8', 'K001', 'Karton Tebal 1mm', 'JM-5', 'pcs', 10, 20, 0, 'USER-1', '2020-10-05 23:07:39', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-9', 'K002', 'Karton Tebal 2mm', 'JM-5', 'pcs', 10, 20, 0, 'USER-1', '2020-10-05 23:07:57', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
+INSERT INTO `sub_jenis_material` (`id_sub_jenis_material`, `kode_sub_jenis_material`, `nama_sub_jenis_material`, `id_jenis_material`, `satuan_ukuran`, `min_stok`, `max_stok`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('SUBJM-1', 'F001', 'REB55', 'JM-1', 'm3', 10, 20, 'USER-1', '2020-10-05 23:02:35', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-2', 'F002', 'REB70', 'JM-1', 'm3', 10, 20, 'USER-1', '2020-10-05 23:03:04', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-3', 'L001', 'Lem Spray', 'JM-2', 'blek', 5, 10, 'USER-1', '2020-10-05 23:04:24', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-4', 'R001', 'Rets Hitam', 'JM-3', 'pcs', 10, 20, 'USER-1', '2020-10-05 23:05:24', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-5', 'R002', 'Rets Putih', 'JM-3', 'pcs', 10, 20, 'USER-1', '2020-10-05 23:05:44', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-6', 'P001', 'Plastic Medium', 'JM-4', 'pcs ', 0, 0, 'USER-1', '2020-10-05 23:06:17', 'USER-1', '2020-10-05 23:06:40', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-7', 'P002', 'Plastic Large', 'JM-4', 'pcs', 10, 20, 'USER-1', '2020-10-05 23:06:32', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-8', 'K001', 'Karton Tebal 1mm', 'JM-5', 'pcs', 10, 20, 'USER-1', '2020-10-05 23:07:39', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-9', 'K002', 'Karton Tebal 2mm', 'JM-5', 'pcs', 10, 20, 'USER-1', '2020-10-05 23:07:57', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -3759,16 +3757,52 @@ ALTER TABLE `material_sementara`
   ADD PRIMARY KEY (`id_material`);
 
 --
+-- Indexes for table `pemasukan_material`
+--
+ALTER TABLE `pemasukan_material`
+  ADD PRIMARY KEY (`id_pemasukan_material`);
+
+--
+-- Indexes for table `pengambilan_material`
+--
+ALTER TABLE `pengambilan_material`
+  ADD PRIMARY KEY (`id_pengambilan_material`);
+
+--
+-- Indexes for table `pengeluaran_material`
+--
+ALTER TABLE `pengeluaran_material`
+  ADD PRIMARY KEY (`id_pengeluaran_material`);
+
+--
 -- Indexes for table `permintaan_material`
 --
 ALTER TABLE `permintaan_material`
   ADD PRIMARY KEY (`id_permintaan_material`);
 
 --
+-- Indexes for table `permintaan_pembelian`
+--
+ALTER TABLE `permintaan_pembelian`
+  ADD PRIMARY KEY (`id_permintaan_pembelian`);
+
+--
 -- Indexes for table `permohonan_akses`
 --
 ALTER TABLE `permohonan_akses`
   ADD PRIMARY KEY (`id_permohonan_akses`);
+
+--
+-- Indexes for table `perubahan_harga`
+--
+ALTER TABLE `perubahan_harga`
+  ADD PRIMARY KEY (`id_perubahan_harga`);
+
+--
+-- Indexes for table `planning_material`
+--
+ALTER TABLE `planning_material`
+  ADD PRIMARY KEY (`id_planning_material`);
 
 --
 -- Indexes for table `pos`
@@ -3813,6 +3847,12 @@ ALTER TABLE `purchase_order_customer`
   ADD PRIMARY KEY (`id_purchase_order_customer`);
 
 --
+-- Indexes for table `purchase_order_supplier`
+--
+ALTER TABLE `purchase_order_supplier`
+  ADD PRIMARY KEY (`id_purchase_order_supplier`);
+
+--
 -- Indexes for table `rekening`
 --
 ALTER TABLE `rekening`
@@ -3829,6 +3869,12 @@ ALTER TABLE `rekening_logs`
 --
 ALTER TABLE `spesifikasi_jabatan`
   ADD PRIMARY KEY (`id_spesifikasi_jabatan`);
+
+--
+-- Indexes for table `sub_customer`
+--
+ALTER TABLE `sub_customer`
+  ADD PRIMARY KEY (`id_sub_customer`);
 
 --
 -- Indexes for table `sub_jenis_material`

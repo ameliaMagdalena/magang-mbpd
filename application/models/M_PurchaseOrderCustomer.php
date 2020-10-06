@@ -48,14 +48,16 @@ class M_PurchaseOrderCustomer extends CI_Model {
 
     function selectSatuDetailPOCustomer($id){
         return $this->db->query("SELECT * FROM detail_purchase_order_customer a
-        JOIN produk b ON a.id_produk = b.id_produk
-        JOIN purchase_order_customer c ON a.id_purchase_order_customer = c.id_purchase_order_customer
+        JOIN detail_produk b ON a.id_detail_produk = b.id_detail_produk
+        JOIN produk c ON b.id_produk = c.id_produk
+        JOIN purchase_order_customer d ON a.id_purchase_order_customer = d.id_purchase_order_customer
         WHERE a.status_delete=0 AND a.id_purchase_order_customer='" . $id['id_purchase_order_customer'] . "'");
     }
     
     function selectDetailPOCustomerAktif(){
         return $this->db->query("SELECT * FROM detail_purchase_order_customer a
-        JOIN produk b ON a.id_produk = b.id_produk
+        JOIN detail_produk b ON a.id_detail_produk = b.id_detail_produk
+        JOIN produk c ON b.id_produk = c.id_produk
         WHERE a.status_delete=0");
     }
 
@@ -72,11 +74,12 @@ class M_PurchaseOrderCustomer extends CI_Model {
     }
 
 
-
+    //******************************* DETAIL PRODUK ****************************** */
+    //**************************************************************************** */
     function selectDetailProduk(){
         return $this->db->query("SELECT * FROM detail_produk a
         JOIN produk b ON a.id_produk = b.id_produk
-        WHERE a.status_delete='0'");
+        WHERE a.status_delete='0' AND b.status_delete=0");
     }
 
     function selectUkuranProduk(){
@@ -92,7 +95,9 @@ class M_PurchaseOrderCustomer extends CI_Model {
 
     
     function selectHargaProduk($id){
-        return $this->db->query("SELECT harga_produk FROM produk WHERE status_delete=0 AND id_produk='$id'");
+        return $this->db->query("SELECT harga_produk FROM produk a
+        JOIN detail_produk b ON a.id_produk = b.id_produk
+        WHERE a.status_delete=0 AND b.status_delete=0 AND b.id_detail_produk='$id'");
     }
 
 
