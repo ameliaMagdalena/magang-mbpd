@@ -13,18 +13,19 @@ class M_Produk extends CI_Model {
     }
 
     function select_all_aktif(){
-        return $this->db->query("SELECT * FROM produk WHERE status_delete='0'");
+        return $this->db->query("SELECT * FROM produk,jenis_produk WHERE produk.status_delete='0' 
+        AND produk.id_jenis_produk=jenis_produk.id_jenis_produk ");
     }
 
 //material
-    function select_all_material(){
-        return $this->db->query("SELECT * FROM jenis_material_sementara");
+    function select_all_jenis_material(){
+        return $this->db->query("SELECT * FROM jenis_material WHERE status_delete='0' ");
     }
 
     function cari_material($id_jenis_material){
-        return $this->db->query("SELECT * FROM material_sementara,jenis_material_sementara WHERE 
-        jenis_material_sementara.id_jenis_material = '$id_jenis_material' AND 
-        jenis_material_sementara.id_jenis_material = material_sementara.id_jenis_material");
+        return $this->db->query("SELECT * FROM sub_jenis_material,jenis_material WHERE 
+        jenis_material.id_jenis_material = '$id_jenis_material' AND 
+        jenis_material.id_jenis_material = sub_jenis_material.id_jenis_material");
     }
 
     function select_all_km(){
@@ -59,6 +60,10 @@ class M_Produk extends CI_Model {
         return $this->db->query("SELECT * FROM produk WHERE nama_produk='$nama_produk' AND status_delete='0'");
     }
 
+    function cari_produk_by_kode($kode_produk){
+        return $this->db->query("SELECT * FROM produk WHERE kode_produk='$kode_produk' AND status_delete='0'");
+    }
+
     function get_ukprod($id_jp){
         return $this->db->query("SELECT * FROM ukuran_produk WHERE id_jenis_produk='$id_jp' AND status_delete='0'");
     }
@@ -73,6 +78,10 @@ class M_Produk extends CI_Model {
         produk.id_jenis_produk=jenis_produk.id_jenis_produk");
     }
 
+    function dcari_detail_produk($id_produk){
+        return $this->db->query("SELECT * FROM detail_produk WHERE id_produk='$id_produk' AND status_delete='0' ");
+    }
+
     function dcari_warna($id_produk){
         return $this->db->query("SELECT * FROM produk,detail_produk,warna WHERE produk.id_produk='$id_produk'
         AND produk.id_produk=detail_produk.id_produk AND warna.id_warna=detail_produk.id_warna");
@@ -84,8 +93,9 @@ class M_Produk extends CI_Model {
     }
 
     function dcari_km($id_produk){
-        return $this->db->query("SELECT * FROM produk,konsumsi_material,material,line WHERE produk.id_produk='$id_produk'
-        AND produk.id_produk=konsumsi_material.id_produk AND material.id_material=konsumsi_material.id_material AND
+        return $this->db->query("SELECT * FROM produk,konsumsi_material,sub_jenis_material,line WHERE produk.id_produk='$id_produk'
+        AND produk.id_produk=konsumsi_material.id_produk AND 
+        sub_jenis_material.id_sub_jenis_material=konsumsi_material.id_sub_jenis_material AND
         line.id_line=konsumsi_material.id_line ");
     }
 
