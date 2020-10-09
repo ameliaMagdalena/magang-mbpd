@@ -683,13 +683,16 @@ class PerencanaanProduksi extends CI_Controller {
                                     //id yang baru
                                     $id_permat_baru = "PERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
                                 }
+
+                                $tgl_now = date('Y-m-d');
                                 
                                 $data_permat = array(
                                     'id_permintaan_material'            => $id_permat_baru,
                                     'id_detail_purchase_order_customer' => $id_detpo,
                                     'id_line'                           => $idline,
                                     'jumlah_minta'                      => $jumlah_item,
-                                    'tanggal_permintaan'                => $tanggal,
+                                    'tanggal_permintaan'                => $tgl_now,
+                                    'tanggal_produksi'                  => $tanggal,
                                     'status_permintaan'                 => 0,
                                     'user_add'                          => $user,
                                     'waktu_add'                         => $now,
@@ -1386,7 +1389,5 @@ class PerencanaanProduksi extends CI_Controller {
 
         $pdf->Output();
     }
-
-
 
 }

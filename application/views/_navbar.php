@@ -448,8 +448,8 @@
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>permohonanAkses/batal">
-											Batal
+										<a href="<?= base_url()?>permohonanAkses/selesai">
+											Selesai
 										</a>
 									</li>
 								</ul>
@@ -550,19 +550,42 @@
 								</ul>
 							</li>
 							<li class="nav-parent">
-								<a title="Laporan Produksi">
-									<i class="fa  fa-file" aria-hidden="true"></i>
-									<span>Laporan Produksi</span>
+								<a title="Permintaan Material">
+									<i class="fa fa-calendar" aria-hidden="true"></i>
+									<span>Permintaan Material</span>
 								</a>
 								<ul class="nav nav-children">
 									<li>
-										<a href="">
-											Laporan Produksi Hari Ini
+										<a href="<?= base_url()?>permintaanMaterialPPIC">
+											Semua Permintaan Material PPIC
 										</a>
 									</li>
 									<li>
-										<a href="">
-											Semua Laporan Produksi
+										<a href="<?= base_url()?>perencanaanProduksi/semua_perencanaan_produksi">
+											...
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-th-list" aria-hidden="true"></i>
+									<span>Laporan Hasil Produksi</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?= base_url()?>hasilProduksi/semua_hasil_produksi">
+											<span>Semua</span>
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>hasilProduksi/lengkap_hasil_produksi">
+											<span>Lengkap</span>
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>hasilProduksi/selesai_hasil_produksi">
+											<span>Selesai</span>
 										</a>
 									</li>
 								</ul>
@@ -680,7 +703,7 @@
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-plus-square-o" aria-hidden="true"></i>
-									<span>Permintaan Material</span>
+									<span>Pengambilan Material</span>
 								</a>
 								<ul class="nav nav-children">
 									<li>
@@ -822,19 +845,6 @@
 						<?php if(($_SESSION['nama_jabatan'] == "Admin") && ($_SESSION['nama_departemen'] == "Purchasing") ){?>
 							<li class="nav-parent">
 								<a>
-									<i class="fa fa-copy" aria-hidden="true"></i>
-									<span>Master Data</span>
-								</a>
-								<ul class="nav nav-children">
-									<li>
-										<a href="<?= base_url()?>ppn">
-											PPN
-										</a>
-									</li>
-								</ul>
-							</li>
-							<li class="nav-parent">
-								<a>
 									<i class="fa fa-envelope" aria-hidden="true"></i>
 									<span>Surat Jalan</span>
 								</a>
@@ -878,8 +888,8 @@
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>invoice/sedang_diproses_invoice">
-											Sedang Diproses
+										<a href="<?= base_url()?>invoice/belum_diproses_invoice">
+											Belum Diproses
 										</a>
 									</li>
 									<li>
@@ -985,13 +995,53 @@
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>hasilProduksi/selesai_hasil_produksi">
-											<span>Laporan Hasil Produksi Selesai</span>
+										<a href="<?= base_url()?>hasilProduksi/semua_hasil_produksi">
+											<span>Semua</span>
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>hasilProduksi/semua_hasil_produksi">
-											<span>Semua Laporan Hasil Produksi</span>
+										<a href="<?= base_url()?>hasilProduksi/lengkap_hasil_produksi">
+											<span>Lengkap</span>
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>hasilProduksi/selesai_hasil_produksi">
+											<span>Selesai</span>
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-parent">
+								<a title="Permohonan Akses">
+									<i class="fa   fa-unlock-alt" aria-hidden="true"></i>
+									<span>Permohonan Akses</span>
+									<span class="label" style="background-color:#BE2525;border-radius:50px;">1</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?= base_url()?>permohonanAkses/semua">
+											Semua
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>permohonanAkses/belum_disetujui">
+											Belum Disetujui
+											<span class="pull-right label" style="background-color:#BE2525;border-radius:50px;">1</span>
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>permohonanAkses/disetujui">
+											Disetujui
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>permohonanAkses/tidak_disetujui">
+											Tidak Disetujui
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>permohonanAkses/selesai">
+											Selesai
 										</a>
 									</li>
 								</ul>
@@ -1013,19 +1063,109 @@
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>hasilProduksi/selesai_hasil_produksi">
-											<span>Laporan Hasil Produksi Selesai</span>
+										<a href="<?= base_url()?>hasilProduksi/semua_hasil_produksi">
+											<span>Semua</span>
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>hasilProduksi/semua_hasil_produksi">
-											<span>Semua Laporan Hasil Produksi</span>
+										<a href="<?= base_url()?>hasilProduksi/lengkap_hasil_produksi">
+											<span>Lengkap</span>
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>hasilProduksi/selesai_hasil_produksi">
+											<span>Selesai</span>
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-parent">
+								<a title="Permohonan Akses">
+									<i class="fa   fa-unlock-alt" aria-hidden="true"></i>
+									<span>Permohonan Akses</span>
+									<span class="label" style="background-color:#BE2525;border-radius:50px;">1</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?= base_url()?>permohonanAkses/semua">
+											Semua
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>permohonanAkses/belum_disetujui">
+											Belum Disetujui
+											<span class="pull-right label" style="background-color:#BE2525;border-radius:50px;">1</span>
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>permohonanAkses/disetujui">
+											Disetujui
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>permohonanAkses/tidak_disetujui">
+											Tidak Disetujui
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>permohonanAkses/selesai">
+											Selesai
 										</a>
 									</li>
 								</ul>
 							</li>
 						<?php }?>
 						<!--  -->
+						<li>
+							<a href="<?= base_url()?>purchaseOrderCustomer/baru">
+								+PO Kath
+							</a>
+						</li>
+						<li>
+							<a href="<?= base_url()?>purchaseOrderCustomer/index/0">
+								PO Kath stat 0
+							</a>
+						</li>
+						<li>
+							<a href="<?= base_url()?>purchaseOrderCustomer/index/1">
+								PO Kath stat 1
+							</a>
+						</li>
+						<li>
+							<a href="<?= base_url()?>purchaseOrderCustomer/index/2">
+								PO Kath stat 2
+							</a>
+						</li>
+						<li>
+							<a href="<?= base_url()?>purchaseOrderCustomer/index/3">
+								PO Kath stat 3
+							</a>
+						</li>
+						<li>
+							<a href="<?= base_url()?>purchaseOrderCustomer/index/4">
+								PO Kath stat 4
+							</a>
+						</li>
+						<li>
+							<a href="<?= base_url()?>purchaseOrderCustomer/index/5">
+								PO Kath stat 5
+							</a>
+						</li>
+						<li>
+							<a href="<?= base_url()?>material">
+								Material Kath
+							</a>
+						</li>
+						<li>
+							<a href="<?= base_url()?>jenisMaterial">
+								Jenis Material Kath
+							</a>
+						</li>
+						<li>
+							<a href="<?= base_url()?>customer">
+								Customer Kath
+							</a>
+						</li>
 <!-- PRODUKSI -->
 						<li>
 							<br><br>

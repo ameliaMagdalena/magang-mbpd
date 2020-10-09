@@ -69,7 +69,7 @@ class PurchaseOrderCustomer extends CI_Controller {
                     "id_detail_produk" => $this->input->post("produk".$x),
                     "jumlah_produk" => $jumlah_produk,
                     "harga_satuan" => $this->input->post("harga_satuan".$x),
-                    //"total_harga" => $this->input->post("harga_total".$x),
+                    "total_harga" => $this->input->post("harga_total".$x),
                     "tanggal_penerimaan" => $this->input->post("tgl_terima".$x),
                     "user_add"=>$_SESSION['id_user'],
                     "waktu_add"=>date('Y-m-d H:i:s'),

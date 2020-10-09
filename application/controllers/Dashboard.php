@@ -7,12 +7,23 @@ class Dashboard extends CI_Controller {
 
         date_default_timezone_set('Asia/Jakarta');
 
+        $this->load->model('M_SuratPerintahLembur');
+
         if($this->session->userdata('status_login') != "login"){
 			    redirect('akses');
 		    }
     }
 
 	public function index(){
+    $now = date('Y-m-d');
+    //update spl batal
+    $this->M_SuratPerintahLembur->cek_batal($now);
+
+    //update status po
+
+    //update bpbj
+    
+
 		$this->load->view('v_dashboard');
     }
 

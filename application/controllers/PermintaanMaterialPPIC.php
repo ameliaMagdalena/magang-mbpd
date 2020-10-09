@@ -8,6 +8,8 @@ class PermintaanMaterialPPIC extends CI_Controller {
         date_default_timezone_set('Asia/Jakarta');
 
         $this->load->model('M_PermintaanMaterialPPIC');
+        $this->load->model('M_UkuranProduk');
+        $this->load->model('M_Warna');
 
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');
@@ -17,7 +19,20 @@ class PermintaanMaterialPPIC extends CI_Controller {
     public function index(){
         $data['permintaan_material'] = $this->M_PermintaanMaterialPPIC->select_all_aktif()->result();
 
+        $data['warna']            = $this->M_Warna->select_all_aktif()->result();
+        $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
+
 		$this->load->view('v_permintaan_material_ppic_semua',$data);
+    }
+
+    public function detail_permintaan(){
+        $id = $this->input->post('id');
+
+        $data['permat']       = $this->M_PermintaanMaterialPPIC->get_one_permat($id)->result_array();
+        $data['detpermat']    = $this->M_PermintaanMaterialPPIC->get_one_detpermat($id)->result_array();
+        $data['jm_detpermat'] = $this->M_PermintaanMaterialPPIC->get_one_detpermat($id)->num_rows();
+
+        echo json_encode($data);
     }
 
    

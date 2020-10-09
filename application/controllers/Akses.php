@@ -14,7 +14,7 @@ class Akses extends CI_Controller {
     }
     
     function login(){
-        $email = $this->input->post('email');
+        $email    = $this->input->post('email');
         $password = $this->input->post('password');
 
         $where = array(
