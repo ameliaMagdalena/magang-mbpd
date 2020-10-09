@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 08, 2020 at 08:00 PM
+-- Generation Time: Oct 09, 2020 at 02:27 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.3.13
 
@@ -226,7 +226,7 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id_customer`, `nama_customer`, `alamat_customer`, `no_telp_customer`, `email_customer`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('CUST-1', 'INOAC', 'Jl. mawar', '085256789012', 'inoac@gmail.com', 'USER-7', '2020-10-06 02:38:57', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
+('CUST-1', 'INOAC', 'Tangerang', '085256789011', 'inoac@gmail.com', 'USER-7', '2020-10-06 02:38:57', 'USER-1', '2020-10-09 02:07:49', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -782,7 +782,7 @@ CREATE TABLE `detail_permintaan_material` (
   `id_permintaan_material` varchar(20) NOT NULL,
   `id_konsumsi_material` varchar(10) NOT NULL,
   `needs` int(11) NOT NULL,
-  `status_detail_permintaan_material` int(11) NOT NULL,
+  `ketersediaan_supplier` int(11) NOT NULL,
   `status_pengambilan` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
@@ -959,7 +959,9 @@ CREATE TABLE `detail_purchase_order_customer` (
 
 INSERT INTO `detail_purchase_order_customer` (`id_detail_purchase_order_customer`, `id_purchase_order_customer`, `id_detail_produk`, `jumlah_produk`, `harga_satuan`, `total_harga`, `tanggal_penerimaan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
 ('DPOC-1', 'POC-1', 'DETPRO-21', 1, 100000, 0, '2020-10-28', 'USER-1', '2020-10-06 19:47:03', '0', '0000-00-00 00:00:00', 'USER-1', '2020-10-06 22:05:31', 1),
-('DPOC-2', 'POC-1', 'DETPRO-17', 2, 300000, 0, '2020-10-30', 'USER-1', '2020-10-06 19:47:03', '0', '0000-00-00 00:00:00', 'USER-1', '2020-10-06 22:05:31', 1);
+('DPOC-2', 'POC-1', 'DETPRO-17', 2, 300000, 0, '2020-10-30', 'USER-1', '2020-10-06 19:47:03', '0', '0000-00-00 00:00:00', 'USER-1', '2020-10-06 22:05:31', 1),
+('DPOC-3', 'POC-2', 'DETPRO-17', 2, 300000, 0, '2020-10-14', 'USER-1', '2020-10-09 14:40:29', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('DPOC-4', 'POC-2', 'DETPRO-16', 1, 300000, 0, '2020-10-15', 'USER-1', '2020-10-09 14:40:29', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -983,6 +985,14 @@ CREATE TABLE `detail_purchase_order_supplier` (
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `detail_purchase_order_supplier`
+--
+
+INSERT INTO `detail_purchase_order_supplier` (`id_detail_purchase_order_supplier`, `id_purchase_order_supplier`, `id_sub_jenis_material`, `jumlah_material`, `harga_total`, `status_detail_po`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('DPOS-1', 'POS-1', 'SUBJM-8', 2, 4000, 0, 'USER-1', '2020-10-09 14:30:32', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('DPOS-2', 'POS-1', 'SUBJM-10', 3, 180000, 0, 'USER-1', '2020-10-09 14:30:32', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -1002,6 +1012,15 @@ CREATE TABLE `detail_supplier` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_supplier`
+--
+
+INSERT INTO `detail_supplier` (`id_detail_supplier`, `id_supplier`, `id_sub_jenis_material`, `harga_material`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('DSUP-1', 'SUP-1', 'SUBJM-10', 60000, 'USER-1', '2020-10-09 01:58:37', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('DSUP-2', 'SUP-1', 'SUBJM-8', 2000, 'USER-1', '2020-10-09 02:01:54', '0', '0000-00-00 00:00:00', 'USER-1', '2020-10-09 02:02:18', 0),
+('DSUP-3', 'SUP-2', 'SUBJM-4', 3000, 'USER-1', '2020-10-09 02:04:26', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1643,7 +1662,8 @@ INSERT INTO `jenis_material` (`id_jenis_material`, `kode_jenis_material`, `nama_
 ('JM-3', 'RETS00', 'Rets', 'USER-1', '2020-10-05 23:01:02', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
 ('JM-4', 'PLASTIC00', 'Plastic Pack', 'USER-1', '2020-10-05 23:01:18', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
 ('JM-5', 'KARTON00', 'Karton ', 'USER-1', '2020-10-05 23:01:33', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('JM-6', 'KARTON00', 'Karton', 'USER-1', '2020-10-05 23:07:04', '0', '0000-00-00 00:00:00', 'USER-1', '2020-10-05 23:07:09', 1);
+('JM-6', 'KARTON00', 'Karton', 'USER-1', '2020-10-05 23:07:04', '0', '0000-00-00 00:00:00', 'USER-1', '2020-10-05 23:07:09', 1),
+('JM-7', 'BA001', 'Baut', 'USER-1', '2020-10-09 01:51:00', 'USER-1', '2020-10-09 02:10:34', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2238,7 +2258,8 @@ CREATE TABLE `pengeluaran_material` (
   `id_sub_jenis_material` varchar(10) NOT NULL,
   `tanggal_keluar` datetime NOT NULL,
   `jumlah_keluar` int(11) NOT NULL,
-  `keterangan_pengeluaran` varchar(100) NOT NULL,
+  `keterangan_keluar` int(11) NOT NULL,
+  `catatan` varchar(500) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
   `user_edit` varchar(10) NOT NULL,
@@ -2664,7 +2685,8 @@ CREATE TABLE `purchase_order_customer` (
 --
 
 INSERT INTO `purchase_order_customer` (`id_purchase_order_customer`, `kode_purchase_order_customer`, `kode_so`, `id_customer`, `tanggal_po`, `harga_sebelum_pajak`, `ppn`, `total_harga_akhir`, `keterangan`, `status_po`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('POC-1', 'aaa/014/p', 'soc/003/30/9/20', 'CUST-1', '2020-10-16', 700000, 70000, 770000, '', 3, 'USER-1', '2020-10-06 22:04:15', 'USER-1', '0000-00-00 00:00:00', 'USER-1', '2020-10-06 22:05:31', 1);
+('POC-1', 'aaa/014/p', 'soc/003/30/9/20', 'CUST-1', '2020-10-16', 700000, 70000, 770000, '', 3, 'USER-1', '2020-10-06 22:04:15', 'USER-1', '0000-00-00 00:00:00', 'USER-1', '2020-10-06 22:05:31', 1),
+('POC-2', 'INC/20/5/001', 'MBP/SO/20/10/002', 'CUST-1', '2020-10-08', 900000, 90000, 990000, '', 0, 'USER-1', '2020-10-09 14:40:29', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2674,12 +2696,14 @@ INSERT INTO `purchase_order_customer` (`id_purchase_order_customer`, `kode_purch
 
 CREATE TABLE `purchase_order_supplier` (
   `id_purchase_order_supplier` varchar(10) NOT NULL,
+  `kode_purchase_order_supplier` varchar(50) NOT NULL,
   `id_supplier` varchar(10) NOT NULL,
   `tanggal_po` datetime NOT NULL,
   `harga_sebelum_pajak` int(11) NOT NULL,
   `ppn` int(11) NOT NULL,
   `total_harga_akhir` int(11) NOT NULL,
   `status_po` int(11) NOT NULL,
+  `keterangan` varchar(500) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
   `user_edit` varchar(10) NOT NULL,
@@ -2688,6 +2712,13 @@ CREATE TABLE `purchase_order_supplier` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `purchase_order_supplier`
+--
+
+INSERT INTO `purchase_order_supplier` (`id_purchase_order_supplier`, `kode_purchase_order_supplier`, `id_supplier`, `tanggal_po`, `harga_sebelum_pajak`, `ppn`, `total_harga_akhir`, `status_po`, `keterangan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('POS-1', '', 'SUP-1', '2020-05-10 00:00:00', 184000, 18400, 202400, 0, '', 'USER-1', '2020-10-09 14:30:32', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2843,7 +2874,7 @@ CREATE TABLE `sub_customer` (
 --
 
 INSERT INTO `sub_customer` (`id_sub_customer`, `nama_sub_customer`, `id_customer`, `nama_pic`, `no_telp_pic`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('SUBCUST-1', 'PT Techno', 'CUST-1', 'Amelia', '089812345678', 'USER-1', '2020-09-30 22:49:35', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
+('SUBCUST-1', 'PT. Techno', 'CUST-1', 'Amelia', '089812345678', 'USER-1', '2020-09-30 22:49:35', 'USER-1', '2020-10-09 02:08:01', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2874,6 +2905,8 @@ CREATE TABLE `sub_jenis_material` (
 
 INSERT INTO `sub_jenis_material` (`id_sub_jenis_material`, `kode_sub_jenis_material`, `nama_sub_jenis_material`, `id_jenis_material`, `satuan_ukuran`, `min_stok`, `max_stok`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
 ('SUBJM-1', 'F001', 'REB55', 'JM-1', 'm3', 10, 20, 'USER-1', '2020-10-05 23:02:35', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-10', 'BAJCBC001', 'JCBC M 6x20 MM 20Cm', 'JM-7', 'Pcs ', 10, 50, 'USER-1', '2020-10-09 01:52:06', 'USER-1', '2020-10-09 01:53:30', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-11', 'BAJCBC002', 'JCBC M 6x50 MM 50Cm', 'JM-7', 'Pcs', 15, 60, 'USER-1', '2020-10-09 01:55:27', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
 ('SUBJM-2', 'F002', 'REB70', 'JM-1', 'm3', 10, 20, 'USER-1', '2020-10-05 23:03:04', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
 ('SUBJM-3', 'L001', 'Lem Spray', 'JM-2', 'blek', 5, 10, 'USER-1', '2020-10-05 23:04:24', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
 ('SUBJM-4', 'R001', 'Rets Hitam', 'JM-3', 'pcs', 10, 20, 'USER-1', '2020-10-05 23:05:24', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
@@ -2903,6 +2936,14 @@ CREATE TABLE `supplier` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `supplier`
+--
+
+INSERT INTO `supplier` (`id_supplier`, `nama_supplier`, `alamat_supplier`, `no_telp_supplier`, `email_supplier`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('SUP-1', 'PT. INOAC POLYTECHNO INDONESIA', 'Tangerang', '081234567890', 'inoac@gmail.com', 'USER-1', '2020-10-09 01:49:14', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUP-2', 'PT. MIRA USAHA BAKTI LESTARI', 'Jakarta', '087819274830', 'mirausaha@gmail.com', 'USER-1', '2020-10-09 02:04:13', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
