@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 10, 2020 at 02:34 PM
+-- Generation Time: Oct 10, 2020 at 02:53 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.3.13
 
@@ -3123,6 +3123,8 @@ INSERT INTO `rekening_logs` (`id_rekening_logs`, `keterangan_log`, `id_rekening`
 CREATE TABLE `sales_order` (
   `id_sales_order` varchar(10) NOT NULL,
   `kode_sales_order` varchar(10) NOT NULL,
+  `tanggal_so` date NOT NULL,
+  `tanggal_pengantaran` date NOT NULL,
   `dibuat_oleh` varchar(10) NOT NULL,
   `diterima_oleh` varchar(10) NOT NULL,
   `id_purchase_order_customer` varchar(10) NOT NULL,
