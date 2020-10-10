@@ -556,8 +556,8 @@
 								</a>
 								<ul class="nav nav-children">
 									<li>
-										<a href="<?= base_url()?>permintaanMaterialPPIC">
-											Semua Permintaan Material PPIC
+										<a href="<?= base_url()?>permintaanMaterialProduksi">
+											Semua Permintaan Material
 										</a>
 									</li>
 									<li>
@@ -661,16 +661,6 @@
 									</li>
 								</ul>
 							</li>
-							<li>
-								<a href="<?= base_url()?>produk">
-									<span>Produk Sementara</span>
-								</a>
-							</li>
-							<li>
-								<a href="<?= base_url()?>POS">
-									<span>PO Sementara</span>
-								</a>
-							</li>
 						<?php }?>
 						<!--  -->
 
@@ -707,32 +697,32 @@
 								</a>
 								<ul class="nav nav-children">
 									<li>
-										<a href="<?= base_url()?>permintaanMaterialProduksi/tambah">
-											+ Permintaan Material
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/tambah">
+											+ Pengambilan Material
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>permintaanMaterialProduksi/semua_permintaan_material">
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/semua_pengambilan_material">
 											Semua
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>permintaanMaterialProduksi/belum_disetujui_permintaan_material">
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_disetujui_pengambilan_material">
 											Belum Disetujui Gudang Material
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>permintaanMaterialProduksi/belum_diambil_permintaan_material">
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_diambil_pengambilan_material">
 											Disetujui & Belum Diambil
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>permintaanMaterialProduksi/selesai_permintaan_material">
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/selesai_pengambilan_material">
 											Selesai
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>permintaanMaterialProduksi/batal_permintaan_material">
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/batal_pengambilan_material">
 											Batal
 										</a>
 									</li>
@@ -1124,31 +1114,6 @@
 						<li>
 							<a href="<?= base_url()?>purchaseOrderCustomer/index/0">
 								PO Kath stat 0
-							</a>
-						</li>
-						<li>
-							<a href="<?= base_url()?>purchaseOrderCustomer/index/1">
-								PO Kath stat 1
-							</a>
-						</li>
-						<li>
-							<a href="<?= base_url()?>purchaseOrderCustomer/index/2">
-								PO Kath stat 2
-							</a>
-						</li>
-						<li>
-							<a href="<?= base_url()?>purchaseOrderCustomer/index/3">
-								PO Kath stat 3
-							</a>
-						</li>
-						<li>
-							<a href="<?= base_url()?>purchaseOrderCustomer/index/4">
-								PO Kath stat 4
-							</a>
-						</li>
-						<li>
-							<a href="<?= base_url()?>purchaseOrderCustomer/index/5">
-								PO Kath stat 5
 							</a>
 						</li>
 						<li>

@@ -166,6 +166,8 @@ class PerencanaanProduksi extends CI_Controller {
 
         $data['line']             = $this->M_Line->select_all_aktif()->result();
         $data['dpo']              = $this->M_PerencanaanProduksi->select_all_detpoxproduk()->result();
+        $data['produksi_tertunda']= $this->M_PerencanaanProduksi->select_all_prodtun_aktif()->result();
+
         $data['warna']            = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
 
@@ -775,7 +777,7 @@ class PerencanaanProduksi extends CI_Controller {
                                         'id_permintaan_material'            => $id_permat_baru,
                                         'id_konsumsi_material'              => $id_konsumsi_material,
                                         'needs'                             => $needs,
-                                        'status_detail_permintaan_material' => 0,
+                                        'status_pengambilan'                => 0,
                                         'user_add'                          => $user,
                                         'waktu_add'                         => $now,
                                         'status_delete'                     => 0

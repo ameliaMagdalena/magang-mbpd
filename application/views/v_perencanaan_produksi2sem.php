@@ -100,7 +100,7 @@
             <div class="panel-body" style="height: 300px;overflow: scroll;margin-left:-25px;margin-right:-25px">
                 <!-- BAGIAN II : PRODUK & BAGIAN III : PERENCANAAN PRODUKSI -->
                 <input id="start_date" type="hidden" value="<?= $start_date;?>">
-                <input type="text" id="jumlah_div_ada_isi">
+                <input type="hidden" id="jumlah_div_ada_isi">
         
                 <div class="col-md-12" id="isi_bg3">
                     <table class="table table-bordered table-striped mb-none table_efisiensi_pp" id="datatable-default">
@@ -133,27 +133,27 @@
 
                                         if($jmlah_ctp == 3){
                         ?>
-                                                <tr  id="1perc<?= $no; ?>">
+                                                <tr  id="1perc<?= $no; ?>" style="display:none">
                                                     <td rowspan="4">
                                                         <!-- buat keterangan, div mana yang ada isi deng nda. kalo 0 berarti nda ada isi, kalo 1 ada isi -->
-                                                        <input type="text" id="ket<?= $no;?>" value="0" style="width:20px">
+                                                        <input type="hidden" id="ket<?= $no;?>" value="0" style="width:20px">
                                                         <center>
                                                             <button type="button" id="bedit<?= $no;?>" value="<?= $no; ?>"
                                                             class="btn btn-warning fa fa-pencil-square-o btn1 edit_produk" title="Edit"></button>
                                                         </center>
                                                     </td>
                                                     <td rowspan="4">
-                                                        <input type="text" id="no<?= $no;?>" class="row_efisiensi"
+                                                        <input type="hidden" id="no<?= $no;?>" class="row_efisiensi"
                                                         value="<?= $no;?>" readonly>
                                                         <center><?= $no+1?></center>
                                                     </td>
                                                     <td rowspan="4">
-                                                        <input type="text" id="cust<?= $no;?>" class="row_efisiensi"
+                                                        <input type="hidden" id="cust<?= $no;?>" class="row_efisiensi"
                                                         value="<?= $det_po->nama_customer?>" readonly>
                                                         <center><?= $det_po->nama_customer?></center>
                                                     </td>
                                                     <td rowspan="4">
-                                                        <input type="text" id="id_bg3<?= $no;?>" value="<?= $det_po->id_detail_purchase_order_customer?>" style="width:50px">
+                                                        <input type="hidden" id="id_bg3<?= $no;?>" value="<?= $det_po->id_detail_purchase_order_customer?>" style="width:50px">
                                                         
                                                             <!-- memiliki ukuran & warna -->
                                                             <?php if($det_po->keterangan == 0){
@@ -171,7 +171,7 @@
                                                                     }
                                                                 }
                                                             ?>
-                                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                                <input type="hidden" id="produk<?= $no;?>" class="row_efisiensi"
                                                                 value="<?= $det_po->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)">
                                                             <!-- memiliki ukuran -->
                                                             <?php } else if($det_po->keterangan == 1){
@@ -183,7 +183,7 @@
                                                                     }
                                                                 }
                                                             ?>
-                                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                                <input type="hidden" id="produk<?= $no;?>" class="row_efisiensi"
                                                                 value="<?= $det_po->nama_produk ?> <?= $ukuran_tam?>">
 
                                                             <?php } else if($det_po->keterangan == 2){
@@ -195,10 +195,10 @@
                                                                     }
                                                                 }
                                                             ?>
-                                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                                <input type="hidden" id="produk<?= $no;?>" class="row_efisiensi"
                                                                 value="<?= $det_po->nama_produk ?> (<?= $warna_tam;?>)">
                                                             <?php } else{?>
-                                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                                <input type="hidden" id="produk<?= $no;?>" class="row_efisiensi"
                                                                 value="<?= $det_po->nama_produk ?>">
                                                             <?php } ?>
                                                         
@@ -248,7 +248,7 @@
                                                         </center>
                                                     </td>
                                                     <td rowspan="4">
-                                                        <input type="text" id="qty<?= $no;?>" class="row_efisiensi"
+                                                        <input type="hidden" id="qty<?= $no;?>" class="row_efisiensi"
                                                         value="<?= $det_po->jumlah_produk?>">
                                                         <center><?= $det_po->jumlah_produk?></center>
                                                     </td>
@@ -260,11 +260,11 @@
                                                     if($ct->id_produk == $det_po->id_produk){?>
                                                         <tr id="2perc<?= $no; ?>ke<?= $lineke?>" style="display:none">
                                                                 <td>
-                                                                    <input type="text" id="<?=$no?>id_line<?= $lineke?>"
+                                                                    <input type="hidden" id="<?=$no?>id_line<?= $lineke?>"
                                                                     class="row_efisiensi" value="<?= $ct->id_line?>">
-                                                                    <input type="text" id="<?=$no?>nama_line<?= $ct->id_line?>"
+                                                                    <input type="hidden" id="<?=$no?>nama_line<?= $ct->id_line?>"
                                                                     class="row_efisiensi" value="<?= $ct->nama_line?>">
-                                                                    <input type="text" id="<?=$no?>ct<?= $ct->id_line?>"
+                                                                    <input type="hidden" id="<?=$no?>ct<?= $ct->id_line?>"
                                                                     class="row_efisiensi" value="<?= $ct->cycle_time?>">
                                                                     <center><?= $ct->nama_line?></center>
                                                                 </td>
@@ -275,38 +275,38 @@
                                                                         type="number" class="inputinput form-control" min="0"
                                                                         style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                         <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                        type="text" class="form-control" disabled min="0"
+                                                                        type="hidden" class="form-control" disabled min="0"
                                                                         style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                         </td>
                                                                     <?php } ?>
                                                         </tr>
                                                 <?php $lineke++;}} ?> 
-                                                <input type="text" id="jumlah_line<?= $no?>" value="<?= $lineke;?>">                        
+                                                <input type="hidden" id="jumlah_line<?= $no?>" value="<?= $lineke;?>">                        
                         <?php
                                         } 
                                         else{
                         ?>
-                                                <tr id="1perc<?= $no; ?>" >
+                                                <tr id="1perc<?= $no; ?>" style="display:none">
                                                     <td rowspan="5">
                                                         <!-- buat keterangan, div mana yang ada isi deng nda -->
-                                                        <input type="text" id="ket<?= $no;?>" value="0" style="width:20px">
+                                                        <input type="hidden" id="ket<?= $no;?>" value="0" style="width:20px">
                                                         <center>
                                                             <button type="button" id="bedit<?= $no;?>" value="<?= $no; ?>"
                                                             class="btn btn-warning fa fa-pencil-square-o btn1 edit_produk" title="Edit"></button>
                                                         </center>
                                                     </td>
                                                     <td rowspan="5">
-                                                        <input type="text" id="no<?= $no;?>" class="row_efisiensi"
+                                                        <input type="hidden" id="no<?= $no;?>" class="row_efisiensi"
                                                         value="<?= $no;?>" readonly>
                                                         <center><?= $no+1?></center>
                                                     </td>
                                                     <td rowspan="5">
-                                                        <input type="text" id="cust<?= $no;?>" class="row_efisiensi"
+                                                        <input type="hidden" id="cust<?= $no;?>" class="row_efisiensi"
                                                         value="<?= $det_po->nama_customer?>" readonly>
                                                         <center><?= $det_po->nama_customer?></center>
                                                     </td>
                                                     <td rowspan="5">
-                                                        <input type="text" id="id_bg3<?= $no;?>" value="<?= $det_po->id_detail_purchase_order_customer?>" style="width:50px">
+                                                        <input type="hidden" id="id_bg3<?= $no;?>" value="<?= $det_po->id_detail_purchase_order_customer?>" style="width:50px">
                                                             <!-- memiliki ukuran & warna -->
                                                             <?php if($det_po->keterangan == 0){
                                                                 $ukuran_tam = "";
@@ -323,7 +323,7 @@
                                                                     }
                                                                 }
                                                             ?>
-                                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                                <input type="hidden" id="produk<?= $no;?>" class="row_efisiensi"
                                                                 value="<?= $det_po->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)">
                                                             <!-- memiliki ukuran -->
                                                             <?php } else if($det_po->keterangan == 1){
@@ -335,7 +335,7 @@
                                                                     }
                                                                 }
                                                             ?>
-                                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                                <input type="hidden" id="produk<?= $no;?>" class="row_efisiensi"
                                                                 value="<?= $det_po->nama_produk ?> <?= $ukuran_tam?>">
 
                                                             <?php } else if($det_po->keterangan == 2){
@@ -347,10 +347,10 @@
                                                                     }
                                                                 }
                                                             ?>
-                                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                                <input type="hidden" id="produk<?= $no;?>" class="row_efisiensi"
                                                                 value="<?= $det_po->nama_produk ?> (<?= $warna_tam;?>)">
                                                             <?php } else{?>
-                                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                                <input type="hidden" id="produk<?= $no;?>" class="row_efisiensi"
                                                                 value="<?= $det_po->nama_produk ?>">
                                                             <?php } ?>
 
@@ -401,7 +401,7 @@
                                                         </center>
                                                     </td>
                                                     <td rowspan="5">
-                                                        <input type="text" id="qty<?= $no;?>" class="row_efisiensi"
+                                                        <input type="hidden" id="qty<?= $no;?>" class="row_efisiensi"
                                                         value="<?= $det_po->jumlah_produk?>">
                                                         <center><?= $det_po->jumlah_produk?></center>
                                                     </td>
@@ -413,11 +413,11 @@
                                                     if($ct->id_produk == $det_po->id_produk){?>
                                                         <tr id="2perc<?= $no; ?>ke<?= $lineke?>" style="display:none">
                                                             <td>
-                                                                <input type="text" id="<?=$no?>id_line<?= $lineke?>"
+                                                                <input type="hidden" id="<?=$no?>id_line<?= $lineke?>"
                                                                 class="row_efisiensi" value="<?= $ct->id_line?>">
-                                                                <input type="text" id="<?=$no?>nama_line<?= $ct->id_line?>"
+                                                                <input type="hidden" id="<?=$no?>nama_line<?= $ct->id_line?>"
                                                                 class="row_efisiensi" value="<?= $ct->nama_line?>">
-                                                                <input type="text" id="<?=$no?>ct<?= $ct->id_line?>"
+                                                                <input type="hidden" id="<?=$no?>ct<?= $ct->id_line?>"
                                                                 class="row_efisiensi" value="<?= $ct->cycle_time?>">
                                                                 <center><?= $ct->nama_line?></center>
                                                             </td>
@@ -428,18 +428,19 @@
                                                                         type="number" class="inputinput form-control" min="0"
                                                                         style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                         <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                        type="text" class="form-control" disabled min="0"
+                                                                        type="hidden" class="form-control" disabled min="0"
                                                                         style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                     </td>
                                                                 <?php } ?>
                                                         </tr>
                                                 <?php $lineke++;}} ?>
-                                                <input type="text" id="jumlah_line<?= $no?>" value="<?= $lineke;?>">
+                                                <input type="hidden" id="jumlah_line<?= $no?>" value="<?= $lineke;?>">
                                         <?php }?>
                         <?php $no++; 
                         }}} ?>
                     </table>
                     <!--<input type="text" id="jumlah_bg3" value="">-->
+
                 </div>
             </div>
         </section>
@@ -496,13 +497,13 @@
                                     if($hit != $count_line){ ?>
                                         <tr id="bg1<?= $ke ?>">
                                             <td class="col-md-6">
-                                                <input type="text" class="input_bgpo1 info_produk1"
+                                                <input type="hidden" class="input_bgpo1 info_produk1"
                                                 value="<?= $dt_dpo->id_detail_purchase_order_customer?>">
-                                                <input type="text" class="input_bgpo1 info_produk1" id="nama_customer1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                <input type="hidden" class="input_bgpo1 info_produk1" id="nama_customer1<?= $dt_dpo->id_detail_purchase_order_customer?>"
                                                 value="<?= $dt_dpo->id_customer?>">
-                                                <input type="text" class="input_bgpo1 info_produk1" id="nama_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                <input type="hidden" class="input_bgpo1 info_produk1" id="nama_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
                                                 value="<?= $dt_dpo->nama_produk?>">
-                                                <input type="text" class="input_bgpo1 info_produk1" id="id_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                <input type="hidden" class="input_bgpo1 info_produk1" id="id_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
                                                 value="<?= $dt_dpo->id_produk?>">
                                                 
                                                 <center>
@@ -978,7 +979,7 @@
                 <?php 
                     $count=0;
                     foreach($dpo as $detail_po){?>
-                    <div id="track<?= $count ?>">
+                    <div id="track<?= $count ?>" style="display:none">
                         <!-- Nama produk (jumlah produk) -->
                         <p id="<?= $count ?>nama_produk2" style="font-size:10px">
                             <span><?= $count+1?>. </span>
@@ -1045,7 +1046,7 @@
                                         if($ct->id_produk == $detail_po->id_produk){?>
                                         <tr>
                                             <td style="text-align: center;vertical-align: middle;">
-                                                <input type="text" id="<?= $count?>idline2<?= $ct->id_line?>" value="<?= $ct->id_line?>">
+                                                <input type="hidden" id="<?= $count?>idline2<?= $ct->id_line?>" value="<?= $ct->id_line?>">
                                                 <?= $ct->nama_line?>
                                             </td>
                                             <td>
@@ -1168,6 +1169,7 @@
         location.reload();
     }
 </script>
+
 
 <!-- search bg.1 -->
 <script>
