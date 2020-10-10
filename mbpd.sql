@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 10, 2020 at 02:53 PM
+-- Generation Time: Oct 10, 2020 at 02:56 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.3.13
 
@@ -2974,7 +2974,6 @@ INSERT INTO `produk_logs` (`id_produk_logs`, `keterangan_log`, `id_produk`, `id_
 CREATE TABLE `purchase_order_customer` (
   `id_purchase_order_customer` varchar(10) NOT NULL,
   `kode_purchase_order_customer` varchar(30) NOT NULL,
-  `kode_so` varchar(30) NOT NULL,
   `id_customer` varchar(10) NOT NULL,
   `tanggal_po` date NOT NULL,
   `harga_sebelum_pajak` int(11) NOT NULL,
@@ -2995,10 +2994,10 @@ CREATE TABLE `purchase_order_customer` (
 -- Dumping data for table `purchase_order_customer`
 --
 
-INSERT INTO `purchase_order_customer` (`id_purchase_order_customer`, `kode_purchase_order_customer`, `kode_so`, `id_customer`, `tanggal_po`, `harga_sebelum_pajak`, `ppn`, `total_harga_akhir`, `keterangan`, `status_po`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('POC-1', 'aaa/014/p', 'soc/003/30/9/20', 'CUST-1', '2020-10-16', 700000, 70000, 770000, '', 3, 'USER-1', '2020-10-06 22:04:15', 'USER-1', '0000-00-00 00:00:00', 'USER-1', '2020-10-06 22:05:31', 1),
-('POC-2', 'INC/20/5/001', 'MBP/SO/20/10/002', 'CUST-1', '2020-10-08', 900000, 90000, 990000, '', 0, 'USER-1', '2020-10-09 14:40:29', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('POC-3', 'L2001231', 'SO001', 'CUST-1', '2020-10-09', 50000000, 5000000, 55000000, '', 2, 'USER-7', '2020-10-09 19:38:23', 'USER-7', '2020-10-10 18:37:21', '0', '0000-00-00 00:00:00', 0);
+INSERT INTO `purchase_order_customer` (`id_purchase_order_customer`, `kode_purchase_order_customer`, `id_customer`, `tanggal_po`, `harga_sebelum_pajak`, `ppn`, `total_harga_akhir`, `keterangan`, `status_po`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('POC-1', 'aaa/014/p', 'CUST-1', '2020-10-16', 700000, 70000, 770000, '', 3, 'USER-1', '2020-10-06 22:04:15', 'USER-1', '0000-00-00 00:00:00', 'USER-1', '2020-10-06 22:05:31', 1),
+('POC-2', 'INC/20/5/001', 'CUST-1', '2020-10-08', 900000, 90000, 990000, '', 0, 'USER-1', '2020-10-09 14:40:29', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('POC-3', 'L2001231', 'CUST-1', '2020-10-09', 50000000, 5000000, 55000000, '', 2, 'USER-7', '2020-10-09 19:38:23', 'USER-7', '2020-10-10 18:37:21', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
