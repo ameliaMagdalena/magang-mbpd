@@ -163,10 +163,10 @@ class HasilProduksi extends CI_Controller {
         $tahun_sekarangnya = substr(date('Y',strtotime($tanggal)),2,2);
         $bulan_sekarangnya = date('m',strtotime($tanggal));
 
-        $idcode_detprod_line = "PRODTUN".$tahun_sekarangnya.$bulan_sekarangnya.".";
+        $idcode_prodtun = "PRODTUN".$tahun_sekarangnya.$bulan_sekarangnya.".";
 
-        $id_prodtun_last     = $this->M_HasilProduksi->get_last_prodtun_id($idcode_detprod_line)->result_array();
-        $id_prodtun_last_cek = $this->M_HasilProduksi->get_last_prodtun_id($idcode_detprod_line)->num_rows();
+        $id_prodtun_last     = $this->M_HasilProduksi->get_last_prodtun_id($idcode_prodtun)->result_array();
+        $id_prodtun_last_cek = $this->M_HasilProduksi->get_last_prodtun_id($idcode_prodtun)->num_rows();
 
         if($id_prodtun_last_cek == 1){
             $id_terakhirnya    = $id_prodtun_last[0]['id_produksi_tertunda'];
@@ -372,9 +372,10 @@ class HasilProduksi extends CI_Controller {
         $jm_sebelum = $this->M_HasilProduksi->get_one_prodtun($id_dpl)->num_rows();
 
         if($jm_sebelum == 1){
+          $tertunda = $jumlah_perc-$jumlah_aktual;
           //update yang sudah ada
           $data_prodtun = array (
-            'jumlah_tertunda' => $jumlah_aktual,
+            'jumlah_tertunda' => $tertunda,
             'user_edit'       => $user,
             'waktu_edit'      => $now
           );

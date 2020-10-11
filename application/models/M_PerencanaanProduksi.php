@@ -36,33 +36,14 @@ class M_PerencanaanProduksi extends CI_Model {
         $this->db->update($table,$data,$where);
     }
 
-    function get_detail_produksi_line($start,$end){
-        return $this->db->query("SELECT * FROM produksi, produksi_line, 
-        detail_produksi_line,purchase_order_customer,detail_purchase_order_customer,detail_produk,produk,warna WHERE 
-        detail_produksi_line.id_detail_purchase_order = detail_purchase_order_customer.id_detail_purchase_order_customer AND
-        detail_purchase_order_customer.id_detail_purchase_order_customer = purchase_order_customer.id_detail_purchase_order_customer AND detail_purchase_order_customer.id_detail_produk = detail_produk.id_detail_produk AND
-        detail_produk.id_produk = produk.id_produk AND detail_produk.id_warna = warna.id_warna AND
-        produksi.id_produksi = produksi_line.id_produksi AND 
-        produksi_line.id_produksi_line = detail_produksi_line.id_produksi_line AND 
-        produksi.tanggal >= '2020-08-10' AND produksi.tanggal <= '2020-08-16' ");
-    }
-
     function cek_perencanaan($start){
         return $this->db->query("SELECT tanggal FROM produksi WHERE tanggal='$start' AND status_delete='0'");
     }
-/*
-    function get_last_produksi_id(){
-        return $this->db->query("SELECT id_produksi FROM produksi ORDER BY id_produksi DESC LIMIT 1");
-    }
-*/
+
     function get_last_produksi_id($id_code){
         return $this->db->query("SELECT id_produksi FROM produksi WHERE id_produksi LIKE '$id_code%' ORDER BY id_produksi DESC LIMIT 1");
     }
-/*
-    function get_last_produksi_line_id(){
-        return $this->db->query("SELECT id_produksi_line FROM produksi_line ORDER BY id_produksi_line DESC LIMIT 1");
-    }
-*/
+
     function get_last_produksi_line_id($id_code){
         return $this->db->query("SELECT id_produksi_line FROM produksi_line WHERE id_produksi_line LIKE '$id_code%' ORDER BY id_produksi_line DESC LIMIT 1");
     }
@@ -72,12 +53,7 @@ class M_PerencanaanProduksi extends CI_Model {
         produksi.tanggal ='$tanggal' AND produksi_line.id_line='$idline' AND 
         produksi.id_produksi=produksi_line.id_produksi ");
     }
-/*
-    function get_last_detprodline_id(){
-        return $this->db->query("SELECT id_detail_produksi_line FROM detail_produksi_line 
-        ORDER BY id_detail_produksi_line DESC LIMIT 1");
-    }
-*/
+
     function get_last_detprodline_id($id_code){
         return $this->db->query("SELECT id_detail_produksi_line FROM detail_produksi_line WHERE id_detail_produksi_line LIKE '$id_code%'
         ORDER BY id_detail_produksi_line DESC LIMIT 1");
@@ -192,13 +168,32 @@ class M_PerencanaanProduksi extends CI_Model {
 
     function select_all_prodtun_aktif(){
         return $this->db->query("SELECT * FROM produksi_tertunda,detail_produksi_line,produksi_line,detail_purchase_order_customer,
-        purchase_order_customer,detail_produk,produk
+        purchase_order_customer,customer,detail_produk,produk
         WHERE produksi_tertunda.status_delete='0' AND (produksi_tertunda.status_penjadwalan BETWEEN 0 AND 1) AND 
         produksi_tertunda.id_detail_produksi_line=detail_produksi_line.id_detail_produksi_line AND 
         produksi_line.id_produksi_line=detail_produksi_line.id_produksi_line AND
         detail_produksi_line.id_detail_purchase_order=detail_purchase_order_customer.id_detail_purchase_order_customer AND 
         purchase_order_customer.id_purchase_order_customer=detail_purchase_order_customer.id_purchase_order_customer AND
+        purchase_order_customer.id_customer=customer.id_customer AND
         detail_purchase_order_customer.id_detail_produk=detail_produk.id_detail_produk AND detail_produk.id_produk=produk.id_produk");
+    }
+
+    function get_one_prodtun($id_prodtun){
+        return $this->db->query("SELECT * FROM produksi_tertunda,detail_produksi_line,produksi_line,produksi,detail_purchase_order_customer,
+        purchase_order_customer,customer,detail_produk,produk
+        WHERE id_produksi_tertunda='$id_prodtun' AND  
+        produksi_tertunda.id_detail_produksi_line=detail_produksi_line.id_detail_produksi_line AND 
+        produksi_line.id_produksi_line=detail_produksi_line.id_produksi_line AND
+        produksi_line.id_produksi=produksi.id_produksi AND
+        detail_produksi_line.id_detail_purchase_order=detail_purchase_order_customer.id_detail_purchase_order_customer AND 
+        purchase_order_customer.id_purchase_order_customer=detail_purchase_order_customer.id_purchase_order_customer AND
+        purchase_order_customer.id_customer=customer.id_customer AND
+        detail_purchase_order_customer.id_detail_produk=detail_produk.id_detail_produk AND detail_produk.id_produk=produk.id_produk");
+    }
+    
+    function get_last_dprodtun_id($id_code){
+        return $this->db->query("SELECT id_detail_produksi_tertunda FROM detail_produksi_tertunda WHERE id_detail_produksi_tertunda 
+        LIKE '$id_code%' ORDER BY id_detail_produksi_tertunda DESC LIMIT 1");
     }
 
 }

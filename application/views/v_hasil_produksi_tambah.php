@@ -182,11 +182,6 @@
                                             <button type="button" class="bpermaks_klik col-lg-3 btn btn-success fa fa-pencil-square-o" 
                                                 value="<?= $no;?>" title="Buat Permintaan Akses"></button>
                                         <?php } ?>
-                                    
-                                        <!--
-                                        <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                            value="<?= $no;?>" title="Edit"></button>
-                                        -->
                                     <?php } ?>
                                 </td>
                             </tr>
@@ -643,7 +638,7 @@
                                             $hitung+
                                         '</td>'+
                                         '<td style="text-align: center;vertical-align: middle;">'+
-                                            respond['dpl'][$t]['nama_produk']+
+                                            $namanya+
                                         '</td>'+
                                         '<td style="text-align: center;vertical-align: middle;">'+
                                             respond['dpl'][$t]['jumlah_item_perencanaan']+
@@ -761,8 +756,10 @@
                     $isi = "";
                     $hitung=0;
 
+                    $num = 0;
                     for($i=0;$i<respond['jm_dpl'];$i++){
                         if(respond['dpl'][$i]['jumlah_item_perencanaan'] != 0){
+                            $num++;
                             $namanya = "";
 
                             //nama produk
@@ -833,7 +830,7 @@
                             $isi = $isi +
                             '<tr>'+
                                 '<td style="text-align: center;vertical-align: middle;">'+
-                                    ($i+1)+
+                                    $num+
                                 '</td>'+
                                 '<td style="text-align: center;vertical-align: middle;">'+
                                     '<input type="hidden" name="id_dpl'+$hitung+'" value="'+respond['dpl'][$i]['id_detail_produksi_line']+'">'+

@@ -56,8 +56,11 @@
                             <td  class="col-lg-3">
                                 <button type="button" class="bdetail_klik col-lg-3 btn btn-primary fa fa-info-circle" title="Detail"
                                 id="bdetail<?php echo $x->id_produksi?>" value="<?= $no ?>"></button>
-                                <a class="col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                    title="Edit" href="<?= base_url()?>perencanaanProduksi/edit_perencanaan_produksi"></a>
+                                <form method="POST" action="<?= base_url()?>perencanaanProduksi/edit_perencanaan_produksi">
+                                    <input type="hidden" name="id" value="<?= $x->id_produksi?>">
+                                    <button type="submit" class="col-lg-3 btn btn-warning fa fa-pencil-square-o"
+                                    title="Edit"></button>
+                                </form>  
                                 <button type="button" class="bdelete_klik col-lg-3 btn btn-danger fa fa-trash-o" title="Delete"
                                     id="bdelete<?php echo $x->id_produksi?>" value="<?= $no ?>"></button>
                                 <form method="POST" action="<?= base_url()?>perencanaanProduksi/print_perencanaan_produksi">

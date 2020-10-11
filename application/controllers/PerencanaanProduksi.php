@@ -505,6 +505,7 @@ class PerencanaanProduksi extends CI_Controller {
         for($o=0;$o<$jumlah_dpo;$o++){
             //keterangan ada isi/nda
             $keterangan_div = $this->input->post('ket'.$o);
+            $statper        = $this->input->post('statper'.$o);
 
             if($keterangan_div == 1){
                 $id_detpo    = $this->input->post('id_bg3'.$o);
@@ -599,18 +600,153 @@ class PerencanaanProduksi extends CI_Controller {
                         }
 
                         //-----------------------------------
+                        if($statper == 0){
                             $data_detprod = array(
                                 'id_detail_produksi_line'   => $id_dpl_baru,
                                 'id_detail_purchase_order'  => $id_detpo,
                                 'id_produksi_line'          => $id_prodlinenya,
                                 'jumlah_item_perencanaan'   => $jumlah_item,
                                 'waktu_proses_perencanaan'  => $waktu_proses,
+                                'status_perencanaan'        => 0,
                                 'status_aktual'             => 0,
                                 'user_add'                  => $user,
                                 'waktu_add'                 => $now,
                                 'status_delete'             => 0
                             );
                             $this->M_PerencanaanProduksi->insert('detail_produksi_line',$data_detprod);
+                        } else{
+                            $data_detprod = array(
+                                'id_detail_produksi_line'   => $id_dpl_baru,
+                                'id_detail_purchase_order'  => $id_detpo,
+                                'id_produksi_line'          => $id_prodlinenya,
+                                'jumlah_item_perencanaan'   => $jumlah_item,
+                                'waktu_proses_perencanaan'  => $waktu_proses,
+                                'status_perencanaan'        => 1,
+                                'status_aktual'             => 0,
+                                'user_add'                  => $user,
+                                'waktu_add'                 => $now,
+                                'status_delete'             => 0
+                            );
+                            $this->M_PerencanaanProduksi->insert('detail_produksi_line',$data_detprod);
+                        }
+
+                        //UPDATE PERENCANAAN TERTUNDA
+                        if($statper == 1){
+                            if($jumlah_item > 0){
+                                $id_prodtun = $this->input->post('id_pt_bg3'.$o);
+                                echo $id_prodtun."  ---";
+                                $one_prodtun = $this->M_PerencanaanProduksi->get_one_prodtun($id_prodtun)->result_array();
+                                $jumlah_tertunda_sebelum  = $one_prodtun[0]['jumlah_tertunda'];
+                                $jumlah_terencana_sebelum = $one_prodtun[0]['jumlah_terencana'];
+
+                                //id produksi tunda produksi
+                                $tahun_sekarangnya = substr(date('Y',strtotime($tanggal)),2,2);
+                                $bulan_sekarangnya = date('m',strtotime($tanggal));
+
+                                $idcode_dprodtun = "DPRODTUN".$tahun_sekarangnya.$bulan_sekarangnya.".";
+
+                                $id_dprodtun_last     = $this->M_PerencanaanProduksi->get_last_dprodtun_id($idcode_dprodtun)->result_array();
+                                $id_dprodtun_last_cek = $this->M_PerencanaanProduksi->get_last_dprodtun_id($idcode_dprodtun)->num_rows();
+
+                                if($id_dprodtun_last_cek == 1){
+                                    $id_terakhirnya    = $id_dprodtun_last[0]['id_detail_produksi_tertunda'];
+
+                                    $tahun_sebelumnya  = substr($id_terakhirnya,8,2);
+                                    $bulan_sebelumnya  = substr($id_terakhirnya,10,2);
+                                            
+                                    //kalau tahun sama
+                                    if($tahun_sebelumnya == $tahun_sekarangnya){
+                                        //kalau tahun & bulannya sama berarti count+1
+                                        if($bulan_sebelumnya == $bulan_sekarangnya){
+                                            $countnya = intval(substr($id_terakhirnya,13,8)) + 1;
+                                            $pjgnya   = strlen($countnya);
+                                
+                                            if($pjgnya == 1){
+                                                $countnya_baru = "0000000".$countnya;
+                                            }
+                                            else if($pjgnya == 2){
+                                                $countnya_baru = "000000".$countnya;
+                                            }
+                                            else if($pjgnya == 3){
+                                                $countnya_baru = "00000".$countnya;
+                                            }
+                                            else if($pjgnya == 4){
+                                                $countnya_baru = "0000".$countnya;
+                                            }
+                                            else if($pjgnya == 5){
+                                                $countnya_baru = "000".$countnya;
+                                            }
+                                            else if($pjgnya == 6){
+                                                $countnya_baru = "00".$countnya;
+                                            }
+                                            else if($pjgnya == 7){
+                                                $countnya_baru = "0".$countnya;
+                                            }
+                                            else{
+                                                $countnya_baru = $countnya;
+                                            }
+                                            
+                                            //id yang baru
+                                            $id_dprodtun_baru = "DPRODTUN".$tahun_sebelumnya.$bulan_sebelumnya.".".$countnya_baru;
+                                        }
+                                        //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                                        else{
+                                            //id yang baru
+                                            $id_dprodtun_baru = "DPRODTUN".$tahun_sekarangnya.$bulan_sekarangnya.".00000001";
+                                        }
+                                    }
+                                    //kalau tahun tidak sama
+                                    else{
+                                        //id yang baru
+                                        $id_dprodtun_baru = "DPRODTUN".$tahun_sekarangnya.$bulan_sekarangnya.".00000001";
+                                    }
+                                }
+                                else{
+                                    //id yang baru
+                                    $id_dprodtun_baru = "DPRODTUN".$tahun_sekarangnya.$bulan_sekarangnya.".00000001";
+                                }
+
+                                $data_detprodtun = array(
+                                    'id_detail_produksi_tertunda' => $id_dprodtun_baru,
+                                    'id_produksi_tertunda'        => $id_prodtun,
+                                    'id_detail_produksi_line'     => $id_dpl_baru,
+                                    'jumlah_perencanaan'          => $jumlah_item,
+                                    'user_add'                    => $user,
+                                    'waktu_add'                   => $now,
+                                    'status_delete'               => 0
+                                );
+
+                                $this->M_PerencanaanProduksi->insert('detail_produksi_tertunda',$data_detprodtun);
+
+                                $jumlahnya = $jumlah_terencana_sebelum +$jumlah_item;
+                                if($jumlah_item == $jumlah_tertunda_sebelum){
+                                    $data_prodtun = array (
+                                        'jumlah_terencana'   => $jumlahnya,
+                                        'status_penjadwalan' => 2
+                                    );
+
+                                    $where_prodtun = array (
+                                      'id_produksi_tertunda' => $id_prodtun  
+                                    );
+
+                                    $this->M_PerencanaanProduksi->edit('produksi_tertunda',$data_prodtun,$where_prodtun);
+                                } else{
+                                    $data_prodtun = array (
+                                        'jumlah_terencana'   => $jumlahnya,
+                                        'status_penjadwalan' => 1
+                                    );
+
+                                    $where_prodtun = array (
+                                      'id_produksi_tertunda' => $id_prodtun  
+                                    );
+
+                                    $this->M_PerencanaanProduksi->edit('produksi_tertunda',$data_prodtun,$where_prodtun);
+                                }
+                            }
+
+
+                        }
+                                                    
                         
                         //PURCHASE ORDER CUSTOMER STATUS UPDATES
                         $id_pos = $this->M_PerencanaanProduksi->get_detail_po($id_detpo)->result_array();
@@ -792,6 +928,18 @@ class PerencanaanProduksi extends CI_Controller {
             }
         }
         redirect('perencanaanProduksi/semua_perencanaan_produksi');
+    }
+
+    public function detail_produksi_tertunda(){
+        $id = $this->input->post('id');
+
+        $data['prodtun'] = $this->M_PerencanaanProduksi-> get_one_prodtun($id)->result_array();
+        $data['warna']      = $this->M_Warna->select_all_aktif()->result_array();
+        $data['jmwarna']    = $this->M_Warna->select_all_aktif()->num_rows();
+        $data['ukuran']     = $this->M_UkuranProduk->select_all_aktif()->result_array();
+        $data['jmukuran']   = $this->M_UkuranProduk->select_all_aktif()->num_rows();
+
+        echo json_encode($data);
     }
 
     public function semua_perencanaan_produksi(){
@@ -1052,7 +1200,108 @@ class PerencanaanProduksi extends CI_Controller {
     }
 
     public function edit_perencanaan_produksi(){
-        $this->load->view('v_perencanaan_produksi2');
+        $id           = $this->input->post('id');
+
+        $tanggals     = $this->M_PerencanaanProduksi->get_tanggal_produksi($id)->result_array();
+
+        $data['start_date'] = $tanggals[0]['tanggal_awal'];
+        $start              = $tanggals[0]['tanggal_awal'];
+
+        $data['end_date']   = date('Y-m-d', strtotime('+6 days', strtotime($data['start_date'])));
+        $end                = $data['end_date'];
+
+        $month_start = date('M', strtotime($data['start_date']));
+
+        if($month_start == "Jan"){
+            $data['month_start'] = "Januari";
+        }
+        else if($month_start == "Feb"){
+            $data['month_start'] = "Februari";
+        }
+        else if($month_start == "Mar"){
+            $data['month_start'] = "Maret";
+        }
+        else if($month_start == "Apr"){
+            $data['month_start'] = "April";
+        }
+        else if($month_start == "May"){
+            $data['month_start'] = "Mei";
+        }
+        else if($month_start == "Jun"){
+            $data['month_start'] = "Juni";
+        }
+        else if($month_start == "Jul"){
+            $data['month_start'] = "Juli";
+        }
+        else if($month_start == "Aug"){
+            $data['month_start'] = "Agustus";
+        }
+        else if($month_start == "Sep"){
+            $data['month_start'] = "September";
+        }
+        else if($month_start == "Oct"){
+            $data['month_start'] = "Oktober";
+        }
+        else if($month_start == "Nov"){
+            $data['month_start'] = "November";
+        }
+        else{
+            $data['month_start'] = "Desember";
+        }
+
+        $month_end = date('M', strtotime($data['end_date']));
+        if($month_end == "Jan"){
+            $data['month_end'] = "Januari";
+        }
+        else if($month_end == "Feb"){
+            $data['month_end'] = "Februari";
+        }
+        else if($month_end == "Mar"){
+            $data['month_end'] = "Maret";
+        }
+        else if($month_end == "Apr"){
+            $data['month_end'] = "April";
+        }
+        else if($month_end == "May"){
+            $data['month_end'] = "Mei";
+        }
+        else if($month_end == "Jun"){
+            $data['month_end'] = "Juni";
+        }
+        else if($month_end == "Jul"){
+            $data['month_end'] = "Juli";
+        }
+        else if($month_end == "Aug"){
+            $data['month_end'] = "Agustus";
+        }
+        else if($month_end == "Sep"){
+            $data['month_end'] = "September";
+        }
+        else if($month_end == "Oct"){
+            $data['month_end'] = "Oktober";
+        }
+        else if($month_end == "Nov"){
+            $data['month_end'] = "November";
+        }
+        else{
+            $data['month_end'] = "Desember";
+        }
+
+        $data['line']             = $this->M_Line->select_all_aktif()->result();
+        $data['dpo']              = $this->M_PerencanaanProduksi->select_all_detpoxproduk()->result();
+        $data['produksi_tertunda']= $this->M_PerencanaanProduksi->select_all_prodtun_aktif()->result();
+
+        $data['warna']            = $this->M_Warna->select_all_aktif()->result();
+        $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
+
+        $data['jm_perc_seb']      = $this->M_PerencanaanProduksi->jm_perc_sebelum()->result();
+        $data['cycle_time']       = $this->M_Produk->select_all_ct_lengkap()->result();
+        $data['jumlah_ct_produk'] = $this->M_Produk->jumlah_ct_produk()->result();
+    
+        $data['produksi_line']        = $this->M_PerencanaanProduksi->get_pl($start)->result();
+        $data['detail_produksi_line'] = $this->M_PerencanaanProduksi->get_dpl($start)->result();
+
+        $this->load->view('v_perencanaan_produksi_edit',$data);
     }
 
     public function delete(){

@@ -1481,7 +1481,7 @@
                                             $hitung+
                                         '</td>'+
                                         '<td style="text-align: center;vertical-align: middle;">'+
-                                            respond['dpl'][$t]['nama_produk']+
+                                            $namanya+
                                         '</td>'+
                                         '<td style="text-align: center;vertical-align: middle;">'+
                                             respond['dpl'][$t]['jumlah_item_perencanaan']+
