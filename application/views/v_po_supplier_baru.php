@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Purchase Order Customer</h2>
+        <h2>Purchase Order Supplier</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Purchase Order Customer</span></li>
+                <li><span>Purchase Order Supplier</span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -24,18 +24,18 @@
 <!--*****************************-->
 <!--KODINGAN ISI HALAMAN-->
 
-<h1>Purchase Order Customer</h1>
+<h1>Purchase Order Supplier</h1>
 <hr>
 
 	<section class="panel">
-		<form class="form-horizontal mb-lg" action="<?php echo base_url()?>PurchaseOrderCustomer/insert" method="post">
+		<form class="form-horizontal mb-lg" action="<?php echo base_url()?>PurchaseOrderSupplier/insert" method="post">
 			<header class="panel-heading">
-				<h2 class="panel-title">Form Purchase Order Customer</h2>
+				<h2 class="panel-title">Form Purchase Order Supplier</h2>
 			</header>
 
 			<div class="panel-body">
-				<input type="hidden" name="id_po_customer" class="form-control" value="POC-<?php echo $jumlah_po_customer + 1?>" readonly>
-                
+				<input type="hidden" name="id_po_supplier" class="form-control" value="POS-<?php echo $jumlah_po_sup + 1?>" readonly>
+					
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Tanggal PO<span class="required">*</span></label>
 					<div class="col-sm-7">
@@ -45,43 +45,41 @@
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Nomor PO<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="text" name="no_po_customer" class="form-control" placeholder="format: ..." required>
+                        <input type="text" class="form-control" name="no_po_supplier">
                     </div>
                 </div>
                 <div class="form-group mt-lg">
-					<label class="col-sm-3 control-label">Customer<span class="required">*</span></label>
+					<label class="col-sm-3 control-label">Supplier<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <select class="form-control" name="customer" id="customer" required>
-                            <?php for($a=0; $a<count($customer); $a++){ ?>
-                                <option value="<?php echo $customer[$a]['id_customer'] ?>">
-                                    <?php echo $customer[$a]['nama_customer']?>
+                        <select class="form-control" name="supplier" id="supplier" required>
+                            <?php for($a=0; $a<count($supplier); $a++){ ?>
+                                <option value="<?php echo $supplier[$a]['id_supplier'] ?>">
+                                    <?php echo $supplier[$a]['nama_supplier'];?>
                                 </option>
                             <?php } ?>
                         </select>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
-					<label class="col-sm-3 control-label">Nomor SO<span class="required">*</span></label>
+					<label class="col-sm-3 control-label">Pengiriman<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="text" name="no_so_customer" class="form-control" placeholder="format: ..." required>
+                        <input type="date" class="form-control" value="">
                     </div>
                 </div>
                 <br>
-                <table class = "table table-bordered table-striped table-hover" border="1">
+                <table class = "table table-bordered table-striped table-hover" border="1" id="tabel_material">
                     <thead>
                         <tr>
-                            <th style="text-align:center" class="col-lg-3">Produk</th>
-                            <th style="text-align:center" class="col-lg-1">Jumlah</th>
-                            <th style="text-align:center" class="col-lg-1">Satuan</th>
-                            <th style="text-align:center" class="col-lg-3">Tanggal Penerimaan</th>
-                            <th style="text-align:center" class="col-lg-2">Harga Satuan</th>
+                            <th style="text-align:center" class="col-lg-4">Material</th>
+                            <th style="text-align:center" class="col-lg-2">Jumlah</th>
+                            <th style="text-align:center" class="col-lg-2">Satuan</th>
+                            <th style="text-align:center" class="col-lg-2">Harga</th>
                             <th style="text-align:center" class="col-lg-2">Total Harga</th>
                         </tr>
                     </thead>
                     <tbody id = "print_new_row">
                     </tbody>
                     <tr>
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -128,7 +126,7 @@
                 <footer class="panel-footer">
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <input type="submit" id="tambah" class="btn btn-primary float-right" value="Simpan">
+                            <input type="submit" id="simpan" class="btn btn-primary float-right" value="Simpan">
                         </div>
                     </div>
                 </footer>
@@ -147,43 +145,35 @@
 <?php include('_js.php'); ?>
 <!--*****************************-->
 <!--*****************************-->
-<?php //include('_rightbar.php');?>
-
+<?php //include('_rightbar.php');
+?>
 
 <script>
-    function cekTabel(){
-        var counter = $(".new_row").length;
-        if(counter<=0){
-            $("#tambah").attr("disabled", true);
+    $('#supplier').change(function() {
+        var length = document.getElementById("print_new_row").rows.length;
+        var z;
+        for(z=0; z<length; z++){
+            document.getElementById("print_new_row").deleteRow(0);
         }
-        else{
-            $("#tambah").attr("disabled", false);
-        }
-    }
+    });
 </script>
-
 
 <script>
     function addNewRow(){
         var counter = $(".new_row").length;
+        var id_supplier = $("#supplier").val();
         html =
         '<tr class = "new_row">'+
             '<td class="col-lg-3">'+
-                '<input type ="hidden" name = "row" value = '+counter+'>'+
-                '<select data-plugin-selectTwo class="form-control" name="produk'+counter+'" id="produk'+counter+'" onchange="getHargaSatuan('+counter+')" required><?php for($b=0; $b<count($produk); $b++){ ?>'+
-                    '<option value="<?php echo $produk[$b]['id_detail_produk']?>">'+
-                        '<?php echo $produk[$b]['kode_produk'] . ' - ' . $produk[$b]['nama_produk']; if ($produk[$b]['keterangan'] == 0 || $produk[$b]['keterangan'] == 1){ for ($c=0; $c<count($ukuran); $c++){ if ($produk[$b]['id_ukuran_produk'] == $ukuran[$c]['id_ukuran_produk']){ echo ' ' . $ukuran[$c]['ukuran_produk'];}}} if($produk[$b]['keterangan'] == 0 || $produk[$b]['keterangan'] == 2){ for ($d=0; $d<count($warna); $d++){ if ($produk[$b]['id_warna'] == $warna[$d]['id_warna']){ echo ' '. $warna[$d]['nama_warna'];}}} ?>'+
-                    '</option><?php } ?>'+
+            '<input type ="hidden" name = "row" value = '+counter+'>'+
+                '<select data-plugin-selectTwo class="form-control" name="material'+counter+'" id="material'+counter+'" onchange="getHargaSatuan('+counter+'); getSatuan('+counter+')" required>'+
                 '</select>'+
             '</td>'+
             '<td class="col-lg-1">'+
-                '<input class="form-control" type="number" name="jumlah'+counter+'" id="jumlah'+counter+'" min="0" onkeyup="countHargaTotal('+counter+'); totalHarga();" onclick="getHargaSatuan('+counter+'); countHargaTotal('+counter+'); totalHarga();" required>'+
+                '<input class="form-control" type="number" name="jumlah'+counter+'" id="jumlah'+counter+'" min="0" onkeyup="countHargaTotal('+counter+'); totalHarga();" onclick="countHargaTotal('+counter+'); totalHarga();" required>'+
             '</td>'+
             '<td class="col-lg-1">'+
-                '<input class="form-control" type="text" name="satuan'+counter+'" id="satuan'+counter+'" value="Pcs" readonly>'+
-            '</td>'+
-            '<td class="col-3">'+
-                '<input class="form-control" type="date" name="tgl_terima'+counter+'" id="tgl_terima'+counter+'" required>'+
+                '<input class="form-control" type="text" name="satuan'+counter+'" id="satuan'+counter+'" readonly>'+
             '</td>'+
             '<td class="col-2">'+
                 '<input class="form-control" type="number" name="harga_satuan'+counter+'" id="harga_satuan'+counter+'" readonly>'+
@@ -193,30 +183,52 @@
             '</td>'+
         '</tr>';
         $("#print_new_row").append(html);
-        
-        /* var id_detail_produk = $("#produk"+counter).val();
+        getMaterial(counter);
+    }
+</script>
+
+<script>
+    function getMaterial(counter){
+        var id_supplier = $("#supplier").val();
+        <?php for($b=0; $b<count($material); $b++){  ?>
+            if (id_supplier == '<?php echo $material[$b]['id_supplier'] ?>') {
+                html =
+                '<option value="<?php echo $material[$b]['id_sub_jenis_material']?>">'+
+                    '<?php echo $material[$b]['kode_sub_jenis_material'] . ' - ' . $material[$b]['nama_jenis_material'] . ' ' . $material[$b]['nama_sub_jenis_material']; ?>'+
+                '</option>';
+                $("#material"+counter).append(html);
+                getHargaSatuan(counter);
+                getSatuan(counter);
+            }
+        <?php } ?>
+    }
+</script>
+
+<script>
+    function getSatuan(countt){
+        var id_sub_jenis_material = $("#material"+countt).val();
         $.ajax({
-            url:"<?php echo base_url();?>PurchaseOrderCustomer/harga_produk",
+            url:"<?php echo base_url();?>PurchaseOrderSupplier/satuan_ukuran",
             type:"POST",
             dataType:"JSON",
-            data:{id_detail_produk:id_detail_produk},
+            data:{id_sub_jenis_material:id_sub_jenis_material},
             success:function(respond){
-                $("#harga_satuan"+counter).val(respond[0]["harga_produk"]);
+                $("#satuan"+countt).val(respond[0]["satuan_ukuran"]);
             }
-        }); */
+        });
     }
 </script>
 
 <script>
     function getHargaSatuan(countt){
-        var id_detail_produk = $("#produk"+countt).val();
+        var id_sub_jenis_material = $("#material"+countt).val();
         $.ajax({
-            url:"<?php echo base_url();?>PurchaseOrderCustomer/harga_produk",
+            url:"<?php echo base_url();?>PurchaseOrderSupplier/harga_material",
             type:"POST",
             dataType:"JSON",
-            data:{id_detail_produk:id_detail_produk},
+            data:{id_sub_jenis_material:id_sub_jenis_material},
             success:function(respond){
-                $("#harga_satuan"+countt).val(respond[0]["harga_produk"]);
+                $("#harga_satuan"+countt).val(respond[0]["harga_material"]);
                 countHargaTotal(countt);
                 totalHarga();
             }
@@ -259,43 +271,9 @@
     }
 </script>
 
-
-<script>
-    function number_format(number, decimals, dec_point, thousands_point){
-        if (number == null || !isFinite(number)) {
-            throw new TypeError("number is not valid");
-        }
-
-        if (!decimals) {
-            var len = number.toString().split('.').length;
-            decimals = len > 1 ? len : 0;
-        }
-
-        if (!dec_point) {
-            dec_point = '.';
-        }
-
-        if (!thousands_point) {
-            thousands_point = ',';
-        }
-
-        number = parseFloat(number).toFixed(decimals);
-
-        number = number.replace(".", dec_point);
-
-        var splitNum = number.split(dec_point);
-        splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands_point);
-        number = splitNum.join(dec_point);
-
-        return number;
-    }
-</script>
-
-
-
 <script>
     function reload() {
-        location.reload();
+    location.reload();
     }
 </script>
     

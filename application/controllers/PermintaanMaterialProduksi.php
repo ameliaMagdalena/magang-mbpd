@@ -18,7 +18,7 @@ class PermintaanMaterialProduksi extends CI_Controller {
 
     public function index(){
         $data['permintaan_material'] = $this->M_PermintaanMaterialProduksi->select_all_aktif()->result();
-
+    
         $data['warna']            = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
 
