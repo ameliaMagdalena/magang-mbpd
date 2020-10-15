@@ -1106,31 +1106,7 @@
 							</li>
 						<?php }?>
 						<!--  -->
-						<li>
-							<a href="<?= base_url()?>purchaseOrderCustomer/baru">
-								+PO Kath
-							</a>
-						</li>
-						<li>
-							<a href="<?= base_url()?>purchaseOrderCustomer/index/0">
-								PO Kath stat 0
-							</a>
-						</li>
-						<li>
-							<a href="<?= base_url()?>material">
-								Material Kath
-							</a>
-						</li>
-						<li>
-							<a href="<?= base_url()?>jenisMaterial">
-								Jenis Material Kath
-							</a>
-						</li>
-						<li>
-							<a href="<?= base_url()?>customer">
-								Customer Kath
-							</a>
-						</li>
+						
 <!-- PRODUKSI -->
 						<li>
 							<br><br>
