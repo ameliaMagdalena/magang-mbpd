@@ -1594,135 +1594,143 @@
                 data: {id_produksi:id_produksi,id_line:id_line},
 
                 success: function(respond){
-                    $isi = "";
-                    $hitung=0;
+                    if(respond['pl'][0]['status_perencanaan'] > 0){
+                        $isi = "";
+                        $hitung=0;
 
-                    for($i=0;$i<respond['jm_dpl'];$i++){
-                        if(respond['dpl'][$i]['jumlah_item_perencanaan'] != 0){
-                            $namanya = "";
+                        $num = 0;
+                        for($i=0;$i<respond['jm_dpl'];$i++){
+                            if(respond['dpl'][$i]['jumlah_item_perencanaan'] != 0){
+                                $num++;
+                                $namanya = "";
 
-                            //nama produk
-                            if(respond['dpl'][$i]['keterangan'] == 0){
-                                $id_ukuran = respond['dpl'][$i]['id_ukuran'];
-                                $id_warna  = respond['dpl'][$i]['id_warna'];
+                                //nama produk
+                                if(respond['dpl'][$i]['keterangan'] == 0){
+                                    $id_ukuran = respond['dpl'][$i]['id_ukuran'];
+                                    $id_warna  = respond['dpl'][$i]['id_warna'];
 
-                                for($l=0;$l<respond['jmukuran'];$l++){
-                                    if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
-                                        $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
-                                        $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
+                                    for($l=0;$l<respond['jmukuran'];$l++){
+                                        if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
+                                            $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
+                                            $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
 
-                                        $ukurannya = $nama_ukuran + $satuan_ukuran;
+                                            $ukurannya = $nama_ukuran + $satuan_ukuran;
+                                        }
+                                    }
+
+                                    for($k=0;$k<respond['jmwarna'];$k++){
+                                        if(respond['warna'][$k]['id_warna'] == $id_warna){
+                                            $warnanya = respond['warna'][$k]['nama_warna'];
+                                        }
+                                    }
+
+                                    $namanya = respond['dpl'][$i]['nama_produk'] + $ukurannya + " (" + $warnanya + ")";
+                                }
+                                else if(respond['dpl'][$i]['keterangan'] == 1){
+                                    $id_ukuran = respond['dpl'][$i]['id_ukuran'];
+
+                                    for($l=0;$l<respond['jmukuran'];$l++){
+                                        if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
+                                            $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
+                                            $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
+
+                                            $ukurannya = $nama_ukuran + $satuan_ukuran;
+                                        }
+                                    }
+
+                                    $namanya = respond['dpl'][$i]['nama_produk'] + $ukurannya;
+
+                                }
+                                else if(respond['dpl'][$i]['keterangan'] == 2){
+                                    $id_warna  = respond['dpl'][$i]['id_warna'];
+
+                                    for($k=0;$k<respond['jmwarna'];$k++){
+                                        if(respond['warna'][$k]['id_warna'] == $id_warna){
+                                            $warnanya = respond['warna'][$k]['nama_warna'];
+                                        }
+                                    }
+
+                                    $namanya = respond['dpl'][$i]['nama_produk'] + " (" + $warnanya + ")";
+                                }
+                                else{
+                                    $namanya = respond['dpl'][$i]['nama_produk'];
+                                }
+                                
+                                $max = respond['dpl'][$i]['jumlah_item_perencanaan'];
+
+                                $id_linenya    = id_line;
+                                $id_produknya  = respond['dpl'][$i]['id_produk'];
+
+                                for($y=0;$y<respond['jm_ct'];$y++){
+                                    if(respond['ct'][$y]['id_line'] == $id_linenya && respond['ct'][$y]['id_produk'] == $id_produknya){
+                                        $cycle_timenya = respond['ct'][$y]['cycle_time'];
                                     }
                                 }
 
-                                for($k=0;$k<respond['jmwarna'];$k++){
-                                    if(respond['warna'][$k]['id_warna'] == $id_warna){
-                                        $warnanya = respond['warna'][$k]['nama_warna'];
-                                    }
-                                }
-
-                                $namanya = respond['dpl'][$i]['nama_produk'] + $ukurannya + " (" + $warnanya + ")";
+                                $isi = $isi +
+                                '<tr>'+
+                                    '<td style="text-align: center;vertical-align: middle;">'+
+                                        $num+
+                                    '</td>'+
+                                    '<td style="text-align: center;vertical-align: middle;">'+
+                                        '<input type="hidden" name="id_dpl'+$hitung+'" value="'+respond['dpl'][$i]['id_detail_produksi_line']+'">'+
+                                        $namanya+
+                                    '</td>'+
+                                    '<td style="text-align: center;vertical-align: middle;">'+
+                                        '<input type="hidden" name="jm_perc'+$hitung+'" value="'+respond['dpl'][$i]['jumlah_item_perencanaan']+'">'+
+                                        respond['dpl'][$i]['jumlah_item_perencanaan']+ " pcs"+
+                                    '</td>'+
+                                    '<td style="text-align: center;vertical-align: middle;">'+
+                                        '<input type="hidden" id="ct'+$hitung+'" value="'+$cycle_timenya+'">'+
+                                        '<input type="hidden" name="wkt_aktual'+$hitung+'" id="wkt'+$hitung+'">'+
+                                        '<center><input type="number" min="0" max="'+$max+'" name="jm_aktual'+$hitung+'" id="'+$hitung+'" oninput="hitung_ef(this)" class="form-control" style="width:80px;height:25px" required></center>'+
+                                    '</td>'+
+                                    '<td style="text-align: center;vertical-align: middle;">'+
+                                        '<textarea type="text" class="form-control" name="ket'+$hitung+'"></textarea>'+
+                                    '</td>'+
+                                '</tr>';
+                                $hitung++;
                             }
-                            else if(respond['dpl'][$i]['keterangan'] == 1){
-                                $id_ukuran = respond['dpl'][$i]['id_ukuran'];
-
-                                for($l=0;$l<respond['jmukuran'];$l++){
-                                    if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
-                                        $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
-                                        $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
-
-                                        $ukurannya = $nama_ukuran + $satuan_ukuran;
-                                    }
-                                }
-
-                                $namanya = respond['dpl'][$i]['nama_produk'] + $ukurannya;
-
-                            }
-                            else if(respond['dpl'][$i]['keterangan'] == 2){
-                                $id_warna  = respond['dpl'][$i]['id_warna'];
-
-                                for($k=0;$k<respond['jmwarna'];$k++){
-                                    if(respond['warna'][$k]['id_warna'] == $id_warna){
-                                        $warnanya = respond['warna'][$k]['nama_warna'];
-                                    }
-                                }
-
-                                $namanya = respond['dpl'][$i]['nama_produk'] + " (" + $warnanya + ")";
-                            }
-                            else{
-                                $namanya = respond['dpl'][$i]['nama_produk'];
-                            }
-
-
-                            $hitung++; 
-                            $max = respond['dpl'][$i]['jumlah_item_perencanaan'];
-
-                            $id_linenya    = id_line;
-                            $id_produknya  = respond['dpl'][$i]['id_produk'];
-
-                            for($y=0;$y<respond['jm_ct'];$y++){
-                                if(respond['ct'][$y]['id_line'] == $id_linenya && respond['ct'][$y]['id_produk'] == $id_produknya){
-                                    $cycle_timenya = respond['ct'][$y]['cycle_time'];
-                                }
-                            }
-
-                            $isi = $isi +
-                            '<tr>'+
-                                '<td style="text-align: center;vertical-align: middle;">'+
-                                    ($i+1)+
-                                '</td>'+
-                                '<td style="text-align: center;vertical-align: middle;">'+
-                                    '<input type="hidden" name="id_dpl'+$i+'" value="'+respond['dpl'][$i]['id_detail_produksi_line']+'">'+
-                                    $namanya+
-                                '</td>'+
-                                '<td style="text-align: center;vertical-align: middle;">'+
-                                    '<input type="hidden" name="jm_perc'+$i+'" value="'+respond['dpl'][$i]['jumlah_item_perencanaan']+'">'+
-                                    respond['dpl'][$i]['jumlah_item_perencanaan']+ " pcs"+
-                                '</td>'+
-                                '<td style="text-align: center;vertical-align: middle;">'+
-                                    '<input type="hidden" id="ct'+$i+'" value="'+$cycle_timenya+'">'+
-                                    '<input type="hidden" name="wkt_aktual'+$i+'" id="wkt'+$i+'">'+
-                                    '<center><input type="number" min="0" max="'+$max+'" name="jm_aktual'+$i+'" id="'+$i+'" oninput="hitung_ef(this)" class="form-control" style="width:80px;height:25px" required></center>'+
-                                '</td>'+
-                                '<td style="text-align: center;vertical-align: middle;">'+
-                                    '<textarea type="text" class="form-control" name="ket'+$i+'"></textarea>'+
-                                '</td>'+
-                            '</tr>';
                         }
+
+                        $table =
+                        '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
+                            '<thead>'+
+                                '<tr>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'No'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Nama Produk'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Perencanaan (pcs)'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Aktual (pcs)'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Keterangan'+
+                                    '</th>'+
+                                '</tr>'+
+                            '</thead>'+
+                            '<tbody>'+
+                                $isi+
+                            '</tbody>'+
+                        '</table>'+
+                        '*Aktual harus terisi. Jika aktual produksi untuk suatu item tidak ada, silahkan masukkan 0';
+
+                        $("#jumlah_detail").val($hitung);
+                        $("#id_pl").val(respond['dpl'][0]['id_produksi_line']);
+                        $("#total_pt").val(respond['dpl'][0]['total_processing_time']);
+
+                        $("#table_tambah").html($table);
+                    } else{
+                        $("#tambah").prop('disabled',true);
+                        $("#table_tambah").html("");
+                        alert("Mohon maaf tidak ada perencanaan produksi untuk line di hari yang dipilih");
                     }
-
-                    $table =
-                    '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
-                        '<thead>'+
-                            '<tr>'+
-                                '<th style="text-align: center;vertical-align: middle;">'+
-                                    'No'+
-                                '</th>'+
-                                '<th style="text-align: center;vertical-align: middle;">'+
-                                    'Nama Produk'+
-                                '</th>'+
-                                '<th style="text-align: center;vertical-align: middle;">'+
-                                    'Perencanaan (pcs)'+
-                                '</th>'+
-                                '<th style="text-align: center;vertical-align: middle;">'+
-                                    'Aktual (pcs)'+
-                                '</th>'+
-                                '<th style="text-align: center;vertical-align: middle;">'+
-                                    'Keterangan'+
-                                '</th>'+
-                            '</tr>'+
-                        '</thead>'+
-                        '<tbody>'+
-                            $isi+
-                        '</tbody>'+
-                    '</table>'+
-                    '*Aktual harus terisi. Jika aktual produksi untuk suatu item tidak ada, silahkan masukkan 0';
-
-                    $("#jumlah_detail").val($hitung);
-                    $("#id_pl").val(respond['dpl'][0]['id_produksi_line']);
-                    $("#total_pt").val(respond['dpl'][0]['total_processing_time']);
-
-                    $("#table_tambah").html($table);
+                    
                 }
             }); 
         }

@@ -640,7 +640,7 @@
                 </div>
                 <div id="collapse2One" class="accordion-body collapse in">
                     <div class="panel-body" style="height:250px;overflow:scroll;">
-                        <input type="text" class="form-control search_prop" id="myInput" onkeyup="myFunction1()" placeholder="Search" style="font-size:9px;height:30px;margin-bottom:10px;">
+                        <input type="text" class="form-control search_prop" id="myInput" onkeyup="myFunction()" placeholder="Search" style="font-size:9px;height:30px;margin-bottom:10px;">
                         <table class="table table-bordered table-striped mb-none po_table" id="myTable" style="font-size:8px">
                             <thead>
                                 <tr>
@@ -654,244 +654,762 @@
                                 <?php 
                                     $ke = 0;
                                     foreach($dpo as $dt_dpo){
-                                        $hit = 0;
-                                        $count_line = 0;
-                                        foreach($cycle_time as $ct){
-                                            if($ct->id_produk == $dt_dpo->id_produk){
-                                                $count_line++;
+                                        $cari_sama = 0;
+                                        foreach($detail_produksi_line as $dpl){
+                                            if($dpl->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                $cari_sama++;
                                             }
                                         }
-
-                                        foreach($jm_perc_seb as $z){
-                                            if($z->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
-                                                $sebelum = $z->jumlah_sebelum;
-                                                $target  = $dt_dpo->jumlah_produk;
-
-                                                if($sebelum == $target){
-                                                    $hit++;
+                                            //if tidak sama dengan edit
+                                            if($cari_sama == 0){
+                                                $hit = 0;
+                                                $count_line = 0;
+                                                foreach($cycle_time as $ct){
+                                                    if($ct->id_produk == $dt_dpo->id_produk){
+                                                        $count_line++;
+                                                    }
                                                 }
-                                            }
-                                        }
-                                        
-                                    if($hit != $count_line){ ?>
-                                        <tr id="bg1<?= $ke ?>">
-                                            <td class="col-md-6">
-                                                <input type="text" class="input_bgpo1 info_produk1"
-                                                value="<?= $dt_dpo->id_detail_purchase_order_customer?>">
-                                                <input type="text" class="input_bgpo1 info_produk1" id="nama_customer1<?= $dt_dpo->id_detail_purchase_order_customer?>"
-                                                value="<?= $dt_dpo->id_customer?>">
-                                                <input type="text" class="input_bgpo1 info_produk1" id="nama_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
-                                                value="<?= $dt_dpo->nama_produk?>">
-                                                <input type="text" class="input_bgpo1 info_produk1" id="id_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
-                                                value="<?= $dt_dpo->id_produk?>">
-                                                
-                                                <center>
-                                                    <!-- memiliki ukuran & warna -->
-                                                    <?php if($dt_dpo->keterangan == 0){
-                                                        $ukuran_tam = "";
-                                                        $warna_tam  = "";
-                                                        foreach($ukuran as $u){
-                                                            if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
-                                                                $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
-                                                            }
+
+                                                foreach($jm_perc_seb as $z){
+                                                    if($z->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                        $sebelum = $z->jumlah_sebelum;
+                                                        $target  = $dt_dpo->jumlah_produk;
+
+                                                        if($sebelum == $target){
+                                                            $hit++;
                                                         }
-                                                        
-                                                        foreach($warna as $w){
-                                                            if($w->id_warna == $dt_dpo->id_warna){
-                                                                $warna_tam = $w->nama_warna;
-                                                            }
-                                                        }
-                                                    ?>
-                                                        <?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
-                                                    <!-- memiliki ukuran -->
-                                                    <?php } else if($dt_dpo->keterangan == 1){
-                                                        $ukuran_tam = "";
-                                                        
-                                                        foreach($ukuran as $u){
-                                                            if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
-                                                                $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
-                                                            }
-                                                        }
-                                                    ?>
-                                                        <?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?>
-
-                                                    <?php } else if($dt_dpo->keterangan == 2){
-                                                        $warna_tam = "";
-
-                                                        foreach($warna as $w){
-                                                            if($w->id_warna == $dt_dpo->id_warna){
-                                                                $warna_tam = $w->nama_warna;
-                                                            }
-                                                        }
-                                                    ?>
-                                                        <?= $dt_dpo->nama_produk ?> (<?= $warna_tam;?>)
-                                                    <?php } else{?>
-                                                        <?= $dt_dpo->nama_produk ?>
-                                                    <?php } ?>
-                                                </center>
-                                            </td>
-                                            <td class="col-md-2">
-                                                <input type="hidden" class="input_bgpo1 jumlah_produk1" id="jumlah_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
-                                                value="<?= $dt_dpo->jumlah_produk?>">
-                                                <center>
-                                                    <?= $dt_dpo->jumlah_produk ?> 
-                                                </center>
-                                            </td>
-                                            <td class="col-md-4">
-                                                <button type="button" class="btn btn-success fa fa-plus-square-o btn1 add_produk" 
-                                                title="Add" id="add<?= $ke ?>" value="<?= $ke ?>"></button>
-                                                <a class="modal-with-form btn btn-primary fa fa-info-circle btn1"
-                                                title="Detail" href="#modaldetail<?= $dt_dpo->id_detail_purchase_order_customer?>"></a>
-                                            </td>
-                                            <td class="col-xx-1">
-                                                <input type="hidden" class="input_bgpo1 info_produk1" value="<?= $ke?>">
-                                                <center><?= $ke+1;?></center>
-                                            </td>
-                                        </tr>
-
-                                        <div id='modaldetail<?= $dt_dpo->id_detail_purchase_order_customer?>' class="modal-block modal-block-primary mfp-hide">
-                                            <section class="panel">
-                                                <header class="panel-heading">
-                                                    <h2 class="panel-title">Detail Produk PO</h2>
-                                                </header>
-
-                                                <div class="panel-body">
-                                                    <div class="form-group mt-lg">
-                                                        <label class="col-sm-5 control-label">Nama Customer</label>
-                                                        <div class="col-sm-7">
-                                                            <input type="text" class="form-control"
-                                                            value="<?= $dt_dpo->nama_customer?>" readonly>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group mt-lg">
-                                                        <label class="col-sm-5 control-label">Kode PO</label>
-                                                        <div class="col-sm-7">
-                                                            <input type="text" class="form-control"
-                                                            value="<?= $dt_dpo->kode_purchase_order_customer?>" readonly>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group mt-lg">
-                                                        <label class="col-sm-5 control-label">Tanggal Pesanan</label>
-                                                        <div class="col-sm-7">
-                                                            <input type="text" class="form-control"
-                                                            value="<?= $dt_dpo->tanggal_po?>" readonly>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group mt-lg">
-                                                        <label class="col-sm-5 control-label">Nama Produk</label>
-                                                        <div class="col-sm-7">
-                                                            <!-- memiliki ukuran & warna -->
-                                                            <?php if($dt_dpo->keterangan == 0){
-                                                                $ukuran_tam = "";
-                                                                $warna_tam  = "";
-                                                                foreach($ukuran as $u){
-                                                                    if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
-                                                                        $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                    }
+                                                }
+                                            
+                                                if($hit != $count_line){ ?>
+                                                    <tr id="bg1<?= $ke ?>">
+                                                        <td class="col-md-6">
+                                                            <input type="text" class="input_bgpo1 info_produk1"
+                                                            value="<?= $dt_dpo->id_detail_purchase_order_customer?>">
+                                                            <input type="text" class="input_bgpo1 info_produk1" id="nama_customer1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                            value="<?= $dt_dpo->id_customer?>">
+                                                            <input type="text" class="input_bgpo1 info_produk1" id="nama_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                            value="<?= $dt_dpo->nama_produk?>">
+                                                            <input type="text" class="input_bgpo1 info_produk1" id="id_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                            value="<?= $dt_dpo->id_produk?>">
+                                                            
+                                                            <center>
+                                                                <!-- memiliki ukuran & warna -->
+                                                                <?php if($dt_dpo->keterangan == 0){
+                                                                    $ukuran_tam = "";
+                                                                    $warna_tam  = "";
+                                                                    foreach($ukuran as $u){
+                                                                        if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
+                                                                            $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
+                                                                        }
                                                                     }
-                                                                }
-                                                                
-                                                                foreach($warna as $w){
-                                                                    if($w->id_warna == $dt_dpo->id_warna){
-                                                                        $warna_tam = $w->nama_warna;
+                                                                    
+                                                                    foreach($warna as $w){
+                                                                        if($w->id_warna == $dt_dpo->id_warna){
+                                                                            $warna_tam = $w->nama_warna;
+                                                                        }
                                                                     }
-                                                                }
-                                                            ?>
-                                                                <input type="text" class="form-control"
-                                                                value="<?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)" readonly>
-                                                            <!-- memiliki ukuran -->
-                                                            <?php } else if($dt_dpo->keterangan == 1){
-                                                                $ukuran_tam = "";
-                                                                
-                                                                foreach($ukuran as $u){
-                                                                    if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
-                                                                        $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                                ?>
+                                                                    <?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
+                                                                <!-- memiliki ukuran -->
+                                                                <?php } else if($dt_dpo->keterangan == 1){
+                                                                    $ukuran_tam = "";
+                                                                    
+                                                                    foreach($ukuran as $u){
+                                                                        if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
+                                                                            $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                                        }
                                                                     }
-                                                                }
-                                                            ?>
-                                                                <input type="text" class="form-control"
-                                                                value="<?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?>" readonly>
+                                                                ?>
+                                                                    <?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?>
 
-                                                            <?php } else if($dt_dpo->keterangan == 2){
-                                                                $warna_tam = "";
+                                                                <?php } else if($dt_dpo->keterangan == 2){
+                                                                    $warna_tam = "";
 
-                                                                foreach($warna as $w){
-                                                                    if($w->id_warna == $dt_dpo->id_warna){
-                                                                        $warna_tam = $w->nama_warna;
+                                                                    foreach($warna as $w){
+                                                                        if($w->id_warna == $dt_dpo->id_warna){
+                                                                            $warna_tam = $w->nama_warna;
+                                                                        }
                                                                     }
-                                                                }
-                                                            ?>
-                                                                <input type="text" class="form-control"
-                                                                value="<?= $dt_dpo->nama_produk ?> (<?= $warna_tam;?>)" readonly>
-                                                            <?php } else{?>
-                                                                <input type="text" class="form-control"
-                                                                value="<?= $dt_dpo->nama_produk ?>" readonly>
-                                                            <?php } ?>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group mt-lg">
-                                                        <label class="col-sm-5 control-label">Tanggal Penerimaan</label>
-                                                        <div class="col-sm-7">
-                                                            <input type="text" class="form-control"
-                                                            value="<?= $dt_dpo->tanggal_penerimaan?>" readonly>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group mt-lg">
-                                                        <label class="col-sm-5 control-label">Jumlah Produk Pesanan</label>
-                                                        <div class="col-sm-7">
-                                                            <input type="text" class="form-control"
-                                                            value="<?= $dt_dpo->jumlah_produk?>" readonly>
-                                                        </div>
-                                                    </div>
-                                            <!--- JUMLAH YANG HARUS DIPRODUKSI-->
-                                                    <label class="col-sm-12 control-label"><b>Jumlah Produk Yang Belum Dibuatkan Perencanaan Produksi</b></label>
-                                                    <?php 
-                                                        foreach($cycle_time as $ct){
-                                                        if($ct->id_produk == $dt_dpo->id_produk){
-                                                            $ket = 0;
-                                                            foreach($jm_perc_seb as $z){
-                                                                if($z->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
-                                                                    $ket++;
-                                                                }
-                                                            }
+                                                                ?>
+                                                                    <?= $dt_dpo->nama_produk ?> (<?= $warna_tam;?>)
+                                                                <?php } else{?>
+                                                                    <?= $dt_dpo->nama_produk ?>
+                                                                <?php } ?>
+                                                            </center>
+                                                        </td>
+                                                        <td class="col-md-2">
+                                                            <input type="hidden" class="input_bgpo1 jumlah_produk1" id="jumlah_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                            value="<?= $dt_dpo->jumlah_produk?>">
+                                                            <center>
+                                                                <?= $dt_dpo->jumlah_produk ?> 
+                                                            </center>
+                                                        </td>
+                                                        <td class="col-md-4">
+                                                            <button type="button" class="btn btn-success fa fa-plus-square-o btn1 add_produk" 
+                                                            title="Add" id="add<?= $ke ?>" value="<?= $ke ?>"></button>
+                                                            <a class="modal-with-form btn btn-primary fa fa-info-circle btn1"
+                                                            title="Detail" href="#modaldetail<?= $dt_dpo->id_detail_purchase_order_customer?>"></a>
+                                                        </td>
+                                                        <td class="col-xx-1">
+                                                            <input type="hidden" class="input_bgpo1 info_produk1" value="<?= $ke?>">
+                                                            <center><?= $ke+1;?></center>
+                                                        </td>
+                                                    </tr>
 
-                                                            if($ket == 0){
-                                                    ?>
+                                                    <div id='modaldetail<?= $dt_dpo->id_detail_purchase_order_customer?>' class="modal-block modal-block-primary mfp-hide">
+                                                        <section class="panel">
+                                                            <header class="panel-heading">
+                                                                <h2 class="panel-title">Detail Produk PO</h2>
+                                                            </header>
+
+                                                            <div class="panel-body">
                                                                 <div class="form-group mt-lg">
-                                                                    <label class="col-sm-5 control-label"><?= $ct->nama_line;?></label>
+                                                                    <label class="col-sm-5 control-label">Nama Customer</label>
                                                                     <div class="col-sm-7">
-                                                                        <input type="text" id="<?= $ke ?>target1<?= $ct->id_line ?>" class="form-control"
+                                                                        <input type="text" class="form-control"
+                                                                        value="<?= $dt_dpo->nama_customer?>" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group mt-lg">
+                                                                    <label class="col-sm-5 control-label">Kode PO</label>
+                                                                    <div class="col-sm-7">
+                                                                        <input type="text" class="form-control"
+                                                                        value="<?= $dt_dpo->kode_purchase_order_customer?>" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group mt-lg">
+                                                                    <label class="col-sm-5 control-label">Tanggal Pesanan</label>
+                                                                    <div class="col-sm-7">
+                                                                        <input type="text" class="form-control"
+                                                                        value="<?= $dt_dpo->tanggal_po?>" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group mt-lg">
+                                                                    <label class="col-sm-5 control-label">Nama Produk</label>
+                                                                    <div class="col-sm-7">
+                                                                        <!-- memiliki ukuran & warna -->
+                                                                        <?php if($dt_dpo->keterangan == 0){
+                                                                            $ukuran_tam = "";
+                                                                            $warna_tam  = "";
+                                                                            foreach($ukuran as $u){
+                                                                                if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
+                                                                                    $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                                                }
+                                                                            }
+                                                                            
+                                                                            foreach($warna as $w){
+                                                                                if($w->id_warna == $dt_dpo->id_warna){
+                                                                                    $warna_tam = $w->nama_warna;
+                                                                                }
+                                                                            }
+                                                                        ?>
+                                                                            <input type="text" class="form-control"
+                                                                            value="<?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)" readonly>
+                                                                        <!-- memiliki ukuran -->
+                                                                        <?php } else if($dt_dpo->keterangan == 1){
+                                                                            $ukuran_tam = "";
+                                                                            
+                                                                            foreach($ukuran as $u){
+                                                                                if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
+                                                                                    $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                                                }
+                                                                            }
+                                                                        ?>
+                                                                            <input type="text" class="form-control"
+                                                                            value="<?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?>" readonly>
+
+                                                                        <?php } else if($dt_dpo->keterangan == 2){
+                                                                            $warna_tam = "";
+
+                                                                            foreach($warna as $w){
+                                                                                if($w->id_warna == $dt_dpo->id_warna){
+                                                                                    $warna_tam = $w->nama_warna;
+                                                                                }
+                                                                            }
+                                                                        ?>
+                                                                            <input type="text" class="form-control"
+                                                                            value="<?= $dt_dpo->nama_produk ?> (<?= $warna_tam;?>)" readonly>
+                                                                        <?php } else{?>
+                                                                            <input type="text" class="form-control"
+                                                                            value="<?= $dt_dpo->nama_produk ?>" readonly>
+                                                                        <?php } ?>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group mt-lg">
+                                                                    <label class="col-sm-5 control-label">Tanggal Penerimaan</label>
+                                                                    <div class="col-sm-7">
+                                                                        <input type="text" class="form-control"
+                                                                        value="<?= $dt_dpo->tanggal_penerimaan?>" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group mt-lg">
+                                                                    <label class="col-sm-5 control-label">Jumlah Produk Pesanan</label>
+                                                                    <div class="col-sm-7">
+                                                                        <input type="text" class="form-control"
                                                                         value="<?= $dt_dpo->jumlah_produk?>" readonly>
                                                                     </div>
-                                                                </div>    
-                                                    <?php 
-                                                            } else{
-                                                                foreach($jm_perc_seb as $zz){
-                                                                    if($zz->id_line == $ct->id_line && $zz->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
-                                                                        $jumlah_total = $dt_dpo->jumlah_produk;
-                                                                        $jumlah_sblm  = $zz->jumlah_sebelum;
-                                                                        $jumlah_now   = $jumlah_total - $jumlah_sblm;
-                                                    ?>
-                                                            <div class="form-group mt-lg">
-                                                            <label class="col-sm-5 control-label"><?= $ct->nama_line;?></label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" id="<?= $ke ?>target1<?= $ct->id_line ?>" class="form-control"
-                                                                value="<?= $jumlah_now?>" readonly>
-                                                            </div>
-                                                        </div>
-                                                    <?php }}}}} ?>
-                                            <!-- -->
-                                                </div>
+                                                                </div>
+                                                        <!--- JUMLAH YANG HARUS DIPRODUKSI-->
+                                                                <label class="col-sm-12 control-label"><b>Jumlah Produk Yang Belum Dibuatkan Perencanaan Produksi</b></label>
+                                                                <?php 
+                                                                    foreach($cycle_time as $ct){
+                                                                    if($ct->id_produk == $dt_dpo->id_produk){
+                                                                        $ket = 0;
+                                                                        foreach($jm_perc_seb as $z){
+                                                                            if($z->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                                                $ket++;
+                                                                            }
+                                                                        }
 
-                                                <footer class="panel-footer">
-                                                    <div class="row">
-                                                        <div class="col-md-12 text-right">
-                                                            <button type="button" class="btn btn-default modal-dismiss">Ok</button>
-                                                        </div>
+                                                                        if($ket == 0){
+                                                                ?>
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label"><?= $ct->nama_line;?></label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="text" id="<?= $ke ?>target1<?= $ct->id_line ?>" class="form-control"
+                                                                                    value="<?= $dt_dpo->jumlah_produk?>" readonly>
+                                                                                </div>
+                                                                            </div>    
+                                                                <?php 
+                                                                        } else{
+                                                                            foreach($jm_perc_seb as $zz){
+                                                                                if($zz->id_line == $ct->id_line && $zz->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                                                    $jumlah_total = $dt_dpo->jumlah_produk;
+                                                                                    $jumlah_sblm  = $zz->jumlah_sebelum;
+                                                                                    $jumlah_now   = $jumlah_total - $jumlah_sblm;
+                                                                ?>
+                                                                        <div class="form-group mt-lg">
+                                                                        <label class="col-sm-5 control-label"><?= $ct->nama_line;?></label>
+                                                                        <div class="col-sm-7">
+                                                                            <input type="text" id="<?= $ke ?>target1<?= $ct->id_line ?>" class="form-control"
+                                                                            value="<?= $jumlah_now?>" readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                <?php }}}}} ?>
+                                                        <!-- -->
+                                                            </div>
+
+                                                            <footer class="panel-footer">
+                                                                <div class="row">
+                                                                    <div class="col-md-12 text-right">
+                                                                        <button type="button" class="btn btn-default modal-dismiss">Ok</button>
+                                                                    </div>
+                                                                </div>
+                                                            </footer>
+                                                        </section>
                                                     </div>
-                                                </footer>
-                                            </section>
-                                        </div>
-                                <?php $ke++; } } ?>
+                                                <?php $ke++; } ?>
+                                            <?php } 
+                                                //if sama dengan edit
+                                                else{ 
+                                                    foreach($detail_produksi_line as $dpl){
+                                                        //if sama dengan edit
+                                                        if($dpl->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                            $hit = 0;
+                                                            $count_line = 0;
+                                                            foreach($cycle_time as $ct){
+                                                                if($ct->id_produk == $dt_dpo->id_produk){
+                                                                    $count_line++;
+                                                                }
+                                                            }
+
+                                                            foreach($jm_perc_seb as $z){
+                                                                if($z->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                                    $sebelum = $z->jumlah_sebelum;
+                                                                    $target  = $dt_dpo->jumlah_produk;
+
+                                                                    if($sebelum == $target){
+                                                                        $hit++;
+                                                                    }
+                                                                }
+                                                            }
+                                                            
+                                                            //jika masih ada yang harus dibuatkan perencanaan
+                                                            if($hit != $count_line){
+                                            ?>
+                                                                <tr id="bg1<?= $ke ?>">
+                                                                    <td class="col-md-6">
+                                                                        <input type="text" class="input_bgpo1 info_produk1"
+                                                                        value="<?= $dt_dpo->id_detail_purchase_order_customer?>">
+                                                                        <input type="text" class="input_bgpo1 info_produk1" id="nama_customer1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                                        value="<?= $dt_dpo->id_customer?>">
+                                                                        <input type="text" class="input_bgpo1 info_produk1" id="nama_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                                        value="<?= $dt_dpo->nama_produk?>">
+                                                                        <input type="text" class="input_bgpo1 info_produk1" id="id_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                                        value="<?= $dt_dpo->id_produk?>">
+                                                                        
+                                                                        <center>
+                                                                            <!-- memiliki ukuran & warna -->
+                                                                            <?php if($dt_dpo->keterangan == 0){
+                                                                                $ukuran_tam = "";
+                                                                                $warna_tam  = "";
+                                                                                foreach($ukuran as $u){
+                                                                                    if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
+                                                                                        $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
+                                                                                    }
+                                                                                }
+                                                                                
+                                                                                foreach($warna as $w){
+                                                                                    if($w->id_warna == $dt_dpo->id_warna){
+                                                                                        $warna_tam = $w->nama_warna;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
+                                                                            <!-- memiliki ukuran -->
+                                                                            <?php } else if($dt_dpo->keterangan == 1){
+                                                                                $ukuran_tam = "";
+                                                                                
+                                                                                foreach($ukuran as $u){
+                                                                                    if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
+                                                                                        $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?>
+
+                                                                            <?php } else if($dt_dpo->keterangan == 2){
+                                                                                $warna_tam = "";
+
+                                                                                foreach($warna as $w){
+                                                                                    if($w->id_warna == $dt_dpo->id_warna){
+                                                                                        $warna_tam = $w->nama_warna;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <?= $dt_dpo->nama_produk ?> (<?= $warna_tam;?>)
+                                                                            <?php } else{?>
+                                                                                <?= $dt_dpo->nama_produk ?>
+                                                                            <?php } ?>
+                                                                        </center>
+                                                                    </td>
+                                                                    <td class="col-md-2">
+                                                                        <input type="hidden" class="input_bgpo1 jumlah_produk1" id="jumlah_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                                        value="<?= $dt_dpo->jumlah_produk?>">
+                                                                        <center>
+                                                                            <?= $dt_dpo->jumlah_produk ?> 
+                                                                        </center>
+                                                                    </td>
+                                                                    <td class="col-md-4">
+                                                                        <button type="button" class="btn btn-success fa fa-plus-square-o btn1 add_produk" 
+                                                                        title="Add" id="add<?= $ke ?>" value="<?= $ke ?>" disabled></button>
+                                                                        <a class="modal-with-form btn btn-primary fa fa-info-circle btn1"
+                                                                        title="Detail" href="#modaldetail<?= $dt_dpo->id_detail_purchase_order_customer?>"></a>
+                                                                    </td>
+                                                                    <td class="col-xx-1">
+                                                                        <input type="hidden" class="input_bgpo1 info_produk1" value="<?= $ke?>">
+                                                                        <center><?= $ke+1;?></center>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <div id='modaldetail<?= $dt_dpo->id_detail_purchase_order_customer?>' class="modal-block modal-block-primary mfp-hide">
+                                                                    <section class="panel">
+                                                                        <header class="panel-heading">
+                                                                            <h2 class="panel-title">Detail Produk PO</h2>
+                                                                        </header>
+
+                                                                        <div class="panel-body">
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Nama Customer</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="text" class="form-control"
+                                                                                    value="<?= $dt_dpo->nama_customer?>" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Kode PO</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="text" class="form-control"
+                                                                                    value="<?= $dt_dpo->kode_purchase_order_customer?>" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Tanggal Pesanan</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="text" class="form-control"
+                                                                                    value="<?= $dt_dpo->tanggal_po?>" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Nama Produk</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <!-- memiliki ukuran & warna -->
+                                                                                    <?php if($dt_dpo->keterangan == 0){
+                                                                                        $ukuran_tam = "";
+                                                                                        $warna_tam  = "";
+                                                                                        foreach($ukuran as $u){
+                                                                                            if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
+                                                                                                $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                                                            }
+                                                                                        }
+                                                                                        
+                                                                                        foreach($warna as $w){
+                                                                                            if($w->id_warna == $dt_dpo->id_warna){
+                                                                                                $warna_tam = $w->nama_warna;
+                                                                                            }
+                                                                                        }
+                                                                                    ?>
+                                                                                        <input type="text" class="form-control"
+                                                                                        value="<?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)" readonly>
+                                                                                    <!-- memiliki ukuran -->
+                                                                                    <?php } else if($dt_dpo->keterangan == 1){
+                                                                                        $ukuran_tam = "";
+                                                                                        
+                                                                                        foreach($ukuran as $u){
+                                                                                            if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
+                                                                                                $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                                                            }
+                                                                                        }
+                                                                                    ?>
+                                                                                        <input type="text" class="form-control"
+                                                                                        value="<?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?>" readonly>
+
+                                                                                    <?php } else if($dt_dpo->keterangan == 2){
+                                                                                        $warna_tam = "";
+
+                                                                                        foreach($warna as $w){
+                                                                                            if($w->id_warna == $dt_dpo->id_warna){
+                                                                                                $warna_tam = $w->nama_warna;
+                                                                                            }
+                                                                                        }
+                                                                                    ?>
+                                                                                        <input type="text" class="form-control"
+                                                                                        value="<?= $dt_dpo->nama_produk ?> (<?= $warna_tam;?>)" readonly>
+                                                                                    <?php } else{?>
+                                                                                        <input type="text" class="form-control"
+                                                                                        value="<?= $dt_dpo->nama_produk ?>" readonly>
+                                                                                    <?php } ?>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Tanggal Penerimaan</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="text" class="form-control"
+                                                                                    value="<?= $dt_dpo->tanggal_penerimaan?>" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Jumlah Produk Pesanan</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="text" class="form-control"
+                                                                                    value="<?= $dt_dpo->jumlah_produk?>" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                    <!--- JUMLAH YANG HARUS DIPRODUKSI-->
+                                                                            <label class="col-sm-12 control-label"><b>Jumlah Produk Yang Belum Dibuatkan Perencanaan Produksi</b></label>
+                                                                            <?php 
+                                                                                foreach($cycle_time as $ct){
+                                                                                if($ct->id_produk == $dt_dpo->id_produk){
+                                                                                    $ket = 0;
+                                                                                    foreach($jm_perc_seb as $z){
+                                                                                        if($z->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                                                            $ket++;
+                                                                                        }
+                                                                                    }
+
+                                                                                    if($ket == 0){
+                                                                            ?>
+                                                                                        <?php 
+                                                                                            $hit_dplt = 0;
+                                                                                            foreach($dpl_tam as $dplt){ 
+                                                                                                if($dplt->id_line == $ct->id_line && $dplt->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                                                                    $hit_dplt++;
+                                                                                                }
+                                                                                            } 
+
+                                                                                                if($hit_dplt > 0){
+                                                                                                    foreach($dpl_tam as $dplt){
+                                                                                                        if($dplt->id_line == $ct->id_line && $dplt->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                                                                            $jumlah_total = $dt_dpo->jumlah_produk;
+                                                                                                            $jumlah_edit  = $dplt->jumlah_item_perencanaan;
+                                                                                                            $jumlah_now   = $jumlah_total + $jumlah_edit;
+                                                                                        ?>
+                                                                                                            <div class="form-group mt-lg">
+                                                                                                                <label class="col-sm-5 control-label"><?= $ct->nama_line;?></label>
+                                                                                                                <div class="col-sm-7">
+                                                                                                                    <input type="text" id="<?= $ke ?>target1<?= $ct->id_line ?>" class="form-control"
+                                                                                                                    value="<?= $jumlah_now?>" readonly>
+                                                                                                                </div>
+                                                                                                            </div>   
+                                                                                                    <?php
+                                                                                                        }
+                                                                                                    } 
+                                                                                                    ?>
+                                                                                                 
+                                                                                                <?php } else{?>
+                                                                                                <div class="form-group mt-lg">
+                                                                                                    <label class="col-sm-5 control-label"><?= $ct->nama_line;?></label>
+                                                                                                    <div class="col-sm-7">
+                                                                                                        <input type="text" id="<?= $ke ?>target1<?= $ct->id_line ?>" class="form-control"
+                                                                                                        value="<?= $dt_dpo->jumlah_produk?>" readonly>
+                                                                                                    </div>
+                                                                                                </div>  
+                                                                                            <?php } ?>
+                                                                                    <?php  } else{ ?>
+                                                                                            <?php 
+                                                                                                $jumlah_total = $dt_dpo->jumlah_produk;
+                                                                                                $cek_dplt = 0;
+                                                                                                foreach($dpl_tam as $dplt){
+                                                                                                    if($dplt->id_line == $ct->id_line && $dplt->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){ 
+                                                                                                        $jumlah_edit = $dplt->jumlah_item_perencanaan;
+                                                                                                        $cek_dplt++;
+                                                                                                    }
+                                                                                                }
+
+                                                                                                $cek_percseb = 0;
+                                                                                                    foreach($jm_perc_seb as $zz){
+                                                                                                        if($zz->id_line == $ct->id_line && $zz->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                                                                            $jumlah_sblm  = $zz->jumlah_sebelum;
+                                                                                                            $cek_percseb++;
+                                                                                                        }
+                                                                                                    }
+
+                                                                                                    $jumlah_now = $jumlah_total - $jumlah_sblm + $jumlah_edit;
+                                                                                            ?>
+                                                                                                    <div class="form-group mt-lg">
+                                                                                                        <label class="col-sm-5 control-label"><?= $ct->nama_line;?></label>
+                                                                                                        <div class="col-sm-7">
+                                                                                                            <input type="text" id="<?= $ke ?>target1<?= $ct->id_line ?>" class="form-control"
+                                                                                                            value="<?= $jumlah_now ?>" readonly>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                    <?php } ?>
+                                                                            <?php }} ?>
+                                                                    <!-- -->
+                                                                        </div>
+
+                                                                        <footer class="panel-footer">
+                                                                            <div class="row">
+                                                                                <div class="col-md-12 text-right">
+                                                                                    <button type="button" class="btn btn-default modal-dismiss">Ok</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </footer>
+                                                                    </section>
+                                                                </div>
+                                                            <?php $ke++; } else{?>
+                                                                <tr id="bg1<?= $ke ?>">
+                                                                    <td class="col-md-6">
+                                                                        <input type="text" class="input_bgpo1 info_produk1"
+                                                                        value="<?= $dt_dpo->id_detail_purchase_order_customer?>">
+                                                                        <input type="text" class="input_bgpo1 info_produk1" id="nama_customer1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                                        value="<?= $dt_dpo->id_customer?>">
+                                                                        <input type="text" class="input_bgpo1 info_produk1" id="nama_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                                        value="<?= $dt_dpo->nama_produk?>">
+                                                                        <input type="text" class="input_bgpo1 info_produk1" id="id_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                                        value="<?= $dt_dpo->id_produk?>">
+                                                                        
+                                                                        <center>
+                                                                            <!-- memiliki ukuran & warna -->
+                                                                            <?php if($dt_dpo->keterangan == 0){
+                                                                                $ukuran_tam = "";
+                                                                                $warna_tam  = "";
+                                                                                foreach($ukuran as $u){
+                                                                                    if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
+                                                                                        $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
+                                                                                    }
+                                                                                }
+                                                                                
+                                                                                foreach($warna as $w){
+                                                                                    if($w->id_warna == $dt_dpo->id_warna){
+                                                                                        $warna_tam = $w->nama_warna;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
+                                                                            <!-- memiliki ukuran -->
+                                                                            <?php } else if($dt_dpo->keterangan == 1){
+                                                                                $ukuran_tam = "";
+                                                                                
+                                                                                foreach($ukuran as $u){
+                                                                                    if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
+                                                                                        $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?>
+
+                                                                            <?php } else if($dt_dpo->keterangan == 2){
+                                                                                $warna_tam = "";
+
+                                                                                foreach($warna as $w){
+                                                                                    if($w->id_warna == $dt_dpo->id_warna){
+                                                                                        $warna_tam = $w->nama_warna;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <?= $dt_dpo->nama_produk ?> (<?= $warna_tam;?>)
+                                                                            <?php } else{?>
+                                                                                <?= $dt_dpo->nama_produk ?>
+                                                                            <?php } ?>
+                                                                        </center>
+                                                                    </td>
+                                                                    <td class="col-md-2">
+                                                                        <input type="hidden" class="input_bgpo1 jumlah_produk1" id="jumlah_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                                        value="<?= $dt_dpo->jumlah_produk?>">
+                                                                        <center>
+                                                                            <?= $dt_dpo->jumlah_produk ?> 
+                                                                        </center>
+                                                                    </td>
+                                                                    <td class="col-md-4">
+                                                                        <button type="button" class="btn btn-success fa fa-plus-square-o btn1 add_produk" 
+                                                                        title="Add" id="add<?= $ke ?>" value="<?= $ke ?>" disabled></button>
+                                                                        <a class="modal-with-form btn btn-primary fa fa-info-circle btn1"
+                                                                        title="Detail" href="#modaldetail<?= $dt_dpo->id_detail_purchase_order_customer?>"></a>
+                                                                    </td>
+                                                                    <td class="col-xx-1">
+                                                                        <input type="hidden" class="input_bgpo1 info_produk1" value="<?= $ke?>">
+                                                                        <center><?= $ke+1;?></center>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <div id='modaldetail<?= $dt_dpo->id_detail_purchase_order_customer?>' class="modal-block modal-block-primary mfp-hide">
+                                                                    <section class="panel">
+                                                                        <header class="panel-heading">
+                                                                            <h2 class="panel-title">Detail Produk PO</h2>
+                                                                        </header>
+
+                                                                        <div class="panel-body">
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Nama Customer</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="text" class="form-control"
+                                                                                    value="<?= $dt_dpo->nama_customer?>" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Kode PO</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="text" class="form-control"
+                                                                                    value="<?= $dt_dpo->kode_purchase_order_customer?>" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Tanggal Pesanan</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="text" class="form-control"
+                                                                                    value="<?= $dt_dpo->tanggal_po?>" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Nama Produk</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <!-- memiliki ukuran & warna -->
+                                                                                    <?php if($dt_dpo->keterangan == 0){
+                                                                                        $ukuran_tam = "";
+                                                                                        $warna_tam  = "";
+                                                                                        foreach($ukuran as $u){
+                                                                                            if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
+                                                                                                $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                                                            }
+                                                                                        }
+                                                                                        
+                                                                                        foreach($warna as $w){
+                                                                                            if($w->id_warna == $dt_dpo->id_warna){
+                                                                                                $warna_tam = $w->nama_warna;
+                                                                                            }
+                                                                                        }
+                                                                                    ?>
+                                                                                        <input type="text" class="form-control"
+                                                                                        value="<?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)" readonly>
+                                                                                    <!-- memiliki ukuran -->
+                                                                                    <?php } else if($dt_dpo->keterangan == 1){
+                                                                                        $ukuran_tam = "";
+                                                                                        
+                                                                                        foreach($ukuran as $u){
+                                                                                            if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
+                                                                                                $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                                                            }
+                                                                                        }
+                                                                                    ?>
+                                                                                        <input type="text" class="form-control"
+                                                                                        value="<?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?>" readonly>
+
+                                                                                    <?php } else if($dt_dpo->keterangan == 2){
+                                                                                        $warna_tam = "";
+
+                                                                                        foreach($warna as $w){
+                                                                                            if($w->id_warna == $dt_dpo->id_warna){
+                                                                                                $warna_tam = $w->nama_warna;
+                                                                                            }
+                                                                                        }
+                                                                                    ?>
+                                                                                        <input type="text" class="form-control"
+                                                                                        value="<?= $dt_dpo->nama_produk ?> (<?= $warna_tam;?>)" readonly>
+                                                                                    <?php } else{?>
+                                                                                        <input type="text" class="form-control"
+                                                                                        value="<?= $dt_dpo->nama_produk ?>" readonly>
+                                                                                    <?php } ?>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Tanggal Penerimaan</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="text" class="form-control"
+                                                                                    value="<?= $dt_dpo->tanggal_penerimaan?>" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Jumlah Produk Pesanan</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="text" class="form-control"
+                                                                                    value="<?= $dt_dpo->jumlah_produk?>" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                    <!--- JUMLAH YANG HARUS DIPRODUKSI-->
+                                                                            <label class="col-sm-12 control-label"><b>Jumlah Produk Yang Belum Dibuatkan Perencanaan Produksi</b></label>
+                                                                            <?php 
+                                                                                foreach($cycle_time as $ct){
+                                                                                    if($ct->id_produk == $dt_dpo->id_produk){
+                                                                                        $ket = 0;
+                                                                                        foreach($dpl_tam as $dplt){ 
+                                                                                            if($dplt->id_line == $ct->id_line && $dplt->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                                                                $ket++;
+                                                                                            }
+                                                                                        }
+
+                                                                                        if($ket == 0){
+                                                                            ?>
+                                                                                            <div class="form-group mt-lg">
+                                                                                                <label class="col-sm-5 control-label"><?= $ct->nama_line;?></label>
+                                                                                                <div class="col-sm-7">
+                                                                                                    <input type="text" id="<?= $ke ?>target1<?= $ct->id_line ?>" class="form-control"
+                                                                                                    value="0" readonly>
+                                                                                                </div>
+                                                                                            </div>   
+
+                                                                                        <?php } else{
+                                                                                                    foreach($dpl_tam as $dplt){
+                                                                                                        if($dplt->id_line == $ct->id_line && $dplt->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                                                        ?>
+                                                                                                        <div class="form-group mt-lg">
+                                                                                                            <label class="col-sm-5 control-label"><?= $ct->nama_line;?></label>
+                                                                                                            <div class="col-sm-7">
+                                                                                                                <input type="text" id="<?= $ke ?>target1<?= $ct->id_line ?>" class="form-control"
+                                                                                                                value="<?= $dplt->jumlah_item_perencanaan ?>" readonly>
+                                                                                                            </div>
+                                                                                                        </div>   
+                                                                                        <?php }}} ?>
+                                                                                <?php }} ?>
+
+                                                                    <!-- -->
+                                                                        </div>
+
+                                                                        <footer class="panel-footer">
+                                                                            <div class="row">
+                                                                                <div class="col-md-12 text-right">
+                                                                                    <button type="button" class="btn btn-default modal-dismiss">Ok</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </footer>
+                                                                    </section>
+                                                                </div>
+                                                        <?php $ke++; } ?>
+                                                    <?php } ?>
+                                                <?php } ?>
+                                            <?php } ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -908,8 +1426,8 @@
                 </div>
                 <div id="collapse2Two" class="accordion-body collapse">
                     <div class="panel-body" style="height:250px;overflow:scroll;">
-                        <input type="text" class="form-control search_prop" id="remyInput" onkeyup="myFunction2()" placeholder="Search" style="font-size:9px;height:30px;margin-bottom:10px;">
-                        <table class="table table-bordered table-striped mb-none po_table" id="remyTable" style="font-size:8px">
+                        <input type="text" class="form-control search_prop" id="myInput" onkeyup="myFunction()" placeholder="Search" style="font-size:9px;height:30px;margin-bottom:10px;">
+                        <table class="table table-bordered table-striped mb-none po_table" id="myTable" style="font-size:8px">
                             <thead>
                                 <tr>
                                     <th style="text-align: center;vertical-align: middle;">Produk</th>
@@ -922,7 +1440,6 @@
                                 <?php 
                                     $ke = $ke;
                                     foreach($produksi_tertunda as $pt){
-                                        if($pt->status_penjadwalan < 2){
                                 ?>
                                         <tr id="bg1<?= $ke ?>">
                                             <td class="col-md-6">
@@ -1001,7 +1518,7 @@
                                             </td>
                                         </tr>
 
-                                <?php $ke++; }} ?>
+                                <?php $ke++; } ?>
                             </tbody>
                         </table>
                     </div>
@@ -1018,117 +1535,325 @@
                 <?php 
                     $count=0;
                     foreach($dpo as $detail_po){
-                        $hit = 0;
-                                $count_line = 0;
-                                foreach($cycle_time as $ct){
-                                    if($ct->id_produk == $detail_po->id_produk){
-                                        $count_line++;
-                                    }
-                                }
+                        $cari_sama = 0;
+                        foreach($detail_produksi_line as $dpl){
+                            if($dpl->id_detail_purchase_order == $detail_po->id_detail_purchase_order_customer){
+                                $cari_sama++;
+                            }
+                        }
 
-                                foreach($jm_perc_seb as $z){
-                                    if($z->id_detail_purchase_order == $detail_po->id_detail_purchase_order_customer){
-                                        $sebelum = $z->jumlah_sebelum;
-                                        $target  = $detail_po->jumlah_produk;
+                        if($cari_sama == 0){
+                ?>
+                            <?php
+                                        $hit = 0;
+                                        $count_line = 0;
+                                        foreach($cycle_time as $ct){
+                                            if($ct->id_produk == $detail_po->id_produk){
+                                                $count_line++;
+                                            }
+                                        }
 
-                                        if($sebelum == $target){
-                                            $hit++;
+                                        foreach($jm_perc_seb as $z){
+                                            if($z->id_detail_purchase_order == $detail_po->id_detail_purchase_order_customer){
+                                                $sebelum = $z->jumlah_sebelum;
+                                                $target  = $detail_po->jumlah_produk;
+
+                                                if($sebelum == $target){
+                                                    $hit++;
+                                                }
+                                            }
+                                        }
+                                        
+                                    if($hit != $count_line){
+                            ?>
+                                <div id="track<?= $count ?>" >
+                                    <!-- Nama produk (jumlah produk) -->
+                                    <p id="<?= $count ?>nama_produk2" style="font-size:10px">
+                                        <span><?= $count+1?>. </span>
+
+                                        <!-- memiliki ukuran & warna -->
+                                        <?php if($detail_po->keterangan == 0){
+                                            $ukuran_tam = "";
+                                            $warna_tam  = "";
+                                            foreach($ukuran as $u){
+                                                if($u->id_ukuran_produk == $detail_po->id_ukuran_produk){
+                                                    $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
+                                                }
+                                            }
+                                            
+                                            foreach($warna as $w){
+                                                if($w->id_warna == $detail_po->id_warna){
+                                                    $warna_tam = $w->nama_warna;
+                                                }
+                                            }
+                                        ?>
+                                            <?= $detail_po->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
+                                        <!-- memiliki ukuran -->
+                                        <?php } else if($detail_po->keterangan == 1){
+                                            $ukuran_tam = "";
+                                            
+                                            foreach($ukuran as $u){
+                                                if($u->id_ukuran_produk == $detail_po->id_ukuran_produk){
+                                                    $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                }
+                                            }
+                                        ?>
+                                            <?= $detail_po->nama_produk ?> <?= $ukuran_tam?>
+
+                                        <?php } else if($detail_po->keterangan == 2){
+                                            $warna_tam = "";
+
+                                            foreach($warna as $w){
+                                                if($w->id_warna == $detail_po->id_warna){
+                                                    $warna_tam = $w->nama_warna;
+                                                }
+                                            }
+                                        ?>
+                                            <?= $detail_po->nama_produk ?> (<?= $warna_tam;?>)
+                                        <?php } else{?>
+                                            <?= $detail_po->nama_produk ?>
+                                        <?php } ?>
+                                    </p>
+                                    <!-- Nama Konsumen -->
+                                    <p id="<?= $count ?>nama_customer2" style="font-size:10px">
+                                        <?= $detail_po->nama_customer?>
+                                    </p>
+
+                                    <table class="table table-bordered table-striped mb-none"
+                                        id="datatable-default"  style="font-size:9px">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-9"><center>Nama Line</center></th>
+                                                    <th class="col-md-1"><center>Target</center></th>
+                                                    <th class="col-md-1"><center>Plan</center></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach($cycle_time as $ct){
+                                                    if($ct->id_produk == $detail_po->id_produk){?>
+                                                    <tr>
+                                                        <td style="text-align: center;vertical-align: middle;">
+                                                            <input type="text" id="<?= $count?>idline2<?= $ct->id_line?>" value="<?= $ct->id_line?>">
+                                                            <?= $ct->nama_line?>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="<?= $count?>target2<?= $ct->id_line?>"  style="text-align: center;vertical-align: middle;"
+                                                            class="row_efisiensi" disabled>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="<?= $count?>plan2<?= $ct->id_line?>" style="text-align: center;vertical-align:middle;" 
+                                                            class="row_efisiensi" disabled>
+                                                        </td>
+                                                    </tr>
+                                                <?php }} ?>
+                                            </tbody>
+                                    </table>
+                                </div>
+
+                            <?php $count++;} ?>
+                        <?php } else { 
+                            foreach($detail_produksi_line as $dpl){
+                                if($dpl->id_detail_purchase_order == $detail_po->id_detail_purchase_order_customer){
+                                    $hit = 0;
+                                    $count_line = 0;
+                                    foreach($cycle_time as $ct){
+                                        if($ct->id_produk == $dt_dpo->id_produk){
+                                            $count_line++;
                                         }
                                     }
-                                }
+
+                                    foreach($jm_perc_seb as $z){
+                                        if($z->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                            $sebelum = $z->jumlah_sebelum;
+                                            $target  = $dt_dpo->jumlah_produk;
+
+                                            if($sebelum == $target){
+                                                $hit++;
+                                            }
+                                        }
+                                    }
                                 
-                            if($hit != $count_line){
-                ?>
-                    <div id="track<?= $count ?>" style="display:none">
-                        <!-- Nama produk (jumlah produk) -->
-                        <p id="<?= $count ?>nama_produk2" style="font-size:10px">
-                            <span><?= $count+1?>. </span>
+                                //jika masih ada yang harus dibuatkan perencanaan
+                                if($hit != $count_line){    
+                        ?>
+                                    <div id="track<?= $count ?>" >
+                                        <!-- Nama produk (jumlah produk) -->
+                                        <p id="<?= $count ?>nama_produk2" style="font-size:10px">
+                                            <span><?= $count+1?>. </span>
 
-                            <!-- memiliki ukuran & warna -->
-                            <?php if($detail_po->keterangan == 0){
-                                $ukuran_tam = "";
-                                $warna_tam  = "";
-                                foreach($ukuran as $u){
-                                    if($u->id_ukuran_produk == $detail_po->id_ukuran_produk){
-                                        $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
-                                    }
-                                }
-                                
-                                foreach($warna as $w){
-                                    if($w->id_warna == $detail_po->id_warna){
-                                        $warna_tam = $w->nama_warna;
-                                    }
-                                }
-                            ?>
-                                <?= $detail_po->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
-                            <!-- memiliki ukuran -->
-                            <?php } else if($detail_po->keterangan == 1){
-                                $ukuran_tam = "";
-                                
-                                foreach($ukuran as $u){
-                                    if($u->id_ukuran_produk == $detail_po->id_ukuran_produk){
-                                        $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
-                                    }
-                                }
-                            ?>
-                                <?= $detail_po->nama_produk ?> <?= $ukuran_tam?>
+                                            <!-- memiliki ukuran & warna -->
+                                            <?php if($detail_po->keterangan == 0){
+                                                $ukuran_tam = "";
+                                                $warna_tam  = "";
+                                                foreach($ukuran as $u){
+                                                    if($u->id_ukuran_produk == $detail_po->id_ukuran_produk){
+                                                        $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
+                                                    }
+                                                }
+                                                
+                                                foreach($warna as $w){
+                                                    if($w->id_warna == $detail_po->id_warna){
+                                                        $warna_tam = $w->nama_warna;
+                                                    }
+                                                }
+                                            ?>
+                                                <?= $detail_po->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
+                                            <!-- memiliki ukuran -->
+                                            <?php } else if($detail_po->keterangan == 1){
+                                                $ukuran_tam = "";
+                                                
+                                                foreach($ukuran as $u){
+                                                    if($u->id_ukuran_produk == $detail_po->id_ukuran_produk){
+                                                        $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                    }
+                                                }
+                                            ?>
+                                                <?= $detail_po->nama_produk ?> <?= $ukuran_tam?>
 
-                            <?php } else if($detail_po->keterangan == 2){
-                                $warna_tam = "";
+                                            <?php } else if($detail_po->keterangan == 2){
+                                                $warna_tam = "";
 
-                                foreach($warna as $w){
-                                    if($w->id_warna == $detail_po->id_warna){
-                                        $warna_tam = $w->nama_warna;
-                                    }
-                                }
-                            ?>
-                                <?= $detail_po->nama_produk ?> (<?= $warna_tam;?>)
-                            <?php } else{?>
-                                <?= $detail_po->nama_produk ?>
-                            <?php } ?>
-                        </p>
-                        <!-- Nama Konsumen -->
-                        <p id="<?= $count ?>nama_customer2" style="font-size:10px">
-                            <?= $detail_po->nama_customer?>
-                        </p>
+                                                foreach($warna as $w){
+                                                    if($w->id_warna == $detail_po->id_warna){
+                                                        $warna_tam = $w->nama_warna;
+                                                    }
+                                                }
+                                            ?>
+                                                <?= $detail_po->nama_produk ?> (<?= $warna_tam;?>)
+                                            <?php } else{?>
+                                                <?= $detail_po->nama_produk ?>
+                                            <?php } ?>
+                                        </p>
+                                        <!-- Nama Konsumen -->
+                                        <p id="<?= $count ?>nama_customer2" style="font-size:10px">
+                                            <?= $detail_po->nama_customer?>
+                                        </p>
 
-                        <table class="table table-bordered table-striped mb-none"
-                            id="datatable-default"  style="font-size:9px">
-                                <thead>
-                                    <tr>
-                                        <th class="col-md-9"><center>Nama Line</center></th>
-                                        <th class="col-md-1"><center>Target</center></th>
-                                        <th class="col-md-1"><center>Plan</center></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach($cycle_time as $ct){
-                                        if($ct->id_produk == $detail_po->id_produk){?>
-                                        <tr>
-                                            <td style="text-align: center;vertical-align: middle;">
-                                                <input type="text" id="<?= $count?>idline2<?= $ct->id_line?>" value="<?= $ct->id_line?>">
-                                                <?= $ct->nama_line?>
-                                            </td>
-                                            <td>
-                                                <input type="text" id="<?= $count?>target2<?= $ct->id_line?>"  style="text-align: center;vertical-align: middle;"
-                                                class="row_efisiensi" disabled>
-                                            </td>
-                                            <td>
-                                                <input type="text" id="<?= $count?>plan2<?= $ct->id_line?>" style="text-align: center;vertical-align:middle;" 
-                                                class="row_efisiensi" disabled>
-                                            </td>
-                                        </tr>
-                                    <?php }} ?>
-                                </tbody>
-                        </table>
-                    </div>
+                                        <table class="table table-bordered table-striped mb-none"
+                                            id="datatable-default"  style="font-size:9px">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="col-md-9"><center>Nama Line</center></th>
+                                                        <th class="col-md-1"><center>Target</center></th>
+                                                        <th class="col-md-1"><center>Plan</center></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php foreach($cycle_time as $ct){
+                                                        if($ct->id_produk == $detail_po->id_produk){?>
+                                                        <tr>
+                                                            <td style="text-align: center;vertical-align: middle;">
+                                                                <input type="text" id="<?= $count?>idline2<?= $ct->id_line?>" value="<?= $ct->id_line?>">
+                                                                <?= $ct->nama_line?>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="<?= $count?>target2<?= $ct->id_line?>"  style="text-align: center;vertical-align: middle;"
+                                                                class="row_efisiensi" disabled>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="<?= $count?>plan2<?= $ct->id_line?>" style="text-align: center;vertical-align:middle;" 
+                                                                class="row_efisiensi" disabled>
+                                                            </td>
+                                                        </tr>
+                                                    <?php }} ?>
+                                                </tbody>
+                                        </table>
+                                    </div>
 
-                <?php $count++;}} ?>
+                                <?php $count++; } else{ ?>
+                                    <div id="track<?= $count ?>" >
+                                        <!-- Nama produk (jumlah produk) -->
+                                        <p id="<?= $count ?>nama_produk2" style="font-size:10px">
+                                            <span><?= $count+1?>. </span>
+
+                                            <!-- memiliki ukuran & warna -->
+                                            <?php if($detail_po->keterangan == 0){
+                                                $ukuran_tam = "";
+                                                $warna_tam  = "";
+                                                foreach($ukuran as $u){
+                                                    if($u->id_ukuran_produk == $detail_po->id_ukuran_produk){
+                                                        $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
+                                                    }
+                                                }
+                                                
+                                                foreach($warna as $w){
+                                                    if($w->id_warna == $detail_po->id_warna){
+                                                        $warna_tam = $w->nama_warna;
+                                                    }
+                                                }
+                                            ?>
+                                                <?= $detail_po->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
+                                            <!-- memiliki ukuran -->
+                                            <?php } else if($detail_po->keterangan == 1){
+                                                $ukuran_tam = "";
+                                                
+                                                foreach($ukuran as $u){
+                                                    if($u->id_ukuran_produk == $detail_po->id_ukuran_produk){
+                                                        $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                    }
+                                                }
+                                            ?>
+                                                <?= $detail_po->nama_produk ?> <?= $ukuran_tam?>
+
+                                            <?php } else if($detail_po->keterangan == 2){
+                                                $warna_tam = "";
+
+                                                foreach($warna as $w){
+                                                    if($w->id_warna == $detail_po->id_warna){
+                                                        $warna_tam = $w->nama_warna;
+                                                    }
+                                                }
+                                            ?>
+                                                <?= $detail_po->nama_produk ?> (<?= $warna_tam;?>)
+                                            <?php } else{?>
+                                                <?= $detail_po->nama_produk ?>
+                                            <?php } ?>
+                                        </p>
+                                        <!-- Nama Konsumen -->
+                                        <p id="<?= $count ?>nama_customer2" style="font-size:10px">
+                                            <?= $detail_po->nama_customer?>
+                                        </p>
+
+                                        <table class="table table-bordered table-striped mb-none"
+                                            id="datatable-default"  style="font-size:9px">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="col-md-9"><center>Nama Line</center></th>
+                                                        <th class="col-md-1"><center>Target</center></th>
+                                                        <th class="col-md-1"><center>Plan</center></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php foreach($cycle_time as $ct){
+                                                        if($ct->id_produk == $detail_po->id_produk){?>
+                                                        <tr>
+                                                            <td style="text-align: center;vertical-align: middle;">
+                                                                <input type="text" id="<?= $count?>idline2<?= $ct->id_line?>" value="<?= $ct->id_line?>">
+                                                                <?= $ct->nama_line?>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="<?= $count?>target2<?= $ct->id_line?>"  style="text-align: center;vertical-align: middle;"
+                                                                class="row_efisiensi" disabled>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="<?= $count?>plan2<?= $ct->id_line?>" style="text-align: center;vertical-align:middle;" 
+                                                                class="row_efisiensi" disabled>
+                                                            </td>
+                                                        </tr>
+                                                    <?php }} ?>
+                                                </tbody>
+                                        </table>
+                                    </div>
+                                <?php $count++; } ?>
+                            <?php }} ?>
+                        <?php } ?>
+                    <?php } ?>
+
 
                 <?php 
                     $countt = $count;
                     foreach($produksi_tertunda as $pt){?>
-                        <div id="track<?= $countt ?>" style="display:none">
+                        <div id="track<?= $countt ?>" >
                             <!-- Nama produk (jumlah produk) -->
                             <p id="<?= $countt ?>nama_produk2" style="font-size:10px">
                                 <span><?= $countt+1?>. </span>
@@ -1301,7 +2026,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-default modal-dismiss" value="Ok" onclick="close_modal()">
+                    <input type="button" class="btn btn-default modal-dismiss" value="Ok" onclick="reload()">
                 </div>
             </div>
         </div>
@@ -1406,43 +2131,13 @@
     }
 </script>
 
-<!-- close modal -->
+<!-- search bg.1 -->
 <script>
-    function close_modal(){
-        $("#modalredetail").modal('hide');
-    }
-</script>
-
-<!-- search bg.1 po -->
-<script>
-    function myFunction1() {
+    function myFunction() {
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
     table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        
-        if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-        } else {
-            tr[i].style.display = "none";
-        }
-        }       
-    }
-    }
-</script>
-
-<!-- search bg.1 re -->
-<script>
-    function myFunction2() {
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("remyInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("remyTable");
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[0];

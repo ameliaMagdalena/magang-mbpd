@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body" >
     <header class="page-header">
-        <h2> Edit Perencanaan Produksi</h2>
+        <h2> Tambah Perencanaan Produksi</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span> Edit Perencanaan Produksi</span></li>
+                <li><span> + Perencanaan Produksi</span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -83,7 +83,7 @@
                                     <center>
                                         <!-- persentase prt(presentase yg ditampilkan) & prs(presentase yg disimpan) -->
                                         <?php if($pl->efisiensi_perencanaan != 0){?>
-                                            <span id="prt<?= $ln->id_line?>day<?=$j?>"><?= $pl->efisiensi_perencanaan?>%</span>
+                                            <span id="prt<?= $ln->id_line?>day<?=$j?>"><?= $pl->efisiensi_perencanaan?></span>
                                             <input type="text" class="row_efisiensi" id="prs<?= $ln->id_line?>day<?=$j?>" 
                                             value="<?= $pl->efisiensi_perencanaan?>" readonly>
                                             <!-- total waktu -->
@@ -115,7 +115,7 @@
             <div class="panel-body" style="height: 300px;overflow: scroll;margin-left:-25px;margin-right:-25px">
                 <!-- BAGIAN II : PRODUK & BAGIAN III : PERENCANAAN PRODUKSI -->
                 <input id="start_date" type="hidden" value="<?= $start_date;?>">
-                <input type="text" id="jumlah_div_ada_isi" value="<?= $jm_detail_produksi_line + $jm_dpl_reschedule_group?>">
+                <input type="text" id="jumlah_div_ada_isi" value="<?= $jm_detail_produksi_line?>">
         
                 <div class="col-md-12" id="isi_bg3">
                     <table class="table table-bordered table-striped mb-none table_efisiensi_pp" id="datatable-default">
@@ -179,7 +179,7 @@
 
                                                     if($jmlah_ctp == 3){
                                     ?>
-                                                        <tr  id="1perc<?= $no; ?>" style="display:none">
+                                                        <tr  id="1perc<?= $no; ?>" >
                                                             <td rowspan="4">
                                                                 <!-- buat keterangan, div mana yang ada isi deng nda. kalo 0 berarti nda ada isi, kalo 1 ada isi -->
                                                                 <input type="text" id="ket<?= $no;?>" value="0" style="width:20px">
@@ -305,7 +305,7 @@
                                                             $lineke = 1;
                                                             foreach($cycle_time as $ct){
                                                             if($ct->id_produk == $det_po->id_produk){?>
-                                                                <tr id="2perc<?= $no; ?>ke<?= $lineke?>" style="display:none" >
+                                                                <tr id="2perc<?= $no; ?>ke<?= $lineke?>" >
                                                                         <td>
                                                                             <input type="text" id="<?=$no?>id_line<?= $lineke?>"
                                                                             class="row_efisiensi" value="<?= $ct->id_line?>">
@@ -332,7 +332,7 @@
                                                     <?php
                                                     } else{
                                                     ?>
-                                                        <tr id="1perc<?= $no; ?>" style="display:none">
+                                                        <tr id="1perc<?= $no; ?>" >
                                                             <td rowspan="5">
                                                                 <!-- buat keterangan, div mana yang ada isi deng nda -->
                                                                 <input type="text" id="ket<?= $no;?>" value="0" style="width:20px">
@@ -458,7 +458,7 @@
                                                             $lineke = 1;
                                                             foreach($cycle_time as $ct){
                                                                 if($ct->id_produk == $det_po->id_produk){?>
-                                                                <tr id="2perc<?= $no; ?>ke<?= $lineke?>" style="display:none">
+                                                                <tr id="2perc<?= $no; ?>ke<?= $lineke?>" >
                                                                     <td>
                                                                         <input type="text" id="<?=$no?>id_line<?= $lineke?>"
                                                                         class="row_efisiensi" value="<?= $ct->id_line?>">
@@ -487,6 +487,27 @@
                                 <?php } else{
                                     foreach($detail_produksi_line as $dpl){
                                         if($dpl->id_detail_purchase_order == $det_po->id_detail_purchase_order_customer){
+                                            $hit = 0;
+                                            $count_line = 0;
+                                            foreach($cycle_time as $ct){
+                                                if($ct->id_produk == $det_po->id_produk){
+                                                    $count_line++;
+                                                }
+                                            }
+        
+                                            foreach($jm_perc_seb as $z){
+                                                if($z->id_detail_purchase_order == $det_po->id_detail_purchase_order_customer){
+                                                    $sebelum = $z->jumlah_sebelum;
+                                                    $target  = $det_po->jumlah_produk;
+        
+                                                    if($sebelum == $target){
+                                                        $hit++;
+                                                    }
+                                                }
+                                            }
+                                        
+                                            //jika masih ada yang harus dibuatkan perencanaan
+                                            if($hit != $count_line){
                                 ?>
                                                 <?php
                                                     foreach($jumlah_ct_produk as $jctp){
@@ -495,7 +516,7 @@
 
                                                             if($jmlah_ctp == 3){
                                                 ?>
-                                                                <tr  id="1perc<?= $no; ?>">
+                                                                <tr  id="1perc<?= $no; ?>" >
                                                                     <td rowspan="4">
                                                                         <!-- buat keterangan, div mana yang ada isi deng nda. kalo 0 berarti nda ada isi, kalo 1 ada isi -->
                                                                         <input type="text" id="ket<?= $no;?>" value="3" style="width:20px">
@@ -646,47 +667,39 @@
                                                                                             if($hitungan > 0){
                                                                                                 foreach($dpl_tam as $detprodline){
                                                                                                     if($detprodline->id_detail_purchase_order == $det_po->id_detail_purchase_order_customer && $detprodline->id_line == $ct->id_line && $detprodline->id_produksi == $p->id_produksi){
-                                                                                                        if($detprodline->jumlah_item_perencanaan > 0){
-                                                                                            ?>
-                                                                                                            <td>
-                                                                                                                <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->jumlah_item_perencanaan?>"
-                                                                                                                type="number" class="inputinput form-control" min="0"
-                                                                                                                style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                                                                                <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->waktu_proses_perencanaan?>"
-                                                                                                                type="text" class="form-control" disabled min="0"
-                                                                                                                style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                                                                                <input id="id_dpl<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->id_detail_produksi_line?>"
-                                                                                                                type="text" class="form-control" disabled min="0"
-                                                                                                                style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                                                                            </td>
-                                                                                            <?php
-                                                                                                       $z++; } else{
                                                                                             ?>
                                                                                                         <td>
-                                                                                                            <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>"
+                                                                                                            <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->jumlah_item_perencanaan?>"
                                                                                                             type="number" class="inputinput form-control" min="0"
                                                                                                             style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                                                                            <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                                                            type="text" class="form-control" disabled min="0"
-                                                                                                            style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                                                                            <input id="id_dpl<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->id_detail_produksi_line?>"
+                                                                                                            <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->waktu_proses_perencanaan?>"
                                                                                                             type="text" class="form-control" disabled min="0"
                                                                                                             style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                                                         </td>
-                                                                                    <?php
-                                                                                                    $z++; }
+                                                                                            <?php
+                                                                                                    $z++;
+                                                                                                    }
                                                                                                 }
-                                                                                            } 
-                                                                                        } 
-                                                                                    }
+                                                                                            } else{
                                                                                     ?>
+                                                                                                    <td>
+                                                                                                        <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>"
+                                                                                                        type="number" class="inputinput form-control" min="0"
+                                                                                                        style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
+                                                                                                        <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
+                                                                                                        type="text" class="form-control" disabled min="0"
+                                                                                                        style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
+                                                                                                        
+                                                                                                    </td>
+                                                                                            <?php $z++; } ?>
+                                                                                    <?php  } ?>
                                                                         </tr>
                                                                 <?php $lineke++;}} ?> 
                                                                 <input type="hidden" id="jumlah_line<?= $no?>" value="<?= $lineke;?>">                        
                                                             <?php
                                                             } else{
                                                             ?>
-                                                                <tr id="1perc<?= $no; ?>">
+                                                                <tr id="1perc<?= $no; ?>" >
                                                                     <td rowspan="5">
                                                                         <!-- buat keterangan, div mana yang ada isi deng nda -->
                                                                         <input type="text" id="ket<?= $no;?>" value="3" style="width:20px">
@@ -812,7 +825,7 @@
                                                                     $lineke = 1;
                                                                     foreach($cycle_time as $ct){
                                                                         if($ct->id_produk == $det_po->id_produk){?>
-                                                                        <tr id="2perc<?= $no; ?>ke<?= $lineke?>">
+                                                                        <tr id="2perc<?= $no; ?>ke<?= $lineke?>" >
                                                                             <td>
                                                                                 <input type="text" id="<?=$no?>id_line<?= $lineke?>"
                                                                                 class="row_efisiensi" value="<?= $ct->id_line?>">
@@ -823,6 +836,195 @@
                                                                                 <center><?= $ct->nama_line?></center>
                                                                             </td>
                                                                                 <!--$inputan_jumlah_produk+-->
+                                                                                <?php 
+                                                                                    $z=1;
+                                                                                    foreach($produksi as $p){ 
+                                                                                        $hitungan = 0;
+                                                                                        foreach($dpl_tam as $detprodline){
+                                                                                            if($detprodline->id_detail_purchase_order == $det_po->id_detail_purchase_order_customer && $detprodline->id_line == $ct->id_line && $detprodline->id_produksi == $p->id_produksi){
+                                                                                                $hitungan++;
+                                                                                                
+                                                                                            }
+                                                                                        }
+
+                                                                                        if($hitungan > 0){
+                                                                                            foreach($dpl_tam as $detprodline){
+                                                                                                if($detprodline->id_detail_purchase_order == $det_po->id_detail_purchase_order_customer && $detprodline->id_line == $ct->id_line && $detprodline->id_produksi == $p->id_produksi){
+                                                                                        ?>
+                                                                                                     <td>
+                                                                                                        <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->jumlah_item_perencanaan?>"
+                                                                                                        type="number" class="inputinput form-control" min="0"
+                                                                                                        style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
+                                                                                                        <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->waktu_proses_perencanaan?>"
+                                                                                                        type="text" class="form-control" disabled min="0"
+                                                                                                        style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
+                                                                                                    </td>
+                                                                                        <?php
+                                                                                                $z++;
+                                                                                                }
+                                                                                            }
+                                                                                        } else{
+                                                                                ?>
+                                                                                                <td>
+                                                                                                    <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>"
+                                                                                                    type="number" class="inputinput form-control" min="0"
+                                                                                                    style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
+                                                                                                    <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
+                                                                                                    type="text" class="form-control" disabled min="0"
+                                                                                                    style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
+                                                                                                </td>
+                                                                                        <?php $z++; } ?>
+                                                                                <?php  } ?>
+                                                                        </tr>
+                                                                <?php $lineke++;}} ?>
+                                                                <input type="hidden" id="jumlah_line<?= $no?>" value="<?= $lineke;?>">
+                                                            <?php }?>
+                                                <?php $no++; }} ?>
+                                            <?php }  else{?>
+                                                <?php
+                                                    foreach($jumlah_ct_produk as $jctp){
+                                                        if($det_po->id_produk == $jctp->id_produk){
+                                                            $jmlah_ctp = $jctp->jumlah_ct;
+
+                                                            if($jmlah_ctp == 3){
+                                                ?>
+                                                                <tr  id="1perc<?= $no; ?>" >
+                                                                    <td rowspan="4">
+                                                                        <!-- buat keterangan, div mana yang ada isi deng nda. kalo 0 berarti nda ada isi, kalo 1 ada isi -->
+                                                                        <input type="text" id="ket<?= $no;?>" value="3" style="width:20px">
+                                                                        <input type="text" id="statper<?= $no;?>" value="0" style="width:20px">
+                                                                        <center>
+                                                                            <button type="button" id="bedit<?= $no;?>" value="<?= $no; ?>"
+                                                                            class="btn btn-warning fa fa-pencil-square-o btn1 edit_produk" title="Edit"></button>
+                                                                        </center>
+                                                                    </td>
+                                                                    <td rowspan="4">
+                                                                        <input type="text" id="no<?= $no;?>" class="row_efisiensi"
+                                                                        value="<?= $no;?>" readonly>
+                                                                        <center><?= $no+1?></center>
+                                                                    </td>
+                                                                    <td rowspan="4">
+                                                                        <input type="text" id="cust<?= $no;?>" class="row_efisiensi"
+                                                                        value="<?= $det_po->nama_customer?>" readonly>
+                                                                        <center><?= $det_po->nama_customer?></center>
+                                                                    </td>
+                                                                    <td rowspan="4">
+                                                                        <input type="text" id="id_bg3<?= $no;?>" value="<?= $det_po->id_detail_purchase_order_customer?>" style="width:50px">
+                                                                        
+                                                                            <!-- memiliki ukuran & warna -->
+                                                                            <?php if($det_po->keterangan == 0){
+                                                                                $ukuran_tam = "";
+                                                                                $warna_tam  = "";
+                                                                                foreach($ukuran as $u){
+                                                                                    if($u->id_ukuran_produk == $det_po->id_ukuran_produk){
+                                                                                        $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
+                                                                                    }
+                                                                                }
+                                                                                
+                                                                                foreach($warna as $w){
+                                                                                    if($w->id_warna == $det_po->id_warna){
+                                                                                        $warna_tam = $w->nama_warna;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                                                value="<?= $det_po->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)">
+                                                                            <!-- memiliki ukuran -->
+                                                                            <?php } else if($det_po->keterangan == 1){
+                                                                                $ukuran_tam = "";
+                                                                                
+                                                                                foreach($ukuran as $u){
+                                                                                    if($u->id_ukuran_produk == $det_po->id_ukuran_produk){
+                                                                                        $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                                                value="<?= $det_po->nama_produk ?> <?= $ukuran_tam?>">
+
+                                                                            <?php } else if($det_po->keterangan == 2){
+                                                                                $warna_tam = "";
+
+                                                                                foreach($warna as $w){
+                                                                                    if($w->id_warna == $det_po->id_warna){
+                                                                                        $warna_tam = $w->nama_warna;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                                                value="<?= $det_po->nama_produk ?> (<?= $warna_tam;?>)">
+                                                                            <?php } else{?>
+                                                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                                                value="<?= $det_po->nama_produk ?>">
+                                                                            <?php } ?>
+                                                                        
+                                                                        <center>
+                                                                            <!-- memiliki ukuran & warna -->
+                                                                            <?php if($det_po->keterangan == 0){
+                                                                                $ukuran_tam = "";
+                                                                                $warna_tam  = "";
+                                                                                foreach($ukuran as $u){
+                                                                                    if($u->id_ukuran_produk == $det_po->id_ukuran_produk){
+                                                                                        $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
+                                                                                    }
+                                                                                }
+                                                                                
+                                                                                foreach($warna as $w){
+                                                                                    if($w->id_warna == $det_po->id_warna){
+                                                                                        $warna_tam = $w->nama_warna;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <?= $det_po->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
+                                                                            <!-- memiliki ukuran -->
+                                                                            <?php } else if($det_po->keterangan == 1){
+                                                                                $ukuran_tam = "";
+                                                                                
+                                                                                foreach($ukuran as $u){
+                                                                                    if($u->id_ukuran_produk == $det_po->id_ukuran_produk){
+                                                                                        $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <?= $det_po->nama_produk ?> <?= $ukuran_tam?>
+
+                                                                            <?php } else if($det_po->keterangan == 2){
+                                                                                $warna_tam = "";
+
+                                                                                foreach($warna as $w){
+                                                                                    if($w->id_warna == $det_po->id_warna){
+                                                                                        $warna_tam = $w->nama_warna;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <?= $det_po->nama_produk ?> (<?= $warna_tam;?>)
+                                                                            <?php } else{?>
+                                                                                <?= $det_po->nama_produk ?>
+                                                                            <?php } ?>
+                                                                        </center>
+                                                                    </td>
+                                                                    <td rowspan="4">
+                                                                        <input type="text" id="qty<?= $no;?>" class="row_efisiensi"
+                                                                        value="<?= $det_po->jumlah_produk?>">
+                                                                        <center><?= $det_po->jumlah_produk?></center>
+                                                                    </td>
+                                                                </tr>
+                                                                <!--$nama_lines-->
+                                                                <?php 
+                                                                    $lineke = 1;
+                                                                    foreach($cycle_time as $ct){
+                                                                    if($ct->id_produk == $det_po->id_produk){?>
+                                                                        <tr id="2perc<?= $no; ?>ke<?= $lineke?>" >
+                                                                                <td>
+                                                                                    <input type="text" id="<?=$no?>id_line<?= $lineke?>"
+                                                                                    class="row_efisiensi" value="<?= $ct->id_line?>">
+                                                                                    <input type="text" id="<?=$no?>nama_line<?= $ct->id_line?>"
+                                                                                    class="row_efisiensi" value="<?= $ct->nama_line?>">
+                                                                                    <input type="text" id="<?=$no?>ct<?= $ct->id_line?>"
+                                                                                    class="row_efisiensi" value="<?= $ct->cycle_time?>">
+                                                                                    <center><?= $ct->nama_line?></center>
+                                                                                </td>
+                                                                                    <!--$inputan_jumlah_produk+-->
                                                                                     <?php 
                                                                                         $z=1;
                                                                                         foreach($produksi as $p){ 
@@ -837,40 +1039,214 @@
                                                                                             if($hitungan > 0){
                                                                                                 foreach($dpl_tam as $detprodline){
                                                                                                     if($detprodline->id_detail_purchase_order == $det_po->id_detail_purchase_order_customer && $detprodline->id_line == $ct->id_line && $detprodline->id_produksi == $p->id_produksi){
-                                                                                                        if($detprodline->jumlah_item_perencanaan > 0){
-                                                                                            ?>
-                                                                                                            <td>
-                                                                                                                <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->jumlah_item_perencanaan?>"
-                                                                                                                type="number" class="inputinput form-control" min="0"
-                                                                                                                style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                                                                                <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->waktu_proses_perencanaan?>"
-                                                                                                                type="text" class="form-control" disabled min="0"
-                                                                                                                style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                                                                                <input id="id_dpl<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->id_detail_produksi_line?>"
-                                                                                                                type="text" class="form-control" disabled min="0"
-                                                                                                                style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                                                                            </td>
-                                                                                            <?php
-                                                                                                       $z++; } else{
                                                                                             ?>
                                                                                                         <td>
-                                                                                                            <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>"
+                                                                                                            <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->jumlah_item_perencanaan?>"
                                                                                                             type="number" class="inputinput form-control" min="0"
                                                                                                             style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                                                                            <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                                                            type="text" class="form-control" disabled min="0"
-                                                                                                            style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                                                                            <input id="id_dpl<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->id_detail_produksi_line?>"
+                                                                                                            <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->waktu_proses_perencanaan?>"
                                                                                                             type="text" class="form-control" disabled min="0"
                                                                                                             style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                                                         </td>
-                                                                                    <?php
-                                                                                                    $z++; }
+                                                                                            <?php
+                                                                                                    $z++;
+                                                                                                    }
                                                                                                 }
-                                                                                            } 
-                                                                                        } 
-                                                                                    }
+                                                                                            } else{
                                                                                     ?>
+                                                                                                    <td>
+                                                                                                        <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>"
+                                                                                                        type="number" class="inputinput form-control" min="0"
+                                                                                                        style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
+                                                                                                        <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
+                                                                                                        type="text" class="form-control" disabled min="0"
+                                                                                                        style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
+                                                                                                    </td>
+                                                                                            <?php $z++; } ?>
+                                                                                    <?php  } ?>
+                                                                        </tr>
+                                                                <?php $lineke++;}} ?> 
+                                                                <input type="hidden" id="jumlah_line<?= $no?>" value="<?= $lineke;?>">                        
+                                                            <?php
+                                                            } else{
+                                                            ?>
+                                                                <tr id="1perc<?= $no; ?>" >
+                                                                    <td rowspan="5">
+                                                                        <!-- buat keterangan, div mana yang ada isi deng nda -->
+                                                                        <input type="text" id="ket<?= $no;?>" value="3" style="width:20px">
+                                                                        <input type="text" id="statper<?= $no;?>" value="0" style="width:20px">
+                                                                        <center>
+                                                                            <button type="button" id="bedit<?= $no;?>" value="<?= $no; ?>"
+                                                                            class="btn btn-warning fa fa-pencil-square-o btn1 edit_produk" title="Edit"></button>
+                                                                        </center>
+                                                                    </td>
+                                                                    <td rowspan="5">
+                                                                        <input type="text" id="no<?= $no;?>" class="row_efisiensi"
+                                                                        value="<?= $no;?>" readonly>
+                                                                        <center><?= $no+1?></center>
+                                                                    </td>
+                                                                    <td rowspan="5">
+                                                                        <input type="text" id="cust<?= $no;?>" class="row_efisiensi"
+                                                                        value="<?= $det_po->nama_customer?>" readonly>
+                                                                        <center><?= $det_po->nama_customer?></center>
+                                                                    </td>
+                                                                    <td rowspan="5">
+                                                                        <input type="text" id="id_bg3<?= $no;?>" value="<?= $det_po->id_detail_purchase_order_customer?>" style="width:50px">
+                                                                            <!-- memiliki ukuran & warna -->
+                                                                            <?php if($det_po->keterangan == 0){
+                                                                                $ukuran_tam = "";
+                                                                                $warna_tam  = "";
+                                                                                foreach($ukuran as $u){
+                                                                                    if($u->id_ukuran_produk == $det_po->id_ukuran_produk){
+                                                                                        $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
+                                                                                    }
+                                                                                }
+                                                                                
+                                                                                foreach($warna as $w){
+                                                                                    if($w->id_warna == $det_po->id_warna){
+                                                                                        $warna_tam = $w->nama_warna;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                                                value="<?= $det_po->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)">
+                                                                            <!-- memiliki ukuran -->
+                                                                            <?php } else if($det_po->keterangan == 1){
+                                                                                $ukuran_tam = "";
+                                                                                
+                                                                                foreach($ukuran as $u){
+                                                                                    if($u->id_ukuran_produk == $det_po->id_ukuran_produk){
+                                                                                        $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                                                value="<?= $det_po->nama_produk ?> <?= $ukuran_tam?>">
+
+                                                                            <?php } else if($det_po->keterangan == 2){
+                                                                                $warna_tam = "";
+
+                                                                                foreach($warna as $w){
+                                                                                    if($w->id_warna == $det_po->id_warna){
+                                                                                        $warna_tam = $w->nama_warna;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                                                value="<?= $det_po->nama_produk ?> (<?= $warna_tam;?>)">
+                                                                            <?php } else{?>
+                                                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                                                value="<?= $det_po->nama_produk ?>">
+                                                                            <?php } ?>
+
+
+                                                                        <center>
+                                                                            <!-- memiliki ukuran & warna -->
+                                                                            <?php if($det_po->keterangan == 0){
+                                                                                $ukuran_tam = "";
+                                                                                $warna_tam  = "";
+                                                                                foreach($ukuran as $u){
+                                                                                    if($u->id_ukuran_produk == $det_po->id_ukuran_produk){
+                                                                                        $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
+                                                                                    }
+                                                                                }
+                                                                                
+                                                                                foreach($warna as $w){
+                                                                                    if($w->id_warna == $det_po->id_warna){
+                                                                                        $warna_tam = $w->nama_warna;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <?= $det_po->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
+                                                                            <!-- memiliki ukuran -->
+                                                                            <?php } else if($det_po->keterangan == 1){
+                                                                                $ukuran_tam = "";
+                                                                                
+                                                                                foreach($ukuran as $u){
+                                                                                    if($u->id_ukuran_produk == $det_po->id_ukuran_produk){
+                                                                                        $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <?= $det_po->nama_produk ?> <?= $ukuran_tam?>
+
+                                                                            <?php } else if($det_po->keterangan == 2){
+                                                                                $warna_tam = "";
+
+                                                                                foreach($warna as $w){
+                                                                                    if($w->id_warna == $det_po->id_warna){
+                                                                                        $warna_tam = $w->nama_warna;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <?= $det_po->nama_produk ?> (<?= $warna_tam;?>)
+                                                                            <?php } else{?>
+                                                                                <?= $det_po->nama_produk ?>
+                                                                            <?php } ?>
+                                                                        </center>
+                                                                    </td>
+                                                                    <td rowspan="5">
+                                                                        <input type="text" id="qty<?= $no;?>" class="row_efisiensi"
+                                                                        value="<?= $det_po->jumlah_produk?>">
+                                                                        <center><?= $det_po->jumlah_produk?></center>
+                                                                    </td>
+                                                                </tr>
+                                                                <!--$nama_lines-->
+                                                                <?php 
+                                                                    $lineke = 1;
+                                                                    foreach($cycle_time as $ct){
+                                                                        if($ct->id_produk == $det_po->id_produk){?>
+                                                                        <tr id="2perc<?= $no; ?>ke<?= $lineke?>" >
+                                                                            <td>
+                                                                                <input type="text" id="<?=$no?>id_line<?= $lineke?>"
+                                                                                class="row_efisiensi" value="<?= $ct->id_line?>">
+                                                                                <input type="text" id="<?=$no?>nama_line<?= $ct->id_line?>"
+                                                                                class="row_efisiensi" value="<?= $ct->nama_line?>">
+                                                                                <input type="text" id="<?=$no?>ct<?= $ct->id_line?>"
+                                                                                class="row_efisiensi" value="<?= $ct->cycle_time?>">
+                                                                                <center><?= $ct->nama_line?></center>
+                                                                            </td>
+                                                                                <!--$inputan_jumlah_produk+-->
+                                                                                <?php 
+                                                                                    $z=1;
+                                                                                    foreach($produksi as $p){ 
+                                                                                        $hitungan = 0;
+                                                                                        foreach($dpl_tam as $detprodline){
+                                                                                            if($detprodline->id_detail_purchase_order == $det_po->id_detail_purchase_order_customer && $detprodline->id_line == $ct->id_line && $detprodline->id_produksi == $p->id_produksi){
+                                                                                                $hitungan++;
+                                                                                                
+                                                                                            }
+                                                                                        }
+
+                                                                                        if($hitungan > 0){
+                                                                                            foreach($dpl_tam as $detprodline){
+                                                                                                if($detprodline->id_detail_purchase_order == $det_po->id_detail_purchase_order_customer && $detprodline->id_line == $ct->id_line && $detprodline->id_produksi == $p->id_produksi){
+                                                                                        ?>
+                                                                                                     <td>
+                                                                                                        <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->jumlah_item_perencanaan?>"
+                                                                                                        type="number" class="inputinput form-control" min="0"
+                                                                                                        style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
+                                                                                                        <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->waktu_proses_perencanaan?>"
+                                                                                                        type="text" class="form-control" disabled min="0"
+                                                                                                        style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
+                                                                                                    </td>
+                                                                                        <?php
+                                                                                                $z++;
+                                                                                                }
+                                                                                            }
+                                                                                        } else{
+                                                                                ?>
+                                                                                                <td>
+                                                                                                    <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>"
+                                                                                                    type="number" class="inputinput form-control" min="0"
+                                                                                                    style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
+                                                                                                    <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
+                                                                                                    type="text" class="form-control" disabled min="0"
+                                                                                                    style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
+                                                                                                </td>
+                                                                                        <?php $z++; } ?>
+                                                                                <?php  } ?>
+                                                                                            
                                                                         </tr>
                                                                 <?php $lineke++;}} ?>
                                                                 <input type="hidden" id="jumlah_line<?= $no?>" value="<?= $lineke;?>">
@@ -880,352 +1256,165 @@
                                         <?php } ?>
                                     <?php } ?>
                                 <?php } ?>
-                        
+                            <?php } ?>
+
                         <!-- reschedule -->
                         <?php 
                             $no = $no;
                             foreach($produksi_tertunda as $pt){
-                                $cari_sama = 0;
-                                foreach($dpl_reschedule_group as $dpl_rg){
-                                    if($pt->id_produksi_tertunda == $dpl_rg->id_produksi_tertunda){
-                                        $cari_sama++;
-                                    }
-                                }
-
-                                if($cari_sama == 0){
-                                    if($pt->status_penjadwalan == 0 || $pt->status_penjadwalan == 1){
                         ?>
-                                    <tr  id="1perc<?= $no; ?>" style="display:none">
-                                        <td>
-                                            <!-- buat keterangan, div mana yang ada isi deng nda. kalo 0 berarti nda ada isi, kalo 1 ada isi -->
-                                            <input type="text" id="ket<?= $no;?>" value="0" style="width:20px">
-                                            <input type="text" id="statper<?= $no;?>" value="1" style="width:20px">
-                                            <center>
-                                                <button type="button" id="bedit<?= $no;?>" value="<?= $no; ?>"
-                                                class="btn btn-warning fa fa-pencil-square-o btn1 edit_produk" title="Edit"></button>
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <input type="text" id="no<?= $no;?>" class="row_efisiensi"
-                                            value="<?= $no;?>" readonly>
-                                            <center><?= $no+1?></center>
-                                        </td>
-                                        <td>
-                                            <input type="text" id="cust<?= $no;?>" class="row_efisiensi"
-                                            value="<?= $pt->nama_customer?>" readonly>
-                                            <center><?= $pt->nama_customer?></center>
-                                        </td>
-                                        <td>
-                                            <input type="text" id="id_bg3<?= $no;?>" value="<?= $pt->id_detail_purchase_order_customer?>" style="width:50px">
-                                            <input type="text" id="id_pt_bg3<?= $no;?>" value="<?= $pt->id_produksi_tertunda?>" style="width:50px">
-                                                <!-- memiliki ukuran & warna -->
-                                                <?php if($pt->keterangan == 0){
-                                                    $ukuran_tam = "";
-                                                    $warna_tam  = "";
-                                                    foreach($ukuran as $u){
-                                                        if($u->id_ukuran_produk == $pt->id_ukuran_produk){
-                                                            $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
-                                                        }
+                                <tr  id="1perc<?= $no; ?>">
+                                    <td>
+                                        <!-- buat keterangan, div mana yang ada isi deng nda. kalo 0 berarti nda ada isi, kalo 1 ada isi -->
+                                        <input type="text" id="ket<?= $no;?>" value="0" style="width:20px">
+                                        <input type="text" id="statper<?= $no;?>" value="1" style="width:20px">
+                                        <center>
+                                            <button type="button" id="bedit<?= $no;?>" value="<?= $no; ?>"
+                                            class="btn btn-warning fa fa-pencil-square-o btn1 edit_produk" title="Edit"></button>
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="no<?= $no;?>" class="row_efisiensi"
+                                        value="<?= $no;?>" readonly>
+                                        <center><?= $no+1?></center>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="cust<?= $no;?>" class="row_efisiensi"
+                                        value="<?= $pt->nama_customer?>" readonly>
+                                        <center><?= $pt->nama_customer?></center>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="id_bg3<?= $no;?>" value="<?= $pt->id_detail_purchase_order_customer?>" style="width:50px">
+                                        <input type="text" id="id_pt_bg3<?= $no;?>" value="<?= $pt->id_produksi_tertunda?>" style="width:50px">
+                                            <!-- memiliki ukuran & warna -->
+                                            <?php if($pt->keterangan == 0){
+                                                $ukuran_tam = "";
+                                                $warna_tam  = "";
+                                                foreach($ukuran as $u){
+                                                    if($u->id_ukuran_produk == $pt->id_ukuran_produk){
+                                                        $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
                                                     }
-                                                    
-                                                    foreach($warna as $w){
-                                                        if($w->id_warna == $pt->id_warna){
-                                                            $warna_tam = $w->nama_warna;
-                                                        }
-                                                    }
-                                                ?>
-                                                    <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
-                                                    value="<?= $pt->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)">
-                                                <!-- memiliki ukuran -->
-                                                <?php } else if($pt->keterangan == 1){
-                                                    $ukuran_tam = "";
-                                                    
-                                                    foreach($ukuran as $u){
-                                                        if($u->id_ukuran_produk == $pt->id_ukuran_produk){
-                                                            $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
-                                                        }
-                                                    }
-                                                ?>
-                                                    <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
-                                                    value="<?= $pt->nama_produk ?> <?= $ukuran_tam?>">
-
-                                                <?php } else if($pt->keterangan == 2){
-                                                    $warna_tam = "";
-
-                                                    foreach($warna as $w){
-                                                        if($w->id_warna == $pt->id_warna){
-                                                            $warna_tam = $w->nama_warna;
-                                                        }
-                                                    }
-                                                ?>
-                                                    <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
-                                                    value="<?= $pt->nama_produk ?> (<?= $warna_tam;?>)">
-                                                <?php } else{?>
-                                                    <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
-                                                    value="<?= $pt->nama_produk ?>">
-                                                <?php } ?>
-                                            
-                                            <center>
-                                                <!-- memiliki ukuran & warna -->
-                                                <?php if($pt->keterangan == 0){
-                                                    $ukuran_tam = "";
-                                                    $warna_tam  = "";
-                                                    foreach($ukuran as $u){
-                                                        if($u->id_ukuran_produk == $pt->id_ukuran_produk){
-                                                            $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
-                                                        }
-                                                    }
-                                                    
-                                                    foreach($warna as $w){
-                                                        if($w->id_warna == $pt->id_warna){
-                                                            $warna_tam = $w->nama_warna;
-                                                        }
-                                                    }
-                                                ?>
-                                                    <?= $pt->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
-                                                <!-- memiliki ukuran -->
-                                                <?php } else if($pt->keterangan == 1){
-                                                    $ukuran_tam = "";
-                                                    
-                                                    foreach($ukuran as $u){
-                                                        if($u->id_ukuran_produk == $pt->id_ukuran_produk){
-                                                            $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
-                                                        }
-                                                    }
-                                                ?>
-                                                    <?= $pt->nama_produk ?> <?= $ukuran_tam?>
-
-                                                <?php } else if($pt->keterangan == 2){
-                                                    $warna_tam = "";
-
-                                                    foreach($warna as $w){
-                                                        if($w->id_warna == $pt->id_warna){
-                                                            $warna_tam = $w->nama_warna;
-                                                        }
-                                                    }
-                                                ?>
-                                                    <?= $pt->nama_produk ?> (<?= $warna_tam;?>)
-                                                <?php } else{?>
-                                                    <?= $pt->nama_produk ?>
-                                                <?php } ?>
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <input type="text" id="qty<?= $no;?>" class="row_efisiensi"
-                                            value="<?= $pt->jumlah_tertunda?>">
-                                            <center><?= $pt->jumlah_tertunda?></center>
-                                        </td>
-                                    
-                                        <!--$nama_lines-->
-                                        <?php 
-                                            $lineke = 1;
-                                            foreach($cycle_time as $ct){
-                                                if($ct->id_produk == $pt->id_produk && $ct->id_line == $pt->id_line){
-                                        ?>
-                                        
-                                                    <td>
-                                                        <input type="text" id="<?=$no?>id_line<?= $lineke?>"
-                                                        class="row_efisiensi" value="<?= $ct->id_line?>">
-                                                        <input type="text" id="<?=$no?>nama_line<?= $ct->id_line?>"
-                                                        class="row_efisiensi" value="<?= $ct->nama_line?>">
-                                                        <input type="text" id="<?=$no?>ct<?= $ct->id_line?>"
-                                                        class="row_efisiensi" value="<?= $ct->cycle_time?>">
-                                                        <center><?= $ct->nama_line?></center>
-                                                    </td>
-                                                        <!--$inputan_jumlah_produk+-->
-                                                        <?php for($z=1;$z<=7;$z++){ ?>
-                                                            <td>
-                                                            <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                            type="number" class="inputinput form-control" min="0"
-                                                            style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                            <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                            type="text" class="form-control" disabled min="0"
-                                                            style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                            </td>
-                                                        <?php } ?>
-                                    </tr>
-                                        <?php $lineke++;}} ?> 
-                                    <input type="hidden" id="jumlah_line<?= $no?>" value="<?= $lineke;?>">      
-                                <?php $no++; }} else {
-                                    foreach($dpl_reschedule_group as $dpl_rg){
-                                        if($pt->id_produksi_tertunda == $dpl_rg->id_produksi_tertunda){
-                                ?>
-                                            <tr  id="1perc<?= $no; ?>">
-                                                <td>
-                                                    <!-- buat keterangan, div mana yang ada isi deng nda. kalo 0 berarti nda ada isi, kalo 1 ada isi -->
-                                                    <input type="text" id="ket<?= $no;?>" value="3" style="width:20px">
-                                                    <input type="text" id="statper<?= $no;?>" value="1" style="width:20px">
-                                                    <center>
-                                                        <button type="button" id="bedit<?= $no;?>" value="<?= $no; ?>" 
-                                                        class="btn btn-warning fa fa-pencil-square-o btn1 edit_produk" title="Edit"></button>
-                                                    </center>
-                                                </td>
-                                                <td>
-                                                    <input type="text" id="no<?= $no;?>" class="row_efisiensi"
-                                                    value="<?= $no;?>" readonly>
-                                                    <center><?= $no+1?></center>
-                                                </td>
-                                                <td>
-                                                    <input type="text" id="cust<?= $no;?>" class="row_efisiensi"
-                                                    value="<?= $pt->nama_customer?>" readonly>
-                                                    <center><?= $pt->nama_customer?></center>
-                                                </td>
-                                                <td>
-                                                    <input type="text" id="id_bg3<?= $no;?>" value="<?= $pt->id_detail_purchase_order_customer?>" style="width:50px">
-                                                    <input type="text" id="id_pt_bg3<?= $no;?>" value="<?= $pt->id_produksi_tertunda?>" style="width:50px">
-                                                        <!-- memiliki ukuran & warna -->
-                                                        <?php if($pt->keterangan == 0){
-                                                            $ukuran_tam = "";
-                                                            $warna_tam  = "";
-                                                            foreach($ukuran as $u){
-                                                                if($u->id_ukuran_produk == $pt->id_ukuran_produk){
-                                                                    $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
-                                                                }
-                                                            }
-                                                            
-                                                            foreach($warna as $w){
-                                                                if($w->id_warna == $pt->id_warna){
-                                                                    $warna_tam = $w->nama_warna;
-                                                                }
-                                                            }
-                                                        ?>
-                                                            <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
-                                                            value="<?= $pt->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)">
-                                                        <!-- memiliki ukuran -->
-                                                        <?php } else if($pt->keterangan == 1){
-                                                            $ukuran_tam = "";
-                                                            
-                                                            foreach($ukuran as $u){
-                                                                if($u->id_ukuran_produk == $pt->id_ukuran_produk){
-                                                                    $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
-                                                                }
-                                                            }
-                                                        ?>
-                                                            <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
-                                                            value="<?= $pt->nama_produk ?> <?= $ukuran_tam?>">
-
-                                                        <?php } else if($pt->keterangan == 2){
-                                                            $warna_tam = "";
-
-                                                            foreach($warna as $w){
-                                                                if($w->id_warna == $pt->id_warna){
-                                                                    $warna_tam = $w->nama_warna;
-                                                                }
-                                                            }
-                                                        ?>
-                                                            <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
-                                                            value="<?= $pt->nama_produk ?> (<?= $warna_tam;?>)">
-                                                        <?php } else{?>
-                                                            <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
-                                                            value="<?= $pt->nama_produk ?>">
-                                                        <?php } ?>
-                                                    
-                                                    <center>
-                                                        <!-- memiliki ukuran & warna -->
-                                                        <?php if($pt->keterangan == 0){
-                                                            $ukuran_tam = "";
-                                                            $warna_tam  = "";
-                                                            foreach($ukuran as $u){
-                                                                if($u->id_ukuran_produk == $pt->id_ukuran_produk){
-                                                                    $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
-                                                                }
-                                                            }
-                                                            
-                                                            foreach($warna as $w){
-                                                                if($w->id_warna == $pt->id_warna){
-                                                                    $warna_tam = $w->nama_warna;
-                                                                }
-                                                            }
-                                                        ?>
-                                                            <?= $pt->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
-                                                        <!-- memiliki ukuran -->
-                                                        <?php } else if($pt->keterangan == 1){
-                                                            $ukuran_tam = "";
-                                                            
-                                                            foreach($ukuran as $u){
-                                                                if($u->id_ukuran_produk == $pt->id_ukuran_produk){
-                                                                    $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
-                                                                }
-                                                            }
-                                                        ?>
-                                                            <?= $pt->nama_produk ?> <?= $ukuran_tam?>
-
-                                                        <?php } else if($pt->keterangan == 2){
-                                                            $warna_tam = "";
-
-                                                            foreach($warna as $w){
-                                                                if($w->id_warna == $pt->id_warna){
-                                                                    $warna_tam = $w->nama_warna;
-                                                                }
-                                                            }
-                                                        ?>
-                                                            <?= $pt->nama_produk ?> (<?= $warna_tam;?>)
-                                                        <?php } else{?>
-                                                            <?= $pt->nama_produk ?>
-                                                        <?php } ?>
-                                                    </center>
-                                                </td>
-                                                <td>
-                                                    <input type="text" id="qty<?= $no;?>" class="row_efisiensi"
-                                                    value="<?= $pt->jumlah_tertunda?>">
-                                                    <center><?= $pt->jumlah_tertunda?></center>
-                                                </td>
-                                            
-                                                <!--$nama_lines-->
-                                                <?php 
-                                                    $lineke = 1;
-                                                    foreach($cycle_time as $ct){
-                                                        if($ct->id_produk == $pt->id_produk && $ct->id_line == $pt->id_line){
-                                                ?>
+                                                }
                                                 
-                                                            <td>
-                                                                <input type="text" id="<?=$no?>id_line<?= $lineke?>"
-                                                                class="row_efisiensi" value="<?= $ct->id_line?>">
-                                                                <input type="text" id="<?=$no?>nama_line<?= $ct->id_line?>"
-                                                                class="row_efisiensi" value="<?= $ct->nama_line?>">
-                                                                <input type="text" id="<?=$no?>ct<?= $ct->id_line?>"
-                                                                class="row_efisiensi" value="<?= $ct->cycle_time?>">
-                                                                <center><?= $ct->nama_line?></center>
-                                                            </td>
-                                                            <?php 
-                                                                $z=1;
-                                                                foreach($produksi as $p){
-                                                                    foreach($dpl_reschedule as $dplre){
-                                                                        if($dplre->id_produksi_tertunda == $dpl_rg->id_produksi_tertunda && $dplre->id_produksi == $p->id_produksi){
-                                                                            if($dplre->jumlah_item_perencanaan > 0){
-                                                            ?>
-                                                                                <td>
-                                                                                    <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                                    type="number" class="inputinput form-control" min="0" value="<?= $dplre->jumlah_item_perencanaan ?>"
-                                                                                    style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                                                    <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                                    type="text" class="form-control" disabled min="0" value="<?= $dplre->waktu_proses_perencanaan ?>"
-                                                                                    style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                                                    <input id="id_dpl<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                                    type="text" class="form-control" disabled min="0" value="<?= $dplre->id_detail_produksi_line ?>"
-                                                                                    style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                                                </td>
-                                                                            <?php } else{ ?>
-                                                                                <td>
-                                                                                    <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                                    type="number" class="inputinput form-control" min="0"
-                                                                                    style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                                                    <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                                    type="text" class="form-control" disabled min="0"
-                                                                                    style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                                                    <input id="id_dpl<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                                    type="text" class="form-control" disabled min="0" value="<?= $dplre->id_detail_produksi_line ?>"
-                                                                                    style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
-                                                                                </td>
-                                                                            <?php } ?>
-                                                            <?php $z++; }}}?>
-                                            </tr>
-                                                <?php $lineke++;}} ?> 
-                                            <input type="hidden" id="jumlah_line<?= $no?>" value="<?= $lineke;?>"> 
-                                        <?php $no++; } ?>
-                                        <?php } ?>
-                                    <?php } ?>
-                                <?php } ?>
+                                                foreach($warna as $w){
+                                                    if($w->id_warna == $pt->id_warna){
+                                                        $warna_tam = $w->nama_warna;
+                                                    }
+                                                }
+                                            ?>
+                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                value="<?= $pt->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)">
+                                            <!-- memiliki ukuran -->
+                                            <?php } else if($pt->keterangan == 1){
+                                                $ukuran_tam = "";
+                                                
+                                                foreach($ukuran as $u){
+                                                    if($u->id_ukuran_produk == $pt->id_ukuran_produk){
+                                                        $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                    }
+                                                }
+                                            ?>
+                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                value="<?= $pt->nama_produk ?> <?= $ukuran_tam?>">
+
+                                            <?php } else if($pt->keterangan == 2){
+                                                $warna_tam = "";
+
+                                                foreach($warna as $w){
+                                                    if($w->id_warna == $pt->id_warna){
+                                                        $warna_tam = $w->nama_warna;
+                                                    }
+                                                }
+                                            ?>
+                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                value="<?= $pt->nama_produk ?> (<?= $warna_tam;?>)">
+                                            <?php } else{?>
+                                                <input type="text" id="produk<?= $no;?>" class="row_efisiensi"
+                                                value="<?= $pt->nama_produk ?>">
+                                            <?php } ?>
+                                        
+                                        <center>
+                                            <!-- memiliki ukuran & warna -->
+                                            <?php if($pt->keterangan == 0){
+                                                $ukuran_tam = "";
+                                                $warna_tam  = "";
+                                                foreach($ukuran as $u){
+                                                    if($u->id_ukuran_produk == $pt->id_ukuran_produk){
+                                                        $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
+                                                    }
+                                                }
+                                                
+                                                foreach($warna as $w){
+                                                    if($w->id_warna == $pt->id_warna){
+                                                        $warna_tam = $w->nama_warna;
+                                                    }
+                                                }
+                                            ?>
+                                                <?= $pt->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
+                                            <!-- memiliki ukuran -->
+                                            <?php } else if($pt->keterangan == 1){
+                                                $ukuran_tam = "";
+                                                
+                                                foreach($ukuran as $u){
+                                                    if($u->id_ukuran_produk == $pt->id_ukuran_produk){
+                                                        $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                    }
+                                                }
+                                            ?>
+                                                <?= $pt->nama_produk ?> <?= $ukuran_tam?>
+
+                                            <?php } else if($pt->keterangan == 2){
+                                                $warna_tam = "";
+
+                                                foreach($warna as $w){
+                                                    if($w->id_warna == $pt->id_warna){
+                                                        $warna_tam = $w->nama_warna;
+                                                    }
+                                                }
+                                            ?>
+                                                <?= $pt->nama_produk ?> (<?= $warna_tam;?>)
+                                            <?php } else{?>
+                                                <?= $pt->nama_produk ?>
+                                            <?php } ?>
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="qty<?= $no;?>" class="row_efisiensi"
+                                        value="<?= $pt->jumlah_tertunda?>">
+                                        <center><?= $pt->jumlah_tertunda?></center>
+                                    </td>
+                                
+                                    <!--$nama_lines-->
+                                    <?php 
+                                        $lineke = 1;
+                                        foreach($cycle_time as $ct){
+                                            if($ct->id_produk == $pt->id_produk && $ct->id_line == $pt->id_line){
+                                    ?>
+                                       
+                                                <td>
+                                                    <input type="text" id="<?=$no?>id_line<?= $lineke?>"
+                                                    class="row_efisiensi" value="<?= $ct->id_line?>">
+                                                    <input type="text" id="<?=$no?>nama_line<?= $ct->id_line?>"
+                                                    class="row_efisiensi" value="<?= $ct->nama_line?>">
+                                                    <input type="text" id="<?=$no?>ct<?= $ct->id_line?>"
+                                                    class="row_efisiensi" value="<?= $ct->cycle_time?>">
+                                                    <center><?= $ct->nama_line?></center>
+                                                </td>
+                                                    <!--$inputan_jumlah_produk+-->
+                                                    <?php for($z=1;$z<=7;$z++){ ?>
+                                                        <td>
+                                                        <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>"
+                                                        type="number" class="inputinput form-control" min="0"
+                                                        style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
+                                                        <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
+                                                        type="text" class="form-control" disabled min="0"
+                                                        style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
+                                                        </td>
+                                                    <?php } ?>
+                                </tr>
+                                    <?php $lineke++;}} ?> 
+                                <input type="hidden" id="jumlah_line<?= $no?>" value="<?= $lineke;?>">      
+                        <?php $no++; } ?>
                     </table>
                 </div>
             </div>
@@ -1513,6 +1702,27 @@
                                                     foreach($detail_produksi_line as $dpl){
                                                         //if sama dengan edit
                                                         if($dpl->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                            $hit = 0;
+                                                            $count_line = 0;
+                                                            foreach($cycle_time as $ct){
+                                                                if($ct->id_produk == $dt_dpo->id_produk){
+                                                                    $count_line++;
+                                                                }
+                                                            }
+
+                                                            foreach($jm_perc_seb as $z){
+                                                                if($z->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                                    $sebelum = $z->jumlah_sebelum;
+                                                                    $target  = $dt_dpo->jumlah_produk;
+
+                                                                    if($sebelum == $target){
+                                                                        $hit++;
+                                                                    }
+                                                                }
+                                                            }
+                                                            
+                                                            //jika masih ada yang harus dibuatkan perencanaan, karpet polos
+                                                            if($hit != $count_line){
                                             ?>
                                                                 <tr id="bg1<?= $ke ?>">
                                                                     <td class="col-md-6">
@@ -1687,33 +1897,83 @@
                                                                             <?php 
                                                                                 foreach($cycle_time as $ct){
                                                                                 if($ct->id_produk == $dt_dpo->id_produk){
+                                                                                    $ket = 0;
+                                                                                    foreach($jm_perc_seb as $z){
+                                                                                        if($z->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                                                            $ket++;
+                                                                                        }
+                                                                                    }
+                                                                                    //kalau tidak ada perencanaan sebelum.
+                                                                                    if($ket == 0){
                                                                             ?>
-                                                                                    <?php 
-                                                                                        $jumlah_total = $dt_dpo->jumlah_produk;
-                                                                                        $jumlah_edit = 0;
-                                                                                        $jumlah_sblm = 0;
+                                                                                        <?php 
+                                                                                            $hit_dplt = 0;
+                                                                                            foreach($dpl_tam as $dplt){ 
+                                                                                                if($dplt->id_line == $ct->id_line && $dplt->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                                                                    if($dplt->jumlah_item_perencanaan != 0){
+                                                                                                        $hit_dplt++;
+                                                                                                    }
+                                                                                                    
+                                                                                                }
+                                                                                            } 
 
-                                                                                        foreach($dpl_tam_total as $dplt){
-                                                                                            if($dplt->id_line == $ct->id_line && $dplt->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){ 
-                                                                                                $jumlah_edit = $dplt->jumlah_edit;
-                                                                                            }
-                                                                                        }
+                                                                                                if($hit_dplt > 0){
+                                                                                                    foreach($dpl_tam as $dplt){
+                                                                                                        if($dplt->id_line == $ct->id_line && $dplt->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                                                                            $jumlah_total = $dt_dpo->jumlah_produk;
+                                                                                                            $jumlah_edit  = $dplt->jumlah_item_perencanaan;
+                                                                                                            $jumlah_now   = $jumlah_total + $jumlah_edit;
+                                                                                        ?>
+                                                                                                            <div class="form-group mt-lg">
+                                                                                                                <label class="col-sm-5 control-label"><?= $ct->nama_line;?></label>
+                                                                                                                <div class="col-sm-7">
+                                                                                                                    <input type="text" id="<?= $ke ?>target1<?= $ct->id_line ?>" class="form-control"
+                                                                                                                    value="<?= $jumlah_now?>" readonly>
+                                                                                                                </div>
+                                                                                                            </div>   
+                                                                                                    <?php
+                                                                                                        }
+                                                                                                    } 
+                                                                                                    ?>
+                                                                                                 
+                                                                                                <?php } else{?>
+                                                                                                <div class="form-group mt-lg">
+                                                                                                    <label class="col-sm-5 control-label"><?= $ct->nama_line;?></label>
+                                                                                                    <div class="col-sm-7">
+                                                                                                        <input type="text" id="<?= $ke ?>target1<?= $ct->id_line ?>" class="form-control"
+                                                                                                        value="<?= $dt_dpo->jumlah_produk?>" readonly>
+                                                                                                    </div>
+                                                                                                </div>  
+                                                                                            <?php } ?>
+                                                                                    <?php  } else{ ?>
+                                                                                            <?php 
+                                                                                                $jumlah_total = $dt_dpo->jumlah_produk; //100
+                                                                                                $cek_dplt = 0;
+                                                                                                foreach($dpl_tam as $dplt){
+                                                                                                    if($dplt->id_line == $ct->id_line && $dplt->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){ 
+                                                                                                        $jumlah_edit = $dplt->jumlah_item_perencanaan;
+                                                                                                        $cek_dplt++;
+                                                                                                    }
+                                                                                                }
 
-                                                                                        foreach($jm_perc_seb as $zz){
-                                                                                            if($zz->id_line == $ct->id_line && $zz->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
-                                                                                                $jumlah_sblm  = $zz->jumlah_sebelum;
-                                                                                            }
-                                                                                        }
+                                                                                                $cek_percseb = 0;
+                                                                                                    foreach($jm_perc_seb as $zz){
+                                                                                                        if($zz->id_line == $ct->id_line && $zz->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                                                                            $jumlah_sblm  = $zz->jumlah_sebelum;
+                                                                                                            $cek_percseb++;
+                                                                                                        }
+                                                                                                    }
 
-                                                                                        $jumlah_now = $jumlah_total - $jumlah_sblm + $jumlah_edit;
-                                                                                    ?>
-                                                                                    <div class="form-group mt-lg">
-                                                                                        <label class="col-sm-5 control-label"><?= $ct->nama_line;?></label>
-                                                                                        <div class="col-sm-7">
-                                                                                            <input type="text" id="<?= $ke ?>target1<?= $ct->id_line ?>" class="form-control"
-                                                                                            value="<?= $jumlah_now ?>" readonly>
-                                                                                        </div>
-                                                                                    </div>
+                                                                                                    $jumlah_now = $jumlah_total - $jumlah_sblm + $jumlah_edit;
+                                                                                            ?>
+                                                                                                    <div class="form-group mt-lg">
+                                                                                                        <label class="col-sm-5 control-label"><?= $ct->nama_line;?></label>
+                                                                                                        <div class="col-sm-7">
+                                                                                                            <input type="text" id="<?= $ke ?>target1<?= $ct->id_line ?>" class="form-control"
+                                                                                                            value="<?= $jumlah_now ?>" readonly>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                    <?php } ?>
                                                                             <?php }} ?>
                                                                     <!-- -->
                                                                         </div>
@@ -1727,7 +1987,229 @@
                                                                         </footer>
                                                                     </section>
                                                                 </div>
-                                                    <?php $ke++;} ?>
+                                                            <?php $ke++; } else{?>
+                                                                <tr id="bg1<?= $ke ?>">
+                                                                    <td class="col-md-6">
+                                                                        <input type="text" class="input_bgpo1 info_produk1"
+                                                                        value="<?= $dt_dpo->id_detail_purchase_order_customer?>">
+                                                                        <input type="text" class="input_bgpo1 info_produk1" id="nama_customer1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                                        value="<?= $dt_dpo->id_customer?>">
+                                                                        <input type="text" class="input_bgpo1 info_produk1" id="nama_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                                        value="<?= $dt_dpo->nama_produk?>">
+                                                                        <input type="text" class="input_bgpo1 info_produk1" id="id_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                                        value="<?= $dt_dpo->id_produk?>">
+                                                                        
+                                                                        <center>
+                                                                            <!-- memiliki ukuran & warna -->
+                                                                            <?php if($dt_dpo->keterangan == 0){
+                                                                                $ukuran_tam = "";
+                                                                                $warna_tam  = "";
+                                                                                foreach($ukuran as $u){
+                                                                                    if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
+                                                                                        $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
+                                                                                    }
+                                                                                }
+                                                                                
+                                                                                foreach($warna as $w){
+                                                                                    if($w->id_warna == $dt_dpo->id_warna){
+                                                                                        $warna_tam = $w->nama_warna;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
+                                                                            <!-- memiliki ukuran -->
+                                                                            <?php } else if($dt_dpo->keterangan == 1){
+                                                                                $ukuran_tam = "";
+                                                                                
+                                                                                foreach($ukuran as $u){
+                                                                                    if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
+                                                                                        $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?>
+
+                                                                            <?php } else if($dt_dpo->keterangan == 2){
+                                                                                $warna_tam = "";
+
+                                                                                foreach($warna as $w){
+                                                                                    if($w->id_warna == $dt_dpo->id_warna){
+                                                                                        $warna_tam = $w->nama_warna;
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                                <?= $dt_dpo->nama_produk ?> (<?= $warna_tam;?>)
+                                                                            <?php } else{?>
+                                                                                <?= $dt_dpo->nama_produk ?>
+                                                                            <?php } ?>
+                                                                        </center>
+                                                                    </td>
+                                                                    <td class="col-md-2">
+                                                                        <input type="hidden" class="input_bgpo1 jumlah_produk1" id="jumlah_produk1<?= $dt_dpo->id_detail_purchase_order_customer?>"
+                                                                        value="<?= $dt_dpo->jumlah_produk?>">
+                                                                        <center>
+                                                                            <?= $dt_dpo->jumlah_produk ?> 
+                                                                        </center>
+                                                                    </td>
+                                                                    <td class="col-md-4">
+                                                                        <button type="button" class="btn btn-success fa fa-plus-square-o btn1 add_produk" 
+                                                                        title="Add" id="add<?= $ke ?>" value="<?= $ke ?>" disabled></button>
+                                                                        <a class="modal-with-form btn btn-primary fa fa-info-circle btn1"
+                                                                        title="Detail" href="#modaldetail<?= $dt_dpo->id_detail_purchase_order_customer?>"></a>
+                                                                    </td>
+                                                                    <td class="col-xx-1">
+                                                                        <input type="hidden" class="input_bgpo1 info_produk1" value="<?= $ke?>">
+                                                                        <center><?= $ke+1;?></center>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <div id='modaldetail<?= $dt_dpo->id_detail_purchase_order_customer?>' class="modal-block modal-block-primary mfp-hide">
+                                                                    <section class="panel">
+                                                                        <header class="panel-heading">
+                                                                            <h2 class="panel-title">Detail Produk PO</h2>
+                                                                        </header>
+
+                                                                        <div class="panel-body">
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Nama Customer</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="text" class="form-control"
+                                                                                    value="<?= $dt_dpo->nama_customer?>" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Kode PO</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="text" class="form-control"
+                                                                                    value="<?= $dt_dpo->kode_purchase_order_customer?>" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Tanggal Pesanan</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="text" class="form-control"
+                                                                                    value="<?= $dt_dpo->tanggal_po?>" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Nama Produk</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <!-- memiliki ukuran & warna -->
+                                                                                    <?php if($dt_dpo->keterangan == 0){
+                                                                                        $ukuran_tam = "";
+                                                                                        $warna_tam  = "";
+                                                                                        foreach($ukuran as $u){
+                                                                                            if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
+                                                                                                $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                                                            }
+                                                                                        }
+                                                                                        
+                                                                                        foreach($warna as $w){
+                                                                                            if($w->id_warna == $dt_dpo->id_warna){
+                                                                                                $warna_tam = $w->nama_warna;
+                                                                                            }
+                                                                                        }
+                                                                                    ?>
+                                                                                        <input type="text" class="form-control"
+                                                                                        value="<?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)" readonly>
+                                                                                    <!-- memiliki ukuran -->
+                                                                                    <?php } else if($dt_dpo->keterangan == 1){
+                                                                                        $ukuran_tam = "";
+                                                                                        
+                                                                                        foreach($ukuran as $u){
+                                                                                            if($u->id_ukuran_produk == $dt_dpo->id_ukuran_produk){
+                                                                                                $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
+                                                                                            }
+                                                                                        }
+                                                                                    ?>
+                                                                                        <input type="text" class="form-control"
+                                                                                        value="<?= $dt_dpo->nama_produk ?> <?= $ukuran_tam?>" readonly>
+
+                                                                                    <?php } else if($dt_dpo->keterangan == 2){
+                                                                                        $warna_tam = "";
+
+                                                                                        foreach($warna as $w){
+                                                                                            if($w->id_warna == $dt_dpo->id_warna){
+                                                                                                $warna_tam = $w->nama_warna;
+                                                                                            }
+                                                                                        }
+                                                                                    ?>
+                                                                                        <input type="text" class="form-control"
+                                                                                        value="<?= $dt_dpo->nama_produk ?> (<?= $warna_tam;?>)" readonly>
+                                                                                    <?php } else{?>
+                                                                                        <input type="text" class="form-control"
+                                                                                        value="<?= $dt_dpo->nama_produk ?>" readonly>
+                                                                                    <?php } ?>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Tanggal Penerimaan</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="text" class="form-control"
+                                                                                    value="<?= $dt_dpo->tanggal_penerimaan?>" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group mt-lg">
+                                                                                <label class="col-sm-5 control-label">Jumlah Produk Pesanan</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="text" class="form-control"
+                                                                                    value="<?= $dt_dpo->jumlah_produk?>" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                    <!--- JUMLAH YANG HARUS DIPRODUKSI-->
+                                                                            <label class="col-sm-12 control-label"><b>Jumlah Produk Yang Belum Dibuatkan Perencanaan Produksi</b></label>
+                                                                            <?php 
+                                                                                foreach($cycle_time as $ct){
+                                                                                    if($ct->id_produk == $dt_dpo->id_produk){
+                                                                                        $ket = 0;
+                                                                                        foreach($dpl_tam as $dplt){ 
+                                                                                            if($dplt->id_line == $ct->id_line && $dplt->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                                                                if($dplt->jumlah_item_perencanaan > 0){
+                                                                                                    $ket++;
+                                                                                                }
+                                                                                            }
+                                                                                        }
+
+                                                                                        if($ket == 0){
+                                                                            ?>
+                                                                                            <div class="form-group mt-lg">
+                                                                                                <label class="col-sm-5 control-label"><?= $ct->nama_line;?></label>
+                                                                                                <div class="col-sm-7">
+                                                                                                    <input type="text" id="<?= $ke ?>target1<?= $ct->id_line ?>" class="form-control"
+                                                                                                    value="0" readonly>
+                                                                                                </div>
+                                                                                            </div>   
+
+                                                                                        <?php } else{
+                                                                                                    foreach($dpl_tam as $dplt){
+                                                                                                        if($dplt->id_line == $ct->id_line && $dplt->id_detail_purchase_order == $dt_dpo->id_detail_purchase_order_customer){
+                                                                                        ?>
+                                                                                                        <div class="form-group mt-lg">
+                                                                                                            <label class="col-sm-5 control-label"><?= $ct->nama_line;?></label>
+                                                                                                            <div class="col-sm-7">
+                                                                                                                <input type="text" id="<?= $ke ?>target1<?= $ct->id_line ?>" class="form-control"
+                                                                                                                value="<?= $dplt->jumlah_item_perencanaan ?>" readonly>
+                                                                                                            </div>
+                                                                                                        </div>   
+                                                                                                        <?php } ?>
+                                                                                                    <?php } ?>
+                                                                                        <?php } ?>
+                                                                                <?php }} ?>
+
+                                                                    <!-- -->
+                                                                        </div>
+
+                                                                        <footer class="panel-footer">
+                                                                            <div class="row">
+                                                                                <div class="col-md-12 text-right">
+                                                                                    <button type="button" class="btn btn-default modal-dismiss">Ok</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </footer>
+                                                                    </section>
+                                                                </div>
+                                                        <?php $ke++; } ?>
+                                                    <?php } ?>
                                                 <?php } ?>
                                             <?php } ?>
                                 <?php } ?>
@@ -1761,15 +2243,6 @@
                                 <?php 
                                     $ke = $ke;
                                     foreach($produksi_tertunda as $pt){
-                                        $cari_sama = 0;
-                                        foreach($dpl_reschedule_group as $dpl_rg){
-                                            if($pt->id_produksi_tertunda == $dpl_rg->id_produksi_tertunda){
-                                                $cari_sama++;
-                                            }
-                                        }
-
-                                        if($cari_sama == 0){
-                                            if($pt->status_penjadwalan == 0 || $pt->status_penjadwalan == 1){
                                 ?>
                                         <tr id="bg1<?= $ke ?>">
                                             <td class="col-md-6">
@@ -1847,92 +2320,8 @@
                                                 <center><?= $ke+1;?></center>
                                             </td>
                                         </tr>
-                                <?php
-                                        $ke++; }} else {
-                                            foreach($dpl_reschedule_group as $dpl_rg){
-                                                if($pt->id_produksi_tertunda == $dpl_rg->id_produksi_tertunda){
-                                ?>
-                                                    <tr id="bg1<?= $ke ?>">
-                                                        <td class="col-md-6">
-                                                            <input type="text" class="input_bgpo1 info_produk1"
-                                                            value="<?= $pt->id_detail_purchase_order_customer?>">
-                                                            <input type="text" class="input_bgpo1 info_produk1" id="renama_customer1<?= $pt->id_detail_purchase_order_customer?>"
-                                                            value="<?= $pt->id_customer?>">
-                                                            <input type="text" class="input_bgpo1 info_produk1" id="renama_produk1<?= $pt->id_detail_purchase_order_customer?>"
-                                                            value="<?= $pt->nama_produk?>">
-                                                            <input type="text" class="input_bgpo1 info_produk1" id="reid_produk1<?= $pt->id_detail_purchase_order_customer?>"
-                                                            value="<?= $pt->id_produk?>">
-                                                            
-                                                            <center>
-                                                                <!-- memiliki ukuran & warna -->
-                                                                <?php if($pt->keterangan == 0){
-                                                                    $ukuran_tam = "";
-                                                                    $warna_tam  = "";
-                                                                    foreach($ukuran as $u){
-                                                                        if($u->id_ukuran_produk == $pt->id_ukuran_produk){
-                                                                            $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
-                                                                        }
-                                                                    }
-                                                                    
-                                                                    foreach($warna as $w){
-                                                                        if($w->id_warna == $pt->id_warna){
-                                                                            $warna_tam = $w->nama_warna;
-                                                                        }
-                                                                    }
-                                                                ?>
-                                                                    <?= $pt->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
-                                                                <!-- memiliki ukuran -->
-                                                                <?php } else if($pt->keterangan == 1){
-                                                                    $ukuran_tam = "";
-                                                                    
-                                                                    foreach($ukuran as $u){
-                                                                        if($u->id_ukuran_produk == $pt->id_ukuran_produk){
-                                                                            $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
-                                                                        }
-                                                                    }
-                                                                ?>
-                                                                    <?= $pt->nama_produk ?> <?= $ukuran_tam?>
 
-                                                                <?php } else if($pt->keterangan == 2){
-                                                                    $warna_tam = "";
-
-                                                                    foreach($warna as $w){
-                                                                        if($w->id_warna == $pt->id_warna){
-                                                                            $warna_tam = $w->nama_warna;
-                                                                        }
-                                                                    }
-                                                                ?>
-                                                                    <?= $pt->nama_produk ?> (<?= $warna_tam;?>)
-                                                                <?php } else{?>
-                                                                    <?= $pt->nama_produk ?>
-                                                                <?php } ?>
-                                                            </center>
-                                                        </td>
-                                                        <td class="col-md-2">
-                                                            <input type="text" class="input_bgpo1 jumlah_produk1" id="re_id1<?= $ke ?>" value="<?= $pt->id_produksi_tertunda?>">
-                                                            <input type="text" class="input_bgpo1 jumlah_produk1" id="rejumlah_produk1<?= $pt->id_detail_purchase_order_customer?>"
-                                                            value="<?= $pt->jumlah_tertunda ?>">
-                                                            <center>
-                                                                <?= $pt->jumlah_tertunda  ?> 
-                                                            </center>
-                                                        </td>
-                                                        <td class="col-md-4">
-                                                            <button type="button" class="btn btn-success fa fa-plus-square-o btn1 add_produk" 
-                                                            title="Add" id="add<?= $ke ?>" value="<?= $ke ?>" disabled></button>
-                                                            <button type="button" class="btn btn-primary fa fa-info-circle btn1 detail_reschedule" 
-                                                            title="Detail" value="<?= $ke ?>"></button>
-                                                        </td>
-                                                        <td class="col-xx-1">
-                                                            <input type="hidden" class="input_bgpo1 info_produk1" value="<?= $ke?>">
-                                                            <center><?= $ke+1;?></center>
-                                                        </td>
-                                                    </tr>
-                                                <?php 
-                                                    $ke++; }
-                                                ?>
-                                            <?php } ?>
-                                        <?php  } ?>
-                                <?php } ?>
+                                <?php $ke++; } ?>
                             </tbody>
                         </table>
                     </div>
@@ -2263,199 +2652,94 @@
                         <?php } ?>
                     <?php } ?>
 
-                <!-- reschedule -->
+
                 <?php 
                     $countt = $count;
-                    foreach($produksi_tertunda as $pt){
-                        $cari_sama = 0;
-                        foreach($dpl_reschedule_group as $dpl_rg){
-                            if($pt->id_produksi_tertunda == $dpl_rg->id_produksi_tertunda){
-                                $cari_sama++;
-                            }
-                        }
+                    foreach($produksi_tertunda as $pt){?>
+                        <div id="track<?= $countt ?>" style="display:none">
+                            <!-- Nama produk (jumlah produk) -->
+                            <p id="<?= $countt ?>nama_produk2" style="font-size:10px">
+                                <span><?= $countt+1?>. </span>
 
-                        if($cari_sama == 0){
-                            if($pt->status_penjadwalan == 0 || $pt->status_penjadwalan == 1){
-                ?>
-                            <div id="track<?= $countt ?>" style="display:none">
-                                <!-- Nama produk (jumlah produk) -->
-                                <p id="<?= $countt ?>nama_produk2" style="font-size:10px">
-                                    <span><?= $countt+1?>. </span>
-
-                                    <!-- memiliki ukuran & warna -->
-                                    <?php if($pt->keterangan == 0){
-                                        $ukuran_tam = "";
-                                        $warna_tam  = "";
-                                        foreach($ukuran as $u){
-                                            if($u->id_ukuran_produk == $pt->id_ukuran_produk){
-                                                $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
-                                            }
+                                <!-- memiliki ukuran & warna -->
+                                <?php if($pt->keterangan == 0){
+                                    $ukuran_tam = "";
+                                    $warna_tam  = "";
+                                    foreach($ukuran as $u){
+                                        if($u->id_ukuran_produk == $pt->id_ukuran_produk){
+                                            $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
                                         }
-                                        
-                                        foreach($warna as $w){
-                                            if($w->id_warna == $pt->id_warna){
-                                                $warna_tam = $w->nama_warna;
-                                            }
+                                    }
+                                    
+                                    foreach($warna as $w){
+                                        if($w->id_warna == $pt->id_warna){
+                                            $warna_tam = $w->nama_warna;
                                         }
-                                    ?>
-                                        <?= $pt->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
-                                    <!-- memiliki ukuran -->
-                                    <?php } else if($pt->keterangan == 1){
-                                        $ukuran_tam = "";
-                                        
-                                        foreach($ukuran as $u){
-                                            if($u->id_ukuran_produk == $pt->id_ukuran_produk){
-                                                $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
-                                            }
+                                    }
+                                ?>
+                                    <?= $pt->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
+                                <!-- memiliki ukuran -->
+                                <?php } else if($pt->keterangan == 1){
+                                    $ukuran_tam = "";
+                                    
+                                    foreach($ukuran as $u){
+                                        if($u->id_ukuran_produk == $pt->id_ukuran_produk){
+                                            $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
                                         }
-                                    ?>
-                                        <?= $pt->nama_produk ?> <?= $ukuran_tam?>
+                                    }
+                                ?>
+                                    <?= $pt->nama_produk ?> <?= $ukuran_tam?>
 
-                                    <?php } else if($pt->keterangan == 2){
-                                        $warna_tam = "";
+                                <?php } else if($pt->keterangan == 2){
+                                    $warna_tam = "";
 
-                                        foreach($warna as $w){
-                                            if($w->id_warna == $pt->id_warna){
-                                                $warna_tam = $w->nama_warna;
-                                            }
+                                    foreach($warna as $w){
+                                        if($w->id_warna == $pt->id_warna){
+                                            $warna_tam = $w->nama_warna;
                                         }
-                                    ?>
-                                        <?= $pt->nama_produk ?> (<?= $warna_tam;?>)
-                                    <?php } else{?>
-                                        <?= $pt->nama_produk ?>
-                                    <?php } ?>
-                                </p>
-                                <!-- Nama Konsumen -->
-                                <p id="<?= $countt ?>nama_customer2" style="font-size:10px">
-                                    <?= $pt->nama_customer?>
-                                </p>
+                                    }
+                                ?>
+                                    <?= $pt->nama_produk ?> (<?= $warna_tam;?>)
+                                <?php } else{?>
+                                    <?= $pt->nama_produk ?>
+                                <?php } ?>
+                            </p>
+                            <!-- Nama Konsumen -->
+                            <p id="<?= $countt ?>nama_customer2" style="font-size:10px">
+                                <?= $pt->nama_customer?>
+                            </p>
 
-                                <table class="table table-bordered table-striped mb-none"
-                                    id="datatable-default"  style="font-size:9px">
-                                        <thead>
+                            <table class="table table-bordered table-striped mb-none"
+                                id="datatable-default"  style="font-size:9px">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-md-9"><center>Nama Line</center></th>
+                                            <th class="col-md-1"><center>Target</center></th>
+                                            <th class="col-md-1"><center>Plan</center></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach($cycle_time as $ct){
+                                            if($ct->id_produk == $pt->id_produk && $ct->id_line == $pt->id_line){?>
                                             <tr>
-                                                <th class="col-md-9"><center>Nama Line</center></th>
-                                                <th class="col-md-1"><center>Target</center></th>
-                                                <th class="col-md-1"><center>Plan</center></th>
+                                                <td style="text-align: center;vertical-align: middle;">
+                                                    <input type="text" id="<?= $countt?>idline2<?= $ct->id_line?>" value="<?= $ct->id_line?>">
+                                                    <?= $ct->nama_line?>
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="<?= $countt?>target2<?= $ct->id_line?>" value="<?= $pt->jumlah_tertunda - $pt->jumlah_terencana?>" style="text-align: center;vertical-align: middle;"
+                                                    class="row_efisiensi" disabled>
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="<?= $countt?>plan2<?= $ct->id_line?>" style="text-align: center;vertical-align:middle;" 
+                                                    class="row_efisiensi" disabled>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach($cycle_time as $ct){
-                                                if($ct->id_produk == $pt->id_produk && $ct->id_line == $pt->id_line){
-                                                    ?>
-                                                <tr>
-                                                    <td style="text-align: center;vertical-align: middle;">
-                                                        <input type="text" id="<?= $countt?>idline2<?= $ct->id_line?>" value="<?= $ct->id_line?>">
-                                                        <?= $ct->nama_line?>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="<?= $countt?>target2<?= $ct->id_line?>" value="<?= $pt->jumlah_tertunda - $pt->jumlah_terencana?>" style="text-align: center;vertical-align: middle;"
-                                                        class="row_efisiensi" disabled>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="<?= $countt?>plan2<?= $ct->id_line?>" style="text-align: center;vertical-align:middle;" 
-                                                        class="row_efisiensi" disabled>
-                                                    </td>
-                                                </tr>
-                                            <?php }} ?>
-                                        </tbody>
-                                </table>
-                            </div>
-                <?php
-                        $countt++; }} else{
-                            foreach($dpl_reschedule_group as $dpl_rg){
-                                if($pt->id_produksi_tertunda == $dpl_rg->id_produksi_tertunda){
-                ?>
-                                <div id="track<?= $countt ?>" style="display:none">
-                                    <!-- Nama produk (jumlah produk) -->
-                                    <p id="<?= $countt ?>nama_produk2" style="font-size:10px">
-                                        <span><?= $countt+1?>. </span>
-
-                                        <!-- memiliki ukuran & warna -->
-                                        <?php if($pt->keterangan == 0){
-                                            $ukuran_tam = "";
-                                            $warna_tam  = "";
-                                            foreach($ukuran as $u){
-                                                if($u->id_ukuran_produk == $pt->id_ukuran_produk){
-                                                    $ukuran_tam = $u->ukuran_produk." ".$u->satuan_ukuran;
-                                                }
-                                            }
-                                            
-                                            foreach($warna as $w){
-                                                if($w->id_warna == $pt->id_warna){
-                                                    $warna_tam = $w->nama_warna;
-                                                }
-                                            }
-                                        ?>
-                                            <?= $pt->nama_produk ?> <?= $ukuran_tam?> (<?= $warna_tam;?>)
-                                        <!-- memiliki ukuran -->
-                                        <?php } else if($pt->keterangan == 1){
-                                            $ukuran_tam = "";
-                                            
-                                            foreach($ukuran as $u){
-                                                if($u->id_ukuran_produk == $pt->id_ukuran_produk){
-                                                    $ukuran_tam = $u->ukuran_produk ." ".$u->satuan_ukuran;
-                                                }
-                                            }
-                                        ?>
-                                            <?= $pt->nama_produk ?> <?= $ukuran_tam?>
-
-                                        <?php } else if($pt->keterangan == 2){
-                                            $warna_tam = "";
-
-                                            foreach($warna as $w){
-                                                if($w->id_warna == $pt->id_warna){
-                                                    $warna_tam = $w->nama_warna;
-                                                }
-                                            }
-                                        ?>
-                                            <?= $pt->nama_produk ?> (<?= $warna_tam;?>)
-                                        <?php } else{?>
-                                            <?= $pt->nama_produk ?>
-                                        <?php } ?>
-                                    </p>
-                                    <!-- Nama Konsumen -->
-                                    <p id="<?= $countt ?>nama_customer2" style="font-size:10px">
-                                        <?= $pt->nama_customer?>
-                                    </p>
-
-                                    <table class="table table-bordered table-striped mb-none"
-                                        id="datatable-default"  style="font-size:9px">
-                                            <thead>
-                                                <tr>
-                                                    <th class="col-md-9"><center>Nama Line</center></th>
-                                                    <th class="col-md-1"><center>Target</center></th>
-                                                    <th class="col-md-1"><center>Plan</center></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php foreach($cycle_time as $ct){
-                                                    if($ct->id_produk == $pt->id_produk && $ct->id_line == $pt->id_line){
-                                                        ?>
-                                                    <tr>
-                                                        <td style="text-align: center;vertical-align: middle;">
-                                                            <input type="text" id="<?= $countt?>idline2<?= $ct->id_line?>" value="<?= $ct->id_line?>">
-                                                            <?= $ct->nama_line?>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" id="<?= $countt?>target2<?= $ct->id_line?>" value="<?= $pt->jumlah_tertunda - $pt->jumlah_terencana + $dpl_rg->jumlah_item_perencanaan?>" style="text-align: center;vertical-align: middle;"
-                                                            class="row_efisiensi" disabled>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" id="<?= $countt?>plan2<?= $ct->id_line?>" style="text-align: center;vertical-align:middle;" 
-                                                            class="row_efisiensi" disabled>
-                                                        </td>
-                                                    </tr>
-                                                <?php }} ?>
-                                            </tbody>
-                                    </table>
-                                </div>
-                <?php
-                                }
-                            }
-                ?>
-
-                <?php $countt++; }} ?>
+                                        <?php }} ?>
+                                    </tbody>
+                            </table>
+                        </div>
+                <?php $countt++; } ?>
                 </div>
             </div>
         </section>
@@ -2545,7 +2829,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-default modal-dismiss" value="Ok" onclick="close_modal()">
+                    <input type="button" class="btn btn-default modal-dismiss" value="Ok" onclick="reload()">
                 </div>
             </div>
         </div>
@@ -2647,13 +2931,6 @@
 <script>
     function reload() {
         location.reload();
-    }
-</script>
-
-<!-- close modal -->
-<script>
-    function close_modal(){
-        $("#modalredetail").modal('hide');
     }
 </script>
 
@@ -2771,7 +3048,6 @@
     $('.detail_reschedule').click(function(){
         var no      = $(this).attr('value');
         var id      = $("#re_id1"+no).val();
-        var start_date = $("#start_date").val();
 
         $.ajax({
             type:"post",
@@ -2910,14 +3186,6 @@
                     }
                 }
             }
-
-            $jumlah_div_terisi = 0;
-            for($q=0;$q<jumlah_dpo;$q++){
-                if($("#ket"+$q).val() == 1 || $("#ket"+$q).val() == 3){
-                    $jumlah_div_terisi++;
-                }
-            }
-            $("#jumlah_div_ada_isi").val($jumlah_div_terisi);
 
 
 
@@ -3081,18 +3349,10 @@
         }
         
         if($hit_jum_inp > 0){
-            if($("#ket"+div).val() == 0){
-                $("#ket"+div).val(1);
-            } else if($("#ket"+div).val() == 2){
-                $("#ket"+div).val(3);
-            }
+            $("#ket"+div).val(1);
         }
         else{
-            if($("#ket"+div).val() == 1){
-                $("#ket"+div).val(0);
-            } else if($("#ket"+div).val() == 3){
-                $("#ket"+div).val(2);
-            }
+            $("#ket"+div).val(0);
         }
         
         //update jumlah div yang ada isinya
@@ -3152,139 +3412,74 @@
             //jumlah line untuk suatu dpo  id="jumlah_line<?= $no?>"
             $jumlah_line_dpo = $("#jumlah_line"+$r).val()-1;
 
+
                 //kalau div ada perencanaan
                 if($ket == 1){
                     if($jumlah_line_dpo == 3){
-                        if($statper == 0){
-                            $lines = "";
+                        $lines = "";
 
-                            for($y=1;$y<=$jumlah_line_dpo;$y++){
-                                $id_line = $("#"+$r+'id_line'+$y).val();
-                                $inputan="";
+                        for($y=1;$y<=$jumlah_line_dpo;$y++){
+                            $id_line = $("#"+$r+'id_line'+$y).val();
+                            $inputan="";
 
-                                for($u=1;$u<=7;$u++){
-                                    $inputan = $inputan +
-                                    '<td>'+
-                                        '<center>'+$("#jm"+$r+$id_line+'day'+$u).val()+'</center>'+
-                                        '<input name="'+"jm"+$r+$id_line+'day'+$u+'"'+
-                                            'value="'+$("#jm"+$r+$id_line+'day'+$u).val()+'"'+
-                                            'type="hidden" class="input_line_pp"'+
-                                        '>'+
-                                        '<input name="'+"ef"+$r+$id_line+'day'+$u+'"'+
-                                            'value="'+$("#ef"+$r+$id_line+'day'+$u).val()+'"'+
-                                            'type="hidden" class="input_line_pp"'+
-                                        '>'+
-                                    '</td>';
-                                }
-
-                                $idline = $("#"+$r+'id_line'+$y).val();
-                                $nmline = $("#"+$r+'nama_line'+$idline).val();
-                                $show   = $("#"+$r+'nama_line'+$idline).val();
-
-                                $lines = $lines+
-                                '<tr>'+
-                                    '<td>'+
-                                        '<input type="hidden" name="'+$r+'id_line_kf'+$y+'" class="row_efisiensi" value="'+$idline+'">'+
-                                        '<input type="hidden" class="row_efisiensi" value="'+$nmline+'">'+
-                                        '<center>'+$show+'</center>'+
-                                    '</td>'+
-                                    $inputan+
-                                '</tr>';
-                            }
-
-                            $isi_div = $isi_div +
-                            '<tr  id="1perc_kf'+$r+'">'+
-                                '<td rowspan="4">'+
-                                    '<input type="text" name="ket'+$r+'" value="'+$ket+'" style="width:20px">'+
-                                    '<input type="text" name="statper<?= $no;?>" value="'+$statper+'" style="width:20px">'+
-                                    '<input type="hidden" id="no'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$r+'" readonly>'+
-                                    '<center>'+parseInt($r+1)+'</center>'+
-                                '</td>'+
-                                '<td rowspan="4">'+
-                                    '<input type="hidden" id="cust'+$r+'" class="row_efisiensi"'+
-                                    'value="'+ $("#cust"+$r).val()+'" readonly>'+
-                                    '<center>'+ $("#cust"+$r).val()+'</center>'+
-                                '</td>'+
-                                '<td rowspan="4">'+
-                                    '<input type="hidden" name="id_bg3'+$r+'" value="'+$("#id_bg3"+$r).val()+'" style="width:50px">'+
-                                    '<input type="hidden" id="produk'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$("#produk"+$r).val()+'">'+
-                                    '<center>'+$("#produk"+$r).val()+'</center>'+
-                                '</td>'+
-                                '<td rowspan="4">'+
-                                    '<input type="hidden" id="qty'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$("#qty"+$r).val()+'">'+
-                                    '<center>'+$("#qty"+$r).val()+'</center>'+
-                                '</td>'+
-                            '</tr>'+
-                            $lines+
-                            '<input type="hidden" name="jumlah_line'+$r+'" value="'+($("#jumlah_line"+$r).val()-1)+'">';
-                        } else{
-                            $lines = "";
-
-                            for($y=1;$y<=$jumlah_line_dpo;$y++){
-                                $id_line = $("#"+$r+'id_line'+$y).val();
-                                $inputan="";
-
-                                for($u=1;$u<=7;$u++){
-                                    $inputan = $inputan +
-                                    '<td>'+
-                                        '<center>'+$("#jm"+$r+$id_line+'day'+$u).val()+'</center>'+
-                                        '<input name="'+"jm"+$r+$id_line+'day'+$u+'"'+
+                            for($u=1;$u<=7;$u++){
+                                $inputan = $inputan +
+                                '<td>'+
+                                    '<center>'+$("#jm"+$r+$id_line+'day'+$u).val()+'</center>'+
+                                    '<input name="'+"jm"+$r+$id_line+'day'+$u+'"'+
                                         'value="'+$("#jm"+$r+$id_line+'day'+$u).val()+'"'+
                                         'type="hidden" class="input_line_pp"'+
-                                        '>'+
-                                        '<input name="'+"ef"+$r+$id_line+'day'+$u+'"'+
+                                    '>'+
+                                    '<input name="'+"ef"+$r+$id_line+'day'+$u+'"'+
                                         'value="'+$("#ef"+$r+$id_line+'day'+$u).val()+'"'+
                                         'type="hidden" class="input_line_pp"'+
-                                        '>'+
-                                    '</td>';
-                                }
-
-                                $idline = $("#"+$r+'id_line'+$y).val();
-                                $nmline = $("#"+$r+'nama_line'+$idline).val();
-                                $show   = $("#"+$r+'nama_line'+$idline).val();
-
-                                $lines = $lines+
-                                    '<td>'+
-                                        '<input type="hidden" name="'+$r+'id_line_kf'+$y+'"  class="row_efisiensi" value="'+$idline+'">'+
-                                        '<input type="hidden" class="row_efisiensi" value="'+$nmline+'">'+
-                                        '<center>'+$show+'</center>'+
-                                    '</td>'+
-                                    $inputan;
+                                    '>'+
+                                '</td>';
                             }
 
-                            $isi_div = $isi_div +
-                            '<tr  id="1perc_kf'+$r+'">'+
+                            $idline = $("#"+$r+'id_line'+$y).val();
+                            $nmline = $("#"+$r+'nama_line'+$idline).val();
+                            $show   = $("#"+$r+'nama_line'+$idline).val();
+
+                            $lines = $lines+
+                            '<tr>'+
                                 '<td>'+
-                                    '<input type="text" name="ket'+$r+'" value="'+$ket+'" style="width:20px">'+
-                                    '<input type="text" name="statper'+$r+'" value="'+$statper+'" style="width:20px">'+
-                                    '<input type="hidden" id="no'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$r+'" readonly>'+
-                                    '<center>'+parseInt($r+1)+'</center>'+
+                                    '<input type="hidden" name="'+$r+'id_line_kf'+$y+'" class="row_efisiensi" value="'+$idline+'">'+
+                                    '<input type="hidden" class="row_efisiensi" value="'+$nmline+'">'+
+                                    '<center>'+$show+'</center>'+
                                 '</td>'+
-                                '<td>'+
-                                    '<input type="hidden" id="cust'+$r+'" class="row_efisiensi"'+
-                                    'value="'+ $("#cust"+$r).val()+'" readonly>'+
-                                    '<center>'+ $("#cust"+$r).val()+'</center>'+
-                                '</td>'+
-                                '<td>'+
-                                    '<input type="hidden" name="id_bg3'+$r+'" value="'+$("#id_bg3"+$r).val()+'" style="width:50px">'+
-                                    '<input type="text" name="id_pt_bg3'+$r+'" value="'+$("#id_pt_bg3"+$r).val()+'" style="width:50px">'+
-                                    '<input type="hidden" id="produk'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$("#produk"+$r).val()+'">'+
-                                    '<center>'+$("#produk"+$r).val()+'</center>'+
-                                '</td>'+
-                                '<td>'+
-                                    '<input type="hidden" id="qty'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$("#qty"+$r).val()+'">'+
-                                    '<center>'+$("#qty"+$r).val()+'</center>'+
-                                '</td>'+
-                                $lines+
-                            '</tr>'+
-                            '<input type="hidden" name="jumlah_line'+$r+'" value="'+($("#jumlah_line"+$r).val()-1)+'">';
+                                $inputan+
+                            '</tr>';
                         }
+
+                        $isi_div = $isi_div +
+                        '<tr  id="1perc_kf'+$r+'">'+
+                            '<td rowspan="4">'+
+                                '<input type="hidden" name="ket'+$r+'" value="'+$ket+'" style="width:20px">'+
+                                '<input type="text" name="statper<?= $no;?>" value="'+$statper+'" style="width:20px">'+
+                                '<input type="hidden" id="no'+$r+'" class="row_efisiensi"'+
+                                'value="'+$r+'" readonly>'+
+                                '<center>'+parseInt($r+1)+'</center>'+
+                            '</td>'+
+                            '<td rowspan="4">'+
+                                '<input type="hidden" id="cust'+$r+'" class="row_efisiensi"'+
+                                'value="'+ $("#cust"+$r).val()+'" readonly>'+
+                                '<center>'+ $("#cust"+$r).val()+'</center>'+
+                            '</td>'+
+                            '<td rowspan="4">'+
+                                '<input type="hidden" name="id_bg3'+$r+'" value="'+$("#id_bg3"+$r).val()+'" style="width:50px">'+
+                                '<input type="hidden" id="produk'+$r+'" class="row_efisiensi"'+
+                                'value="'+$("#produk"+$r).val()+'">'+
+                                '<center>'+$("#produk"+$r).val()+'</center>'+
+                            '</td>'+
+                            '<td rowspan="4">'+
+                                '<input type="hidden" id="qty'+$r+'" class="row_efisiensi"'+
+                                'value="'+$("#qty"+$r).val()+'">'+
+                                '<center>'+$("#qty"+$r).val()+'</center>'+
+                            '</td>'+
+                        '</tr>'+
+                        $lines+
+                        '<input type="hidden" name="jumlah_line'+$r+'" value="'+($("#jumlah_line"+$r).val()-1)+'">';
                     }
                     else{
                         if($statper == 0){
@@ -3327,7 +3522,7 @@
                             $isi_div = $isi_div +
                             '<tr  id="1perc_kf'+$r+'">'+
                                 '<td rowspan="5">'+
-                                    '<input type="text" name="ket'+$r+'" value="'+$ket+'" style="width:20px">'+
+                                    '<input type="hidden" name="ket'+$r+'" value="'+$ket+'" style="width:20px">'+
                                     '<input type="text" name="statper<?= $no;?>" value="'+$statper+'" style="width:20px">'+
                                     '<input type="hidden" id="no'+$r+'" class="row_efisiensi"'+
                                     'value="'+$r+'" readonly>'+
@@ -3390,7 +3585,7 @@
                             $isi_div = $isi_div +
                             '<tr  id="1perc_kf'+$r+'">'+
                                 '<td>'+
-                                    '<input type="text" name="ket'+$r+'" value="'+$ket+'" style="width:20px">'+
+                                    '<input type="hidden" name="ket'+$r+'" value="'+$ket+'" style="width:20px">'+
                                     '<input type="text" name="statper'+$r+'" value="'+$statper+'" style="width:20px">'+
                                     '<input type="hidden" id="no'+$r+'" class="row_efisiensi"'+
                                     'value="'+$r+'" readonly>'+
@@ -3418,287 +3613,141 @@
                             '<input type="hidden" name="jumlah_line'+$r+'" value="'+($("#jumlah_line"+$r).val()-1)+'">';
                         }
                     } 
-                } else if($ket == 3 || $ket == 2){
+                }
+                //kalau div nda ada perencanaan
+                else{
                     if($jumlah_line_dpo == 3){
-                        if($statper == 0){
-                            $lines = "";
+                        $lines = "";
 
-                            for($y=1;$y<=$jumlah_line_dpo;$y++){
-                                $id_line = $("#"+$r+'id_line'+$y).val();
-                                $inputan="";
+                        for($y=1;$y<=$jumlah_line_dpo;$y++){
+                            $id_line = $("#"+$r+'id_line'+$y).val();
+                            $inputan="";
 
-                                for($u=1;$u<=7;$u++){
-                                    $inputan = $inputan +
-                                    '<td>'+
-                                        '<center>'+$("#jm"+$r+$id_line+'day'+$u).val()+'</center>'+
-                                        '<input name="'+"jm"+$r+$id_line+'day'+$u+'"'+
-                                            'value="'+$("#jm"+$r+$id_line+'day'+$u).val()+'"'+
-                                            'type="text" class="input_line_pp"'+
-                                        '>'+
-                                        '<input name="'+"ef"+$r+$id_line+'day'+$u+'"'+
-                                            'value="'+$("#ef"+$r+$id_line+'day'+$u).val()+'"'+
-                                            'type="text" class="input_line_pp"'+
-                                        '>'+
-                                        '<input name="'+"id_dpl"+$r+$id_line+'day'+$u+'"'+
-                                            'value="'+$("#id_dpl"+$r+$id_line+'day'+$u).val()+'"'+
-                                            'type="text" class="input_line_pp"'+
-                                        '>'+
-                                    '</td>';
-                                }
-
-                                $idline = $("#"+$r+'id_line'+$y).val();
-                                $nmline = $("#"+$r+'nama_line'+$idline).val();
-                                $show   = $("#"+$r+'nama_line'+$idline).val();
-
-                                $lines = $lines+
-                                '<tr>'+
-                                    '<td>'+
-                                        '<input type="hidden" name="'+$r+'id_line_kf'+$y+'" class="row_efisiensi" value="'+$idline+'">'+
-                                        '<input type="hidden" class="row_efisiensi" value="'+$nmline+'">'+
-                                        '<center>'+$show+'</center>'+
-                                    '</td>'+
-                                    $inputan+
-                                '</tr>';
+                            for($u=1;$u<=7;$u++){
+                                $inputan = $inputan +
+                                '<td>'+
+                                    '<input name="'+"jm"+$r+$id_line+'day'+$u+'"'+
+                                    'value="'+$("#jm"+$r+$id_line+'day'+$u).val()+'"'+
+                                    'type="text" class="input_line_pp"'+
+                                    '>'+
+                                    '<input name="'+"ef"+$r+$id_line+'day'+$u+'"'+
+                                    'value="'+$("#ef"+$r+$id_line+'day'+$u).val()+'"'+
+                                    'type="text" class="input_line_pp"'+
+                                    '>'+
+                                '</td>';
                             }
 
-                            $isi_div = $isi_div +
-                            '<tr  id="1perc_kf'+$r+'">'+
-                                '<td rowspan="4">'+
-                                    '<input type="text" name="ket'+$r+'" value="'+$ket+'" style="width:20px">'+
-                                    '<input type="text" name="statper<?= $no;?>" value="'+$statper+'" style="width:20px">'+
-                                    '<input type="hidden" id="no'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$r+'" readonly>'+
-                                    '<center>'+parseInt($r+1)+'</center>'+
-                                '</td>'+
-                                '<td rowspan="4">'+
-                                    '<input type="hidden" id="cust'+$r+'" class="row_efisiensi"'+
-                                    'value="'+ $("#cust"+$r).val()+'" readonly>'+
-                                    '<center>'+ $("#cust"+$r).val()+'</center>'+
-                                '</td>'+
-                                '<td rowspan="4">'+
-                                    '<input type="hidden" name="id_bg3'+$r+'" value="'+$("#id_bg3"+$r).val()+'" style="width:50px">'+
-                                    '<input type="hidden" id="produk'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$("#produk"+$r).val()+'">'+
-                                    '<center>'+$("#produk"+$r).val()+'</center>'+
-                                '</td>'+
-                                '<td rowspan="4">'+
-                                    '<input type="hidden" id="qty'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$("#qty"+$r).val()+'">'+
-                                    '<center>'+$("#qty"+$r).val()+'</center>'+
-                                '</td>'+
-                            '</tr>'+
-                            $lines+
-                            '<input type="hidden" name="jumlah_line'+$r+'" value="'+($("#jumlah_line"+$r).val()-1)+'">';
-                        } else{
-                            $lines = "";
+                            $idline = $("#"+$r+'id_line'+$y).val();
+                            $nmline = $("#"+$r+'nama_line'+$idline).val();
+                            $show   = $("#"+$r+'nama_line'+$idline).val();
 
-                            for($y=1;$y<=$jumlah_line_dpo;$y++){
-                                $id_line = $("#"+$r+'id_line'+$y).val();
-                                $inputan="";
-
-                                for($u=1;$u<=7;$u++){
-                                    $inputan = $inputan +
-                                    '<td>'+
-                                        '<center>'+$("#jm"+$r+$id_line+'day'+$u).val()+'</center>'+
-                                        '<input name="'+"jm"+$r+$id_line+'day'+$u+'"'+
-                                        'value="'+$("#jm"+$r+$id_line+'day'+$u).val()+'"'+
-                                        'type="hidden" class="input_line_pp"'+
-                                        '>'+
-                                        '<input name="'+"ef"+$r+$id_line+'day'+$u+'"'+
-                                        'value="'+$("#ef"+$r+$id_line+'day'+$u).val()+'"'+
-                                        'type="hidden" class="input_line_pp"'+
-                                        '>'+
-                                        '<input name="'+"id_dpl"+$r+$id_line+'day'+$u+'"'+
-                                            'value="'+$("#id_dpl"+$r+$id_line+'day'+$u).val()+'"'+
-                                            'type="text" class="input_line_pp"'+
-                                        '>'+
-                                    '</td>';
-                                }
-
-                                $idline = $("#"+$r+'id_line'+$y).val();
-                                $nmline = $("#"+$r+'nama_line'+$idline).val();
-                                $show   = $("#"+$r+'nama_line'+$idline).val();
-
-                                $lines = $lines+
-                                    '<td>'+
-                                        '<input type="hidden" name="'+$r+'id_line_kf'+$y+'"  class="row_efisiensi" value="'+$idline+'">'+
-                                        '<input type="hidden" class="row_efisiensi" value="'+$nmline+'">'+
-                                        '<center>'+$show+'</center>'+
-                                    '</td>'+
-                                    $inputan;
-                            }
-
-                            $isi_div = $isi_div +
-                            '<tr  id="1perc_kf'+$r+'">'+
+                            $lines = $lines+
+                            '<tr style="display:none">'+
                                 '<td>'+
-                                    '<input type="text" name="ket'+$r+'" value="'+$ket+'" style="width:20px">'+
-                                    '<input type="text" name="statper'+$r+'" value="'+$statper+'" style="width:20px">'+
-                                    '<input type="hidden" id="no'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$r+'" readonly>'+
-                                    '<center>'+parseInt($r+1)+'</center>'+
+                                    '<input type="text" class="row_efisiensi" value="'+$idline+'">'+
+                                    '<input type="hidden" class="row_efisiensi" value="'+$nmline+'">'+
+                                    '<center>'+$show+'</center>'+
                                 '</td>'+
-                                '<td>'+
-                                    '<input type="hidden" id="cust'+$r+'" class="row_efisiensi"'+
-                                    'value="'+ $("#cust"+$r).val()+'" readonly>'+
-                                    '<center>'+ $("#cust"+$r).val()+'</center>'+
-                                '</td>'+
-                                '<td>'+
-                                    '<input type="hidden" name="id_bg3'+$r+'" value="'+$("#id_bg3"+$r).val()+'" style="width:50px">'+
-                                    '<input type="text" name="id_pt_bg3'+$r+'" value="'+$("#id_pt_bg3"+$r).val()+'" style="width:50px">'+
-                                    '<input type="hidden" id="produk'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$("#produk"+$r).val()+'">'+
-                                    '<center>'+$("#produk"+$r).val()+'</center>'+
-                                '</td>'+
-                                '<td>'+
-                                    '<input type="hidden" id="qty'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$("#qty"+$r).val()+'">'+
-                                    '<center>'+$("#qty"+$r).val()+'</center>'+
-                                '</td>'+
-                                $lines+
-                            '</tr>'+
-                            '<input type="hidden" name="jumlah_line'+$r+'" value="'+($("#jumlah_line"+$r).val()-1)+'">';
+                                $inputan+
+                            '</tr>';
                         }
+
+
+                        $isi_div = $isi_div +
+                        '<tr  id="1perc_kf'+$r+'" style="display:none">'+
+                            '<td rowspan="4">'+
+                                '<input type="hidden" name="ket'+$r+'" value="'+$ket+'" style="width:20px">'+
+                                '<input type="text" id="statper<?= $no;?>" value="'+$statper+'" style="width:20px">'+
+                                '<input type="hidden" id="no'+$r+'" class="row_efisiensi"'+
+                                'value="'+$r+'" readonly>'+
+                                '<center>'+parseInt($r+1)+'</center>'+
+                            '</td>'+
+                            '<td rowspan="4">'+
+                                '<input type="hidden" id="cust'+$r+'" class="row_efisiensi"'+
+                                'value="'+ $("#cust"+$r).val()+'" readonly>'+
+                                '<center>'+ $("#cust"+$r).val()+'</center>'+
+                            '</td>'+
+                            '<td rowspan="4">'+
+                                '<input type="hidden" id="id_bg3'+$r+'" value="'+$("#id_bg3"+$r).val()+'" style="width:50px">'+
+                                '<input type="hidden" id="produk'+$r+'" class="row_efisiensi"'+
+                                'value="'+$("#produk"+$r).val()+'">'+
+                                '<center>'+$("#produk"+$r).val()+'</center>'+
+                            '</td>'+
+                            '<td rowspan="4">'+
+                                '<input type="hidden" id="qty'+$r+'" class="row_efisiensi"'+
+                                'value="'+$("#qty"+$r).val()+'">'+
+                                '<center>'+$("#qty"+$r).val()+'</center>'+
+                            '</td>'+
+                        '</tr>'+
+                        $lines+
+                        '<input type="hidden" name="jumlah_line'+$r+'" value="'+($("#jumlah_line"+$r).val()-1)+'">';
                     }
                     else{
-                        if($statper == 0){
-                            $lines = "";
+                        $lines = "";
 
-                            for($y=1;$y<=$jumlah_line_dpo;$y++){
-                                $id_line = $("#"+$r+'id_line'+$y).val();
-                                $inputan="";
+                        for($y=1;$y<=$jumlah_line_dpo;$y++){
+                            $id_line = $("#"+$r+'id_line'+$y).val();
+                            $inputan="";
 
-                                for($u=1;$u<=7;$u++){
-                                    $inputan = $inputan +
-                                    '<td>'+
-                                        '<center>'+$("#jm"+$r+$id_line+'day'+$u).val()+'</center>'+
-                                        '<input name="'+"jm"+$r+$id_line+'day'+$u+'"'+
-                                        'value="'+$("#jm"+$r+$id_line+'day'+$u).val()+'"'+
-                                        'type="hidden" class="input_line_pp"'+
-                                        '>'+
-                                        '<input name="'+"ef"+$r+$id_line+'day'+$u+'"'+
-                                        'value="'+$("#ef"+$r+$id_line+'day'+$u).val()+'"'+
-                                        'type="hidden" class="input_line_pp"'+
-                                        '>'+
-                                        '<input name="'+"id_dpl"+$r+$id_line+'day'+$u+'"'+
-                                            'value="'+$("#id_dpl"+$r+$id_line+'day'+$u).val()+'"'+
-                                            'type="text" class="input_line_pp"'+
-                                        '>'+
-                                    '</td>';
-                                }
-
-                                $idline = $("#"+$r+'id_line'+$y).val();
-                                $nmline = $("#"+$r+'nama_line'+$idline).val();
-                                $show   = $("#"+$r+'nama_line'+$idline).val();
-
-                                $lines = $lines+
-                                '<tr>'+
-                                    '<td>'+
-                                        '<input type="hidden" name="'+$r+'id_line_kf'+$y+'"  class="row_efisiensi" value="'+$idline+'">'+
-                                        '<input type="hidden" class="row_efisiensi" value="'+$nmline+'">'+
-                                        '<center>'+$show+'</center>'+
-                                    '</td>'+
-                                    $inputan+
-                                '</tr>';
+                            for($u=1;$u<=7;$u++){
+                                $inputan = $inputan +
+                                '<td>'+
+                                    '<input name="'+"jm"+$r+$id_line+'day'+$u+'"'+
+                                    'value="'+$("#jm"+$r+$id_line+'day'+$u).val()+'"'+
+                                    'type="text" class="input_line_pp"'+
+                                    '>'+
+                                    '<input name="'+"ef"+$r+$id_line+'day'+$u+'"'+
+                                    'value="'+$("#ef"+$r+$id_line+'day'+$u).val()+'"'+
+                                    'type="text" class="input_line_pp"'+
+                                    '>'+
+                                '</td>';
                             }
 
-                            $isi_div = $isi_div +
-                            '<tr  id="1perc_kf'+$r+'">'+
-                                '<td rowspan="5">'+
-                                    '<input type="text" name="ket'+$r+'" value="'+$ket+'" style="width:20px">'+
-                                    '<input type="text" name="statper<?= $no;?>" value="'+$statper+'" style="width:20px">'+
-                                    '<input type="hidden" id="no'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$r+'" readonly>'+
-                                    '<center>'+parseInt($r+1)+'</center>'+
-                                '</td>'+
-                                '<td rowspan="5">'+
-                                    '<input type="hidden" id="cust'+$r+'" class="row_efisiensi"'+
-                                    'value="'+ $("#cust"+$r).val()+'" readonly>'+
-                                    '<center>'+ $("#cust"+$r).val()+'</center>'+
-                                '</td>'+
-                                '<td rowspan="5">'+
-                                    '<input type="hidden" name="id_bg3'+$r+'" value="'+$("#id_bg3"+$r).val()+'" style="width:50px">'+
-                                    '<input type="hidden" id="produk'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$("#produk"+$r).val()+'">'+
-                                    '<center>'+$("#produk"+$r).val()+'</center>'+
-                                '</td>'+
-                                '<td rowspan="5">'+
-                                    '<input type="hidden" id="qty'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$("#qty"+$r).val()+'">'+
-                                    '<center>'+$("#qty"+$r).val()+'</center>'+
-                                '</td>'+
-                            '</tr>'+
-                            $lines+
-                            '<input type="hidden" name="jumlah_line'+$r+'" value="'+($("#jumlah_line"+$r).val()-1)+'">';
-                        } else{
-                            $lines = "";
+                            $idline = $("#"+$r+'id_line'+$y).val();
+                            $nmline = $("#"+$r+'nama_line'+$idline).val();
+                            $show   = $("#"+$r+'nama_line'+$idline).val();
 
-                            for($y=1;$y<=$jumlah_line_dpo;$y++){
-                                $id_line = $("#"+$r+'id_line'+$y).val();
-                                $inputan="";
-
-                                for($u=1;$u<=7;$u++){
-                                    $inputan = $inputan +
-                                    '<td>'+
-                                        '<center>'+$("#jm"+$r+$id_line+'day'+$u).val()+'</center>'+
-                                        '<input name="'+"jm"+$r+$id_line+'day'+$u+'"'+
-                                        'value="'+$("#jm"+$r+$id_line+'day'+$u).val()+'"'+
-                                        'type="hidden" class="input_line_pp"'+
-                                        '>'+
-                                        '<input name="'+"ef"+$r+$id_line+'day'+$u+'"'+
-                                        'value="'+$("#ef"+$r+$id_line+'day'+$u).val()+'"'+
-                                        'type="hidden" class="input_line_pp"'+
-                                        '>'+
-                                        '<input name="'+"id_dpl"+$r+$id_line+'day'+$u+'"'+
-                                            'value="'+$("#id_dpl"+$r+$id_line+'day'+$u).val()+'"'+
-                                            'type="text" class="input_line_pp"'+
-                                        '>'+
-                                    '</td>';
-                                }
-
-                                $idline = $("#"+$r+'id_line'+$y).val();
-                                $nmline = $("#"+$r+'nama_line'+$idline).val();
-                                $show   = $("#"+$r+'nama_line'+$idline).val();
-
-                                $lines = $lines+
-                                    '<td>'+
-                                        '<input type="hidden" name="'+$r+'id_line_kf'+$y+'"  class="row_efisiensi" value="'+$idline+'">'+
-                                        '<input type="hidden" class="row_efisiensi" value="'+$nmline+'">'+
-                                        '<center>'+$show+'</center>'+
-                                    '</td>'+
-                                    $inputan;
-                            }
-
-                            $isi_div = $isi_div +
-                            '<tr  id="1perc_kf'+$r+'">'+
+                            $lines = $lines+
+                            '<tr style="display:none">'+
                                 '<td>'+
-                                    '<input type="text" name="ket'+$r+'" value="'+$ket+'" style="width:20px">'+
-                                    '<input type="text" name="statper'+$r+'" value="'+$statper+'" style="width:20px">'+
-                                    '<input type="hidden" id="no'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$r+'" readonly>'+
-                                    '<center>'+parseInt($r+1)+'</center>'+
+                                    '<input type="text" name="idline'+$y+'" class="row_efisiensi" value="'+$idline+'">'+
+                                    '<input type="hidden" class="row_efisiensi" value="'+$nmline+'">'+
+                                    '<center>'+$show+'</center>'+
                                 '</td>'+
-                                '<td>'+
-                                    '<input type="hidden" id="cust'+$r+'" class="row_efisiensi"'+
-                                    'value="'+ $("#cust"+$r).val()+'" readonly>'+
-                                    '<center>'+ $("#cust"+$r).val()+'</center>'+
-                                '</td>'+
-                                '<td>'+
-                                    '<input type="hidden" name="id_bg3'+$r+'" value="'+$("#id_bg3"+$r).val()+'" style="width:50px">'+
-                                    '<input type="text" name="id_pt_bg3'+$r+'" value="'+$("#id_pt_bg3"+$r).val()+'" style="width:50px">'+
-                                    '<input type="hidden" id="produk'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$("#produk"+$r).val()+'">'+
-                                    '<center>'+$("#produk"+$r).val()+'</center>'+
-                                '</td>'+
-                                '<td>'+
-                                    '<input type="hidden" id="qty'+$r+'" class="row_efisiensi"'+
-                                    'value="'+$("#qty"+$r).val()+'">'+
-                                    '<center>'+$("#qty"+$r).val()+'</center>'+
-                                '</td>'+
-                                $lines+
-                            '</tr>'+
-                            '<input type="hidden" name="jumlah_line'+$r+'" value="'+($("#jumlah_line"+$r).val()-1)+'">';
+                                $inputan+
+                            '</tr>';
                         }
+
+                        $isi_div = $isi_div +
+                        '<tr  id="1perc_kf'+$r+'" style="display:none">'+
+                            '<td rowspan="5">'+
+                                '<input type="hidden" name="ket'+$r+'" value="'+$ket+'" style="width:20px">'+
+                                '<input type="text" id="statper<?= $no;?>" value="'+$statper+'" style="width:20px">'+
+                                '<input type="hidden" id="no'+$r+'" class="row_efisiensi"'+
+                                'value="'+$r+'" readonly>'+
+                                '<center>'+parseInt($r+1)+'</center>'+
+                            '</td>'+
+                            '<td rowspan="5">'+
+                                '<input type="hidden" id="cust'+$r+'" class="row_efisiensi"'+
+                                'value="'+ $("#cust"+$r).val()+'" readonly>'+
+                                '<center>'+ $("#cust"+$r).val()+'</center>'+
+                            '</td>'+
+                            '<td rowspan="5">'+
+                                '<input type="hidden" id="id_bg3'+$r+'" value="'+$("#id_bg3"+$r).val()+'" style="width:50px">'+
+                                '<input type="hidden" id="produk'+$r+'" class="row_efisiensi"'+
+                                'value="'+$("#produk"+$r).val()+'">'+
+                                '<center>'+$("#produk"+$r).val()+'</center>'+
+                            '</td>'+
+                            '<td rowspan="5">'+
+                                '<input type="hidden" id="qty'+$r+'" class="row_efisiensi"'+
+                                'value="'+$("#qty"+$r).val()+'">'+
+                                '<center>'+$("#qty"+$r).val()+'</center>'+
+                            '</td>'+
+                        '</tr>'+
+                        $lines+
+                        '<input type="hidden" name="jumlah_line'+$r+'" value="'+($("#jumlah_line"+$r).val()-1)+'">';;
                     } 
+
                 }
         }
 

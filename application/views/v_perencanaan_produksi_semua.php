@@ -190,7 +190,7 @@
 
     <div class="modal" id="modaldelete" role="dialog">
         <div class="modal-dialog modal-xl" style="width:40%">
-            <form method="POST" action="<?= base_url()?>perencanaanProduksi/delete">
+            <form method="POST" action="<?= base_url()?>perencanaanProduksi/delete_perencanaan_produksi">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Hapus Perencanaan Produksi</h4>
@@ -212,40 +212,6 @@
         </div>
     </div>
 
-    <div class="modal" id="modallog" role="dialog">
-        <div class="modal-dialog modal-xl" style="width:80%">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Log Perencanaan Produksi</h4>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="id_terpilih">
-
-                    <table>
-                        <tr>
-                            <td class="col-md-6">
-                                <center>
-                                    <b>Input Date:</b><span id="input_date"></span>
-                                </center>
-                            </td>
-                            <td class="col-md-6">
-                                <center>
-                                    <b>User Input:</b><span id="input_user"></span>
-                                </center>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <div id="isi_log">
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
 <!--*****************************-->
 <?php include('_endtitle.php'); ?>
 <?php include('_js.php'); ?>

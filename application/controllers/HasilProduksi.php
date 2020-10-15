@@ -262,18 +262,23 @@ class HasilProduksi extends CI_Controller {
       $prodline    = $this->M_HasilProduksi->get_produksi_line_by_id($id_produksi)->result_array();
       $jm_prodline = $this->M_HasilProduksi->get_produksi_line_by_id($id_produksi)->num_rows();
 
-      $cek = 0;
+      $cek_perc = 0;
+      $cak_lap  = 0;
 
       for($o=0;$o<$jm_prodline;$o++){
+        if($prodline[$o]['status_perencanaan'] == 1){
+          $cek_perc++;
+        }
+
         if($prodline[$o]['status_laporan'] == 1){
-          $cek++;
+          $cek_lap++;
         }
       }
 
-      if($cek == $jm_prodline){
+      if($cek_lap == $cek_perc){
         $status_produksi = 2;
       }
-      else if($cek == 0){
+      else if($cek_lap == 0){
         $status_produksi = 0;
       }
       else{
@@ -492,18 +497,23 @@ class HasilProduksi extends CI_Controller {
       $prodline    = $this->M_HasilProduksi->get_produksi_line_by_id($id_produksi)->result_array();
       $jm_prodline = $this->M_HasilProduksi->get_produksi_line_by_id($id_produksi)->num_rows();
 
-      $cek = 0;
+      $cek_perc = 0;
+      $cak_lap  = 0;
 
       for($o=0;$o<$jm_prodline;$o++){
+        if($prodline[$o]['status_perencanaan'] == 1){
+          $cek_perc++;
+        }
+
         if($prodline[$o]['status_laporan'] == 1){
-          $cek++;
+          $cek_lap++;
         }
       }
 
-      if($cek == $jm_prodline){
+      if($cek_lap == $cek_perc){
         $status_produksi = 2;
       }
-      else if($cek == 0){
+      else if($cek_lap == 0){
         $status_produksi = 0;
       }
       else{

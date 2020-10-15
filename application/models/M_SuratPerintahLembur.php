@@ -51,7 +51,7 @@ class M_SuratPerintahLembur extends CI_Model {
 
     function cari_spl($tanggal_spl,$id_line_spl){
         return $this->db->query("SELECT * FROM surat_perintah_lembur WHERE tanggal='$tanggal_spl' AND id_line='$id_line_spl'
-        AND keterangan_spl='0' AND status_delete='0'");
+        AND status_delete='0'");
     }
 
     function get_last_spl_id(){
