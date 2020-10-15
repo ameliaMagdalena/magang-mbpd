@@ -20,6 +20,7 @@ class PurchaseOrderCustomer extends CI_Controller {
         $data['po_cust'] = $this->M_PurchaseOrderCustomer->selectPOCustomerAktif()->result_array();
         $data['detail_po_cust'] = $this->M_PurchaseOrderCustomer->selectDetailPOCustomerAktif()->result_array();
         $data['customer'] = $this->M_Customer->selectCustomerAktif()->result_array();
+        $data['sales_order'] = $this->M_PurchaseOrderCustomer->selectSalesOrderAktif()->result_array();
 
 		$this->load->view('v_po_customer', $data);
     }
@@ -31,6 +32,8 @@ class PurchaseOrderCustomer extends CI_Controller {
         $data['id_po'] = $id;
         $data['po_cust'] = $this->M_PurchaseOrderCustomer->selectSatuPOCustomer($id_po)->result_array();
         $data['detail_po_cust'] = $this->M_PurchaseOrderCustomer->selectSatuDetailPOCustomer($id_po)->result_array();
+        $data['sales_order'] = $this->M_PurchaseOrderCustomer->selectSatuSalesOrder($id_po)->result_array();
+        $data['jumlah_so'] = $this->M_PurchaseOrderCustomer->selectSalesOrderAktif()->num_rows();
 
 		$this->load->view('v_detail_po_customer', $data);
     }
@@ -84,7 +87,7 @@ class PurchaseOrderCustomer extends CI_Controller {
         $data2 = array (
             "id_purchase_order_customer" => $id_po,
             "kode_purchase_order_customer" => $no_po,
-            "kode_so" => $this->input->post("no_so_customer"),
+            //"kode_so" => $this->input->post("no_so_customer"),
             "id_customer" => $this->input->post("customer"),
             "tanggal_po" => $this->input->post("tgl_po"),
             "harga_sebelum_pajak" => $this->input->post("total_sebelum_pajaknya"),
@@ -109,7 +112,6 @@ class PurchaseOrderCustomer extends CI_Controller {
         $data = array (
             "id_purchase_order_customer" => $this->input->post("id_po_customer"),
             "kode_purchase_order_customer" =>  $this->input->post("no_po_customer"),
-            "kode_so" => $this->input->post("no_so_customer"),
             "id_customer" => $this->input->post("customer"),
             "tanggal_po" => $this->input->post("tgl_po"),
             "status_po" => $this->input->post("status"),
@@ -119,6 +121,20 @@ class PurchaseOrderCustomer extends CI_Controller {
         );
         $this->M_PurchaseOrderCustomer->editPOCustomer($data, $where);
         redirect('PurchaseOrderCustomer/index/3');
+    }
+
+    public function batal_po(){
+        $where = array(
+            "id_purchase_order_customer" => $this->input->post("id_po_customer"),
+        );
+        $data = array(
+            "status_po" => "4",
+            "keterangan" => $this->input->post("keterangan"),
+            "user_edit"=>$_SESSION['id_user'],
+            "waktu_add"=>date('Y-m-d H:i:s'),
+        );
+        $this->M_PurchaseOrderCustomer->editPOCustomer($data, $where);
+        redirect('PurchaseOrderCustomer/index/2');
     }
 
     public function hapus_po(){
@@ -135,5 +151,69 @@ class PurchaseOrderCustomer extends CI_Controller {
         redirect('PurchaseOrderCustomer/index/3');
     }
 
+    public function sales_order($id){
+        $id_po = array(
+            "id_purchase_order_customer" => $id
+        );
+        $data['id_po'] = $id;
+        $data['po_cust'] = $this->M_PurchaseOrderCustomer->selectSatuPOCustomer($id_po)->result_array();
+        $data['detail_po_cust'] = $this->M_PurchaseOrderCustomer->selectSatuDetailPOCustomer($id_po)->result_array();
+        $data['sales_order'] = $this->M_PurchaseOrderCustomer->selectSatuSalesOrder($id_po)->result_array();
+        $data['user'] = $this->M_PurchaseOrderCustomer->selectKaryawan()->result_array();
+
+		$this->load->view('v_sales_order', $data);
+    }
+
+    public function insert_so(){
+        $id_po = $this->input->post("id_po_customer");
+        $data = array (
+            "id_purchase_order_customer" => $id_po,
+            "id_sales_order" => $this->input->post("id_sales_order"),
+            "kode_sales_order" => $this->input->post("kode_sales_order"),
+            "tanggal_so" => $this->input->post("tgl_so"),
+            "tanggal_pengantaran" => $this->input->post("tgl_pengantaran"),
+            "dibuat_oleh" => $_SESSION['id_user'],
+            "tanggal_dibuat" => date('Y-m-d H:i:s'),
+            "user_add"=>$_SESSION['id_user'],
+            "waktu_add"=>date('Y-m-d H:i:s'),
+            "user_edit"=>"0",
+            "user_delete"=>"0"
+        );
+        $this->M_PurchaseOrderCustomer->insertSalesOrder($data);
+        redirect('PurchaseOrderCustomer/sales_order/'.$id_po);
+    }
+
+    public function edit_so(){
+        $id_po = $this->input->post("id_po_cust");
+        $where = array(
+            'id_sales_order' => $this->input->post("id_sales_order")
+        );
+
+        $data = array (
+            "id_sales_order" => $this->input->post("id_sales_order"),
+            "tanggal_pengantaran" =>  $this->input->post("tgl_pengantaran"),
+            "dibuat_oleh" => $this->input->post("dibuat_oleh"),
+            "diterima_oleh" => $this->input->post("diterima_oleh"),
+            "user_edit"=>$_SESSION['id_user'],
+            "waktu_add"=>date('Y-m-d H:i:s'),
+        );
+        $this->M_PurchaseOrderCustomer->editSalesOrder($data, $where);
+        redirect('PurchaseOrderCustomer/sales_order/'.$id_po);
+    }
+
+    public function hapus_so(){
+        $id_po = $this->input->post("id_po_cust");
+        $where = array(
+            "id_purchase_order_customer" => $this->input->post("id_po_customer"),
+        );
+        $data = array(
+            "status_delete"=>"1",
+            "user_delete"=>$_SESSION['id_user'],
+            "waktu_delete"=>date('Y-m-d H:i:s')
+        );
+        $this->M_PurchaseOrderCustomer->hapusPOCustomer($data, $where);
+        $this->M_PurchaseOrderCustomer->hapusDetailPOCustomer($data, $where);
+        redirect('PurchaseOrderCustomer/sales_order/'.$id_po);
+    }
 
 }

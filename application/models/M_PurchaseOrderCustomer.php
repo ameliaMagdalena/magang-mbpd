@@ -93,11 +93,45 @@ class M_PurchaseOrderCustomer extends CI_Model {
     }
 
 
-    
+    //******************************** SALES ORDER ******************************* */
+    //**************************************************************************** */
+    function selectSalesOrderAktif(){
+        return $this->db->query("SELECT * FROM sales_order a
+        JOIN purchase_order_customer b ON a.id_purchase_order_customer = b.id_purchase_order_customer
+        WHERE a.status_delete=0");
+    }
+    function selectSatuSalesOrder($id){
+        return $this->db->query("SELECT * FROM sales_order a
+        JOIN purchase_order_customer b ON a.id_purchase_order_customer = b.id_purchase_order_customer
+        JOIN customer c ON b.id_customer = c.id_customer
+        JOIN user d ON a.dibuat_oleh = d.id_user
+        JOIN karyawan e ON d.id_karyawan = e.id_karyawan
+        WHERE a.status_delete=0 AND a.id_purchase_order_customer='" . $id['id_purchase_order_customer'] . "'");
+    }
+    function insertSalesOrder($data){
+        $this->db->insert('sales_order', $data);
+    }
+    function editSalesOrder($data,$where){
+        $this->db->update('sales_order', $data, $where);
+    }
+
+    function hapusSalesOrder($data,$where){
+        $this->db->update('sales_order', $data, $where);
+    }
+
+
+    //********************************* LAIN LAIN ******************************** */
+    //**************************************************************************** */
     function selectHargaProduk($id){
         return $this->db->query("SELECT harga_produk FROM produk a
         JOIN detail_produk b ON a.id_produk = b.id_produk
         WHERE a.status_delete=0 AND b.status_delete=0 AND b.id_detail_produk='$id'");
+    }
+    
+    function selectKaryawan(){
+        return $this->db->query("SELECT * FROM user a
+        JOIN karyawan b ON a.id_karyawan = b.id_karyawan
+        WHERE a.status_delete=0 AND b.status_delete=0");
     }
 
 

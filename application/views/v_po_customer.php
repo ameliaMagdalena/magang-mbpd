@@ -176,13 +176,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group mt-lg">
-                                    <label class="col-sm-3 control-label">Nomor SO<span class="required">*</span></label>
-                                    <div class="col-sm-7">
-                                        <input type="text" name="no_so_customer" class="form-control"
-                                            value="<?php echo $po_cust[$x]['kode_so'] ?>" required>
-                                    </div>
-                                </div>
-                                <div class="form-group mt-lg">
                                     <label class="col-sm-3 control-label">Status<span class="required">*</span></label>
                                     <div class="col-sm-7">
                                         <select name="status" class="form-control" required>
@@ -248,7 +241,7 @@
                         <section class="panel">
                             <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PurchaseOrderCustomer/hapus_po" method="post">
                                 <header class="panel-heading">
-                                    <h2 class="panel-title">Hapus Data Supplier</h2>
+                                    <h2 class="panel-title">Hapus Data PO Customer</h2>
                                 </header>
 
                                 <div class="panel-body" style="color: black">

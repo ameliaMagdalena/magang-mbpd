@@ -84,10 +84,24 @@
                                     </div>
                                 </div>
                                 <div class="form-group mt-lg">
-                                    <label class="col-sm-4 control-label">Satuan Ukuran<span class="required">*</span></label>
+                                    <label class="col-sm-4 control-label">Satuan<span class="required">*</span></label>
                                     <div class="col-sm-7">
                                         <input type="text" name="satuan" class="form-control"
-                                        placeholder="Satuan ukuran" required>
+                                        placeholder="Satuan" required>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-lg">
+                                    <label class="col-sm-4 control-label">Satuan Keluar<span class="required">*</span></label>
+                                    <div class="col-sm-7">
+                                        <input type="text" name="satuan_keluar" class="form-control"
+                                        placeholder="Satuan keluar" required>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-lg">
+                                    <label class="col-sm-4 control-label">Ukuran Satuan Keluar<span class="required">*</span></label>
+                                    <div class="col-sm-7">
+                                        <input type="number" name="ukuran_satuan_keluar" class="form-control"
+                                        placeholder="Contoh: 1 satuan = 12 ukuran satuan keluar" required>
                                     </div>
                                 </div>
                                 <div class="form-group mt-lg">
@@ -127,8 +141,9 @@
                         <tr>
                             <th class="col-lg-3">Sub Jenis Material</th>
                             <th class="col-lg-2">Unit</th>
-                            <th class="col-lg-3">Jumlah Di Gudang</th>
-                            <th class="col-lg-4">Aksi</th>
+                            <th class="col-lg-2">Unit Keluar</th>
+                            <th class="col-lg-2">Jumlah Di Gudang</th>
+                            <th class="col-lg-3">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -139,6 +154,7 @@
                         <tr>
                             <td> <?php echo $sub_jenis[$y]['nama_sub_jenis_material']?></td>
                             <td> <?php echo $sub_jenis[$y]['satuan_ukuran']?></td>
+                            <td> <?php echo $sub_jenis[$y]['satuan_keluar']?></td>
                             <td>
                                 <?php
                                 $jumlah_material = 0;
@@ -171,36 +187,49 @@
                                     <input type="hidden" name="id_sub_jenis_material" class="form-control" value="<?php echo $sub_jenis[$y]['id_sub_jenis_material']?>" readonly>
                                     
                                     <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Nama Sub Jenis Material</label>
-                                        <div class="col-sm-9">
+                                        <label class="col-sm-4 control-label">Nama Sub Jenis Material</label>
+                                        <div class="col-sm-8">
                                             <input type="text" name="nama_sub" class="form-control"
-                                            value="<?php echo $sub_jenis[$y]['nama_sub_jenis_material'] ?> " readonly>
+                                            value="<?php echo $sub_jenis[$y]['nama_sub_jenis_material'] ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Kode Sub Jenis Material</label>
-                                        <div class="col-sm-9">
+                                        <label class="col-sm-4 control-label">Kode Sub Jenis Material</label>
+                                        <div class="col-sm-8">
                                             <input type="text" name="kode" class="form-control"
-                                            value="<?php echo $sub_jenis[$y]['kode_sub_jenis_material'] ?> " readonly>
+                                            value="<?php echo $sub_jenis[$y]['kode_sub_jenis_material'] ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Jenis Material</label>
-                                        <div class="col-sm-9">
+                                        <label class="col-sm-4 control-label">Jenis Material</label>
+                                        <div class="col-sm-8">
                                             <input type="text" name="nama_jenis" class="form-control"
-                                            value="<?php echo $sub_jenis[$y]['nama_jenis_material'] ?> " readonly>
+                                            value="<?php echo $sub_jenis[$y]['nama_jenis_material'] ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Satuan Ukuran</label>
-                                        <div class="col-sm-9">
+                                        <label class="col-sm-4 control-label">Satuan</label>
+                                        <div class="col-sm-8">
                                             <input type="text" name="satuan" class="form-control"
-                                            value="<?php echo $sub_jenis[$y]['satuan_ukuran'] ?> " readonly>
+                                            value="<?php echo $sub_jenis[$y]['satuan_ukuran'] ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Jumlah Di Gudang</label>
-                                        <div class="col-sm-9">
+                                        <label class="col-sm-4 control-label">Satuan Keluar</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="satuan_keluar" class="form-control"
+                                            value="<?php echo $sub_jenis[$y]['satuan_keluar'] ?>" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-lg">
+                                        <label class="col-sm-12 control-label" style="text-align: center">Ukuran Satuan Keluar <?php echo $jenis_material[0]['nama_jenis_material'] . " " . $sub_jenis[$y]['nama_sub_jenis_material'] ?></label>
+                                        <div class="col-sm-12" style="text-align: center">
+                                            1 <?php echo $sub_jenis[$y]['satuan_ukuran'] ?> = <?php echo $sub_jenis[$y]['ukuran_satuan_keluar'] . " " . $sub_jenis[$y]['satuan_keluar'] ?>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-lg">
+                                        <label class="col-sm-4 control-label">Jumlah Di Gudang</label>
+                                        <div class="col-sm-8">
                                             <input type="text" name="jumlah" class="form-control"
                                             value="<?php $jumlah_material = 0;
                                                 for($z=0; $z<count($material); $z++){
@@ -208,21 +237,21 @@
                                                         $jumlah_material=$jumlah_material+1;
                                                     }
                                                 }
-                                            echo $jumlah_material;?> " readonly>
+                                            echo $jumlah_material;?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Minimal Stok</label>
-                                        <div class="col-sm-9">
+                                        <label class="col-sm-4 control-label">Minimal Stok</label>
+                                        <div class="col-sm-8">
                                             <input type="text" name="min_stok" class="form-control"
-                                            value="<?php echo $sub_jenis[$y]['min_stok'] ?> " readonly>
+                                            value="<?php echo $sub_jenis[$y]['min_stok'] ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Maksimal Stok</label>
-                                        <div class="col-sm-9">
+                                        <label class="col-sm-4 control-label">Maksimal Stok</label>
+                                        <div class="col-sm-8">
                                             <input type="text" name="max_stok" class="form-control"
-                                            value="<?php echo $sub_jenis[$y]['max_stok'] ?> " readonly>
+                                            value="<?php echo $sub_jenis[$y]['max_stok'] ?>" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -270,35 +299,50 @@
                                             <label class="col-sm-4 control-label">Jenis Material</label>
                                             <div class="col-sm-8">
                                                 <input type="text" name="jenis" class="form-control"
-                                                value="<?php echo $sub_jenis[$y]['nama_jenis_material'] ?> " readonly>
+                                                value="<?php echo $sub_jenis[$y]['nama_jenis_material'] ?>" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group mt-lg">
-                                            <label class="col-sm-4 control-label">Satuan Ukuran</label>
+                                            <label class="col-sm-4 control-label">Satuan</label>
                                             <div class="col-sm-8">
                                                 <input type="text" name="satuan" class="form-control"
-                                                value="<?php echo $sub_jenis[$y]['satuan_ukuran'] ?> ">
+                                                value="<?php echo $sub_jenis[$y]['satuan_ukuran'] ?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group mt-lg">
+                                            <label class="col-sm-4 control-label">Satuan Keluar</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="satuan_keluar" class="form-control"
+                                                value="<?php echo $sub_jenis[$y]['satuan_keluar'] ?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group mt-lg">
+                                            <label class="col-sm-4 control-label">Ukuran Satuan Keluar</label>
+                                            <div class="col-sm-8">
+                                                <input type="number" name="ukuran_satuan_keluar" class="form-control"
+                                                value="<?php echo $sub_jenis[$y]['ukuran_satuan_keluar'] ?>"
+                                                placeholder="Contoh : 1 satuan = 12 ukuran satuan kelaur">
                                             </div>
                                         </div>
                                         <div class="form-group mt-lg">
                                             <label class="col-sm-4 control-label">Minimal Stok</label>
                                             <div class="col-sm-8">
                                                 <input type="number" name="min_stok" class="form-control"
-                                                value="<?php echo $sub_jenis[$y]['min_stok'] ?> ">
+                                                value="<?php echo $sub_jenis[$y]['min_stok'] ?>">
                                             </div>
                                         </div>
                                         <div class="form-group mt-lg">
                                             <label class="col-sm-4 control-label">Maksimal Stok</label>
                                             <div class="col-sm-8">
                                                 <input type="number" name="max_stok" class="form-control"
-                                                value="<?php echo $sub_jenis[$y]['max_stok'] ?> ">
+                                                value="<?php echo $sub_jenis[$y]['max_stok'] ?>">
                                             </div>
                                         </div>
                                     </div>
                                     <footer class="panel-footer">
                                         <div class="row">
                                             <div class="col-md-12 text-right">
-                                                <input type="submit" id="tambah" class="btn btn-primary" value="Simpan">
+                                                <input type="submit" class="btn btn-primary" value="Simpan">
                                                 <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
                                             </div>
                                         </div>
@@ -327,7 +371,7 @@
                                     <footer class="panel-footer">
                                         <div class="row">
                                             <div class="col-md-12 text-right">
-                                                <input type="submit" id="tambah" class="btn btn-danger" value="Hapus">
+                                                <input type="submit" class="btn btn-danger" value="Hapus">
                                                 <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
                                             </div>
                                         </div>

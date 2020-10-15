@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2020 at 07:58 AM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.0
+-- Generation Time: Oct 14, 2020 at 06:11 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.3.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -2286,6 +2286,7 @@ CREATE TABLE `permintaan_pembelian` (
   `id_permintaan_pembelian` varchar(10) NOT NULL,
   `id_sub_jenis_material` varchar(10) NOT NULL,
   `jumlah_material` int(11) NOT NULL,
+  `satuan_keluar` varchar(30) NOT NULL,
   `status_pembelian` int(11) NOT NULL,
   `keterangan` varchar(100) NOT NULL,
   `user_add` varchar(10) NOT NULL,
@@ -2902,6 +2903,8 @@ CREATE TABLE `sub_jenis_material` (
   `nama_sub_jenis_material` varchar(30) NOT NULL,
   `id_jenis_material` varchar(10) NOT NULL,
   `satuan_ukuran` varchar(30) NOT NULL,
+  `satuan_keluar` varchar(30) NOT NULL,
+  `ukuran_satuan_keluar` int(11) NOT NULL,
   `min_stok` int(11) NOT NULL,
   `max_stok` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
@@ -2917,18 +2920,18 @@ CREATE TABLE `sub_jenis_material` (
 -- Dumping data for table `sub_jenis_material`
 --
 
-INSERT INTO `sub_jenis_material` (`id_sub_jenis_material`, `kode_sub_jenis_material`, `nama_sub_jenis_material`, `id_jenis_material`, `satuan_ukuran`, `min_stok`, `max_stok`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('SUBJM-1', 'F001', 'REB55', 'JM-1', 'm3', 10, 20, 'USER-1', '2020-10-05 23:02:35', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-10', 'BAJCBC001', 'JCBC M 6x20 MM 20Cm', 'JM-7', 'Pcs ', 10, 50, 'USER-1', '2020-10-09 01:52:06', 'USER-1', '2020-10-09 01:53:30', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-11', 'BAJCBC002', 'JCBC M 6x50 MM 50Cm', 'JM-7', 'Pcs', 15, 60, 'USER-1', '2020-10-09 01:55:27', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-2', 'F002', 'REB70', 'JM-1', 'm3', 10, 20, 'USER-1', '2020-10-05 23:03:04', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-3', 'L001', 'Lem Spray', 'JM-2', 'blek', 5, 10, 'USER-1', '2020-10-05 23:04:24', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-4', 'R001', 'Rets Hitam', 'JM-3', 'pcs', 10, 20, 'USER-1', '2020-10-05 23:05:24', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-5', 'R002', 'Rets Putih', 'JM-3', 'pcs', 10, 20, 'USER-1', '2020-10-05 23:05:44', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-6', 'P001', 'Plastic Medium', 'JM-4', 'pcs ', 0, 0, 'USER-1', '2020-10-05 23:06:17', 'USER-1', '2020-10-05 23:06:40', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-7', 'P002', 'Plastic Large', 'JM-4', 'pcs', 10, 20, 'USER-1', '2020-10-05 23:06:32', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-8', 'K001', 'Karton Tebal 1mm', 'JM-5', 'pcs', 10, 20, 'USER-1', '2020-10-05 23:07:39', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-9', 'K002', 'Karton Tebal 2mm', 'JM-5', 'pcs', 10, 20, 'USER-1', '2020-10-05 23:07:57', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
+INSERT INTO `sub_jenis_material` (`id_sub_jenis_material`, `kode_sub_jenis_material`, `nama_sub_jenis_material`, `id_jenis_material`, `satuan_ukuran`, `satuan_keluar`, `ukuran_satuan_keluar`, `min_stok`, `max_stok`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('SUBJM-1', 'F001', 'REB55', 'JM-1', 'm3', '', 0, 10, 20, 'USER-1', '2020-10-05 23:02:35', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-10', 'BAJCBC001', 'JCBC M 6x20 MM 20Cm', 'JM-7', 'Pcs ', '', 0, 10, 50, 'USER-1', '2020-10-09 01:52:06', 'USER-1', '2020-10-09 01:53:30', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-11', 'BAJCBC002', 'JCBC M 6x50 MM 50Cm', 'JM-7', 'Pcs', '', 0, 15, 60, 'USER-1', '2020-10-09 01:55:27', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-2', 'F002', 'REB70', 'JM-1', 'm3', '', 0, 10, 20, 'USER-1', '2020-10-05 23:03:04', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-3', 'L001', 'Lem Spray', 'JM-2', 'blek', '', 0, 5, 10, 'USER-1', '2020-10-05 23:04:24', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-4', 'R001', 'Rets Hitam', 'JM-3', 'pcs', '', 0, 10, 20, 'USER-1', '2020-10-05 23:05:24', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-5', 'R002', 'Rets Putih', 'JM-3', 'pcs', '', 0, 10, 20, 'USER-1', '2020-10-05 23:05:44', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-6', 'P001', 'Plastic Medium', 'JM-4', 'pcs ', '', 0, 0, 0, 'USER-1', '2020-10-05 23:06:17', 'USER-1', '2020-10-05 23:06:40', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-7', 'P002', 'Plastic Large', 'JM-4', 'pcs', '', 0, 10, 20, 'USER-1', '2020-10-05 23:06:32', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-8', 'K001', 'Karton Tebal 1mm', 'JM-5', 'pcs', '', 0, 10, 20, 'USER-1', '2020-10-05 23:07:39', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-9', 'K002', 'Karton Tebal 2mm', 'JM-5', 'pcs', '', 0, 10, 20, 'USER-1', '2020-10-05 23:07:57', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 

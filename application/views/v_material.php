@@ -50,12 +50,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if(count($material)==0){?>
-                    <tr>
-                        <td colspan="5" style="text-align:center">Belum Ada Data</td>
-                    </tr>
-                <?php 
-                    }else{
+                <?php
                     for($x=0 ; $x<count($material) ; $x++){
                 ?>
                     <tr>
@@ -259,7 +254,7 @@
                     <!-- ***************************** END MODAL HAPUS ***************************** -->
                     <!-- ************************************************************************** -->
 
-                <?php }} ?>
+                <?php } ?>
             </tbody>
         </table>
     </div>
