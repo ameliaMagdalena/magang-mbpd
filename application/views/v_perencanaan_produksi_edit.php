@@ -2,6 +2,7 @@
 <?php include('_css.php'); ?>
 <?php include('_header.php'); ?>
 <?php include('_navbar.php'); ?>
+
 <!--*****************************-->
 <!--*****************************-->
 <section role="main" class="content-body" >
@@ -105,6 +106,13 @@
                         $hitung++;
                         }
                     ?>
+                        <input type="text" id="stat_date1" value="<?= $stat_date1?>">
+                        <input type="text" id="stat_date2" value="<?= $stat_date2?>">
+                        <input type="text" id="stat_date3" value="<?= $stat_date3?>">
+                        <input type="text" id="stat_date4" value="<?= $stat_date4?>">
+                        <input type="text" id="stat_date5" value="<?= $stat_date5?>">
+                        <input type="text" id="stat_date6" value="<?= $stat_date6?>">
+                        <input type="text" id="stat_date7" value="<?= $stat_date7?>">
                 </table>
             </div>
         </section>
@@ -116,6 +124,7 @@
                 <!-- BAGIAN II : PRODUK & BAGIAN III : PERENCANAAN PRODUKSI -->
                 <input id="start_date" type="hidden" value="<?= $start_date;?>">
                 <input type="text" id="jumlah_div_ada_isi" value="<?= $jm_detail_produksi_line + $jm_dpl_reschedule_group?>">
+                <input type="date" id="sekarang" value="<?= $sekarang ?>">
         
                 <div class="col-md-12" id="isi_bg3">
                     <table class="table table-bordered table-striped mb-none table_efisiensi_pp" id="datatable-default">
@@ -316,10 +325,11 @@
                                                                             <center><?= $ct->nama_line?></center>
                                                                         </td>
                                                                             <!--$inputan_jumlah_produk+-->
-                                                                            <?php for($z=1;$z<=7;$z++){ ?>
+                                                                            <?php for($z=1;$z<=7;$z++){ 
+                                                                            ?>
                                                                                 <td>
                                                                                 <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                                type="number" class="inputinput form-control" min="0"
+                                                                                type="number" class="input<?= $z?> inputinput form-control" min="0"
                                                                                 style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                                 <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
                                                                                 type="text" class="form-control" disabled min="0"
@@ -470,9 +480,9 @@
                                                                     </td>
                                                                         <!--$inputan_jumlah_produk+-->
                                                                         <?php for($z=1;$z<=7;$z++){ ?>
-                                                                            <td>
+                                                                            <td> 
                                                                             <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                                type="number" class="inputinput form-control" min="0"
+                                                                                type="number" class="input<?= $z?> inputinput form-control" min="0"
                                                                                 style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                                 <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
                                                                                 type="text" class="form-control" disabled min="0"
@@ -650,7 +660,7 @@
                                                                                             ?>
                                                                                                             <td>
                                                                                                                 <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->jumlah_item_perencanaan?>"
-                                                                                                                type="number" class="inputinput form-control" min="0"
+                                                                                                                type="number" class="input<?= $z?> inputinput form-control" min="0" disabled 
                                                                                                                 style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                                                                 <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->waktu_proses_perencanaan?>"
                                                                                                                 type="text" class="form-control" disabled min="0"
@@ -664,7 +674,7 @@
                                                                                             ?>
                                                                                                         <td>
                                                                                                             <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                                                            type="number" class="inputinput form-control" min="0"
+                                                                                                            type="number" class="input<?= $z?> inputinput form-control" min="0" disabled
                                                                                                             style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                                                             <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
                                                                                                             type="text" class="form-control" disabled min="0"
@@ -841,7 +851,7 @@
                                                                                             ?>
                                                                                                             <td>
                                                                                                                 <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->jumlah_item_perencanaan?>"
-                                                                                                                type="number" class="inputinput form-control" min="0"
+                                                                                                                type="number" class="input<?= $z?> inputinput form-control" min="0" disabled
                                                                                                                 style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                                                                 <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>" value="<?= $detprodline->waktu_proses_perencanaan?>"
                                                                                                                 type="text" class="form-control" disabled min="0"
@@ -855,7 +865,7 @@
                                                                                             ?>
                                                                                                         <td>
                                                                                                             <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                                                            type="number" class="inputinput form-control" min="0"
+                                                                                                            type="number" class="input<?= $z?> inputinput form-control" min="0" disabled
                                                                                                             style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                                                             <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
                                                                                                             type="text" class="form-control" disabled min="0"
@@ -1036,7 +1046,7 @@
                                                         <?php for($z=1;$z<=7;$z++){ ?>
                                                             <td>
                                                             <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                            type="number" class="inputinput form-control" min="0"
+                                                            type="number" class="input<?= $z?> inputinput form-control" min="0"
                                                             style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                             <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
                                                             type="text" class="form-control" disabled min="0"
@@ -1195,8 +1205,8 @@
                                                                             if($dplre->jumlah_item_perencanaan > 0){
                                                             ?>
                                                                                 <td>
-                                                                                    <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                                    type="number" class="inputinput form-control" min="0" value="<?= $dplre->jumlah_item_perencanaan ?>"
+                                                                                    <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>" disabled
+                                                                                    type="number" class="input<?=$z?> inputinput form-control" min="0" value="<?= $dplre->jumlah_item_perencanaan ?>"
                                                                                     style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                                     <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
                                                                                     type="text" class="form-control" disabled min="0" value="<?= $dplre->waktu_proses_perencanaan ?>"
@@ -1208,7 +1218,7 @@
                                                                             <?php } else{ ?>
                                                                                 <td>
                                                                                     <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                                    type="number" class="inputinput form-control" min="0"
+                                                                                    type="number" class="input<?=$z?> inputinput form-control" min="0" disabled
                                                                                     style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                                     <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
                                                                                     type="text" class="form-control" disabled min="0"
@@ -2551,9 +2561,9 @@
         </div>
     </div>
 
-    <!-- modal tambah -->
+    <!-- modal edit -->
     <div id='modaltambah' class="modal-block modal-block-lg mfp-hide">
-        <form method="POST" action="<?= base_url()?>perencanaanProduksi/tambah_perencanaan"> 
+        <form method="POST" action="<?= base_url()?>perencanaanProduksi/ubah_perencanaan_produksi"> 
             <section class="panel">
                 <header class="panel-heading">
                     <h2 class="panel-title">Konfirmasi <span id="judul_konf"></span></h2>
@@ -2609,6 +2619,8 @@
                                         <!-- total waktu -->
                                         <input type="hidden" class="row_efisiensi" id="tw_kf<?= $ln->id_line?>day<?=$j?>"
                                         name="tw_kf<?= $ln->id_line?>day<?=$j?>" readonly>
+                                        <input type="text" class="row_efisiensi" id="id_plkf<?= $ln->id_line?>day<?=$j?>" 
+                                        name="id_plkf<?= $ln->id_line?>day<?=$j?>" readonly>
                                         </center>
                                     </td>
                                 <?php } ?>
@@ -2648,6 +2660,12 @@
     function reload() {
         location.reload();
     }
+</script>
+
+<script>
+$(window).on("load", function(){
+  //cek_tanggal();
+});
 </script>
 
 <!-- close modal -->
@@ -2762,7 +2780,7 @@
             $target1 = $("#"+id+'target1'+$id_line).val();
             $("#"+id+'target2'+$id_line).val($target1);
         }
-        
+        //cek_tanggal();
     });
 </script>
 
@@ -2880,9 +2898,12 @@
                     //jika sebelumnya sudah ada maka:
                     for($k=1;$k<=$jumlah_line_dpo;$k++){
                         $id_line = $("#"+id+'id_line'+$k).val();
-                        $target1 = $("#"+id+'target1'+$id_line).val();
-                        $("#"+id+'target2'+$id_line).val($target1);
 
+                        if($("#statper"+i).val() == 0){
+                            $target1 = $("#"+id+'target1'+$id_line).val();
+                            $("#"+id+'target2'+$id_line).val($target1);
+                        }
+                
                         
                         //UPDATE BG2 0plan2LINE-1
                         $jumlah = 0;
@@ -2894,6 +2915,8 @@
                         }
                         $("#"+i+"plan2"+$id_line).val($jumlah);
                     }
+
+                   
                 }
             }
             else{
@@ -2922,6 +2945,7 @@
 
 
         }
+        //cek_tanggal();
     });
 </script>
 
@@ -3129,6 +3153,7 @@
                 $("#prt_kf"+$id_line+'day'+$i).html($("#prt"+$id_line+'day'+$i).html());
                 $("#prs_kf"+$id_line+'day'+$i).val($("#prs"+$id_line+'day'+$i).val());
                 $("#tw_kf"+$id_line+'day'+$i).val($("#tw"+$id_line+'day'+$i).val());
+                $("#id_plkf"+$id_line+'day'+$i).val($("#id_pl"+$id_line+'day'+$i).val());
             }
         }
 
@@ -3418,7 +3443,8 @@
                             '<input type="hidden" name="jumlah_line'+$r+'" value="'+($("#jumlah_line"+$r).val()-1)+'">';
                         }
                     } 
-                } else if($ket == 3 || $ket == 2){
+                } 
+                else if($ket == 3 || $ket == 2){
                     if($jumlah_line_dpo == 3){
                         if($statper == 0){
                             $lines = "";
@@ -3700,6 +3726,141 @@
                         }
                     } 
                 }
+                //kalau div nda ada perencanaan
+                else{
+                    if($jumlah_line_dpo == 3){
+                        $lines = "";
+
+                        for($y=1;$y<=$jumlah_line_dpo;$y++){
+                            $id_line = $("#"+$r+'id_line'+$y).val();
+                            $inputan="";
+
+                            for($u=1;$u<=7;$u++){
+                                $inputan = $inputan +
+                                '<td>'+
+                                    '<input name="'+"jm"+$r+$id_line+'day'+$u+'"'+
+                                    'value="'+$("#jm"+$r+$id_line+'day'+$u).val()+'"'+
+                                    'type="text" class="input_line_pp"'+
+                                    '>'+
+                                    '<input name="'+"ef"+$r+$id_line+'day'+$u+'"'+
+                                    'value="'+$("#ef"+$r+$id_line+'day'+$u).val()+'"'+
+                                    'type="text" class="input_line_pp"'+
+                                    '>'+
+                                '</td>';
+                            }
+
+                            $idline = $("#"+$r+'id_line'+$y).val();
+                            $nmline = $("#"+$r+'nama_line'+$idline).val();
+                            $show   = $("#"+$r+'nama_line'+$idline).val();
+
+                            $lines = $lines+
+                            '<tr style="display:none">'+
+                                '<td>'+
+                                    '<input type="text" class="row_efisiensi" value="'+$idline+'">'+
+                                    '<input type="hidden" class="row_efisiensi" value="'+$nmline+'">'+
+                                    '<center>'+$show+'</center>'+
+                                '</td>'+
+                                $inputan+
+                            '</tr>';
+                        }
+
+
+                        $isi_div = $isi_div +
+                        '<tr  id="1perc_kf'+$r+'" style="display:none">'+
+                            '<td rowspan="4">'+
+                                '<input type="hidden" name="ket'+$r+'" value="'+$ket+'" style="width:20px">'+
+                                '<input type="text" id="statper<?= $no;?>" value="'+$statper+'" style="width:20px">'+
+                                '<input type="hidden" id="no'+$r+'" class="row_efisiensi"'+
+                                'value="'+$r+'" readonly>'+
+                                '<center>'+parseInt($r+1)+'</center>'+
+                            '</td>'+
+                            '<td rowspan="4">'+
+                                '<input type="hidden" id="cust'+$r+'" class="row_efisiensi"'+
+                                'value="'+ $("#cust"+$r).val()+'" readonly>'+
+                                '<center>'+ $("#cust"+$r).val()+'</center>'+
+                            '</td>'+
+                            '<td rowspan="4">'+
+                                '<input type="hidden" id="id_bg3'+$r+'" value="'+$("#id_bg3"+$r).val()+'" style="width:50px">'+
+                                '<input type="hidden" id="produk'+$r+'" class="row_efisiensi"'+
+                                'value="'+$("#produk"+$r).val()+'">'+
+                                '<center>'+$("#produk"+$r).val()+'</center>'+
+                            '</td>'+
+                            '<td rowspan="4">'+
+                                '<input type="hidden" id="qty'+$r+'" class="row_efisiensi"'+
+                                'value="'+$("#qty"+$r).val()+'">'+
+                                '<center>'+$("#qty"+$r).val()+'</center>'+
+                            '</td>'+
+                        '</tr>'+
+                        $lines+
+                        '<input type="hidden" name="jumlah_line'+$r+'" value="'+($("#jumlah_line"+$r).val()-1)+'">';
+                    }
+                    else{
+                        $lines = "";
+
+                        for($y=1;$y<=$jumlah_line_dpo;$y++){
+                            $id_line = $("#"+$r+'id_line'+$y).val();
+                            $inputan="";
+
+                            for($u=1;$u<=7;$u++){
+                                $inputan = $inputan +
+                                '<td>'+
+                                    '<input name="'+"jm"+$r+$id_line+'day'+$u+'"'+
+                                    'value="'+$("#jm"+$r+$id_line+'day'+$u).val()+'"'+
+                                    'type="text" class="input_line_pp"'+
+                                    '>'+
+                                    '<input name="'+"ef"+$r+$id_line+'day'+$u+'"'+
+                                    'value="'+$("#ef"+$r+$id_line+'day'+$u).val()+'"'+
+                                    'type="text" class="input_line_pp"'+
+                                    '>'+
+                                '</td>';
+                            }
+
+                            $idline = $("#"+$r+'id_line'+$y).val();
+                            $nmline = $("#"+$r+'nama_line'+$idline).val();
+                            $show   = $("#"+$r+'nama_line'+$idline).val();
+
+                            $lines = $lines+
+                            '<tr style="display:none">'+
+                                '<td>'+
+                                    '<input type="text" name="idline'+$y+'" class="row_efisiensi" value="'+$idline+'">'+
+                                    '<input type="hidden" class="row_efisiensi" value="'+$nmline+'">'+
+                                    '<center>'+$show+'</center>'+
+                                '</td>'+
+                                $inputan+
+                            '</tr>';
+                        }
+
+                        $isi_div = $isi_div +
+                        '<tr  id="1perc_kf'+$r+'" style="display:none">'+
+                            '<td rowspan="5">'+
+                                '<input type="hidden" name="ket'+$r+'" value="'+$ket+'" style="width:20px">'+
+                                '<input type="text" id="statper<?= $no;?>" value="'+$statper+'" style="width:20px">'+
+                                '<input type="hidden" id="no'+$r+'" class="row_efisiensi"'+
+                                'value="'+$r+'" readonly>'+
+                                '<center>'+parseInt($r+1)+'</center>'+
+                            '</td>'+
+                            '<td rowspan="5">'+
+                                '<input type="hidden" id="cust'+$r+'" class="row_efisiensi"'+
+                                'value="'+ $("#cust"+$r).val()+'" readonly>'+
+                                '<center>'+ $("#cust"+$r).val()+'</center>'+
+                            '</td>'+
+                            '<td rowspan="5">'+
+                                '<input type="hidden" id="id_bg3'+$r+'" value="'+$("#id_bg3"+$r).val()+'" style="width:50px">'+
+                                '<input type="hidden" id="produk'+$r+'" class="row_efisiensi"'+
+                                'value="'+$("#produk"+$r).val()+'">'+
+                                '<center>'+$("#produk"+$r).val()+'</center>'+
+                            '</td>'+
+                            '<td rowspan="5">'+
+                                '<input type="hidden" id="qty'+$r+'" class="row_efisiensi"'+
+                                'value="'+$("#qty"+$r).val()+'">'+
+                                '<center>'+$("#qty"+$r).val()+'</center>'+
+                            '</td>'+
+                        '</tr>'+
+                        $lines+
+                        '<input type="hidden" name="jumlah_line'+$r+'" value="'+($("#jumlah_line"+$r).val()-1)+'">';;
+                    } 
+
+                }
         }
 
 
@@ -3719,5 +3880,20 @@
             $isi_div+
         '</table>';
         $("#isi_perc_kf").html($tam_isinya);
+    }
+</script>
+
+<script>
+    function cek_tanggal(){
+        for($z=1;$z<=7;$z++){
+            $stat = $("#stat_date"+$z).val();
+
+            //tanggal produksi sudah lewat
+            if($stat == 1){
+                $(".input"+$z).prop("disabled",true);
+            } else{
+                $(".input"+$z).prop("disabled",false);
+            }
+        }
     }
 </script>

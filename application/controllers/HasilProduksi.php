@@ -259,14 +259,14 @@ class HasilProduksi extends CI_Controller {
     
 
     //update produksi
-      $prodline    = $this->M_HasilProduksi->get_produksi_line_by_id($id_produksi)->result_array();
-      $jm_prodline = $this->M_HasilProduksi->get_produksi_line_by_id($id_produksi)->num_rows();
+      $prodline    = $this->M_HasilProduksi->get_produksi_line_by_produksi($id_produksi)->result_array();
+      $jm_prodline = $this->M_HasilProduksi->get_produksi_line_by_produksi($id_produksi)->num_rows();
 
       $cek_perc = 0;
       $cak_lap  = 0;
 
       for($o=0;$o<$jm_prodline;$o++){
-        if($prodline[$o]['status_perencanaan'] == 1){
+        if($prodline[$o]['status_perencanaan'] == 1 || $prodline[$o]['status_perencanaan'] == 2){
           $cek_perc++;
         }
 
@@ -494,43 +494,43 @@ class HasilProduksi extends CI_Controller {
       $this->M_HasilProduksi->edit('produksi_line',$data_pl,$where_pl); 
 
     //update produksi
-      $prodline    = $this->M_HasilProduksi->get_produksi_line_by_id($id_produksi)->result_array();
-      $jm_prodline = $this->M_HasilProduksi->get_produksi_line_by_id($id_produksi)->num_rows();
+    $prodline    = $this->M_HasilProduksi->get_produksi_line_by_produksi($id_produksi)->result_array();
+    $jm_prodline = $this->M_HasilProduksi->get_produksi_line_by_produksi($id_produksi)->num_rows();
 
-      $cek_perc = 0;
-      $cak_lap  = 0;
+    $cek_perc = 0;
+    $cak_lap  = 0;
 
-      for($o=0;$o<$jm_prodline;$o++){
-        if($prodline[$o]['status_perencanaan'] == 1){
-          $cek_perc++;
-        }
-
-        if($prodline[$o]['status_laporan'] == 1){
-          $cek_lap++;
-        }
+    for($o=0;$o<$jm_prodline;$o++){
+      if($prodline[$o]['status_perencanaan'] == 1 || $prodline[$o]['status_perencanaan'] == 2){
+        $cek_perc++;
       }
 
-      if($cek_lap == $cek_perc){
-        $status_produksi = 2;
+      if($prodline[$o]['status_laporan'] == 1){
+        $cek_lap++;
       }
-      else if($cek_lap == 0){
-        $status_produksi = 0;
-      }
-      else{
-        $status_produksi = 1;
-      }
+    }
 
-      $data_produksi = array(
-        'status_laporan' => $status_produksi,
-        'user_edit'      => $user,
-        'waktu_edit'     => $now
-      );
+    if($cek_lap == $cek_perc){
+      $status_produksi = 2;
+    }
+    else if($cek_lap == 0){
+      $status_produksi = 0;
+    }
+    else{
+      $status_produksi = 1;
+    }
 
-      $where_produksi = array (
-        'id_produksi' => $id_produksi
-      );
+    $data_produksi = array(
+      'status_laporan' => $status_produksi,
+      'user_edit'      => $user,
+      'waktu_edit'     => $now
+    );
 
-     $this->M_HasilProduksi->edit('produksi',$data_produksi,$where_produksi);
+    $where_produksi = array (
+      'id_produksi' => $id_produksi
+    );
+
+    $this->M_HasilProduksi->edit('produksi',$data_produksi,$where_produksi);
 
     
     //update permohonan akses

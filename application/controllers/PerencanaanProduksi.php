@@ -468,6 +468,7 @@ class PerencanaanProduksi extends CI_Controller {
                             $this->M_SuratPerintahLembur->edit('surat_perintah_lembur',$data_spl,$where_spl);
                         }
                     }
+                //tutup spl
             }
 
             //insert di table produksi
@@ -507,6 +508,7 @@ class PerencanaanProduksi extends CI_Controller {
                 $id_detpo    = $this->input->post('id_bg3'.$o);
                 $jumlah_line = $this->input->post('jumlah_line'.$o);
                 
+                
                 for($k=1;$k<=$jumlah_line;$k++){
                     $idline = $this->input->post($o.'id_line_kf'.$k);
     
@@ -524,6 +526,7 @@ class PerencanaanProduksi extends CI_Controller {
                             $waktu_proses = 0;
                         }
 
+                        
                         //cari id_produksi_line berdasarkan tanggal & line
                         $id_prodline_sesuai = $this->M_PerencanaanProduksi->cari_id_prodline($idline,$tanggal)->result_array();
                         $id_prodlinenya     = $id_prodline_sesuai[0]['id_produksi_line'];
@@ -595,7 +598,7 @@ class PerencanaanProduksi extends CI_Controller {
                             $id_dpl_baru = "DPL".$tahun_sekarangnya.$bulan_sekarangnya.".00000001";
                         }
 
-                        //DETAIL PRODUKSI TERTUNDA
+                        //DETAIL PRODUKSI LINE
                         if($statper == 0){
                             $data_detprod = array(
                                 'id_detail_produksi_line'   => $id_dpl_baru,
@@ -625,14 +628,14 @@ class PerencanaanProduksi extends CI_Controller {
                             );
                             $this->M_PerencanaanProduksi->insert('detail_produksi_line',$data_detprod);
                         }
-
+                        
                         //PRODUKSI TERTUNDA
                         if($statper == 1){
                                 $id_prodtun  = $this->input->post('id_pt_bg3'.$o);
                                 $one_prodtun = $this->M_PerencanaanProduksi->get_one_prodtun($id_prodtun)->result_array();
                                 $jumlah_tertunda_sebelum  = $one_prodtun[0]['jumlah_tertunda'];
                                 $jumlah_terencana_sebelum = $one_prodtun[0]['jumlah_terencana'];
-
+                                
                                 //id produksi tunda produksi
                                 $tahun_sekarangnya = substr(date('Y',strtotime($tanggal)),2,2);
                                 $bulan_sekarangnya = date('m',strtotime($tanggal));
@@ -740,134 +743,61 @@ class PerencanaanProduksi extends CI_Controller {
                                     }
                                 }
                         }              
-                        
+
                         //PURCHASE ORDER CUSTOMER
-                        $id_pos     = $this->M_PerencanaanProduksi->get_detail_po($id_detpo)->result_array();
-                        $id_po_tam  = $id_pos[0]['id_purchase_order_customer'];
+                            $id_pos     = $this->M_PerencanaanProduksi->get_detail_po($id_detpo)->result_array();
+                            $id_po_tam  = $id_pos[0]['id_purchase_order_customer'];
 
-                        $data_po = array (
-                            'status_po' => 2,
-                            'user_edit' => $user,
-                            'waktu_edit'=> $now
-                        );
+                            $data_po = array (
+                                'status_po' => 2,
+                                'user_edit' => $user,
+                                'waktu_edit'=> $now
+                            );
 
-                        $where_po = array (
-                            'id_purchase_order_customer' => $id_po_tam
-                        );
+                            $where_po = array (
+                                'id_purchase_order_customer' => $id_po_tam
+                            );
 
-                        $this->M_PerencanaanProduksi->edit('purchase_order_customer',$data_po,$where_po);
-
-                            //PERMINTAAN MATERIAL
+                            $this->M_PerencanaanProduksi->edit('purchase_order_customer',$data_po,$where_po);
+                        //tutup po
+                        
+                        //PERMINTAAN MATERIAL
                             if($jumlah_item != "" || $jumlah_item != 0){
-                                //id detail perencanaan produksi
-                                $idcode_permat = "PERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".";
+                                //cari apakah sudah ada sebelumnya permintaan material untuk tanggal,id_det_po_cust,id_line yangsama?
+                                $cari_permat    = $this->M_PerencanaanProduksi->get_one_permat($tanggal,$id_detpo,$idline)->result_array();
+                                $jm_cari_permat = $this->M_PerencanaanProduksi->get_one_permat($tanggal,$id_detpo,$idline)->num_rows();
 
-                                $id_permat_last     = $this->M_PerencanaanProduksi->get_last_permat_id($idcode_permat)->result_array();
-                                $id_permat_last_cek = $this->M_PerencanaanProduksi->get_last_permat_id($idcode_permat)->num_rows();
-                    
-                                if($id_permat_last_cek == 1){
-                                    $id_terakhirnya    = $id_permat_last[0]['id_permintaan_material'];
-                    
-                                    $tahun_sebelumnya  = substr($id_terakhirnya,6,2);
-                                    $bulan_sebelumnya  = substr($id_terakhirnya,8,2);
-                                            
-                                    //kalau tahun sama
-                                    if($tahun_sebelumnya == $tahun_sekarangnya){
-                                        //kalau tahun & bulannya sama berarti count+1
-                                        if($bulan_sebelumnya == $bulan_sekarangnya){
-                                            $countnya = intval(substr($id_terakhirnya,11,5)) + 1;
-                                            $pjgnya   = strlen($countnya);
-                                
-                                            if($pjgnya == 1){
-                                                $countnya_baru = "0000".$countnya;
-                                            }
-                                            else if($pjgnya == 2){
-                                                $countnya_baru = "000".$countnya;
-                                            }
-                                            else if($pjgnya == 3){
-                                                $countnya_baru = "00".$countnya;
-                                            }
-                                            else if($pjgnya == 4){
-                                                $countnya_baru = "0".$countnya;
-                                            }
-                                            else{
-                                                $countnya_baru = $countnya;
-                                            }
-                                            
-                                            //id yang baru
-                                            $id_permat_baru = "PERMAT".$tahun_sebelumnya.$bulan_sebelumnya.".".$countnya_baru;
-                                        }
-                                        //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
-                                        else{
-                                            //id yang baru
-                                            $id_permat_baru = "PERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
-                                        }
-                                    }
-                                    //kalau tahun tidak sama
-                                    else{
-                                        //id yang baru
-                                        $id_permat_baru = "PERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
-                                    }
-                                }
-                                else{
-                                    //id yang baru
-                                    $id_permat_baru = "PERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
-                                }
+                                //jika sebelumnya belum ada
+                                if($jm_cari_permat == 0){
+                                    //id detail perencanaan produksi
+                                    $idcode_permat = "PERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".";
 
-                                $tgl_now = date('Y-m-d');
-                                
-                                $data_permat = array(
-                                    'id_permintaan_material'            => $id_permat_baru,
-                                    'id_detail_purchase_order_customer' => $id_detpo,
-                                    'id_line'                           => $idline,
-                                    'jumlah_minta'                      => $jumlah_item,
-                                    'tanggal_permintaan'                => $tgl_now,
-                                    'tanggal_produksi'                  => $tanggal,
-                                    'status_permintaan'                 => 0,
-                                    'user_add'                          => $user,
-                                    'waktu_add'                         => $now,
-                                    'status_delete'                     => 0
-                                );
-
-                                $this->M_PerencanaanProduksi->insert('permintaan_material',$data_permat);
-
-                                //DETAIL PERMINTAAN MATERIAL
-                                $konmat_tam    = $this->M_PerencanaanProduksi->get_id_produk_by_detail_po($id_detpo,$idline)->result_array();
-                                $jm_konmat_tam = $this->M_PerencanaanProduksi->get_id_produk_by_detail_po($id_detpo,$idline)->num_rows();
-
-                                for($b=0;$b<$jm_konmat_tam;$b++){
-                                    //id_detail_permintaan_material
-                                    $idcode_detpermat = "DETPERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".";
-
-                                    $id_detpermat_last     = $this->M_PerencanaanProduksi->get_last_detpermat_id($idcode_detpermat)->result_array();
-                                    $id_detpermat_last_cek = $this->M_PerencanaanProduksi->get_last_detpermat_id($idcode_detpermat)->num_rows();
+                                    $id_permat_last     = $this->M_PerencanaanProduksi->get_last_permat_id($idcode_permat)->result_array();
+                                    $id_permat_last_cek = $this->M_PerencanaanProduksi->get_last_permat_id($idcode_permat)->num_rows();
                         
-                                    if($id_detpermat_last_cek == 1){
-                                        $id_terakhirnya    = $id_detpermat_last[0]['id_detail_permintaan_material'];
+                                    if($id_permat_last_cek == 1){
+                                        $id_terakhirnya    = $id_permat_last[0]['id_permintaan_material'];
                         
-                                        $tahun_sebelumnya  = substr($id_terakhirnya,9,2);
-                                        $bulan_sebelumnya  = substr($id_terakhirnya,11,2);
+                                        $tahun_sebelumnya  = substr($id_terakhirnya,6,2);
+                                        $bulan_sebelumnya  = substr($id_terakhirnya,8,2);
                                                 
                                         //kalau tahun sama
                                         if($tahun_sebelumnya == $tahun_sekarangnya){
                                             //kalau tahun & bulannya sama berarti count+1
                                             if($bulan_sebelumnya == $bulan_sekarangnya){
-                                                $countnya = intval(substr($id_terakhirnya,14,6)) + 1;
+                                                $countnya = intval(substr($id_terakhirnya,11,5)) + 1;
                                                 $pjgnya   = strlen($countnya);
                                     
                                                 if($pjgnya == 1){
-                                                    $countnya_baru = "00000".$countnya;
-                                                }
-                                                else if($pjgnya == 2){
                                                     $countnya_baru = "0000".$countnya;
                                                 }
-                                                else if($pjgnya == 3){
+                                                else if($pjgnya == 2){
                                                     $countnya_baru = "000".$countnya;
                                                 }
-                                                else if($pjgnya == 4){
+                                                else if($pjgnya == 3){
                                                     $countnya_baru = "00".$countnya;
                                                 }
-                                                else if($pjgnya == 5){
+                                                else if($pjgnya == 4){
                                                     $countnya_baru = "0".$countnya;
                                                 }
                                                 else{
@@ -875,45 +805,166 @@ class PerencanaanProduksi extends CI_Controller {
                                                 }
                                                 
                                                 //id yang baru
-                                                $id_detpermat_baru = "DETPERMAT".$tahun_sebelumnya.$bulan_sebelumnya.".".$countnya_baru;
+                                                $id_permat_baru = "PERMAT".$tahun_sebelumnya.$bulan_sebelumnya.".".$countnya_baru;
                                             }
                                             //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
                                             else{
                                                 //id yang baru
-                                                $id_detpermat_baru = "DETPERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".000001";
+                                                $id_permat_baru = "PERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
                                             }
                                         }
                                         //kalau tahun tidak sama
                                         else{
                                             //id yang baru
-                                            $id_detpermat_baru = "DETPERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".000001";
+                                            $id_permat_baru = "PERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
                                         }
                                     }
                                     else{
                                         //id yang baru
-                                        $id_detpermat_baru = "DETPERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".000001";
+                                        $id_permat_baru = "PERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
                                     }
 
-                                    $id_konsumsi_material = $konmat_tam[$b]['id_konsumsi_material'];
-                                    $jumlah_konsumsi      = $konmat_tam[$b]['jumlah_konsumsi'];
-                                    $needs                = $jumlah_item * $jumlah_konsumsi;
+                                    $tgl_now = date('Y-m-d');
                                     
-                                    $data_detpermat = array (
-                                        'id_detail_permintaan_material'     => $id_detpermat_baru,
+                                    $data_permat = array(
                                         'id_permintaan_material'            => $id_permat_baru,
-                                        'id_konsumsi_material'              => $id_konsumsi_material,
-                                        'needs'                             => $needs,
-                                        'status_pengambilan'                => 0,
+                                        'id_detail_purchase_order_customer' => $id_detpo,
+                                        'id_line'                           => $idline,
+                                        'jumlah_minta'                      => $jumlah_item,
+                                        'tanggal_permintaan'                => $tgl_now,
+                                        'tanggal_produksi'                  => $tanggal,
+                                        'status_permintaan'                 => 0,
                                         'user_add'                          => $user,
                                         'waktu_add'                         => $now,
                                         'status_delete'                     => 0
                                     );
 
-                                    $this->M_PerencanaanProduksi->insert('detail_permintaan_material',$data_detpermat);
+                                    $this->M_PerencanaanProduksi->insert('permintaan_material',$data_permat);
+
+                                    //DETAIL PERMINTAAN MATERIAL
+                                    $konmat_tam    = $this->M_PerencanaanProduksi->get_id_produk_by_detail_po($id_detpo,$idline)->result_array();
+                                    $jm_konmat_tam = $this->M_PerencanaanProduksi->get_id_produk_by_detail_po($id_detpo,$idline)->num_rows();
+
+                                    for($b=0;$b<$jm_konmat_tam;$b++){
+                                        //id_detail_permintaan_material
+                                        $idcode_detpermat = "DETPERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".";
+
+                                        $id_detpermat_last     = $this->M_PerencanaanProduksi->get_last_detpermat_id($idcode_detpermat)->result_array();
+                                        $id_detpermat_last_cek = $this->M_PerencanaanProduksi->get_last_detpermat_id($idcode_detpermat)->num_rows();
+                            
+                                        if($id_detpermat_last_cek == 1){
+                                            $id_terakhirnya    = $id_detpermat_last[0]['id_detail_permintaan_material'];
+                            
+                                            $tahun_sebelumnya  = substr($id_terakhirnya,9,2);
+                                            $bulan_sebelumnya  = substr($id_terakhirnya,11,2);
+                                                    
+                                            //kalau tahun sama
+                                            if($tahun_sebelumnya == $tahun_sekarangnya){
+                                                //kalau tahun & bulannya sama berarti count+1
+                                                if($bulan_sebelumnya == $bulan_sekarangnya){
+                                                    $countnya = intval(substr($id_terakhirnya,14,6)) + 1;
+                                                    $pjgnya   = strlen($countnya);
+                                        
+                                                    if($pjgnya == 1){
+                                                        $countnya_baru = "00000".$countnya;
+                                                    }
+                                                    else if($pjgnya == 2){
+                                                        $countnya_baru = "0000".$countnya;
+                                                    }
+                                                    else if($pjgnya == 3){
+                                                        $countnya_baru = "000".$countnya;
+                                                    }
+                                                    else if($pjgnya == 4){
+                                                        $countnya_baru = "00".$countnya;
+                                                    }
+                                                    else if($pjgnya == 5){
+                                                        $countnya_baru = "0".$countnya;
+                                                    }
+                                                    else{
+                                                        $countnya_baru = $countnya;
+                                                    }
+                                                    
+                                                    //id yang baru
+                                                    $id_detpermat_baru = "DETPERMAT".$tahun_sebelumnya.$bulan_sebelumnya.".".$countnya_baru;
+                                                }
+                                                //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                                                else{
+                                                    //id yang baru
+                                                    $id_detpermat_baru = "DETPERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".000001";
+                                                }
+                                            }
+                                            //kalau tahun tidak sama
+                                            else{
+                                                //id yang baru
+                                                $id_detpermat_baru = "DETPERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".000001";
+                                            }
+                                        }
+                                        else{
+                                            //id yang baru
+                                            $id_detpermat_baru = "DETPERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".000001";
+                                        }
+
+                                        $id_konsumsi_material = $konmat_tam[$b]['id_konsumsi_material'];
+                                        $jumlah_konsumsi      = $konmat_tam[$b]['jumlah_konsumsi'];
+                                        $needs                = $jumlah_item * $jumlah_konsumsi;
+                                        
+                                        $data_detpermat = array (
+                                            'id_detail_permintaan_material'     => $id_detpermat_baru,
+                                            'id_permintaan_material'            => $id_permat_baru,
+                                            'id_konsumsi_material'              => $id_konsumsi_material,
+                                            'needs'                             => $needs,
+                                            'status_pengambilan'                => 0,
+                                            'user_add'                          => $user,
+                                            'waktu_add'                         => $now,
+                                            'status_delete'                     => 0
+                                        );
+
+                                        $this->M_PerencanaanProduksi->insert('detail_permintaan_material',$data_detpermat);
+                                    }
+                                } 
+                                //jika sebelumnya ada
+                                else{
+                                    $id_permat     = $cari_permat[0]['id_permintaan_material'];
+                                    $jumlah_permat = $cari_permat[0]['jumlah_minta'];
+
+                                    $jumlah_baru = $jumlah_permat + $jumlah_item;
+
+                                    $data_permat = array(
+                                        'jumlah_minta' => $jumlah_baru
+                                    );
+
+                                    $where_permat = array(
+                                        'id_permintaan_material' => $id_permat
+                                    );
+
+                                    $this->M_PerencanaanProduksi->edit('permintaan_material',$data_permat,$where_permat);
+
+                                    $det_permat    = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->result_array();
+                                    $jm_det_permat = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->num_rows();
+
+                                    for($t=0;$t<$jm_det_permat;$t++){
+                                        $jumlah_konsumsi = $det_permat[$t]['jumlah_konsumsi'];
+                                        $id_det_permat   = $det_permat[$t]['id_detail_permintaan_material'];
+
+                                        $needs = $jumlah_baru * $jumlah_konsumsi;
+
+                                        $data_det_permat = array(
+                                            'needs' => $needs
+                                        );
+
+                                        $where_det_permat = array(
+                                            'id_detail_permintaan_material' => $id_det_permat
+                                        );
+
+                                        $this->M_PerencanaanProduksi->edit('detail_permintaan_material',$data_det_permat,$where_det_permat);
+                                    }
                                 }
                             }
+                        //tutup permat
                     }
                 }
+                
+                
             }
         }
         redirect('perencanaanProduksi/semua_perencanaan_produksi');
@@ -991,16 +1042,22 @@ class PerencanaanProduksi extends CI_Controller {
         }
 
         $pl         = $this->M_PerencanaanProduksi->get_pl($start)->result();
-        $dpo        = $this->M_PerencanaanProduksi->get_dpo($start)->result_array();
-        $jm_dpo     = $this->M_PerencanaanProduksi->get_dpo($start)->num_rows();
-        $dpl        = $this->M_PerencanaanProduksi->get_dpl($start)->result_array();
-        $jm_dpl     = $this->M_PerencanaanProduksi->get_dpl($start)->num_rows();
+
+        $dpo        = $this->M_PerencanaanProduksi->get_dpo_normal($start)->result_array();
+        $jm_dpo     = $this->M_PerencanaanProduksi->get_dpo_normal($start)->num_rows();
+        $dpl        = $this->M_PerencanaanProduksi->get_dpl_normal($start)->result_array();
+        $jm_dpl     = $this->M_PerencanaanProduksi->get_dpl_normal($start)->num_rows();
+
+        $dpore      = $this->M_PerencanaanProduksi->get_dpo_re($start)->result_array();
+        $jm_dpore   = $this->M_PerencanaanProduksi->get_dpo_re($start)->num_rows();
+        $dplre      = $this->M_PerencanaanProduksi->get_dpl_re($start)->result_array();
+        $jm_dplre   = $this->M_PerencanaanProduksi->get_dpl_re($start)->num_rows();
 
         $warna      = $this->M_Warna->select_all_aktif()->result_array();
         $jmwarna    = $this->M_Warna->select_all_aktif()->num_rows();
         $ukuran     = $this->M_UkuranProduk->select_all_aktif()->result_array();
         $jmukuran   = $this->M_UkuranProduk->select_all_aktif()->num_rows();
-
+        
         $pdf = new FPDF('l','mm','A4');
         //buat halaman baru
         $pdf->AddPage();
@@ -1189,6 +1246,88 @@ class PerencanaanProduksi extends CI_Controller {
                 
             }
         }
+
+        $count = $jm_dpo+1;
+
+        for($k=0;$k<$jm_dpore;$k++){
+            //$ct    = $this->M_PerencanaanProduksi->get_ct($dpore[$k]['id_produk'])->result_array();
+            //$jm_ct = $this->M_PerencanaanProduksi->get_ct($dpore[$k]['id_produk'])->num_rows();
+
+            $id_produksi_tertunda = $dpore[$k]['id_produksi_tertunda'];
+
+            $pdf->SetFont('Arial','',10);
+
+            //nama produk
+            if($dpore[$k]['keterangan'] == 0){
+                for($w=0;$w<$jmwarna;$w++){
+                    if($warna[$w]['id_warna'] == $dpore[$k]['id_warna']){
+                        $nama_warna = $warna[$w]['nama_warna'];
+                    }
+                }
+
+                for($w=0;$w<$jmukuran;$w++){
+                    if($ukuran[$w]['id_ukuran_produk'] == $dpore[$k]['id_ukuran_produk']){
+                        $nama_ukuran = $ukuran[$w]['ukuran_produk'] . $ukuran[$w]['satuan_ukuran'];
+                    }
+                }
+
+                $nama_produk = $dpore[$k]['nama_produk'] ." ". $nama_ukuran . " (" . $nama_warna . ")";
+            }
+            else if($dpore[$k]['keterangan'] == 1){
+                for($w=0;$w<$jmukuran;$w++){
+                    if($ukuran[$w]['id_ukuran_produk'] == $dpore[$k]['id_ukuran_produk']){
+                        $nama_ukuran = $ukuran[$w]['ukuran_produk'] ." ". $ukuran[$w]['satuan_ukuran'];
+                    }
+                }
+
+                $nama_produk = $dpore[$k]['nama_produk'] . $nama_ukuran;
+            }
+            else if($dpore[$k]['keterangan'] == 2){
+                for($w=0;$w<$jmwarna;$w++){
+                    if($warna[$w]['id_warna'] == $dpore[$k]['id_warna']){
+                        $nama_warna = $warna[$w]['nama_warna'];
+                    }
+                }
+
+                $nama_produk = $dpore[$k]['nama_produk'] . " (" . $nama_warna . ")";
+            }
+            else{
+                $nama_produk = $dpore[$k]['nama_produk'];
+            }
+
+            $pdf->Cell(10,6,$count,1,0,'C');
+            $pdf->Cell(90,6,$nama_produk,1,0,'C');
+            $pdf->Cell(20,6,$dpore[$k]['jumlah_tertunda'],1,0,'C');
+            $pdf->Cell(30,6,$dpore[$k]['nama_line'],1,0,'C');
+
+            $total = 0;
+
+            for($u=0;$u<7;$u++){
+                $tanggal_cek = $semua_tanggal[$u]['tanggal'];
+                for($q=0;$q<$jm_dplre;$q++){
+                    $id_prodtun  = $dplre[$q]['id_produksi_tertunda'];
+                    $tgl_dpl     = $dplre[$q]['tanggal'];
+
+                    if($id_prodtun == $id_produksi_tertunda && $tgl_dpl == $tanggal_cek){
+                        if($dplre[$q]['jumlah_item_perencanaan'] == 0){
+                            $pdf->Cell(15,6,'',1,0,'C');
+                        }
+                        else{
+                            $pdf->Cell(15,6,$dplre[$q]['jumlah_item_perencanaan'],1,0,'C');
+                            $total = $total + intval($dplre[$q]['jumlah_item_perencanaan']);
+                        }
+                    }
+                }
+            }
+            if($total == 0){
+                $pdf->Cell(20,6,'-',1,1,'C');
+            }
+            else{
+                $pdf->Cell(20,6,$total,1,1,'C');
+            }
+            $count++;
+        }
+
         $pdf->Output();
     }
 
@@ -1304,7 +1443,1517 @@ class PerencanaanProduksi extends CI_Controller {
 
         $data['det_prodtun']             = $this->M_PerencanaanProduksi->get_detail_produksi_tertunda()->result();
 
+        $data['sekarang'] = date('Y-m-d');
+
+        for($p=1;$p<=7;$p++){
+            $new_date = date('Y-m-d', strtotime('+'.($p-1).'days', strtotime($data['start_date'])));
+
+            //0 klau belum lewat
+            //1 kalau sudah lewat
+            if($new_date <= $data['sekarang']){
+                $data['stat_date'.$p] = 1;
+            } else{
+                $data['stat_date'.$p] = 0;
+            }
+        }
+
         $this->load->view('v_perencanaan_produksi_edit',$data);
+    }
+
+    public function ubah_perencanaan_produksi(){
+        $start_date = $this->input->post('start_date');
+        $now        = date('Y-m-d H:i:s');
+        $user       = $_SESSION['id_user'];
+
+        for($j=0;$j<7;$j++){
+            $tgl   = date('Y-m-d', strtotime('+'.$j.'days', strtotime($start_date)));
+
+            //keterangan tanggal produksi
+            $hari  = date('D',strtotime($tgl));
+
+            if($hari == "Mon"){
+                $harinya = "Senin";
+            }
+            else if($hari == "Tue"){
+                $harinya = "Selasa";
+            }
+            else if($hari == "Wed"){
+                $harinya = "Rabu";
+            }
+            else if($hari == "Thu"){
+                $harinya = "Kamis";
+            }
+            else if($hari == "Fri"){
+                $harinya = "Jumat";
+            }
+            else if($hari == "Sat"){
+                $harinya = "Sabtu";
+            }
+            else{
+                $harinya = "Minggu";
+            }
+
+            $carket          = $this->M_PerencanaanProduksi->cari_ket_hari($harinya)->result_array();
+            $keterangan_hari = $carket[0]['isi_tetapan'];
+
+            $produksi    = $this->M_PerencanaanProduksi->get_one_produksi($tgl)->result_array();
+            $id_produksi = $produksi[0]['id_produksi'];
+            
+            //PRODUKSI LINE
+
+            //untuk hitung berapa produksi_line yang ada perencanaannya.
+            $cek_terisi=0;
+
+            for($i=1;$i<=4;$i++){
+                $id_line = $this->input->post('idline_kf'.$i);
+                $tpt     = $this->input->post('tpt_kf'.$i);
+
+                $total_waktu_perencanaan = $this->input->post('tw_kf'.$id_line.'day'.($j+1));
+                $efisiensi_perencanaan   = $this->input->post('prs_kf'.$id_line.'day'.($j+1));
+                $id_produksi_line        = $this->input->post('id_plkf'.$id_line.'day'.($j+1));
+                
+                //kalo total waktu perencanaannya ==0 maka nanti pas mo simpan/insert total waktu dan efisiensi isi 0
+                    if($total_waktu_perencanaan == "" || $total_waktu_perencanaan == 0){
+                        $data_ef = array (
+                            'total_waktu_perencanaan' => 0,
+                            'efisiensi_perencanaan'   => 0,
+                            'status_perencanaan'      => 0,
+                            'status_laporan'          => 0,
+                            'user_edit'               =>$user,
+                            'waktu_edit'              =>$now,
+                            'status_delete'           =>0
+                        );
+
+                        $where_ef = array (
+                            'id_produksi_line' =>$id_produksi_line
+                        );
+                    }
+                    else{
+                        if($efisiensi_perencanaan < 100){
+                            $data_ef = array (
+                                'total_waktu_perencanaan' => $total_waktu_perencanaan,
+                                'efisiensi_perencanaan'   => $efisiensi_perencanaan,
+                                'status_perencanaan'      => 1,
+                                'status_laporan'          => 0,
+                                'user_edit'               =>$user,
+                                'waktu_edit'              =>$now,
+                                'status_delete'           =>0
+                            );
+
+                            $where_ef = array (
+                                'id_produksi_line' =>$id_produksi_line
+                            );
+
+                            $cek_terisi++;
+                        }
+                        else{
+                            $data_ef = array (
+                                'total_waktu_perencanaan' => $total_waktu_perencanaan,
+                                'efisiensi_perencanaan'   => $efisiensi_perencanaan,
+                                'status_perencanaan'      => 2,
+                                'status_laporan'          => 0,
+                                'user_edit'               =>$user,
+                                'waktu_edit'              =>$now,
+                                'status_delete'           =>0
+                            );
+
+                            $where_ef = array (
+                                'id_produksi_line' =>$id_produksi_line
+                            );
+
+                            $cek_terisi++;
+                        }
+                    }
+                    $this->M_PerencanaanProduksi->edit('produksi_line',$data_ef,$where_ef);
+                
+                //SURAT PERINTAH LEMBUR
+                    $spl    = $this->M_SuratPerintahLembur->cari_spl($tgl,$id_line)->result_array();
+                    $jm_spl = $this->M_SuratPerintahLembur->cari_spl($tgl,$id_line)->num_rows();
+
+                    //jika sebelumnya tidak ada spl
+                    if($jm_spl == 0){
+                        //sekarang ada
+                        if($total_waktu_perencanaan != 0){
+                            //kalo efisiensi > 0 && harinya bukan merupakan hari produksi
+                            if($total_waktu_perencanaan != 0 && $keterangan_hari == "Hari Libur"){
+                                $jum_spl     = $this->M_SuratPerintahLembur->select_all()->num_rows();
+                                $jumlah      = $jum_spl + 1;
+                                $id_spl_baru = "SPL-".$jumlah;
+                                
+                                $cek_tanggal = $this->M_SuratPerintahLembur->cek_tanggal($tgl,$id_line)->num_rows();
+
+                                if($cek_tanggal == 0){
+                                    $data_spl = array (
+                                        'id_surat_perintah_lembur' => $id_spl_baru,
+                                        'id_line'                  => $id_line,
+                                        'tanggal'                  => $tgl,
+                                        'waktu_lembur'             => $keterangan_hari,
+                                        'status_spl'               => 0,
+                                        'keterangan_spl'           => 0,
+                                        'user_add'                 => $user,
+                                        'waktu_add'                => $now,
+                                        'status_delete'            => 0
+                                    );
+                                    $this->M_SuratPerintahLembur->insert('surat_perintah_lembur',$data_spl);
+                                }
+                                else{
+                                    $idspl = $this->M_SuratPerintahLembur->cek_tanggal($tgl,$id_line)->result_array();
+                                    $idsplnya = $idspl[0]['id_surat_perintah_lembur'];
+
+                                    $data_spl = array (
+                                        'keterangan_spl' => 2,
+                                        'user_edit'      => $user,
+                                        'waktu_edit'     => $now
+                                    );
+                                    $where_spl = array (
+                                        'id_surat_perintah_lembur' => $idsplnya
+                                    );
+                                    $this->M_SuratPerintahLembur->edit('surat_perintah_lembur',$data_spl,$where_spl);
+                                }
+                            }
+                            else if($efisiensi_perencanaan > 100){
+                                $jum_spl = $this->M_SuratPerintahLembur->select_all()->num_rows();
+                                $jumlah = $jum_spl + 1;
+                                $id_spl_baru = "SPL-".$jumlah;
+                                
+                                $cek_tanggal = $this->M_SuratPerintahLembur->cek_tanggal($tgl,$id_line)->num_rows();
+
+                                if($cek_tanggal == 0){
+                                    $data_spl = array (
+                                        'id_surat_perintah_lembur' => $id_spl_baru,
+                                        'id_line'                  => $id_line,
+                                        'tanggal'                  => $tgl,
+                                        'waktu_lembur'             => $keterangan_hari,
+                                        'status_spl'               => 0,
+                                        'keterangan_spl'           => 0,
+                                        'user_add'                 => $user,
+                                        'waktu_add'                => $now,
+                                        'status_delete'            => 0
+                                    );
+                                    $this->M_SuratPerintahLembur->insert('surat_perintah_lembur',$data_spl);
+                                }
+                                else{
+                                    $idspl = $this->M_SuratPerintahLembur->cek_tanggal($tgl,$id_line)->result_array();
+                                    $idsplnya = $idspl[0]['id_surat_perintah_lembur'];
+
+                                    $data_spl = array (
+                                        'keterangan_spl' => 2,
+                                        'user_edit'      => $user,
+                                        'waktu_edit'     => $now
+                                    );
+                                    $where_spl = array (
+                                        'id_surat_perintah_lembur' => $idsplnya
+                                    );
+                                    $this->M_SuratPerintahLembur->edit('surat_perintah_lembur',$data_spl,$where_spl);
+                                }
+                            }
+                        //sekarang tidak ada
+                        } 
+                    //jika sebelumnya ada spl
+                    } else{
+                        //ada
+                        if($total_waktu_perencanaan != 0){
+                            if($spl[0]['keterangan_spl'] == 1){
+                                $data_spl = array(
+                                    'keterangan_spl' => 2,
+                                    'user_edit'      => $user,
+                                    'waktu_edit'     => $now
+                                );
+
+                                $where_spl = array (
+                                    'id_surat_perintah_lembur' => $spl[0]['id_surat_perintah_lembur']
+                                );
+
+                                $this->M_SuratPerintahLembur->edit('surat_perintah_lembur',$data_spl,$where_spl);
+                            }
+                        
+                        //tidak ada
+                        } else{
+                            //jika hanya berdasarkan perencanaan produksi, status deletenya = 0
+                            if($spl[0]['keterangan_spl'] == 0){
+                                $data_spl = array(
+                                    'user_delete'  => $user,
+                                    'waktu_delete' => $now,
+                                    'status_delete'=> 1
+                                );
+
+                                $where_spl = array (
+                                    'id_surat_perintah_lembur' => $spl[0]['id_surat_perintah_lembur']
+                                );
+
+                                $this->M_SuratPerintahLembur->edit('surat_perintah_lembur',$data_spl,$where_spl);
+                            }
+                            //jika berdasarkan perencanaan produksi & others, ubah keterangan spl menjadi 1
+                            else if($spl[0]['keterangan_spl'] == 2){
+                                $data_spl = array(
+                                    'keterangan_spl'=> 1,
+                                    'user_edit'     => $user,
+                                    'waktu_edit'    => $now
+                                );
+                                
+                                $where_spl = array (
+                                    'id_surat_perintah_lembur' => $spl[0]['id_surat_perintah_lembur']
+                                );
+
+                                $this->M_SuratPerintahLembur->edit('surat_perintah_lembur',$data_spl,$where_spl);
+                            }
+                        }
+                    }
+                //TUTUP SPL
+            }
+            
+            //PRODUKSI
+            if($cek_terisi > 0){
+                $data_prod = array (
+                    'status_perencanaan'    =>1,
+                    'user_edit'             =>$user,
+                    'waktu_edit'            =>$now,
+                );
+
+                $where_prod = array(
+                    'id_produksi' => $id_produksi
+                );
+
+                $this->M_PerencanaanProduksi->edit('produksi',$data_prod,$where_prod);
+
+            } else{
+                $data_prod = array (
+                    'status_perencanaan'    =>0,
+                    'user_edit'             =>$user,
+                    'waktu_edit'            =>$now,
+                );
+
+                $where_prod = array(
+                    'id_produksi' => $id_produksi
+                );
+
+                $this->M_PerencanaanProduksi->edit('produksi',$data_prod,$where_prod);
+            }
+        }
+
+        //DETAIL PRODUKSI LINE
+        $jumlah_dpo = $this->input->post('jumlah_dpo_kf');
+
+        for($o=0;$o<$jumlah_dpo;$o++){
+            $keterangan_div = $this->input->post('ket'.$o);
+            $statper        = $this->input->post('statper'.$o);
+            $id_detpo       = $this->input->post('id_bg3'.$o);
+
+            //lama, ada perencanaan
+            if($keterangan_div == 3){
+                $jumlah_line = $this->input->post('jumlah_line'.$o);
+                
+                for($k=1;$k<=$jumlah_line;$k++){
+                    $idline = $this->input->post($o.'id_line_kf'.$k);
+    
+                    for($z=1;$z<=7;$z++){
+                        $jumlah_item_s   = $this->input->post('jm'.$o.$idline.'day'.$z);
+                        $waktu_proses_s  = $this->input->post('ef'.$o.$idline.'day'.$z);
+                        $id_det_prodline = $this->input->post('id_dpl'.$o.$idline.'day'.$z);
+
+                        $get_old_detprodline      = $this->M_PerencanaanProduksi->get_one_detprodline($id_det_prodline)->result_array();
+                        $jumlah_item_sebelum_edit = $get_old_detprodline[0]['jumlah_item_perencanaan'];
+
+                        $tgl   = date('Y-m-d', strtotime('+'.($z-1).'days', strtotime($start_date)));
+                        
+                        if($jumlah_item_s != ""){
+                            $jumlah_item = $jumlah_item_s;
+                            $waktu_proses = $waktu_proses_s;
+                        }
+                        else{
+                            $jumlah_item  = 0;
+                            $waktu_proses = 0;
+                        }
+
+                        //DETAIL PRODUKSI LINE
+                            if($statper == 0){
+                                $data_detprod = array(
+                                    'jumlah_item_perencanaan'   => $jumlah_item,
+                                    'waktu_proses_perencanaan'  => $waktu_proses,
+                                    'status_perencanaan'        => 0,
+                                    'user_edit'                 => $user,
+                                    'waktu_edit'                => $now,
+                                );
+
+                                $where_detprod = array(
+                                    'id_detail_produksi_line' => $id_det_prodline
+                                );
+
+                                $this->M_PerencanaanProduksi->edit('detail_produksi_line',$data_detprod,$where_detprod);
+                            } else{
+                                $data_detprod = array(
+                                    'jumlah_item_perencanaan'   => $jumlah_item,
+                                    'waktu_proses_perencanaan'  => $waktu_proses,
+                                    'status_perencanaan'        => 1,
+                                    'user_edit'                 => $user,
+                                    'waktu_edit'                => $now,
+                                );
+
+                                $where_detprod = array(
+                                    'id_detail_produksi_line' => $id_det_prodline
+                                );
+
+                                $this->M_PerencanaanProduksi->edit('detail_produksi_line',$data_detprod,$where_detprod);
+                            }
+                        //tutup detprod
+                        
+                        //DETAIL PRODUKSI TERTUNDA
+                            if($statper == 1){
+                                $dpt    = $this->M_PerencanaanProduksi->get_one_detprodtun($id_det_prodline)->result_array();
+                                $jm_dpt = $this->M_PerencanaanProduksi->get_one_detprodtun($id_det_prodline)->result_array();
+                                
+                                //PRODUKSI TERTUNDA
+                                    //sebelumnya ada, tetap ada
+                                    if($dpt[0]['jumlah_perencanaan'] != 0 && $jumlah_item > 0){
+                                        $id_pt  = $dpt[0]['id_produksi_tertunda'];
+                                        $pt     = $this->M_PerencanaanProduksi->get_one_prodtun($id_pt)->result_array();
+
+                                        $jumlah_tertundas = $pt[0]['jumlah_tertunda'];
+                                        $jumlah_terencanas= $pt[0]['jumlah_terencana'];
+
+                                        if($dpt[0]['jumlah_perencanaan'] == $jumlah_item){
+
+                                        }
+                                        else if($dpt[0]['jumlah_perencanaan'] > $jumlah_item){
+                                            $selisih = $dpt[0]['jumlah_perencanaan'] - $jumlah_item;
+                                            $new     = $jumlah_terencanas - $selisih;
+                                            
+                                            $data_pt = array(
+                                                'jumlah_terencana'  => $new,
+                                                'status_penjadwalan'=> 1,
+                                                'user_edit'         => $user,
+                                                'waktu_edit'        => $now
+                                            );
+
+                                            $where_pt = array(
+                                                'id_produksi_tertunda' => $id_pt
+                                            );
+                                             
+                                            $this->M_PerencanaanProduksi->edit('produksi_tertunda',$data_pt,$where_pt);
+
+                                        } else if($dpt[0]['jumlah_perencanaan'] < $jumlah_item){
+                                            $selisih = $jumlah_item - $dpt[0]['jumlah_perencanaan'];
+                                            $new     = $jumlah_terencanas + $selisih;
+
+                                            if($new == $jumlah_tertundas){
+                                                $data_pt = array(
+                                                    'jumlah_terencana'  => $new,
+                                                    'status_penjadwalan'=> 2,
+                                                    'user_edit'         => $user,
+                                                    'waktu_edit'        => $now
+                                                );
+
+                                                $where_pt = array(
+                                                    'id_produksi_tertunda' => $id_pt
+                                                );
+                                                 
+                                                $this->M_PerencanaanProduksi->edit('produksi_tertunda',$data_pt,$where_pt);
+                                            } else{
+                                                $data_pt = array(
+                                                    'jumlah_terencana'  => $new,
+                                                    'status_penjadwalan'=> 1,
+                                                    'user_edit'         => $user,
+                                                    'waktu_edit'        => $now
+                                                );
+
+                                                $where_pt = array(
+                                                    'id_produksi_tertunda' => $id_pt
+                                                );
+                                                 
+                                                $this->M_PerencanaanProduksi->edit('produksi_tertunda',$data_pt,$where_pt);
+                                            }
+                                            
+                                        }
+                                    }
+                                    //sebelumnya ada, sekarang nda ada
+                                    else if($dpt[0]['jumlah_perencanaan'] > 0 && $jumlah_item == 0){
+                                        $id_pt  = $dpt[0]['id_produksi_tertunda'];
+                                        $pt     = $this->M_PerencanaanProduksi->get_one_prodtun($id_pt)->result_array();
+
+                                        $jumlah_tertundas = $pt[0]['jumlah_tertunda'];
+                                        $jumlah_terencanas= $pt[0]['jumlah_terencana'];
+
+                                        if($dpt[0]['jumlah_perencanaan'] == $pt[0]['jumlah_tertunda']){
+                                            $data_pt = array(
+                                                'jumlah_terencana'  => 0,
+                                                'status_penjadwalan'=> 0,
+                                                'user_edit'         => $user,
+                                                'waktu_edit'        => $now
+                                            );
+                                        }
+                                        else{
+                                            $new = $jumlah_terencanas -  $dpt[0]['jumlah_perencanaan'];
+
+                                            if($new == $jumlah_tertundas){
+                                                $data_pt = array(
+                                                    'jumlah_terencana'  => $new,
+                                                    'status_penjadwalan'=> 2,
+                                                    'user_edit'         => $user,
+                                                    'waktu_edit'        => $now
+                                                );
+                                            } else{
+                                                $data_pt = array(
+                                                    'jumlah_terencana'  => $new,
+                                                    'status_penjadwalan'=> 1,
+                                                    'user_edit'         => $user,
+                                                    'waktu_edit'        => $now
+                                                );
+                                            }
+                                        }
+
+                                        $where_pt = array(
+                                            'id_produksi_tertunda' => $id_pt
+                                        );
+
+                                        $this->M_PerencanaanProduksi->edit('produksi_tertunda',$data_pt,$where_pt);
+                                    }
+                                    //sebelumnya nda ada, sekarang ada
+                                    else if($dpt[0]['jumlah_perencanaan'] == 0 && $jumlah_item > 0){
+                                        $id_pt  = $dpt[0]['id_produksi_tertunda'];
+                                        $pt     = $this->M_PerencanaanProduksi->get_one_prodtun($id_pt)->result_array();
+
+                                        $jumlah_tertundas = $pt[0]['jumlah_tertunda'];
+                                        $jumlah_terencanas= $pt[0]['jumlah_terencana'];
+
+                                        $new = $jumlah_item + $jumlah_terencanas;
+
+                                        if($new == $jumlah_tertundas){
+                                            $data_pt = array(
+                                                'jumlah_terencana'  => $new,
+                                                'status_penjadwalan'=> 2,
+                                                'user_edit'         => $user,
+                                                'waktu_edit'        => $now
+                                            );
+                                        } else{
+                                            $data_pt = array(
+                                                'jumlah_terencana'  => $new,
+                                                'status_penjadwalan'=> 1,
+                                                'user_edit'         => $user,
+                                                'waktu_edit'        => $now
+                                            );
+                                        }
+
+                                        $where_pt = array(
+                                            'id_produksi_tertunda' => $id_pt
+                                        );
+                                        $this->M_PerencanaanProduksi->edit('produksi_tertunda',$data_pt,$where_pt);
+                                    }
+                                //tutup prodtun
+
+                                $data_dpt = array(
+                                    'jumlah_perencanaan' => $jumlah_item,
+                                    'user_edit'          => $user,
+                                    'waktu_edit'         => $now
+                                );
+
+                                $where_dpt = array(
+                                    'id_detail_produksi_tertunda' => $dpt[0]['id_detail_produksi_tertunda']
+                                );
+
+                                $this->M_PerencanaanProduksi->edit('detail_produksi_tertunda',$data_dpt,$where_dpt);
+                            }  
+                        //tutup detprodtun
+
+                        //PERMINTAAN MATERIAL
+                            //sebelum ada & tetap ada
+                            if($jumlah_item_sebelum_edit > 0 && $jumlah_item_s > 0){
+                                $permat    = $this->M_PerencanaanProduksi->get_one_permat($tgl,$id_detpo,$idline)->result_array();
+                                $jm_permat = $this->M_PerencanaanProduksi->get_one_permat($tgl,$id_detpo,$idline)->num_rows();
+
+                                $jumlah_permat = $permat[0]['jumlah_minta'];
+                                $id_permat     = $permat[0]['id_permintaan_material'];
+
+                                //lama lebih besar
+                                if($jumlah_item_sebelum_edit > $jumlah_item_s){
+                                    $selisih = $jumlah_item_sebelum_edit - $jumlah_item_s;
+
+                                    $jumlah_minta_baru = $jumlah_permat - $selisih;
+
+                                    $data_permat = array(
+                                        'jumlah_minta' => $jumlah_minta_baru
+                                    );
+
+                                    $where_permat = array(
+                                        'id_permintaan_material' => $id_permat
+                                    );
+
+                                    $this->M_PerencanaanProduksi->edit('permintaan_material',$data_permat,$where_permat);
+
+                                    $det_permat    = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->result_array();
+                                    $jm_det_permat = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->num_rows();
+
+                                    for($t=0;$t<$jm_det_permat;$t++){
+                                        $jumlah_konsumsi = $det_permat[$t]['jumlah_konsumsi'];
+                                        $id_det_permat   = $det_permat[$t]['id_detail_permintaan_material'];
+
+                                        $needs = $jumlah_minta_baru * $jumlah_konsumsi;
+
+                                        $data_det_permat = array(
+                                            'needs' => $needs
+                                        );
+
+                                        $where_det_permat = array(
+                                            'id_detail_permintaan_material' => $id_det_permat
+                                        );
+
+                                        $this->M_PerencanaanProduksi->edit('detail_permintaan_material',$data_det_permat,$where_det_permat);
+                                    }
+                                } 
+                                //baru lebih besar
+                                else if($jumlah_item_sebelum_edit < $jumlah_item_s){
+                                    $selisih = $jumlah_item_s - $jumlah_item_sebelum_edit;
+
+                                    $jumlah_minta_baru = $jumlah_permat + $selisih;
+
+                                    $data_permat = array(
+                                        'jumlah_minta' => $jumlah_minta_baru
+                                    );
+
+                                    $where_permat = array(
+                                        'id_permintaan_material' => $id_permat
+                                    );
+
+                                    $this->M_PerencanaanProduksi->edit('permintaan_material',$data_permat,$where_permat);
+
+                                    $det_permat    = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->result_array();
+                                    $jm_det_permat = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->num_rows();
+
+                                    for($t=0;$t<$jm_det_permat;$t++){
+                                        $jumlah_konsumsi = $det_permat[$t]['jumlah_konsumsi'];
+                                        $id_det_permat   = $det_permat[$t]['id_detail_permintaan_material'];
+
+                                        $needs = $jumlah_minta_baru * $jumlah_konsumsi;
+
+                                        $data_det_permat = array(
+                                            'needs' => $needs
+                                        );
+
+                                        $where_det_permat = array(
+                                            'id_detail_permintaan_material' => $id_det_permat
+                                        );
+
+                                        $this->M_PerencanaanProduksi->edit('detail_permintaan_material',$data_det_permat,$where_det_permat);
+                                    }
+                                }
+                            } 
+                            //sebelum ada, jadi tdk ada
+                            else if($jumlah_item_sebelum_edit > 0 && $jumlah_item_s == 0){
+                                $permat    = $this->M_PerencanaanProduksi->get_one_permat($tgl,$id_detpo,$idline)->result_array();
+                                $jm_permat = $this->M_PerencanaanProduksi->get_one_permat($tgl,$id_detpo,$idline)->num_rows();
+
+                                $jumlah_permat = $permat[0]['jumlah_minta'];
+                                $id_permat     = $permat[0]['id_permintaan_material'];
+
+                                if($jumlah_item_sebelum_edit == $jumlah_permat){
+                                    $data_permat = array(
+                                        'status_delete' => 1
+                                    );
+
+                                    $where_permat = array(
+                                        'id_permintaan_material' => $id_permat
+                                    );
+
+                                    $this->M_PerencanaanProduksi->edit('permintaan_material',$data_permat,$where_permat);
+
+                                    $det_permat    = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->result_array();
+                                    $jm_det_permat = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->num_rows();
+
+                                    for($t=0;$t<$jm_det_permat;$t++){
+                                        $jumlah_konsumsi = $det_permat[$t]['jumlah_konsumsi'];
+                                        $id_det_permat   = $det_permat[$t]['id_detail_permintaan_material'];
+
+                                        $needs = $jumlah_minta_baru * $jumlah_konsumsi;
+
+                                        $data_det_permat = array(
+                                            'status_delete' => 1
+                                        );
+
+                                        $where_det_permat = array(
+                                            'id_detail_permintaan_material' => $id_det_permat
+                                        );
+
+                                        $this->M_PerencanaanProduksi->edit('detail_permintaan_material',$data_det_permat,$where_det_permat);
+                                    }                                    
+                                } 
+                                else if($jumlah_item_sebelum_edit < $jumlah_permat){
+                                    $jumlah_minta_baru =  $jumlah_permat - $jumlah_item_sebelum_edit;
+
+                                    $data_permat = array(
+                                        'jumlah_minta' => $jumlah_minta_baru
+                                    );
+
+                                    $where_permat = array(
+                                        'id_permintaan_material' => $id_permat
+                                    );
+
+                                    $this->M_PerencanaanProduksi->edit('permintaan_material',$data_permat,$where_permat);
+
+                                    $det_permat    = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->result_array();
+                                    $jm_det_permat = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->num_rows();
+
+                                    for($t=0;$t<$jm_det_permat;$t++){
+                                        $jumlah_konsumsi = $det_permat[$t]['jumlah_konsumsi'];
+                                        $id_det_permat   = $det_permat[$t]['id_detail_permintaan_material'];
+
+                                        $needs = $jumlah_minta_baru * $jumlah_konsumsi;
+
+                                        $data_det_permat = array(
+                                            'needs' => $needs
+                                        );
+
+                                        $where_det_permat = array(
+                                            'id_detail_permintaan_material' => $id_det_permat
+                                        );
+
+                                        $this->M_PerencanaanProduksi->edit('detail_permintaan_material',$data_det_permat,$where_det_permat);
+                                    }                                    
+                                }
+                            }
+                            //sebelum tidak ada, jadi ada
+                            else if($jumlah_item_sebelum_edit == 0 && $jumlah_item_s > 0){
+                                //cari apakah sudah ada sebelumnya permintaan material untuk tanggal,id_det_po_cust,id_line yangsama?
+                                $cari_permat    = $this->M_PerencanaanProduksi->get_one_permat($tgl,$id_detpo,$idline)->result_array();
+                                $jm_cari_permat = $this->M_PerencanaanProduksi->get_one_permat($tgl,$id_detpo,$idline)->num_rows();
+
+                                //jika sebelumnya belum ada
+                                if($jm_cari_permat == 0){
+                                    $tahun_sekarangnya = substr(date('Y',strtotime($tgl)),2,2);
+                                    $bulan_sekarangnya = date('m',strtotime($tgl));
+
+                                    //id detail perencanaan produksi
+                                    $idcode_permat = "PERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".";
+
+                                    $id_permat_last     = $this->M_PerencanaanProduksi->get_last_permat_id($idcode_permat)->result_array();
+                                    $id_permat_last_cek = $this->M_PerencanaanProduksi->get_last_permat_id($idcode_permat)->num_rows();
+                        
+                                    if($id_permat_last_cek == 1){
+                                        $id_terakhirnya    = $id_permat_last[0]['id_permintaan_material'];
+                        
+                                        $tahun_sebelumnya  = substr($id_terakhirnya,6,2);
+                                        $bulan_sebelumnya  = substr($id_terakhirnya,8,2);
+                                                
+                                        //kalau tahun sama
+                                        if($tahun_sebelumnya == $tahun_sekarangnya){
+                                            //kalau tahun & bulannya sama berarti count+1
+                                            if($bulan_sebelumnya == $bulan_sekarangnya){
+                                                $countnya = intval(substr($id_terakhirnya,11,5)) + 1;
+                                                $pjgnya   = strlen($countnya);
+                                    
+                                                if($pjgnya == 1){
+                                                    $countnya_baru = "0000".$countnya;
+                                                }
+                                                else if($pjgnya == 2){
+                                                    $countnya_baru = "000".$countnya;
+                                                }
+                                                else if($pjgnya == 3){
+                                                    $countnya_baru = "00".$countnya;
+                                                }
+                                                else if($pjgnya == 4){
+                                                    $countnya_baru = "0".$countnya;
+                                                }
+                                                else{
+                                                    $countnya_baru = $countnya;
+                                                }
+                                                
+                                                //id yang baru
+                                                $id_permat_baru = "PERMAT".$tahun_sebelumnya.$bulan_sebelumnya.".".$countnya_baru;
+                                            }
+                                            //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                                            else{
+                                                //id yang baru
+                                                $id_permat_baru = "PERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
+                                            }
+                                        }
+                                        //kalau tahun tidak sama
+                                        else{
+                                            //id yang baru
+                                            $id_permat_baru = "PERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
+                                        }
+                                    }
+                                    else{
+                                        //id yang baru
+                                        $id_permat_baru = "PERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
+                                    }
+
+                                    $tgl_now = date('Y-m-d');
+                                    
+                                    $data_permat = array(
+                                        'id_permintaan_material'            => $id_permat_baru,
+                                        'id_detail_purchase_order_customer' => $id_detpo,
+                                        'id_line'                           => $idline,
+                                        'jumlah_minta'                      => $jumlah_item,
+                                        'tanggal_permintaan'                => $tgl_now,
+                                        'tanggal_produksi'                  => $tgl,
+                                        'status_permintaan'                 => 0,
+                                        'user_add'                          => $user,
+                                        'waktu_add'                         => $now,
+                                        'status_delete'                     => 0
+                                    );
+
+                                    $this->M_PerencanaanProduksi->insert('permintaan_material',$data_permat);
+
+                                    //DETAIL PERMINTAAN MATERIAL
+                                    $konmat_tam    = $this->M_PerencanaanProduksi->get_id_produk_by_detail_po($id_detpo,$idline)->result_array();
+                                    $jm_konmat_tam = $this->M_PerencanaanProduksi->get_id_produk_by_detail_po($id_detpo,$idline)->num_rows();
+
+                                    for($b=0;$b<$jm_konmat_tam;$b++){
+                                        //id_detail_permintaan_material
+                                        $idcode_detpermat = "DETPERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".";
+
+                                        $id_detpermat_last     = $this->M_PerencanaanProduksi->get_last_detpermat_id($idcode_detpermat)->result_array();
+                                        $id_detpermat_last_cek = $this->M_PerencanaanProduksi->get_last_detpermat_id($idcode_detpermat)->num_rows();
+                            
+                                        if($id_detpermat_last_cek == 1){
+                                            $id_terakhirnya    = $id_detpermat_last[0]['id_detail_permintaan_material'];
+                            
+                                            $tahun_sebelumnya  = substr($id_terakhirnya,9,2);
+                                            $bulan_sebelumnya  = substr($id_terakhirnya,11,2);
+                                                    
+                                            //kalau tahun sama
+                                            if($tahun_sebelumnya == $tahun_sekarangnya){
+                                                //kalau tahun & bulannya sama berarti count+1
+                                                if($bulan_sebelumnya == $bulan_sekarangnya){
+                                                    $countnya = intval(substr($id_terakhirnya,14,6)) + 1;
+                                                    $pjgnya   = strlen($countnya);
+                                        
+                                                    if($pjgnya == 1){
+                                                        $countnya_baru = "00000".$countnya;
+                                                    }
+                                                    else if($pjgnya == 2){
+                                                        $countnya_baru = "0000".$countnya;
+                                                    }
+                                                    else if($pjgnya == 3){
+                                                        $countnya_baru = "000".$countnya;
+                                                    }
+                                                    else if($pjgnya == 4){
+                                                        $countnya_baru = "00".$countnya;
+                                                    }
+                                                    else if($pjgnya == 5){
+                                                        $countnya_baru = "0".$countnya;
+                                                    }
+                                                    else{
+                                                        $countnya_baru = $countnya;
+                                                    }
+                                                    
+                                                    //id yang baru
+                                                    $id_detpermat_baru = "DETPERMAT".$tahun_sebelumnya.$bulan_sebelumnya.".".$countnya_baru;
+                                                }
+                                                //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                                                else{
+                                                    //id yang baru
+                                                    $id_detpermat_baru = "DETPERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".000001";
+                                                }
+                                            }
+                                            //kalau tahun tidak sama
+                                            else{
+                                                //id yang baru
+                                                $id_detpermat_baru = "DETPERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".000001";
+                                            }
+                                        }
+                                        else{
+                                            //id yang baru
+                                            $id_detpermat_baru = "DETPERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".000001";
+                                        }
+
+                                        $id_konsumsi_material = $konmat_tam[$b]['id_konsumsi_material'];
+                                        $jumlah_konsumsi      = $konmat_tam[$b]['jumlah_konsumsi'];
+                                        $needs                = $jumlah_item * $jumlah_konsumsi;
+                                        
+                                        $data_detpermat = array (
+                                            'id_detail_permintaan_material'     => $id_detpermat_baru,
+                                            'id_permintaan_material'            => $id_permat_baru,
+                                            'id_konsumsi_material'              => $id_konsumsi_material,
+                                            'needs'                             => $needs,
+                                            'status_pengambilan'                => 0,
+                                            'user_add'                          => $user,
+                                            'waktu_add'                         => $now,
+                                            'status_delete'                     => 0
+                                        );
+
+                                        $this->M_PerencanaanProduksi->insert('detail_permintaan_material',$data_detpermat);
+                                    }
+                                } 
+                                //jika sebelumnya ada
+                                else{
+                                    $id_permat     = $cari_permat[0]['id_permintaan_material'];
+                                    $jumlah_permat = $cari_permat[0]['jumlah_minta'];
+
+                                    $jumlah_baru = $jumlah_permat + $jumlah_item;
+
+                                    $data_permat = array(
+                                        'jumlah_minta' => $jumlah_baru
+                                    );
+
+                                    $where_permat = array(
+                                        'id_permintaan_material' => $id_permat
+                                    );
+
+                                    $this->M_PerencanaanProduksi->edit('permintaan_material',$data_permat,$where_permat);
+
+                                    $det_permat    = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->result_array();
+                                    $jm_det_permat = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->num_rows();
+
+                                    for($t=0;$t<$jm_det_permat;$t++){
+                                        $jumlah_konsumsi = $det_permat[$t]['jumlah_konsumsi'];
+                                        $id_det_permat   = $det_permat[$t]['id_detail_permintaan_material'];
+
+                                        $needs = $jumlah_baru * $jumlah_konsumsi;
+
+                                        $data_det_permat = array(
+                                            'needs' => $needs
+                                        );
+
+                                        $where_det_permat = array(
+                                            'id_detail_permintaan_material' => $id_det_permat
+                                        );
+
+                                        $this->M_PerencanaanProduksi->edit('detail_permintaan_material',$data_det_permat,$where_det_permat);
+                                    }
+                                }
+                            }
+                        //tutup permat
+                    }
+                }
+            } 
+            //lama, tidak memiliki perencanaan, hapus
+            else if($keterangan_div == 2){
+                $jumlah_line = $this->input->post('jumlah_line'.$o);
+                
+                for($k=1;$k<=$jumlah_line;$k++){
+                    $idline = $this->input->post($o.'id_line_kf'.$k);
+    
+                    for($z=1;$z<=7;$z++){
+                        $jumlah_item_s   = $this->input->post('jm'.$o.$idline.'day'.$z);
+                        $waktu_proses_s  = $this->input->post('ef'.$o.$idline.'day'.$z);
+                        $id_det_prodline = $this->input->post('id_dpl'.$o.$idline.'day'.$z);
+
+                        $get_old_detprodline      = $this->M_PerencanaanProduksi->get_one_detprodline($id_det_prodline)->result_array();
+                        $jumlah_item_sebelum_edit = $get_old_detprodline[0]['jumlah_item_perencanaan'];
+
+                        $tgl   = date('Y-m-d', strtotime('+'.($z-1).'days', strtotime($start_date)));
+                        
+                        if($jumlah_item_s != ""){
+                            $jumlah_item = $jumlah_item_s;
+                            $waktu_proses = $waktu_proses_s;
+                        }
+                        else{
+                            $jumlah_item  = 0;
+                            $waktu_proses = 0;
+                        }
+
+                        //DETAIL PRODUKSI LINE
+                            $data_detprod = array(
+                                'status_delete'        => 1,
+                                'user_delete'          => $user,
+                                'waktu_delete'         => $now,
+                            );
+
+                            $where_detprod = array(
+                                'id_detail_produksi_line' => $id_det_prodline
+                            );
+
+                            $this->M_PerencanaanProduksi->edit('detail_produksi_line',$data_detprod,$where_detprod);
+                        //tutup detprod
+                        
+                        //DETAIL PRODUKSI TERTUNDA
+                            if($statper == 1){
+                                $dpt    = $this->M_PerencanaanProduksi->get_one_detprodtun($id_det_prodline)->result_array();
+                                $jm_dpt = $this->M_PerencanaanProduksi->get_one_detprodtun($id_det_prodline)->result_array();
+
+                                $data_dpt = array(
+                                    'status_delete' => 1,
+                                    'user_delete'   => $user,
+                                    'waktu_delete'  => $now
+                                );
+
+                                $where_dpt = array(
+                                    'id_detail_produksi_tertunda' => $dpt[0]['id_detail_produksi_tertunda']
+                                );
+
+                                $this->M_PerencanaanProduksi->edit('detail_produksi_tertunda',$data_dpt,$where_dpt);
+
+
+                                //PRODUKSI TERTUNDA
+                                $id_pt      = $dpt[0]['id_produksi_tertunda'];
+
+                                $pt = $this->M_PerencanaanProduksi->get_one_prodtun($id_pt)->result_array();
+
+                                $jumlah_terencana =  $pt[0]['jumlah_terencana'] - $dpt[0]['jumlah_perencanaan'];
+
+                                if($jumlah_terencana > 0){
+                                    $data_pt = array(
+                                        'jumlah_terencana'   => $jumlah_terencana,
+                                        'status_penjadwalan' => 1,
+                                        'user_edit'          => $user,
+                                        'waktu_edit'         => $now
+                                    );
+    
+                                    $where_pt = array (
+                                        'id_produksi_tertunda' => $id_pt 
+                                    );
+    
+                                    $this->M_PerencanaanProduksi->edit('produksi_tertunda',$data_pt,$where_pt);
+                                } else if($jumlah_terencana == 0){
+                                    $data_pt = array(
+                                        'jumlah_terencana'   => $jumlah_terencana,
+                                        'status_penjadwalan' => 0,
+                                        'user_edit'          => $user,
+                                        'waktu_edit'         => $now
+                                    );
+    
+                                    $where_pt = array (
+                                        'id_produksi_tertunda' => $id_pt 
+                                    );
+    
+                                    $this->M_PerencanaanProduksi->edit('produksi_tertunda',$data_pt,$where_pt);
+                                }
+                            }  
+                        //tutup detprodtun
+                        
+                        //PERMINTAAN MATERIAL
+                            $permat    = $this->M_PerencanaanProduksi->get_one_permat($tgl,$id_detpo,$idline)->result_array();
+                            $jm_permat = $this->M_PerencanaanProduksi->get_one_permat($tgl,$id_detpo,$idline)->num_rows();
+
+                            $jumlah_minta_sebelum = $permat[0]['jumlah_minta'];
+                            $id_permat            = $permat[0]['id_permintaan_material'];
+
+                            //jumlah yang ingin dihapus == jumlah minta
+                            if($jumlah_minta_sebelum == $jumlah_item_sebelum_edit){
+                                $data_permat = array(
+                                    'status_delete' => 1,
+                                    'user_delete'   => $user,
+                                    'waktu_delete'  => $now
+                                );
+
+                                $where_permat = array(
+                                    'id_permintaan_material' => $id_permat
+                                );
+
+                                $this->M_PerencanaanProduksi->edit('permintaan_material',$data_permat,$where_permat);
+
+                                $det_permat    = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->result_array();
+                                $jm_det_permat = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->num_rows();
+
+                                for($t=0;$t<$jm_det_permat;$t++){
+                                    $jumlah_konsumsi = $det_permat[$t]['jumlah_konsumsi'];
+                                    $id_det_permat   = $det_permat[$t]['id_detail_permintaan_material'];
+
+                                    $needs = $jumlah_minta_baru * $jumlah_konsumsi;
+
+                                    $data_det_permat = array(
+                                        'status_delete' => 1,
+                                        'user_delete'   => $user,
+                                        'waktu_delete'  => $now
+                                    );
+
+                                    $where_det_permat = array(
+                                        'id_detail_permintaan_material' => $id_det_permat
+                                    );
+
+                                    $this->M_PerencanaanProduksi->edit('detail_permintaan_material',$data_det_permat,$where_det_permat);
+                                }
+                            }
+                            //jumlah yang ingin dihapus < jumlah minta
+                            else if($jumlah_minta_sebelum > $jumlah_item_sebelum_edit){
+                                $jumlah_minta_baru = $jumlah_minta_sebelum - $jumlah_item_sebelum_edit;
+
+                                $data_permat = array(
+                                    'jumlah_minta' => $jumlah_minta_baru
+                                );
+
+                                $where_permat = array(
+                                    'id_permintaan_material' => $id_permat
+                                );
+
+                                $this->M_PerencanaanProduksi->edit('permintaan_material',$data_permat,$where_permat);
+
+                                $det_permat    = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->result_array();
+                                $jm_det_permat = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->num_rows();
+
+                                for($t=0;$t<$jm_det_permat;$t++){
+                                    $jumlah_konsumsi = $det_permat[$t]['jumlah_konsumsi'];
+                                    $id_det_permat   = $det_permat[$t]['id_detail_permintaan_material'];
+
+                                    $needs = $jumlah_minta_baru * $jumlah_konsumsi;
+
+                                    $data_det_permat = array(
+                                        'needs' => $needs
+                                    );
+
+                                    $where_det_permat = array(
+                                        'id_detail_permintaan_material' => $id_det_permat
+                                    );
+
+                                    $this->M_PerencanaanProduksi->edit('detail_permintaan_material',$data_det_permat,$where_det_permat);
+                                }
+                            }
+                        //tutup permat   
+                    }
+                }
+            } 
+            //add baru
+            else if($keterangan_div == 1){
+                $id_detpo    = $this->input->post('id_bg3'.$o);
+                $jumlah_line = $this->input->post('jumlah_line'.$o);
+                
+                
+                for($k=1;$k<=$jumlah_line;$k++){
+                    $idline = $this->input->post($o.'id_line_kf'.$k);
+    
+                    for($z=1;$z<=7;$z++){
+                        $tanggal        = date('Y-m-d', strtotime('+'.($z-1).'days', strtotime($start_date)));
+                        $jumlah_item_s  = $this->input->post('jm'.$o.$idline.'day'.$z);
+                        $waktu_proses_s = $this->input->post('ef'.$o.$idline.'day'.$z);
+                        
+                        if($jumlah_item_s != ""){
+                            $jumlah_item = $jumlah_item_s;
+                            $waktu_proses = $waktu_proses_s;
+                        }
+                        else{
+                            $jumlah_item  = 0;
+                            $waktu_proses = 0;
+                        }
+
+                        
+                        //cari id_produksi_line berdasarkan tanggal & line
+                        $id_prodline_sesuai = $this->M_PerencanaanProduksi->cari_id_prodline($idline,$tanggal)->result_array();
+                        $id_prodlinenya     = $id_prodline_sesuai[0]['id_produksi_line'];
+                        
+                        //id detail perencanaan produksi
+                        $tahun_sekarangnya = substr(date('Y',strtotime($tanggal)),2,2);
+                        $bulan_sekarangnya = date('m',strtotime($tanggal));
+
+                        $idcode_detprod_line = "DPL".$tahun_sekarangnya.$bulan_sekarangnya.".";
+
+                        $id_detprodline_last     = $this->M_PerencanaanProduksi->get_last_detprodline_id($idcode_detprod_line)->result_array();
+                        $id_detprodline_last_cek = $this->M_PerencanaanProduksi->get_last_detprodline_id($idcode_detprod_line)->num_rows();
+            
+                        if($id_detprodline_last_cek == 1){
+                            $id_terakhirnya    = $id_detprodline_last[0]['id_detail_produksi_line'];
+            
+                            $tahun_sebelumnya  = substr($id_terakhirnya,3,2);
+                            $bulan_sebelumnya  = substr($id_terakhirnya,5,2);
+                                    
+                            //kalau tahun sama
+                            if($tahun_sebelumnya == $tahun_sekarangnya){
+                                //kalau tahun & bulannya sama berarti count+1
+                                if($bulan_sebelumnya == $bulan_sekarangnya){
+                                    $countnya = intval(substr($id_terakhirnya,8,8)) + 1;
+                                    $pjgnya   = strlen($countnya);
+                        
+                                    if($pjgnya == 1){
+                                        $countnya_baru = "0000000".$countnya;
+                                    }
+                                    else if($pjgnya == 2){
+                                        $countnya_baru = "000000".$countnya;
+                                    }
+                                    else if($pjgnya == 3){
+                                        $countnya_baru = "00000".$countnya;
+                                    }
+                                    else if($pjgnya == 4){
+                                        $countnya_baru = "0000".$countnya;
+                                    }
+                                    else if($pjgnya == 5){
+                                        $countnya_baru = "000".$countnya;
+                                    }
+                                    else if($pjgnya == 6){
+                                        $countnya_baru = "00".$countnya;
+                                    }
+                                    else if($pjgnya == 7){
+                                        $countnya_baru = "0".$countnya;
+                                    }
+                                    else{
+                                        $countnya_baru = $countnya;
+                                    }
+                                    
+                                    //id yang baru
+                                    $id_dpl_baru = "DPL".$tahun_sebelumnya.$bulan_sebelumnya.".".$countnya_baru;
+                                }
+                                //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                                else{
+                                    //id yang baru
+                                    $id_dpl_baru = "DPL".$tahun_sekarangnya.$bulan_sekarangnya.".00000001";
+                                }
+                            }
+                            //kalau tahun tidak sama
+                            else{
+                                //id yang baru
+                                $id_dpl_baru = "DPL".$tahun_sekarangnya.$bulan_sekarangnya.".00000001";
+                            }
+                        }
+                        else{
+                            //id yang baru
+                            $id_dpl_baru = "DPL".$tahun_sekarangnya.$bulan_sekarangnya.".00000001";
+                        }
+
+                        //DETAIL PRODUKSI LINE
+                        if($statper == 0){
+                            $data_detprod = array(
+                                'id_detail_produksi_line'   => $id_dpl_baru,
+                                'id_detail_purchase_order'  => $id_detpo,
+                                'id_produksi_line'          => $id_prodlinenya,
+                                'jumlah_item_perencanaan'   => $jumlah_item,
+                                'waktu_proses_perencanaan'  => $waktu_proses,
+                                'status_perencanaan'        => 0,
+                                'status_aktual'             => 0,
+                                'user_add'                  => $user,
+                                'waktu_add'                 => $now,
+                                'status_delete'             => 0
+                            );
+                            $this->M_PerencanaanProduksi->insert('detail_produksi_line',$data_detprod);
+                        } else{
+                            $data_detprod = array(
+                                'id_detail_produksi_line'   => $id_dpl_baru,
+                                'id_detail_purchase_order'  => $id_detpo,
+                                'id_produksi_line'          => $id_prodlinenya,
+                                'jumlah_item_perencanaan'   => $jumlah_item,
+                                'waktu_proses_perencanaan'  => $waktu_proses,
+                                'status_perencanaan'        => 1,
+                                'status_aktual'             => 0,
+                                'user_add'                  => $user,
+                                'waktu_add'                 => $now,
+                                'status_delete'             => 0
+                            );
+                            $this->M_PerencanaanProduksi->insert('detail_produksi_line',$data_detprod);
+                        }
+                        
+                        //PRODUKSI TERTUNDA
+                        if($statper == 1){
+                                $id_prodtun  = $this->input->post('id_pt_bg3'.$o);
+                                $one_prodtun = $this->M_PerencanaanProduksi->get_one_prodtun($id_prodtun)->result_array();
+                                $jumlah_tertunda_sebelum  = $one_prodtun[0]['jumlah_tertunda'];
+                                $jumlah_terencana_sebelum = $one_prodtun[0]['jumlah_terencana'];
+                                
+                                //id produksi tunda produksi
+                                $tahun_sekarangnya = substr(date('Y',strtotime($tanggal)),2,2);
+                                $bulan_sekarangnya = date('m',strtotime($tanggal));
+
+                                $idcode_dprodtun = "DPRODTUN".$tahun_sekarangnya.$bulan_sekarangnya.".";
+
+                                $id_dprodtun_last     = $this->M_PerencanaanProduksi->get_last_dprodtun_id($idcode_dprodtun)->result_array();
+                                $id_dprodtun_last_cek = $this->M_PerencanaanProduksi->get_last_dprodtun_id($idcode_dprodtun)->num_rows();
+
+                                if($id_dprodtun_last_cek == 1){
+                                    $id_terakhirnya    = $id_dprodtun_last[0]['id_detail_produksi_tertunda'];
+
+                                    $tahun_sebelumnya  = substr($id_terakhirnya,8,2);
+                                    $bulan_sebelumnya  = substr($id_terakhirnya,10,2);
+                                            
+                                    //kalau tahun sama
+                                    if($tahun_sebelumnya == $tahun_sekarangnya){
+                                        //kalau tahun & bulannya sama berarti count+1
+                                        if($bulan_sebelumnya == $bulan_sekarangnya){
+                                            $countnya = intval(substr($id_terakhirnya,13,8)) + 1;
+                                            $pjgnya   = strlen($countnya);
+                                
+                                            if($pjgnya == 1){
+                                                $countnya_baru = "0000000".$countnya;
+                                            }
+                                            else if($pjgnya == 2){
+                                                $countnya_baru = "000000".$countnya;
+                                            }
+                                            else if($pjgnya == 3){
+                                                $countnya_baru = "00000".$countnya;
+                                            }
+                                            else if($pjgnya == 4){
+                                                $countnya_baru = "0000".$countnya;
+                                            }
+                                            else if($pjgnya == 5){
+                                                $countnya_baru = "000".$countnya;
+                                            }
+                                            else if($pjgnya == 6){
+                                                $countnya_baru = "00".$countnya;
+                                            }
+                                            else if($pjgnya == 7){
+                                                $countnya_baru = "0".$countnya;
+                                            }
+                                            else{
+                                                $countnya_baru = $countnya;
+                                            }
+                                            
+                                            //id yang baru
+                                            $id_dprodtun_baru = "DPRODTUN".$tahun_sebelumnya.$bulan_sebelumnya.".".$countnya_baru;
+                                        }
+                                        //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                                        else{
+                                            //id yang baru
+                                            $id_dprodtun_baru = "DPRODTUN".$tahun_sekarangnya.$bulan_sekarangnya.".00000001";
+                                        }
+                                    }
+                                    //kalau tahun tidak sama
+                                    else{
+                                        //id yang baru
+                                        $id_dprodtun_baru = "DPRODTUN".$tahun_sekarangnya.$bulan_sekarangnya.".00000001";
+                                    }
+                                }
+                                else{
+                                    //id yang baru
+                                    $id_dprodtun_baru = "DPRODTUN".$tahun_sekarangnya.$bulan_sekarangnya.".00000001";
+                                }
+
+                                $data_detprodtun = array(
+                                    'id_detail_produksi_tertunda' => $id_dprodtun_baru,
+                                    'id_produksi_tertunda'        => $id_prodtun,
+                                    'id_detail_produksi_line'     => $id_dpl_baru,
+                                    'jumlah_perencanaan'          => $jumlah_item,
+                                    'user_add'                    => $user,
+                                    'waktu_add'                   => $now,
+                                    'status_delete'               => 0
+                                );
+
+                                $this->M_PerencanaanProduksi->insert('detail_produksi_tertunda',$data_detprodtun);
+
+                                if($jumlah_item >0){
+                                    $jumlahnya = $jumlah_terencana_sebelum +$jumlah_item;
+                                    $sisanya   = $jumlah_tertunda_sebelum - $jumlah_terencana_sebelum;
+                                    if($jumlah_item == $sisanya){
+                                        $data_prodtun = array (
+                                            'jumlah_terencana'   => $jumlahnya,
+                                            'status_penjadwalan' => 2
+                                        );
+
+                                        $where_prodtun = array (
+                                        'id_produksi_tertunda' => $id_prodtun  
+                                        );
+
+                                        $this->M_PerencanaanProduksi->edit('produksi_tertunda',$data_prodtun,$where_prodtun);
+                                    } else{
+                                        $data_prodtun = array (
+                                            'jumlah_terencana'   => $jumlahnya,
+                                            'status_penjadwalan' => 1
+                                        );
+
+                                        $where_prodtun = array (
+                                        'id_produksi_tertunda' => $id_prodtun  
+                                        );
+
+                                        $this->M_PerencanaanProduksi->edit('produksi_tertunda',$data_prodtun,$where_prodtun);
+                                    }
+                                }
+                        }              
+
+                        //PURCHASE ORDER CUSTOMER
+                            $id_pos     = $this->M_PerencanaanProduksi->get_detail_po($id_detpo)->result_array();
+                            $id_po_tam  = $id_pos[0]['id_purchase_order_customer'];
+
+                            $data_po = array (
+                                'status_po' => 2,
+                                'user_edit' => $user,
+                                'waktu_edit'=> $now
+                            );
+
+                            $where_po = array (
+                                'id_purchase_order_customer' => $id_po_tam
+                            );
+
+                            $this->M_PerencanaanProduksi->edit('purchase_order_customer',$data_po,$where_po);
+                        //tutup po
+                        
+                        //PERMINTAAN MATERIAL
+                            if($jumlah_item != "" || $jumlah_item != 0){
+                                //cari apakah sudah ada sebelumnya permintaan material untuk tanggal,id_det_po_cust,id_line yangsama?
+                                $cari_permat    = $this->M_PerencanaanProduksi->get_one_permat($tanggal,$id_detpo,$idline)->result_array();
+                                $jm_cari_permat = $this->M_PerencanaanProduksi->get_one_permat($tanggal,$id_detpo,$idline)->num_rows();
+
+                                //jika sebelumnya belum ada
+                                if($jm_cari_permat == 0){
+                                    //id detail perencanaan produksi
+                                    $idcode_permat = "PERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".";
+
+                                    $id_permat_last     = $this->M_PerencanaanProduksi->get_last_permat_id($idcode_permat)->result_array();
+                                    $id_permat_last_cek = $this->M_PerencanaanProduksi->get_last_permat_id($idcode_permat)->num_rows();
+                        
+                                    if($id_permat_last_cek == 1){
+                                        $id_terakhirnya    = $id_permat_last[0]['id_permintaan_material'];
+                        
+                                        $tahun_sebelumnya  = substr($id_terakhirnya,6,2);
+                                        $bulan_sebelumnya  = substr($id_terakhirnya,8,2);
+                                                
+                                        //kalau tahun sama
+                                        if($tahun_sebelumnya == $tahun_sekarangnya){
+                                            //kalau tahun & bulannya sama berarti count+1
+                                            if($bulan_sebelumnya == $bulan_sekarangnya){
+                                                $countnya = intval(substr($id_terakhirnya,11,5)) + 1;
+                                                $pjgnya   = strlen($countnya);
+                                    
+                                                if($pjgnya == 1){
+                                                    $countnya_baru = "0000".$countnya;
+                                                }
+                                                else if($pjgnya == 2){
+                                                    $countnya_baru = "000".$countnya;
+                                                }
+                                                else if($pjgnya == 3){
+                                                    $countnya_baru = "00".$countnya;
+                                                }
+                                                else if($pjgnya == 4){
+                                                    $countnya_baru = "0".$countnya;
+                                                }
+                                                else{
+                                                    $countnya_baru = $countnya;
+                                                }
+                                                
+                                                //id yang baru
+                                                $id_permat_baru = "PERMAT".$tahun_sebelumnya.$bulan_sebelumnya.".".$countnya_baru;
+                                            }
+                                            //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                                            else{
+                                                //id yang baru
+                                                $id_permat_baru = "PERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
+                                            }
+                                        }
+                                        //kalau tahun tidak sama
+                                        else{
+                                            //id yang baru
+                                            $id_permat_baru = "PERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
+                                        }
+                                    }
+                                    else{
+                                        //id yang baru
+                                        $id_permat_baru = "PERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
+                                    }
+
+                                    $tgl_now = date('Y-m-d');
+                                    
+                                    $data_permat = array(
+                                        'id_permintaan_material'            => $id_permat_baru,
+                                        'id_detail_purchase_order_customer' => $id_detpo,
+                                        'id_line'                           => $idline,
+                                        'jumlah_minta'                      => $jumlah_item,
+                                        'tanggal_permintaan'                => $tgl_now,
+                                        'tanggal_produksi'                  => $tanggal,
+                                        'status_permintaan'                 => 0,
+                                        'user_add'                          => $user,
+                                        'waktu_add'                         => $now,
+                                        'status_delete'                     => 0
+                                    );
+
+                                    $this->M_PerencanaanProduksi->insert('permintaan_material',$data_permat);
+
+                                    //DETAIL PERMINTAAN MATERIAL
+                                    $konmat_tam    = $this->M_PerencanaanProduksi->get_id_produk_by_detail_po($id_detpo,$idline)->result_array();
+                                    $jm_konmat_tam = $this->M_PerencanaanProduksi->get_id_produk_by_detail_po($id_detpo,$idline)->num_rows();
+
+                                    for($b=0;$b<$jm_konmat_tam;$b++){
+                                        //id_detail_permintaan_material
+                                        $idcode_detpermat = "DETPERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".";
+
+                                        $id_detpermat_last     = $this->M_PerencanaanProduksi->get_last_detpermat_id($idcode_detpermat)->result_array();
+                                        $id_detpermat_last_cek = $this->M_PerencanaanProduksi->get_last_detpermat_id($idcode_detpermat)->num_rows();
+                            
+                                        if($id_detpermat_last_cek == 1){
+                                            $id_terakhirnya    = $id_detpermat_last[0]['id_detail_permintaan_material'];
+                            
+                                            $tahun_sebelumnya  = substr($id_terakhirnya,9,2);
+                                            $bulan_sebelumnya  = substr($id_terakhirnya,11,2);
+                                                    
+                                            //kalau tahun sama
+                                            if($tahun_sebelumnya == $tahun_sekarangnya){
+                                                //kalau tahun & bulannya sama berarti count+1
+                                                if($bulan_sebelumnya == $bulan_sekarangnya){
+                                                    $countnya = intval(substr($id_terakhirnya,14,6)) + 1;
+                                                    $pjgnya   = strlen($countnya);
+                                        
+                                                    if($pjgnya == 1){
+                                                        $countnya_baru = "00000".$countnya;
+                                                    }
+                                                    else if($pjgnya == 2){
+                                                        $countnya_baru = "0000".$countnya;
+                                                    }
+                                                    else if($pjgnya == 3){
+                                                        $countnya_baru = "000".$countnya;
+                                                    }
+                                                    else if($pjgnya == 4){
+                                                        $countnya_baru = "00".$countnya;
+                                                    }
+                                                    else if($pjgnya == 5){
+                                                        $countnya_baru = "0".$countnya;
+                                                    }
+                                                    else{
+                                                        $countnya_baru = $countnya;
+                                                    }
+                                                    
+                                                    //id yang baru
+                                                    $id_detpermat_baru = "DETPERMAT".$tahun_sebelumnya.$bulan_sebelumnya.".".$countnya_baru;
+                                                }
+                                                //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                                                else{
+                                                    //id yang baru
+                                                    $id_detpermat_baru = "DETPERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".000001";
+                                                }
+                                            }
+                                            //kalau tahun tidak sama
+                                            else{
+                                                //id yang baru
+                                                $id_detpermat_baru = "DETPERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".000001";
+                                            }
+                                        }
+                                        else{
+                                            //id yang baru
+                                            $id_detpermat_baru = "DETPERMAT".$tahun_sekarangnya.$bulan_sekarangnya.".000001";
+                                        }
+
+                                        $id_konsumsi_material = $konmat_tam[$b]['id_konsumsi_material'];
+                                        $jumlah_konsumsi      = $konmat_tam[$b]['jumlah_konsumsi'];
+                                        $needs                = $jumlah_item * $jumlah_konsumsi;
+                                        
+                                        $data_detpermat = array (
+                                            'id_detail_permintaan_material'     => $id_detpermat_baru,
+                                            'id_permintaan_material'            => $id_permat_baru,
+                                            'id_konsumsi_material'              => $id_konsumsi_material,
+                                            'needs'                             => $needs,
+                                            'status_pengambilan'                => 0,
+                                            'user_add'                          => $user,
+                                            'waktu_add'                         => $now,
+                                            'status_delete'                     => 0
+                                        );
+
+                                        $this->M_PerencanaanProduksi->insert('detail_permintaan_material',$data_detpermat);
+                                    }
+                                } 
+                                //jika sebelumnya ada
+                                else{
+                                    $id_permat     = $cari_permat[0]['id_permintaan_material'];
+                                    $jumlah_permat = $cari_permat[0]['jumlah_minta'];
+
+                                    $jumlah_baru = $jumlah_permat + $jumlah_item;
+
+                                    $data_permat = array(
+                                        'jumlah_minta' => $jumlah_baru
+                                    );
+
+                                    $where_permat = array(
+                                        'id_permintaan_material' => $id_permat
+                                    );
+
+                                    $this->M_PerencanaanProduksi->edit('permintaan_material',$data_permat,$where_permat);
+
+                                    $det_permat    = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->result_array();
+                                    $jm_det_permat = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->num_rows();
+
+                                    for($t=0;$t<$jm_det_permat;$t++){
+                                        $jumlah_konsumsi = $det_permat[$t]['jumlah_konsumsi'];
+                                        $id_det_permat   = $det_permat[$t]['id_detail_permintaan_material'];
+
+                                        $needs = $jumlah_baru * $jumlah_konsumsi;
+
+                                        $data_det_permat = array(
+                                            'needs' => $needs
+                                        );
+
+                                        $where_det_permat = array(
+                                            'id_detail_permintaan_material' => $id_det_permat
+                                        );
+
+                                        $this->M_PerencanaanProduksi->edit('detail_permintaan_material',$data_det_permat,$where_det_permat);
+                                    }
+                                }
+                            }
+                        //tutup permat
+                    }
+                }
+            }
+        }
+        //redirect('perencanaanProduksi/semua_perencanaan_produksi');
     }
 
     public function delete_perencanaan_produksi(){
@@ -1315,7 +2964,7 @@ class PerencanaanProduksi extends CI_Controller {
         $tgl  = $this->M_PerencanaanProduksi->get_tanggal_produksi($id_produksi)->result_array();
         $awal = $tgl[0]['tanggal_awal'];
 
-        //untuk produksi
+        //PRODUKSI
         $id_prod   = $this->M_PerencanaanProduksi->get_semua_idprod($awal)->result_array();
         $jmid_prod = $this->M_PerencanaanProduksi->get_semua_idprod($awal)->num_rows();
 
@@ -1344,7 +2993,7 @@ class PerencanaanProduksi extends CI_Controller {
                 'id_produksi' => $id_produksinya
             );
 
-            //$this->M_PerencanaanProduksi->edit('produksi',$data_prod,$where_prod);
+            $this->M_PerencanaanProduksi->edit('produksi',$data_prod,$where_prod);
             
             //PRODUKSI LINE
             $prodline   = $this->M_PerencanaanProduksi->get_semua_prodline($id_awal,$id_akhir)->result_array();
@@ -1373,7 +3022,7 @@ class PerencanaanProduksi extends CI_Controller {
                     'id_produksi_line' => $id_produksi_linenya
                 );
 
-                //$this->M_PerencanaanProduksi->edit('produksi_line',$data_produksi_line,$where_produksi_line);
+                $this->M_PerencanaanProduksi->edit('produksi_line',$data_produksi_line,$where_produksi_line);
 
                 //SURAT PERINTAH LEMBUR
                     $tanggal_spl = $prodline[$t]['tanggal'];
@@ -1414,29 +3063,103 @@ class PerencanaanProduksi extends CI_Controller {
                     }
 
 
-                //untuk detail produksi line
-                $detprodline   = $this->M_PerencanaanProduksi->get_semua_detprodline($id_awal_prodline,$id_akhir_prodline)->result_array();
-                $jmdetprodline = $this->M_PerencanaanProduksi->get_semua_detprodline($id_awal_prodline,$id_akhir_prodline)->num_rows();
-               
-                for($y=0;$y<$jmdetprodline;$y++){
-                    $id_detail_produksi_linenya = $detprodline[$y]['id_detail_produksi_line'];
-    
-                    $data_detail_produksi_line = array (
-                        'user_edit'     => $user,
-                        'waktu_edit'    => $now,
-                        'status_delete' => 1
-                    );
-    
-                    $where_detail_produksi_line = array (
-                        'id_detail_produksi_line' =>  $id_detail_produksi_linenya
-                    );
-    
-                    //$this->M_PerencanaanProduksi->edit('detail_produksi_line',$data_detail_produksi_line,$where_detail_produksi_line);
-                }
+                //DETAIL PRODUKSI LINE
+                    $detprodline   = $this->M_PerencanaanProduksi->get_semua_detprodline($id_awal_prodline,$id_akhir_prodline)->result_array();
+                    $jmdetprodline = $this->M_PerencanaanProduksi->get_semua_detprodline($id_awal_prodline,$id_akhir_prodline)->num_rows();
+                
+                    for($y=0;$y<$jmdetprodline;$y++){
+                        $id_detail_produksi_linenya = $detprodline[$y]['id_detail_produksi_line'];
+        
+                        $data_detail_produksi_line = array (
+                            'user_edit'     => $user,
+                            'waktu_edit'    => $now,
+                            'status_delete' => 1
+                        );
+        
+                        $where_detail_produksi_line = array (
+                            'id_detail_produksi_line' =>  $id_detail_produksi_linenya
+                        );
+        
+                        $this->M_PerencanaanProduksi->edit('detail_produksi_line',$data_detail_produksi_line,$where_detail_produksi_line);
+                        
+                        //PRODUKSI TERTUNDA
+                            if($detprodline[$y]['status_perencanaan'] == 1){
+                                $dpt = $this->M_PerencanaanProduksi->get_one_detprodtun($id_detail_produksi_linenya)->result_array();
 
+                                $data_dpt = array(
+                                    'status_delete' => 1,
+                                    'user_delete'   => $user,
+                                    'waktu_delete'  => $now
+                                );
+
+                                $where_dpt = array(
+                                    'id_detail_produksi_tertunda' => $dpt[0]['id_detail_produksi_tertunda']
+                                );
+
+                                $this->M_PerencanaanProduksi->edit('detail_produksi_tertunda',$data_dpt,$where_dpt);
+
+                                $id_pt      = $dpt[0]['id_produksi_tertunda'];
+
+                                $pt = $this->M_PerencanaanProduksi->get_one_prodtun($id_pt)->result_array();
+
+                                $jumlah_terencana =  $pt[0]['jumlah_terencana'] - $dpt[0]['jumlah_perencanaan'];
+
+                                if($jumlah_terencana > 0){
+                                    $data_pt = array(
+                                        'jumlah_terencana'   => $jumlah_terencana,
+                                        'status_penjadwalan' => 1,
+                                        'user_edit'          => $user,
+                                        'waktu_edit'         => $now
+                                    );
+    
+                                    $where_pt = array (
+                                        'id_produksi_tertunda' => $id_pt 
+                                    );
+    
+                                    $this->M_PerencanaanProduksi->edit('produksi_tertunda',$data_pt,$where_pt);
+                                } else if($jumlah_terencana == 0){
+                                    $data_pt = array(
+                                        'jumlah_terencana'   => $jumlah_terencana,
+                                        'status_penjadwalan' => 0,
+                                        'user_edit'          => $user,
+                                        'waktu_edit'         => $now
+                                    );
+    
+                                    $where_pt = array (
+                                        'id_produksi_tertunda' => $id_pt 
+                                    );
+    
+                                    $this->M_PerencanaanProduksi->edit('produksi_tertunda',$data_pt,$where_pt);
+                                }
+                            }
+                        //tutup prodtun
+                        
+                        //PERMINTAAN MATERIAL
+                        if($detprodline[$y]['jumlah_item_perencanaan'] > 0){
+                            $tanggal_produksi =  $detprodline[$y]['tanggal'];
+                            $id_det_po        =  $detprodline[$y]['id_detail_purchase_order'];
+                            $id_line          =  $detprodline[$y]['id_line'];
+
+                            $permat    = $this->M_PerencanaanProduksi->get_one_permat($tanggal_produksi,$id_det_po,$id_line)->result_array();
+                            $id_permat = $permat[0]['id_permintaan_material'];
+                    
+                            $data_permat = array(
+                                'status_delete' => 1,
+                                'user_delete'   => $user,
+                                'waktu_delete'  => $now
+                            );
+
+                            $where_permat = array(
+                                'id_permintaan_material' => $id_permat
+                            );
+
+                            $this->M_PerencanaanProduksi->edit('permintaan_material',$data_permat,$where_permat);
+                            $this->M_PerencanaanProduksi->delete_detpermat($id_permat);
+                        }
+                    }
             }
         }
-        //redirect('perencanaanProduksi/semua_perencanaan_produksi');
+        redirect('perencanaanProduksi/semua_perencanaan_produksi');
     }
 
     public function perencanaan_produksi_line(){
