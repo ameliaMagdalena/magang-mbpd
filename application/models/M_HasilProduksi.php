@@ -45,6 +45,12 @@ class M_HasilProduksi extends CI_Model {
         return $this->db->query("SELECT * FROM produksi WHERE produksi.id_produksi='$id' ");
     }
 
+    function get_produksi_line_by_produksi($id){
+        return $this->db->query("SELECT * FROM produksi_line,line
+        WHERE produksi_line.id_produksi='$id' AND produksi_line.status_delete='0'
+        AND produksi_line.id_line=line.id_line");
+    }
+
     function get_produksi_line_by_id($id){
         return $this->db->query("SELECT * FROM produksi,produksi_line,line
         WHERE produksi.id_produksi='$id' AND produksi.status_delete='0' AND produksi_line.status_delete='0'

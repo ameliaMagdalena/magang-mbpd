@@ -187,15 +187,6 @@
                                     <td style="text-align: center;vertical-align: middle;">
                                         <?php foreach($produksi_line as $pl){
                                                 if($pl->id_produksi == $p->id_produksi){
-                                                    if($pl->nama_line == "Line Assy"){  
-                                                        if($pl->status_laporan == 1){
-                                        ?>
-                                            <i class="fa  fa-check"></i>
-                                        <?php }}}} ?>
-                                    </td>
-                                    <td style="text-align: center;vertical-align: middle;">
-                                        <?php foreach($produksi_line as $pl){
-                                                if($pl->id_produksi == $p->id_produksi){
                                                     if($pl->nama_line == "Line Cutting"){  
                                                         if($pl->status_laporan == 1){
                                         ?>
@@ -215,6 +206,15 @@
                                         <?php foreach($produksi_line as $pl){
                                                 if($pl->id_produksi == $p->id_produksi){
                                                     if($pl->nama_line == "Line Sewing"){   
+                                                        if($pl->status_laporan == 1){
+                                        ?>
+                                            <i class="fa  fa-check"></i>
+                                        <?php }}}} ?>
+                                    </td>
+                                    <td style="text-align: center;vertical-align: middle;">
+                                        <?php foreach($produksi_line as $pl){
+                                                if($pl->id_produksi == $p->id_produksi){
+                                                    if($pl->nama_line == "Line Assy"){  
                                                         if($pl->status_laporan == 1){
                                         ?>
                                             <i class="fa  fa-check"></i>

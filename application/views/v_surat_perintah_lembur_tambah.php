@@ -33,6 +33,7 @@
             <div class="form-group mt-lg">
                 <label class="col-sm-3 control-label">Tanggal Lembur</label>
                 <div class="col-sm-9">
+                    
                     <input class="form-control col-md-5" type="date" id="tanggal" name="tanggal"
                     min="<?php echo $tudei;?>" onchange="cek_tanggal()"> 
                 </div>
