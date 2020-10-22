@@ -308,7 +308,7 @@
 										</a>
 										<ul class="nav nav-children">
 											<li>
-												<a href="<?php echo base_url() . 'PengambilanMaterial/dn'?>">
+												<a href="<?php echo base_url() . 'DeliveryNote'?>">
 													Delivery Note
 												</a>
 											</li>

@@ -117,6 +117,8 @@
                                         echo "Material Belum Diambil";
                                     }
                                     else if ($detail_po_sup[$y]['status_detail_po']==1){
+                                        echo "Pengambilan Terjadwal";
+                                    }else if ($detail_po_sup[$y]['status_detail_po']==2){
                                         echo "Proses Pengambilan Material";
                                     }
                                     else{

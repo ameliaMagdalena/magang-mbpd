@@ -80,21 +80,21 @@
                                     <label class="col-sm-4 control-label">Kode Sub Jenis Material<span class="required">*</span></label>
                                     <div class="col-sm-7">
                                         <input type="text" name="kode_sub_jenis_material" class="form-control"
-                                        placeholder="Kode sub jenis material"  required>
+                                        placeholder="format atau kode terakhir"  required>
                                     </div>
                                 </div>
                                 <div class="form-group mt-lg">
                                     <label class="col-sm-4 control-label">Satuan<span class="required">*</span></label>
                                     <div class="col-sm-7">
                                         <input type="text" name="satuan" class="form-control"
-                                        placeholder="Satuan" required>
+                                        placeholder="Contoh: pcs, blek, rol, dll." required>
                                     </div>
                                 </div>
                                 <div class="form-group mt-lg">
                                     <label class="col-sm-4 control-label">Satuan Keluar<span class="required">*</span></label>
                                     <div class="col-sm-7">
                                         <input type="text" name="satuan_keluar" class="form-control"
-                                        placeholder="Satuan keluar" required>
+                                        placeholder="Contoh: meter, liter, dll." required>
                                     </div>
                                 </div>
                                 <div class="form-group mt-lg">
@@ -306,14 +306,16 @@
                                             <label class="col-sm-4 control-label">Satuan</label>
                                             <div class="col-sm-8">
                                                 <input type="text" name="satuan" class="form-control"
-                                                value="<?php echo $sub_jenis[$y]['satuan_ukuran'] ?>">
+                                                value="<?php echo $sub_jenis[$y]['satuan_ukuran'] ?>"
+                                                placeholder="Contoh: pcs, blek, rol, dll.">
                                             </div>
                                         </div>
                                         <div class="form-group mt-lg">
                                             <label class="col-sm-4 control-label">Satuan Keluar</label>
                                             <div class="col-sm-8">
                                                 <input type="text" name="satuan_keluar" class="form-control"
-                                                value="<?php echo $sub_jenis[$y]['satuan_keluar'] ?>">
+                                                value="<?php echo $sub_jenis[$y]['satuan_keluar'] ?>"
+                                                placeholder="Contoh: meter, liter, dll.">
                                             </div>
                                         </div>
                                         <div class="form-group mt-lg">

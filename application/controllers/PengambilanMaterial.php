@@ -7,11 +7,6 @@ class PengambilanMaterial extends CI_Controller {
         date_default_timezone_set('Asia/Jakarta');
 
     }
-
-	public function dn(){
-		$this->load->view('v_delivery_note');
-    }
-
     
     public function jadwal(){
         $this->load->view('v_jadwal_pengambilan_material');

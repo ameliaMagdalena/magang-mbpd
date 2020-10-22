@@ -44,6 +44,7 @@ class PurchaseOrderCustomer extends CI_Controller {
         $data['produk'] = $this->M_PurchaseOrderCustomer->selectDetailProduk()->result_array();
         $data['ukuran'] = $this->M_PurchaseOrderCustomer->selectUkuranProduk()->result_array();
         $data['warna'] = $this->M_PurchaseOrderCustomer->selectWarnaProduk()->result_array();
+        $data['sales_order'] = $this->M_PurchaseOrderCustomer->selectSalesOrderAktif()->result_array();
         
 		$this->load->view('v_po_customer_baru', $data);
     }

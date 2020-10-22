@@ -33,85 +33,56 @@
 
 <!-- **************************** MODAL TAMBAH DN ***************************** -->
 <!-- ************************************************************************** -->
-<div id='modaltambah' class="modal-block modal-block-primary mfp-hide">
+<div id='modaltambah' class="modal-block modal-block-lg mfp-hide">
     <section class="panel">
-		<form class="form-horizontal mb-lg" action="<?php //echo base_url()."Departemen/tambah_departemen"?>" method="post">
+		<form class="form-horizontal mb-lg" action="<?php echo base_url()."DeliveryNote/insert"?>" method="post">
 			<header class="panel-heading">
 				<h2 class="panel-title">Form Delivery Note</h2>
 			</header>
 
 			<div class="panel-body">
-				<input type="hidden" name="id_dn" class="form-control" value="DN-<?php //echo $jumlah_delivery_note + 1?>" readonly>
-				
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Nomor DN<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="text" class="form-control" value="DN-5/104/20" readonly>
+                        <input type="text" class="form-control" name="id_dn" value="DN-<?php echo $jumlah_dn+1?>" readonly>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
-					<label class="col-sm-3 control-label">Customer<span class="required">*</span></label>
+					<label class="col-sm-3 control-label">Tanggal Delivery Note<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <select class="form-control" name="customer" id="customer" required>
-                            <option value="">INOAC</option>
-                            <option value="">PT AAA</option>
-                            <option value="">dll</option>
-                        </select>
+                        <input type="date" class="form-control" name="tgl_dn">
                     </div>
                 </div>
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Supplier<span class="required">*</span></label>
 					<div class="col-sm-7">
                         <select class="form-control" name="supplier" id="supplier" required>
-                            <option value="">INOAC</option>
-                            <option value="">PT AAA</option>
-                            <option value="">dll</option>
+                            <?php for($sup=0; $sup<count($supplier); $sup++){ ?>
+                                <option value="<?= $supplier[$sup]['id_supplier'] ?>"> <?= $supplier[$sup]['nama_supplier'] ?> </option>
+                            <?php }?>
                         </select>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
-					<label class="col-sm-3 control-label">Tgl Pengiriman<span class="required">*</span></label>
+					<label class="col-sm-3 control-label">Tanggal Pengiriman<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="date" class="form-control" value="">
+                        <input type="date" class="form-control" name="tgl_pengiriman">
                     </div>
                 </div>
                 <br>
                 <table class = "table table-bordered table-striped table-hover" border="1">
                     <thead>
                         <tr>
-                            <th style="text-align:center">Nama Material</th>
-                            <th style="text-align:center">Kode Material</th>
-                            <th style="text-align:center">Jumlah</th>
-                            <th style="text-align:center">Satuan</th>
-                            <th style="text-align:center">Keterangan</th>
+                            <th style="text-align:center" class="col-sm-3">No. PO Supplier</th>
+                            <th style="text-align:center" class="col-sm-4">Material</th>
+                            <th style="text-align:center" class="col-sm-1">Jumlah</th>
+                            <th style="text-align:center" class="col-sm-1">Satuan</th>
+                            <th style="text-align:center" class="col-sm-3">Keterangan</th>
                         </tr>
                     </thead>
-                    <tbody id = "detail_print_container">
+                    <tbody id = "print_new_row">
                     </tbody>
                     <tr class = "new_row">
-                        <td>
-                            <select class="form-control" name="material" id="material" required>
-                                <option value="">Foam A</option>
-                                <option value="">Foam B</option>
-                                <option value="">Kain</option>
-                                <option value="">dll</option>
-                            </select>
-                        </td>
-                        <td>
-                            <input class="form-control" type="text" placeholder="otomatis" readonly>
-                        </td>
-                        <td>
-                            <input class="form-control" type="number" required>
-                        </td>
-                        <td>
-                            <input class="form-control" type="text" placeholder="otomatis setelah pilih
-                             nama material" readonly>
-                        </td>
-                        <td>
-                            <input class="form-control" type="text">
-                        </td>
-                    </tr>
-                    <tr>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -529,12 +500,80 @@
 ?>
 
 <script>
-function addNewRow(){
-    var counter = $(".new_row").length;
-    html = '<tr class = "new_row"><td><select class="form-control" name="material" id="material" required><option value="">Foam A</option><option value="">Foam B</option><option value="">Kain</option><option value="">dll</option></select></td><td><input class="form-control" type="text" placeholder="otomatis" readonly></td><td><input class="form-control" type="number" required></td><td><input class="form-control" type="text" placeholder="otomatis setelah pilih nama material" readonly></td><td><input class="form-control" type="text"></td></tr>';
-    $("#detail_print_container").append(html);
-    
-}
+    $('#supplier').change(function() {
+        var length = document.getElementById("print_new_row").rows.length;
+        var z;
+        for(z=0; z<length; z++){
+            document.getElementById("print_new_row").deleteRow(0);
+        }
+    });
+</script>
+
+<script>
+    function addNewRow(){
+        var counter = $(".new_row").length;
+        html =
+        '<tr class = "new_row">'+
+            '<td>'+
+                '<input type ="hidden" name = "row" value = '+counter+'>'+
+                '<select data-plugin-selectTwo class="form-control" name="po'+counter+'" id="po'+counter+'" onchange="getMaterial('+counter+')" required>'+
+                '</select>'+
+            '</td>'+
+            '<td>'+
+                '<select data-plugin-selectTwo class="form-control" name="material'+counter+'" id="material'+counter+'" onchange="getSatuan('+counter+')" required>'+
+            '</td>'+
+            '<td>'+
+                '<input class="form-control" type="number" name="jumlah'+counter+'" id="jumlah'+counter+'" min="0" onkeyup="countHargaTotal('+counter+'); totalHarga();" onclick="countHargaTotal('+counter+'); totalHarga();" required>'+
+            '</td>'+
+            '<td>'+
+                '<input class="form-control" type="text" name="satuan'+counter+'" id="satuan'+counter+'" readonly>'+
+            '</td>'+
+            '<td>'+
+                '<input class="form-control" type="text" name="keterangan'+counter+'" id="keterangan'+counter+'" readonly>'+
+            '</td>'+
+        '</tr>';
+        $("#print_new_row").append(html);
+        getPO(counter);
+    }
+</script>
+
+<script>
+    function getPO(counter){
+        var id_supplier = $("#supplier").val();
+        <?php for($a=0; $a<count($po); $a++){  ?>
+            if (id_supplier == '<?php echo $po[$a]['id_supplier'] ?>') {
+                html =
+                '<option value="<?php echo $po[$a]['id_purchase_order_supplier']?>">'+
+                    '<?php echo $po[$a]['id_purchase_order_supplier'] ?>'+
+                '</option>';
+                $("#po"+counter).append(html);
+                getMaterial(counter);
+            }
+        <?php } ?>
+    }
+</script>
+
+
+<script>
+    function getMaterial(counter){
+        var id_po_supplier = $("#po"+counter).val();
+        $.ajax({
+            url:"<?php echo base_url();?>DeliveryNote/get_material_po",
+            type:"POST",
+            dataType:"JSON",
+            data:{id_po_supplier:id_po_supplier},
+            success:function(respond){
+                <?php for($b=0; $b<count($po); $b++){  ?>
+                    html =
+                    '<option value="<?php echo $po[$b]['id_sub_jenis_material']?>">'+
+                        '<?php echo $po[$b]['kode_sub_jenis_material'] . ' - ' . $po[$b]['nama_jenis_material'] . $po[$b]['nama_sub_jenis_material']?>'+
+                    '</option>';
+                    $("#material"+counter).append(html);
+                    //$("#satuan"+countt).val(respond[0]["satuan_ukuran"]);
+                <?php } ?>
+            }
+        });
+    }
 </script>
 
 <script>

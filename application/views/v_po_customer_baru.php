@@ -63,7 +63,7 @@
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Nomor SO<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="text" name="no_so_customer" class="form-control" placeholder="format: ..." required>
+                        <input type="text" name="no_so_customer" class="form-control" value="SO-<?php echo count($sales_order)+1 ?>" readonly>
                     </div>
                 </div>
                 <br>

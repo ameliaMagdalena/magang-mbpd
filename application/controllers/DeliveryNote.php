@@ -1,13 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class PemasukanMaterial extends CI_Controller {
+class DeliveryNote extends CI_Controller {
 	function __construct(){
         parent::__construct();
         date_default_timezone_set('Asia/Jakarta');
 
         $this->load->model('M_PemasukanMaterial');
-        $this->load->model('M_Material');
+        $this->load->model('M_PurchaseOrderSupplier');
+        $this->load->model('M_Supplier');
         $this->load->model('M_DeliveryNote');
 
         if($this->session->userdata('status_login') != "login"){
@@ -16,10 +17,11 @@ class PemasukanMaterial extends CI_Controller {
     }
 
 	public function index(){
-        $data['pemasukan'] = $this->M_PemasukanMaterial->selectPemasukanMaterialAktif()->result_array();
-        $data['material'] = $this->M_Material->selectMaterialAktif()->result_array();
+        $data['jumlah_dn'] = $this->M_DeliveryNote->selectDeliveryNote()->num_rows();
+        $data['supplier'] = $this->M_Supplier->selectSupplierAktif()->result_array();
+        $data['po'] = $this->M_DeliveryNote->selectPOSupplier()->result_array();
         
-		$this->load->view('v_pemasukan_material', $data);
+		$this->load->view('v_delivery_note', $data);
     }
 
     public function baru(){

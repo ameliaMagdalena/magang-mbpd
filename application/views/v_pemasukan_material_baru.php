@@ -44,32 +44,25 @@
                 </div>
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Keterangan Masuk<span class="required">*</span></label>
-					<div class="col-sm-7">
+					<div class="col-sm-9">
                         <div class="radio">
                             <label>
                                 <input type="radio" name="keterangan" id="keterangan1" value="0" checked=""> Dari Supplier
-                                <div id="dari_supplier">
-                                    <select class="form-control delivery_note" name="delivery_note">
-                                        <option> test
-                                        </option>
-                                    </select>
-                                    
-                                    <!-- <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                        <input type="date" name="tanggal_pengantaran" min="<?php echo date("Y-m-d")?>" class="form-control pengantarya">
-                                    </div>
-                                    <span>*deskripsikan tanggal pengantaran</span>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-clock-o"></i>
-                                        </span>
-                                    <input type="time" class="form-control" name = "waktu_pengantaran" min="07:00" max="16:00"  pengantarya>
-                                    </div>
-                                    <span>*deskripsikan waktu pengantaran (jam kerja Senin-Jumat, pukul 07.00 sampai 16.00)</span> -->
-                                </div>
                             </label>
+
+                            <div id="dari_supplier" class="input-group col-sm-12">
+                                <label class="col-sm-2 control-label">No. DN<span class="required">*</span></label>
+                                <div class="col-sm-5">
+                                    <select class="form-control delivery_note" name="delivery_note">
+                                        <?php for($a=0; $a<count($dn); $a++){ ?>
+                                            <option value="<?= $dn[$a]['id_delivery_note'] ?>"> <?= $dn[$a]['id_delivery_note'] ?> </option>
+                                        <?php }?>
+                                    </select>
+                                </div>
+                                <br>
+
+                            </div>
+                                
                         </div>
                         <div class="radio">
                             <label>
@@ -96,27 +89,36 @@
                             <?php } ?>
 						</select>
                     </div>
-                </div>
-				<div class="form-group mt-lg"> -->
-                    <!-- berubah sesuai pilihan supplier
-					<label class="col-sm-3 control-label">Jenis Material<span class="required">*</span></label>
+                </div> -->
+				<div class="form-group mt-lg" id="line">
+					<label class="col-sm-3 control-label">Line<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <select class="form-control" name="jenis_material" id="jenis_material" required>
-							<option value=""></option>
+                        <select class="form-control line" name="line">
+							<option value="">aa</option>
+							<option value="">dd</option>
 						</select>
                     </div>
-                </div> -->
-                <div class="form-group mt-lg">
+                </div>
+				<div class="form-group mt-lg" id="jenis">
+					<label class="col-sm-3 control-label">Jenis Material<span class="required">*</span></label>
+					<div class="col-sm-7">
+                        <select class="form-control jenis_material" name="jenis_material">
+							<option value="">aa</option>
+							<option value="">dd</option>
+						</select>
+                    </div>
+                </div>
+                <div class="form-group mt-lg" id="jumlah">
 					<label class="col-sm-3 control-label">Jumlah Material<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="number" class="form-control" name="jumlah" id="jumlah" >
+                        <input type="number" class="form-control jumlah" name="jumlah">
                     </div>
                 </div>
                 <div class="form-group mt-lg">
                     <!-- ini required kalau radio button pilih lainlain -->
-					<label class="col-sm-3 control-label catatan">Catatan</label>
+					<label class="col-sm-3 control-label">Catatan</label>
 					<div class="col-sm-7">
-                        <input type="text" class="form-control" name="catatan" id="catatan" >
+                        <input type="text" class="form-control catatan" name="catatan" id="catatan" >
                     </div>
                 </div>
             </div>
@@ -168,40 +170,60 @@
 
 
 <script>
-$('#dari_supplier').show();
-$('#dari_produksi').hide();
+    $('#dari_supplier').show();
+    $('#jenis').hide();
+    $('#jumlah').hide();
+    $('#line').hide();
 
-$('#keterangan1').click(function() {
-    if($('#keterangan1').is(':checked')) { 
-        $('#dari_supplier').show();
-        $('#dari_produksi').hide();
-        $('.delivery_note').attr('required', true);
-        $('.permintaan_material').attr('required', false);
-    }
-});
-$('#keterangan2').click(function() {
-   if($('#keterangan2').is(':checked')) {
-        $('#dari_supplier').hide();
-        $('#dari_produksi').show();
-        $('.permintaan_material').attr('required', true);
-        $('.delivery_note').attr('required', false);
-    }
-});
-$('#keterangan3').click(function() {
-   if($('#keterangan3').is(':checked')) {
-        $('#dari_supplier').hide();
-        $('#dari_produksi').hide();
-        $('#catatan_req').show();
-        $('.permintaan_material').attr('required', false);
-        $('.delivery_note').attr('required', false);
-        $('.catatan').attr('required', true);
-    }
-});
+    $('#keterangan1').click(function() { //supplier
+        if($('#keterangan1').is(':checked')) { 
+            $('#dari_supplier').show();
+            $('#jenis').hide();
+            $('#jumlah').hide();
+            $('#line').hide();
+            $('.jenis_material').attr('required', false);
+            $('.jumlah_material').attr('required', false);
+            $('.line').attr('required', false);
+            $('.delivery_note').attr('required', true);
+            $('.permintaan_material').attr('required', false);
+            $('.catatan').attr('required', false);
+        }
+    });
+
+    $('#keterangan2').click(function() { //produksi
+    if($('#keterangan2').is(':checked')) {
+            $('#dari_supplier').hide();
+            $('#jenis').show();
+            $('#jumlah').show();
+            $('#line').show();
+            $('.jenis_material').attr('required', true);
+            $('.jumlah_material').attr('required', true);
+            $('.line').attr('required', true);
+            $('.permintaan_material').attr('required', true);
+            $('.delivery_note').attr('required', false);
+            $('.catatan').attr('required', false);
+        }
+    });
+    
+    $('#keterangan3').click(function() { //lainlain
+    if($('#keterangan3').is(':checked')) {
+            $('#dari_supplier').hide();
+            $('#jenis').show();
+            $('#jumlah').show();
+            $('#line').hide();
+            $('.jenis_material').attr('required', true);
+            $('.jumlah_material').attr('required', true);
+            $('.line').attr('required', false);
+            $('.permintaan_material').attr('required', false);
+            $('.delivery_note').attr('required', false);
+            $('.catatan').attr('required', true);
+        }
+    });
 </script>
 
 <script>
     function reload() {
-    location.reload();
+        location.reload();
     }
 </script>
     
