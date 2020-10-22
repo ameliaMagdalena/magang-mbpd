@@ -2062,8 +2062,6 @@ class PerencanaanProduksi extends CI_Controller {
                                         $jumlah_konsumsi = $det_permat[$t]['jumlah_konsumsi'];
                                         $id_det_permat   = $det_permat[$t]['id_detail_permintaan_material'];
 
-                                        $needs = $jumlah_minta_baru * $jumlah_konsumsi;
-
                                         $data_det_permat = array(
                                             'status_delete' => 1
                                         );
@@ -2438,7 +2436,7 @@ class PerencanaanProduksi extends CI_Controller {
                                     $jumlah_konsumsi = $det_permat[$t]['jumlah_konsumsi'];
                                     $id_det_permat   = $det_permat[$t]['id_detail_permintaan_material'];
 
-                                    $needs = $jumlah_minta_baru * $jumlah_konsumsi;
+                                    //$needs = $jumlah_minta_baru * $jumlah_konsumsi;
 
                                     $data_det_permat = array(
                                         'status_delete' => 1,

@@ -78,7 +78,7 @@
                                     <center>
                                         <!-- persentase prt(presentase yg ditampilkan) & prs(presentase yg disimpan) -->
                                         <span id="prt<?= $ln->id_line?>day<?=$j?>"></span>
-                                        <input type="text" class="row_efisiensi" id="prs<?= $ln->id_line?>day<?=$j?>" readonly>
+                                        <input type="hidden" class="row_efisiensi" id="prs<?= $ln->id_line?>day<?=$j?>" readonly>
                                         <!-- total waktu -->
                                         <input type="hidden" class="row_efisiensi" id="tw<?= $ln->id_line?>day<?=$j?>" readonly>
                                     </center>
@@ -96,7 +96,7 @@
 
 <!-- BG 3 PERENCANAAN AWAL-->
         <section class="panel">
-            <div class="panel-body" style="height: 300px;overflow: scroll;margin-left:-25px;margin-right:-25px">
+            <div class="panel-body" style="height: 345px;overflow: scroll;margin-left:-25px;margin-right:-25px">
                 <!-- BAGIAN II : PRODUK & BAGIAN III : PERENCANAAN PRODUKSI -->
                 <input id="start_date" type="hidden" value="<?= $start_date;?>">
                 <input type="hidden" id="jumlah_div_ada_isi">

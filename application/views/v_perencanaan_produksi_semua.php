@@ -225,6 +225,7 @@
     }
 </script>
 
+<!-- modal detail -->
 <script>
     $('.bdetail_klik').click(function(){
         var no = $(this).attr('value');
@@ -279,7 +280,7 @@
                                         $status = "Overtime";
                                     }
 
-                                    ef[$l] = ef[$l] + '<td><center>'+respond['produksi_line'][$r]['efisiensi_perencanaan']+'</center></td>';
+                                    ef[$l] = ef[$l] + '<td><center>'+respond['produksi_line'][$r]['efisiensi_perencanaan']+' % </center></td>';
                                     tw[$l] = tw[$l] + '<td><center>'+respond['produksi_line'][$r]['total_waktu_perencanaan']+'</center></td>';
                                     sts[$l] = sts[$l] + '<td><center>'+$status+'</center></td>';
                                 }
@@ -291,7 +292,7 @@
                                 isi[$l] = isi[$l]+
                                 '<tr>'+
                                     '<td>Efisiensi Perencanaan</td>'+
-                                    ef[$l]+
+                                    ef[$l]+ 
                                 '</tr>';
                             }
                             else if($j==2){

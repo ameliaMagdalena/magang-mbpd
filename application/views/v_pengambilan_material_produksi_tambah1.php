@@ -31,7 +31,7 @@
 
         <div class="panel-body">
             <div class="form-group mt-lg">
-                <label class="col-sm-3 control-label">Tanggal Permintaan Material<span class="required">*</span></label>
+                <label class="col-sm-3 control-label">Tanggal Produksi<span class="required">*</span></label>
                     <div class="col-sm-9">
                         <input class="form-control col-md-5" type="date" id="tanggal" name="tanggal"
                         min="<?php echo $min_date;?>" required> 

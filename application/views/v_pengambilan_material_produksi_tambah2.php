@@ -30,7 +30,7 @@
 
         <div class="panel-body">
             <div class="form-group mt-lg">
-                <label class="col-sm-3 control-label">Tanggal Permintaan Material</label>
+                <label class="col-sm-3 control-label">Tanggal Produksi</label>
                     <div class="col-sm-9">
                         <input class="form-control col-md-5" type="text" id="tanggal_mulai" name="tanggal_mulai"
                         value="<?= $min_date; ?>" disabled> 

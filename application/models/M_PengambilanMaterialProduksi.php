@@ -14,7 +14,7 @@ class M_PengambilanMaterialProduksi extends CI_Model {
         AND permintaan_material.id_detail_purchase_order_customer=detail_purchase_order_customer.id_detail_purchase_order_customer 
         AND purchase_order_customer.id_purchase_order_customer=detail_purchase_order_customer.id_purchase_order_customer 
         AND detail_purchase_order_customer.id_detail_produk=detail_produk.id_detail_produk AND produk.id_produk=detail_produk.id_produk
-        AND permintaan_material.id_line=line.id_line ");
+        AND permintaan_material.id_line=line.id_line AND permintaan_material.status_delete='0' ");
     }
 
     function get_one_permat($id){

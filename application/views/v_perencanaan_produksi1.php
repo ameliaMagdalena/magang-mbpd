@@ -33,15 +33,12 @@
             <div class="form-group mt-lg">
                 <label class="col-sm-3 control-label">Tanggal Mulai<span class="required">*</span></label>
                 <div class="col-sm-9">
-                <!--
                     <input class="form-control col-md-5" type="date" id="tanggal_mulai" name="tanggal_mulai"
-                    min="<?php echo $min_date;?>" step="7" onchange="tanggal_mulai_change()" required> 
-                -->
-            
-                <input class="form-control col-md-5" type="date" id="tanggal_mulai" name="tanggal_mulai"
-                onchange="tanggal_mulai_change()" required> 
-                
-                    
+                    onchange="tanggal_mulai_change()" required> 
+                    <!--
+                    <input class="form-control col-md-5" type="date" id="tanggal_mulai" name="tanggal_mulai"
+                    onchange="tanggal_mulai_change()" required> 
+                    -->
                 </div>
             </div>
             <div class="form-group mt-lg">

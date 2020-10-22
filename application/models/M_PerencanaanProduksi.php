@@ -52,7 +52,7 @@ class M_PerencanaanProduksi extends CI_Model {
     function cari_id_prodline($idline,$tanggal){
         return $this->db->query("SELECT produksi_line.id_produksi_line FROM produksi,produksi_line WHERE
         produksi.tanggal ='$tanggal' AND produksi_line.id_line='$idline' AND 
-        produksi.id_produksi=produksi_line.id_produksi ");
+        produksi.id_produksi=produksi_line.id_produksi AND produksi.status_delete='0' ");
     }
 
     function get_last_detprodline_id($id_code){
@@ -165,7 +165,7 @@ class M_PerencanaanProduksi extends CI_Model {
         detail_produksi_line.status_perencanaan='0' AND  produksi.id_produksi = produksi_line.id_produksi AND produksi_line.id_produksi_line = detail_produksi_line.id_produksi_line 
         AND detail_produksi_line.id_detail_purchase_order=detail_purchase_order_customer.id_detail_purchase_order_customer AND 
         detail_purchase_order_customer.id_detail_produk = detail_produk.id_detail_produk AND detail_produk.id_produk=produk.id_produk
-        AND detail_produksi_line.status_delete='0'  AND produksi.status_delete='0'");
+        AND detail_produksi_line.status_delete='0' ");
     }
 
     function get_dpl_terisi_total($start){
