@@ -119,10 +119,6 @@
                                     value="<?= $no;?>" title="Detail"></button>
                                 <button type="button" class="badd_klik col-lg-3 btn btn-success fa fa-plus-square-o" 
                                     value="<?= $no;?>" title="Buat Pengambilan Material"></button>
-                                <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                    title="Detail" href="#modaldetailnya"></a>
-                                <button type="button" class="modal-with-form col-lg-3 btn btn-success fa fa-plus-square-o" style="color:white"
-                                        title="Add"  href="#modaltambahnya"></button>
                             </td>
                         </tr>
                     <?php $no++; } ?>
@@ -209,6 +205,7 @@
                             <label class="col-sm-5 control-label">Nomor Permintaan Material</label>
                             <div class="col-sm-7">
                                 <input type="text" class="form-control" id="no_permat_add" readonly>
+                                <input type="hidden" class="form-control" id="status_pengambilan" name="status_pengambilan" readonly>
                             </div>
                         </div>
                         <div class="form-group mt-lg">
@@ -226,13 +223,13 @@
                         <div class="form-group mt-lg">
                             <label class="col-sm-5 control-label">Tanggal Permintaan</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" id="tanggal_permintaan_add" readonly>
+                                <input type="text" class="form-control" id="tanggal_permintaan_add" name="tanggal_permintaan_add" readonly>
                             </div>
                         </div>
                         <div class="form-group mt-lg">
                             <label class="col-sm-5 control-label">Tanggal Produksi</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" id="tanggal_produksi_add" readonly>
+                                <input type="text" class="form-control" id="tanggal_produksi_add" name="tanggal_produksi_add" readonly>
                             </div>
                         </div>
                         <div class="form-group mt-lg">
@@ -241,324 +238,29 @@
                                 <input type="text" class="form-control" id="jumlah_minta_add" readonly>
                             </div>
                         </div>
+                        <?php if($_SESSION['nama_jabatan'] == "PIC Line Sewing"){?>
+                            <div class="form-group mt-lg">
+                                <label class="col-sm-5 control-label">Keterangan Pengambilan</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control" id="keterangan_pengambilan" onchange="ganti_keterangan_pengambilan()">
+                                        <option value=" ">Keterangan Pengambilan</option>
+                                        <option value="0">Pengambilan Material Untuk Cutting Kain</option>
+                                        <option value="1">Lainnya</option>
+                                    </select>
+                                </div>
+                            </div>
+                        <?php } ?>
                         <br>
                         
-                        <div id="table_add">
-                        
-                        </div>
+                        <div id="table_add"></div>
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" id="tambah" class="btn btn-primary" value="Simpan">
+                        <input type="submit" id="tambah" class="btn btn-primary" value="Simpan" disabled>
                         <input type="button" class="btn btn-default modal-dismiss" value="Batal" onclick="reload()">
                     </div>
                 </div>
             </form>
         </div>
-    </div>
-
-    <div id='modaltambahnya' class="modal-block modal-block-primary mfp-hide">
-		<section class="panel">
-            <header class="panel-heading">
-                <h2 class="panel-title">Tambah Permintaan Material</h2>
-            </header>
-
-            <form method="POST" action="<?= base_url()?>permintaanMaterialProduksi/semua_permintaan_material">
-                <div class="panel-body">
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Kode Produk</label>
-                    <div class="col-sm-7">
-                            <input type="text" name="nama" class="form-control"
-                            value="0100101" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Nama Produk</label>
-                        <div class="col-sm-7">
-                            <input type="text" name="nama" class="form-control"
-                            value="Bantal Datron Ligna" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Jumlah Produk</label>
-                        <div class="col-sm-7">
-                            <input type="text" name="nama" class="form-control"
-                            value="50 pcs" readonly>
-                        </div>
-                    </div>
-
-                    <br>
-                    <h4>Konsumsi Material</h4>
-                    <table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">
-                        <thead>
-                            <tr>
-                                <th  style="text-align: center;vertical-align: middle;">No</th>
-                                <th  style="text-align: center;vertical-align: middle;">Nama Material</th>
-                                <th  style="text-align: center;vertical-align: middle;">Jumlah Konsumsi /Produk</th>
-                                <th  style="text-align: center;vertical-align: middle;">Total Konsumsi</th>
-                                <th  style="text-align: center;vertical-align: middle;">WIP Line</th>
-                                <th  style="text-align: center;vertical-align: middle;">Jumlah Material Diminta</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="text-align: center;vertical-align: middle;">1</td>
-                                <td style="text-align: center;vertical-align: middle;">Kain Polos</td>
-                                <td style="text-align: center;vertical-align: middle;">10 pcs</td>
-                                <td style="text-align: center;vertical-align: middle;">500 pcs</td>
-                                <td style="text-align: center;vertical-align: middle;">10 pcs</td>
-                                <td style="text-align: center;vertical-align: middle;">
-                                    <input type="number" name="nama" class="form-control" required>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center;vertical-align: middle;">2</td>
-                                <td style="text-align: center;vertical-align: middle;">Karton Protector</td>
-                                <td style="text-align: center;vertical-align: middle;">4 pcs</td>
-                                <td style="text-align: center;vertical-align: middle;">200 pcs</td>
-                                <td style="text-align: center;vertical-align: middle;">20 pcs</td>
-                                <td style="text-align: center;vertical-align: middle;">
-                                    <input type="number" name="nama" class="form-control" required>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center;vertical-align: middle;">3</td>
-                                <td style="text-align: center;vertical-align: middle;">Benang Putih</td>
-                                <td style="text-align: center;vertical-align: middle;">1 pcs</td>
-                                <td style="text-align: center;vertical-align: middle;">50 pcs</td>
-                                <td style="text-align: center;vertical-align: middle;">10 pcs</td>
-                                <td style="text-align: center;vertical-align: middle;">
-                                    <input type="number" name="nama" class="form-control" required>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center;vertical-align: middle;">4</td>
-                                <td style="text-align: center;vertical-align: middle;">Plastik Pembungkus</td>
-                                <td style="text-align: center;vertical-align: middle;">1 pcs</td>
-                                <td style="text-align: center;vertical-align: middle;">50 pcs</td>
-                                <td style="text-align: center;vertical-align: middle;">30 pcs</td>
-                                <td style="text-align: center;vertical-align: middle;">
-                                    <input type="number" name="nama" class="form-control" required>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <br>
-                </div>
-
-                <footer class="panel-footer">
-                    <div class="row">
-                        <div class="col-md-12 text-right">
-                            <input type="submit" id="tambah" class="btn btn-primary" value="Save">
-                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Cancel</button>
-                        </div>
-                    </div>
-                </footer>
-            </form>
-		</section>
-
-        <!-- tampung id produk yang dipilih
-        <input type="text" id="tampung_id_produk" name="tampung_id_produk">  -->
-        <!-- tampung jumlah id produk yang dipilih -->
-        <input type="hidden" id="tampung_jumlah_id_produk"> 
-    </div>
-    
-    <div id='modaldetailnya' class="modal-block modal-block-primary mfp-hide">
-		<section class="panel">
-            <header class="panel-heading">
-                <h2 class="panel-title">Detail Konsumsi Material & Permintaan Material</h2>
-            </header>
-
-            <div class="panel-body">
-                <div class="form-group mt-lg">
-                    <label class="col-sm-5 control-label">Kode Produk</label>
-                <div class="col-sm-7">
-                        <input type="text" name="nama" class="form-control"
-                        value="0100101" readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-5 control-label">Nama Produk</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="nama" class="form-control"
-                        value="Bantal Datron Ligna" readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-5 control-label">Jumlah Produk</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="nama" class="form-control"
-                        value="50 pcs" readonly>
-                    </div>
-                </div>
-
-                <br>
-                <h4>Konsumsi Material</h4>
-                <table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">
-                    <thead>
-                        <tr>
-                            <th  style="text-align: center;vertical-align: middle;">No</th>
-                            <th  style="text-align: center;vertical-align: middle;">Nama Material</th>
-                            <th  style="text-align: center;vertical-align: middle;">Jumlah Konsumsi Per Produk</th>
-                            <th  style="text-align: center;vertical-align: middle;">Total Konsumsi Material</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="text-align: center;vertical-align: middle;">1</td>
-                            <td style="text-align: center;vertical-align: middle;">Kain Polos</td>
-                            <td style="text-align: center;vertical-align: middle;">10 pcs</td>
-                            <td style="text-align: center;vertical-align: middle;">500 pcs</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;vertical-align: middle;">2</td>
-                            <td style="text-align: center;vertical-align: middle;">Karton Protector</td>
-                            <td style="text-align: center;vertical-align: middle;">4 pcs</td>
-                            <td style="text-align: center;vertical-align: middle;">200 pcs</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;vertical-align: middle;">3</td>
-                            <td style="text-align: center;vertical-align: middle;">Benang Putih</td>
-                            <td style="text-align: center;vertical-align: middle;">1 pcs</td>
-                            <td style="text-align: center;vertical-align: middle;">50 pcs</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;vertical-align: middle;">4</td>
-                            <td style="text-align: center;vertical-align: middle;">Plastik Pembungkus</td>
-                            <td style="text-align: center;vertical-align: middle;">1 pcs</td>
-                            <td style="text-align: center;vertical-align: middle;">50 pcs</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-
-                <h4>Permintaan Material</h4>
-                <div class="col-md-12">
-                    <div class="toggle" data-plugin-toggle>
-                        <section class="toggle">
-                            <label>Permintaan 1 </label>
-                            <div class="toggle-content">
-                                <div>
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-5 control-label">Tanggal & Waktu Permintaan</label>
-                                        <div class="col-sm-7">
-                                            <input type="text" class="form-control"
-                                            value="Selasa, 07-07-2020 | 12:00" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-5 control-label">Keterangan</label>
-                                        <div class="col-sm-7">
-                                            <input type="text" class="form-control"
-                                            value="Sudah Diambil" readonly>
-                                        </div>
-                                    </div>
-                                    <br>
-
-                                    <table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">
-                                        <thead>
-                                            <tr>
-                                                <th  style="text-align: center;vertical-align: middle;">No</th>
-                                                <th  style="text-align: center;vertical-align: middle;">Nama Material</th>
-                                                <th  style="text-align: center;vertical-align: middle;">Jumlah Material</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td style="text-align: center;vertical-align: middle;">1</td>
-                                                <td style="text-align: center;vertical-align: middle;">Kain Polos</td>
-                                                <td style="text-align: center;vertical-align: middle;">500 pcs</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align: center;vertical-align: middle;">2</td>
-                                                <td style="text-align: center;vertical-align: middle;">Karton Protector</td>
-                                                <td style="text-align: center;vertical-align: middle;">200 pcs</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align: center;vertical-align: middle;">3</td>
-                                                <td style="text-align: center;vertical-align: middle;">Benang Putih</td>
-                                                <td style="text-align: center;vertical-align: middle;">50 pcs</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align: center;vertical-align: middle;">4</td>
-                                                <td style="text-align: center;vertical-align: middle;">Plastik Pembungkus</td>
-                                                <td style="text-align: center;vertical-align: middle;">50 pcs</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-
-
-                                </div>
-                            </div>
-                        </section>
-                        <br>
-                        <section class="toggle">
-                            <label>Permintaan 2</label>
-                            <div class="toggle-content">
-                                <div>
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-5 control-label">Tanggal & Waktu Permintaan</label>
-                                        <div class="col-sm-7">
-                                            <input type="text" class="form-control"
-                                            value="Selasa, 07-07-2020 | 15:00" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-5 control-label">Keterangan</label>
-                                        <div class="col-sm-7">
-                                            <input type="text" class="form-control"
-                                            value="Sudah Diambil" readonly>
-                                        </div>
-                                    </div>
-                                    <br>
-
-                                    <table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">
-                                        <thead>
-                                            <tr>
-                                                <th  style="text-align: center;vertical-align: middle;">No</th>
-                                                <th  style="text-align: center;vertical-align: middle;">Nama Material</th>
-                                                <th  style="text-align: center;vertical-align: middle;">Jumlah Material</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td style="text-align: center;vertical-align: middle;">1</td>
-                                                <td style="text-align: center;vertical-align: middle;">Kain Polos</td>
-                                                <td style="text-align: center;vertical-align: middle;">50 pcs</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align: center;vertical-align: middle;">2</td>
-                                                <td style="text-align: center;vertical-align: middle;">Karton Protector</td>
-                                                <td style="text-align: center;vertical-align: middle;">20 pcs</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align: center;vertical-align: middle;">3</td>
-                                                <td style="text-align: center;vertical-align: middle;">Benang Putih</td>
-                                                <td style="text-align: center;vertical-align: middle;">5 pcs</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align: center;vertical-align: middle;">4</td>
-                                                <td style="text-align: center;vertical-align: middle;">Plastik Pembungkus</td>
-                                                <td style="text-align: center;vertical-align: middle;">5 pcs</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-
-
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </div>
-
-			<footer class="panel-footer">
-				<div class="row">
-					<div class="col-md-12 text-right">
-						<button type="button" class="btn btn-default modal-dismiss">OK</button>
-					</div>
-				</div>
-			</footer>
-		</section>
     </div>
                     
 <!--*****************************-->
@@ -596,6 +298,23 @@
 
                 $isi = "";
                 for($i=0;$i<respond['jm_detpermat'];$i++){
+                    //telah diambil
+                    $cari = 0;
+                    $jumlah_sebelum = 0;
+                    for($o=0;$o<respond['jm_pengmat'];$o++){
+                        if(respond['pengmat'][$o]['id_detail_permintaan_material'] == respond['detpermat'][$i]['id_detail_permintaan_material']){
+                            $jumlah_sebelum = respond['pengmat'][$o]['jumlah_keluar'];
+                            $cari++;
+                        }
+
+                        if($cari > 0){
+                            $jumlah_sebelum = $jumlah_sebelum;
+                        }
+                        else{
+                            $jumlah_sebelum = 0;
+                        }
+                    }
+
                     $isi = $isi +
                     '<tr>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
@@ -611,7 +330,7 @@
                             respond['detpermat'][$i]['needs']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            
+                            $jumlah_sebelum+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['detpermat'][$i]['satuan_ukuran']+
@@ -675,14 +394,57 @@
                 $("#tanggal_produksi_add").val(respond['permat'][0]['tanggal_produksi']);
                 $("#jumlah_minta_add").val(respond['permat'][0]['jumlah_minta']);
 
+                if(respond['permat'][0]['nama_line'] == "Line Cutting" || respond['permat'][0]['nama_line'] == "Line Bonding" || respond['permat'][0]['nama_line'] == "Line Assy"){
+                    $("#status_pengambilan").val(1);
+                }
+                else{
+                    $("#status_pengambilan").val($("#keterangan_pengambilan").val());
+                }
+
                 $isi = "";
                 for($i=0;$i<respond['jm_detpermat'];$i++){
+                    //telah diambil
+                    $cari = 0;
+                    $jumlah_sebelum = 0;
+                    for($o=0;$o<respond['jm_pengmat'];$o++){
+                        if(respond['pengmat'][$o]['id_detail_permintaan_material'] == respond['detpermat'][$i]['id_detail_permintaan_material']){
+                            $jumlah_sebelum = respond['pengmat'][$o]['jumlah_keluar'];
+                            $cari++;
+                        }
+
+                        if($cari > 0){
+                            $jumlah_sebelum = $jumlah_sebelum;
+                        }
+                        else{
+                            $jumlah_sebelum = 0;
+                        }
+                    }
+
+                    //wip
+                    $cari_wip = 0;
+                    $wip = 0;
+                    for($p=0;$p<respond['jm_wip'];$p++){
+                        if(respond['wip'][$p]['id_sub_jenis_material']  == respond['detpermat'][$i]['id_sub_jenis_material']){
+                            $wip = respond['wip'][$p]['total_material'];
+                            $cari_wip++;
+                        }
+
+                        if($cari_wip > 0){
+                            $wip = $wip;
+                        }
+                        else{
+                            $wip = 0;
+                        }
+                    }
+
                     $isi = $isi +
                     '<tr>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             ($i+1)+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
+                            '<input type="hidden" name="id_det_permat'+$i+'" value="'+respond['detpermat'][$i]['id_detail_permintaan_material']+'">'+
+                            '<input type="hidden" name="id_sub_jenmat'+$i+'" value="'+respond['detpermat'][$i]['id_sub_jenis_material']+'">'+
                             respond['detpermat'][$i]['nama_sub_jenis_material']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
@@ -692,13 +454,14 @@
                             respond['detpermat'][$i]['needs']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            
+                            $jumlah_sebelum+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            
+                            '<input type="hidden" name="wip'+$i+'" value="'+$wip+'">'+
+                            $wip+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                        
+                            '<center><input type="number" min="0" class="form-control" name="ambil'+$i+'" id="ambil'+$i+'" oninput="cek()"></center>'+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['detpermat'][$i]['satuan_ukuran']+
@@ -739,13 +502,48 @@
                             '<tbody>'+
                                $isi+
                             '</tbody>'+
-                '</table>';
+                '</table>'+
+                '<input type="hidden" name="jumlah_detpermat" id="jumlah_detpermat" value="'+respond['jm_detpermat']+'">';
 
                 $("#table_add").html($table);
                 $("#modaltambah").modal();
             }
         });  
     });
+</script>
+
+<!-- keterangan pengambilan -->
+<script>
+    function ganti_keterangan_pengambilan(){
+        $("#status_pengambilan").val($("#keterangan_pengambilan").val());
+
+        if($("#status_pengambilan").val() == " "){
+            $("#tambah").prop('disabled',true);
+        } else{
+            cek();
+        }
+    }
+</script>
+
+<!-- cek -->
+<script>
+    function cek(){
+        $jumlah_detpermat = $("#jumlah_detpermat").val();
+
+        $terisi = 0;
+        for($i=0;$i<$jumlah_detpermat;$i++){
+            if($("#ambil"+$i).val() > 0){
+                $terisi++;
+            }
+        }
+
+        if($terisi > 0 && $("#status_pengambilan").val() != " "){
+            $("#tambah").prop('disabled',false);
+        }
+        else{
+            $("#tambah").prop('disabled',true);
+        }
+    }
 </script>
 
 

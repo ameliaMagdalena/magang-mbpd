@@ -404,7 +404,7 @@ class HasilProduksi extends CI_Controller {
           $id_prodtun_last     = $this->M_HasilProduksi->get_last_prodtun_id($idcode_detprod_line)->result_array();
           $id_prodtun_last_cek = $this->M_HasilProduksi->get_last_prodtun_id($idcode_detprod_line)->num_rows();
 
-          if($id_prodtun_last_cek == 1){
+            if($id_prodtun_last_cek == 1){
               $id_terakhirnya    = $id_prodtun_last[0]['id_produksi_tertunda'];
 
               $tahun_sebelumnya  = substr($id_terakhirnya,7,2);
@@ -565,9 +565,9 @@ class HasilProduksi extends CI_Controller {
       'id_produksi'   => $id
     );
 
-    $this->M_HasilProduksi->edit('produksi',$data,$where);
+    //$this->M_HasilProduksi->edit('produksi',$data,$where);
 
-    redirect('hasilProduksi/selesai_hasil_produksi');
+    //redirect('hasilProduksi/selesai_hasil_produksi');
   }
 
   public function print(){

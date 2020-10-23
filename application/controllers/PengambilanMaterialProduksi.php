@@ -40,24 +40,222 @@ class PengambilanMaterialProduksi extends CI_Controller {
       }
     }
 
+    public function buat_pengambilan_material(){
+      $data['min_date'] = $this->input->post('tanggal');
+      $nmline = "Line Sewing";
+      
+      $data['permat']        = $this->M_PengambilanMaterialProduksi->get_one_permat_by_line($nmline,$data['min_date'])->result();
+      $data['warna']         = $this->M_Warna->select_all_aktif()->result();
+      $data['ukuran']        = $this->M_UkuranProduk->select_all_aktif()->result();
+
+      $this->load->view('v_pengambilan_material_produksi_tambah2',$data);
+    }
+
     public function detail_permintaan(){
       $id = $this->input->post('id');
 
       $data['permat']       = $this->M_PengambilanMaterialProduksi->get_one_permat($id)->result_array();
       $data['detpermat']    = $this->M_PengambilanMaterialProduksi->get_one_detpermat($id)->result_array();
       $data['jm_detpermat'] = $this->M_PengambilanMaterialProduksi->get_one_detpermat($id)->num_rows();
+      $data['pengmat']      = $this->M_PengambilanMaterialProduksi->get_pengmat_sebelum()->result_array();
+      $data['jm_pengmat']   = $this->M_PengambilanMaterialProduksi->get_pengmat_sebelum()->num_rows();
+      $data['wip']          = $this->M_PengambilanMaterialProduksi->get_wip()->result_array();
+      $data['jm_wip']       = $this->M_PengambilanMaterialProduksi->get_wip()->num_rows();
+
 
       echo json_encode($data);
     }
 
     public function tambah_permintaan_pengambilan(){
+      $jumlah             = $this->input->post("jumlah_detpermat");
+      $tanggal_produksi   = $this->input->post('tanggal_produksi_add');
+      $status_pengambilan = $this->input->post("status_pengambilan");
+
+      $user = $_SESSION['id_user'];
+      $now  = date('Y-m-d');
+
+      for($i=0;$i<$jumlah;$i++){
+        $id_detail_permat = $this->input->post("id_det_permat".$i);
+        $id_sub_jenmat    = $this->input->post("id_sub_jenmat".$i);
+        $wip              = $this->input->post("wip".$i);
+        $akan_diambil     = $this->input->post("ambil".$i);
+        
+          if($akan_diambil > 0){
+            $tahun_sekarangnya = substr(date('Y',strtotime($now)),2,2);
+            $bulan_sekarangnya = date('m',strtotime($now));
+
+            $idcode_lumat = "LUMAT".$tahun_sekarangnya.$bulan_sekarangnya.".";
+
+            $id_lumat_last     = $this->M_PengambilanMaterialProduksi->get_last_lumat_id($idcode_lumat)->result_array();
+            $id_lumat_last_cek = $this->M_PengambilanMaterialProduksi->get_last_lumat_id($idcode_lumat)->num_rows();
+
+            if($id_lumat_last_cek == 1){
+                $id_terakhirnya    = $id_lumat_last[0]['id_pengeluaran_material'];
+
+                $tahun_sebelumnya  = substr($id_terakhirnya,5,2);
+                $bulan_sebelumnya  = substr($id_terakhirnya,7,2);
+                        
+                //kalau tahun sama
+                if($tahun_sebelumnya == $tahun_sekarangnya){
+                    //kalau tahun & bulannya sama berarti count+1
+                    if($bulan_sebelumnya == $bulan_sekarangnya){
+                        $countnya = intval(substr($id_terakhirnya,10,5)) + 1;
+                        $pjgnya   = strlen($countnya);
+            
+                        if($pjgnya == 1){
+                            $countnya_baru = "0000".$countnya;
+                        }
+                        else if($pjgnya == 2){
+                            $countnya_baru = "000".$countnya;
+                        }
+                        else if($pjgnya == 3){
+                            $countnya_baru = "00".$countnya;
+                        }
+                        else if($pjgnya == 4){
+                            $countnya_baru = "0".$countnya;
+                        }
+                        else{
+                            $countnya_baru = $countnya;
+                        }
+                        
+                        //id yang baru
+                        $id_lumat_baru = "LUMAT".$tahun_sebelumnya.$bulan_sebelumnya.".".$countnya_baru;
+                    }
+                    //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                    else{
+                        //id yang baru
+                        $id_lumat_baru = "LUMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
+                    }
+                }
+                //kalau tahun tidak sama
+                else{
+                    //id yang baru
+                    $id_lumat_baru = "LUMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
+                }
+            }
+            else{
+                //id yang baru
+                $id_lumat_baru = "LUMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
+            }
+
+            $idcode_ammat = "AMMAT".$tahun_sekarangnya.$bulan_sekarangnya.".";
+
+            $id_ammat_last     = $this->M_PengambilanMaterialProduksi->get_last_ammat_id($idcode_ammat)->result_array();
+            $id_ammat_last_cek = $this->M_PengambilanMaterialProduksi->get_last_ammat_id($idcode_ammat)->num_rows();
+
+            if($id_ammat_last_cek == 1){
+                $id_terakhirnya    = $id_ammat_last[0]['id_pengambilan_material'];
+
+                $tahun_sebelumnya  = substr($id_terakhirnya,5,2);
+                $bulan_sebelumnya  = substr($id_terakhirnya,7,2);
+                        
+                //kalau tahun sama
+                if($tahun_sebelumnya == $tahun_sekarangnya){
+                    //kalau tahun & bulannya sama berarti count+1
+                    if($bulan_sebelumnya == $bulan_sekarangnya){
+                        $countnya = intval(substr($id_terakhirnya,10,5)) + 1;
+                        $pjgnya   = strlen($countnya);
+            
+                        if($pjgnya == 1){
+                            $countnya_baru = "0000".$countnya;
+                        }
+                        else if($pjgnya == 2){
+                            $countnya_baru = "000".$countnya;
+                        }
+                        else if($pjgnya == 3){
+                            $countnya_baru = "00".$countnya;
+                        }
+                        else if($pjgnya == 4){
+                            $countnya_baru = "0".$countnya;
+                        }
+                        else{
+                            $countnya_baru = $countnya;
+                        }
+                        
+                        //id yang baru
+                        $id_ammat_baru = "AMMAT".$tahun_sebelumnya.$bulan_sebelumnya.".".$countnya_baru;
+                    }
+                    //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                    else{
+                        //id yang baru
+                        $id_ammat_baru = "AMMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
+                    }
+                }
+                //kalau tahun tidak sama
+                else{
+                    //id yang baru
+                    $id_ammat_baru = "AMMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
+                }
+            }
+            else{
+                //id yang baru
+                $id_ammat_baru = "AMMAT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
+            }
+
+            if($wip == 0){
+              $data_pengeluaran_material = array(
+                'id_pengeluaran_material' => $id_lumat_baru,
+                'id_sub_jenis_material'   => $id_sub_jenmat,
+                'tanggal_keluar'          => $now,
+                'jumlah_keluar'           => $akan_diambil,
+                'keterangan_keluar'       => 0,
+                'user_add'                => $user,
+                'waktu_add'               => $now,
+                'status_delete'           => 0
+              );
+
+              $this->M_PengambilanMaterialProduksi->insert('pengeluaran_material',$data_pengeluaran_material);
+
+              $data_pengambilan_material = array(
+                'id_pengambilan_material'       => $id_ammat_baru,
+                'id_karyawan'                   => $user,
+                'id_detail_permintaan_material' => $id_detail_permat,
+                'id_pengeluaran_material'       => $id_lumat_baru,
+                'status_pengambilan'            => $status_pengambilan,
+                'user_add'                      => $user,
+                'waktu_add'                     => $now,
+                'status_delete'                 => 0
+              );
+
+              $this->M_PengambilanMaterialProduksi->insert('pengambilan_material',$data_pengambilan_material);
+            } else{
+              //potong wip dulu
+              //input
+            }
+          }
+
+
+        /*
+          $data_pengeluaran_material = array(
+            'id_pengeluaran_material' => 
+            'id_sub_jenis_material'   => $id_sub_jenmat,
+            'tanggal_keluar'          => $tanggal_permintaan,
+            'jumlah_keluar'           => $akan_diambil,
+            'keterangan_keluar'       => 0,
+            'user_add'                => $user,
+            'waktu_add'               => $now,
+            'status_delete'           => 0
+          );
+
+          $this->M_PengambilanMaterialProduksi->insert('pengeluaran_material',$data_pengeluaran_material);
+
+          $data_pengambilan_material = array(
+            'id_permintaan_material'        =>
+            'id_karyawan'                   => $user,
+            'id_detail_permintaan_material' => $id_detail_permat
+            'id_pengeluaran_material'       => 
+            'status_pengambilan'            =>
+            'user_add'                      => $user,
+            'waktu_add'                     => $now,
+            'status_delete'                 => 0
+          );
+
+          $this->M_PengambilanMaterialProduksi->insert('pengambilan_material',$data_pengambilan_material);
+        */
+      }
       
     }
 
-    public function buat_pengambilan_material(){
-      $data['min_date'] = $this->input->post('tanggal');
-      $this->load->view('v_pengambilan_material_produksi_tambah2',$data);
-    }
 
     public function coba_tambah(){
       $this->load->view('v_pengambilan_material_produksi_tambah1');

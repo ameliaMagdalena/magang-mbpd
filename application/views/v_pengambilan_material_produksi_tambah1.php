@@ -23,7 +23,7 @@
     </header>
 <!--*****************************-->
 <!--KODINGAN ISI HALAMAN-->
-<form method="POST" action="<?= base_url()?>permintaanMaterialProduksi/buat_permintaan_material">
+<form method="POST" action="<?= base_url()?>pengambilanMaterialProduksi/buat_pengambilan_material">
     <section class="panel">
         <header class="panel-heading">
             <h2 class="panel-title">Pilih Tanggal Permintaan Material</h2>

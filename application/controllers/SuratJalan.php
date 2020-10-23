@@ -25,7 +25,6 @@ class SuratJalan extends CI_Controller {
         $data['terkirim']              = $this->M_SuratJalan->get_isj_idpo()->result();
         $data['bpbj_available']        = $this->M_SuratJalan->get_bpbj_available()->result();
 
-
         $data['now'] = date('Y-m-d');
         $year_now   = substr(date('Y'),2,2);
         $month_now  = date('m');
