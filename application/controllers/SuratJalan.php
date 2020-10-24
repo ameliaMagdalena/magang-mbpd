@@ -1361,6 +1361,26 @@ class SuratJalan extends CI_Controller {
         redirect('suratJalan/belum_diproses_surat_jalan');
     }
 
+    public function konfirmasi(){
+        $id_surat_jalan = $this->input->post('id_sjnya');
+        $user = $_SESSION['id_user'];
+        $now  = date('Y-m-d');
+
+        $data_sj = array(
+            'status_surat_jalan' => 1,
+            'user_edit'          => $user,
+            'waktu_edit'         => $now
+        );
+
+        $where_sj = array(
+            'id_surat_jalan' => $id_surat_jalan
+        );
+
+        $this->M_SuratJalan->edit('surat_jalan',$data_sj,$where_sj);
+
+        redirect('suratJalan/semua_surat_jalan');
+    }
+
     public function belum_diproses_surat_jalan(){
         $data['po_aktif']    = $this->M_SuratJalan->select_all_po_aktif()->result();
         $data['surat_jalan'] = $this->M_SuratJalan->select_all_aktif()->result();

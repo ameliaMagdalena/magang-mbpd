@@ -565,6 +565,9 @@ class HasilProduksi extends CI_Controller {
       'id_produksi'   => $id
     );
 
+    //compare pemakaian dan pengambilan material, input di wip kalau ada selisih +
+    
+
     //$this->M_HasilProduksi->edit('produksi',$data,$where);
 
     //redirect('hasilProduksi/selesai_hasil_produksi');

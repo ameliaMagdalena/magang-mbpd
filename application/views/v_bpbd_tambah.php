@@ -43,62 +43,14 @@
                     <?php 
                         $no = 1;    
                         foreach($purchase_order as $po){
-                    ?>
-                    <?php  
-                        //hitung untuk jumlah dpo yang msih ada yang harus dikirim
-                        $hitung = 0;
-                        foreach($detail_purchase_order as $dpo){
-                            if($po->id_purchase_order_customer == $dpo->id_purchase_order_customer){
-                                //cek apakah detail po tersebut sudah pernah dikirim/belum
-                                $cek = 0;
-                                foreach($terkirim as $t){
-                                    if($dpo->id_detail_produk == $t->id_detail_produk){
-                                        $cek++;
-                                    }
+                            $cek = 0;
+                            foreach($surat_jalan as $sj){
+                                if($po->id_purchase_order_customer == $sj->id_purchase_order_customer){
+                                    $cek++;
                                 }
-
-                                //kalau sebelumnya belum pernah ada dpo yg dikirim berarti, $hitung++
-                                if($cek == 0){
-                                    //cek bpbj apakah ada produk yang sudah selesai atau tidak.
-                                    $cari_selesai = 0;
-                                    foreach($bpbj_available as $ba){
-                                        if($dpo->id_detail_produk == $ba->id_detail_produk){
-                                           $cari_selesai++;
-                                        }
-                                    }
-                                    //$selesai = $ba->jumlah_produk;
-                                    if($cari_selesai > 0){
-                                        $hitung++;
-                                    }
-                                }
-                                if($cek>0){
-                                    $jumlah_terkirim = 0;
-                                    foreach($terkirim as $t){
-                                        if($dpo->id_purchase_order_customer == $t->id_purchase_order_customer && $dpo->id_detail_produk == $t->id_detail_produk){
-                                            $jumlah_terkirim = $t->total;
-                                        }
-                                    }
-
-                                    $jumlah_permintaan = $dpo->jumlah_produk;
-                                    $max = $jumlah_permintaan - $jumlah_terkirim;
-
-                                    if($max > 0){
-                                        //cek bpbj apakah ada produk yang sudah selesai atau tidak.
-                                        $cari_selesai = 0;
-                                        foreach($bpbj_available as $ba){
-                                            if($dpo->id_detail_produk == $ba->id_detail_produk){
-                                            $cari_selesai++;
-                                            }
-                                        }
-                                        //$selesai = $ba->jumlah_produk;
-                                        if($cari_selesai > 0){
-                                            $hitung++;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        if($hitung > 0){
+                            } 
+                        
+                        if($cek > 0){
                     ?>
                         <tr>
                             <td style="text-align: center;vertical-align: middle;">
@@ -174,21 +126,12 @@
         <!-- modal tambah -->
         <div class="modal" id="modaltambah" role="dialog">
             <div class="modal-dialog modal-xl" style="width:70%">
-                <form method="POST" action="<?= base_url()?>suratJalan/tambah_surat_jalan">
+                <form method="POST" action="<?= base_url()?>bpbd/buat_bpbd">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title"><b>Buat Surat Jalan</b></h4>
+                            <h4 class="modal-title"><b>Buat BPBD</b></h4>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group mt-lg">
-                                <label class="col-sm-5 control-label">Nomor Surat Jalan</label>
-                                <div class="col-sm-7">
-                                    <input type="hidden" id="id_po_tambah" name="id_po_tambah"
-                                    class="form-control" readonly>
-                                    <input type="text" class="form-control"
-                                    value="<?= $idnya ?>" name="nomor_sj_tambah" readonly>
-                                </div>
-                            </div>
                             <div class="form-group mt-lg">
                                 <label class="col-sm-5 control-label">Tanggal PO</label>
                                 <div class="col-sm-7">
@@ -199,6 +142,8 @@
                             <div class="form-group mt-lg">
                                 <label class="col-sm-5 control-label">Nomor PO</label>
                                 <div class="col-sm-7">
+                                    <input type="hidden" id="id_po_tambah" name="id_po_tambah" class="form-control"
+                                        readonly>
                                     <input type="text" id="nomor_po_tambah" name="nomor_po_tambah"
                                     class="form-control" readonly>
                                 </div>
@@ -211,22 +156,15 @@
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
-                                <label class="col-sm-5 control-label">Data Kendaraan</label>
+                                <label class="col-sm-5 control-label">Plat Nomor</label>
                                 <div class="col-sm-7">
-                                    <input type="text" id="kendaraan"  name="kendaraan" class="form-control" required>
+                                    <input type="text" id="plat_nomor"  name="plat_nomor" class="form-control" required>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
-                                <label class="col-sm-5 control-label">Nama Pengirim</label>
+                                <label class="col-sm-5 control-label">Driver</label>
                                 <div class="col-sm-7">
-                                    <input type="text" id="nama_pengirim"  name="nama_pengirim" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="form-group mt-lg">
-                                <label class="col-sm-5 control-label">Keterangan Pengiriman</label>
-                                <div class="col-sm-7">
-                                    <input type="text" id="keterangan_pengiriman"  name="keterangan_pengiriman" 
-                                    class="form-control" placeholder="Oleh Customer/Jasa Kirim" required>
+                                    <input type="text" id="driver"  name="driver" class="form-control" required>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
@@ -272,7 +210,7 @@
 
         $.ajax({
             type:"post",
-            url:"<?php echo base_url() ?>suratJalan/detail_po_bpbj",
+            url:"<?php echo base_url() ?>bpbd/detail_po_sj",
             dataType: "JSON",
             data: {id:id},
 
@@ -305,7 +243,7 @@
                             }
                         }
 
-                        $namanya = respond['dpo'][$q]['nama_produk'] + $ukurannya + " (" + $warnanya + " )";
+                        $namanya = respond['dpo'][$q]['nama_produk'] + $ukurannya + " (" + $warnanya + ")";
                     }
                     else if(respond['dpo'][$q]['keterangan'] == 1){
                         $id_ukuran = respond['dpo'][$q]['id_ukuran'];
@@ -331,40 +269,56 @@
                             }
                         }
 
-                        $namanya = respond['dpo'][$q]['nama_produk'] + " (" + $warnanya + " )";
+                        $namanya = respond['dpo'][$q]['nama_produk'] + " (" + $warnanya + ")";
                     }
                     else{
                         $namanya = respond['dpo'][$q]['nama_produk'];
                     }
 
-                    $terkirim = 0;
-
-                    //jumlah sebelum 
-                    if(respond['jmsebelum'] == 0){
-                        $terkirim = 0;
-                    }
-                    else{
-                        $hitung=0;
-                        for($y=0;$y<respond['jmsebelum'];$y++){
-                            if(respond['sebelum'][$y]['id_detail_produk'] == respond['dpo'][$q]['id_detail_produk']){
-                                $hitung++;
+                    //stok gundang
+                        $cari_gudang = 0;
+                        $stok_gudang = 0;
+                        
+                        for($u=0;$u<respond['jm_stok_gudang'];$u++){
+                            if(respond['dpo'][$q]['id_detail_produk'] == respond['stok_gudang'][$u]['id_detail_produk']){
+                                $cari_gudang++;
                             }
                         }
-
-                        if($hitung>0){
-                            for($p=0;$p<respond['jmsebelum'];$p++){
-                                if(respond['sebelum'][$p]['id_detail_produk'] == respond['dpo'][$q]['id_detail_produk']){
-                                    $terkirim = respond['sebelum'][$p]['total'];
+        
+                        if($cari_gudang > 0){
+                            for($u=0;$u<respond['jm_stok_gudang'];$u++){
+                                if(respond['dpo'][$q]['id_detail_produk'] == respond['stok_gudang'][$u]['id_detail_produk']){
+                                    $stok_gudang = respond['stok_gudang'][$u]['jumlah_produk'];
                                 }
                             }
                         }
                         else{
-                            $terkirim = 0;
+                            $stok_gudang = 0;
                         }
-                    }
+                    //tutup stok gudang
 
-                    $belum_terkirim = parseInt(respond['dpo'][$q]['jumlah_produk']) - parseInt($terkirim);
-
+                    //terambil
+                        $cari_terambil = 0;
+                        $terambil = 0;
+                        
+                        for($u=0;$u<respond['jm_terambil'];$u++){
+                            if(respond['dpo'][$q]['id_detail_produk'] == respond['terambil'][$u]['id_detail_produk']){
+                                $cari_terambil++;
+                            }
+                        }
+        
+                        if($cari_terambil > 0){
+                            for($u=0;$u<respond['jm_terambil'];$u++){
+                                if(respond['dpo'][$q]['id_detail_produk'] == respond['terambil'][$u]['id_detail_produk']){
+                                    $terambil = respond['terambil'][$u]['jumlah_produk'];
+                                }
+                            }
+                        }
+                        else{
+                            $terambil = 0;
+                        }
+                    //tutup terambil
+                    
                    $isi = $isi +
                    '<tr>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
@@ -380,10 +334,13 @@
                             respond['dpo'][$q]['jumlah_produk']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            $terkirim+
+                            $stok_gudang+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            $belum_terkirim+
+                            $terambil+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            (parseInt($stok_gudang) - parseInt($terambil))+
                         '</td>'+
                    '</tr>';
                 }
@@ -391,7 +348,7 @@
                 $table=
                 '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
                         '<thead>'+
-                            '<tr>'+
+                        '<tr>'+
                                 '<th style="text-align: center;vertical-align: middle;">'+
                                     'No'+
                                 '</th>'+
@@ -405,10 +362,13 @@
                                     'Total Produk'+
                                 '</th>'+
                                 '<th style="text-align: center;vertical-align: middle;">'+
-                                    'Terkirim'+
+                                    'Stok Gudang'+
                                 '</th>'+
                                 '<th style="text-align: center;vertical-align: middle;">'+
-                                    'Belum Terkirim'+
+                                    'Diambil'+
+                                '</th>'+
+                                '<th style="text-align: center;vertical-align: middle;">'+
+                                    'Belum Diambil'+
                                 '</th>'+
                             '</tr>'+
                         '</thead>'+
@@ -418,7 +378,6 @@
                 '</table>';
 
                 $("#table_detail").html($table);
-
                 $("#modaldetail").modal();
             }
         });  
@@ -426,15 +385,15 @@
     });
 </script>
 
-<!-- add sj -->
+<!-- add bpbd -->
 <script>
     $('.badd_klik').click(function(){
         var no      = $(this).attr('value');
         var id      = $("#id"+no).val();
-    
+
         $.ajax({
             type:"post",
-            url:"<?php echo base_url() ?>suratJalan/detail_po_bpbj",
+            url:"<?php echo base_url() ?>bpbd/detail_po_sj",
             dataType: "JSON",
             data: {id:id},
 
@@ -443,13 +402,13 @@
                 $("#id_po_tambah").val(respond['po'][0]['id_purchase_order_customer']);
                 $("#nomor_po_tambah").val(respond['po'][0]['kode_purchase_order_customer']);
                 $("#nama_cust_tambah").val(respond['po'][0]['nama_customer']);
+                $("#jumlah_detail").val(respond['jmdpo']);
 
                 $isi = "";
 
                 for($q=0;$q<respond['jmdpo'];$q++){
                     $namanya = "";
 
-                    //nama produk
                     if(respond['dpo'][$q]['keterangan'] == 0){
                         $id_ukuran = respond['dpo'][$q]['id_ukuran'];
                         $id_warna  = respond['dpo'][$q]['id_warna'];
@@ -469,7 +428,7 @@
                             }
                         }
 
-                        $namanya = respond['dpo'][$q]['nama_produk'] + $ukurannya + " (" + $warnanya + " )";
+                        $namanya = respond['dpo'][$q]['nama_produk'] + $ukurannya + " (" + $warnanya + ")";
                     }
                     else if(respond['dpo'][$q]['keterangan'] == 1){
                         $id_ukuran = respond['dpo'][$q]['id_ukuran'];
@@ -495,105 +454,88 @@
                             }
                         }
 
-                        $namanya = respond['dpo'][$q]['nama_produk'] + " (" + $warnanya + " )";
+                        $namanya = respond['dpo'][$q]['nama_produk'] + " (" + $warnanya + ")";
                     }
                     else{
                         $namanya = respond['dpo'][$q]['nama_produk'];
                     }
 
-                    $terkirim = 0;
-
-                    //jumlah sebelum 
-                    if(respond['jmsebelum'] == 0){
-                        $terkirim = 0;
-                    }
-                    else{
-                        $hitung=0;
-                        for($y=0;$y<respond['jmsebelum'];$y++){
-                            if(respond['sebelum'][$y]['id_detail_produk'] == respond['dpo'][$q]['id_detail_produk']){
-                                $hitung++;
+                    //stok gundang
+                        $cari_gudang = 0;
+                        $stok_gudang = 0;
+                        
+                        for($u=0;$u<respond['jm_stok_gudang'];$u++){
+                            if(respond['dpo'][$q]['id_detail_produk'] == respond['stok_gudang'][$u]['id_detail_produk']){
+                                $cari_gudang++;
                             }
                         }
-
-                        if($hitung>0){
-                            for($p=0;$p<respond['jmsebelum'];$p++){
-                                if(respond['sebelum'][$p]['id_detail_produk'] == respond['dpo'][$q]['id_detail_produk']){
-                                    $terkirim = respond['sebelum'][$p]['total'];
+        
+                        if($cari_gudang > 0){
+                            for($u=0;$u<respond['jm_stok_gudang'];$u++){
+                                if(respond['dpo'][$q]['id_detail_produk'] == respond['stok_gudang'][$u]['id_detail_produk']){
+                                    $stok_gudang = respond['stok_gudang'][$u]['jumlah_produk'];
                                 }
                             }
                         }
                         else{
-                            $terkirim = 0;
+                            $stok_gudang = 0;
                         }
-                    }
-                
-                    $jumlah_selesai=0;
-                    
-                    //jumlah dari bpbj
-                    if(respond['jmbpbj_tot'] == 0){
-                        $jumlah_selesai = 0;
-                    }
-                    else{
-                        $count=0;
-                        for($t=0;$t<respond['jmbpbj_tot'];$t++){
-                            if(respond['bpbj_tot'][$t]['id_detail_produk'] == respond['dpo'][$q]['id_detail_produk']){
-                                $count++;
+                    //tutup stok gudang
+
+                    //terambil
+                        $cari_terambil = 0;
+                        $terambil = 0;
+                        
+                        for($u=0;$u<respond['jm_terambil'];$u++){
+                            if(respond['dpo'][$q]['id_detail_produk'] == respond['terambil'][$u]['id_detail_produk']){
+                                $cari_terambil++;
                             }
                         }
-
-                        if($count>0){
-                            for($y=0;$y<respond['jmbpbj_tot'];$y++){
-                                if(respond['bpbj_tot'][$y]['id_detail_produk'] == respond['dpo'][$q]['id_detail_produk']){
-                                    $jumlah_selesai = respond['bpbj_tot'][$y]['total'] - respond['bpbj_tot'][$y]['total_terkirim'];
+        
+                        if($cari_terambil > 0){
+                            for($u=0;$u<respond['jm_terambil'];$u++){
+                                if(respond['dpo'][$q]['id_detail_produk'] == respond['terambil'][$u]['id_detail_produk']){
+                                    $terambil = respond['terambil'][$u]['jumlah_produk'];
                                 }
                             }
                         }
                         else{
-                            $jumlah_selesai=0;
+                            $terambil = 0;
                         }
-                    }
-                    
-                   $belum_terkirim = parseInt(respond['dpo'][$q]['jumlah_produk']) - parseInt($terkirim);
+                    //tutup terambil
 
-                  
-                    if($belum_terkirim != 0 && $jumlah_selesai != 0){
-                        if($jumlah_selesai > $belum_terkirim){
-                            $html_inp = '<center><input type="number" min="1"  max="'+$belum_terkirim+'" class="form-control" id="kirim'+$q+'" name="kirim'+$q+'" oninput="cek()"></center>';
-                        }
-                        else{
-                            $html_inp = '<center><input type="number" min="1"  max="'+$jumlah_selesai+'" class="form-control" id="kirim'+$q+'" name="kirim'+$q+'" oninput="cek()"></center>';
-                        }
+                    $belum_diambil = (parseInt($stok_gudang) - parseInt($terambil));
+
+                    if($belum_diambil != 0){
+                        $html_inp = '<center><input type="number" min="0"  max="'+$belum_diambil+'" class="form-control" id="ambil'+$q+'" name="ambil'+$q+'" oninput="cek()"></center>';
                     }
                     else{
-                        $html_inp = '<center><input type="number" min="1" class="form-control" id="kirim'+$q+'" name="kirim'+$q+'" disabled></center>';
+                        $html_inp = '<center><input type="number" min="0" class="form-control" id="ambil'+$q+'" name="ambil'+$q+'" disabled></center>';
                     }
-
+                    
                    $isi = $isi +
                    '<tr>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             ($q+1)+
-                            '<center><input type="hidden" name="id'+$q+'" value="'+respond['dpo'][$q]['id_detail_produk']+'"></center>'+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             $namanya+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
+                            '<input type="text" name="id_detail_produk'+$q+'" value="'+respond['dpo'][$q]['id_detail_produk']+'">'+
                             respond['dpo'][$q]['kode_produk']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['dpo'][$q]['jumlah_produk']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            '<center><input type="hidden" id="terkirim'+$q+'" value="'+$terkirim+'"></center>'+
-                            $terkirim+
+                            $stok_gudang+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            '<center><input type="hidden" id="belum_terkirim'+$q+'" value="'+$belum_terkirim+'"></center>'+
-                            $belum_terkirim+
+                            $terambil+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            '<center><input type="hidden" id="selesai'+$q+'" value="'+$jumlah_selesai+'"></center>'+
-                            $jumlah_selesai+
+                            $belum_diambil+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             $html_inp+
@@ -604,7 +546,7 @@
                 $table=
                 '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
                         '<thead>'+
-                            '<tr>'+
+                        '<tr>'+
                                 '<th style="text-align: center;vertical-align: middle;">'+
                                     'No'+
                                 '</th>'+
@@ -618,16 +560,16 @@
                                     'Total Produk'+
                                 '</th>'+
                                 '<th style="text-align: center;vertical-align: middle;">'+
-                                    'Terkirim'+
+                                    'Stok Gudang'+
                                 '</th>'+
                                 '<th style="text-align: center;vertical-align: middle;">'+
-                                    'Belum Terkirim'+
+                                    'Diambil'+
                                 '</th>'+
                                 '<th style="text-align: center;vertical-align: middle;">'+
-                                    'Selesai Produksi'+
+                                    'Belum Diambil'+
                                 '</th>'+
                                 '<th style="text-align: center;vertical-align: middle;">'+
-                                    'Akan Dikirim'+
+                                    'Akan Diambil'+
                                 '</th>'+
                             '</tr>'+
                         '</thead>'+
@@ -637,8 +579,6 @@
                 '</table>';
 
                 $("#table_tambah").html($table);
-                $("#jumlah_detail").val(respond['jmdpo']);
-
                 $("#modaltambah").modal();
             }
         });  
@@ -651,7 +591,7 @@
         $count = 0;
 
         for($i=0;$i<$jumlah_detail;$i++){
-            if($("#kirim"+$i).val() != 0){
+            if($("#ambil"+$i).val() != 0){
                 $count++;
             }
         }

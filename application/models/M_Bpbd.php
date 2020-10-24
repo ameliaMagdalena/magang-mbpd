@@ -25,6 +25,42 @@ class M_Bpbd extends CI_Model {
         return $this->db->query("SELECT * FROM detail_purchase_order_customer WHERE status_delete='0' ");
     }
 
+    function get_surat_jalan_belum_selesai(){
+        return $this->db->query("SELECT surat_jalan.id_purchase_order_customer FROM surat_jalan,item_surat_jalan 
+        WHERE surat_jalan.status_surat_jalan != 0 AND  item_surat_jalan.status_delete='0' AND item_surat_jalan.status_keluar='0' 
+        AND surat_jalan.id_surat_jalan = item_surat_jalan.id_surat_jalan 
+        GROUP BY surat_jalan.id_purchase_order_customer ");
+    }
+
+    function get_po_by_id($id){
+        return $this->db->query("SELECT * FROM purchase_order_customer,customer
+        WHERE id_purchase_order_customer='$id' AND customer.id_customer=purchase_order_customer.id_customer");
+    }
+
+    function get_dpo_by_id($id){
+        return $this->db->query("SELECT * FROM detail_purchase_order_customer,detail_produk,produk 
+        WHERE detail_purchase_order_customer.id_purchase_order_customer='$id'
+         AND detail_purchase_order_customer.id_detail_produk = detail_produk.id_detail_produk 
+         AND detail_produk.id_produk=produk.id_produk");
+    }
+
+    function get_stok_gudang($id_po){
+        return $this->db->query("SELECT item_surat_jalan.id_detail_produk, SUM(item_surat_jalan.jumlah_produk) as jumlah_produk
+        FROM surat_jalan,item_surat_jalan 
+        WHERE surat_jalan.id_purchase_order_customer='$id_po' AND surat_jalan.status_surat_jalan != '0'
+        AND surat_jalan.id_surat_jalan=item_surat_jalan.id_surat_jalan GROUP BY item_surat_jalan.id_detail_produk");
+    }
+
+    function get_terambil($id_po){
+        return $this->db->query("SELECT bpbd.id_purchase_order_customer, item_bpbd.id_detail_produk, SUM(item_bpbd.jumlah_produk) as jumlah_produk
+        FROM bpbd,item_bpbd 
+        WHERE bpbd.id_bpbd=item_bpbd.id_bpbd AND item_bpbd.status_delete='0' AND bpbd.id_purchase_order_customer='$id_po'
+        GROUP BY bpbd.id_purchase_order_customer,item_bpbd.id_detail_produk ");
+    }
+
+    function get_last_bpbd_id(){
+        return $this->db->query("SELECT id_bpbd,no_bpbd,tanggal FROM bpbd ORDER BY id_bpbd DESC LIMIT 1");
+   }   
 
 
 /*

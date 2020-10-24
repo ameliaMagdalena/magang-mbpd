@@ -244,7 +244,7 @@ class Invoice extends CI_Controller {
 
                 $data_sj = array (
                     'id_invoice'         => $id_invoice,
-                    'status_surat_jalan' => 1,
+                    'status_surat_jalan' => 2,
                     'user_edit'          => $user,
                     'waktu_edit'         => $now
                 );
@@ -508,7 +508,7 @@ class Invoice extends CI_Controller {
 
                 $data_sj = array (
                     'id_invoice'         => $id_invoice,
-                    'status_surat_jalan' => 1,
+                    'status_surat_jalan' => 2,
                     'user_edit'          => $user,
                     'waktu_edit'         => $now
                 );
@@ -524,7 +524,7 @@ class Invoice extends CI_Controller {
 
                 $data_sj = array (
                     'id_invoice'         => "",
-                    'status_surat_jalan' => 0,
+                    'status_surat_jalan' => 1,
                     'user_edit'          => $user,
                     'waktu_edit'         => $now
                 );
