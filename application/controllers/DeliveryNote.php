@@ -34,6 +34,12 @@ class DeliveryNote extends CI_Controller {
         $this->load->view('v_pemasukan_material_baru', $data);
     }
 
+    public function get_material_po(){
+        $id = $this->input->post("id_po_supplier");
+        $result = $this->M_DeliveryNote->selectMaterialPO($id)->result_array();
+        echo json_encode($result);
+    }
+
     public function tambah_pemasukan(){
         $id = $this->input->post("id_pemasukan_material");
         $data = array(

@@ -529,7 +529,7 @@
                 '<input class="form-control" type="text" name="satuan'+counter+'" id="satuan'+counter+'" readonly>'+
             '</td>'+
             '<td>'+
-                '<input class="form-control" type="text" name="keterangan'+counter+'" id="keterangan'+counter+'" readonly>'+
+                '<input class="form-control" type="text" name="keterangan'+counter+'" id="keterangan'+counter+'">'+
             '</td>'+
         '</tr>';
         $("#print_new_row").append(html);
@@ -556,6 +556,12 @@
 
 <script>
     function getMaterial(counter){
+        var matoption = document.getElementById("material"+counter);
+        for(y=0; y<matoption.length; y++){
+            matoption.remove(y);
+            y=y-1;
+        }
+        
         var id_po_supplier = $("#po"+counter).val();
         $.ajax({
             url:"<?php echo base_url();?>DeliveryNote/get_material_po",
@@ -563,14 +569,30 @@
             dataType:"JSON",
             data:{id_po_supplier:id_po_supplier},
             success:function(respond){
-                <?php for($b=0; $b<count($po); $b++){  ?>
+                for($b=0; $b<respond.length; $b++){
                     html =
-                    '<option value="<?php echo $po[$b]['id_sub_jenis_material']?>">'+
-                        '<?php echo $po[$b]['kode_sub_jenis_material'] . ' - ' . $po[$b]['nama_jenis_material'] . $po[$b]['nama_sub_jenis_material']?>'+
+                    '<option value="' + respond[$b]['id_sub_jenis_material'] + '">'+
+                        respond[$b]['kode_sub_jenis_material'] + ' - ' +
+                        respond[$b]['nama_jenis_material'] + respond[$b]['nama_sub_jenis_material']+
                     '</option>';
                     $("#material"+counter).append(html);
-                    //$("#satuan"+countt).val(respond[0]["satuan_ukuran"]);
-                <?php } ?>
+                    getSatuan(counter);
+                }
+            }
+        });
+    }
+</script>
+
+<script>
+    function getSatuan(countt){
+        var id_sub_jenis_material = $("#material"+countt).val();
+        $.ajax({
+            url:"<?php echo base_url();?>PurchaseOrderSupplier/satuan_ukuran",
+            type:"POST",
+            dataType:"JSON",
+            data:{id_sub_jenis_material:id_sub_jenis_material},
+            success:function(respond){
+                $("#satuan"+countt).val(respond[0]["satuan_ukuran"]);
             }
         });
     }

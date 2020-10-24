@@ -80,9 +80,15 @@ class M_DeliveryNote extends CI_Model {
         return $this->db->query("SELECT * FROM purchase_order_supplier a
         JOIN detail_purchase_order_supplier b ON a.id_purchase_order_supplier = b.id_purchase_order_supplier
         JOIN supplier c ON a.id_supplier = c.id_supplier
-        JOIN sub_jenis_material d ON b.id_sub_jenis_material = d.id_sub_jenis_material
         WHERE a.status_delete=0 AND b.status_delete=0
         GROUP BY a.id_purchase_order_supplier");
+    }
+
+    function selectMaterialPO($id){
+        return $this->db->query("SELECT * FROM detail_purchase_order_supplier a
+        JOIN sub_jenis_material b ON a.id_sub_jenis_material = b.id_sub_jenis_material
+        JOIN jenis_material c ON b.id_jenis_material = c.id_jenis_material
+        WHERE a.status_delete=0 AND a.id_purchase_order_supplier='$id'");
     }
 
 
