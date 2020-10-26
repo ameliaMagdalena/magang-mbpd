@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2020 at 07:12 AM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.0
+-- Generation Time: Oct 26, 2020 at 06:08 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.3.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -440,8 +440,8 @@ INSERT INTO `cycle_time_logs` (`id_cycle_time_logs`, `keterangan_log`, `id_cycle
 CREATE TABLE `delivery_note` (
   `id_delivery_note` varchar(10) NOT NULL,
   `id_supplier` varchar(10) NOT NULL,
-  `tanggal_dn` datetime NOT NULL,
-  `tanggal_penerimaan` datetime NOT NULL,
+  `tanggal_dn` date NOT NULL,
+  `tanggal_penerimaan` date NOT NULL,
   `total_harga` int(11) NOT NULL,
   `status_pengesahan` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
@@ -2347,7 +2347,7 @@ INSERT INTO `material_sementara` (`id_material`, `id_jenis_material`, `kode_mate
 CREATE TABLE `pemasukan_material` (
   `id_pemasukan_material` varchar(10) NOT NULL,
   `id_sub_jenis_material` varchar(10) NOT NULL,
-  `tanggal_masuk` datetime NOT NULL,
+  `tanggal_masuk` date NOT NULL,
   `jumlah_masuk` int(11) NOT NULL,
   `keterangan_masuk` int(11) NOT NULL,
   `catatan` varchar(500) NOT NULL,
@@ -2418,7 +2418,7 @@ INSERT INTO `pengambilan_material` (`id_pengambilan_material`, `id_karyawan`, `i
 CREATE TABLE `pengeluaran_material` (
   `id_pengeluaran_material` varchar(15) NOT NULL,
   `id_sub_jenis_material` varchar(10) NOT NULL,
-  `tanggal_keluar` datetime NOT NULL,
+  `tanggal_keluar` date NOT NULL,
   `jumlah_keluar` int(11) NOT NULL,
   `keterangan_keluar` int(11) NOT NULL,
   `catatan` varchar(500) NOT NULL,
@@ -2436,9 +2436,9 @@ CREATE TABLE `pengeluaran_material` (
 --
 
 INSERT INTO `pengeluaran_material` (`id_pengeluaran_material`, `id_sub_jenis_material`, `tanggal_keluar`, `jumlah_keluar`, `keterangan_keluar`, `catatan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('LUMAT2010.00001', 'SUBJM-1', '2020-10-24 00:00:00', 5, 0, '', 'USER-9', '2020-10-24 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('LUMAT2010.00002', 'SUBJM-4', '2020-10-24 00:00:00', 10, 0, '', 'USER-10', '2020-10-24 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('LUMAT2010.00003', 'SUBJM-1', '2020-10-24 00:00:00', 10, 0, '', 'USER-9', '2020-10-24 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+('LUMAT2010.00001', 'SUBJM-1', '2020-10-24', 5, 0, '', 'USER-9', '2020-10-24 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('LUMAT2010.00002', 'SUBJM-4', '2020-10-24', 10, 0, '', 'USER-10', '2020-10-24 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('LUMAT2010.00003', 'SUBJM-1', '2020-10-24', 10, 0, '', 'USER-9', '2020-10-24 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2494,11 +2494,14 @@ INSERT INTO `permintaan_material` (`id_permintaan_material`, `kode_permintaan_ma
 
 CREATE TABLE `permintaan_pembelian` (
   `id_permintaan_pembelian` varchar(10) NOT NULL,
+  `tanggal_permintaan` date NOT NULL,
   `id_sub_jenis_material` varchar(10) NOT NULL,
   `jumlah_material` int(11) NOT NULL,
   `satuan_keluar` varchar(30) NOT NULL,
   `status_pembelian` int(11) NOT NULL,
-  `keterangan` varchar(100) NOT NULL,
+  `keterangan` int(11) NOT NULL,
+  `catatan` varchar(500) NOT NULL,
+  `id_detail_purchase_order_supplier` varchar(10) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
   `user_edit` varchar(10) NOT NULL,
