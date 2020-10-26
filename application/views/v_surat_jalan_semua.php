@@ -75,7 +75,9 @@
                             <td  style="text-align: center;vertical-align: middle;">
                                 <?php 
                                     if($sj->status_surat_jalan == 0){
-                                        echo "Belum Diproses";
+                                        echo "Belum Dikonfirmasi";
+                                    } else if($sj->status_surat_jalan == 1){
+                                        echo "Terkonfirmasi";
                                     } else{
                                         echo "Selesai";
                                     }
@@ -89,6 +91,8 @@
                                         value="<?= $no;?>" title="Edit"></button>
                                     <button type="button" class="bdel_klik col-lg-3 btn btn-danger fa fa-trash-o" 
                                         value="<?= $no;?>" title="Delete"></button>
+                                    <button type="button" class="bkonf_klik col-lg-3 btn btn-success fa fa-check-square" 
+                                        value="<?= $no;?>" title="Konfirmasi"></button>
                                 <?php }?>
                                     <form method="POST" action="<?= base_url()?>suratJalan/print">
                                         <input type="hidden" name="id_sj" value="<?= $sj->id_surat_jalan?>">
@@ -263,6 +267,28 @@
                         
                         </div>
                         <input type="hidden" id="jumlah_detail" name="jumlah_detail">
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" id="edit" class="btn btn-primary" value="Simpan">
+                        <input type="button" class="btn btn-default modal-dismiss" value="Batal" onclick="reload()">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- modal se7 -->
+    <div class="modal" id="modalkonf" role="dialog">
+        <div class="modal-dialog modal-xl" style="width:35%">
+            <form method="POST" action="<?= base_url()?>suratJalan/konfirmasi">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"><b>Konfirmasi Surat Jalan</b></h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id_sjnya" id="id_sjnya">
+                        <p>Apakah anda yakin akan mengkonfirmasi surat jalan dengan nomor <span id="id_sj_tampil"></span>?</p>
+                        <p><b>*</b>jika sudah dikonfirmasi, surat jalan sudah bisa dibuatkan BPBD dan tidak dapat diedit lagi</p>
                     </div>
                     <div class="modal-footer">
                         <input type="submit" id="edit" class="btn btn-primary" value="Simpan">
@@ -762,6 +788,18 @@
             $("#edit").prop('disabled',true);
         }
     }
+</script>
+
+<!-- setuju-->
+<script>
+    $('.bkonf_klik').click(function(){
+        var no      = $(this).attr('value');
+        var id      = $("#id"+no).val();
+
+        $("#id_sjnya").val(id);
+        $("#id_sj_tampil").html(id);
+        $("#modalkonf").modal();
+    });
 </script>
 
 

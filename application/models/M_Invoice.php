@@ -27,7 +27,8 @@ class M_Invoice extends CI_Model {
     }
 
     function get_sj_by_id_po($id_po){
-        return $this->db->query("SELECT * FROM surat_jalan WHERE status_delete='0' AND status_surat_jalan='0' AND  id_purchase_order_customer='$id_po' ");
+        return $this->db->query("SELECT * FROM surat_jalan 
+        WHERE status_delete='0' AND status_surat_jalan='1' AND  id_purchase_order_customer='$id_po' ");
     }
 
     function get_sj_by_idPo_idInvoice($id_po,$id_invoice){
@@ -114,7 +115,7 @@ class M_Invoice extends CI_Model {
     }
 
     function delete_invoice_sj($id){
-        return $this->db->query("UPDATE surat_jalan SET id_invoice =null,status_surat_jalan='0' WHERE id_invoice='$id'");
+        return $this->db->query("UPDATE surat_jalan SET id_invoice =null,status_surat_jalan='1' WHERE id_invoice='$id'");
     }
 
     function get_penanda_tangan(){
