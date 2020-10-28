@@ -14,7 +14,7 @@ class M_PerencanaanProduksi extends CI_Model {
             WHERE purchase_order_customer.id_purchase_order_customer = detail_purchase_order_customer.id_purchase_order_customer AND
             detail_purchase_order_customer.id_detail_produk = detail_produk.id_detail_produk 
             AND detail_produk.id_produk = produk.id_produk AND purchase_order_customer.id_customer = customer.id_customer
-            AND (purchase_order_customer.status_po BETWEEN 1 AND 2)");
+            AND (purchase_order_customer.status_po BETWEEN 1 AND 2) ORDER BY purchase_order_customer.id_purchase_order_customer,produk.nama_produk");
         }
 
         function jm_perc_sebelum(){
@@ -109,7 +109,7 @@ class M_PerencanaanProduksi extends CI_Model {
         detail_produksi_line.id_detail_purchase_order = detail_purchase_order_customer.id_detail_purchase_order_customer 
         AND detail_purchase_order_customer.id_detail_produk = detail_produk.id_detail_produk AND
         detail_produk.id_produk = produk.id_produk AND detail_produksi_line.status_delete='0' 
-        GROUP BY detail_produksi_line.id_detail_purchase_order");
+        GROUP BY detail_produksi_line.id_detail_purchase_order ORDER BY produk.nama_produk ");
     }
 
     function get_dpo_re($start){

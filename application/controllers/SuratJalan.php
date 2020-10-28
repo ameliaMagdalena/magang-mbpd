@@ -385,7 +385,7 @@ class SuratJalan extends CI_Controller {
             }
         }
 
-        redirect('suratJalan/belum_diproses_surat_jalan');
+        redirect('suratJalan/belum_dikonfirmasi_surat_jalan');
     }
 
     public function semua_surat_jalan(){
@@ -1206,7 +1206,7 @@ class SuratJalan extends CI_Controller {
                 }
             }
         }
-        redirect('suratJalan/belum_diproses_surat_jalan');
+        redirect('suratJalan/belum_dikonfirmasi_surat_jalan');
     }
 
     public function delete(){
@@ -1358,7 +1358,7 @@ class SuratJalan extends CI_Controller {
                 
             }
         }
-        redirect('suratJalan/belum_diproses_surat_jalan');
+        redirect('suratJalan/belum_dikonfirmasi_surat_jalan');
     }
 
     public function konfirmasi(){
@@ -1381,11 +1381,18 @@ class SuratJalan extends CI_Controller {
         redirect('suratJalan/semua_surat_jalan');
     }
 
-    public function belum_diproses_surat_jalan(){
+    public function belum_dikonfirmasi_surat_jalan(){
         $data['po_aktif']    = $this->M_SuratJalan->select_all_po_aktif()->result();
         $data['surat_jalan'] = $this->M_SuratJalan->select_all_aktif()->result();
 
-        $this->load->view('v_surat_jalan_belum_diproses',$data);
+        $this->load->view('v_surat_jalan_belum_dikonfirmasi',$data);
+    }
+
+    public function terkonfirmasi_surat_jalan(){
+        $data['po_aktif']    = $this->M_SuratJalan->select_all_po_aktif()->result();
+        $data['surat_jalan'] = $this->M_SuratJalan->select_all_aktif()->result();
+
+        $this->load->view('v_surat_jalan_terkonfirmasi',$data);
     }
 
     public function selesai_surat_jalan(){

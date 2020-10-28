@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Tambah Bpbd</h2>
+        <h2>Tambah BPBD</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Tambah Bpbd</span></li>
+                <li><span>Tambah BPBD</span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -508,9 +508,11 @@
 
                     if($belum_diambil != 0){
                         $html_inp = '<center><input type="number" min="0"  max="'+$belum_diambil+'" class="form-control" id="ambil'+$q+'" name="ambil'+$q+'" oninput="cek()"></center>';
+                        $html_ket = '<center><textarea type="text" class="form-control" name="ket'+$q+'"></textarea></center>';
                     }
                     else{
                         $html_inp = '<center><input type="number" min="0" class="form-control" id="ambil'+$q+'" name="ambil'+$q+'" disabled></center>';
+                        $html_ket = '<center><textarea type="text" class="form-control" name="ket'+$q+'" disabled></textarea></center>';
                     }
                     
                    $isi = $isi +
@@ -522,7 +524,7 @@
                             $namanya+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            '<input type="text" name="id_detail_produk'+$q+'" value="'+respond['dpo'][$q]['id_detail_produk']+'">'+
+                            '<input type="hidden" name="id_detail_produk'+$q+'" value="'+respond['dpo'][$q]['id_detail_produk']+'">'+
                             respond['dpo'][$q]['kode_produk']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
@@ -539,6 +541,9 @@
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             $html_inp+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            $html_ket+
                         '</td>'+
                    '</tr>';
                 }
@@ -571,6 +576,9 @@
                                 '<th style="text-align: center;vertical-align: middle;">'+
                                     'Akan Diambil'+
                                 '</th>'+
+                                '<th style="text-align: center;vertical-align: middle;">'+
+                                    'Ket'+
+                                '</th>'+
                             '</tr>'+
                         '</thead>'+
                         '<tbody>'+
@@ -585,6 +593,7 @@
     });
 </script>
 
+<!-- cek terisi -->
 <script>
     function cek(){
         $jumlah_detail = $("#jumlah_detail").val();

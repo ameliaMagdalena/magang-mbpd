@@ -23,12 +23,12 @@ class M_Invoice extends CI_Model {
 
     function get_sj(){
         return $this->db->query("SELECT id_purchase_order_customer,id_surat_jalan FROM surat_jalan 
-        WHERE status_delete=0 AND status_surat_jalan='0' ");
+        WHERE status_delete=0 AND status_surat_jalan != '2' ");
     }
 
     function get_sj_by_id_po($id_po){
         return $this->db->query("SELECT * FROM surat_jalan 
-        WHERE status_delete='0' AND status_surat_jalan='1' AND  id_purchase_order_customer='$id_po' ");
+        WHERE status_delete='0' AND status_surat_jalan != '2' AND  id_purchase_order_customer='$id_po' ");
     }
 
     function get_sj_by_idPo_idInvoice($id_po,$id_invoice){

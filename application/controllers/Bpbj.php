@@ -110,7 +110,7 @@ class Bpbj extends CI_Controller {
       $jm_data_last = $this->M_Bpbj->get_last_detail_bpbj_id()->num_rows();
 
       $year_now  = substr(date('Y'),2,2);
-  
+
       if($jm_data_last == 1){
         $id_terakhir   = $data_last[0]['id_detail_bpbj'];
   
@@ -163,8 +163,6 @@ class Bpbj extends CI_Controller {
     }
 
     redirect('bpbj/semua_bpbj');
-
-    
   }
 
   public function semua_bpbj(){

@@ -20,10 +20,6 @@
 								<i class="fa fa-home" aria-hidden="true"></i>
 								<span>Dashboard</span>
 							</a>
-							<a href="<?= base_url()?>dashboard/coba">
-								<i class="fa fa-home" aria-hidden="true"></i>
-								<span>COBA</span>
-							</a>
 						</li>
 							
 
@@ -839,8 +835,13 @@
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>suratJalan/belum_diproses_surat_jalan">
-											Belum Diproses
+										<a href="<?= base_url()?>suratJalan/belum_dikonfirmasi_surat_jalan">
+											Belum Dikonfirmasi
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>suratJalan/terkonfirmasi_surat_jalan">
+											Terkonfirmasi
 										</a>
 									</li>
 									<li>
@@ -877,11 +878,6 @@
 										</a>
 									</li>
 								</ul>
-							</li>
-							<li>
-								<a href="<?= base_url()?>POS">
-									<span>PO Sementara</span>
-								</a>
 							</li>
 						<?php }?>
 					<!--  -->
@@ -958,6 +954,16 @@
 									<li>
 										<a href="<?= base_url()?>bpbd/semua_bpbd">
 											Semua
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>bpbd/belum_konfirmasi_bpbd">
+											Belum Konfirmasi
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>bpbd/terkonfirmasi_bpbd">
+											Terkonfirmasi
 										</a>
 									</li>
 								</ul>

@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Surat Jalan Belum Diproses</h2>
+        <h2>Surat Jalan Belum Dikonfirmasi</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Surat Jalan Belum Diproses</span></span></li>
+                <li><span>Surat Jalan Belum Dikonfirmasi</span></span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -25,7 +25,7 @@
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
         <header class="panel-heading">
-            <h2 class="panel-title">Data Surat Jalan Belum Diproses</h2>
+            <h2 class="panel-title">Data Surat Jalan Belum Dikonfirmasi</h2>
         </header>
 
         <div class="panel-body">
@@ -75,13 +75,7 @@
                                 ?>
                             </td>
                             <td  style="text-align: center;vertical-align: middle;">
-                                <?php 
-                                    if($sj->status_surat_jalan == 0){
-                                        echo "Belum Diproses";
-                                    } else{
-                                        echo "Selesai";
-                                    }
-                                ?>
+                                Belum Dikonfirmasi
                             </td>
                             <td class="col-lg-3"> 
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 

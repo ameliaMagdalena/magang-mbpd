@@ -759,10 +759,4 @@ class Invoice extends CI_Controller {
 
 	    $this->load->view('v_invoice_selesai',$data);
     }
-
-
-
-
-
-
 }

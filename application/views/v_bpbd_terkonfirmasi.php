@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Semua BPBD</h2>
+        <h2>BPBD Terkonfirmasi</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Semua BPBD</span></span></li>
+                <li><span>BPBD Terkonfirmasi</span></span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -25,7 +25,7 @@
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
         <header class="panel-heading">
-            <h2 class="panel-title">Data Semua BPBD</h2>
+            <h2 class="panel-title">Data BPBD Terkonfirmasi</h2>
         </header>
 
         <div class="panel-body">
@@ -44,7 +44,9 @@
                 <tbody>
                     <?php 
                         $no=1;
-                        foreach($bpbd as $x){?>
+                        foreach($bpbd as $x){
+                            if($x->status_bpbd == 1){
+                    ?>
                         <tr>
                             <td  style="text-align: center;vertical-align: middle;"><?= $no ?></td>
                             <td  style="text-align: center;vertical-align: middle;">
@@ -85,7 +87,7 @@
 
                             </td>
                         </tr>
-                    <?php $no++;} ?>
+                    <?php $no++;}} ?>
                 </tbody>
 	        </table>
         </div>
