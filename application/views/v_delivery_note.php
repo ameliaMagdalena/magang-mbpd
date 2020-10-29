@@ -27,7 +27,44 @@
 
 <h1>Delivery Note</h1>
 <hr>
-<a class="modal-with-form btn btn-success" href="#modaltambah">+ Tambah Delivery Note</a>
+<a class="modal-with-form btn btn-success"
+href="<?php if(count($po)==0){
+        echo '#modalkosong';
+    }
+    else{
+        echo '#modaltambah';
+    } ?>">
++ Tambah Delivery Note</a>
+
+
+
+<!-- ******************************* MODAL KOSONG ***************************** -->
+<!-- ************************************************************************** -->
+<div id='modalkosong' class="modal-block modal-block-primary mfp-hide">
+    <section class="panel">
+		<form class="form-horizontal mb-lg" action="" method="post">
+			<header class="panel-heading">
+				<h2 class="panel-title">TIDAK ADA PO SUPPLIER</h2>
+			</header>
+
+			<div class="panel-body">
+                <div>
+                    <div class="form-group mt-lg" style="text-align: center">
+                        <b>Belum ada Purchase Order Supplier yang dapat dibuatkan Delivery Note.</b>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <footer class="panel-footer">
+				<div class="row">
+					<div class="col-md-12 text-right">
+						<button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Kembali</button>
+					</div>
+				</div>
+			</footer>
+		</form>
+	</section>
+</div>
 
 
 
@@ -57,8 +94,8 @@
 					<label class="col-sm-3 control-label">Supplier<span class="required">*</span></label>
 					<div class="col-sm-7">
                         <select class="form-control" name="supplier" id="supplier" required>
-                            <?php for($sup=0; $sup<count($supplier); $sup++){ ?>
-                                <option value="<?= $supplier[$sup]['id_supplier'] ?>"> <?= $supplier[$sup]['nama_supplier'] ?> </option>
+                            <?php for($sup=0; $sup<count($po); $sup++){ ?>
+                                <option value="<?= $po[$sup]['id_supplier'] ?>"> <?= $po[$sup]['nama_supplier'] ?> </option>
                             <?php }?>
                         </select>
                     </div>

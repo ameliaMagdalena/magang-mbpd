@@ -8,7 +8,6 @@ class DeliveryNote extends CI_Controller {
 
         $this->load->model('M_PemasukanMaterial');
         $this->load->model('M_PurchaseOrderSupplier');
-        $this->load->model('M_Supplier');
         $this->load->model('M_DeliveryNote');
 
         if($this->session->userdata('status_login') != "login"){
@@ -18,13 +17,12 @@ class DeliveryNote extends CI_Controller {
 
 	public function index(){
         $data['jumlah_dn'] = $this->M_DeliveryNote->selectDeliveryNote()->num_rows();
-        $data['supplier'] = $this->M_Supplier->selectSupplierAktif()->result_array();
         $data['po'] = $this->M_DeliveryNote->selectPOSupplier()->result_array();
         
 		$this->load->view('v_delivery_note', $data);
     }
 
-    public function baru(){
+    /* public function baru(){
         $data['pemasukan'] = $this->M_PemasukanMaterial->selectPemasukanMaterialAktif()->result_array();
         $data['jumlah_pemasukan'] = $this->M_PemasukanMaterial->selectPemasukanMaterialAktif()->num_rows();
 
@@ -32,7 +30,7 @@ class DeliveryNote extends CI_Controller {
         $data['sub_jenis_material'] = $this->M_Material->selectSubJenisMaterialAktif()->result_array();
         
         $this->load->view('v_pemasukan_material_baru', $data);
-    }
+    } */
 
     public function get_material_po(){
         $id = $this->input->post("id_po_supplier");

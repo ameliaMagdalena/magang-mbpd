@@ -146,6 +146,20 @@ class PurchaseOrderSupplier extends CI_Controller {
         redirect('PurchaseOrderSupplier/index/3');
     }
 
+    public function hapus_po(){
+        $where = array(
+            "id_purchase_order_supplier" => $this->input->post("id_po_supplier"),
+        );
+        $data = array(
+            "status_delete"=>"1",
+            "user_delete"=>$_SESSION['id_user'],
+            "waktu_delete"=>date('Y-m-d H:i:s')
+        );
+        $this->M_PurchaseOrderSupplier->hapusPOSupplier($data, $where);
+        $this->M_PurchaseOrderSupplier->hapusDetailPOSupplier($data, $where);
+        redirect('PurchaseOrderSupplier/index/3');
+    }
+
     public function persetujuan(){
         $this->load->view('v_po_supplier_persetujuan');
    }

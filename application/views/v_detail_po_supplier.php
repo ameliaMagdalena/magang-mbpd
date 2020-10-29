@@ -69,14 +69,16 @@
                     if($po_sup[0]['status_po'] == 0){
                         echo "Menunggu Persetujuan";
                     } else if($po_sup[0]['status_po'] == 1){
-                        echo "Disetujui, Belum Diproses";
+                        echo "Disetujui, Belum Dikirim ke Supplier";
                     } else if($po_sup[0]['status_po'] == 2){
+                        echo "Dikirim, Menunggu Konfirmasi Supplier";
+                    } else if($po_sup[0]['status_po'] == 3){
                         echo "Sedang Diproses";
                     }
-                    else if($po_sup[0]['status_po'] == 3){
+                    else if($po_sup[0]['status_po'] == 4){
                         echo "Selesai";
                     }
-                    else if($po_sup[0]['status_po'] == 4){
+                    else if($po_sup[0]['status_po'] == 5){
                         echo "Batal";
                     }
                     else {

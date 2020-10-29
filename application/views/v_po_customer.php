@@ -236,32 +236,32 @@
 
 
                 <!-- ******************************* MODAL HAPUS ****************************** -->
-                    <!-- ************************************************************************** -->
-                    <div id='modalhapus<?php echo $po_cust[$x]['id_purchase_order_customer']?>' class="modal-block modal-block-primary mfp-hide">
-                        <section class="panel">
-                            <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PurchaseOrderCustomer/hapus_po" method="post">
-                                <header class="panel-heading">
-                                    <h2 class="panel-title">Hapus Data PO Customer</h2>
-                                </header>
+                <!-- ************************************************************************** -->
+                <div id='modalhapus<?php echo $po_cust[$x]['id_purchase_order_customer']?>' class="modal-block modal-block-primary mfp-hide">
+                    <section class="panel">
+                        <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PurchaseOrderCustomer/hapus_po" method="post">
+                            <header class="panel-heading">
+                                <h2 class="panel-title">Hapus Data PO Customer</h2>
+                            </header>
 
-                                <div class="panel-body" style="color: black">
-                                    <input type="hidden" name="id_po_customer" class="form-control" value="<?php echo $po_cust[$x]['id_purchase_order_customer'] ?>" readonly>
-                                
-                                    Apakah anda yakin akan menghapus data PO Customer dengan Nomor PO <b><?php echo $po_cust[$x]['kode_purchase_order_customer']?></b>?
-                                </div>
-                                <footer class="panel-footer">
-                                    <div class="row">
-                                        <div class="col-md-12 text-right">
-                                            <input type="submit" class="btn btn-danger" value="Hapus">
-                                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
-                                        </div>
+                            <div class="panel-body" style="color: black">
+                                <input type="hidden" name="id_po_customer" class="form-control" value="<?php echo $po_cust[$x]['id_purchase_order_customer'] ?>" readonly>
+                            
+                                Apakah anda yakin akan menghapus data PO Customer dengan Nomor PO <b><?php echo $po_cust[$x]['kode_purchase_order_customer']?></b>?
+                            </div>
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <input type="submit" class="btn btn-danger" value="Hapus">
+                                        <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
                                     </div>
-                                </footer>
-                            </form>
-                        </section>
-                    </div>
-                    <!-- ***************************** END MODAL HAPUS **************************** -->
-                    <!-- ************************************************************************** -->
+                                </div>
+                            </footer>
+                        </form>
+                    </section>
+                </div>
+                <!-- ***************************** END MODAL HAPUS **************************** -->
+                <!-- ************************************************************************** -->
                 
                 <?php } ?>
             </tbody>
