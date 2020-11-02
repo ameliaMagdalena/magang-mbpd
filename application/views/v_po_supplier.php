@@ -52,7 +52,7 @@
                 <?php
                     for($x=0 ; $x<count($po_sup) ; $x++){
                         if ($status == 0 || $status == 3){ 
-                            if($po_sup[$x]['status_po'] == 0 || $po_sup[$x]['status_po'] == 1 || $po_sup[$x]['status_po'] == 2){
+                            if($po_sup[$x]['status_po'] == 0 || $po_sup[$x]['status_po'] == 1 || $po_sup[$x]['status_po'] == 2 || $po_sup[$x]['status_po'] == 3){
                 ?>
                 <tr>
                     <td> <?php echo $po_sup[$x]['kode_purchase_order_supplier'] ?> </td>
@@ -63,8 +63,10 @@
                             if($po_sup[$x]['status_po'] == 0){
                                 echo "Menunggu Persetujuan";
                             } else if($po_sup[$x]['status_po'] == 1){
-                                echo "Disetujui dan Dikirim, Menunggu Konfirmasi Supplier";
+                                echo "Disetujui, Belum Dikirimkan ke Supplier";
                             } else if($po_sup[$x]['status_po'] == 2){
+                                echo "Dikirim, Menunggu Konfirmasi Supplier";
+                            } else if($po_sup[$x]['status_po'] == 3){
                                 echo "Sedang Diproses"; //proses pembelian
                             }
                         ?>
@@ -82,13 +84,21 @@
                                 title="Menyetujui" href="#modalsetuju<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
                             <a class="modal-with-form col-lg-3 btn btn-danger fa fa-times"
                                 title="Tolak" href="#modaltolak<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
+                        <?php }
+                        else if($po_sup[$x]['status_po'] == 3 && $_SESSION['nama_departemen']=='Purchasing' && $_SESSION['nama_jabatan']=='Admin'){ ?>
+                            <a class="modal-with-form col-lg-3 btn btn-success fa fa-check"
+                                title="Selesaikan" href="#modalselesai<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
+                        <?php }
+                        else if($po_sup[$x]['status_po'] == 3 && $_SESSION['nama_departemen']=='Management' && $_SESSION['nama_jabatan']=='Direktur'){ ?>
+                            <a class="modal-with-form col-lg-3 btn btn-success fa fa-check"
+                                title="Selesaikan" href="#modalselesai<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
                         <?php } ?>
                     </td>
                 </tr>
                 <?php 
                     }   }
                     if ($status == 1 || $status == 3){
-                        if($po_sup[$x]['status_po'] == 3){
+                        if($po_sup[$x]['status_po'] == 4){
                 ?>
                 <tr>
                     <td> <?php echo $po_sup[$x]['kode_purchase_order_supplier'] ?> </td>
@@ -96,7 +106,7 @@
                     <td> <?php echo $po_sup[$x]['tanggal_po'] ?> </td>
                     <td>
                         <?php
-                            if($po_sup[$x]['status_po'] == 3){
+                            if($po_sup[$x]['status_po'] == 4){
                                 echo "Selesai";
                             }
                         ?>
@@ -104,8 +114,6 @@
                     <td>
                         <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="<?php echo base_url() . 'PurchaseOrderSupplier/detail/' . $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
-                        <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                            title="Edit" href="#modaledit<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
                         <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
                             title="Hapus" href="#modalhapus<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
 
@@ -116,7 +124,7 @@
                 <?php
                     }   }
                     if ($status == 2 || $status == 3){
-                        if($po_sup[$x]['status_po'] == 4 || $po_sup[$x]['status_po'] == 5){
+                        if($po_sup[$x]['status_po'] == 5 || $po_sup[$x]['status_po'] == 6){
                 ?>
                 <tr>
                     <td> <?php echo $po_sup[$x]['kode_purchase_order_supplier'] ?> </td>
@@ -124,9 +132,9 @@
                     <td> <?php echo $po_sup[$x]['tanggal_po'] ?> </td>
                     <td>
                         <?php
-                            if($po_sup[$x]['status_po'] == 4){
+                            if($po_sup[$x]['status_po'] == 5){
                                 echo "Batal";
-                            } else if($po_sup[$x]['status_po'] == 5){
+                            } else if($po_sup[$x]['status_po'] == 6){
                                 echo "Persetujuan Ditolak";
                             }
                         ?>
@@ -186,30 +194,35 @@
                                             <option value="0"
                                                 <?php if($po_sup[$x]['status_po'] == 0){
                                                     echo "selected";
-                                                }?>> Menunggu Persetujuan
+                                                }?>> Menunggu Persetujuan Direktur
                                             </option>
                                             <option value="1"
                                                 <?php if($po_sup[$x]['status_po'] == 1){
                                                     echo "selected";
-                                                }?>> Disetujui, Belum Diproses
+                                                }?>> Disetujui, Belum Dikirim ke Supplier
                                             </option>
                                             <option value="2"
                                                 <?php if($po_sup[$x]['status_po'] == 2){
                                                     echo "selected";
-                                                }?>> Sedang Diproses
+                                                }?>> Dikirim, Menunggu Konfirmasi Supplier
                                             </option>
                                             <option value="3"
                                                 <?php if($po_sup[$x]['status_po'] == 3){
                                                     echo "selected";
-                                                }?>> Selesai
+                                                }?>> Sedang Diproses
                                             </option>
                                             <option value="4"
                                                 <?php if($po_sup[$x]['status_po'] == 4){
                                                     echo "selected";
-                                                }?>> Batal
+                                                }?>> Selesai
                                             </option>
                                             <option value="5"
                                                 <?php if($po_sup[$x]['status_po'] == 5){
+                                                    echo "selected";
+                                                }?>> Batal
+                                            </option>
+                                            <option value="6"
+                                                <?php if($po_sup[$x]['status_po'] == 6){
                                                     echo "selected";
                                                 }?>> Persetujuan Ditolak
                                             </option>
@@ -239,6 +252,70 @@
                 <!-- ****************************** END MODAL EDIT **************************** -->
                 <!-- ************************************************************************** -->
 
+
+                
+                <!-- ******************************* MODAL HAPUS ****************************** -->
+                <!-- ************************************************************************** -->
+                <div id='modalhapus<?php echo $po_sup[$x]['id_purchase_order_supplier']?>' class="modal-block modal-block-primary mfp-hide">
+                    <section class="panel">
+                        <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PurchaseOrderSupplier/hapus_po" method="post">
+                            <header class="panel-heading">
+                                <h2 class="panel-title">Hapus Data PO Supplier</h2>
+                            </header>
+
+                            <div class="panel-body" style="color: black">
+                                <input type="hidden" name="id_po_supplier" class="form-control" value="<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>" readonly>
+                            
+                                Apakah anda yakin akan menghapus data PO Supplier dengan Nomor PO <b><?php echo $po_sup[$x]['kode_purchase_order_supplier']?></b>?
+                            </div>
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <input type="submit" class="btn btn-danger" value="Hapus">
+                                        <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </form>
+                    </section>
+                </div>
+                <!-- ***************************** END MODAL HAPUS **************************** -->
+                <!-- ************************************************************************** -->
+
+
+
+                <!-- ****************************** MODAL DITOLAK ***************************** -->
+                <!-- ************************************************************************** -->
+                <div id='modaltolak<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>' class="modal-block modal-block-md mfp-hide">
+                    <section class="panel">
+                        <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PurchaseOrderSupplier/setuju_po" method="post">
+                            
+                            <header class="panel-heading">
+                                <h2 class="panel-title">Menolak PO Supplier</h2>
+                            </header>
+
+                            <div class="panel-body">
+                                <input type="hidden" name="id_po_supplier" class="form-control" value="<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>" readonly>
+                                <input type="hidden" name="status" class="form-control" value="6" readonly>
+                                
+                                Apakah anda yakin akan menolak PO Supplier dengan No. PO <b><?php echo $po_sup[$x]['kode_purchase_order_supplier'] ?></b>?
+
+                            </div>
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <input type="submit" class="btn btn-primary" value="Simpan">
+                                        <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </form>
+                    </section>
+                </div>
+                <!-- ***************************** END MODAL DITOLAK ************************** -->
+                <!-- ************************************************************************** -->
+
+                
 
                 <!-- ****************************** MODAL SETUJU ***************************** -->
                 <!-- ************************************************************************** -->
@@ -273,139 +350,43 @@
                 <!-- ************************************************************************** -->
 
 
+
+                <!-- ****************************** MODAL SELESAI ***************************** -->
+                <!-- ************************************************************************** -->
+                <div id='modalselesai<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>' class="modal-block modal-block-md mfp-hide">
+                    <section class="panel">
+                        <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PurchaseOrderSupplier/setuju_po" method="post">
+                            
+                            <header class="panel-heading">
+                                <h2 class="panel-title">Selesaikan PO Supplier</h2>
+                            </header>
+
+                            <div class="panel-body">
+                                <input type="hidden" name="id_po_supplier" class="form-control" value="<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>" readonly>
+                                <input type="hidden" name="status" class="form-control" value="4" readonly>
+                                
+                                Apakah anda yakin akan menyelesaikan PO Supplier dengan No. PO <b><?php echo $po_sup[$x]['kode_purchase_order_supplier'] ?></b>?
+                                <br> PO Supplier ini tidak akan dapat diedit kembali.
+
+                            </div>
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <input type="submit" class="btn btn-primary" value="Selesaikan">
+                                        <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </form>
+                    </section>
+                </div>
+                <!-- **************************** END MODAL SELESAI *************************** -->
+                <!-- ************************************************************************** -->
+
             <?php } ?>
             </tbody>
         </table>
     </div>
-
-    <!-- ****************************** MODAL DETAIL ****************************** -->
-    <!-- ************************************************************************** -->
-    <div id='modaldetail' class="modal-block modal-block-lg mfp-hide">
-        <section class="panel">
-            <header class="panel-heading">
-                <h2 class="panel-title">Detail PO Customer</h2>
-            </header>
-
-            <div class="panel-body">
-                <input type="hidden" name="id_user" class="form-control" value="" readonly>
-                
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">No. PO</label>
-                    <div class="col-sm-9">
-                        <input type="text" name="nama" class="form-control"
-                        value="POC-1" readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">Tanggal PO</label>
-                    <div class="col-sm-9">
-                        <input type="text" name="nama" class="form-control"
-                        value="1 Juni 2020" readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">Customer</label>
-                    <div class="col-sm-9">
-                        <input type="text" name="email" class="form-control"
-                        value="INOAC" readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">Status</label>
-                    <div class="col-sm-9">
-                        <input type="text" name="status" class="form-control"
-                        value="Disetujui, belum ditindaklanjuti" readonly>
-                    </div>
-                </div>
-
-                <div class="form-group mt-lg ">
-                    <div class="col-sm-12">
-                        <table class="table table-bordered table-striped mb-none" id="datatable-default">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Kode Barang</th>
-                                    <th>Nama Barang</th>
-                                    <th>Jumlah</th>
-                                    <th>Satuan</th>
-                                    <th>Harga Satuan</th>
-                                    <th>Total Harga</th>
-                                    <th>Tanggal Penerimaan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="col-1">1 </td>
-                                    <td class="col-lg-1"> BRG23 </td>
-                                    <td class="col-lg-2"> Kasur </td>
-                                    <td class="col-lg-1"> 15 </td>
-                                    <td class="col-lg-1"> pc </td>
-                                    <td class="col-lg-2"> 100.000</td>
-                                    <td class="col-lg-2"> 1.500.000</td>
-                                    <td class="col-lg-2"> 12 Juni 2020</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-1">2 </td>
-                                    <td class="col-lg-1"> BRG16 </td>
-                                    <td class="col-lg-2"> Matras </td>
-                                    <td class="col-lg-1"> 10 </td>
-                                    <td class="col-lg-1"> pc </td>
-                                    <td class="col-lg-2"> 100.000</td>
-                                    <td class="col-lg-2"> 1.000.000</td>
-                                    <td class="col-lg-2"> 15 Juni 2020</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <br>
-                    </div>
-                </div>
-                
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">Harga Sebelum Pajak</label>
-                    <div class="col-sm-9">
-                        <input type="text" name="email" class="form-control"
-                        value="2.500.000" readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">PPN</label>
-                    <div class="col-sm-9">
-                        <input type="text" name="status" class="form-control"
-                        value="250.000" readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">Total harga</label>
-                    <div class="col-sm-9">
-                        <input type="text" name="status" class="form-control"
-                        value="2.750.000" readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">Keterangan</label>
-                    <div class="col-sm-9">
-                        <input type="text" name="status" class="form-control"
-                        value="-" readonly>
-                    </div>
-                </div>
-            </div>
-            <footer class="panel-footer">
-                <div class="row">
-                    <div class="col-md-12 text-right">
-                        <button type="button" class="btn btn-default modal-dismiss">OK</button>
-                    </div>
-                </div>
-            </footer>
-        </section>
-    </div>
-    <!-- **************************** END MODAL DETAIL **************************** -->
-    <!-- ************************************************************************** -->
-
-
-    
-
-
-
 
 
     <!-- ******************************* MODAL BELI ******************************* -->

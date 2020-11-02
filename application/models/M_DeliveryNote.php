@@ -80,7 +80,7 @@ class M_DeliveryNote extends CI_Model {
         return $this->db->query("SELECT * FROM purchase_order_supplier a
         JOIN detail_purchase_order_supplier b ON a.id_purchase_order_supplier = b.id_purchase_order_supplier
         JOIN supplier c ON a.id_supplier = c.id_supplier
-        WHERE a.status_delete=0 AND b.status_delete=0
+        WHERE a.status_delete=0 AND b.status_delete=0 AND a.status_po=3
         GROUP BY a.id_purchase_order_supplier");
     }
 
