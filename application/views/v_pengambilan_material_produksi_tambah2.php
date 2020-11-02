@@ -275,7 +275,6 @@
     }
 </script>
 
-
 <!-- detail permintaan material -->
 <script>
     $('.bdet_klik').click(function(){
@@ -333,7 +332,7 @@
                             $jumlah_sebelum+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['detpermat'][$i]['satuan_ukuran']+
+                            respond['detpermat'][$i]['satuan_keluar']+
                         '</td>'+
                     '</tr>';
                 }
@@ -441,6 +440,7 @@
                     '<tr>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             ($i+1)+
+                            '<input type="hidden" id="stat_km'+$i+'" value="'+respond['detpermat'][$i]['status_konsumsi']+'" >'+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             '<input type="hidden" name="id_det_permat'+$i+'" value="'+respond['detpermat'][$i]['id_detail_permintaan_material']+'">'+
@@ -461,10 +461,10 @@
                             $wip+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            '<center><input type="number" min="0" class="form-control" name="ambil'+$i+'" id="ambil'+$i+'" oninput="cek()"></center>'+
+                            '<center><input type="number" min="0" step=".01" class="form-control" name="ambil'+$i+'" id="ambil'+$i+'" oninput="cek()"></center>'+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['detpermat'][$i]['satuan_ukuran']+
+                            respond['detpermat'][$i]['satuan_keluar']+
                         '</td>'+
                     '</tr>';
                 }
@@ -521,6 +521,29 @@
             $("#tambah").prop('disabled',true);
         } else{
             cek();
+        }
+
+        //cek km, untuk cutting kain atau lainnya
+        $jumlah_detpermat = $("#jumlah_detpermat").val();
+        
+        if($("#keterangan_pengambilan").val() == 0){
+            for($i=0;$i<$jumlah_detpermat;$i++){
+                if($("#stat_km"+$i).val() == 0){
+                    $("#ambil"+$i).prop('disabled',false);
+                } else{
+                    $("#ambil"+$i).prop('disabled',true);
+                    $("#ambil"+$i).val(null);
+                }
+            }
+        } else{
+            for($i=0;$i<$jumlah_detpermat;$i++){
+                if($("#stat_km"+$i).val() == 1){
+                    $("#ambil"+$i).prop('disabled',false);
+                } else{
+                    $("#ambil"+$i).prop('disabled',true);
+                    $("#ambil"+$i).val(null);
+                }
+            }
         }
     }
 </script>

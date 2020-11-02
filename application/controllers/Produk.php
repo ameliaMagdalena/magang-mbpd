@@ -81,7 +81,7 @@ class Produk extends CI_Controller {
     public function tambah_produk(){
         $nama_produk       = $this->input->post('nama_produk_input');
         $kode_produk       = $this->input->post('kode_produk');
-        $harga_produk       = $this->input->post('harga_produk');
+        $harga_produk      = $this->input->post('harga_produk');
         $keterangan        = $this->input->post('keterangan');
         $id_jenis_produk   = $this->input->post('jenis_produk');
         $keterangan_warna  = $this->input->post('keterangan_warna');
@@ -154,6 +154,7 @@ class Produk extends CI_Controller {
             if($jumlah_material > 0){
                 $id_material = $this->input->post('idmat'.$i);
                 $id_line     = $this->input->post('idline'.$i);
+                $status_km   = $this->input->post('stat_km'.$i);
 
                 $total_km  = $this->M_Produk->select_all_km()->num_rows();
                 $id_kms    = $total_km +1;
@@ -165,6 +166,7 @@ class Produk extends CI_Controller {
                     'id_sub_jenis_material'=> $id_material,
                     'id_line'              => $id_line,
                     'jumlah_konsumsi'      => $jumlah_material,
+                    'status_konsumsi'      => $status_km,
                     'user_add'             => $_SESSION['id_user'],
                     'waktu_add'            => $now,
                     'status_delete'        => 0

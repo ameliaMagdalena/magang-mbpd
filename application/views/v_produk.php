@@ -368,7 +368,7 @@
     </div>
 
     <div class="modal" id="modaldetail" role="dialog">
-        <div class="modal-dialog modal-xl" style="width:50%">
+        <div class="modal-dialog modal-xl" style="width:60%">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title"><b>Detail Produk</b></h4>
@@ -587,7 +587,6 @@
 
             $("#"+id).val("Not-Selected");
             document.getElementById("div"+id).style.display = "none";
-            //alert(id);
     });
 </script>
 
@@ -1325,7 +1324,7 @@
                 for($i=0;$i<$jumlah_material;$i++){
                     $id_material   = respond['materials'][$i]['id_sub_jenis_material'];
                     $nama_material = respond['materials'][$i]['nama_sub_jenis_material'];
-                    $satuan_konsumsi = respond['materials'][$i]['satuan_ukuran'];
+                    $satuan_konsumsi = respond['materials'][$i]['satuan_keluar'];
 
                     $tampung_material = $tampung_material + 
                     '<option value="'+$id_material+'">'+
@@ -1372,6 +1371,19 @@
                 $jumlah_saat_ini_ = $jumlah_km + 1;
                 $jumlah_saat_ini  = $jumlah_saat_ini_.length;
 
+                $isi_stat_km = "";
+
+                if($nama_line == "Line Sewing"){
+                    $isi_stat_km = 
+                    '<select class="form-control" name="stat_km_sewing'+$jumlah_saat_ini+'" id="stat_km_sewing'+$jumlah_saat_ini+'" onchange="ganti_stat_km_sewing(this)">'+
+                        '<option value="0">Cutting Kain</option>'+
+                        '<option value="1">Lainnya</option>'+
+                    '</select>'+
+                    '<input type="text" class="form-control" name="stat_km'+$jumlah_saat_ini+'" id="stat_km'+$jumlah_saat_ini+'" value="0">';
+                } else{
+                    $isi_stat_km ='<input type="text" class="form-control" name="stat_km'+$jumlah_saat_ini+'" id="stat_km'+$jumlah_saat_ini+'" value="1">';
+                }
+
                 $isinya ='<div id="divkm'+$jumlah_saat_ini+'">'+
                     '<tr>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
@@ -1388,7 +1400,8 @@
                             $nama_line+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            '<input type="number" min="1" class="form-control" name="jmmat'+$jumlah_saat_ini+'" id="jmmat'+$jumlah_saat_ini+'" required>'+
+                            '<input type="number" min="1" step=".01" class="form-control" name="jmmat'+$jumlah_saat_ini+'" id="jmmat'+$jumlah_saat_ini+'" required>'+
+                            $isi_stat_km+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             '<input type="hidden" class="form-control" id="skmat'+$jumlah_saat_ini+'" value="'+$satuan_konsumsi+'" >'+
@@ -1410,8 +1423,8 @@
                 }
 
                 if($hitung == 0){
-                        //tampung yang lama
-                        $lama = "";
+                    //tampung yang lama
+                    $lama = "";
                     
                     for($i=1;$i<=$jumlah_km.length;$i++){
                         $tampung_idmat  = $("#idmat"+$i).val();
@@ -1420,6 +1433,29 @@
                         $tampung_nmline = $("#nmline"+$i).val();
                         $tampung_jmmat  = $("#jmmat"+$i).val();
                         $tampung_skmat  = $("#skmat"+$i).val();
+
+                        $stat_km_sewing = $("#stat_km_sewing"+$i).val();
+                        $stat_km        = $("#stat_km"+$i).val();
+
+                        $isi_stat_km = "";
+
+                        if($tampung_nmline == "Line Sewing"){
+                            if($stat_km_sewing == 0){
+                                $optionnya = '<option value="0" selected>Cutting Kain</option>'+
+                                '<option value="1">Lainnya</option>';
+                            } else{
+                                $optionnya = '<option value="0" selected>Cutting Kain</option>'+
+                                '<option value="1" selected>Lainnya</option>';
+                            }
+
+                            $isi_stat_km = 
+                            '<select class="form-control" name="stat_km_sewing'+$i+'" id="stat_km_sewing'+$i+'" onchange="ganti_stat_km_sewing(this)">'+
+                                $optionnya+
+                            '</select>'+
+                            '<input type="text" class="form-control" name="stat_km'+$i+'" id="stat_km'+$i+'" value="'+$stat_km+'">';
+                        } else{
+                            $isi_stat_km ='<input type="text" class="form-control" name="stat_km'+$i+'" id="stat_km'+$i+'" value="1">';
+                        }
 
                         $lama = $lama + 
                         '<div id="divkm'+$i+'">'+
@@ -1438,7 +1474,8 @@
                                     $tampung_nmline+
                                 '</td>'+
                                 '<td style="text-align: center;vertical-align: middle;">'+
-                                    '<input type="number" min="1" class="form-control" name="jmmat'+$i+'" id="jmmat'+$i+'" value="'+$tampung_jmmat+'" required>'+
+                                    '<input type="number" min="1" step=".01" class="form-control" name="jmmat'+$i+'" id="jmmat'+$i+'" value="'+$tampung_jmmat+'" required>'+
+                                    $isi_stat_km+
                                 '</td>'+
                                 '<td style="text-align: center;vertical-align: middle;">'+
                                     '<input type="hidden" class="form-control" id="skmat'+$i+'" value="'+$tampung_skmat+'" >'+
@@ -1450,6 +1487,19 @@
 
                     $jumlah_saat_ini_ = $jumlah_km + 1;
                     $jumlah_saat_ini  = $jumlah_saat_ini_.length;
+
+                    $isi_stat_km = "";
+
+                    if($nama_line == "Line Sewing"){
+                        $isi_stat_km = 
+                        '<select class="form-control" name="stat_km_sewing'+$jumlah_saat_ini+'" id="stat_km_sewing'+$jumlah_saat_ini+'" onchange="ganti_stat_km_sewing(this)">'+
+                            '<option value="0">Cutting Kain</option>'+
+                            '<option value="1">Lainnya</option>'+
+                        '</select>'+
+                        '<input type="text" class="form-control" name="stat_km'+$jumlah_saat_ini+'" id="stat_km'+$jumlah_saat_ini+'" value="0">';
+                    } else{
+                        $isi_stat_km ='<input type="text" class="form-control" name="stat_km'+$jumlah_saat_ini+'" id="stat_km'+$jumlah_saat_ini+'" value="1">';
+                    }
 
                     $isinya = $lama +
                     '<div id="divkm'+$jumlah_saat_ini+'">'+
@@ -1468,7 +1518,8 @@
                                 $nama_line+
                             '</td>'+
                             '<td style="text-align: center;vertical-align: middle;">'+
-                                '<input type="number" min="1" class="form-control" name="jmmat'+$jumlah_saat_ini+'" id="jmmat'+$jumlah_saat_ini+'" required>'+
+                                '<input type="number" min="1" step=".01" class="form-control" name="jmmat'+$jumlah_saat_ini+'" id="jmmat'+$jumlah_saat_ini+'" required>'+
+                                $isi_stat_km+
                             '</td>'+
                             '<td style="text-align: center;vertical-align: middle;">'+
                                 '<input type="hidden" class="form-control" id="skmat'+$jumlah_saat_ini+'" value="'+$satuan_konsumsi+'" >'+
@@ -1663,6 +1714,33 @@
             $("#simpan").prop('disabled',true);
         }
     
+    }
+</script>
+
+<!-- ganti status konsumsi material untuk line sewing -->
+<script>
+    function ganti_stat_km_sewing(obj){
+        var id = obj.id;
+        var length = id.length;
+
+        //1 angka
+        if(length == 15){
+            var ke = id.charAt(14);
+        } 
+        //jika 2 angka
+        else if(length == 16){
+            var ke = id.charAt(15);
+        }
+        //jika 3 angka
+        else if(length == 17){
+            var ke = id.charAt(16);
+        }
+
+        if($("#"+id).val() == 0){
+            $("#stat_km"+ke).val(0);
+        } else if($("#"+id).val() == 1){
+            $("#stat_km"+ke).val(1);
+        }
     }
 </script>
 
@@ -1883,6 +1961,12 @@
                 $jumlah_km = respond['jumlah_km'];
 
                 for($i=1;$i<=$jumlah_km;$i++){
+                    if(respond['konsumsi_material'][$i-1]['status_konsumsi'] == 0){
+                        $status_km = "Cutting Kain";
+                    }else{
+                        $status_km = "Lainnya";
+                    }
+
                     $isi_km = $isi_km +
                     '<tr>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
@@ -1898,7 +1982,10 @@
                             respond['konsumsi_material'][$i-1]['jumlah_konsumsi']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['konsumsi_material'][$i-1]['satuan_ukuran']+
+                            respond['konsumsi_material'][$i-1]['satuan_keluar']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            $status_km+
                         '</td>'+
                     '</tr>';
                 }
@@ -1912,6 +1999,7 @@
                             '<th  class="col-md-3" style="text-align: center;vertical-align: middle;">Nama Line</th>'+
                             '<th  class="col-md-3" style="text-align: center;vertical-align: middle;">Jumlah Material</th>'+
                             '<th  class="col-md-3" style="text-align: center;vertical-align: middle;">Satuan Konsumsi</th>'+
+                            '<th  class="col-md-3" style="text-align: center;vertical-align: middle;">Status Konsumsi</th>'+
                         '</tr>'+
                     '</thead>'+
                     '<tbody>'+
@@ -1926,3 +2014,4 @@
 
      });
 </script>
+

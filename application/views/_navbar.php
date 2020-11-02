@@ -576,6 +576,34 @@
 								</ul>
 							</li>
 							<li class="nav-parent">
+								<a>
+									<i class="fa fa-th-list" aria-hidden="true"></i>
+									<span>Laporan Perencanaan Cutting</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?= base_url()?>laporanPerencanaanCutting/semua">
+											<span>Semua</span>
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+											<span>Belum Ada Laporan </span>
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+											<span>Sudah Ada Laporan</span>
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+											<span>Selesai </span>
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-parent">
 								<a title="Surat Perintah Lembur">
 									<i class="fa  fa-file-text" aria-hidden="true"></i>
 									<span>Surat Perintah Lembur</span>
@@ -1060,6 +1088,39 @@
 									<li>
 										<a href="<?= base_url()?>hasilProduksi/selesai_hasil_produksi">
 											<span>Selesai</span>
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-th-list" aria-hidden="true"></i>
+									<span>Laporan Perencanaan Cutting</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+											<span>+ Laporan Perencanaan Cutting </span>
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>laporanPerencanaanCutting/semua">
+											<span>Semua</span>
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+											<span>Belum Ada Laporan </span>
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+											<span>Sudah Ada Laporan</span>
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+											<span>Selesai </span>
 										</a>
 									</li>
 								</ul>

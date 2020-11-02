@@ -39,6 +39,12 @@ class M_PengambilanMaterialProduksi extends CI_Model {
         AND sub_jenis_material.id_sub_jenis_material=konsumsi_material.id_sub_jenis_material");
     }
 
+    function get_one_permat_by_detpermat($id_detail_permat){
+        return $this->db->query("SELECT * FROM permintaan_material,detail_permintaan_material 
+        WHERE detail_permintaan_material.id_detail_permintaan_material='$id_detail_permat'
+        AND permintaan_material.id_permintaan_material=detail_permintaan_material.id_permintaan_material ");
+    }
+
     function get_pengmat_sebelum(){
         return $this->db->query("SELECT pengambilan_material.id_detail_permintaan_material, 
         SUM(pengeluaran_material.jumlah_keluar) AS jumlah_keluar
@@ -57,5 +63,26 @@ class M_PengambilanMaterialProduksi extends CI_Model {
 
     function get_last_ammat_id($id_code){
         return $this->db->query("SELECT id_pengambilan_material FROM pengambilan_material WHERE id_pengambilan_material LIKE '$id_code%' ORDER BY id_pengambilan_material DESC LIMIT 1");
+    }
+
+    function get_karyawan($user){
+        return $this->db->query("SELECT * FROM user,karyawan WHERE user.id_user='$user' AND user.id_karyawan=karyawan.id_karyawan ");
+    }
+
+    function get_one_detail_prodline($tanggal,$id_line,$id_detpo){
+        return $this->db->query("SELECT detail_produksi_line.id_detail_produksi_line, detail_produksi_line.jumlah_item_perencanaan 
+        FROM produksi,produksi_line,detail_produksi_line WHERE
+        produksi.tanggal='$tanggal' AND produksi_line.id_line='$id_line' AND detail_produksi_line.id_detail_purchase_order='$id_detpo'
+        AND detail_produksi_line.status_delete='0'  AND produksi.id_produksi=produksi_line.id_produksi 
+        AND produksi_line.id_produksi_line=detail_produksi_line.id_produksi_line ");
+    }
+
+    function get_one_perencanaan_cutting($tanggal_pc,$id_det_prodline){
+        return $this->db->query("SELECT * FROM perencanaan_cutting WHERE tanggal='$tanggal_pc' 
+        AND id_detail_produksi_line='$id_det_prodline' AND perencanaan_cutting.status_delete='0' ");
+    }
+
+    function get_last_pcut_id($id_code){
+        return $this->db->query("SELECT id_perencanaan_cutting FROM perencanaan_cutting WHERE id_perencanaan_cutting LIKE '$id_code%' ORDER BY id_perencanaan_cutting DESC LIMIT 1");
     }
 }

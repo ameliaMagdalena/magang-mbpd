@@ -72,7 +72,11 @@ class PengambilanMaterialProduksi extends CI_Controller {
       $status_pengambilan = $this->input->post("status_pengambilan");
 
       $user = $_SESSION['id_user'];
-      $now  = date('Y-m-d');
+      $now  = date('Y-m-d H:i:s');
+
+      $karyawan    = $this->M_PengambilanMaterialProduksi->get_karyawan($user)->result_array();
+      $id_karyawan = $karyawan[0]['id_karyawan'];
+
 
       for($i=0;$i<$jumlah;$i++){
         $id_detail_permat = $this->input->post("id_det_permat".$i);
@@ -208,7 +212,7 @@ class PengambilanMaterialProduksi extends CI_Controller {
 
               $data_pengambilan_material = array(
                 'id_pengambilan_material'       => $id_ammat_baru,
-                'id_karyawan'                   => $user,
+                'id_karyawan'                   => $id_karyawan,
                 'id_detail_permintaan_material' => $id_detail_permat,
                 'id_pengeluaran_material'       => $id_lumat_baru,
                 'status_pengambilan'            => $status_pengambilan,
@@ -218,12 +222,100 @@ class PengambilanMaterialProduksi extends CI_Controller {
               );
 
               $this->M_PengambilanMaterialProduksi->insert('pengambilan_material',$data_pengambilan_material);
+
+              //jika pengambilan untuk cutting kain, maka input perencanaan cutting kain
+              if($status_pengambilan == 0){
+                //cari perencanaan cutting sebelumnya
+                $tanggal_pc              = date('Y-m-d');
+
+                $permintaan_material = $this->M_PengambilanMaterialProduksi->get_one_permat_by_detpermat($id_detail_permat)->result_array();
+
+                $tanggal_produksi                  = $permintaan_material[0]['tanggal_produksi'];
+                $id_line                           = $permintaan_material[0]['id_line'];
+                $id_detail_purchase_order_customer = $permintaan_material[0]['id_detail_purchase_order_customer'];
+
+                $det_prodline    = $this->M_PengambilanMaterialProduksi->get_one_detail_prodline($tanggal_produksi,$id_line,$id_detail_purchase_order_customer)->result_array();
+                $id_det_prodline = $det_prodline[0]['id_detail_produksi_line'];
+                $jumlah_item_perencanaan = $det_prodline[0]['jumlah_item_perencanaan'];
+
+                $perencanaan_cutting = $this->M_PengambilanMaterialProduksi->get_one_perencanaan_cutting($tanggal_pc,$id_det_prodline)->num_rows();
+
+                //jika belum ada, tambahkan baru
+                if($perencanaan_cutting == 0){
+                  //PCUT2010.00000
+                  $idcode_pcut = "PCUT".$tahun_sekarangnya.$bulan_sekarangnya.".";
+
+                  $id_pcut_last     = $this->M_PengambilanMaterialProduksi->get_last_pcut_id($idcode_pcut)->result_array();
+                  $id_pcut_last_cek = $this->M_PengambilanMaterialProduksi->get_last_pcut_id($idcode_pcut)->num_rows();
+      
+                  if($id_pcut_last_cek == 1){
+                      $id_terakhirnya    = $id_pcut_last[0]['id_perencanaan_cutting'];
+      
+                      $tahun_sebelumnya  = substr($id_terakhirnya,4,2);
+                      $bulan_sebelumnya  = substr($id_terakhirnya,6,2);
+                              
+                      //kalau tahun sama
+                      if($tahun_sebelumnya == $tahun_sekarangnya){
+                          //kalau tahun & bulannya sama berarti count+1
+                          if($bulan_sebelumnya == $bulan_sekarangnya){
+                              $countnya = intval(substr($id_terakhirnya,9,5)) + 1;
+                              $pjgnya   = strlen($countnya);
+                  
+                              if($pjgnya == 1){
+                                  $countnya_baru = "0000".$countnya;
+                              }
+                              else if($pjgnya == 2){
+                                  $countnya_baru = "000".$countnya;
+                              }
+                              else if($pjgnya == 3){
+                                  $countnya_baru = "00".$countnya;
+                              }
+                              else if($pjgnya == 4){
+                                  $countnya_baru = "0".$countnya;
+                              }
+                              else{
+                                  $countnya_baru = $countnya;
+                              }
+                              
+                              //id yang baru
+                              $id_pcut_baru = "PCUT".$tahun_sebelumnya.$bulan_sebelumnya.".".$countnya_baru;
+                          }
+                          //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                          else{
+                              //id yang baru
+                              $id_pcut_baru = "PCUT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
+                          }
+                      }
+                      //kalau tahun tidak sama
+                      else{
+                          //id yang baru
+                          $id_pcut_baru = "PCUT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
+                      }
+                  }
+                  else{
+                      //id yang baru
+                      $id_pcut_baru = "PCUT".$tahun_sekarangnya.$bulan_sekarangnya.".00001";
+                  }
+
+                  $data_perencanaan_cutting = array(
+                    'id_perencanaan_cutting' => $id_pcut_baru,
+                    'id_detail_produksi_line'=> $id_det_prodline,
+                    'tanggal'                => $tanggal_pc,
+                    'jumlah_perencanaan'     => $jumlah_item_perencanaan,
+                    'status_laporan'         => 0,
+                    'user_add'               => $user,
+                    'waktu_add'              => $now,
+                    'status_delete'          => 0
+                  );
+
+                  $this->M_PengambilanMaterialProduksi->insert('perencanaan_cutting',$data_perencanaan_cutting);
+                }
+              }
             } else{
               //potong wip dulu
               //input
             }
           }
-
 
         /*
           $data_pengeluaran_material = array(
@@ -253,7 +345,7 @@ class PengambilanMaterialProduksi extends CI_Controller {
           $this->M_PengambilanMaterialProduksi->insert('pengambilan_material',$data_pengambilan_material);
         */
       }
-      
+      redirect('pengambilanMaterialProduksi/tambah');
     }
 
 

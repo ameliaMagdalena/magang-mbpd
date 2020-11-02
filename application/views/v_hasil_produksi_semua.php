@@ -256,7 +256,7 @@
                                     
                                         <!--
                                         <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                            value="<?= $no;?>" title="Edit"></button>
+                                            value="<?= $no;?>" title="Edit"></button>s
                                         -->
                                     <?php } ?>
                                     <?php if($p->status_laporan == 2 && $_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi"){?>
@@ -505,7 +505,7 @@
 
     <!-- modal se7 -->
     <div class="modal" id="modalse7" role="dialog">
-        <div class="modal-dialog modal-xl" style="width:35%">
+        <div class="modal-dialog modal-xl" style="width:80%">
             <form method="POST" action="<?= base_url()?>hasilProduksi/konfirmasi_ppic">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -514,9 +514,17 @@
                     <div class="modal-body">
                         <input type="hidden" name="id_produksinya" id="id_produksinya">
                         <p>Apakah anda yakin akan menerima laporan hasil produksi dengan tanggal produksi <span id="tanggal_produksinya"></span>?</p>
+                        <br>
+                        
+                        <h4><b>Konsumsi Material</b></h4>
+                        <div id="konsumsi_material"></div>
+                        <div id="alert" type="hidden">
+                            <p><span style="color:red">* </span><b>Mohon maaf, proses konfirmasi tidak dapat dilanjutkan karena data laporan hasil
+                            produksi dengan data pengambilan material tidak sesuai.</b></p>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" id="edit" class="btn btn-primary" value="Simpan">
+                        <input type="submit" id="setuju" class="btn btn-primary" value="Simpan">
                         <input type="button" class="btn btn-default modal-dismiss" value="Batal" onclick="reload()">
                     </div>
                 </div>
@@ -1286,10 +1294,198 @@
         var id      = $("#id"+no).val();
         var tgl      = $("#tgl"+no).val();
 
-        $("#id_produksinya").val(id);
-        $("#tanggal_produksinya").html(tgl);
+                
+        $.ajax({
+            type:"post",
+            url:"<?php echo base_url() ?>hasilProduksi/konsumsi_material",
+            dataType: "JSON",
+            data: {id:id},
 
-        $("#modalse7").modal();
+            success: function(respond){
+                $("#id_produksinya").val(id);
+                $("#tanggal_produksinya").html(tgl);
+
+                //cek apakah ada permintaan_material yang minus dari yang seharusnya
+                $cek = 0;
+
+                $konsumsi_material = "";
+                $ke = 1;
+                for($i=0;$i<respond['jm_total_dpl'];$i++){
+                    $km_per_line = "";
+                    for($k=0;$k<respond['jm_dpl'];$k++){
+                        $isi_km = "";
+                        if(respond['total_dpl'][$i]['id_detail_produk'] == respond['dpl'][$k]['id_detail_produk'] && respond['total_dpl'][$i]['jumlah_produk'] != 0){
+                            //isi table konsumsi material
+                            $nomor = 1;
+                            for($t=0;$t<respond['jm_km'];$t++){
+                                if(respond['dpl'][$k]['id_produk'] == respond['km'][$t]['id_produk'] && respond['dpl'][$k]['id_line'] == respond['km'][$t]['id_line'] 
+                                && respond['dpl'][$k]['jumlah_item_aktual'] != 0 && respond['km'][$t]['status_konsumsi'] == 1){
+                                    $jumlah_konsumsi_seharusnya = respond['km'][$t]['jumlah_konsumsi'] * respond['dpl'][$k]['jumlah_item_aktual'];
+                                    
+                                    //material dari gudang material
+                                    $cari_pm = 0;
+                                    $material_gudang = 0;
+                                    for($p=0;$p<respond['jm_pm'];$p++){
+                                        if(respond['pm'][$p]['id_detail_purchase_order_customer'] == respond['dpl'][$k]['id_detail_purchase_order'] 
+                                            && respond['pm'][$p]['id_line'] == respond['dpl'][$k]['id_line'] 
+                                            && respond['pm'][$p]['id_konsumsi_material'] == respond['km'][$t]['id_konsumsi_material']){
+                                                $cari_pm++;
+                                                $material_gudang = respond['pm'][$p]['total_keluar'];
+                                        }
+                                    }
+
+                                    //material dari inventory line
+                                    $from_inli = 0;
+
+                                    //wipnya
+                                    $wip = $from_inli + $material_gudang - $jumlah_konsumsi_seharusnya;
+
+                                    if($wip < 0){
+                                        $cek++;
+                                    }
+                                    
+                                    $isi_km = $isi_km+
+                                    '<tr>'+
+                                        '<td>'+
+                                            '<center>'+$nomor+'</center>'+
+                                        '</td>'+
+                                        '<td>'+
+                                            '<center>'+respond['km'][$t]['nama_sub_jenis_material']+'</center>'+
+                                        '</td>'+
+                                        '<td>'+
+                                            '<center>'+respond['km'][$t]['jumlah_konsumsi']+'</center>'+
+                                        '</td>'+
+                                        '<td>'+
+                                            '<center>'+$jumlah_konsumsi_seharusnya+'</center>'+
+                                        '</td>'+
+                                        '<td>'+
+                                            '<center>'+0+'</center>'+
+                                        '</td>'+
+                                        '<td>'+
+                                            '<center>'+$material_gudang+'</center>'+
+                                        '</td>'+
+                                        '<td>'+
+                                            '<center>'+$wip+'</center>'+
+                                        '</td>'+
+                                    '</tr>';
+
+                                    $nomor++;
+                                }
+                            }
+
+                            $km_per_line = $km_per_line +
+                            respond['dpl'][$k]['nama_line']+' ('+respond['dpl'][$k]['jumlah_item_aktual']+' pcs)'+
+                            '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
+                                '<thead>'+
+                                    '<tr>'+
+                                        '<th style="text-align: center;vertical-align: middle;">'+
+                                            'No'+
+                                        '</th>'+
+                                        '<th style="text-align: center;vertical-align: middle;">'+
+                                            'Nama Material'+
+                                        '</th>'+
+                                        '<th style="text-align: center;vertical-align: middle;">'+
+                                            'Konsumsi Material'+
+                                        '</th>'+
+                                        '<th style="text-align: center;vertical-align: middle;">'+
+                                            'Konsumsi Seharusnya'+
+                                        '</th>'+
+                                        '<th style="text-align: center;vertical-align: middle;">'+
+                                            'Konsumsi Inventory Line'+
+                                        '</th>'+
+                                        '<th style="text-align: center;vertical-align: middle;">'+
+                                            'Konsumsi Gudang Material'+
+                                        '</th>'+
+                                        '<th style="text-align: center;vertical-align: middle;">'+
+                                            'Sisa Material Di Line'+
+                                        '</th>'+
+                                    '</tr>'+
+                                '</thead>'+
+                                '<tbody>'+
+                                    $isi_km+
+                                '</tbody>'+
+                            '</table><br>';
+
+                        }
+                    }
+
+                    //nama produk
+                        if(respond['total_dpl'][$i]['keterangan'] == 0){
+                            $id_ukuran = respond['total_dpl'][$i]['id_ukuran'];
+                            $id_warna  = respond['total_dpl'][$i]['id_warna'];
+
+                            for($l=0;$l<respond['jmukuran'];$l++){
+                                if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
+                                    $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
+                                    $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
+
+                                    $ukurannya = $nama_ukuran + $satuan_ukuran;
+                                }
+                            }
+
+                            for($k=0;$k<respond['jmwarna'];$k++){
+                                if(respond['warna'][$k]['id_warna'] == $id_warna){
+                                    $warnanya = respond['warna'][$k]['nama_warna'];
+                                }
+                            }
+
+                            $namanya = respond['total_dpl'][$i]['nama_produk'] + $ukurannya + " (" + $warnanya + " )";
+                        }
+                        else if(respond['total_dpl'][$i]['keterangan'] == 1){
+                            $id_ukuran = respond['total_dpl'][$i]['id_ukuran'];
+
+                            for($l=0;$l<respond['jmukuran'];$l++){
+                                if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
+                                    $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
+                                    $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
+
+                                    $ukurannya = $nama_ukuran + $satuan_ukuran;
+                                }
+                            }
+
+                            $namanya = respond['total_dpl'][$i]['nama_produk'] + $ukurannya;
+
+                        }
+                        else if(respond['total_dpl'][$i]['keterangan'] == 2){
+                            $id_warna  = respond['total_dpl'][$i]['id_warna'];
+
+                            for($k=0;$k<respond['jmwarna'];$k++){
+                                if(respond['warna'][$k]['id_warna'] == $id_warna){
+                                    $warnanya = respond['warna'][$k]['nama_warna'];
+                                }
+                            }
+
+                            $namanya = respond['total_dpl'][$i]['nama_produk'] + " (" + $warnanya + ")";
+                        }
+                        else{
+                            $namanya = respond['total_dpl'][$i]['nama_produk'];
+                        }
+                    //tutup nama produk
+
+                    if(respond['total_dpl'][$i]['jumlah_produk'] != 0){
+                        $konsumsi_material = $konsumsi_material +
+                        '<hr><h5><b>'+($ke)+'. '+$namanya+'</b></h5>'+
+                        $km_per_line;
+
+                        $ke++;
+                    }
+                }
+
+                $("#konsumsi_material").html($konsumsi_material);
+
+                if($cek != 0){
+                    $("#alert").show();
+                    $("#setuju").prop('disabled',true);
+                } else{
+                    $("#alert").hide();
+                    $("#setuju").prop('disabled',false);
+                }
+
+                alert($cek);
+
+                $("#modalse7").modal();
+            }
+        });
     });
 </script>
 
