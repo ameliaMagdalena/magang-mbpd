@@ -51,7 +51,7 @@
             <tbody>
                 <?php
                     for($x=0 ; $x<count($po_sup) ; $x++){
-                        if ($status == 0 || $status == 3){ 
+                        if ($status == 0 || $status == 3){ //dalam proses
                             if($po_sup[$x]['status_po'] == 0 || $po_sup[$x]['status_po'] == 1 || $po_sup[$x]['status_po'] == 2 || $po_sup[$x]['status_po'] == 3){
                 ?>
                 <tr>
@@ -85,11 +85,21 @@
                             <a class="modal-with-form col-lg-3 btn btn-danger fa fa-times"
                                 title="Tolak" href="#modaltolak<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
                         <?php }
-                        else if($po_sup[$x]['status_po'] == 3 && $_SESSION['nama_departemen']=='Purchasing' && $_SESSION['nama_jabatan']=='Admin'){ ?>
-                            <a class="modal-with-form col-lg-3 btn btn-success fa fa-check"
-                                title="Selesaikan" href="#modalselesai<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
+                        else if($po_sup[$x]['status_po'] == 1 && 
+                            (($_SESSION['nama_departemen']=='Purchasing' && $_SESSION['nama_jabatan']=='Admin') || 
+                            ($_SESSION['nama_departemen']=='Management' && $_SESSION['nama_jabatan']=='Direktur'))) { ?>
+                            <a class="modal-with-form col-lg-3 btn btn-success fa fa-upload"
+                                title="Terkirim" href="#modalkirim<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
                         <?php }
-                        else if($po_sup[$x]['status_po'] == 3 && $_SESSION['nama_departemen']=='Management' && $_SESSION['nama_jabatan']=='Direktur'){ ?>
+                        else if($po_sup[$x]['status_po'] == 2 && 
+                            (($_SESSION['nama_departemen']=='Purchasing' && $_SESSION['nama_jabatan']=='Admin') || 
+                            ($_SESSION['nama_departemen']=='Management' && $_SESSION['nama_jabatan']=='Direktur'))){ ?>
+                            <a class="modal-with-form col-lg-3 btn btn-success fa fa-check"
+                                title="Dikonfirmasi" href="#modalkonfirm<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
+                        <?php }
+                        else if($po_sup[$x]['status_po'] == 3 && 
+                            (($_SESSION['nama_departemen']=='Management' && $_SESSION['nama_jabatan']=='Direktur') || 
+                            ($_SESSION['nama_departemen']=='Purchasing' && $_SESSION['nama_jabatan']=='Admin'))){ ?>
                             <a class="modal-with-form col-lg-3 btn btn-success fa fa-check"
                                 title="Selesaikan" href="#modalselesai<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
                         <?php } ?>
@@ -381,6 +391,75 @@
                     </section>
                 </div>
                 <!-- **************************** END MODAL SELESAI *************************** -->
+                <!-- ************************************************************************** -->
+
+
+
+                <!-- ******************************** MODAL KIRIM ***************************** -->
+                <!-- ************************************************************************** -->
+                <div id='modalkirim<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>' class="modal-block modal-block-md mfp-hide">
+                    <section class="panel">
+                        <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PurchaseOrderSupplier/setuju_po" method="post">
+                            
+                            <header class="panel-heading">
+                                <h2 class="panel-title">Mengirim PO Supplier</h2>
+                            </header>
+
+                            <div class="panel-body">
+                                <input type="hidden" name="id_po_supplier" class="form-control" value="<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>" readonly>
+                                <input type="hidden" name="status" class="form-control" value="2" readonly>
+                                
+                                Apakah anda telah mengirimkan PO Supplier dengan No. PO <b><?php echo $po_sup[$x]['kode_purchase_order_supplier'] ?></b>
+                                kepada Supplier <b><?php echo $po_sup[$x]['nama_supplier'] ?></b>?
+
+                            </div>
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <input type="submit" class="btn btn-primary" value="Ya">
+                                        <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Tidak</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </form>
+                    </section>
+                </div>
+                <!-- ****************************** END MODAL KIRIM *************************** -->
+                <!-- ************************************************************************** -->
+
+
+
+                <!-- ****************************** MODAL KONFIRM ***************************** -->
+                <!-- ************************************************************************** -->
+                <div id='modalkonfirm<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>' class="modal-block modal-block-md mfp-hide">
+                    <section class="panel">
+                        <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PurchaseOrderSupplier/setuju_po" method="post">
+                            
+                            <header class="panel-heading">
+                                <h2 class="panel-title">Konfirmasi Oleh Supplier</h2>
+                            </header>
+
+                            <div class="panel-body">
+                                <input type="hidden" name="id_po_supplier" class="form-control" value="<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>" readonly>
+                                <input type="hidden" name="status" class="form-control" value="3" readonly>
+                                
+                                Supplier <b><?php echo $po_sup[$x]['nama_supplier'] ?></b> telah menyetujui dan memproses 
+                                PO Supplier dengan No. PO <b><?php echo $po_sup[$x]['kode_purchase_order_supplier'] ?></b>. 
+                                Status PO akan diubah menjadi <b>Sedang Diproses</b>.
+
+                            </div>
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <input type="submit" class="btn btn-primary" value="Simpan">
+                                        <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </form>
+                    </section>
+                </div>
+                <!-- **************************** END MODAL KONFIRM *************************** -->
                 <!-- ************************************************************************** -->
 
             <?php } ?>
