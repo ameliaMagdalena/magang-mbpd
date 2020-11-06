@@ -113,7 +113,7 @@ class LaporanPerencanaanCutting extends CI_Controller {
         $now  = date('Y-m-d H:i:s');
 
         //konfirmasi perencanaan cutting
-        //$this->M_LaporanPerencanaanCutting->konfirmasi_ppic($tanggal);
+        $this->M_LaporanPerencanaanCutting->konfirmasi_ppic($tanggal);
 
         //add di inventory line
         $jumlah_detail = $this->input->post('jumlah_detail_setuju');
@@ -130,7 +130,22 @@ class LaporanPerencanaanCutting extends CI_Controller {
 
                 //jika ditemukan
                 if($jm_cari_inline > 0){
+                    $id_inli                = $cari_inline[0]['id_inventory_line'];
+                    $total_material_sebelum = $cari_inline[0]['total_material'];
 
+                    $total_material_baru = $total_material_sebelum + $wip;
+
+                    $data_inventory_line = array(
+                        'total_material' => $total_material_baru,
+                        'user_edit'      => $user,
+                        'waktu_edit'     => $now
+                    );
+
+                    $where_inventory_line = array(
+                        'id_inventory_line' =>  $id_inli
+                    );
+
+                    $this->M_LaporanPerencanaanCutting->edit('inventory_line',$data_inventory_line,$where_inventory_line);
                 }
                 //jika tidak ada, maka
                 else{
@@ -146,31 +161,85 @@ class LaporanPerencanaanCutting extends CI_Controller {
                         'id_sub_jenis_material' => $id_sub_jm,
                         'total_material'        => $wip,
                         'user_add'              => $user,
-                        'waktu_add'             => $now
+                        'waktu_add'             => $now,
                         'status_delete'         => 0
                     );
-
-                   // $this->M_LaporanHasilProduksi->insert('inventory_line',$data_inline);
+                    $this->M_LaporanPerencanaanCutting->insert('inventory_line',$data_inline);
                 }
 
-                /*
-                $data_detail_inline = array(
-                        'id_detail_inventory_line' =>
-                        'id_inventory_line'        =>
-                        'tanggal'                  => $tanggal,
-                        'jumlah_material'          => $wip,
-                        'status'                   => 0,
-                        'user_add'                 => $user,
-                        'waktu_add'                => $now,
-                        'status_delete'            => 0
-                );
+                //DETAIL INVENTORY LINE
+                    //id detail inventory line
+                    $tahun_sekarang = substr(date('Y',strtotime($now)),2,2);
+                    $bulan_sekarang = date('m',strtotime($now));
+                    $id_code        = "DINLI".$tahun_sekarang.$bulan_sekarang.".";
+        
+                    $last       = $this->M_LaporanPerencanaanCutting->get_last_dinli_id($id_code)->result_array();
+                    $last_cek   = $this->M_LaporanPerencanaanCutting->get_last_dinli_id($id_code)->num_rows();
+        
+                    //id
+                    if($last_cek == 1){
+                        $id_terakhir    = $last[0]['id_detail_inventory_line'];
+        
+                        $tahun_sebelum  = substr($id_terakhir,5,2);
+                    
+                        $bulan_sebelum  = substr($id_terakhir,7,2);
+        
+                        //kalau tahun sama
+                        if($tahun_sebelum == $tahun_sekarang){
+                            //kalau tahun & bulannya sama berarti count+1
+                            if($bulan_sebelum == $bulan_sekarang){
+                                $count = intval(substr($id_terakhir,10,5)) + 1;
+                                $pjg   = strlen($count);
+        
+                                if($pjg == 1){
+                                    $count_baru = "0000".$count;
+                                }
+                                else if($pjg == 2){
+                                    $count_baru = "000".$count;
+                                }
+                                else if($pjg == 3){
+                                    $count_baru = "00".$count;
+                                }
+                                else if($pjg == 4){
+                                    $count_baru = "0".$count;
+                                }
+                                else{
+                                    $count_baru = $count;
+                                }
+                                
+                                //id yang baru
+                                $id_dinli_baru = "DINLI".$tahun_sebelum.$bulan_sebelum.".".$count_baru;
+                            }
+                            //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                            else{
+                                //id yang baru
+                                $id_dinli_baru = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
+                            }
+                        }
+                        //kalau tahun tidak sama
+                        else{
+                            //id yang baru
+                            $id_dinli_baru = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
+                        }
+                    }
+                    else{
+                        //id yang baru
+                        $id_dinli_baru = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
+                    }
 
-                $this->M_LaporanPerencanaanCutting->insert('detail_inventory_line',$data_detail_inline);
-                */
+                    $data_detail_inline = array(
+                            'id_detail_inventory_line' => $id_dinli_baru,
+                            'id_inventory_line'        => $id_inli,
+                            'tanggal'                  => $tanggal,
+                            'jumlah_material'          => $wip,
+                            'status'                   => 0,
+                            'user_add'                 => $user,
+                            'waktu_add'                => $now,
+                            'status_delete'            => 0
+                    );
 
-                //echo $id_line." || ".$id_sub_jm." || ".$wip."<br>";
-
-                
+                    $this->M_LaporanPerencanaanCutting->insert('detail_inventory_line',$data_detail_inline);
+                //tutup detail inventory line
             }
         }
 

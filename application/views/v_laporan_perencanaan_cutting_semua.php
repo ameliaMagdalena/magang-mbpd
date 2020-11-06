@@ -849,6 +849,7 @@
                                         $cari_pm++;
                                         $material_gudang = respond['pm'][$p]['total_keluar'];
                                         $id_line = respond['pm'][$p]['id_line'];
+                                        $id_dpo = respond['pm'][$p]['id_detail_purchase_order_customer']+" || "+respond['percut'][$i]['id_detail_purchase_order_customer'];
                                 }
                             }
 
@@ -872,6 +873,7 @@
                                         respond['km'][$k]['nama_sub_jenis_material']+
                                         '<input type="text" name="id_line'+$hitung+'" value="'+$id_line+'">'+
                                         '<input type="text" name="id_sub_jm'+$hitung+'" value="'+respond['km'][$k]['id_sub_jenis_material']+'">'+
+                                        $id_dpo+
                                     '</center>'+
                                 '</td>'+
                                 '<td>'+

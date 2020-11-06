@@ -7,6 +7,10 @@ class M_LaporanPerencanaanCutting extends CI_Model {
 
         date_default_timezone_set('Asia/Jakarta');
     }
+    
+    function insert($table,$data){
+        $this->db->insert($table,$data);
+    }
 
     function edit($table,$data,$where){
         $this->db->update($table,$data,$where);
@@ -64,5 +68,10 @@ class M_LaporanPerencanaanCutting extends CI_Model {
 
     function get_inline($id_line,$id_sub_jm){
         return $this->db->query("SELECT * FROM inventory_line WHERE id_line='$id_line' AND id_sub_jenis_material='$id_sub_jm' AND status_delete='0'  ");
+    }
+
+    function get_last_dinli_id($id_code){
+        return $this->db->query("SELECT id_detail_inventory_line FROM detail_inventory_line 
+        WHERE id_detail_inventory_line LIKE '$id_code%' ORDER BY id_detail_inventory_line DESC LIMIT 1");
     }
 }

@@ -913,7 +913,7 @@ class PerencanaanProduksi extends CI_Controller {
                                             'id_permintaan_material'            => $id_permat_baru,
                                             'id_konsumsi_material'              => $id_konsumsi_material,
                                             'needs'                             => $needs,
-                                            'status_pengambilan'                => 0,
+                                            'status_detail_permintaan_material' => 0,
                                             'user_add'                          => $user,
                                             'waktu_add'                         => $now,
                                             'status_delete'                     => 0

@@ -113,7 +113,7 @@ class M_HasilProduksi extends CI_Model {
         AND detail_produksi_line.id_detail_purchase_order=detail_purchase_order_customer.id_detail_purchase_order_customer
         AND detail_purchase_order_customer.id_detail_produk=detail_produk.id_detail_produk
         AND detail_produk.id_produk=produk.id_produk
-        GROUP BY detail_purchase_order_customer.id_detail_produk");
+        GROUP BY detail_purchase_order_customer.id_detail_produk,detail_purchase_order_customer.id_detail_purchase_order_customer");
     }
 
     function get_konsumsi_material($id_produk,$id_line){
@@ -165,7 +165,7 @@ class M_HasilProduksi extends CI_Model {
         AND permintaan_material.id_detail_purchase_order_customer=detail_purchase_order_customer.id_detail_purchase_order_customer
         AND detail_purchase_order_customer.id_detail_produk=detail_produk.id_detail_produk
         GROUP BY permintaan_material.id_line,detail_produk.id_detail_produk,
-        detail_permintaan_material.id_konsumsi_material");
+        detail_permintaan_material.id_konsumsi_material,detail_purchase_order_customer.id_detail_purchase_order_customer");
 
         /*
         return $this->db->query("SELECT permintaan_material.id_line,permintaan_material.id_detail_purchase_order_customer,

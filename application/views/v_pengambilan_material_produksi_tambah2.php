@@ -129,7 +129,7 @@
         <footer class="panel-footer">
             <div class="row">
                 <div class="col-md-12 text-right">
-                    <input type="submit" class="btn btn-primary" value="Next">
+                
                 </div>
             </div>
         </footer>
@@ -436,6 +436,8 @@
                         }
                     }
 
+                    $batas_ambil = respond['detpermat'][$i]['needs'] - $jumlah_sebelum - $wip;
+
                     $isi = $isi +
                     '<tr>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
@@ -461,7 +463,10 @@
                             $wip+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            '<center><input type="number" min="0" step=".01" class="form-control" name="ambil'+$i+'" id="ambil'+$i+'" oninput="cek()"></center>'+
+                            $batas_ambil+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            '<center><input type="number" min="0" max="'+$batas_ambil+'" step=".01" class="form-control" name="ambil'+$i+'" id="ambil'+$i+'" oninput="cek()"></center>'+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['detpermat'][$i]['satuan_keluar']+
@@ -490,6 +495,9 @@
                                     '</th>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'WIP Line'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Batas Ambil'+
                                     '</th>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'Akan Diambil'+

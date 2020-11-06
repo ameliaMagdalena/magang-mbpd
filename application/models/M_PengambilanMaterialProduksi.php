@@ -85,4 +85,16 @@ class M_PengambilanMaterialProduksi extends CI_Model {
     function get_last_pcut_id($id_code){
         return $this->db->query("SELECT id_perencanaan_cutting FROM perencanaan_cutting WHERE id_perencanaan_cutting LIKE '$id_code%' ORDER BY id_perencanaan_cutting DESC LIMIT 1");
     }
+
+    function select_all_pm($line){
+        return $this->db->query("SELECT sub_jenis_material.nama_sub_jenis_material,pengeluaran_material.tanggal_keluar,pengambilan_material.stok_wip,
+        pengeluaran_material.jumlah_keluar,pengambilan_material.status_keluar 
+        FROM pengambilan_material,pengeluaran_material,sub_jenis_material,detail_permintaan_material,permintaan_material,line
+        WHERE pengambilan_material.status_delete='0' AND line.nama_line='$line'
+        AND pengambilan_material.id_pengeluaran_material=pengeluaran_material.id_pengeluaran_material
+        AND pengeluaran_material.id_sub_jenis_material = sub_jenis_material.id_sub_jenis_material
+        AND pengambilan_material.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material 
+        AND detail_permintaan_material.id_permintaan_material=permintaan_material.id_permintaan_material
+        AND permintaan_material.id_line=line.id_line");
+    }
 }

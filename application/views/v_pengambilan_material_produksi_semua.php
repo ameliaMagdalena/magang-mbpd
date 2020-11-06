@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Semua Permintaan Material</h2>
+        <h2>Semua Permintaan Pengambilan Material</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Semua Permintaan Material</span></span></li>
+                <li><span>Semua Permintaan Pengambilan Material</span></span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -25,7 +25,7 @@
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
         <header class="panel-heading">
-            <h2 class="panel-title">Data Semua Permintaan Material</h2>
+            <h2 class="panel-title">Data Semua Permintaan Pengambilan Material</h2>
         </header>
 
         <div class="panel-body">
@@ -33,14 +33,55 @@
                 <thead>
                     <tr>
                         <th  style="text-align: center;vertical-align: middle;">No</th>
-                        <th  style="text-align: center;vertical-align: middle;">Tanggal</th>
-                        <th  style="text-align: center;vertical-align: middle;">Nama Produk</th>
-                        <th  style="text-align: center;vertical-align: middle;">Jumlah Produk</th>
-                        <th  style="text-align: center;vertical-align: middle;">Status</th>
+                        <th  style="text-align: center;vertical-align: middle;">Nama Material</th>
+                        <th  style="text-align: center;vertical-align: middle;">Tanggal Keluar</th>
+                        <th  style="text-align: center;vertical-align: middle;">Jumlah Dari Line</th>
+                        <th  style="text-align: center;vertical-align: middle;">Jumlah Dari Gudang</th>
+                        <th  style="text-align: center;vertical-align: middle;">Status Keluar</th>
                         <th  style="text-align: center;vertical-align: middle;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <?php 
+                        $no = 1;
+                        foreach($pengambilan_material as $x){?>
+                        <tr>
+                            <td  style="text-align: center;vertical-align: middle;">
+                                <?= $no ?>
+                            </td>
+                            <td  style="text-align: center;vertical-align: middle;">
+                                <?= $x->nama_sub_jenis_material ?>
+                            </td>
+                            <td  style="text-align: center;vertical-align: middle;">
+                                <?= $x->tanggal_keluar ?>
+                            </td>
+                            <td  style="text-align: center;vertical-align: middle;">
+                                <?= $x->stok_wip ?>
+                            </td>
+                            <td  style="text-align: center;vertical-align: middle;">
+                                <?= $x->jumlah_keluar ?>
+                            </td>
+                            <td  style="text-align: center;vertical-align: middle;">
+                                <?php if($x->status_keluar == 0){?>
+                                    Belum Diambil
+                                <?php } else{?>
+                                    Sudah Diambil
+                                <?php } ?>
+                            </td>
+                            <td class="col-lg-3"> 
+                                <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
+                                    title="Detail" href="#modaldetail1"></a>
+                                <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
+                                    title="Edit" href="#modaledit"></a>
+                                <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
+                                    title="Delete" href="#modalhapus"></a>
+                                <a class="col-lg-3 btn fa fa-print" style="background-color:#E56B1F;color:white;"
+                                    title="Print" href="<?= base_url()?>permintaanMaterialProduksi/print_permintaan_material"></a>
+                            </td>
+                        </tr>
+                    <?php $no++; } ?>
+
+                    <!--
                     <tr>
                         <input type="hidden" id="id_produk1" value="PRODUK-1">
                         <td  style="text-align: center;vertical-align: middle;">1</td>
@@ -109,6 +150,7 @@
                             title="Log" id="blog" value=""></button>
                         </td>
                     </tr>
+                    -->
                 </tbody>
 	        </table>
         </div>
