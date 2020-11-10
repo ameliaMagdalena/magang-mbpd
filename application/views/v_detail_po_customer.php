@@ -108,7 +108,7 @@
                             <td> <?php echo $detail_po_cust[$y]['kode_produk'] ?> </td>
                             <td> <?php echo $detail_po_cust[$y]['nama_produk'] ?> </td>
                             <td> <?php echo $detail_po_cust[$y]['jumlah_produk'] ?> </td>
-                            <td> <?php //echo $detail_po_cust[$y]['satuan'] ?> *** </td>
+                            <td> <?php //echo $detail_po_cust[$y]['satuan'] ?> Pcs </td>
                             <td> <?php echo $detail_po_cust[$y]['harga_satuan'] ?></td>
                             <td> <?php echo $detail_po_cust[$y]['total_harga'] ?></td>
                             <td> <?php echo $detail_po_cust[$y]['tanggal_penerimaan'] ?></td>

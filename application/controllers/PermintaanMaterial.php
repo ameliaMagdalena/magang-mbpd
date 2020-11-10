@@ -38,6 +38,12 @@ class PermintaanMaterial extends CI_Controller {
 		$this->load->view('v_detail_permintaan_material', $data);
     }
 
+    public function ketersediaan(){
+        $id = $this->input->post("id_sub_jenis_material");
+        $result = $this->M_PerencanaanMaterial->selectKetersediaanMaterial($id)->result_array();
+        echo json_encode($result);
+    }
+
     public function baru($jenis){
         if ($jenis == 'produk'){
             $this->load->view('v_permintaan_material_baru');

@@ -170,7 +170,6 @@ class PurchaseOrderCustomer extends CI_Controller {
         $data = array (
             "id_purchase_order_customer" => $id_po,
             "id_sales_order" => $this->input->post("id_sales_order"),
-            "kode_sales_order" => $this->input->post("kode_sales_order"),
             "tanggal_so" => $this->input->post("tgl_so"),
             "tanggal_pengantaran" => $this->input->post("tgl_pengantaran"),
             "dibuat_oleh" => $_SESSION['id_user'],

@@ -73,6 +73,38 @@
                             title="Tolak" href="#modaltolak<?php echo $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
                     </td>
                 </tr>
+
+                <!-- ****************************** MODAL SETUJU ***************************** -->
+                <!-- ************************************************************************** -->
+                <div id='modalkonfirmasi<?php echo $permintaan_material[$x]['id_permintaan_material'] ?>' class="modal-block modal-block-md mfp-hide">
+                    <section class="panel">
+                        <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PerencanaanMaterial/setuju" method="post">
+                            
+                            <header class="panel-heading">
+                                <h2 class="panel-title">Menyetujui Permintaan Material</h2>
+                            </header>
+
+                            <div class="panel-body">
+                                <input type="hidden" name="id_po_supplier" class="form-control" value="<?php echo $permintaan_material[$x]['id_permintaan_material'] ?>" readonly>
+                                <input type="hidden" name="status" class="form-control" value="1" readonly>
+                                
+                                Anda akan menyetujui Permintaan Material dengan No. Form <b><?php echo $po_sup[$x]['id_permintaan_material'] ?></b>?
+
+                            </div>
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <input type="submit" class="btn btn-primary" value="Ya">
+                                        <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </form>
+                    </section>
+                </div>
+                <!-- ***************************** END MODAL SETUJU *************************** -->
+                <!-- ************************************************************************** -->
+                
                 <?php } } } ?>
             </tbody>
         </table>

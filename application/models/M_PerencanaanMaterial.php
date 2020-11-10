@@ -53,4 +53,11 @@ class M_PerencanaanMaterial extends CI_Model {
         JOIN sub_jenis_material d ON c.id_sub_jenis_material = d.id_sub_jenis_material
         WHERE a.status_delete = '0' AND a.id_permintaan_material='" . $id['id_permintaan_material'] . "'");
     }
+
+    function selectKetersediaanMaterial($id){
+        return $this->db->query("SELECT * FROM material a
+        JOIN sub_jenis_material b ON a.id_sub_jenis_material = b.id_sub_jenis_material
+        WHERE a.status_delete = '0' AND a.status_keluar='0'
+        AND a.id_sub_jenis_material='". $id['id_sub_jenis_material'] ."'");
+    }
 }

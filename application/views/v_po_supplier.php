@@ -187,7 +187,7 @@
                                     <label class="col-sm-3 control-label">Tanggal PO</label>
                                     <div class="col-sm-9">
                                         <input type="date" name="tgl_po" class="form-control"
-                                        value="<?php echo $po_sup[$x]['tanggal_po']?>">
+                                        value="<?php echo $po_sup[$x]['tanggal_po']?>" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group mt-lg">

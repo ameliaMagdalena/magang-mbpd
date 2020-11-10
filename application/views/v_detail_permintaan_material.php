@@ -119,22 +119,23 @@
                             <th>Ketersediaan</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php for($y=0; $y<count($detail); $y++){
-                            if($permintaan_material[0]['id_permintaan_material'] == $detail[$y]['id_permintaan_material']){?>
+                    <tbody class="roww">
+                        <?php for($y=0; $y<count($detail); $y++){ ?>
+                            <script> cekKetersediaan(<?= $y ?>); </script>
+                            <?php if($permintaan_material[0]['id_permintaan_material'] == $detail[$y]['id_permintaan_material']){?>
                         <tr>
                             <td> <?php echo $y+1 ?> </td>
-                            <td> <?php echo $detail[$y]['kode_sub_jenis_material'] ?> </td>
+                            <td id="kodemat<?php echo $y ?>"> <?php echo $detail[$y]['id_sub_jenis_material'] ?> </td>
                             <td> <?php echo $detail[$y]['nama_sub_jenis_material'] ?> </td>
                             <td> <?php echo $detail[$y]['jumlah_konsumsi'] ?> </td>
-                            <td> <?php 
+                            <td id="needs<?php echo $y ?>"> <?php 
                                 $produk = $detail[$y]['jumlah_minta'];
                                 $cons = $detail[$y]['jumlah_konsumsi'];
                                 $needs = $produk*$cons;
                                 echo $needs;
                             ?></td>
                             <td> <?php echo $detail[$y]['satuan_keluar'] ?></td>
-                            <td> <?php echo $detail[$y]['satuan_keluar'] ?></td>
+                            <td id="ketersediaan<?php echo $y ?>"></td>
                         </tr>
                         <?php }} ?>
                     </tbody>
@@ -202,6 +203,30 @@
 <!--*****************************-->
 <?php //include('_rightbar.php');
 ?>
+
+<script>
+function cekKetersediaan(counter){
+    var id_sub_jenis_material = $("#kodemat"+counter).val();
+    var needs = $("#needs"+counter).val();
+    $.ajax({
+        url:"<?php echo base_url();?>PermintaanMaterial/ketersediaan",
+        type:"POST",
+        dataType:"JSON",
+        data:{id_sub_jenis_material:id_sub_jenis_material},
+        success:function(respond){
+            var html = 'aaa';
+            /*if(data.length<needs){
+                html = 'Tidak Tersedia';
+            }
+            else{
+                html = 'Tersedia';
+            }*/
+            $('#ketersediaan'+counter).html(html);
+        }
+    });
+}
+</script>
+
 <script>
     function reload() {
     location.reload();
