@@ -13,7 +13,8 @@ class M_PermintaanMaterialProduksi extends CI_Model {
         WHERE permintaan_material.status_delete='0'
         AND permintaan_material.id_line=line.id_line 
         AND detail_purchase_order_customer.id_detail_purchase_order_customer=permintaan_material.id_detail_purchase_order_customer
-        AND detail_purchase_order_customer.id_detail_produk=detail_produk.id_detail_produk AND produk.id_produk=detail_produk.id_produk  ");
+        AND detail_purchase_order_customer.id_detail_produk=detail_produk.id_detail_produk AND produk.id_produk=detail_produk.id_produk
+        ORDER BY permintaan_material.tanggal_produksi ASC");
     }
 
     function get_one_permat($id){

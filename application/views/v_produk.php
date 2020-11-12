@@ -1379,9 +1379,9 @@
                         '<option value="0">Cutting Kain</option>'+
                         '<option value="1">Lainnya</option>'+
                     '</select>'+
-                    '<input type="text" class="form-control" name="stat_km'+$jumlah_saat_ini+'" id="stat_km'+$jumlah_saat_ini+'" value="0">';
+                    '<input type="hidden" class="form-control" name="stat_km'+$jumlah_saat_ini+'" id="stat_km'+$jumlah_saat_ini+'" value="0">';
                 } else{
-                    $isi_stat_km ='<input type="text" class="form-control" name="stat_km'+$jumlah_saat_ini+'" id="stat_km'+$jumlah_saat_ini+'" value="1">';
+                    $isi_stat_km ='<input type="hidden" class="form-control" name="stat_km'+$jumlah_saat_ini+'" id="stat_km'+$jumlah_saat_ini+'" value="1">';
                 }
 
                 $isinya ='<div id="divkm'+$jumlah_saat_ini+'">'+
@@ -1452,9 +1452,9 @@
                             '<select class="form-control" name="stat_km_sewing'+$i+'" id="stat_km_sewing'+$i+'" onchange="ganti_stat_km_sewing(this)">'+
                                 $optionnya+
                             '</select>'+
-                            '<input type="text" class="form-control" name="stat_km'+$i+'" id="stat_km'+$i+'" value="'+$stat_km+'">';
+                            '<input type="hidden" class="form-control" name="stat_km'+$i+'" id="stat_km'+$i+'" value="'+$stat_km+'">';
                         } else{
-                            $isi_stat_km ='<input type="text" class="form-control" name="stat_km'+$i+'" id="stat_km'+$i+'" value="1">';
+                            $isi_stat_km ='<input type="hidden" class="form-control" name="stat_km'+$i+'" id="stat_km'+$i+'" value="1">';
                         }
 
                         $lama = $lama + 
@@ -1496,9 +1496,9 @@
                             '<option value="0">Cutting Kain</option>'+
                             '<option value="1">Lainnya</option>'+
                         '</select>'+
-                        '<input type="text" class="form-control" name="stat_km'+$jumlah_saat_ini+'" id="stat_km'+$jumlah_saat_ini+'" value="0">';
+                        '<input type="hidden" class="form-control" name="stat_km'+$jumlah_saat_ini+'" id="stat_km'+$jumlah_saat_ini+'" value="0">';
                     } else{
-                        $isi_stat_km ='<input type="text" class="form-control" name="stat_km'+$jumlah_saat_ini+'" id="stat_km'+$jumlah_saat_ini+'" value="1">';
+                        $isi_stat_km ='<input type="hidden" class="form-control" name="stat_km'+$jumlah_saat_ini+'" id="stat_km'+$jumlah_saat_ini+'" value="1">';
                     }
 
                     $isinya = $lama +

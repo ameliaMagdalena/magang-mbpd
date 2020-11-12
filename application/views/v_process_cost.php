@@ -61,59 +61,73 @@
 
 <script>
     function ganti(){
-        //alert($("#produk_terpilih").val());
-        //$isi = "aa";
+        var id = $("#produk_terpilih").val();
 
-        $tampung_isi = 
-        '<tr>'+
-            '<td  style="text-align: center;vertical-align: middle;">1</td>'+
-            '<td  style="text-align: center;vertical-align: middle;">Line Cutting</td>'+
-            '<td  style="text-align: center;vertical-align: middle;">60 dtk (1m)</td>'+
-            '<td  style="text-align: center;vertical-align: middle;">1.000</td>'+
-            '<td  style="text-align: center;vertical-align: middle;">60.000</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td  style="text-align: center;vertical-align: middle;">2</td>'+
-            '<td  style="text-align: center;vertical-align: middle;">Line Bonding</td>'+
-            '<td  style="text-align: center;vertical-align: middle;">120 dtk (2m)</td>'+
-            '<td  style="text-align: center;vertical-align: middle;">1.000</td>'+
-            '<td  style="text-align: center;vertical-align: middle;">120.000</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td  style="text-align: center;vertical-align: middle;">3</td>'+
-            '<td  style="text-align: center;vertical-align: middle;">Line Sewing</td>'+
-            '<td  style="text-align: center;vertical-align: middle;">120 dtk (2m)</td>'+
-            '<td  style="text-align: center;vertical-align: middle;">1.000</td>'+
-            '<td  style="text-align: center;vertical-align: middle;">120.000</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td  style="text-align: center;vertical-align: middle;">4</td>'+
-            '<td  style="text-align: center;vertical-align: middle;">Line Assy</td>'+
-            '<td  style="text-align: center;vertical-align: middle;">300 dtk (5m)</td>'+
-            '<td  style="text-align: center;vertical-align: middle;">1.000</td>'+
-            '<td  style="text-align: center;vertical-align: middle;">300.000</td>'+
-        '</tr>';
+        $.ajax({
+            type:"post",
+            url:"<?php echo base_url() ?>processCost/get_process_cost",
+            dataType: "JSON",
+            data: {id:id},
 
-        $total = 
-        '<tr>'+
-            '<td  colspan="4" style="text-align: center;vertical-align: middle;"><b>Total</b></td>'+
-            '<td  style="text-align: center;vertical-align: middle;"><b>600.000</b></td>'+
-        '</tr>';
+            success: function(respond){
+                $tampung_isi = "";
 
-        $isi = '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
-        '<thead>' +
-            '<th style="text-align: center;vertical-align: middle;">No</th>'+
-            '<th style="text-align: center;vertical-align: middle;">Process</th>'+
-            '<th style="text-align: center;vertical-align: middle;">Cycle Time</th>'+
-            '<th style="text-align: center;vertical-align: middle;">Man Power Cost (dtk)</th>'+
-            '<th style="text-align: center;vertical-align: middle;">Total</th>'+
-        '</thead>'+
-        '<tbody>' +
-            $tampung_isi +
-            $total +
-        '</tbody>';
-        
-        $("#tabelnya").html($isi);
+                $totalnya = 0;
+
+                for($i=0;$i<respond['jm_km'];$i++){
+                    $total    = (respond['km'][$i]['cycle_time'] * (respond['km'][$i]['satuan_biaya'] * respond['km'][$i]['jumlah_pekerja_per_team']));
+                    $totalnya = $totalnya + $total;
+
+                    $tampung_isi = $tampung_isi + 
+                    '<tr>'+
+                        '<td  style="text-align: center;vertical-align: middle;">'+
+                            ($i+1)+
+                        '</td>'+
+                        '<td  style="text-align: center;vertical-align: middle;">'+
+                            respond['km'][$i]['nama_line']+
+                        '</td>'+
+                        '<td  style="text-align: center;vertical-align: middle;">'+
+                            respond['km'][$i]['cycle_time']+
+                        '</td>'+
+                        '<td  style="text-align: center;vertical-align: middle;">'+
+                            respond['km'][$i]['jumlah_pekerja_per_team']+
+                        '</td>'+
+                        '<td  style="text-align: center;vertical-align: middle;">'+
+                            respond['km'][$i]['satuan_biaya']+
+                        '</td>'+
+                        '<td  style="text-align: center;vertical-align: middle;">'+
+                            (respond['km'][$i]['satuan_biaya'] * respond['km'][$i]['jumlah_pekerja_per_team'])+
+                        '</td>'+
+                        '<td  style="text-align: center;vertical-align: middle;">'+
+                            $total+
+                        '</td>'+
+                    '</tr>';
+                }
+
+                $total = 
+                '<tr>'+
+                    '<td  colspan="6" style="text-align: center;vertical-align: middle;"><b>Total</b></td>'+
+                    '<td  style="text-align: center;vertical-align: middle;"><b>'+$totalnya+'</b></td>'+
+                '</tr>';
+
+                $isi = '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
+                '<thead>' +
+                    '<th style="text-align: center;vertical-align: middle;">No</th>'+
+                    '<th style="text-align: center;vertical-align: middle;">Process</th>'+
+                    '<th style="text-align: center;vertical-align: middle;">Cycle Time</th>'+
+                    '<th style="text-align: center;vertical-align: middle;">Jumlah Pekerja Per Team</th>'+
+                    '<th style="text-align: center;vertical-align: middle;">Satuan Biaya</th>'+
+                    '<th style="text-align: center;vertical-align: middle;">Man Power Cost (dtk)</th>'+
+                    '<th style="text-align: center;vertical-align: middle;">Total</th>'+
+                '</thead>'+
+                '<tbody>' +
+                    $tampung_isi +
+                    $total +
+                '</tbody>';
+                
+                $("#tabelnya").html($isi);
+            }
+        });
     }
 </script>
 

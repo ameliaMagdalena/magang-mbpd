@@ -297,12 +297,14 @@
 
                 $isi = "";
                 for($i=0;$i<respond['jm_detpermat'];$i++){
-                    //telah diambil
+                    //telah diambil dari gudang
                     $cari = 0;
                     $jumlah_sebelum = 0;
+                    $jumlah_keluar_gudang = 0;
                     for($o=0;$o<respond['jm_pengmat'];$o++){
                         if(respond['pengmat'][$o]['id_detail_permintaan_material'] == respond['detpermat'][$i]['id_detail_permintaan_material']){
-                            $jumlah_sebelum = respond['pengmat'][$o]['jumlah_keluar'];
+                            $jumlah_sebelum       = respond['pengmat'][$o]['jumlah_keluar'];
+                            $jumlah_keluar_gudang = respond['pengmat'][$o]['jumlah_keluar_gudang'];
                             $cari++;
                         }
 
@@ -311,6 +313,14 @@
                         }
                         else{
                             $jumlah_sebelum = 0;
+                        }
+                    }
+
+                    //telah diambil dari inventory line
+                    for($k=0;$k<respond['jm_det_inline'];$k++){
+                        if(respond['det_inline'][$k]['id_detail_permintaan_material'] == respond['detpermat'][$i]['id_detail_permintaan_material'] &&
+                        respond['det_inline'][$k]['status'] == 1){
+                            $jumlah_sebelum = parseFloat($jumlah_sebelum) + parseFloat(respond['det_inline'][$k]['jumlah_material']);
                         }
                     }
 
@@ -333,6 +343,9 @@
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['detpermat'][$i]['satuan_keluar']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            $jumlah_keluar_gudang+' '+ respond['detpermat'][$i]['satuan_ukuran']+
                         '</td>'+
                     '</tr>';
                 }
@@ -358,6 +371,9 @@
                                     '</th>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'Satuan Konsumsi'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Jumlah Keluar Dari Gudang'+
                                     '</th>'+
                                 '</tr>'+
                             '</thead>'+
@@ -403,11 +419,13 @@
                 $isi = "";
                 for($i=0;$i<respond['jm_detpermat'];$i++){
                     //telah diambil
-                    $cari = 0;
-                    $jumlah_sebelum = 0;
+                    $cari                 = 0;
+                    $jumlah_sebelum       = 0;
+                    $jumlah_keluar_gudang = 0;
                     for($o=0;$o<respond['jm_pengmat'];$o++){
-                        if(respond['pengmat'][$o]['id_detail_permintaan_material'] == respond['detpermat'][$i]['id_detail_permintaan_material']){
+                        if(respond['pengmat'][$o]['id_detail_permintaan_material'] == respond['detpermat'][$i]['id_detail_permintaan_material']){                
                             $jumlah_sebelum = respond['pengmat'][$o]['jumlah_keluar'];
+                            $jumlah_keluar_gudang = respond['pengmat'][$o]['jumlah_keluar_gudang'];
                             $cari++;
                         }
 
@@ -416,6 +434,14 @@
                         }
                         else{
                             $jumlah_sebelum = 0;
+                        }
+                    }
+
+                    //telah diambil dari inventory line
+                    for($k=0;$k<respond['jm_det_inline'];$k++){
+                        if(respond['det_inline'][$k]['id_detail_permintaan_material'] == respond['detpermat'][$i]['id_detail_permintaan_material'] &&
+                        respond['det_inline'][$k]['status'] == 1){
+                            $jumlah_sebelum = parseFloat($jumlah_sebelum) + parseFloat(respond['det_inline'][$k]['jumlah_material']);
                         }
                     }
 
@@ -436,7 +462,7 @@
                         }
                     }
 
-                    $batas_ambil = respond['detpermat'][$i]['needs'] - $jumlah_sebelum - $wip;
+                    $batas_ambil = respond['detpermat'][$i]['needs'] - $jumlah_sebelum;
 
                     $isi = $isi +
                     '<tr>'+
@@ -471,6 +497,9 @@
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['detpermat'][$i]['satuan_keluar']+
                         '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            $jumlah_keluar_gudang+' '+ respond['detpermat'][$i]['satuan_ukuran']+
+                        '</td>'+
                     '</tr>';
                 }
 
@@ -504,6 +533,9 @@
                                     '</th>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'Satuan Konsumsi'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Jumlah Keluar Dari Gudang'+
                                     '</th>'+
                                 '</tr>'+
                             '</thead>'+

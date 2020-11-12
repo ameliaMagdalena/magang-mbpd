@@ -513,6 +513,7 @@
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id_produksinya" id="id_produksinya">
+                        <input type="hidden" name="tanggalnya" id="tanggalnya">
                         <p>Apakah anda yakin akan menerima laporan hasil produksi dengan tanggal produksi <span id="tanggal_produksinya"></span>?</p>
                         <br>
                         
@@ -522,6 +523,7 @@
                             <p><span style="color:red">* </span><b>Mohon maaf, proses konfirmasi tidak dapat dilanjutkan karena data laporan hasil
                             produksi dengan data pengambilan material tidak sesuai.</b></p>
                         </div>
+                        <input type="hidden" id="jumlah_detail_se7" name="jumlah_detail_se7">
                     </div>
                     <div class="modal-footer">
                         <input type="submit" id="setuju" class="btn btn-primary" value="Simpan">
@@ -1293,7 +1295,6 @@
         var no      = $(this).attr('value');
         var id      = $("#id"+no).val();
         var tgl      = $("#tgl"+no).val();
-
                 
         $.ajax({
             type:"post",
@@ -1304,9 +1305,11 @@
             success: function(respond){
                 $("#id_produksinya").val(id);
                 $("#tanggal_produksinya").html(tgl);
+                $("#tanggalnya").val(tgl);
 
                 //cek apakah ada permintaan_material yang minus dari yang seharusnya
                 $cek = 0;
+                $jumlah_detail = 0;
 
                 $konsumsi_material = "";
                 $ke = 1;
@@ -1314,14 +1317,17 @@
                     $km_per_line = "";
                     for($k=0;$k<respond['jm_dpl'];$k++){
                         $isi_km = "";
-                        if(respond['total_dpl'][$i]['id_detail_produk'] == respond['dpl'][$k]['id_detail_produk'] && respond['total_dpl'][$i]['jumlah_produk'] != 0){
+                        if(respond['total_dpl'][$i]['id_detail_produk'] == respond['dpl'][$k]['id_detail_produk'] 
+                        && respond['total_dpl'][$i]['jumlah_produk'] != 0
+                        && respond['dpl'][$k]['id_detail_purchase_order'] == respond['total_dpl'][$i]['id_detail_purchase_order']){
                             //isi table konsumsi material
                             $nomor = 1;
                             for($t=0;$t<respond['jm_km'];$t++){
                                 if(respond['dpl'][$k]['id_produk'] == respond['km'][$t]['id_produk'] && respond['dpl'][$k]['id_line'] == respond['km'][$t]['id_line'] 
                                 && respond['dpl'][$k]['jumlah_item_aktual'] != 0 && respond['km'][$t]['status_konsumsi'] == 1){
                                     $jumlah_konsumsi_seharusnya = respond['km'][$t]['jumlah_konsumsi'] * respond['dpl'][$k]['jumlah_item_aktual'];
-                                    
+                                    $ukuran_satuan_keluar       = respond['km'][$t]['ukuran_satuan_keluar'];
+                                    $jumlah_detail++;
                                     //material dari gudang material
                                     $cari_pm = 0;
                                     $material_gudang = 0;
@@ -1331,6 +1337,7 @@
                                             && respond['pm'][$p]['id_konsumsi_material'] == respond['km'][$t]['id_konsumsi_material']){
                                                 $cari_pm++;
                                                 $material_gudang = respond['pm'][$p]['total_keluar'];
+                                                $id_line = respond['pm'][$p]['id_line'];
                                         }
                                     }
 
@@ -1338,7 +1345,7 @@
                                     $from_inli = 0;
 
                                     //wipnya
-                                    $wip = $from_inli + $material_gudang - $jumlah_konsumsi_seharusnya;
+                                    $wip = parseFloat($from_inli) + (parseFloat($material_gudang) * parseFloat($ukuran_satuan_keluar))  - parseFloat($jumlah_konsumsi_seharusnya);
 
                                     if($wip < 0){
                                         $cek++;
@@ -1350,7 +1357,11 @@
                                             '<center>'+$nomor+'</center>'+
                                         '</td>'+
                                         '<td>'+
-                                            '<center>'+respond['km'][$t]['nama_sub_jenis_material']+'</center>'+
+                                            '<center>'+
+                                                respond['km'][$t]['nama_sub_jenis_material']+
+                                                '<input type="text" name="id_line'+$jumlah_detail+'" value="'+$id_line+'">'+
+                                                '<input type="text" name="id_sub_jm'+$jumlah_detail+'" value="'+respond['km'][$t]['id_sub_jenis_material']+'">'+
+                                            '</center>'+
                                         '</td>'+
                                         '<td>'+
                                             '<center>'+respond['km'][$t]['jumlah_konsumsi']+'</center>'+
@@ -1362,10 +1373,11 @@
                                             '<center>'+0+'</center>'+
                                         '</td>'+
                                         '<td>'+
-                                            '<center>'+$material_gudang+'</center>'+
+                                            '<center>'+($material_gudang * $ukuran_satuan_keluar)+'</center>'+
                                         '</td>'+
                                         '<td>'+
                                             '<center>'+$wip+'</center>'+
+                                            '<input type="text" name="wip'+$jumlah_detail+'" value="'+$wip+'">'+
                                         '</td>'+
                                     '</tr>';
 
@@ -1481,8 +1493,7 @@
                     $("#setuju").prop('disabled',false);
                 }
 
-                alert($cek);
-
+                $("#jumlah_detail_se7").val($jumlah_detail);
                 $("#modalse7").modal();
             }
         });

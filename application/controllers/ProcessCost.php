@@ -18,7 +18,12 @@ class ProcessCost extends CI_Controller {
     }
 
     public function get_process_cost(){
+      $id = $this->input->post('id');
 
+      $data['km']    = $this->M_ProcessCost->get_km($id)->result_array();
+      $data['jm_km'] = $this->M_ProcessCost->get_km($id)->num_rows();
+
+      echo json_encode($data);
     }
 
     public function print_permintaan_material(){

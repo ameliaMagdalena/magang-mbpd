@@ -23,243 +23,318 @@ class PerencanaanProduksi extends CI_Controller {
         }
     }
 
-        //INVENTORY LINE
-        $detail_produksi_line    = $this->M_HasilProduksi->get_detail_produksi_line_group_by($id_produksi)->result_array();
-        $jm_detail_produksi_line = $this->M_HasilProduksi->get_detail_produksi_line_group_by($id_produksi)->num_rows();
-  
-        for($i=0;$i<$jm_detail_produksi_line;$i++){
-          $id_line                             = $detail_produksi_line[$i]['id_line'];
-          $id_detail_produk                    = $detail_produksi_line[$i]['id_detail_produk'];
-          $id_detail_purchase_order_customer   = $detail_produksi_line[$i]['id_detail_purchase_order'];
-          $id_produk                           = $detail_produksi_line[$i]['id_produk'];
-          $jumlah_item_aktual                  = $detail_produksi_line[$i]['jumlah_item_aktual'];
-          $tanggal                             = $detail_produksi_line[$i]['tanggal'];
-  
-          $konsumsi_material    = $this->M_HasilProduksi->get_konsumsi_material($id_produk,$id_line)->result_array();
-          $jm_konsumsi_material = $this->M_HasilProduksi->get_konsumsi_material($id_produk,$id_line)->num_rows();
-  
-          for($u=0;$u<$jm_konsumsi_material;$u++){
-            $id_konsumsi_material  = $konsumsi_material[$u]['id_konsumsi_material'];
-            $id_sub_jenis_material = $konsumsi_material[$u]['id_sub_jenis_material'];
-  
-            $konsumsi_material_satuan = $konsumsi_material[$u]['jumlah_konsumsi'];
-  
-            //jumlah minta material seharusnya
-            $total_konsumsi_material = $konsumsi_material_satuan * $jumlah_item_aktual;
-  
-            //jumlah minta material aktual
-            $pengambilan_material = $this->M_HasilProduksi->get_pengambilan_material($tanggal,$id_line,$id_detail_purchase_order_customer,$id_konsumsi_material)->result_array();
-  
-            $jumlah_keluar = $pengambilan_material[0]['total_keluar'];
-            $sisa_wip      = $jumlah_keluar - $total_konsumsi_material;
-  
-            //input ke inventory line
-            if($sisa_wip > 0){
-              //cek apakah sudah ada inventory line sebelumnya
-              $inventory_line    = $this->M_HasilProduksi->get_inventory_line($id_line,$id_sub_jenis_material)->result_array();
-              $jm_inventory_line = $this->M_HasilProduksi->get_inventory_line($id_line,$id_sub_jenis_material)->num_rows();
-  
-              if($jm_inventory_line == 0){
-                $jumlah_inli    = $this->M_HasilProduksi->select_all_inventory_line()->num_rows();
-                $id_number      = $jumlah_inli + 1;
-  
-                $id_inli     = "INLI-".$id_number;
-  
-                $data_inventory_line = array(
-                  'id_inventory_line'     => $id_inli,
-                  'id_line'               => $id_line,
-                  'id_sub_jenis_material' => $id_sub_jenis_material,
-                  'total_material'        => $sisa_wip,
-                  'user_add'              => $user,
-                  'waktu_add'             => $now,
-                  'status_delete'         => 0
-                );
-  
-                $this->M_HasilProduksi->insert('inventory_line',$data_inventory_line);
-  
-                //DETAIL INVENTORY LINE
-                  $tgl            = date('Y-m-d');
-                  $tahun_sekarang = substr(date('Y',strtotime($tgl)),2,2);
-                  $bulan_sekarang = date('m',strtotime($tgl));
-                  $id_code        = "DINLI".$tahun_sekarang.$bulan_sekarang.".";
-  
-                  $last       = $this->M_HasilProduksi->get_last_dinli_id($id_code)->result_array();
-                  $last_cek   = $this->M_HasilProduksi->get_last_dinli_id($id_code)->num_rows();
-  
-                  //id
-                  if($last_cek == 1){
-                      $id_terakhir    = $last[0]['id_detail_inventory_line'];
-  
-                      $tahun_sebelum  = substr($id_terakhir,5,2);
-                  
-                      $bulan_sebelum  = substr($id_terakhir,7,2);
-  
-                      //kalau tahun sama
-                      if($tahun_sebelum == $tahun_sekarang){
-                          //kalau tahun & bulannya sama berarti count+1
-                          if($bulan_sebelum == $bulan_sekarang){
-                              $count = intval(substr($id_terakhir,10,5)) + 1;
-                              $pjg   = strlen($count);
-  
-                              if($pjg == 1){
-                                  $count_baru = "0000".$count;
-                              }
-                              else if($pjg == 2){
-                                  $count_baru = "000".$count;
-                              }
-                              else if($pjg == 3){
-                                  $count_baru = "00".$count;
-                              }
-                              else if($pjg == 4){
-                                $count_baru = "0".$count;
-                            }
-                              else{
-                                  $count_baru = $count;
-                              }
-                              
-                              //id yang baru
-                              $id_detail_inventory_line = "DINLI".$tahun_sebelum.$bulan_sebelum.".".$count_baru;
-                          }
-                          //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
-                          else{
-                              //id yang baru
-                              $id_detail_inventory_line = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-                          }
-                      }
-                      //kalau tahun tidak sama
-                      else{
-                          //id yang baru
-                          $id_detail_inventory_line = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-                      }
-                  }
-                  else{
-                      //id yang baru
-                      $id_detail_inventory_line = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-                  } 
-  
-                  $data_detail_inventory_line = array(
-                    'id_detail_inventory_line' => $id_detail_inventory_line,
-                    'id_inventory_line'        => $id_inli,
-                    'tanggal'                  => $now,
-                    'jumlah_material'          => $sisa_wip,
-                    'status'                   => 0,
-                    'user_add'                 => $user,
-                    'waktu_add'                => $now,
-                    'status_delete'            => 0
-                  );
-  
-                  $this->M_HasilProduksi->insert('detail_inventory_line',$data_detail_inventory_line);
-                //tutup detail inventory line
-  
-              } else{
-                $id_inventory_line = $inventory_line[0]['id_inventory_line'];
-                $jumlah_inventory  = $inventory_line[0]['total_material'];
-  
-                $jumlah_baru = $sisa_wip + $jumlah_inventory;
-  
-                $data_inventory_line = array(
-                  'total_material' => $jumlah_baru,
-                  'user_edit'      => $user,
-                  'waktu_edit'     => $now
-                );
-  
-                $where_inventory_line = array(
-                  'id_inventory_line' => $id_inventory_line
-                );
-  
-                $this->M_HasilProduksi->edit('inventory_line',$data_inventory_line,$where_inventory_line);
-  
-                //DETAIL INVENTORY LINE
-                  $tgl            = date('Y-m-d');
-                  $tahun_sekarang = substr(date('Y',strtotime($tgl)),2,2);
-                  $bulan_sekarang = date('m',strtotime($tgl));
-                  $id_code        = "DINLI".$tahun_sekarang.$bulan_sekarang.".";
-  
-                  $last       = $this->M_HasilProduksi->get_last_dinli_id($id_code)->result_array();
-                  $last_cek   = $this->M_HasilProduksi->get_last_dinli_id($id_code)->num_rows();
-  
-                  //id
-                  if($last_cek == 1){
-                      $id_terakhir    = $last[0]['id_detail_inventory_line'];
-  
-                      $tahun_sebelum  = substr($id_terakhir,5,2);
-                  
-                      $bulan_sebelum  = substr($id_terakhir,7,2);
-  
-                      //kalau tahun sama
-                      if($tahun_sebelum == $tahun_sekarang){
-                          //kalau tahun & bulannya sama berarti count+1
-                          if($bulan_sebelum == $bulan_sekarang){
-                              $count = intval(substr($id_terakhir,10,5)) + 1;
-                              $pjg   = strlen($count);
-  
-                              if($pjg == 1){
-                                  $count_baru = "0000".$count;
-                              }
-                              else if($pjg == 2){
-                                  $count_baru = "000".$count;
-                              }
-                              else if($pjg == 3){
-                                  $count_baru = "00".$count;
-                              }
-                              else if($pjg == 4){
-                                $count_baru = "0".$count;
-                            }
-                              else{
-                                  $count_baru = $count;
-                              }
-                              
-                              //id yang baru
-                              $id_detail_inventory_line = "DINLI".$tahun_sebelum.$bulan_sebelum.".".$count_baru;
-                          }
-                          //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
-                          else{
-                              //id yang baru
-                              $id_detail_inventory_line = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-                          }
-                      }
-                      //kalau tahun tidak sama
-                      else{
-                          //id yang baru
-                          $id_detail_inventory_line = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-                      }
-                  }
-                  else{
-                      //id yang baru
-                      $id_detail_inventory_line = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-                  } 
-  
-                  $data_detail_inventory_line = array(
-                    'id_detail_inventory_line' => $id_detail_inventory_line,
-                    'id_inventory_line'        => $id_inventory_line,
-                    'tanggal'                  => $now,
-                    'jumlah_material'          => $sisa_wip,
-                    'status'                   => 0,
-                    'user_add'                 => $user,
-                    'waktu_add'                => $now,
-                    'status_delete'            => 0
-                  );
-  
-                  $this->M_HasilProduksi->insert('detail_inventory_line',$data_detail_inventory_line);
-                //tutup detail inventory line
-  
-  
-  
-              }
-            }
-  
-            echo $id_line." || ".$id_detail_produk." || ".$id_produk." || ".$jumlah_item_aktual." || ".$tanggal." || ".$id_detail_purchase_order_customer." || ".$total_konsumsi_material." || ".$jumlah_keluar." || ".$sisa_wip."<br>";
-            
-  
-          
-  
-          }
-  
-          //echo " --------------------------------------- <br>";
-  
-  
-        }
-      //tutup inventory line
+    public function print_perencanaan_produksi(){
+      $id = $this->input->post('id');
 
+      $nama_perusahaan = $this->M_Tetapan->cari_tetapan("Nama Perusahaan")->result_array();
+
+      $date   = $this->M_PerencanaanProduksi->get_tanggal_produksi($id)->result_array();
+      $start  = $date[0]['tanggal_awal'];
+      $end    = $date[0]['tanggal_akhir'];
+
+      $start_month = date('F',strtotime($start));
+      $end_month = date('F',strtotime($end));
+
+      if($start_month == $end_month){
+          $tanggalnya = "(".$start_month.")";
+      }
+      else{
+          $tanggalnya = "(".$start_month."-".$end_month.")";
+      }
+
+      $semua_tanggal      = $this->M_PerencanaanProduksi->get_semua_tanggal($start)->result_array();
+      for($i=0;$i<7;$i++){
+          $day[$i] = intval(date('d', strtotime($semua_tanggal[$i]['tanggal'])));
+      }
+
+      $pl         = $this->M_PerencanaanProduksi->get_pl($start)->result();
+
+      $dpo        = $this->M_PerencanaanProduksi->get_dpo_normal($start)->result_array();
+      $jm_dpo     = $this->M_PerencanaanProduksi->get_dpo_normal($start)->num_rows();
+      $dpl        = $this->M_PerencanaanProduksi->get_dpl_normal($start)->result_array();
+      $jm_dpl     = $this->M_PerencanaanProduksi->get_dpl_normal($start)->num_rows();
+
+      $dpore      = $this->M_PerencanaanProduksi->get_dpo_re($start)->result_array();
+      $jm_dpore   = $this->M_PerencanaanProduksi->get_dpo_re($start)->num_rows();
+      $dplre      = $this->M_PerencanaanProduksi->get_dpl_re($start)->result_array();
+      $jm_dplre   = $this->M_PerencanaanProduksi->get_dpl_re($start)->num_rows();
+
+      $warna      = $this->M_Warna->select_all_aktif()->result_array();
+      $jmwarna    = $this->M_Warna->select_all_aktif()->num_rows();
+      $ukuran     = $this->M_UkuranProduk->select_all_aktif()->result_array();
+      $jmukuran   = $this->M_UkuranProduk->select_all_aktif()->num_rows();
+      
+      $pdf = new FPDF('l','mm','A4');
+      //buat halaman baru
+      $pdf->AddPage();
+
+      //logo
+      $pdf->Image(base_url('assets/images/logombp.png'),7,7,-300);
+
+      //setting font
+      $pdf->SetFont('Arial','B','12');
+      //cetak string
+      $pdf->Cell(15); //move
+      $pdf->Cell(190,7,strtoupper($nama_perusahaan[0]['isi_tetapan']),0,1,'L');
+      
+      $pdf->SetFont('Arial','B',12);
+      $pdf->Cell(15);
+      $pdf->Cell(190,7,'PERENCANAAN PRODUKSI '.$tanggalnya,0,1,'L');
+      
+
+      $pdf->SetFont('Arial','B',10);
+      $pdf->Cell(20,10,' ',0,1,'C');
+      $pdf->Cell(10,10,'NO',1,0,'C');
+      $pdf->Cell(90,10,'NAMA PRODUK',1,0,'C');
+      $pdf->Cell(20,10,'QTY',1,0,'C');
+      $pdf->Cell(30,10,'KET',1,0,'C');
+      for($i=0;$i<7;$i++){
+         $pdf->Cell(15,10,$day[$i],1,0,'C');
+      }
+      $pdf->Cell(20,10,'TOTAL',1,1,'C');
+
+      for($k=0;$k<$jm_dpo;$k++){
+          $ct    = $this->M_PerencanaanProduksi->get_ct($dpo[$k]['id_produk'])->result_array();
+          $jm_ct = $this->M_PerencanaanProduksi->get_ct($dpo[$k]['id_produk'])->num_rows();
+
+          $id_dpo = $dpo[$k]['id_detail_purchase_order'];
+
+          $pdf->SetFont('Arial','',10);
+
+          //nama produk
+          if($dpo[$k]['keterangan'] == 0){
+              for($w=0;$w<$jmwarna;$w++){
+                  if($warna[$w]['id_warna'] == $dpo[$k]['id_warna']){
+                      $nama_warna = $warna[$w]['nama_warna'];
+                  }
+              }
+
+              for($w=0;$w<$jmukuran;$w++){
+                  if($ukuran[$w]['id_ukuran_produk'] == $dpo[$k]['id_ukuran_produk']){
+                      $nama_ukuran = $ukuran[$w]['ukuran_produk'] . $ukuran[$w]['satuan_ukuran'];
+                  }
+              }
+
+              $nama_produk = $dpo[$k]['nama_produk'] ." ". $nama_ukuran . " (" . $nama_warna . ")";
+          }
+          else if($dpo[$k]['keterangan'] == 1){
+              for($w=0;$w<$jmukuran;$w++){
+                  if($ukuran[$w]['id_ukuran_produk'] == $dpo[$k]['id_ukuran_produk']){
+                      $nama_ukuran = $ukuran[$w]['ukuran_produk'] ." ". $ukuran[$w]['satuan_ukuran'];
+                  }
+              }
+
+              $nama_produk = $dpo[$k]['nama_produk'] . $nama_ukuran;
+          }
+          else if($dpo[$k]['keterangan'] == 2){
+              for($w=0;$w<$jmwarna;$w++){
+                  if($warna[$w]['id_warna'] == $dpo[$k]['id_warna']){
+                      $nama_warna = $warna[$w]['nama_warna'];
+                  }
+              }
+
+              $nama_produk = $dpo[$k]['nama_produk'] . " (" . $nama_warna . ")";
+          }
+          else{
+              $nama_produk = $dpo[$k]['nama_produk'];
+          }
+
+          if($jm_ct == 4){
+              $pdf->Cell(10,24,($k+1),1,0,'C');
+              $pdf->Cell(90,24,$nama_produk,1,0,'C');
+              $pdf->Cell(20,24,$dpo[$k]['jumlah_produk'],1,0,'C');
+          }
+          if($jm_ct == 3){
+              $pdf->Cell(10,18,($k+1),1,0,'C');
+              $pdf->Cell(90,18,$nama_produk,1,0,'C');
+              $pdf->Cell(20,18,$dpo[$k]['jumlah_produk'],1,0,'C');
+          }
+          
+          for($o=0;$o<$jm_ct;$o++){
+              $id_line = $ct[$o]['id_line'];
+              $total[$o] = 0;
+
+              if($o == 0){
+                  $pdf->Cell(30,6,$ct[$o]['nama_line'],1,0,'C');
+
+                  for($u=0;$u<7;$u++){
+                      for($q=0;$q<$jm_dpl;$q++){
+                          $id_dpo_dpl  = $dpl[$q]['id_detail_purchase_order'];
+                          $id_line_dpl = $dpl[$q]['id_line'];
+                          $tgl_dpl     = $dpl[$q]['tanggal'];
+
+                          $tanggal_cek = $semua_tanggal[$u]['tanggal'];
+
+                          if($id_dpo_dpl == $id_dpo && $id_line_dpl == $id_line && $tgl_dpl == $tanggal_cek){
+                              if($dpl[$q]['jumlah_item_perencanaan'] == 0){
+                                  $pdf->Cell(15,6,'',1,0,'C');
+                              }
+                              else{
+                                  $pdf->Cell(15,6,$dpl[$q]['jumlah_item_perencanaan'],1,0,'C');
+                                  $total[$o] = $total[$o] + intval($dpl[$q]['jumlah_item_perencanaan']);
+                              }
+                          }
+                      }
+                  }
+                  if($total[$o] == 0){
+                      $pdf->Cell(20,6,'-',1,0,'C');
+                  }
+                  else{
+                      $pdf->Cell(20,6,$total[$o],1,0,'C');
+                  }
+              }
+              else if($o == ($jm_ct-1)){
+                  $pdf->Cell(5,6,'',0,1,'C');
+                  $pdf->Cell(10,6,'',0,0,'C');
+                  $pdf->Cell(90,6,'',0,0,'C');
+                  $pdf->Cell(20,6,'',0,0,'C');
+                  $pdf->Cell(30,6,$ct[$o]['nama_line'],1,0,'C');
+
+                  for($u=0;$u<7;$u++){
+                      for($q=0;$q<$jm_dpl;$q++){
+                          $id_dpo_dpl  = $dpl[$q]['id_detail_purchase_order'];
+                          $id_line_dpl = $dpl[$q]['id_line'];
+                          $tgl_dpl     = $dpl[$q]['tanggal'];
+
+                          $tanggal_cek = $semua_tanggal[$u]['tanggal'];
+
+                          if($id_dpo_dpl == $id_dpo && $id_line_dpl == $id_line && $tgl_dpl == $tanggal_cek){
+                              if($dpl[$q]['jumlah_item_perencanaan'] == 0){
+                                  $pdf->Cell(15,6,'',1,0,'C');
+                              }
+                              else{
+                                  $pdf->Cell(15,6,$dpl[$q]['jumlah_item_perencanaan'],1,0,'C');
+                                  $total[$o] = $total[$o] + intval($dpl[$q]['jumlah_item_perencanaan']);
+                              }
+                          }
+                      }
+                  }
+                  if($total[$o] == 0){
+                      $pdf->Cell(20,6,'-',1,1,'C');
+                  }
+                  else{
+                      $pdf->Cell(20,6,$total[$o],1,1,'C');
+                  }
+              }
+              else{
+                  $pdf->Cell(5,6,'',0,1,'C');
+                  $pdf->Cell(10,6,'',0,0,'C');
+                  $pdf->Cell(90,6,'',0,0,'C');
+                  $pdf->Cell(20,6,'',0,0,'C');
+                  $pdf->Cell(30,6,$ct[$o]['nama_line'],1,0,'C');
+
+                  for($u=0;$u<7;$u++){
+                      for($q=0;$q<$jm_dpl;$q++){
+                          $id_dpo_dpl  = $dpl[$q]['id_detail_purchase_order'];
+                          $id_line_dpl = $dpl[$q]['id_line'];
+                          $tgl_dpl     = $dpl[$q]['tanggal'];
+
+                          $tanggal_cek = $semua_tanggal[$u]['tanggal'];
+
+                          if($id_dpo_dpl == $id_dpo && $id_line_dpl == $id_line && $tgl_dpl == $tanggal_cek){
+                              if($dpl[$q]['jumlah_item_perencanaan'] == 0){
+                                  $pdf->Cell(15,6,'',1,0,'C');
+                              }
+                              else{
+                                  $pdf->Cell(15,6,$dpl[$q]['jumlah_item_perencanaan'],1,0,'C');
+                                  $total[$o] = $total[$o] + intval($dpl[$q]['jumlah_item_perencanaan']);
+                              }
+                          }
+                      }
+                  }
+                  if($total[$o] == 0){
+                      $pdf->Cell(20,6,'-',1,0,'C');
+                  }
+                  else{
+                      $pdf->Cell(20,6,$total[$o],1,0,'C');
+                  }
+              }
+              
+          }
+      }
+
+      $count = $jm_dpo+1;
+
+      for($k=0;$k<$jm_dpore;$k++){
+          //$ct    = $this->M_PerencanaanProduksi->get_ct($dpore[$k]['id_produk'])->result_array();
+          //$jm_ct = $this->M_PerencanaanProduksi->get_ct($dpore[$k]['id_produk'])->num_rows();
+
+          $id_produksi_tertunda = $dpore[$k]['id_produksi_tertunda'];
+
+          $pdf->SetFont('Arial','',10);
+
+          //nama produk
+          if($dpore[$k]['keterangan'] == 0){
+              for($w=0;$w<$jmwarna;$w++){
+                  if($warna[$w]['id_warna'] == $dpore[$k]['id_warna']){
+                      $nama_warna = $warna[$w]['nama_warna'];
+                  }
+              }
+
+              for($w=0;$w<$jmukuran;$w++){
+                  if($ukuran[$w]['id_ukuran_produk'] == $dpore[$k]['id_ukuran_produk']){
+                      $nama_ukuran = $ukuran[$w]['ukuran_produk'] . $ukuran[$w]['satuan_ukuran'];
+                  }
+              }
+
+              $nama_produk = $dpore[$k]['nama_produk'] ." ". $nama_ukuran . " (" . $nama_warna . ")";
+          }
+          else if($dpore[$k]['keterangan'] == 1){
+              for($w=0;$w<$jmukuran;$w++){
+                  if($ukuran[$w]['id_ukuran_produk'] == $dpore[$k]['id_ukuran_produk']){
+                      $nama_ukuran = $ukuran[$w]['ukuran_produk'] ." ". $ukuran[$w]['satuan_ukuran'];
+                  }
+              }
+
+              $nama_produk = $dpore[$k]['nama_produk'] . $nama_ukuran;
+          }
+          else if($dpore[$k]['keterangan'] == 2){
+              for($w=0;$w<$jmwarna;$w++){
+                  if($warna[$w]['id_warna'] == $dpore[$k]['id_warna']){
+                      $nama_warna = $warna[$w]['nama_warna'];
+                  }
+              }
+
+              $nama_produk = $dpore[$k]['nama_produk'] . " (" . $nama_warna . ")";
+          }
+          else{
+              $nama_produk = $dpore[$k]['nama_produk'];
+          }
+
+          $pdf->Cell(10,6,$count,1,0,'C');
+          $pdf->Cell(90,6,$nama_produk,1,0,'C');
+          $pdf->Cell(20,6,$dpore[$k]['jumlah_tertunda'],1,0,'C');
+          $pdf->Cell(30,6,$dpore[$k]['nama_line'],1,0,'C');
+
+          $total = 0;
+
+          for($u=0;$u<7;$u++){
+              $tanggal_cek = $semua_tanggal[$u]['tanggal'];
+              for($q=0;$q<$jm_dplre;$q++){
+                  $id_prodtun  = $dplre[$q]['id_produksi_tertunda'];
+                  $tgl_dpl     = $dplre[$q]['tanggal'];
+
+                  if($id_prodtun == $id_produksi_tertunda && $tgl_dpl == $tanggal_cek){
+                      if($dplre[$q]['jumlah_item_perencanaan'] == 0){
+                          $pdf->Cell(15,6,'',1,0,'C');
+                      }
+                      else{
+                          $pdf->Cell(15,6,$dplre[$q]['jumlah_item_perencanaan'],1,0,'C');
+                          $total = $total + intval($dplre[$q]['jumlah_item_perencanaan']);
+                      }
+                  }
+              }
+          }
+          if($total == 0){
+              $pdf->Cell(20,6,'-',1,1,'C');
+          }
+          else{
+              $pdf->Cell(20,6,$total,1,1,'C');
+          }
+          $count++;
+      }
+
+      $pdf->Output();
+    }
 
 }

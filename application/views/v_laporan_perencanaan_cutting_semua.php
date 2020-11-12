@@ -829,7 +829,7 @@
                 $hitung = 0;
                 $konsumsi_material = "";
                 for($i=0;$i<respond['jm_percut'];$i++){
-                    
+            
                     //konsumsi material
                     $isi_km = "";
                     $nomor = 1;
@@ -837,10 +837,12 @@
                         if(respond['km'][$k]['id_produk'] == respond['percut'][$i]['id_produk'] && respond['km'][$k]['id_line'] == respond['percut'][$i]['id_line'] 
                         && respond['km'][$k]['status_konsumsi'] == 0){
                             $jumlah_konsumsi_seharusnya = respond['km'][$k]['jumlah_konsumsi'] * respond['percut'][$i]['jumlah_aktual_cut'];
-                            
+                            $ukuran_satuan_keluar       = respond['km'][$k]['ukuran_satuan_keluar'];
+
                             //material dari gudang
-                            $cari_pm = 0;
+                            $cari_pm         = 0;
                             $material_gudang = 0;
+                            $id_dpo          = "";
 
                             for($p=0;$p<respond['jm_pm'];$p++){
                                 if(respond['pm'][$p]['id_detail_purchase_order_customer'] == respond['percut'][$i]['id_detail_purchase_order_customer'] 
@@ -853,11 +855,21 @@
                                 }
                             }
 
-                            //material wip
+                            //material wip (inventory line)
                             $from_inli = 0;
 
+                            for($r=0;$r<respond['jm_det_inline'];$r++){
+                                if(respond['det_inline'][$r]['id_detail_purchase_order_customer'] == respond['percut'][$i]['id_detail_purchase_order_customer'] 
+                                    && respond['det_inline'][$r]['id_line'] == respond['percut'][$i]['id_line'] 
+                                    && respond['det_inline'][$r]['id_konsumsi_material'] == respond['km'][$k]['id_konsumsi_material'] 
+                                    && respond['det_inline'][$r]['tanggal_produksi'] == respond['percut'][$i]['tanggal_produksi'] ){
+                                        $from_inli = respond['det_inline'][$r]['jumlah_material'];
+                                    }
+                            }
+                            
+
                             //wipnya
-                            $wip = $from_inli + $material_gudang - $jumlah_konsumsi_seharusnya;
+                            $wip = parseFloat($from_inli) + (parseFloat($material_gudang) * parseFloat($ukuran_satuan_keluar)) - parseFloat($jumlah_konsumsi_seharusnya);
 
                             if($wip < 0){
                                 $cek++;
@@ -893,7 +905,7 @@
                                 '</td>'+
                                 '<td>'+
                                     '<center>'+
-                                        $material_gudang+
+                                        ($material_gudang * $ukuran_satuan_keluar)+
                                     '</center>'+
                                 '</td>'+
                                 '<td>'+

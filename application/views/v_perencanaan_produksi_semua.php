@@ -35,6 +35,7 @@
                         <th style="text-align: center;vertical-align: middle;">No</th>
                         <th style="text-align: center;vertical-align: middle;">Tanggal Awal</th>
                         <th style="text-align: center;vertical-align: middle;">Tanggal Akhir</th>
+                        <th style="text-align: center;vertical-align: middle;">Status</th>
                         <th style="text-align: center;vertical-align: middle;">Aksi</th>
                     </tr>
                 </thead>
@@ -53,16 +54,29 @@
                                 <?= $x->tanggal_selesai;?>
                                 <input type="hidden" id="e<?= $no;?>" value="<?= $x->tanggal_selesai;?>">
                             </td>
+                            <td style="text-align: center;vertical-align: middle;">
+                                <?php if($x->start > $now){?>
+                                    Belum Produksi
+                                <?php }  else if($x->start < $now && $x->end > $now){ ?>
+                                    Sedang Produksi
+                                <?php } else if($x->end < $now){?>
+                                    Selesai
+                                <?php } ?> 
+                            </td>
                             <td  class="col-lg-3">
                                 <button type="button" class="bdetail_klik col-lg-3 btn btn-primary fa fa-info-circle" title="Detail"
                                 id="bdetail<?php echo $x->id_produksi?>" value="<?= $no ?>"></button>
-                                <form method="POST" action="<?= base_url()?>perencanaanProduksi/edit_perencanaan_produksi">
-                                    <input type="hidden" name="id" value="<?= $x->id_produksi?>">
-                                    <button type="submit" class="col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                    title="Edit"></button>
-                                </form>  
-                                <button type="button" class="bdelete_klik col-lg-3 btn btn-danger fa fa-trash-o" title="Delete"
+                                <?php if($x->start < $now && $x->end > $now){ ?>
+                                    <form method="POST" action="<?= base_url()?>perencanaanProduksi/edit_perencanaan_produksi">
+                                        <input type="hidden" name="id" value="<?= $x->id_produksi?>">
+                                        <button type="submit" class="col-lg-3 btn btn-warning fa fa-pencil-square-o"
+                                        title="Edit"></button>
+                                    </form>
+                                <?php }?>
+                                <?php if($x->start > $now){?>
+                                    <button type="button" class="bdelete_klik col-lg-3 btn btn-danger fa fa-trash-o" title="Delete"
                                     id="bdelete<?php echo $x->id_produksi?>" value="<?= $no ?>"></button>
+                                <?php } ?>  
                                 <form method="POST" action="<?= base_url()?>perencanaanProduksi/print_perencanaan_produksi">
                                     <input type="hidden" name="id" value="<?= $x->id_produksi?>">
                                     <button type="submit" class="col-lg-3 btn fa fa-print" style="background-color:#E56B1F;color:white;"
@@ -75,65 +89,6 @@
                 </tbody>
 	        </table>
         </div>
-    </div>
-
-    <div id='modaltambah' class="modal-block modal-block-primary mfp-hide">
-        <form method="POST" action="<?= base_url()?>rekening/tambah_rekening"> 
-            <section class="panel">
-                <header class="panel-heading">
-                    <h2 class="panel-title">Tambah Rekening</h2>
-                </header>
-
-                <div class="panel-body">
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Nama Bank</label>
-                        <div class="col-sm-7">
-                            <select name="nama_bank" id="nama_bank" required class="form-control mb-md">
-                                <option>BCA</option>
-                                <option>BNI</option>
-                                <option>BRI</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Nomor Rekening</label>
-                        <div class="col-sm-7">
-                            <input type="number" name="nomor_rekening" id="nomor_rekening" required class="form-control"
-                            value="">
-                        </div>
-                    </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">A/N</label>
-                        <div class="col-sm-7">
-                            <input type="text" name="an" id="an" required class="form-control"
-                            value="">
-                        </div>
-                    </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Keterangan</label>
-                        <div class="col-sm-7">
-                            <select name="keterangan" id="keterangan" required class="form-control mb-md">
-                                <option>Default</option>
-                                <option>Optional</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <footer class="panel-footer">
-                    <div class="row">
-                        <div class="col-md-12 text-right">
-                            <input type="submit" class="btn btn-primary" value="Save">
-                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Cancel</button>
-                        </div>
-                    </div>
-                </footer>
-            </section>
-        </form>
-
-        <!-- tampung id produk yang dipilih
-        <input type="text" id="tampung_id_produk" name="tampung_id_produk">  -->
-        <!-- tampung jumlah id produk yang dipilih -->
-        <input type="hidden" id="tampung_jumlah_id_produk"> 
     </div>
 
     <div class="modal" id="modaldetail" role="dialog">
@@ -217,8 +172,6 @@
 <?php include('_js.php'); ?>
 <!--*****************************-->
 <!--*****************************-->
-
-
 <script>
     function reload() {
         location.reload();
@@ -341,6 +294,7 @@
     });
 </script>
 
+<!-- detail, jika ubah line -->
 <script>
     function ubah_line(){
         $(".divnya").hide();
@@ -356,6 +310,7 @@
     }
 </script>
 
+<!-- jika di delete -->
 <script>
     $('.bdelete_klik').click(function(){
         var no = $(this).attr('value');

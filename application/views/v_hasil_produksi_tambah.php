@@ -67,6 +67,24 @@
                                 Aksi
                             </th>
                         </tr>
+                    <?php } else{?>
+                        <tr>
+                            <th rowspan="2" style="text-align: center;vertical-align: middle;">
+                                No
+                            </th>
+                            <th rowspan="2" style="text-align: center;vertical-align: middle;">
+                                Tanggal Produksi
+                            </th>
+                            <th rowspan="2" style="text-align: center;vertical-align: middle;">
+                                Status Laporan
+                            </th>
+                            <th colspan="4" style="text-align: center;vertical-align: middle;">
+                                Laporan
+                            </th>
+                            <th rowspan="2" style="text-align: center;vertical-align: middle;">
+                                Aksi
+                            </th>
+                        </tr>
                     <?php } ?>
         
                     <tr>
@@ -74,9 +92,7 @@
                             <th style="text-align: center;vertical-align: middle;">
                                 Assy
                             </th>
-                        <?php } ?>
-                        
-                        <?php if($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Produksi"){?>
+                        <?php } else if($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Produksi"){?>
                             <th style="text-align: center;vertical-align: middle;">
                                 Cut
                             </th>
@@ -85,6 +101,19 @@
                             </th>
                             <th style="text-align: center;vertical-align: middle;">
                                 Sew
+                            </th>
+                        <?php } else{?>
+                            <th style="text-align: center;vertical-align: middle;">
+                                Cut
+                            </th>
+                            <th style="text-align: center;vertical-align: middle;">
+                                Bond
+                            </th>
+                            <th style="text-align: center;vertical-align: middle;">
+                                Sew
+                            </th>
+                            <th style="text-align: center;vertical-align: middle;">
+                                Assy
                             </th>
                         <?php } ?>
                     </tr>
@@ -146,6 +175,43 @@
                                         <?php foreach($produksi_line as $pl){
                                                 if($pl->id_produksi == $p->id_produksi){
                                                     if($pl->nama_line == "Line Sewing"){   
+                                                        if($pl->status_laporan == 1){
+                                        ?>
+                                            <i class="fa  fa-check"></i>
+                                        <?php }}}} ?>
+                                    </td>
+                                <?php } else{?>
+                                    <td style="text-align: center;vertical-align: middle;">
+                                        <?php foreach($produksi_line as $pl){
+                                                if($pl->id_produksi == $p->id_produksi){
+                                                    if($pl->nama_line == "Line Cutting"){  
+                                                        if($pl->status_laporan == 1){
+                                        ?>
+                                            <i class="fa  fa-check"></i>
+                                        <?php }}}} ?>
+                                    </td>
+                                    <td style="text-align: center;vertical-align: middle;">
+                                        <?php foreach($produksi_line as $pl){
+                                                if($pl->id_produksi == $p->id_produksi){
+                                                    if($pl->nama_line == "Line Bonding"){   
+                                                        if($pl->status_laporan == 1){
+                                        ?>
+                                            <i class="fa  fa-check"></i>
+                                        <?php }}}} ?>
+                                    </td>
+                                    <td style="text-align: center;vertical-align: middle;">
+                                        <?php foreach($produksi_line as $pl){
+                                                if($pl->id_produksi == $p->id_produksi){
+                                                    if($pl->nama_line == "Line Sewing"){   
+                                                        if($pl->status_laporan == 1){
+                                        ?>
+                                            <i class="fa  fa-check"></i>
+                                        <?php }}}} ?>
+                                    </td>
+                                    <td style="text-align: center;vertical-align: middle;">
+                                        <?php foreach($produksi_line as $pl){
+                                                if($pl->id_produksi == $p->id_produksi){
+                                                    if($pl->nama_line == "Line Assy"){  
                                                         if($pl->status_laporan == 1){
                                         ?>
                                             <i class="fa  fa-check"></i>
@@ -267,8 +333,10 @@
                                         <option id="opt<?= $c;?>" value="<?= $ln->id_line?>"><?= $ln->nama_line?></option>
                                     <?php
                                                 }
-                                            }
-                                    ?>
+                                            } else{
+                                    ?>  
+                                        <option id="opt<?= $c;?>" value="<?= $ln->id_line?>"><?= $ln->nama_line?></option>
+                                            <?php } ?>
                                     <?php $c++; } ?>
                                 </select>
                                 <div id="select_line"></div>

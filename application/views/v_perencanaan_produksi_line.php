@@ -35,6 +35,7 @@
                         <th style="text-align: center;vertical-align: middle;">No</th>
                         <th style="text-align: center;vertical-align: middle;">Tanggal Awal</th>
                         <th style="text-align: center;vertical-align: middle;">Tanggal Akhir</th>
+                        <th style="text-align: center;vertical-align: middle;">Status</th>
                         <th style="text-align: center;vertical-align: middle;">Aksi</th>
                     </tr>
                 </thead>
@@ -64,6 +65,15 @@
                             <td style="text-align: center;vertical-align: middle;">
                                 <?= $x->tanggal_selesai;?>
                                 <input type="hidden" id="e<?= $no;?>" value="<?= $x->tanggal_selesai;?>">
+                            </td>
+                            <td style="text-align: center;vertical-align: middle;">
+                                <?php if($x->start > $now){?>
+                                    Belum Produksi
+                                <?php }  else if($x->start < $now && $x->end > $now){ ?>
+                                    Sedang Produksi
+                                <?php } else if($x->end < $now){?>
+                                    Selesai
+                                <?php } ?> 
                             </td>
                             <td  class="col-lg-3">
                                 <button type="button" class="bdetail_klik col-lg-3 btn btn-primary fa fa-info-circle" title="Detail"
@@ -131,6 +141,7 @@
     }
 </script>
 
+<!-- modal detail -->
 <script>
     $('.bdetail_klik').click(function(){
         var no = $(this).attr('value');
@@ -177,13 +188,16 @@
 
                                 if($tanggal == $tgl && $idline == $id_line ){
                                     if(respond['produksi_line'][$r]['status_perencanaan'] == 0){
+                                        $status = "Tidak Ada";
+                                    }
+                                    else if(respond['produksi_line'][$r]['status_perencanaan'] == 1){
                                         $status = "Tidak Overtime";
                                     }
                                     else{
                                         $status = "Overtime";
                                     }
 
-                                    ef[$l] = ef[$l] + '<td><center>'+respond['produksi_line'][$r]['efisiensi_perencanaan']+'</center></td>';
+                                    ef[$l] = ef[$l] + '<td><center>'+respond['produksi_line'][$r]['efisiensi_perencanaan']+' %</center></td>';
                                     tw[$l] = tw[$l] + '<td><center>'+respond['produksi_line'][$r]['total_waktu_perencanaan']+'</center></td>';
                                     sts[$l] = sts[$l] + '<td><center>'+$status+'</center></td>';
                                 }

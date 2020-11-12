@@ -984,8 +984,8 @@
                                             </td>
                                             <td class="col-md-2">
                                                 <?php $jumlanya = $pt->jumlah_tertunda - $pt->jumlah_terencana;?>
-                                                <input type="text" class="input_bgpo1 jumlah_produk1" id="re_id1<?= $ke ?>" value="<?= $pt->id_produksi_tertunda?>">
-                                                <input type="text" class="input_bgpo1 jumlah_produk1" id="rejumlah_produk1<?= $pt->id_detail_purchase_order_customer?>"
+                                                <input type="hidden" class="input_bgpo1 jumlah_produk1" id="re_id1<?= $ke ?>" value="<?= $pt->id_produksi_tertunda?>">
+                                                <input type="hidden" class="input_bgpo1 jumlah_produk1" id="rejumlah_produk1<?= $pt->id_detail_purchase_order_customer?>"
                                                 value="<?= $pt->jumlah_tertunda ?>">
                                                 <center>
                                                     <?= $pt->jumlah_tertunda  ?> 
