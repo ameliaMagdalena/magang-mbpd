@@ -2806,10 +2806,15 @@ class PerencanaanProduksi extends CI_Controller {
         $this->load->view('v_perencanaan_produksi_semua',$data);
     }
 
+    public function perencanaan_produksi_line0(){
+        $data['line'] = $this->M_Line->select_all_aktif()->result();
+
+        $this->load->view('v_perencanaan_produksi_line0',$data);
+    }
+
     public function perencanaan_produksi_line(){
         $data['line'] = $this->M_Line->select_all_aktif()->result();
-        $data['now']          = date('Y-m-d');
-
+        $data['now']  = date('Y-m-d');
         //select semua perencanaan yang status deletenya = 0
 
         if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Cutting"){
@@ -2823,6 +2828,8 @@ class PerencanaanProduksi extends CI_Controller {
         }
         else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Assy"){
             $data['linenya'] = "Line Assy";
+        } else{
+            $data['linenya'] = $this->input->post('select_line');
         }
 
         $data['monday']       = $this->M_PerencanaanProduksi->select_all_monday()->result();
@@ -3165,6 +3172,8 @@ class PerencanaanProduksi extends CI_Controller {
         }
         else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Assy"){
             $linenya = "Line Assy";
+        } else{
+            $linenya = $this->input->post('nama_line');
         }
 
         $date   = $this->M_PerencanaanProduksi->get_tanggal_produksi($id)->result_array();

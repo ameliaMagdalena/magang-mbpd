@@ -24,9 +24,11 @@
 <!--*****************************-->
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
-        <a class="modal-with-form col-lg-2  btn btn-success" id="button_tambah" 
-            href="#modaltambah" onclick="id_produk()">+ Rekening</a>
+        <?php if(($_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management")){?>
+            <a class="modal-with-form col-lg-2  btn btn-success" id="button_tambah" 
+                href="#modaltambah" onclick="id_produk()">+ Rekening</a>
         <br><br>
+        <?php } ?>
 
         <header class="panel-heading">
             <h2 class="panel-title">Data Rekening</h2>
@@ -63,12 +65,15 @@
                             <td  class="col-lg-3">
                                 <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
                                     title="Detail" href="#modaldetail<?= $rk->id_rekening;?>"></a>
-                                <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                    title="Edit" href="#modaledit<?= $rk->id_rekening;?>"></a>
-                                <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                title="Hapus" href="#modalhapus<?= $rk->id_rekening;?>"></a>
-                                <button type="button" class="blog_klik col-lg-3 btn btn-info fa fa-file" 
-                                id="blog<?= $rk->id_rekening;?>" value="<?= $rk->id_rekening;?>"></button>
+                                
+                                <?php if(($_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management")){?>
+                                    <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
+                                        title="Edit" href="#modaledit<?= $rk->id_rekening;?>"></a>
+                                    <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
+                                    title="Hapus" href="#modalhapus<?= $rk->id_rekening;?>"></a>
+                                    <button type="button" class="blog_klik col-lg-3 btn btn-info fa fa-file" 
+                                    id="blog<?= $rk->id_rekening;?>" value="<?= $rk->id_rekening;?>"></button>
+                                <?php } ?>
                             </td>
                         </tr>
 

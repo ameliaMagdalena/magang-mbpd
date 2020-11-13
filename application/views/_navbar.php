@@ -94,7 +94,7 @@
 									</li>
 									<li>
 										<a href="<?= base_url()?>warna">
-											Warna
+											Warna Produk
 										</a>
 									</li>
 									<li>
@@ -397,6 +397,7 @@
 							</li>
 							
 							<!-- produksi -->
+								<!-- prencanaan produksi -->
 								<li class="nav-parent">
 									<a title="Perencanaan Produksi">
 										<i class="fa fa-calendar" aria-hidden="true"></i>
@@ -415,6 +416,14 @@
 										</li>
 									</ul>
 								</li>
+								<!-- perencanaan produksi line -->
+								<li>
+									<a href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line0">
+										<i class="fa fa-calendar" aria-hidden="true"></i>
+										<span>Perencanaan Produksi Line</span>
+									</a>
+								</li>
+								<!-- permintaan material -->
 								<li class="nav-parent">
 									<a title="Permintaan Material">
 										<i class="fa fa-calendar" aria-hidden="true"></i>
@@ -453,62 +462,7 @@
 										</li>
 									</ul>
 								</li>
-								<li class="nav-parent">
-									<a>
-										<i class="fa fa-th-list" aria-hidden="true"></i>
-										<span>Laporan Hasil Produksi</span>
-									</a>
-									<ul class="nav nav-children">
-										<li>
-											<a href="<?= base_url()?>hasilProduksi/tambah_hasil_produksi">
-												<span>+ Laporan Hasil Produksi </span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>hasilProduksi/semua_hasil_produksi">
-												<span>Semua</span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>hasilProduksi/lengkap_hasil_produksi">
-												<span>Lengkap</span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>hasilProduksi/selesai_hasil_produksi">
-												<span>Selesai</span>
-											</a>
-										</li>
-									</ul>
-								</li>
-								<li class="nav-parent">
-									<a>
-										<i class="fa fa-th-list" aria-hidden="true"></i>
-										<span>Laporan Perencanaan Cutting</span>
-									</a>
-									<ul class="nav nav-children">
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/semua">
-												<span>Semua</span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>Belum Ada Laporan </span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>Sudah Ada Laporan</span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>Selesai </span>
-											</a>
-										</li>
-									</ul>
-								</li>
+								<!-- surat perintah lembur -->
 								<li class="nav-parent">
 									<a title="Surat Perintah Lembur">
 										<i class="fa  fa-file-text" aria-hidden="true"></i>
@@ -552,6 +506,7 @@
 										</li>
 									</ul>
 								</li>
+								<!-- laporan lembur -->
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-file" aria-hidden="true"></i>
@@ -580,111 +535,7 @@
 										</li>
 									</ul>
 								</li>
-								<li>
-									<a href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line">
-										<i class="fa fa-calendar" aria-hidden="true"></i>
-										<span>Perencanaan Produksi Line</span>
-									</a>
-								</li>
-								<li class="nav-parent">
-									<a>
-										<i class="fa fa-plus-square-o" aria-hidden="true"></i>
-										<span>Pengambilan Material</span>
-									</a>
-									<ul class="nav nav-children">
-										<li>
-											<a href="<?= base_url()?>pengambilanMaterialProduksi/tambah">
-												+ Pengambilan Material
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>pengambilanMaterialProduksi/semua_pengambilan_material">
-												Semua
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_disetujui_pengambilan_material">
-												Belum Disetujui Gudang Material
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_diambil_pengambilan_material">
-												Disetujui & Belum Diambil
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>pengambilanMaterialProduksi/selesai_pengambilan_material">
-												Selesai
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>pengambilanMaterialProduksi/batal_pengambilan_material">
-												Batal
-											</a>
-										</li>
-									</ul>
-								</li>
-								<li class="nav-parent">
-									<a>
-										<i class="fa fa-file-text-o" aria-hidden="true"></i>
-										<span>BPBJ</span>
-									</a>
-									<ul class="nav nav-children">
-										<li>
-											<a href="<?= base_url()?>bpbj/tambah_bpbj">
-												+ BPBJ
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>bpbj/semua_bpbj">
-												Semua
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>bpbj/bpbj_belum_diproses">
-												Belum Diproses
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>bpbj/bpbj_sedang_diproses">
-												Sedang Diproses
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>bpbj/bpbj_selesai">
-												Selesai
-											</a>
-										</li>
-									</ul>
-								</li>
-								<li class="nav-parent">
-									<a>
-										<i class="fa fa-file-o" aria-hidden="true"></i>
-										<span>BPBD</span>
-									</a>
-									<ul class="nav nav-children">
-										<li>
-											<a href="<?= base_url()?>bpbd/tambah_bpbd">
-												+ BPBD
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>bpbd/semua_bpbd">
-												Semua
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>bpbd/belum_konfirmasi_bpbd">
-												Belum Konfirmasi
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>bpbd/terkonfirmasi_bpbd">
-												Terkonfirmasi
-											</a>
-										</li>
-									</ul>
-								</li>
+								<!-- laporan hasil produksi -->
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-th-list" aria-hidden="true"></i>
@@ -713,39 +564,7 @@
 										</li>
 									</ul>
 								</li>
-								<li class="nav-parent">
-									<a>
-										<i class="fa fa-th-list" aria-hidden="true"></i>
-										<span>Laporan Perencanaan Cutting</span>
-									</a>
-									<ul class="nav nav-children">
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>+ Laporan Perencanaan Cutting </span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/semua">
-												<span>Semua</span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>Belum Ada Laporan </span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>Sudah Ada Laporan</span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>Selesai </span>
-											</a>
-										</li>
-									</ul>
-								</li>
+								<!-- permohonan akses -->
 								<li class="nav-parent">
 									<a title="Permohonan Akses">
 										<i class="fa   fa-unlock-alt" aria-hidden="true"></i>
@@ -781,6 +600,133 @@
 										</li>
 									</ul>
 								</li>
+								<!-- laporan perencanaan cutting -->
+								<li class="nav-parent">
+									<a>
+										<i class="fa fa-th-list" aria-hidden="true"></i>
+										<span>Laporan Perencanaan Cutting</span>
+									</a>
+									<ul class="nav nav-children">
+										<li>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+												<span>+ Laporan Perencanaan Cutting </span>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/semua">
+												<span>Semua</span>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+												<span>Belum Ada Laporan </span>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+												<span>Sudah Ada Laporan</span>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+												<span>Selesai </span>
+											</a>
+										</li>
+									</ul>
+								</li>
+								<!-- pengambilan material -->
+								<li class="nav-parent">
+									<a>
+										<i class="fa fa-plus-square-o" aria-hidden="true"></i>
+										<span>Pengambilan Material</span>
+									</a>
+									<ul class="nav nav-children">
+										<li>
+											<a href="<?= base_url()?>pengambilanMaterialProduksi/tambah0">
+												+ Pengambilan Material
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>pengambilanMaterialProduksi/semua_pengambilan_material0">
+												Semua
+											</a>
+										</li>
+										<li>
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_disetujui_pengambilan_material">
+											Belum Diambil
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_diambil_pengambilan_material">
+											Sudah Diambil
+										</a>
+									</li>
+									</ul>
+								</li>
+								<!-- bpbj -->
+								<li class="nav-parent">
+									<a>
+										<i class="fa fa-file-text-o" aria-hidden="true"></i>
+										<span>BPBJ</span>
+									</a>
+									<ul class="nav nav-children">
+										<li>
+											<a href="<?= base_url()?>bpbj/tambah_bpbj">
+												+ BPBJ
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>bpbj/semua_bpbj">
+												Semua
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>bpbj/bpbj_belum_diproses">
+												Belum Diproses
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>bpbj/bpbj_sedang_diproses">
+												Sedang Diproses
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>bpbj/bpbj_selesai">
+												Selesai
+											</a>
+										</li>
+									</ul>
+								</li>
+								<!-- bpbd -->
+								<li class="nav-parent">
+									<a>
+										<i class="fa fa-file-o" aria-hidden="true"></i>
+										<span>BPBD</span>
+									</a>
+									<ul class="nav nav-children">
+										<li>
+											<a href="<?= base_url()?>bpbd/tambah_bpbd">
+												+ BPBD
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>bpbd/semua_bpbd">
+												Semua
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>bpbd/belum_konfirmasi_bpbd">
+												Belum Konfirmasi
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>bpbd/terkonfirmasi_bpbd">
+												Terkonfirmasi
+											</a>
+										</li>
+									</ul>
+								</li>
+								<!-- surat jalan -->
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -814,6 +760,7 @@
 										</li>
 									</ul>
 								</li>
+								<!-- invoice -->
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-file-text-o" aria-hidden="true"></i>
@@ -842,6 +789,7 @@
 										</li>
 									</ul>
 								</li>
+								<!-- process cost -->
 								<li>
 									<a href="<?= base_url()?>processCost">
 										<i class="fa fa-money" aria-hidden="true"></i>
@@ -930,6 +878,7 @@
 								</ul>
 							</li>
 							<!-- produksi -->
+								<!-- prencanaan produksi -->
 								<li class="nav-parent">
 									<a title="Perencanaan Produksi">
 										<i class="fa fa-calendar" aria-hidden="true"></i>
@@ -948,6 +897,14 @@
 										</li>
 									</ul>
 								</li>
+								<!-- perencanaan produksi line -->
+								<li>
+									<a href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line0">
+										<i class="fa fa-calendar" aria-hidden="true"></i>
+										<span>Perencanaan Produksi Line</span>
+									</a>
+								</li>
+								<!-- permintaan material -->
 								<li class="nav-parent">
 									<a title="Permintaan Material">
 										<i class="fa fa-calendar" aria-hidden="true"></i>
@@ -986,62 +943,7 @@
 										</li>
 									</ul>
 								</li>
-								<li class="nav-parent">
-									<a>
-										<i class="fa fa-th-list" aria-hidden="true"></i>
-										<span>Laporan Hasil Produksi</span>
-									</a>
-									<ul class="nav nav-children">
-										<li>
-											<a href="<?= base_url()?>hasilProduksi/tambah_hasil_produksi">
-												<span>+ Laporan Hasil Produksi </span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>hasilProduksi/semua_hasil_produksi">
-												<span>Semua</span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>hasilProduksi/lengkap_hasil_produksi">
-												<span>Lengkap</span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>hasilProduksi/selesai_hasil_produksi">
-												<span>Selesai</span>
-											</a>
-										</li>
-									</ul>
-								</li>
-								<li class="nav-parent">
-									<a>
-										<i class="fa fa-th-list" aria-hidden="true"></i>
-										<span>Laporan Perencanaan Cutting</span>
-									</a>
-									<ul class="nav nav-children">
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/semua">
-												<span>Semua</span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>Belum Ada Laporan </span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>Sudah Ada Laporan</span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>Selesai </span>
-											</a>
-										</li>
-									</ul>
-								</li>
+								<!-- surat perintah lembur -->
 								<li class="nav-parent">
 									<a title="Surat Perintah Lembur">
 										<i class="fa  fa-file-text" aria-hidden="true"></i>
@@ -1085,6 +987,7 @@
 										</li>
 									</ul>
 								</li>
+								<!-- laporan lembur -->
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-file" aria-hidden="true"></i>
@@ -1113,111 +1016,7 @@
 										</li>
 									</ul>
 								</li>
-								<li>
-									<a href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line">
-										<i class="fa fa-calendar" aria-hidden="true"></i>
-										<span>Perencanaan Produksi Line</span>
-									</a>
-								</li>
-								<li class="nav-parent">
-									<a>
-										<i class="fa fa-plus-square-o" aria-hidden="true"></i>
-										<span>Pengambilan Material</span>
-									</a>
-									<ul class="nav nav-children">
-										<li>
-											<a href="<?= base_url()?>pengambilanMaterialProduksi/tambah">
-												+ Pengambilan Material
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>pengambilanMaterialProduksi/semua_pengambilan_material">
-												Semua
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_disetujui_pengambilan_material">
-												Belum Disetujui Gudang Material
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_diambil_pengambilan_material">
-												Disetujui & Belum Diambil
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>pengambilanMaterialProduksi/selesai_pengambilan_material">
-												Selesai
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>pengambilanMaterialProduksi/batal_pengambilan_material">
-												Batal
-											</a>
-										</li>
-									</ul>
-								</li>
-								<li class="nav-parent">
-									<a>
-										<i class="fa fa-file-text-o" aria-hidden="true"></i>
-										<span>BPBJ</span>
-									</a>
-									<ul class="nav nav-children">
-										<li>
-											<a href="<?= base_url()?>bpbj/tambah_bpbj">
-												+ BPBJ
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>bpbj/semua_bpbj">
-												Semua
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>bpbj/bpbj_belum_diproses">
-												Belum Diproses
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>bpbj/bpbj_sedang_diproses">
-												Sedang Diproses
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>bpbj/bpbj_selesai">
-												Selesai
-											</a>
-										</li>
-									</ul>
-								</li>
-								<li class="nav-parent">
-									<a>
-										<i class="fa fa-file-o" aria-hidden="true"></i>
-										<span>BPBD</span>
-									</a>
-									<ul class="nav nav-children">
-										<li>
-											<a href="<?= base_url()?>bpbd/tambah_bpbd">
-												+ BPBD
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>bpbd/semua_bpbd">
-												Semua
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>bpbd/belum_konfirmasi_bpbd">
-												Belum Konfirmasi
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>bpbd/terkonfirmasi_bpbd">
-												Terkonfirmasi
-											</a>
-										</li>
-									</ul>
-								</li>
+								<!-- laporan hasil produksi -->
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-th-list" aria-hidden="true"></i>
@@ -1246,39 +1045,7 @@
 										</li>
 									</ul>
 								</li>
-								<li class="nav-parent">
-									<a>
-										<i class="fa fa-th-list" aria-hidden="true"></i>
-										<span>Laporan Perencanaan Cutting</span>
-									</a>
-									<ul class="nav nav-children">
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>+ Laporan Perencanaan Cutting </span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/semua">
-												<span>Semua</span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>Belum Ada Laporan </span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>Sudah Ada Laporan</span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>Selesai </span>
-											</a>
-										</li>
-									</ul>
-								</li>
+								<!-- permohonan akses -->
 								<li class="nav-parent">
 									<a title="Permohonan Akses">
 										<i class="fa   fa-unlock-alt" aria-hidden="true"></i>
@@ -1314,6 +1081,133 @@
 										</li>
 									</ul>
 								</li>
+								<!-- laporan perencanaan cutting -->
+								<li class="nav-parent">
+									<a>
+										<i class="fa fa-th-list" aria-hidden="true"></i>
+										<span>Laporan Perencanaan Cutting</span>
+									</a>
+									<ul class="nav nav-children">
+										<li>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+												<span>+ Laporan Perencanaan Cutting </span>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/semua">
+												<span>Semua</span>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+												<span>Belum Ada Laporan </span>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+												<span>Sudah Ada Laporan</span>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+												<span>Selesai </span>
+											</a>
+										</li>
+									</ul>
+								</li>
+								<!-- pengambilan material -->
+								<li class="nav-parent">
+									<a>
+										<i class="fa fa-plus-square-o" aria-hidden="true"></i>
+										<span>Pengambilan Material</span>
+									</a>
+									<ul class="nav nav-children">
+										<li>
+											<a href="<?= base_url()?>pengambilanMaterialProduksi/tambah0">
+												+ Pengambilan Material
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>pengambilanMaterialProduksi/semua_pengambilan_material0">
+												Semua
+											</a>
+										</li>
+										<li>
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_disetujui_pengambilan_material">
+											Belum Diambil
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_diambil_pengambilan_material">
+											Sudah Diambil
+										</a>
+									</li>
+									</ul>
+								</li>
+								<!-- bpbj -->
+								<li class="nav-parent">
+									<a>
+										<i class="fa fa-file-text-o" aria-hidden="true"></i>
+										<span>BPBJ</span>
+									</a>
+									<ul class="nav nav-children">
+										<li>
+											<a href="<?= base_url()?>bpbj/tambah_bpbj">
+												+ BPBJ
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>bpbj/semua_bpbj">
+												Semua
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>bpbj/bpbj_belum_diproses">
+												Belum Diproses
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>bpbj/bpbj_sedang_diproses">
+												Sedang Diproses
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>bpbj/bpbj_selesai">
+												Selesai
+											</a>
+										</li>
+									</ul>
+								</li>
+								<!-- bpbd -->
+								<li class="nav-parent">
+									<a>
+										<i class="fa fa-file-o" aria-hidden="true"></i>
+										<span>BPBD</span>
+									</a>
+									<ul class="nav nav-children">
+										<li>
+											<a href="<?= base_url()?>bpbd/tambah_bpbd">
+												+ BPBD
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>bpbd/semua_bpbd">
+												Semua
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>bpbd/belum_konfirmasi_bpbd">
+												Belum Konfirmasi
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>bpbd/terkonfirmasi_bpbd">
+												Terkonfirmasi
+											</a>
+										</li>
+									</ul>
+								</li>
+								<!-- surat jalan -->
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -1347,6 +1241,7 @@
 										</li>
 									</ul>
 								</li>
+								<!-- invoice -->
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-file-text-o" aria-hidden="true"></i>
@@ -1375,28 +1270,31 @@
 										</li>
 									</ul>
 								</li>
-								<li>
-									<a href="<?= base_url()?>processCost">
-										<i class="fa fa-money" aria-hidden="true"></i>
-										<span>Process Cost</span>
-									</a>
-								</li>
 							<!-- -->
 						<?php }?>
 					<!--  -->
 
 					<!-- PPIC -->
 						<?php if(($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Produksi")){?>
+							<!-- produk -->
 							<li>
 								<a href="<?= base_url()?>produk" title="Produk">
 									<i class="fa  fa-cubes" aria-hidden="true"></i>
 									<span>Produk</span>
 								</a>
 							</li>
+							<!-- inventory line -->
+							<li>
+								<a href="<?= base_url()?>inventoryLine">
+									<i class="fa  fa-building" aria-hidden="true"></i>
+									<span>Inventory Line</span>
+								</a>
+							</li>
+							<!-- po -->
 							<li class="nav-parent">
 								<a title="Purchase Order">
 									<i class="fa  fa-list" aria-hidden="true"></i>
-									<span>PO/SO</span>
+									<span>Purchase Order Customer</span>
 								</a>
 								<ul class="nav nav-children">
 									<li>
@@ -1421,6 +1319,7 @@
 									</li>
 								</ul>
 							</li>
+							<!-- perencanaan produksi -->
 							<li class="nav-parent">
 								<a title="Perencanaan Produksi">
 									<i class="fa fa-calendar" aria-hidden="true"></i>
@@ -1439,6 +1338,14 @@
 									</li>
 								</ul>
 							</li>
+							<!-- perencanaan produksi line -->
+							<li>
+								<a href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line0">
+									<i class="fa fa-calendar" aria-hidden="true"></i>
+									<span>Perencanaan Produksi Line</span>
+								</a>
+							</li>
+							<!-- permintaan material -->
 							<li class="nav-parent">
 								<a title="Permintaan Material">
 									<i class="fa fa-calendar" aria-hidden="true"></i>
@@ -1477,6 +1384,7 @@
 									</li>
 								</ul>
 							</li>
+							<!-- laporan hasil produksi -->
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-th-list" aria-hidden="true"></i>
@@ -1500,6 +1408,7 @@
 									</li>
 								</ul>
 							</li>
+							<!-- laporan perencanaan cutting -->
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-th-list" aria-hidden="true"></i>
@@ -1528,6 +1437,7 @@
 									</li>
 								</ul>
 							</li>
+							<!-- surat perintah lembur -->
 							<li class="nav-parent">
 								<a title="Surat Perintah Lembur">
 									<i class="fa  fa-file-text" aria-hidden="true"></i>
@@ -1571,6 +1481,7 @@
 									</li>
 								</ul>
 							</li>
+							<!-- laporan lembur -->
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-file" aria-hidden="true"></i>
@@ -1603,31 +1514,32 @@
 					<!--  -->
 
 					<!-- PIC -->
-						<?php if(($_SESSION['nama_jabatan'] == "PIC Line Cutting") && ($_SESSION['nama_departemen'] == "Produksi") || ($_SESSION['nama_jabatan'] == "PIC Line Bonding") && ($_SESSION['nama_departemen'] == "Produksi") || ($_SESSION['nama_jabatan'] == "PIC Line Sewing") && ($_SESSION['nama_departemen'] == "Produksi") || ($_SESSION['nama_jabatan'] == "PIC Line Assy") && ($_SESSION['nama_departemen'] == "Produksi")){?>
+						<?php if(($_SESSION['nama_jabatan'] == "PIC Line Cutting") && ($_SESSION['nama_departemen'] == "Produksi") || 
+								($_SESSION['nama_jabatan'] == "PIC Line Bonding") && ($_SESSION['nama_departemen'] == "Produksi") || 
+								($_SESSION['nama_jabatan'] == "PIC Line Sewing") && ($_SESSION['nama_departemen'] == "Produksi") || 
+								($_SESSION['nama_jabatan'] == "PIC Line Assy") && ($_SESSION['nama_departemen'] == "Produksi")){?>
+							<!-- produk -->
 							<li>
-								<a href="">
+								<a href="<?= base_url()?>produk" title="Produk">
 									<i class="fa  fa-cubes" aria-hidden="true"></i>
 									<span>Produk</span>
 								</a>
 							</li>
-							<li>
-								<a href="">
-									<i class="fa  fa-cog" aria-hidden="true"></i>
-									<span>WIP</span>
-								</a>
-							</li>
+							<!-- inventory line -->
 							<li>
 								<a href="<?= base_url()?>inventoryLine">
 									<i class="fa  fa-building" aria-hidden="true"></i>
 									<span>Inventory Line</span>
 								</a>
 							</li>
+							<!-- perencanaan produksi line -->
 							<li>
 								<a href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line">
 									<i class="fa fa-calendar" aria-hidden="true"></i>
 									<span>Perencanaan Produksi Line</span>
 								</a>
 							</li>
+							<!-- pengambilan material -->
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-plus-square-o" aria-hidden="true"></i>
@@ -1656,6 +1568,7 @@
 									</li>
 								</ul>
 							</li>
+							<!-- surat perintah lembur -->
 							<li class="nav-parent">
 								<a title="Surat Perintah Lembur">
 									<i class="fa  fa-file-text" aria-hidden="true"></i>
@@ -1694,6 +1607,7 @@
 									</li>
 								</ul>
 							</li>
+							<!-- laporan lembur -->
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-file" aria-hidden="true"></i>
@@ -1722,11 +1636,35 @@
 									</li>
 								</ul>
 							</li>
+							<!-- laporan hasil produksi -->
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-th-list" aria-hidden="true"></i>
+									<span>Laporan Hasil Produksi</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?= base_url()?>hasilProduksi/semua_hasil_produksi">
+											<span>Semua</span>
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>hasilProduksi/lengkap_hasil_produksi">
+											<span>Lengkap</span>
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>hasilProduksi/selesai_hasil_produksi">
+											<span>Selesai</span>
+										</a>
+									</li>
+								</ul>
+							</li>
 						<?php }?>
 					<!--  -->
 
 					<!-- Admin R & D -->
-						<?php if(($_SESSION['nama_jabatan'] == "Admin") && ($_SESSION['nama_departemen'] == "Research and Development")){?>
+						<?php if(($_SESSION['nama_jabatan'] == "Admin") && ($_SESSION['nama_departemen'] == "Research & Development")){?>
 							<li>
 								<a href="<?= base_url()?>produk">
 									<i class="fa  fa-cube" aria-hidden="true"></i>
@@ -1742,7 +1680,13 @@
 							<li>
 								<a href="<?= base_url()?>warna">
 									<i class="fa   fa-delicious" aria-hidden="true"></i>
-									<span>Warna</span>
+									<span>Warna Produk</span>
+								</a>
+							</li>
+							<li>
+								<a href="<?= base_url()?>ukuranProduk">
+									<i class="fa    fa-arrows-alt" aria-hidden="true"></i>
+									<span>Ukuran Produk</span>
 								</a>
 							</li>
 						<?php }?>
@@ -1750,6 +1694,20 @@
 
 					<!-- Admin Finish Good -->
 						<?php if(($_SESSION['nama_jabatan'] == "Admin") && ($_SESSION['nama_departemen'] == "Finish Good")){?>
+							<li>
+								<a href="<?= base_url()?>produk" title="Produk">
+									<i class="fa  fa-cubes" aria-hidden="true"></i>
+									<span>Produk</span>
+								</a>
+							</li>
+							<!-- perencanaan produksi line -->
+							<li>
+								<a href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line0">
+									<i class="fa fa-calendar" aria-hidden="true"></i>
+									<span>Perencanaan Produksi Line</span>
+								</a>
+							</li>
+							<!-- bpbj -->
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-file-text-o" aria-hidden="true"></i>
@@ -1783,6 +1741,7 @@
 									</li>
 								</ul>
 							</li>
+							<!-- bpbd -->
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-file-o" aria-hidden="true"></i>
@@ -1811,6 +1770,7 @@
 									</li>
 								</ul>
 							</li>
+							<!-- laporan hasil produksi -->
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-th-list" aria-hidden="true"></i>
@@ -1839,6 +1799,7 @@
 									</li>
 								</ul>
 							</li>
+							<!-- permohonan akses -->
 							<li class="nav-parent">
 								<a title="Permohonan Akses">
 									<i class="fa   fa-unlock-alt" aria-hidden="true"></i>
@@ -1879,6 +1840,20 @@
 
 					<!-- Admin Produksi -->
 						<?php if(($_SESSION['nama_jabatan'] == "Admin") && ($_SESSION['nama_departemen'] == "Produksi")){?>
+							<li>
+								<a href="<?= base_url()?>produk" title="Produk">
+									<i class="fa  fa-cubes" aria-hidden="true"></i>
+									<span>Produk</span>
+								</a>
+							</li>
+							<!-- perencanaan produksi line -->
+							<li>
+								<a href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line0">
+									<i class="fa fa-calendar" aria-hidden="true"></i>
+									<span>Perencanaan Produksi Line</span>
+								</a>
+							</li>
+							<!-- laporan hasil produksi -->
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-th-list" aria-hidden="true"></i>
@@ -1907,6 +1882,7 @@
 									</li>
 								</ul>
 							</li>
+							<!-- laporan perencanaan cutting -->
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-th-list" aria-hidden="true"></i>
@@ -1940,6 +1916,7 @@
 									</li>
 								</ul>
 							</li>
+							<!-- permohonan akses -->
 							<li class="nav-parent">
 								<a title="Permohonan Akses">
 									<i class="fa   fa-unlock-alt" aria-hidden="true"></i>
@@ -1980,6 +1957,14 @@
 
 					<!-- Admin Finance -->
 						<?php if(($_SESSION['nama_jabatan'] == "Admin") && ($_SESSION['nama_departemen'] == "Purchasing") ){?>
+							<!-- rekening -->
+							<li>
+								<a href="<?= base_url()?>rekening">
+								 	<i class="fa fa-bank" aria-hidden="true"></i>
+									Rekening
+								</a>
+							</li>
+							<!-- surat jalan -->
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -2013,6 +1998,7 @@
 									</li>
 								</ul>
 							</li>
+							<!-- invoice -->
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-file-text-o" aria-hidden="true"></i>

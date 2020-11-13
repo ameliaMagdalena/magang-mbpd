@@ -24,7 +24,8 @@
 <!--*****************************-->
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
-        <?php if(($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Research and Development") || ($_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management")){?>
+        <?php if(($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Research and Development") 
+        || ($_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management")){?>
             <a class="modal-with-form col-lg-2  btn btn-success" id="button_tambah" 
                 href="#modaltambah">+ Produk</a>
             <br><br>
@@ -51,7 +52,6 @@
                     <?php 
                     $no = 1;
                     foreach($produk as $x){ 
-
                     ?>
                         <tr>
                             <td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
@@ -89,19 +89,19 @@
                                 ?>
                             </td>   
                             <td>
-                                <?php if(($_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi")){?>
-                                    <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                    id="bdet<?php echo $x->id_produk;?>" value="<?php echo $x->id_produk;?>" title="Detail"></button>
-                                <?php } else{?>
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
                                     id="bdet<?php echo $x->id_produk;?>" value="<?php echo $x->id_produk;?>" title="Detail"></button>
-                                <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                    id="bedit<?php echo $x->id_produk;?>" value="<?php echo $x->id_produk;?>" title="Edit"></button>
-                                <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                    title="Delete" href="#modalhapus<?= $x->id_produk;?>"></a>
-                                <a class="modal-with-form col-lg-3 btn btn-info fa fa-file"
-                                    title="Log" href=""></a>
-                                <?php }?>
+
+                                <?php if(($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Research & Development") 
+                                || ($_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management")
+                                || ($_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management" )){?>
+                                    <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
+                                        id="bedit<?php echo $x->id_produk;?>" value="<?php echo $x->id_produk;?>" title="Edit"></button>
+                                    <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
+                                        title="Delete" href="#modalhapus<?= $x->id_produk;?>"></a>
+                                    <a class="modal-with-form col-lg-3 btn btn-info fa fa-file"
+                                        title="Log" href=""></a>
+                                <?php } ?>
                             </td>
                         </tr>
                     <?php 
@@ -180,7 +180,7 @@
                         <label class="col-sm-5 control-label">Harga Produk (Rp)</label>
                         <div class="col-sm-7">
                             <input type="number"  name="harga_produk" id="harga_produk" 
-                             class="form-control" onchange="cek_terisi()">
+                            class="form-control" onchange="cek_terisi()">
                         </div>
                     </div>
                     <div class="form-group mt-lg">
@@ -395,13 +395,17 @@
                                 id="dnama_produk" readonly>
                             </div>
                         </div>
-                        <div class="form-group mt-lg">
-                            <label class="col-sm-5 control-label">Harga Produk (Rp)</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control"
-                                id="dharga_produk" readonly>
+                        <?php if(($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Research & Development") 
+                            || ($_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management")
+                            || ($_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management" )){?>
+                            <div class="form-group mt-lg">
+                                <label class="col-sm-5 control-label">Harga Produk (Rp)</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control"
+                                    id="dharga_produk" readonly>
+                                </div>
                             </div>
-                        </div>
+                        <?php } ?>
                         <div class="form-group mt-lg">
                             <label class="col-sm-5 control-label">Detail Produk</label>
                             <div class="col-sm-7">

@@ -223,43 +223,56 @@
                                 
                                 <td class="col-lg-3">
                                     <?php if($p->status_laporan < 2){?>
-                                        <?php if($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Finish Good" || $_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Produksi"){?>
-                                        <button type="button" class="badd_klik col-lg-3 btn btn-success fa fa-plus-square-o" 
-                                        value="<?= $no;?>" title="Buat Laporan Hasil Produksi"></button>
-                                    <?php }} ?>
+                                        <?php if($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Finish Good" || 
+                                        $_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Produksi" || 
+                                        $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
+                                        $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
+                                            <button type="button" class="badd_klik col-lg-3 btn btn-success fa fa-plus-square-o" 
+                                            value="<?= $no;?>" title="Buat Laporan Hasil Produksi"></button>
+                                        <?php } ?>
+                                    <?php } ?>
                                     <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
                                         value="<?= $no;?>" title="Detail"></button>
-                                    <?php if(($p->status_laporan == 1 || $p->status_laporan == 2) && ($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Finish Good" || $_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Produksi")){?>
-                                        <?php 
-                                            $hitung = 0;
-                                            foreach($permohonan_akses as $peraks){
-                                            if($peraks->id_data == $p->id_produksi){
-                                                $hitung++;
-                                            }}
-
-                                            if($hitung > 0){
+                                    <!-- if status 1 & 2 & untuk admin finish good & admin produksi -->
+                                        <?php if(($p->status_laporan == 1 || $p->status_laporan == 2) && 
+                                                ($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Finish Good" 
+                                                || $_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Produksi")){?>
+                                            <?php 
+                                                $hitung = 0;
                                                 foreach($permohonan_akses as $peraks){
-                                                    if($peraks->id_data == $p->id_produksi){
-                                        ?>
-                                            <?php if($peraks->status_permohonan == 0){?>
-                                                <input type="hidden" id="id_peraks_tam<?= $no; ?>" value="<?= $peraks->id_permohonan_akses?>">
-                                                <button type="button" class="bbatalpermaks_klik col-lg-3 btn btn-danger fa fa-pencil-square-o" 
-                                                    value="<?= $no;?>" title="Batalkan Permintaan Akses"></button>
-                                            <?php } else if($peraks->status_permohonan == 1){?>
+                                                if($peraks->id_data == $p->id_produksi){
+                                                    $hitung++;
+                                                }}
+
+                                                if($hitung > 0){
+                                                    foreach($permohonan_akses as $peraks){
+                                                        if($peraks->id_data == $p->id_produksi){
+                                            ?>
+                                                <?php if($peraks->status_permohonan == 0){?>
+                                                    <input type="hidden" id="id_peraks_tam<?= $no; ?>" value="<?= $peraks->id_permohonan_akses?>">
+                                                    <button type="button" class="bbatalpermaks_klik col-lg-3 btn btn-danger fa fa-pencil-square-o" 
+                                                        value="<?= $no;?>" title="Batalkan Permintaan Akses"></button>
+                                                <?php } else if($peraks->status_permohonan == 1){?>
+                                                    <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
+                                                        value="<?= $no;?>" title="Edit"></button>
+                                                <?php } ?>
+                                            <?php }}} else{ ?>
+                                                <button type="button" class="bpermaks_klik col-lg-3 btn btn-success fa fa-pencil-square-o" 
+                                                    value="<?= $no;?>" title="Buat Permintaan Akses"></button>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    <!-- tutup -->
+                                    <!-- if status 1 & 2 & untuk direktur & manajemen -->
+                                        <?php if($p->status_laporan == 1 || $p->status_laporan == 2 && 
+                                            ($_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
+                                            $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management")){ ?>
                                                 <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
                                                     value="<?= $no;?>" title="Edit"></button>
-                                            <?php } ?>
-                                        <?php }}} else{ ?>
-                                            <button type="button" class="bpermaks_klik col-lg-3 btn btn-success fa fa-pencil-square-o" 
-                                                value="<?= $no;?>" title="Buat Permintaan Akses"></button>
                                         <?php } ?>
-                                    
-                                        <!--
-                                        <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                            value="<?= $no;?>" title="Edit"></button>s
-                                        -->
-                                    <?php } ?>
-                                    <?php if($p->status_laporan == 2 && $_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi"){?>
+                                    <!-- tutup -->
+                                    <?php if($p->status_laporan == 2 && ($_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi" ||
+                                            $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
+                                            $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management")){?>
                                         <button type="button" class="bse7_klik col-lg-3 btn btn-success fa fa-check-square" 
                                             value="<?= $no;?>" title="Disetujui"></button>
                                     <?php } ?>

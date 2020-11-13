@@ -255,15 +255,20 @@
                                             <button type="button" class="bpermaks_klik col-lg-3 btn btn-success fa fa-pencil-square-o" 
                                                 value="<?= $no;?>" title="Buat Permintaan Akses"></button>
                                         <?php } ?>
-                                    
-                                        <!--
-                                        <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                            value="<?= $no;?>" title="Edit"></button>
-                                        -->
                                     <?php } ?>
-                                    <?php if($p->status_laporan == 2 && $_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi"){?>
-                                        <button type="button" class="bse7_klik col-lg-3 btn btn-success fa fa-check-square" 
-                                            value="<?= $no;?>" title="Disetujui"></button>
+                                    <!-- if status 1 & 2 & untuk direktur & manajemen -->
+                                        <?php if($p->status_laporan == 1 || $p->status_laporan == 2 && 
+                                            ($_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
+                                            $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management")){ ?>
+                                                <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
+                                                    value="<?= $no;?>" title="Edit"></button>
+                                        <?php } ?>
+                                    <!-- tutup -->
+                                    <?php if($p->status_laporan == 2 && ($_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi" ||
+                                            $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
+                                            $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management")){?>
+                                                <button type="button" class="bse7_klik col-lg-3 btn btn-success fa fa-check-square" 
+                                                    value="<?= $no;?>" title="Disetujui"></button>
                                     <?php } ?>
                                     <?php if($p->status_laporan == 3){?>
                                         <button type="button" class="bprint_klik col-lg-3 btn fa fa-print" style="background-color:#E56B1F;color:white;"

@@ -80,6 +80,7 @@
                                 id="bdetail<?php echo $x->id_produksi?>" value="<?= $no ?>"></button>
                                 <form method="POST" action="<?= base_url()?>perencanaanProduksi/print_perencanaan_produksi_line">
                                     <input type="hidden" name="id" value="<?= $x->id_produksi?>">
+                                    <input type="hidden" name="nama_line" value="<?= $linenya?>">
                                     <button type="submit" class="col-lg-3 btn fa fa-print" style="background-color:#E56B1F;color:white;"
                                     title="Print"></button>
                                 </form>   

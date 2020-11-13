@@ -59,9 +59,11 @@
                                     <?php if($_SESSION['nama_jabatan'] == "PIC Line Cutting" && $_SESSION['nama_departemen'] == "Produksi" || 
                                         $_SESSION['nama_jabatan'] == "PIC Line Bonding" && $_SESSION['nama_departemen'] == "Produksi" ||
                                         $_SESSION['nama_jabatan'] == "PIC Line Sewing" && $_SESSION['nama_departemen'] == "Produksi" ||
-                                        $_SESSION['nama_jabatan'] == "PIC Line Assy" && $_SESSION['nama_departemen'] == "Produksi"){?>
-                                        <button type="button" class="bproses_klik col-lg-3 btn btn-success fa fa-gear" 
-                                        id="bproses<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Edit"></button>
+                                        $_SESSION['nama_jabatan'] == "PIC Line Assy" && $_SESSION['nama_departemen'] == "Produksi" || 
+                                        $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
+                                        $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
+                                            <button type="button" class="bproses_klik col-lg-3 btn btn-success fa fa-gear" 
+                                            id="bproses<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Edit"></button>
                                     <?php }?>
                                 <?php } else if($ll->status_spl == 4){ ?>
                                     <button type="button" class="bdet2_klik col-lg-3 btn btn-primary fa fa-info-circle" 
@@ -70,13 +72,17 @@
                                     <?php if($_SESSION['nama_jabatan'] == "PIC Line Cutting" && $_SESSION['nama_departemen'] == "Produksi" || 
                                         $_SESSION['nama_jabatan'] == "PIC Line Bonding" && $_SESSION['nama_departemen'] == "Produksi" ||
                                         $_SESSION['nama_jabatan'] == "PIC Line Sewing" && $_SESSION['nama_departemen'] == "Produksi" ||
-                                        $_SESSION['nama_jabatan'] == "PIC Line Assy" && $_SESSION['nama_departemen'] == "Produksi"){?>
-                                        <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                        id="bedit<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Edit"></button>
+                                        $_SESSION['nama_jabatan'] == "PIC Line Assy" && $_SESSION['nama_departemen'] == "Produksi" ||
+                                        $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
+                                        $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
+                                            <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
+                                            id="bedit<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Edit"></button>
                                     <?php } ?>
-                                    <?php if($_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi"){?>
-                                        <a class="modal-with-form col-lg-3 btn btn-success fa fa-check-square"
-                                        title="Konfirmasi" href="#modalsetuju<?= $ll->id_surat_perintah_lembur ?>"></a>
+                                    <?php if($_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi" ||
+                                            $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
+                                            $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
+                                                <a class="modal-with-form col-lg-3 btn btn-success fa fa-check-square"
+                                                title="Konfirmasi" href="#modalsetuju<?= $ll->id_surat_perintah_lembur ?>"></a>
                                     <?php } ?>
                                 <?php } else if($ll->status_spl == 5){ ?>
                                         <button type="button" class="bdet2_klik col-lg-3 btn btn-primary fa fa-info-circle" 
@@ -85,7 +91,7 @@
                                             <input type="hidden" name="id" value="<?= $ll->id_surat_perintah_lembur?>">
                                             <button type="submit" class="col-lg-3 btn fa fa-print" style="background-color:#E56B1F;color:white;"
                                             title="Print"></button>
-                                        </form>    
+                                        </form>  
                                 <?php } ?>
                             </td>
                         </tr>
