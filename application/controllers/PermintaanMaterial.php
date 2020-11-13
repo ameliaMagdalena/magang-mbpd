@@ -17,12 +17,17 @@ class PermintaanMaterial extends CI_Controller {
     }
 
 	public function index($status){
+        $id = $this->input->post('id');
+
         $data['status'] = $status;
         $data['permintaan_material'] = $this->M_PerencanaanMaterial->selectPermintaanMaterialAktif()->result_array();
         $data['detail'] = $this->M_PerencanaanMaterial->selectDetailPermintaanMaterialAktif()->result_array();
 
         $data['warna'] = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran'] = $this->M_UkuranProduk->select_all_aktif()->result();
+
+        $data['permat'] = $this->M_PerencanaanMaterial->selectSatuPermintaanMaterial($id)->result_array();
+        $data['detpermat'] = $this->M_PerencanaanMaterial->selectSatuDetailPermintaanMaterial($id)->result_array();
 
 		$this->load->view('v_permintaan_material', $data);
     }

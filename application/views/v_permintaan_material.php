@@ -58,7 +58,8 @@
                             if($permintaan_material[$x]['status_permintaan'] == 0){
                 ?>
                 <tr>
-                    <td> <?php echo $x+1 ?> </td>
+                    <td> <?php echo $x+1 ?>
+                    <input type="hidden" id="idd<?= $x ?>" value="<?= $permintaan_material[$x]['id_permintaan_material'] ?>"> </td>
                     <!-- <td style="text-align: center;vertical-align: middle;"></td> -->
                     <td><?= $permintaan_material[$x]['tanggal_permintaan'] ?></td>
                     <td><?= $permintaan_material[$x]['tanggal_produksi'] ?></td>
@@ -67,8 +68,12 @@
                     <td>
                         <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail/' . $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
-                        <a class="modal-with-form col-lg-3 btn btn-success fa fa-check"
-                            title="Konfirmasi" href="#modalkonfirmasi<?php echo $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
+                        
+                        <button type="button" class="konfirmz col-lg-3 btn btn-success fa fa-check" 
+                            value="<?= $x;?>" title="Konfirmasi"></button>
+
+                        <!-- <a class="modal-with-form col-lg-3 btn btn-success fa fa-check"
+                            title="Konfirmasi" href="#modalkonfirmasi<?php echo $permintaan_material[$x]['id_permintaan_material'] ?>"></a> -->
                         <a class="modal-with-form col-lg-3 btn btn-danger fa fa-times"
                             title="Tolak" href="#modaltolak<?php echo $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
                     </td>
@@ -76,8 +81,8 @@
 
                 <!-- ****************************** MODAL SETUJU ***************************** -->
                 <!-- ************************************************************************** -->
-                <div id='modalkonfirmasi<?php echo $permintaan_material[$x]['id_permintaan_material'] ?>' class="modal-block modal-block-md mfp-hide">
-                    <section class="panel">
+                <div id='setuju' class="modal">
+                    <!-- <section class="panel">
                         <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PerencanaanMaterial/setuju" method="post">
                             
                             <header class="panel-heading">
@@ -100,7 +105,7 @@
                                 </div>
                             </footer>
                         </form>
-                    </section>
+                    </section> -->
                 </div>
                 <!-- ***************************** END MODAL SETUJU *************************** -->
                 <!-- ************************************************************************** -->
@@ -787,6 +792,51 @@
 <!--*****************************-->
 <?php //include('_rightbar.php');
 ?>
+
+
+<script>
+    $('.konfirmz').click(function(){
+        var no      = $(this).attr('value');
+        var id      = $("#idd"+no).val();
+        $.ajax({
+            type:"post",    
+            url:"<?php echo base_url() ?>PermintaanMaterial/index/0",
+            dataType: "JSON",
+            data: {id:id},
+
+            success: function(respond){
+                $isi = 
+                    '<section class="panel">'+
+                        '<form class="form-horizontal mb-lg" action="<?php echo base_url()?>PerencanaanMaterial/setuju" method="post">'+
+                            
+                            '<header class="panel-heading">'+
+                                '<h2 class="panel-title">Menyetujui Permintaan Material</h2>'+
+                            '</header>'+
+
+                            '<div class="panel-body">'+
+                                '<input type="hidden" name="id_po_supplier" class="form-control" value="'+respond['permat'][0]['id_permintaan_material']+'" readonly>'+
+                                '<input type="hidden" name="status" class="form-control" value="1" readonly>'+
+                                
+                                'Anda akan menyetujui Permintaan Material dengan No. Form <b>'+respond['permat'][0]['id_permintaan_material']+'</b>?'+
+
+                            '</div>'+
+                            '<footer class="panel-footer">'+
+                                '<div class="row">'+
+                                    '<div class="col-md-12 text-right">'+
+                                        '<input type="submit" class="btn btn-primary" value="Ya">'+
+                                        '<button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</footer>'+
+                        '</form>'+
+                    '</section>';
+
+                $("#setuju").html($isi);
+                $("#setuju").modal();
+            }
+        });  
+    });
+</script>
 
 <script>
     function reload() {
