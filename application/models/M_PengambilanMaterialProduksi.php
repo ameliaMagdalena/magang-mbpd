@@ -47,8 +47,8 @@ class M_PengambilanMaterialProduksi extends CI_Model {
 
     function get_pengmat_sebelum(){
         return $this->db->query("SELECT pengambilan_material.id_detail_permintaan_material, 
-        SUM(pengeluaran_material.jumlah_keluar) AS jumlah_keluar
-        FROM pengambilan_material,pengeluaran_material 
+        SUM(pengambilan_material.jumlah_ambil) AS jumlah_keluar, SUM(pengeluaran_material.jumlah_keluar) AS jumlah_keluar_gudang
+        FROM pengambilan_material,pengeluaran_material
         WHERE pengambilan_material.status_delete='0' AND pengambilan_material.id_pengeluaran_material = pengeluaran_material.id_pengeluaran_material
         GROUP BY pengambilan_material.id_detail_permintaan_material");
     }
@@ -96,5 +96,13 @@ class M_PengambilanMaterialProduksi extends CI_Model {
         AND pengambilan_material.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material 
         AND detail_permintaan_material.id_permintaan_material=permintaan_material.id_permintaan_material
         AND permintaan_material.id_line=line.id_line");
+    }
+
+    function get_sub_jenis_material($id_sub_jenmat){
+        return $this->db->query("SELECT * FROM sub_jenis_material WHERE id_sub_jenis_material='$id_sub_jenmat' ");
+    }
+
+    function get_det_inline(){
+        return $this->db->query("SELECT * FROM detail_inventory_line WHERE status_delete='0' ");
     }
 }

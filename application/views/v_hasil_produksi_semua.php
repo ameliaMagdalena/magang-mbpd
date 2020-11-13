@@ -223,43 +223,56 @@
                                 
                                 <td class="col-lg-3">
                                     <?php if($p->status_laporan < 2){?>
-                                        <?php if($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Finish Good" || $_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Produksi"){?>
-                                        <button type="button" class="badd_klik col-lg-3 btn btn-success fa fa-plus-square-o" 
-                                        value="<?= $no;?>" title="Buat Laporan Hasil Produksi"></button>
-                                    <?php }} ?>
+                                        <?php if($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Finish Good" || 
+                                        $_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Produksi" || 
+                                        $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
+                                        $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
+                                            <button type="button" class="badd_klik col-lg-3 btn btn-success fa fa-plus-square-o" 
+                                            value="<?= $no;?>" title="Buat Laporan Hasil Produksi"></button>
+                                        <?php } ?>
+                                    <?php } ?>
                                     <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
                                         value="<?= $no;?>" title="Detail"></button>
-                                    <?php if(($p->status_laporan == 1 || $p->status_laporan == 2) && ($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Finish Good" || $_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Produksi")){?>
-                                        <?php 
-                                            $hitung = 0;
-                                            foreach($permohonan_akses as $peraks){
-                                            if($peraks->id_data == $p->id_produksi){
-                                                $hitung++;
-                                            }}
-
-                                            if($hitung > 0){
+                                    <!-- if status 1 & 2 & untuk admin finish good & admin produksi -->
+                                        <?php if(($p->status_laporan == 1 || $p->status_laporan == 2) && 
+                                                ($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Finish Good" 
+                                                || $_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Produksi")){?>
+                                            <?php 
+                                                $hitung = 0;
                                                 foreach($permohonan_akses as $peraks){
-                                                    if($peraks->id_data == $p->id_produksi){
-                                        ?>
-                                            <?php if($peraks->status_permohonan == 0){?>
-                                                <input type="hidden" id="id_peraks_tam<?= $no; ?>" value="<?= $peraks->id_permohonan_akses?>">
-                                                <button type="button" class="bbatalpermaks_klik col-lg-3 btn btn-danger fa fa-pencil-square-o" 
-                                                    value="<?= $no;?>" title="Batalkan Permintaan Akses"></button>
-                                            <?php } else if($peraks->status_permohonan == 1){?>
+                                                if($peraks->id_data == $p->id_produksi){
+                                                    $hitung++;
+                                                }}
+
+                                                if($hitung > 0){
+                                                    foreach($permohonan_akses as $peraks){
+                                                        if($peraks->id_data == $p->id_produksi){
+                                            ?>
+                                                <?php if($peraks->status_permohonan == 0){?>
+                                                    <input type="hidden" id="id_peraks_tam<?= $no; ?>" value="<?= $peraks->id_permohonan_akses?>">
+                                                    <button type="button" class="bbatalpermaks_klik col-lg-3 btn btn-danger fa fa-pencil-square-o" 
+                                                        value="<?= $no;?>" title="Batalkan Permintaan Akses"></button>
+                                                <?php } else if($peraks->status_permohonan == 1){?>
+                                                    <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
+                                                        value="<?= $no;?>" title="Edit"></button>
+                                                <?php } ?>
+                                            <?php }}} else{ ?>
+                                                <button type="button" class="bpermaks_klik col-lg-3 btn btn-success fa fa-pencil-square-o" 
+                                                    value="<?= $no;?>" title="Buat Permintaan Akses"></button>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    <!-- tutup -->
+                                    <!-- if status 1 & 2 & untuk direktur & manajemen -->
+                                        <?php if($p->status_laporan == 1 || $p->status_laporan == 2 && 
+                                            ($_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
+                                            $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management")){ ?>
                                                 <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
                                                     value="<?= $no;?>" title="Edit"></button>
-                                            <?php } ?>
-                                        <?php }}} else{ ?>
-                                            <button type="button" class="bpermaks_klik col-lg-3 btn btn-success fa fa-pencil-square-o" 
-                                                value="<?= $no;?>" title="Buat Permintaan Akses"></button>
                                         <?php } ?>
-                                    
-                                        <!--
-                                        <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                            value="<?= $no;?>" title="Edit"></button>s
-                                        -->
-                                    <?php } ?>
-                                    <?php if($p->status_laporan == 2 && $_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi"){?>
+                                    <!-- tutup -->
+                                    <?php if($p->status_laporan == 2 && ($_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi" ||
+                                            $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
+                                            $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management")){?>
                                         <button type="button" class="bse7_klik col-lg-3 btn btn-success fa fa-check-square" 
                                             value="<?= $no;?>" title="Disetujui"></button>
                                     <?php } ?>
@@ -513,6 +526,7 @@
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id_produksinya" id="id_produksinya">
+                        <input type="hidden" name="tanggalnya" id="tanggalnya">
                         <p>Apakah anda yakin akan menerima laporan hasil produksi dengan tanggal produksi <span id="tanggal_produksinya"></span>?</p>
                         <br>
                         
@@ -522,6 +536,7 @@
                             <p><span style="color:red">* </span><b>Mohon maaf, proses konfirmasi tidak dapat dilanjutkan karena data laporan hasil
                             produksi dengan data pengambilan material tidak sesuai.</b></p>
                         </div>
+                        <input type="hidden" id="jumlah_detail_se7" name="jumlah_detail_se7">
                     </div>
                     <div class="modal-footer">
                         <input type="submit" id="setuju" class="btn btn-primary" value="Simpan">
@@ -1293,7 +1308,6 @@
         var no      = $(this).attr('value');
         var id      = $("#id"+no).val();
         var tgl      = $("#tgl"+no).val();
-
                 
         $.ajax({
             type:"post",
@@ -1304,9 +1318,11 @@
             success: function(respond){
                 $("#id_produksinya").val(id);
                 $("#tanggal_produksinya").html(tgl);
+                $("#tanggalnya").val(tgl);
 
                 //cek apakah ada permintaan_material yang minus dari yang seharusnya
                 $cek = 0;
+                $jumlah_detail = 0;
 
                 $konsumsi_material = "";
                 $ke = 1;
@@ -1314,14 +1330,17 @@
                     $km_per_line = "";
                     for($k=0;$k<respond['jm_dpl'];$k++){
                         $isi_km = "";
-                        if(respond['total_dpl'][$i]['id_detail_produk'] == respond['dpl'][$k]['id_detail_produk'] && respond['total_dpl'][$i]['jumlah_produk'] != 0){
+                        if(respond['total_dpl'][$i]['id_detail_produk'] == respond['dpl'][$k]['id_detail_produk'] 
+                        && respond['total_dpl'][$i]['jumlah_produk'] != 0
+                        && respond['dpl'][$k]['id_detail_purchase_order'] == respond['total_dpl'][$i]['id_detail_purchase_order']){
                             //isi table konsumsi material
                             $nomor = 1;
                             for($t=0;$t<respond['jm_km'];$t++){
                                 if(respond['dpl'][$k]['id_produk'] == respond['km'][$t]['id_produk'] && respond['dpl'][$k]['id_line'] == respond['km'][$t]['id_line'] 
                                 && respond['dpl'][$k]['jumlah_item_aktual'] != 0 && respond['km'][$t]['status_konsumsi'] == 1){
                                     $jumlah_konsumsi_seharusnya = respond['km'][$t]['jumlah_konsumsi'] * respond['dpl'][$k]['jumlah_item_aktual'];
-                                    
+                                    $ukuran_satuan_keluar       = respond['km'][$t]['ukuran_satuan_keluar'];
+                                    $jumlah_detail++;
                                     //material dari gudang material
                                     $cari_pm = 0;
                                     $material_gudang = 0;
@@ -1331,6 +1350,7 @@
                                             && respond['pm'][$p]['id_konsumsi_material'] == respond['km'][$t]['id_konsumsi_material']){
                                                 $cari_pm++;
                                                 $material_gudang = respond['pm'][$p]['total_keluar'];
+                                                $id_line = respond['pm'][$p]['id_line'];
                                         }
                                     }
 
@@ -1338,7 +1358,7 @@
                                     $from_inli = 0;
 
                                     //wipnya
-                                    $wip = $from_inli + $material_gudang - $jumlah_konsumsi_seharusnya;
+                                    $wip = parseFloat($from_inli) + (parseFloat($material_gudang) * parseFloat($ukuran_satuan_keluar))  - parseFloat($jumlah_konsumsi_seharusnya);
 
                                     if($wip < 0){
                                         $cek++;
@@ -1350,7 +1370,11 @@
                                             '<center>'+$nomor+'</center>'+
                                         '</td>'+
                                         '<td>'+
-                                            '<center>'+respond['km'][$t]['nama_sub_jenis_material']+'</center>'+
+                                            '<center>'+
+                                                respond['km'][$t]['nama_sub_jenis_material']+
+                                                '<input type="text" name="id_line'+$jumlah_detail+'" value="'+$id_line+'">'+
+                                                '<input type="text" name="id_sub_jm'+$jumlah_detail+'" value="'+respond['km'][$t]['id_sub_jenis_material']+'">'+
+                                            '</center>'+
                                         '</td>'+
                                         '<td>'+
                                             '<center>'+respond['km'][$t]['jumlah_konsumsi']+'</center>'+
@@ -1362,10 +1386,11 @@
                                             '<center>'+0+'</center>'+
                                         '</td>'+
                                         '<td>'+
-                                            '<center>'+$material_gudang+'</center>'+
+                                            '<center>'+($material_gudang * $ukuran_satuan_keluar)+'</center>'+
                                         '</td>'+
                                         '<td>'+
                                             '<center>'+$wip+'</center>'+
+                                            '<input type="text" name="wip'+$jumlah_detail+'" value="'+$wip+'">'+
                                         '</td>'+
                                     '</tr>';
 
@@ -1481,8 +1506,7 @@
                     $("#setuju").prop('disabled',false);
                 }
 
-                alert($cek);
-
+                $("#jumlah_detail_se7").val($jumlah_detail);
                 $("#modalse7").modal();
             }
         });

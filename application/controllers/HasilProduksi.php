@@ -17,6 +17,7 @@ class HasilProduksi extends CI_Controller {
         $this->load->model('M_UkuranProduk');
         $this->load->model('M_PermohonanAkses');
         $this->load->model('M_Tetapan');
+        $this->load->model('M_LaporanPerencanaanCutting');
 
         $this->load->library('pdf');
     }
@@ -554,6 +555,7 @@ class HasilProduksi extends CI_Controller {
 
   function konfirmasi_ppic(){
     $id_produksi = $this->input->post('id_produksinya');
+    $tanggal     = $this->input->post('tanggalnya');
     $user = $_SESSION['id_user'];
     $now  = date('Y-m-d H:i:s');
 
@@ -567,256 +569,138 @@ class HasilProduksi extends CI_Controller {
       'id_produksi'   => $id_produksi
     );
 
-    //$this->M_HasilProduksi->edit('produksi',$data,$where);
+    $this->M_HasilProduksi->edit('produksi',$data,$where);
+
+    $jumlah_detail = $this->input->post('jumlah_detail_se7');
+
+    for($i=0;$i<=$jumlah_detail;$i++){
+      $wip       = $this->input->post('wip'.$i);
 
     
+      if($wip > 0){
+          $id_line   = $this->input->post('id_line'.$i);
+          $id_sub_jm = $this->input->post('id_sub_jm'.$i);
+          
+          $cari_inline    = $this->M_HasilProduksi->get_inline($id_line,$id_sub_jm)->result_array();
+          $jm_cari_inline = $this->M_HasilProduksi->get_inline($id_line,$id_sub_jm)->num_rows();
 
-    /*
-    //INVENTORY LINE
-      $detail_produksi_line    = $this->M_HasilProduksi->get_detail_produksi_line_group_by($id_produksi)->result_array();
-      $jm_detail_produksi_line = $this->M_HasilProduksi->get_detail_produksi_line_group_by($id_produksi)->num_rows();
+          //jika ditemukan
+          if($jm_cari_inline > 0){
+              $id_inli                = $cari_inline[0]['id_inventory_line'];
+              $total_material_sebelum = $cari_inline[0]['total_material'];
 
-      for($i=0;$i<$jm_detail_produksi_line;$i++){
-        $id_line                             = $detail_produksi_line[$i]['id_line'];
-        $id_detail_produk                    = $detail_produksi_line[$i]['id_detail_produk'];
-        $id_detail_purchase_order_customer   = $detail_produksi_line[$i]['id_detail_purchase_order'];
-        $id_produk                           = $detail_produksi_line[$i]['id_produk'];
-        $jumlah_item_aktual                  = $detail_produksi_line[$i]['jumlah_item_aktual'];
-        $tanggal                             = $detail_produksi_line[$i]['tanggal'];
+              $total_material_baru = $total_material_sebelum + $wip;
 
-        $konsumsi_material    = $this->M_HasilProduksi->get_konsumsi_material($id_produk,$id_line)->result_array();
-        $jm_konsumsi_material = $this->M_HasilProduksi->get_konsumsi_material($id_produk,$id_line)->num_rows();
+              $data_inventory_line = array(
+                  'total_material' => $total_material_baru,
+                  'user_edit'      => $user,
+                  'waktu_edit'     => $now
+              );
 
-        for($u=0;$u<$jm_konsumsi_material;$u++){
-          $id_konsumsi_material  = $konsumsi_material[$u]['id_konsumsi_material'];
-          $id_sub_jenis_material = $konsumsi_material[$u]['id_sub_jenis_material'];
+              $where_inventory_line = array(
+                  'id_inventory_line' =>  $id_inli
+              );
 
-          $konsumsi_material_satuan = $konsumsi_material[$u]['jumlah_konsumsi'];
-
-          //jumlah minta material seharusnya
-          $total_konsumsi_material = $konsumsi_material_satuan * $jumlah_item_aktual;
-
-          //jumlah minta material aktual
-          $pengambilan_material = $this->M_HasilProduksi->get_pengambilan_material($tanggal,$id_line,$id_detail_produk,$id_konsumsi_material)->result_array();
-
-          $jumlah_keluar = $pengambilan_material[0]['total_keluar'];
-          $sisa_wip      = $jumlah_keluar - $total_konsumsi_material;
-
-          //input ke inventory line
-          if($sisa_wip > 0){
-            //cek apakah sudah ada inventory line sebelumnya
-            $inventory_line    = $this->M_HasilProduksi->get_inventory_line($id_line,$id_sub_jenis_material)->result_array();
-            $jm_inventory_line = $this->M_HasilProduksi->get_inventory_line($id_line,$id_sub_jenis_material)->num_rows();
-
-            if($jm_inventory_line == 0){
+              $this->M_LaporanPerencanaanCutting->edit('inventory_line',$data_inventory_line,$where_inventory_line);
+          }
+          //jika tidak ada, maka
+          else{
+              //id inventory line, 
               $jumlah_inli    = $this->M_HasilProduksi->select_all_inventory_line()->num_rows();
               $id_number      = $jumlah_inli + 1;
 
               $id_inli     = "INLI-".$id_number;
 
-              $data_inventory_line = array(
-                'id_inventory_line'     => $id_inli,
-                'id_line'               => $id_line,
-                'id_sub_jenis_material' => $id_sub_jenis_material,
-                'total_material'        => $sisa_wip,
-                'user_add'              => $user,
-                'waktu_add'             => $now,
-                'status_delete'         => 0
+              $data_inline = array(
+                  'id_inventory_line'     => $id_inli,
+                  'id_line'               => $id_line,
+                  'id_sub_jenis_material' => $id_sub_jm,
+                  'total_material'        => $wip,
+                  'user_add'              => $user,
+                  'waktu_add'             => $now,
+                  'status_delete'         => 0
               );
-
-              //$this->M_HasilProduksi->insert('inventory_line',$data_inventory_line);
-
-              //DETAIL INVENTORY LINE
-                $tgl            = date('Y-m-d');
-                $tahun_sekarang = substr(date('Y',strtotime($tgl)),2,2);
-                $bulan_sekarang = date('m',strtotime($tgl));
-                $id_code        = "DINLI".$tahun_sekarang.$bulan_sekarang.".";
-
-                $last       = $this->M_HasilProduksi->get_last_dinli_id($id_code)->result_array();
-                $last_cek   = $this->M_HasilProduksi->get_last_dinli_id($id_code)->num_rows();
-
-                //id
-                if($last_cek == 1){
-                    $id_terakhir    = $last[0]['id_detail_inventory_line'];
-
-                    $tahun_sebelum  = substr($id_terakhir,5,2);
-                
-                    $bulan_sebelum  = substr($id_terakhir,7,2);
-
-                    //kalau tahun sama
-                    if($tahun_sebelum == $tahun_sekarang){
-                        //kalau tahun & bulannya sama berarti count+1
-                        if($bulan_sebelum == $bulan_sekarang){
-                            $count = intval(substr($id_terakhir,10,5)) + 1;
-                            $pjg   = strlen($count);
-
-                            if($pjg == 1){
-                                $count_baru = "0000".$count;
-                            }
-                            else if($pjg == 2){
-                                $count_baru = "000".$count;
-                            }
-                            else if($pjg == 3){
-                                $count_baru = "00".$count;
-                            }
-                            else if($pjg == 4){
-                              $count_baru = "0".$count;
-                          }
-                            else{
-                                $count_baru = $count;
-                            }
-                            
-                            //id yang baru
-                            $id_detail_inventory_line = "DINLI".$tahun_sebelum.$bulan_sebelum.".".$count_baru;
-                        }
-                        //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
-                        else{
-                            //id yang baru
-                            $id_detail_inventory_line = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-                        }
-                    }
-                    //kalau tahun tidak sama
-                    else{
-                        //id yang baru
-                        $id_detail_inventory_line = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-                    }
-                }
-                else{
-                    //id yang baru
-                    $id_detail_inventory_line = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-                } 
-
-                $data_detail_inventory_line = array(
-                  'id_detail_inventory_line' => $id_detail_inventory_line,
-                  'id_inventory_line'        => $id_inli,
-                  'tanggal'                  => $now,
-                  'jumlah_material'          => $sisa_wip,
-                  'status'                   => 0,
-                  'user_add'                 => $user,
-                  'waktu_add'                => $now,
-                  'status_delete'            => 0
-                );
-
-                //$this->M_HasilProduksi->insert('detail_inventory_line',$data_detail_inventory_line);
-              //tutup detail inventory line
-
-            } else{
-              $id_inventory_line = $inventory_line[0]['id_inventory_line'];
-              $jumlah_inventory  = $inventory_line[0]['total_material'];
-
-              $jumlah_baru = $sisa_wip + $jumlah_inventory;
-
-              $data_inventory_line = array(
-                'total_material' => $jumlah_baru,
-                'user_edit'      => $user,
-                'waktu_edit'     => $now
-              );
-
-              $where_inventory_line = array(
-                'id_inventory_line' => $id_inventory_line
-              );
-
-              //$this->M_HasilProduksi->edit('inventory_line',$data_inventory_line,$where_inventory_line);
-
-              //DETAIL INVENTORY LINE
-                $tgl            = date('Y-m-d');
-                $tahun_sekarang = substr(date('Y',strtotime($tgl)),2,2);
-                $bulan_sekarang = date('m',strtotime($tgl));
-                $id_code        = "DINLI".$tahun_sekarang.$bulan_sekarang.".";
-
-                $last       = $this->M_HasilProduksi->get_last_dinli_id($id_code)->result_array();
-                $last_cek   = $this->M_HasilProduksi->get_last_dinli_id($id_code)->num_rows();
-
-                //id
-                if($last_cek == 1){
-                    $id_terakhir    = $last[0]['id_detail_inventory_line'];
-
-                    $tahun_sebelum  = substr($id_terakhir,5,2);
-                
-                    $bulan_sebelum  = substr($id_terakhir,7,2);
-
-                    //kalau tahun sama
-                    if($tahun_sebelum == $tahun_sekarang){
-                        //kalau tahun & bulannya sama berarti count+1
-                        if($bulan_sebelum == $bulan_sekarang){
-                            $count = intval(substr($id_terakhir,10,5)) + 1;
-                            $pjg   = strlen($count);
-
-                            if($pjg == 1){
-                                $count_baru = "0000".$count;
-                            }
-                            else if($pjg == 2){
-                                $count_baru = "000".$count;
-                            }
-                            else if($pjg == 3){
-                                $count_baru = "00".$count;
-                            }
-                            else if($pjg == 4){
-                              $count_baru = "0".$count;
-                          }
-                            else{
-                                $count_baru = $count;
-                            }
-                            
-                            //id yang baru
-                            $id_detail_inventory_line = "DINLI".$tahun_sebelum.$bulan_sebelum.".".$count_baru;
-                        }
-                        //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
-                        else{
-                            //id yang baru
-                            $id_detail_inventory_line = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-                        }
-                    }
-                    //kalau tahun tidak sama
-                    else{
-                        //id yang baru
-                        $id_detail_inventory_line = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-                    }
-                }
-                else{
-                    //id yang baru
-                    $id_detail_inventory_line = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-                } 
-
-                $data_detail_inventory_line = array(
-                  'id_detail_inventory_line' => $id_detail_inventory_line,
-                  'id_inventory_line'        => $id_inventory_line,
-                  'tanggal'                  => $now,
-                  'jumlah_material'          => $sisa_wip,
-                  'status'                   => 0,
-                  'user_add'                 => $user,
-                  'waktu_add'                => $now,
-                  'status_delete'            => 0
-                );
-
-                //$this->M_HasilProduksi->insert('detail_inventory_line',$data_detail_inventory_line);
-              //tutup detail inventory line
-
-
-
-            }
+              $this->M_LaporanPerencanaanCutting->insert('inventory_line',$data_inline);
           }
 
-          echo $id_konsumsi_material." || ".$id_line." || ".$id_detail_produk." || ".$id_produk." || ".$jumlah_item_aktual." || ".$tanggal." || ".$id_detail_purchase_order_customer." || ".$total_konsumsi_material." || ".$jumlah_keluar." || ".$sisa_wip."<br>";
-          
+          //DETAIL INVENTORY LINE
+              //id detail inventory line
+              $tahun_sekarang = substr(date('Y',strtotime($now)),2,2);
+              $bulan_sekarang = date('m',strtotime($now));
+              $id_code        = "DINLI".$tahun_sekarang.$bulan_sekarang.".";
 
-        
+              $last       = $this->M_LaporanPerencanaanCutting->get_last_dinli_id($id_code)->result_array();
+              $last_cek   = $this->M_LaporanPerencanaanCutting->get_last_dinli_id($id_code)->num_rows();
 
-        }
+              //id
+              if($last_cek == 1){
+                  $id_terakhir    = $last[0]['id_detail_inventory_line'];
 
-        //echo " --------------------------------------- <br>";
+                  $tahun_sebelum  = substr($id_terakhir,5,2);
+              
+                  $bulan_sebelum  = substr($id_terakhir,7,2);
 
+                  //kalau tahun sama
+                  if($tahun_sebelum == $tahun_sekarang){
+                      //kalau tahun & bulannya sama berarti count+1
+                      if($bulan_sebelum == $bulan_sekarang){
+                          $count = intval(substr($id_terakhir,10,5)) + 1;
+                          $pjg   = strlen($count);
 
+                          if($pjg == 1){
+                              $count_baru = "0000".$count;
+                          }
+                          else if($pjg == 2){
+                              $count_baru = "000".$count;
+                          }
+                          else if($pjg == 3){
+                              $count_baru = "00".$count;
+                          }
+                          else if($pjg == 4){
+                              $count_baru = "0".$count;
+                          }
+                          else{
+                              $count_baru = $count;
+                          }
+                          
+                          //id yang baru
+                          $id_dinli_baru = "DINLI".$tahun_sebelum.$bulan_sebelum.".".$count_baru;
+                      }
+                      //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                      else{
+                          //id yang baru
+                          $id_dinli_baru = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
+                      }
+                  }
+                  //kalau tahun tidak sama
+                  else{
+                      //id yang baru
+                      $id_dinli_baru = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
+                  }
+              }
+              else{
+                  //id yang baru
+                  $id_dinli_baru = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
+              }
+
+              $data_detail_inline = array(
+                      'id_detail_inventory_line' => $id_dinli_baru,
+                      'id_inventory_line'        => $id_inli,
+                      'tanggal'                  => $tanggal,
+                      'jumlah_material'          => $wip,
+                      'status'                   => 0,
+                      'user_add'                 => $user,
+                      'waktu_add'                => $now,
+                      'status_delete'            => 0
+              );
+
+              $this->M_LaporanPerencanaanCutting->insert('detail_inventory_line',$data_detail_inline);
+          //tutup detail inventory line
       }
-    //tutup inventory line
-    */
-
-
     
-
-    
-
-    //redirect('hasilProduksi/selesai_hasil_produksi');
+    }
+ 
+    redirect('hasilProduksi/selesai_hasil_produksi');
   }
 
   function konsumsi_material(){
@@ -863,7 +747,6 @@ class HasilProduksi extends CI_Controller {
     $pdf = new FPDF('l','mm','A5');
 		//buat halaman baru
 		$pdf->AddPage();
-
     
     //logo
     $pdf->Image(base_url('assets/images/logombp.png'),7,7,-300);
@@ -938,7 +821,7 @@ class HasilProduksi extends CI_Controller {
         $pdf->Cell(90,6,$nama_produk,1,0,'C');
         $pdf->Cell(20,6,$detprodline[$i]['jumlah_item_perencanaan']. " pcs",1,0,'C');
         $pdf->Cell(20,6,$detprodline[$i]['jumlah_item_aktual']. " pcs",1,0,'C');
-        $pdf->Cell(20,6,'??????????',1,0,'C');
+        $pdf->Cell(20,6,$detprodline[$i]['cycle_time']. " dtk",1,0,'C');
         $pdf->Cell(30,6,$detprodline[$i]['keterangan_aktual'],1,1,'C');
       }
     }

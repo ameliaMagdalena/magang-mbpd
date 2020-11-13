@@ -46,6 +46,9 @@ class LaporanPerencanaanCutting extends CI_Controller {
     
         $data['pm']    = $this->M_LaporanPerencanaanCutting->get_all_pengambilan_material($tanggal)->result_array();
         $data['jm_pm'] = $this->M_LaporanPerencanaanCutting->get_all_pengambilan_material($tanggal)->num_rows();
+
+        $data['det_inline']    = $this->M_LaporanPerencanaanCutting->get_detail_inline_out()->result_array();
+        $data['jm_det_inline'] = $this->M_LaporanPerencanaanCutting->get_detail_inline_out()->num_rows();
         
         $data['warna']      = $this->M_Warna->select_all_aktif()->result_array();
         $data['jmwarna']    = $this->M_Warna->select_all_aktif()->num_rows();
@@ -108,7 +111,6 @@ class LaporanPerencanaanCutting extends CI_Controller {
 
     function konfirmasi_ppic(){
         $tanggal = $this->input->post('tanggalnya');
-
         $user = $_SESSION['id_user'];
         $now  = date('Y-m-d H:i:s');
 
@@ -242,8 +244,6 @@ class LaporanPerencanaanCutting extends CI_Controller {
                 //tutup detail inventory line
             }
         }
-
-        //echo $jumlah_detail;
     }
 
 }

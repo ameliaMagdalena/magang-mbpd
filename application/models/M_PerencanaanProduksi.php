@@ -75,7 +75,7 @@ class M_PerencanaanProduksi extends CI_Model {
         DATE_FORMAT(tanggal + INTERVAL 6 DAY, '%W, %e %M %Y') AS tanggal_selesai, (tanggal + INTERVAL 6 DAY) AS end,
         id_produksi
         FROM produksi 
-        WHERE weekday(tanggal) = 0 AND status_delete='0'");
+        WHERE weekday(tanggal) = 0 AND status_delete='0' ORDER BY tanggal ASC");
     }
 
     function get_p($awal){

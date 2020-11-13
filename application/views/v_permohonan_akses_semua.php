@@ -88,57 +88,6 @@
                             </td>
                         </tr>
                     <?php $no++;} ?>
-
-                    <!--
-                    <tr>
-                        <td  style="text-align: center;vertical-align: middle;">1</td>
-                        <td  style="text-align: center;vertical-align: middle;">Edit BPBJ</td>
-                        <td  style="text-align: center;vertical-align: middle;">Yogi (Admin Finish Good)</td>
-                        <td  style="text-align: center;vertical-align: middle;">Salah input jumlah</td>
-                        <td  style="text-align: center;vertical-align: middle;">Belum Disetujui</td>
-                        <td class="col-lg-3"> 
-                            <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                title="Detail" href="#modaldetail1"></a>
-                            <a class="modal-with-form col-lg-3 btn btn-success fa fa-check-square"
-                                title="Setujui" href="#modalterima"></a>
-                            <a class="modal-with-form col-lg-3 btn btn-danger fa  fa-times-circle"
-                                title="Tidak Disetujui" href="#modaltolak"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td  style="text-align: center;vertical-align: middle;">2</td>
-                        <td  style="text-align: center;vertical-align: middle;">Edit BPBJ</td>
-                        <td  style="text-align: center;vertical-align: middle;">Yogi (Admin Finish Good)</td>
-                        <td  style="text-align: center;vertical-align: middle;">Salah input jumlah</td>
-                        <td  style="text-align: center;vertical-align: middle;">Disetujui</td>
-                        <td class="col-lg-3"> 
-                            <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                title="Detail" href="#modaldetail1"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td  style="text-align: center;vertical-align: middle;">3</td>
-                        <td  style="text-align: center;vertical-align: middle;">Edit BPBJ</td>
-                        <td  style="text-align: center;vertical-align: middle;">Yogi (Admin Finish Good)</td>
-                        <td  style="text-align: center;vertical-align: middle;">Salah input jumlah</td>
-                        <td  style="text-align: center;vertical-align: middle;">Tidak Disetujui</td>
-                        <td class="col-lg-3"> 
-                            <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                title="Detail" href="#modaldetail1"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td  style="text-align: center;vertical-align: middle;">4</td>
-                        <td  style="text-align: center;vertical-align: middle;">Edit BPBJ</td>
-                        <td  style="text-align: center;vertical-align: middle;">Yogi (Admin Finish Good)</td>
-                        <td  style="text-align: center;vertical-align: middle;">Salah input jumlah</td>
-                        <td  style="text-align: center;vertical-align: middle;">Batal</td>
-                        <td class="col-lg-3"> 
-                            <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                title="Detail" href="#modaldetail1"></a>
-                        </td>
-                    </tr>
-                    -->
                 </tbody>
 	        </table>
         </div>

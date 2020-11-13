@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Semua Permintaan Material</h2>
+        <h2>Permintaan Material Batal</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Semua Permintaan Material</span></li>
+                <li><span>Permintaan Material Batal</span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -25,7 +25,7 @@
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
         <header class="panel-heading">
-            <h2 class="panel-title">Data Semua Permintaan Material</h2>
+            <h2 class="panel-title">Data Permintaan Material Batal</h2>
         </header>
 
         <div class="panel-body">
@@ -38,7 +38,6 @@
                         <th style="text-align: center;vertical-align: middle;">Tanggal Produksi</th>
                         <th style="text-align: center;vertical-align: middle;">Nama Produk</th>
                         <th style="text-align: center;vertical-align: middle;">Nama Line</th>
-                        <th style="text-align: center;vertical-align: middle;">Status Permintaan</th>
                         <th style="text-align: center;vertical-align: middle;">Aksi</th>
                     </tr>
                 </thead>
@@ -46,6 +45,7 @@
                     <?php 
                     $no = 1;
                     foreach($permintaan_material as $x){ 
+                        if($x->status_permintaan == 3){
                     ?>
                         <tr>
                             <td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
@@ -109,19 +109,6 @@
                                 </center>
                             </td>
                             <td style="text-align: center;vertical-align: middle;"><?= $x->nama_line ?></td>
-                            <td style="text-align: center;vertical-align: middle;">
-                                <?php if($x->status_permintaan == 0){?>
-                                    Belum Ditindaklanjuti
-                                <?php } else if($x->status_permintaan == 1){?>
-                                    Sedang diproses
-                                <?php } else if($x->status_permintaan == 2){?>
-                                    Selesai 
-                                <?php } else if($x->status_permintaan == 3){?>
-                                    Batal
-                                <?php } else if($x->status_permintaan == 4){?>
-                                    Ditolak
-                                <?php } ?>
-                            </td>
                             <td  class="col-lg-3">
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
                                     value="<?= $no;?>" title="Detail"></button>
@@ -129,7 +116,7 @@
                         </tr>
                     <?php
                     $no++;
-                    } 
+                    } }
                     ?>
                     </tbody>
 	        </table>
@@ -187,7 +174,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <input type="button" class="btn btn-default modal-dismiss" value="Ok" onclick="reload()">
+                <input type="button" class="btn btn-default modal-dismiss" value="Ok">
             </div>
         </div>
     </div>

@@ -25,6 +25,51 @@ class PermintaanMaterialProduksi extends CI_Controller {
 		$this->load->view('v_permintaan_material_produksi_semua',$data);
     }
 
+    public function belum_ditindaklanjuti(){
+        $data['permintaan_material'] = $this->M_PermintaanMaterialProduksi->select_all_aktif()->result();
+    
+        $data['warna']            = $this->M_Warna->select_all_aktif()->result();
+        $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
+
+		$this->load->view('v_permintaan_material_produksi_belum_ditindaklanjuti',$data);
+    }
+
+    public function sedang_diproses(){
+        $data['permintaan_material'] = $this->M_PermintaanMaterialProduksi->select_all_aktif()->result();
+    
+        $data['warna']            = $this->M_Warna->select_all_aktif()->result();
+        $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
+
+		$this->load->view('v_permintaan_material_produksi_sedang_diproses',$data);
+    }
+
+    public function selesai(){
+        $data['permintaan_material'] = $this->M_PermintaanMaterialProduksi->select_all_aktif()->result();
+    
+        $data['warna']            = $this->M_Warna->select_all_aktif()->result();
+        $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
+
+		$this->load->view('v_permintaan_material_produksi_selesai',$data);
+    }
+
+    public function  batal(){
+        $data['permintaan_material'] = $this->M_PermintaanMaterialProduksi->select_all_aktif()->result();
+    
+        $data['warna']            = $this->M_Warna->select_all_aktif()->result();
+        $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
+
+		$this->load->view('v_permintaan_material_produksi_batal',$data);
+    }
+
+    public function ditolak(){
+        $data['permintaan_material'] = $this->M_PermintaanMaterialProduksi->select_all_aktif()->result();
+    
+        $data['warna']            = $this->M_Warna->select_all_aktif()->result();
+        $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
+
+		$this->load->view('v_permintaan_material_produksi_ditolak',$data);
+    }
+
     public function detail_permintaan(){
         $id = $this->input->post('id');
 

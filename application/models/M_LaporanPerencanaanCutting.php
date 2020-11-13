@@ -74,4 +74,16 @@ class M_LaporanPerencanaanCutting extends CI_Model {
         return $this->db->query("SELECT id_detail_inventory_line FROM detail_inventory_line 
         WHERE id_detail_inventory_line LIKE '$id_code%' ORDER BY id_detail_inventory_line DESC LIMIT 1");
     }
+
+    function get_detail_inline_out(){
+        return $this->db->query("SELECT SUM(detail_inventory_line.jumlah_material) AS jumlah_material,
+        detail_permintaan_material.id_konsumsi_material,permintaan_material.id_line,permintaan_material.id_detail_purchase_order_customer,
+        permintaan_material.tanggal_produksi
+        FROM inventory_line,detail_inventory_line,detail_permintaan_material,permintaan_material
+        WHERE detail_inventory_line.status = 1
+        AND inventory_line.id_inventory_line=detail_inventory_line.id_inventory_line 
+        AND detail_inventory_line.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material
+        AND permintaan_material.id_permintaan_material=detail_permintaan_material.id_permintaan_material
+        AND detail_inventory_line.status_delete='0' GROUP BY detail_inventory_line.id_detail_permintaan_material ");
+    }
 }

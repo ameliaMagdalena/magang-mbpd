@@ -537,8 +537,16 @@ class SuratPerintahLembur extends CI_Controller {
         $id_spl = $this->input->post('id');
 
         $data['spl']     = $this->M_SuratPerintahLembur->get_spl($id_spl)->result_array();
+
         $data['dspl']    = $this->M_SuratPerintahLembur->get_dspl($id_spl)->result_array();
         $data['jm_dspl'] = $this->M_SuratPerintahLembur->get_dspl($id_spl)->num_rows();
+
+        //get line
+        $nama_line = $data['spl'][0]['nama_line'];
+        $jabatan   = "Staff " . $nama_line;
+
+        $data['karyawan']    = $this->M_SuratPerintahLembur->get_karyawan_byjbt($jabatan)->result_array();
+        $data['jm_karyawan'] = $this->M_SuratPerintahLembur->get_karyawan_byjbt($jabatan)->num_rows();
 
         echo json_encode($data);
     }
