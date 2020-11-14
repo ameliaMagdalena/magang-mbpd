@@ -82,33 +82,31 @@
 
                 <!-- ****************************** MODAL SETUJU ***************************** -->
                 <!-- ************************************************************************** -->
- 
-                <!-- modal detail -->
-                <div class="modal" id="setuju" role="dialog">
-                    <div class="modal-dialog modal-xl" style="width:50%">
-                        <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PerencanaanMaterial/setuju" method="post">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title"><b>Menyetujui Permintaan Material</b></h4>
-                                </div>
-                                <div class="modal-body">
-                                <input type="hidden" name="id_po_supplier" class="form-control" value="<?php echo $permintaan_material[$x]['id_permintaan_material'] ?>" readonly>
-                                    <input type="hidden" name="status" class="form-control" value="1" readonly>
-                                    
-                                    Anda akan menyetujui Permintaan Material dengan No. Form <b><?php echo $po_sup[$x]['id_permintaan_material'] ?></b>?
-                                </div>
-                                <footer class="panel-footer">
-                                    <div class="row">
-                                        <div class="col-md-12 text-right">
-                                            <input type="submit" class="btn btn-primary" value="Ya">
-                                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
-                                        </div>
+                    <div class="modal" id="setuju" role="dialog">
+                        <div class="modal-dialog modal-xl" style="width:50%">
+                            <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PerencanaanMaterial/setuju" method="post">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title"><b>Menyetujui Permintaan Material</b></h4>
                                     </div>
-                                </footer>
-                            </div>
-                        </form>
+                                    <div class="modal-body">
+                                    <input type="hidden" name="id_po_supplier" class="form-control" value="<?php echo $permintaan_material[$x]['id_permintaan_material'] ?>" readonly>
+                                        <input type="hidden" name="status" class="form-control" value="1" readonly>
+                                        
+                                        Anda akan menyetujui Permintaan Material dengan No. Form <b><?php echo $po_sup[$x]['id_permintaan_material'] ?></b>?
+                                    </div>
+                                    <footer class="panel-footer">
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <input type="submit" class="btn btn-primary" value="Ya">
+                                                <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                            </div>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
                 <!-- ***************************** END MODAL SETUJU *************************** -->
                 <!-- ************************************************************************** -->
                 
