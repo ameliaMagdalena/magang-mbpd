@@ -71,6 +71,7 @@
                         
                         <button type="button" class="konfirmz col-lg-3 btn btn-success fa fa-check" 
                             value="<?= $x;?>" title="Konfirmasi"></button>
+                        
 
                         <!-- <a class="modal-with-form col-lg-3 btn btn-success fa fa-check"
                             title="Konfirmasi" href="#modalkonfirmasi<?php echo $permintaan_material[$x]['id_permintaan_material'] ?>"></a> -->
@@ -81,31 +82,32 @@
 
                 <!-- ****************************** MODAL SETUJU ***************************** -->
                 <!-- ************************************************************************** -->
-                <div id='setuju' class="modal">
-                    <!-- <section class="panel">
+ 
+                <!-- modal detail -->
+                <div class="modal" id="setuju" role="dialog">
+                    <div class="modal-dialog modal-xl" style="width:50%">
                         <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PerencanaanMaterial/setuju" method="post">
-                            
-                            <header class="panel-heading">
-                                <h2 class="panel-title">Menyetujui Permintaan Material</h2>
-                            </header>
-
-                            <div class="panel-body">
-                                <input type="hidden" name="id_po_supplier" class="form-control" value="<?php echo $permintaan_material[$x]['id_permintaan_material'] ?>" readonly>
-                                <input type="hidden" name="status" class="form-control" value="1" readonly>
-                                
-                                Anda akan menyetujui Permintaan Material dengan No. Form <b><?php echo $po_sup[$x]['id_permintaan_material'] ?></b>?
-
-                            </div>
-                            <footer class="panel-footer">
-                                <div class="row">
-                                    <div class="col-md-12 text-right">
-                                        <input type="submit" class="btn btn-primary" value="Ya">
-                                        <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
-                                    </div>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"><b>Menyetujui Permintaan Material</b></h4>
                                 </div>
-                            </footer>
+                                <div class="modal-body">
+                                <input type="hidden" name="id_po_supplier" class="form-control" value="<?php echo $permintaan_material[$x]['id_permintaan_material'] ?>" readonly>
+                                    <input type="hidden" name="status" class="form-control" value="1" readonly>
+                                    
+                                    Anda akan menyetujui Permintaan Material dengan No. Form <b><?php echo $po_sup[$x]['id_permintaan_material'] ?></b>?
+                                </div>
+                                <footer class="panel-footer">
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <input type="submit" class="btn btn-primary" value="Ya">
+                                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                        </div>
+                                    </div>
+                                </footer>
+                            </div>
                         </form>
-                    </section> -->
+                    </div>
                 </div>
                 <!-- ***************************** END MODAL SETUJU *************************** -->
                 <!-- ************************************************************************** -->
@@ -793,11 +795,12 @@
 <?php //include('_rightbar.php');
 ?>
 
-
 <script>
     $('.konfirmz').click(function(){
         var no      = $(this).attr('value');
         var id      = $("#idd"+no).val();
+
+        /*
         $.ajax({
             type:"post",    
             url:"<?php echo base_url() ?>PermintaanMaterial/index/0",
@@ -835,6 +838,8 @@
                 $("#setuju").modal();
             }
         });  
+        */
+        $("#setuju").modal();
     });
 </script>
 
