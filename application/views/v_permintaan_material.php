@@ -89,10 +89,10 @@
                                     <div class="modal-header">
                                         <h4 class="modal-title"><b>Menyetujui Permintaan Material</b></h4>
                                     </div>
-                                    <div class="modal-body" id="isisetuju">
-                                        <input type="text" name="idnyaa" class="form-control" value="" readonly>
+                                    <div class="modal-body">
+                                        <input type="text" name="idnyaa" id="idnyaa" class="form-control" value="" readonly>
                                         <input type="text" name="status" class="form-control" value="1" readonly>
-                                        
+                                        <div id="isisetuju"></div>
                                         <!-- Anda akan menyetujui Permintaan Material dengan No. Form <b id="coba"></b>? -->
                                     </div>
                                     <footer class="panel-footer">
@@ -798,25 +798,24 @@
         var no      = $(this).attr('value');
         var id      = $("#idd"+no).val();
 
-        /* $.ajax({
+         $.ajax({
             type:"post",    
             url:"<?php echo base_url() ?>PermintaanMaterial/ajax",
             dataType: "JSON",
             data: {id:id},
 
             success: function(respond){
-                $("#idnyaa").val(respond['permat'][0]['id_permintaan_material']);
                 $isi = 
                     '<input type="hidden" name="id_po_supplier" class="form-control" value="'+respond['permat'][0]['id_permintaan_material']+'" readonly>'+
                     '<input type="hidden" name="status" class="form-control" value="1" readonly>'+
                     'Anda akan menyetujui Permintaan Material dengan No. Form <b>'+respond['permat'][0]['id_permintaan_material']+'</b>?';
 
                 $("#isisetuju").html($isi);
+                $("#idnyaa").val(id);
+                $("#setuju").modal();
             }
-        }); */
-        
-        $("#idnyaa").val(id);
-        $("#setuju").modal();
+        }); 
+    
     });
 </script>
 

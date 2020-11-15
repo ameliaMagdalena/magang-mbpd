@@ -31,10 +31,8 @@ class PermintaanMaterial extends CI_Controller {
     }
 
     public function ajax(){
-        $id = $this->input->post('id');
-
-        $data = $this->M_PerencanaanMaterial->selectSatuPermintaanMaterial($id)->result_array();
-        //$data = $this->M_PerencanaanMaterial->selectSatuDetailPermintaanMaterial($id)->result_array();
+        $id             = $this->input->post('id');
+        $data['permat'] = $this->M_PerencanaanMaterial->selectSatuPermintaanMaterial($id)->result_array();
 
         echo json_encode($data);
     }

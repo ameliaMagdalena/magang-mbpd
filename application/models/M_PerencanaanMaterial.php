@@ -23,7 +23,7 @@ class M_PerencanaanMaterial extends CI_Model {
         JOIN line c ON a.id_line = c.id_line
         JOIN detail_produk d ON b.id_detail_produk = d.id_detail_produk
         JOIN produk e ON d.id_produk = e.id_produk
-        WHERE a.status_delete=0 AND a.id_permintaan_material='" . $id['id_permintaan_material'] . "'");
+        WHERE a.status_delete=0 AND a.id_permintaan_material='$id'");
     }
 
     /* function get_one_permat($id){
