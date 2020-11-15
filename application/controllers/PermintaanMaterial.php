@@ -26,10 +26,17 @@ class PermintaanMaterial extends CI_Controller {
         $data['warna'] = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran'] = $this->M_UkuranProduk->select_all_aktif()->result();
 
-        $data['permat'] = $this->M_PerencanaanMaterial->selectSatuPermintaanMaterial($id)->result_array();
-        $data['detpermat'] = $this->M_PerencanaanMaterial->selectSatuDetailPermintaanMaterial($id)->result_array();
 
 		$this->load->view('v_permintaan_material', $data);
+    }
+
+    public function ajax(){
+        $id = $this->input->post('id');
+
+        $data = $this->M_PerencanaanMaterial->selectSatuPermintaanMaterial($id)->result_array();
+        //$data = $this->M_PerencanaanMaterial->selectSatuDetailPermintaanMaterial($id)->result_array();
+
+        echo json_encode($data);
     }
 
     public function detail($id){
