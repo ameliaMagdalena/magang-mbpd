@@ -48,6 +48,46 @@ class PermintaanMaterial extends CI_Controller {
 		$this->load->view('v_detail_permintaan_material', $data);
     }
 
+    public function setuju(){
+        $where = array(
+            'id_permintaan_material' => $this->input->post("idnyaa")
+        );
+
+        $data = array (
+            "id_permintaan_material" => $this->input->post("idnyaa"),
+            "status_permintaan" => $this->input->post("status"),
+            "user_edit"=>$_SESSION['id_user'],
+            "waktu_add"=>date('Y-m-d H:i:s'),
+        );
+        $this->M_PerencanaanMaterial->editPermintaanMaterial($data, $where);
+        
+        if ($this->input->post("status") == 1){
+            redirect('PermintaanMaterial/index/1');
+        }
+        else if ($this->input->post("status") == 2){
+            redirect('PermintaanMaterial/index/2');
+        }
+        else{
+            redirect('PermintaanMaterial/index/3');
+        }
+    }
+
+    public function batal(){
+        $where = array(
+            'id_permintaan_material' => $this->input->post("idnya")
+        );
+
+        $data = array (
+            "id_permintaan_material" => $this->input->post("idnya"),
+            "status_permintaan" => $this->input->post("status"),
+            "user_edit"=>$_SESSION['id_user'],
+            "waktu_add"=>date('Y-m-d H:i:s'),
+        );
+        $this->M_PerencanaanMaterial->editPermintaanMaterial($data, $where);
+        echo $this->input->post("idnya");
+        //redirect('PermintaanMaterial/index/3');
+    }
+
     public function ketersediaan(){
         $id = $this->input->post("id_sub_jenis_material");
         $result = $this->M_PerencanaanMaterial->selectKetersediaanMaterial($id)->result_array();

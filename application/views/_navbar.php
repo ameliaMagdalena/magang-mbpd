@@ -275,6 +275,11 @@
 											</li>
 											<li>
 												<a href="<?php echo base_url() . 'PermintaanMaterial/index/3'?>">
+													Batal
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/4'?>">
 													Semua
 												</a>
 											</li>

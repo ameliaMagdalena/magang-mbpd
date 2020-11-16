@@ -53,12 +53,13 @@
                 </tr>
             </thead>
             <tbody>
-                <?php for($x=0 ; $x<count($permintaan_material) ; $x++){
-                        if ($status == 0 || $status == 3){ 
+                <?php $no=1;
+                    for($x=0 ; $x<count($permintaan_material) ; $x++){
+                        if ($status == 0 || $status == 4){ 
                             if($permintaan_material[$x]['status_permintaan'] == 0){
                 ?>
                 <tr>
-                    <td> <?php echo $x+1 ?>
+                    <td> <?php echo $no ?>
                     <input type="hidden" id="idd<?= $x ?>" value="<?= $permintaan_material[$x]['id_permintaan_material'] ?>"> </td>
                     <!-- <td style="text-align: center;vertical-align: middle;"></td> -->
                     <td><?= $permintaan_material[$x]['tanggal_permintaan'] ?></td>
@@ -71,12 +72,14 @@
                         
                         <button type="button" class="konfirmz col-lg-3 btn btn-success fa fa-check" 
                             value="<?php echo $x //$permintaan_material[$x]['id_permintaan_material'] ?>" title="Konfirmasi"></button>
+                        <button type="button" class="tolakz col-lg-3 btn btn-danger fa fa-times" 
+                            value="<?php echo $x ?>" title="Tolak"></button>
                         
 
                         <!-- <a class="modal-with-form col-lg-3 btn btn-success fa fa-check"
-                            title="Konfirmasi" href="#modalkonfirmasi<?php echo $permintaan_material[$x]['id_permintaan_material'] ?>"></a> -->
+                            title="Konfirmasi" href="#modalkonfirmasi<?php echo $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
                         <a class="modal-with-form col-lg-3 btn btn-danger fa fa-times"
-                            title="Tolak" href="#modaltolak<?php echo $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
+                            title="Tolak" href="#modaltolak<?php echo $permintaan_material[$x]['id_permintaan_material'] ?>"></a> -->
                     </td>
                 </tr>
 
@@ -84,16 +87,15 @@
                 <!-- ************************************************************************** -->
                     <div class="modal" id="setuju" role="dialog">
                         <div class="modal-dialog modal-xl" style="width:50%">
-                            <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PerencanaanMaterial/setuju" method="post">
+                            <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PermintaanMaterial/setuju" method="post">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h4 class="modal-title"><b>Menyetujui Permintaan Material</b></h4>
                                     </div>
                                     <div class="modal-body">
-                                        <input type="text" name="idnyaa" id="idnyaa" class="form-control" value="" readonly>
-                                        <input type="text" name="status" class="form-control" value="1" readonly>
+                                        <input type="hidden" name="idnyaa" id="idnyaa" class="form-control" value="" readonly>
+                                        <input type="hidden" name="status" class="form-control" value="1" readonly>
                                         <div id="isisetuju"></div>
-                                        <!-- Anda akan menyetujui Permintaan Material dengan No. Form <b id="coba"></b>? -->
                                     </div>
                                     <footer class="panel-footer">
                                         <div class="row">
@@ -109,8 +111,37 @@
                     </div>
                 <!-- ***************************** END MODAL SETUJU *************************** -->
                 <!-- ************************************************************************** -->
+
+                <!-- ****************************** MODAL TOLAK ***************************** -->
+                <!-- ************************************************************************ -->
+                <div class="modal" id="tolak" role="dialog">
+                        <div class="modal-dialog modal-xl" style="width:50%">
+                            <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PermintaanMaterial/setuju" method="post">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title"><b>Menolak Permintaan Material</b></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="hidden" name="idnyaa" id="idnya" class="form-control" value="" readonly>
+                                        <input type="hidden" name="status" class="form-control" value="4" readonly>
+                                        <div id="isitolak"></div>
+                                    </div>
+                                    <footer class="panel-footer">
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <input type="submit" class="btn btn-primary" value="Ya">
+                                                <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                            </div>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                <!-- ***************************** END MODAL TOLAK *************************** -->
+                <!-- ************************************************************************* -->
                 
-                <?php } } } ?>
+                <?php $no=$no+1;} } } ?>
             </tbody>
         </table>
     </div>
@@ -130,7 +161,7 @@
             <a href="#" class="fa fa-times"></a>
         </div>
 
-        <h2 class="panel-title">Daftar Produk</h2>
+        <h2 class="panel-title">Permintaan Material - Sedang Proses</h2>
     </header>
     <div class="panel-body">
         <table class="table table-bordered table-striped mb-none" id="datatable-default">
@@ -141,16 +172,42 @@
                     <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Tanggal Permintaan</th>
                     <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Tanggal Produksi</th>
                     <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Produk</th>
-                    <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Status</th>
+                    <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Ketersediaan</th>
                     <th class="col-lg-3" style="text-align: center;vertical-align: middle;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                <?php for($x=0 ; $x<count($permintaan_material) ; $x++){
-                        if ($status == 1 || $status == 3){ 
+                <?php $no=1;
+                    for($x=0 ; $x<count($permintaan_material) ; $x++){
+                        if ($status == 1 || $status == 4){ 
                             if($permintaan_material[$x]['status_permintaan'] == 1){
                 ?>
                 <tr>
+                    <td> <?php echo $no ?>
+                    <input type="hidden" id="idd<?= $x ?>" value="<?= $permintaan_material[$x]['id_permintaan_material'] ?>"> </td>
+                    <!-- <td style="text-align: center;vertical-align: middle;"></td> -->
+                    <td><?= $permintaan_material[$x]['tanggal_permintaan'] ?></td>
+                    <td><?= $permintaan_material[$x]['tanggal_produksi'] ?></td>
+                    <td><?= $permintaan_material[$x]['nama_produk'] ?></td>
+                    <td> *********** </td>
+                    <td>
+                        <a class="col-lg-3 btn btn-primary fa fa-info-circle"
+                            title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail/' . $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
+                        <!-- <a class="col-lg-3 btn btn-info fa fa-file-text" title="Perencanaan" 
+                            href="<?php echo base_url() . 'PerencanaanMaterial/proses_perencanaan/' . $permintaan_material[$x]['id_permintaan_material']?>"></a> -->
+                        <button type="button" class="beliz col-lg-3 btn btn-warning fa fa-shopping-cart" 
+                            value="<?php echo $x ?>" title="Beli"></button>
+                        <button type="button" class="selesaiz col-lg-3 btn btn-success fa fa-check" 
+                            value="<?php echo $x ?>" title="Selesaikan"></button>
+                        <button type="button" class="batalz col-lg-3 btn btn-danger fa fa-times" 
+                            value="<?php echo $x ?>" title="Batal"></button>
+                        <button type="button" class="editz col-lg-3 btn btn-warning fa fa-pencil-square-o" 
+                            value="<?php echo $x ?>" title="Edit"></button>
+                        <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
+                            value="<?php echo $x ?>" title="Hapus"></button>
+                    </td>
+                </tr>
+                <!-- <tr>
                     <td> 1 </td>
                     <td> Compact Mattress </td>
                     <td> 13 Juni 2020 </td>
@@ -166,27 +223,37 @@
                         <a class="modal-with-form col-lg-2 btn btn-danger fa fa-trash-o"
                             title="Delete" href="#modalhapus"></a>
                     </td>
-                </tr>
-                <tr>
-                    <td> 2 </td>
-                    <td><a href="<?php echo base_url() . 'PerencanaanMaterial/detailPerencanaan' ?>"> Floor Chair Gray </a></td>
-                    <td> 20 Juni 2020 </td>
-                    <td> Dikonfirmasi, Belum Direncanakan </td>
-                    <td> Proses </td>
-                    <td>
-                        <a class="modal-with-form col-lg-2 btn btn-primary fa fa-info-circle"
-                            title="Detail" href="#modaldetail"></a>
-                        <a class="modal-with-form col-lg-2 btn btn-warning fa fa-pencil-square-o"
-                            title="Edit" href="#modaledit2"></a>
-                        <a class="col-lg-2 btn btn-info fa fa-file-text" title="Perencanaan" 
-                            href="<?php echo base_url() . 'PerencanaanMaterial/prosesPerencanaan'?>"></a>
-                        <a class="modal-with-form col-lg-2 btn btn-success fa fa-check"
-                            title="Selesaikan" href="#modalselesai"></a>
-                        <a class="modal-with-form col-lg-2 btn btn-danger fa fa-trash-o"
-                            title="Delete" href="#modalhapus"></a>
-                    </td>
-                </tr>
-                <?php } } } ?>
+                </tr> -->
+
+                <!-- ****************************** MODAL BATAL ***************************** -->
+                <!-- ************************************************************************ -->
+                <div class="modal" id="batal" role="dialog">
+                        <div class="modal-dialog modal-xl" style="width:50%">
+                            <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PermintaanMaterial/setuju" method="post">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title"><b>Menolak Permintaan Material</b></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="hidden" name="idnyaa" id="idbatal" class="form-control" value="" readonly>
+                                        <input type="hidden" name="status" class="form-control" value="3" readonly>
+                                        <div id="isibatal"></div>
+                                    </div>
+                                    <footer class="panel-footer">
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <input type="submit" class="btn btn-primary" value="Ya">
+                                                <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                            </div>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                <!-- ***************************** END MODAL BATAL *************************** -->
+                <!-- ************************************************************************* -->
+                <?php $no=$no+1; } } } ?>
             </tbody>
         </table>
     </div>
@@ -576,10 +643,9 @@
 
 
 
-
 <!-- ----------------------------------------------- SELESAI ----------------------------------------- -->
-<?php }else if($status == '1'){ ?>
-<h1>Permintaan Material - Belum Ditinjau</h1>
+<?php }else if($status == '2'){ ?>
+<h1>Permintaan Material - Selesai</h1>
 <hr>
 
 <section class="panel">
@@ -589,20 +655,43 @@
             <a href="#" class="fa fa-times"></a>
         </div>
 
-        <h2 class="panel-title">Permintaan Material - Belum Ditinjau</h2>
+        <h2 class="panel-title">Permintaan Material - Selesai</h2>
     </header>
     <div class="panel-body">
         <table class="table table-bordered table-striped mb-none" id="datatable-default">
             <thead>
                 <tr>
                     <th>No.</th>
-                    <th>Produk</th>
                     <th>Tanggal Permintaan</th>
+                    <th>Tanggal Produksi</th>
+                    <th>Produk</th>
+                    <th>Status</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
+                <?php $no=1;
+                    for($x=0 ; $x<count($permintaan_material) ; $x++){
+                        if ($status == 2 || $status == 4){ 
+                            if($permintaan_material[$x]['status_permintaan'] == 0){
+                ?>
                 <tr>
+                    <td> <?php echo $no ?>
+                    <input type="hidden" id="idd<?= $x ?>" value="<?= $permintaan_material[$x]['id_permintaan_material'] ?>"> </td>
+                    <!-- <td style="text-align: center;vertical-align: middle;"></td> -->
+                    <td><?= $permintaan_material[$x]['tanggal_permintaan'] ?></td>
+                    <td><?= $permintaan_material[$x]['tanggal_produksi'] ?></td>
+                    <td><?= $permintaan_material[$x]['nama_produk'] ?></td>
+                    <td>Selesai </td>
+                    <td>
+                        <a class="col-lg-3 btn btn-primary fa fa-info-circle"
+                            title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail/' . $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
+                        <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
+                            value="<?php echo $x ?>" title="Hapus"></button>
+                    </td>
+                </tr>
+
+                <!-- <tr>
                     <td class="col-2"> 1 </td>
                     <td class="col-lg-2"> Compact Mattress </td>
                     <td class="col-lg-3"> 13 Juni 2020 </td>
@@ -612,18 +701,8 @@
                         <a class="modal-with-form col-lg-3 btn btn-danger fa fa-shopping-cart"
                             title="Beli Material" href="#modalbeli"></a>
                     </td>
-                </tr>
-                <tr>
-                    <td class="col-2"> 2 </td>
-                    <td class="col-lg-2"> Floor Chair Red </td>
-                    <td class="col-lg-3"> 21 Juni 2020 </td>
-                    <td class="col-lg-4">
-                        <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                            title="Detail" href="#modaldetail"></a>
-                        <a class="modal-with-form col-lg-3 btn btn-success fa fa-check-square"
-                            title="Konfirmasi" href="#modaledit"></a>
-                    </td>
-                </tr>
+                </tr> -->
+                <?php $no=$no+1;}}} ?>
             </tbody>
         </table>
     </div>
@@ -781,6 +860,67 @@
     <!-- ************************************************************************** -->
 </section>
 
+
+
+
+<!-- ----------------------------------------------- BATAL ----------------------------------------- -->
+<?php }else if($status == '3'){ ?>
+<h1>Permintaan Material - Batal / Ditolak</h1>
+<hr>
+
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+            <a href="#" class="fa fa-times"></a>
+        </div>
+
+        <h2 class="panel-title">Permintaan Material - Batal / Ditolak</h2>
+    </header>
+    <div class="panel-body">
+        <table class="table table-bordered table-striped mb-none" id="datatable-default">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Tanggal Permintaan</th>
+                    <th>Tanggal Produksi</th>
+                    <th>Produk</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $no=1;
+                    for($x=0 ; $x<count($permintaan_material) ; $x++){
+                        if ($status == 3 || $status == 4){ 
+                            if($permintaan_material[$x]['status_permintaan'] == 3 || $permintaan_material[$x]['status_permintaan'] == 4){
+                ?>
+                <tr>
+                    <td> <?php echo $no ?>
+                    <input type="hidden" id="idd<?= $x ?>" value="<?= $permintaan_material[$x]['id_permintaan_material'] ?>"> </td>
+                    <!-- <td style="text-align: center;vertical-align: middle;"></td> -->
+                    <td><?= $permintaan_material[$x]['tanggal_permintaan'] ?></td>
+                    <td><?= $permintaan_material[$x]['tanggal_produksi'] ?></td>
+                    <td><?= $permintaan_material[$x]['nama_produk'] ?></td>
+                    <td><?php if($permintaan_material[$x]['status_permintaan']==3){
+                        echo "Batal";
+                    }else{
+                        echo "Ditolak";
+                    } ?></td>
+                    <td>
+                        <a class="col-lg-3 btn btn-primary fa fa-info-circle"
+                            title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail/' . $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
+                        <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
+                            value="<?php echo $x ?>" title="Hapus"></button>
+                    </td>
+                </tr>
+                <?php $no=$no+1;}}} ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+
 <?php } ?>
 
 
@@ -805,17 +945,58 @@
             data: {id:id},
 
             success: function(respond){
-                $isi = 
-                    '<input type="hidden" name="id_po_supplier" class="form-control" value="'+respond['permat'][0]['id_permintaan_material']+'" readonly>'+
-                    '<input type="hidden" name="status" class="form-control" value="1" readonly>'+
-                    'Anda akan menyetujui Permintaan Material dengan No. Form <b>'+respond['permat'][0]['id_permintaan_material']+'</b>?';
-
+                $isi = 'Anda akan menyetujui Permintaan Material dengan No. Form <b>'+respond['permat'][0]['id_permintaan_material']+'</b>?';
                 $("#isisetuju").html($isi);
                 $("#idnyaa").val(id);
                 $("#setuju").modal();
             }
         }); 
-    
+    });
+</script>
+
+<script>
+    $('.tolakz').click(function(){
+        var no      = $(this).attr('value');
+        var id      = $("#idd"+no).val();
+
+         $.ajax({
+            type:"post",    
+            url:"<?php echo base_url() ?>PermintaanMaterial/ajax",
+            dataType: "JSON",
+            data: {id:id},
+
+            success: function(respond){
+                $isi = 
+                    //'<input type="hidden" name="id_permintaan_material" class="form-control" value="'+respond['permat'][0]['id_permintaan_material']+'" readonly>'+
+                    //'<input type="hidden" name="status" class="form-control" value="1" readonly>'+
+                    'Anda akan menolak Permintaan Material dengan No. Form <b>'+respond['permat'][0]['id_permintaan_material']+'</b>?';
+
+                $("#isitolak").html($isi);
+                $("#idnya").val(id);
+                $("#tolak").modal();
+            }
+        }); 
+    });
+</script>
+
+<script>
+    $('.batalz').click(function(){
+        var no      = $(this).attr('value');
+        var id      = $("#idd"+no).val();
+
+         $.ajax({
+            type:"post",    
+            url:"<?php echo base_url() ?>PermintaanMaterial/ajax",
+            dataType: "JSON",
+            data: {id:id},
+
+            success: function(respond){
+                $isi = 'Anda akan membatalkan Permintaan Material dengan No. Form <b>'+respond['permat'][0]['id_permintaan_material']+'</b>?';
+                $("#isibatal").html($isi);
+                $("#idbatal").val(id);
+                $("#batal").modal();
+            }
+        }); 
     });
 </script>
 

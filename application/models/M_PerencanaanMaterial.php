@@ -26,6 +26,19 @@ class M_PerencanaanMaterial extends CI_Model {
         WHERE a.status_delete=0 AND a.id_permintaan_material='$id'");
     }
 
+    function insertPermintaanMaterial($data){
+        $this->db->insert('permintaan_material', $data);
+    }
+
+    function editPermintaanMaterial($data,$where){
+        $this->db->update('permintaan_material', $data, $where);
+    }
+
+    function hapusPermintaanMaterial($data,$where){
+        $this->db->update('permintaan_material', $data, $where);
+    }
+
+
     /* function get_one_permat($id){
         return $this->db->query(" SELECT * FROM permintaan_material,detail_purchase_order_customer,purchase_order_customer,line
         WHERE id_permintaan_material='$id' 
