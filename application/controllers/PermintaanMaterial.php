@@ -38,12 +38,12 @@ class PermintaanMaterial extends CI_Controller {
     }
 
     public function detail($id){
-        $idnya = array(
+        /* $idnya = array(
             "id_permintaan_material" => $id
-        );
+        ); */
         $data['id_permintaan'] = $id;
-        $data['permintaan_material'] = $this->M_PerencanaanMaterial->selectSatuPermintaanMaterial($idnya)->result_array();
-        $data['detail'] = $this->M_PerencanaanMaterial->selectSatuDetailPermintaanMaterial($idnya)->result_array();
+        $data['permintaan_material'] = $this->M_PerencanaanMaterial->selectSatuPermintaanMaterial($id)->result_array();
+        $data['detail'] = $this->M_PerencanaanMaterial->selectSatuDetailPermintaanMaterial($id)->result_array();
 
 		$this->load->view('v_detail_permintaan_material', $data);
     }
@@ -108,7 +108,7 @@ class PermintaanMaterial extends CI_Controller {
     }
 
     public function prosesPerencanaan(){
-        $this->load->view('v_proses_perencanaan');
+        $this->load->view('v_detail_perencanaan');
     }
     
 

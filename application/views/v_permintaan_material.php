@@ -195,6 +195,8 @@
                             title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail/' . $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
                         <!-- <a class="col-lg-3 btn btn-info fa fa-file-text" title="Perencanaan" 
                             href="<?php echo base_url() . 'PerencanaanMaterial/proses_perencanaan/' . $permintaan_material[$x]['id_permintaan_material']?>"></a> -->
+                        <a class="col-lg-3 btn btn-info fa fa-file-text" title="Pengambilan Material" 
+                            href="<?php echo base_url() . 'PermintaanMaterial/prosesPerencanaan'?>"></a>
                         <button type="button" class="beliz col-lg-3 btn btn-warning fa fa-shopping-cart" 
                             value="<?php echo $x ?>" title="Beli"></button>
                         <button type="button" class="selesaiz col-lg-3 btn btn-success fa fa-check" 
@@ -224,6 +226,35 @@
                             title="Delete" href="#modalhapus"></a>
                     </td>
                 </tr> -->
+
+                <!-- ****************************** MODAL SELESAI ***************************** -->
+                <!-- ************************************************************************** -->
+                <div class="modal" id="selesai" role="dialog">
+                        <div class="modal-dialog modal-xl" style="width:50%">
+                            <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PermintaanMaterial/setuju" method="post">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title"><b>Menyelesaikan Permintaan Material</b></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="hidden" name="idnyaa" id="idselesai" class="form-control" value="" readonly>
+                                        <input type="hidden" name="status" class="form-control" value="2" readonly>
+                                        <div id="isiselesai"></div>
+                                    </div>
+                                    <footer class="panel-footer">
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <input type="submit" class="btn btn-primary" value="Ya">
+                                                <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                            </div>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                <!-- **************************** END MODAL SELESAI *************************** -->
+                <!-- ************************************************************************** -->
 
                 <!-- ****************************** MODAL BATAL ***************************** -->
                 <!-- ************************************************************************ -->
@@ -673,7 +704,7 @@
                 <?php $no=1;
                     for($x=0 ; $x<count($permintaan_material) ; $x++){
                         if ($status == 2 || $status == 4){ 
-                            if($permintaan_material[$x]['status_permintaan'] == 0){
+                            if($permintaan_material[$x]['status_permintaan'] == 2){
                 ?>
                 <tr>
                     <td> <?php echo $no ?>
@@ -995,6 +1026,27 @@
                 $("#isibatal").html($isi);
                 $("#idbatal").val(id);
                 $("#batal").modal();
+            }
+        }); 
+    });
+</script>
+
+<script>
+    $('.selesaiz').click(function(){
+        var no      = $(this).attr('value');
+        var id      = $("#idd"+no).val();
+
+         $.ajax({
+            type:"post",    
+            url:"<?php echo base_url() ?>PermintaanMaterial/ajax",
+            dataType: "JSON",
+            data: {id:id},
+
+            success: function(respond){
+                $isi = 'Anda akan menyelesaikan Permintaan Material dengan No. Form <b>'+respond['permat'][0]['id_permintaan_material']+'</b>?';
+                $("#isiselesai").html($isi);
+                $("#idselesai").val(id);
+                $("#selesai").modal();
             }
         }); 
     });

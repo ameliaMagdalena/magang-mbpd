@@ -107,35 +107,48 @@
         <div class="form-group mt-lg">
             <div class="col-sm-12">
                 <h3 style="text-align: center">Material</h3>
-                <table class="table table-bordered table-striped mb-none">
+                <table class="table table-bordered table-striped mb-none" id="datatable-default">
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>Kode Material</th>
-                            <th>Nama Material</th>
-                            <th>Cons</th>
-                            <th>Needs</th>
-                            <th>Satuan</th>
-                            <th>Ketersediaan</th>
+                            <th class="col-lg-1">No.</th>
+                            <th class="col-lg-2">Kode Material</th>
+                            <th class="col-lg-3">Nama Material</th>
+                            <th class="col-lg-1">Cons</th>
+                            <th class="col-lg-1">Needs</th>
+                            <th class="col-lg-1">Satuan</th>
+                            
+                            <?php if ($permintaan_material[0]['status_permintaan'] == '0' || $permintaan_material[0]['status_permintaan'] == '1'){?>
+                                <th class="col-lg-3">Ketersediaan</th>
+                            <?php } ?>
                         </tr>
                     </thead>
                     <tbody class="roww">
                         <?php for($y=0; $y<count($detail); $y++){ ?>
-                            <script> cekKetersediaan(<?= $y ?>); </script>
+                            <!-- <script> cekKetersediaan(<?= $y ?>); </script> -->
                             <?php if($permintaan_material[0]['id_permintaan_material'] == $detail[$y]['id_permintaan_material']){?>
                         <tr>
                             <td> <?php echo $y+1 ?> </td>
-                            <td id="kodemat<?php echo $y ?>"> <?php echo $detail[$y]['id_sub_jenis_material'] ?> </td>
+                            <td> <?php echo $detail[$y]['id_sub_jenis_material'] ?>
+                                <input type="hidden" id="kodemat<?php echo $y ?>" value="<?= $detail[$y]['id_sub_jenis_material'] ?>">
+                            </td>
                             <td> <?php echo $detail[$y]['nama_sub_jenis_material'] ?> </td>
                             <td> <?php echo $detail[$y]['jumlah_konsumsi'] ?> </td>
-                            <td id="needs<?php echo $y ?>"> <?php 
+                            <td> <?php 
                                 $produk = $detail[$y]['jumlah_minta'];
                                 $cons = $detail[$y]['jumlah_konsumsi'];
                                 $needs = $produk*$cons;
                                 echo $needs;
-                            ?></td>
+                            ?>
+                                <input type="hidden" id="needs<?php echo $y ?>" value="<?= $needs?>">
+                            </td>
                             <td> <?php echo $detail[$y]['satuan_keluar'] ?></td>
-                            <td id="ketersediaan<?php echo $y ?>"></td>
+                            
+                            <?php if ($permintaan_material[0]['status_permintaan'] == '0' || $permintaan_material[0]['status_permintaan'] == '1'){?>
+                            <td id="ketersediaan<?php echo $y ?>">
+                                <button type="button" class="col-lg-7 btn btn-default"  id="sedia" onclick=cekKetersediaan(<?= $y ?>)>Lihat</button>
+                            </td>
+                            <?php } ?>
+                            
                         </tr>
                         <?php }} ?>
                     </tbody>
@@ -214,13 +227,14 @@ function cekKetersediaan(counter){
         dataType:"JSON",
         data:{id_sub_jenis_material:id_sub_jenis_material},
         success:function(respond){
-            var html = 'aaa';
-            /*if(data.length<needs){
-                html = 'Tidak Tersedia';
+            var html = '';
+            if(respond.length<needs){
+                html = 'Tidak Tersedia<br>';
+                html += '<small>Jumlah di gudang: ' + respond.length + '</small>';
             }
             else{
                 html = 'Tersedia';
-            }*/
+            }
             $('#ketersediaan'+counter).html(html);
         }
     });
