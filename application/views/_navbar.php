@@ -1295,7 +1295,7 @@
 									<span>Inventory Line</span>
 								</a>
 							</li>
-							<!-- po -->
+							<!-- po 
 							<li class="nav-parent">
 								<a title="Purchase Order">
 									<i class="fa  fa-list" aria-hidden="true"></i>
@@ -1309,21 +1309,22 @@
 									</li>
 									<li>
 										<a href="">
-											Belum Memiliki Perencanaan Produksi
+											Belum Diproses
 										</a>
 									</li>
 									<li>
 										<a href="">
-											Dalam Proses Produksi
+											Sedang Diproses
 										</a>
 									</li>
 									<li>
 										<a href="">
-											Selesai Produksi
+											Selesai
 										</a>
 									</li>
 								</ul>
 							</li>
+							-->
 							<!-- perencanaan produksi -->
 							<li class="nav-parent">
 								<a title="Perencanaan Produksi">
@@ -1350,10 +1351,38 @@
 									<span>Perencanaan Produksi Line</span>
 								</a>
 							</li>
+							<!-- produksi tertunda -->
+							<li class="nav-parent">
+								<a title="Produksi Tertunda">
+									<i class="fa fa-calendar-o" aria-hidden="true"></i>
+									<span>Produksi Tertunda</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?= base_url()?>produksiTertunda/semua">
+											Semua
+										</a>
+									<li>
+										<a href="<?= base_url()?>produksiTertunda/belum_diproses">
+											Belum Diproses
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>produksiTertunda/sedang_diproses">
+											Sedang Diproses
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>produksiTertunda/selesai">
+											Selesai
+										</a>
+									</li>
+								</ul>
+							</li>
 							<!-- permintaan material -->
 							<li class="nav-parent">
 								<a title="Permintaan Material">
-									<i class="fa fa-calendar" aria-hidden="true"></i>
+									<i class="fa fa-bars" aria-hidden="true"></i>
 									<span>Permintaan Material</span>
 								</a>
 								<ul class="nav nav-children">
