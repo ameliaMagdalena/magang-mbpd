@@ -73,4 +73,12 @@ class M_PerencanaanMaterial extends CI_Model {
         WHERE a.status_delete = '0' AND a.status_keluar='0'
         AND a.id_sub_jenis_material='$id'");
     }
+
+    function selectPengambilanMaterial($id){
+        return $this->db->query("SELECT * FROM pengambilan_material a
+        JOIN detail_permintaan_material b ON a.id_detail_permintaan_material = b.id_detail_permintaan_material
+        JOIN karyawan c ON a.id_karyawan = c.id_karyawan
+        JOIN pengeluaran_material d ON a.id_pengeluaran_material = d.id_pengeluaran_material
+        WHERE a.status_delete = '0' AND b.id_permintaan_material='$id'");
+    }
 }
