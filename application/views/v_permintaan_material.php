@@ -195,8 +195,8 @@
                             title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail/' . $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
                         <!-- <a class="col-lg-3 btn btn-info fa fa-file-text" title="Perencanaan" 
                             href="<?php echo base_url() . 'PerencanaanMaterial/proses_perencanaan/' . $permintaan_material[$x]['id_permintaan_material']?>"></a> -->
-                        <a class="col-lg-3 btn btn-info fa fa-file-text" title="Pengambilan Material" 
-                            href="<?php echo base_url() . 'PermintaanMaterial/prosesPerencanaan'?>"></a>
+                        <a class="col-lg-3 btn btn-info fa fa-file-text" title="Perencanaan"
+                            href="<?php echo base_url() . 'PermintaanMaterial/proses_perencanaan/' . $permintaan_material[$x]['id_permintaan_material']?>"></a>
                         <button type="button" class="beliz col-lg-3 btn btn-warning fa fa-shopping-cart" 
                             value="<?php echo $x ?>" title="Beli"></button>
                         <button type="button" class="selesaiz col-lg-3 btn btn-success fa fa-check" 
