@@ -1602,6 +1602,40 @@
 									</li>
 								</ul>
 							</li>
+							<!-- permintaan material tambahan -->
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-plus-square-o" aria-hidden="true"></i>
+									<span>Permintaan Material Tambahan</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?= base_url()?>permintaanTambahan">
+											+ Permintaan Material Tambahan
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>permintaanTambahan/semua">
+											Semua 
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_disetujui_pengambilan_material">
+											Belum Diproses
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_diambil_pengambilan_material">
+											Diterima
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_diambil_pengambilan_material">
+											Ditolak
+										</a>
+									</li>
+								</ul>
+							</li>
 							<!-- surat perintah lembur -->
 							<li class="nav-parent">
 								<a title="Surat Perintah Lembur">

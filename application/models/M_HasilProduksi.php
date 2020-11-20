@@ -91,7 +91,8 @@ class M_HasilProduksi extends CI_Model {
 
     function get_detail_produksi_line_group_by($id_produksi){
         return $this->db->query("SELECT produksi.tanggal,produksi_line.id_line,detail_purchase_order_customer.id_detail_produk,
-        detail_produksi_line.id_detail_purchase_order,SUM(detail_produksi_line.jumlah_item_aktual) as jumlah_item_aktual,detail_produk.id_produk,
+        detail_produksi_line.id_detail_purchase_order, SUM(detail_produksi_line.jumlah_item_perencanaan) AS jumlah_item_perencanaan,
+        SUM(detail_produksi_line.jumlah_item_aktual) as jumlah_item_aktual,detail_produk.id_produk,
         line.nama_line
         FROM produksi,produksi_line,detail_produksi_line,detail_produk,detail_purchase_order_customer,line
         WHERE produksi.id_produksi='$id_produksi' AND detail_produksi_line.status_delete='0'

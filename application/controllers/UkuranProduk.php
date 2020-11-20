@@ -19,8 +19,7 @@ class UkuranProduk extends CI_Controller {
 	public function index(){
         $data['ukuran_produk']      = $this->M_UkuranProduk->select_all_aktif()->result();
         $data['jenis_produk']       = $this->M_JenisProduk->select_all_aktif()->result();
-       // $data['tetapan_logs'] = $this->M_Tetapan->select_log()->result();
-
+        
 		$this->load->view('v_ukuran_produk',$data);
     }
 

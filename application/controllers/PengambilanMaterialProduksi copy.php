@@ -73,9 +73,6 @@ class PengambilanMaterialProduksi extends CI_Controller {
       $data['det_inline']   = $this->M_PengambilanMaterialProduksi->get_det_inline()->result_array();
       $data['jm_det_inline']= $this->M_PengambilanMaterialProduksi->get_det_inline()->num_rows();
 
-      $data['pertam']    = $this->M_PengambilanMaterialProduksi->get_pertam($id)->result_array();
-      $data['jm_pertam'] = $this->M_PengambilanMaterialProduksi->get_pertam($id)->num_rows();
-
 
       echo json_encode($data);
     }
@@ -85,9 +82,8 @@ class PengambilanMaterialProduksi extends CI_Controller {
       $tanggal_produksi   = $this->input->post('tanggal_produksi_add');
       $status_pengambilan = $this->input->post("status_pengambilan");
 
-      $user          = $_SESSION['id_user'];
-      $now           = date('Y-m-d H:i:s');
-      $tanggal_ambil = date('Y-m-d');
+      $user = $_SESSION['id_user'];
+      $now  = date('Y-m-d H:i:s');
 
       $karyawan    = $this->M_PengambilanMaterialProduksi->get_karyawan($user)->result_array();
       $id_karyawan = $karyawan[0]['id_karyawan'];
@@ -97,11 +93,58 @@ class PengambilanMaterialProduksi extends CI_Controller {
         $id_sub_jenmat    = $this->input->post("id_sub_jenmat".$i);
         $wip              = $this->input->post("wip".$i);
         $akan_diambil     = $this->input->post("ambil".$i);
-        $keterangan       = $this->input->post("keterangan".$i);
         
           if($akan_diambil > 0){
             $tahun_sekarangnya = substr(date('Y',strtotime($now)),2,2);
             $bulan_sekarangnya = date('m',strtotime($now));
+
+            $idcode_lumat = "MBP/KELUAR/".$bulan_sekarangnya."/".$tahun_sekarangnya."/";
+
+            $id_lumat_last     = $this->M_PengambilanMaterialProduksi->get_last_lumat_id($idcode_lumat)->result_array();
+            $id_lumat_last_cek = $this->M_PengambilanMaterialProduksi->get_last_lumat_id($idcode_lumat)->num_rows();
+
+            if($id_lumat_last_cek == 1){
+                $id_terakhirnya    = $id_lumat_last[0]['id_pengeluaran_material'];
+
+                $tahun_sebelumnya  = substr($id_terakhirnya,14,2);
+                $bulan_sebelumnya  = substr($id_terakhirnya,11,2);
+                        echo $tahun_sebelumya." || ".$bulan_sebelumnya;
+                //kalau tahun sama
+                if($tahun_sebelumnya == $tahun_sekarangnya){
+                    //kalau tahun & bulannya sama berarti count+1
+                    if($bulan_sebelumnya == $bulan_sekarangnya){
+                        $countnya = intval(substr($id_terakhirnya,17,3)) + 1;
+                        $pjgnya   = strlen($countnya);
+            
+                        if($pjgnya == 1){
+                            $countnya_baru = "00".$countnya;
+                        }
+                        else if($pjgnya == 2){
+                            $countnya_baru = "0".$countnya;
+                        }
+                        else{
+                            $countnya_baru = $countnya;
+                        }
+                        
+                        //id yang baru
+                        $id_lumat_baru = "MBP/KELUAR/".$bulan_sebelumnya."/".$tahun_sebelumnya."/".$countnya_baru;
+                    }
+                    //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                    else{
+                        //id yang baru
+                        $id_lumat_baru = "MBP/KELUAR/".$bulan_sebelumnya."/".$tahun_sebelumnya."/001";
+                    }
+                }
+                //kalau tahun tidak sama
+                else{
+                    //id yang baru
+                     $id_lumat_baru = "MBP/KELUAR/".$bulan_sebelumnya."/".$tahun_sebelumnya."/001";
+                }
+            }
+            else{
+                //id yang baru
+                 $id_lumat_baru = "MBP/KELUAR/".$bulan_sekarangnya."/".$tahun_sekarangnya."/001";
+            }
 
             $idcode_ammat = "MBP/AMBIL/".$bulan_sekarangnya."/".$tahun_sekarangnya."/";
 
@@ -160,14 +203,26 @@ class PengambilanMaterialProduksi extends CI_Controller {
               $total_ambil_kotor       = $akan_diambil / $ukuran_satuan_keluar;
               $total_ambil_kotor_bulat = ceil($total_ambil_kotor);
 
+              $data_pengeluaran_material = array(
+                'id_pengeluaran_material' => $id_lumat_baru,
+                'id_sub_jenis_material'   => $id_sub_jenmat,
+                'tanggal_keluar'          => $now,
+                'jumlah_keluar'           => $total_ambil_kotor_bulat,
+                'keterangan_keluar'       => 0,
+                'user_add'                => $user,
+                'waktu_add'               => $now,
+                'status_delete'           => 0
+              );
+
+              $this->M_PengambilanMaterialProduksi->insert('pengeluaran_material',$data_pengeluaran_material);
+
               $data_pengambilan_material = array(
                 'id_pengambilan_material'       => $id_ammat_baru,
                 'id_karyawan'                   => $id_karyawan,
                 'id_detail_permintaan_material' => $id_detail_permat,
-                'tanggal_ambil'                 => $tanggal_ambil,
+                'id_pengeluaran_material'       => $id_lumat_baru,
                 'stok_wip'                      => 0,
                 'jumlah_ambil'                  => $akan_diambil,
-                'keterangan'                    => $keterangan,
                 'status_pengambilan'            => $status_pengambilan,
                 'status_keluar'                 => 0,
                 'user_add'                      => $user,
@@ -283,14 +338,31 @@ class PengambilanMaterialProduksi extends CI_Controller {
               //tutup inventory line
 
               if($akan_diambil > $wip){
+                $minta_gudang = $akan_diambil - $wip;
+
+                $total_ambil_kotor       = $minta_gudang / $ukuran_satuan_keluar;
+                $total_ambil_kotor_bulat = ceil($total_ambil_kotor);
+
+                $data_pengeluaran_material = array(
+                  'id_pengeluaran_material' => $id_lumat_baru,
+                  'id_sub_jenis_material'   => $id_sub_jenmat,
+                  'tanggal_keluar'          => $now,
+                  'jumlah_keluar'           => $total_ambil_kotor_bulat,
+                  'keterangan_keluar'       => 0,
+                  'user_add'                => $user,
+                  'waktu_add'               => $now,
+                  'status_delete'           => 0
+                );
+  
+                $this->M_PengambilanMaterialProduksi->insert('pengeluaran_material',$data_pengeluaran_material);
+  
                 $data_pengambilan_material = array(
                   'id_pengambilan_material'       => $id_ammat_baru,
                   'id_karyawan'                   => $id_karyawan,
                   'id_detail_permintaan_material' => $id_detail_permat,
-                  'tanggal_ambil'                 => $tanggal_ambil,
+                  'id_pengeluaran_material'       => $id_lumat_baru,
                   'stok_wip'                      => $wip,
-                  'jumlah_ambil'                  => $akan_diambil,
-                  'keterangan'                    => $keterangan,
+                  'jumlah_ambil'                  => $minta_gudang,
                   'status_pengambilan'            => $status_pengambilan,
                   'status_keluar'                 => 0,
                   'user_add'                      => $user,
@@ -304,10 +376,8 @@ class PengambilanMaterialProduksi extends CI_Controller {
                   'id_pengambilan_material'       => $id_ammat_baru,
                   'id_karyawan'                   => $id_karyawan,
                   'id_detail_permintaan_material' => $id_detail_permat,
-                  'tanggal_ambil'                 => $tanggal_ambil,
                   'stok_wip'                      => $akan_diambil,
                   'jumlah_ambil'                  => 0,
-                  'keterangan'                    => $keterangan,
                   'status_pengambilan'            => $status_pengambilan,
                   'status_keluar'                 => 0,
                   'user_add'                      => $user,
@@ -409,107 +479,6 @@ class PengambilanMaterialProduksi extends CI_Controller {
             }
           }
       }
-      //redirect('pengambilanMaterialProduksi/tambah');
-    }
-
-    public function buat_permintaan_tambahan(){
-      $jumlah = $this->input->post('jumlah_pertam_tambahan');
-      $now = date('Y-m-d H:i:s');
-
-      for($i=0;$i<$jumlah;$i++){
-        $id_pertam          = $this->input->post('id_pertam'.$i);
-        $id_det_permat      = $this->input->post('id_det_permat'.$i);
-        $jumlah_ambil       = $this->input->post('jumlah_tambah'.$i);
-        $keterangan         = $this->input->post('keterangan'.$i);
-        $status_pengambilan = $this->input->post('stat_km'.$i);
-
-        $karyawan    = $this->M_PengambilanMaterialProduksi->get_karyawan($_SESSION['id_user'])->result_array();
-        $id_karyawan = $karyawan[0]['id_karyawan'];
-
-
-        $tahun_sekarangnya = substr(date('Y',strtotime($now)),2,2);
-        $bulan_sekarangnya = date('m',strtotime($now));
-
-        $idcode_ammat = "MBP/AMBIL/".$bulan_sekarangnya."/".$tahun_sekarangnya."/";
-
-        $id_ammat_last     = $this->M_PengambilanMaterialProduksi->get_last_ammat_id($idcode_ammat)->result_array();
-        $id_ammat_last_cek = $this->M_PengambilanMaterialProduksi->get_last_ammat_id($idcode_ammat)->num_rows();
-        
-        if($id_ammat_last_cek == 1){
-            $id_terakhirnya    = $id_ammat_last[0]['id_pengambilan_material'];
-
-            $tahun_sebelumnya  = substr($id_terakhirnya,13,2);
-            $bulan_sebelumnya  = substr($id_terakhirnya,10,2);
-                    
-            //kalau tahun sama
-            if($tahun_sebelumnya == $tahun_sekarangnya){
-                //kalau tahun & bulannya sama berarti count+1
-                if($bulan_sebelumnya == $bulan_sekarangnya){
-                    $countnya = intval(substr($id_terakhirnya,16,3)) + 1;
-                    $pjgnya   = strlen($countnya);
-        
-                    if($pjgnya == 1){
-                        $countnya_baru = "00".$countnya;
-                    }
-                    else if($pjgnya == 2){
-                        $countnya_baru = "0".$countnya;
-                    }
-                    else{
-                        $countnya_baru = $countnya;
-                    }
-                    
-                    //id yang baru
-                    $id_ammat_baru = "MBP/AMBIL/".$bulan_sebelumnya."/".$tahun_sebelumnya."/".$countnya_baru;
-                }
-                //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
-                else{
-                    //id yang baru
-                    $id_ammat_baru = "MBP/AMBIL/".$bulan_sebelumnya."/".$tahun_sebelumnya."/001";
-                }
-            }
-            //kalau tahun tidak sama
-            else{
-                //id yang baru
-                $id_ammat_baru = "MBP/AMBIL/".$bulan_sebelumnya."/".$tahun_sebelumnya."/001";
-            }
-        }
-        else{
-            //id yang baru
-            $id_ammat_baru = "MBP/AMBIL/".$bulan_sekarangnya."/".$tahun_sekarangnya."/001";
-        } 
-
-          $data = array(
-            'id_pengambilan_material'       => $id_ammat_baru,
-            'id_karyawan'                   => $id_karyawan,
-            'id_detail_permintaan_material' => $id_det_permat,
-            'tanggal_ambil'                 => date('Y-m-d'),
-            'stok_wip'                      => 0,
-            'jumlah_ambil'                  => $jumlah_ambil,
-            'keterangan'                    => $keterangan,
-            'status_pengambilan'            => $status_pengambilan,
-            'status_keluar'                 => 0,
-            'status_permintaan'             => 1,
-            'user_add'                      => $_SESSION['id_user'],
-            'waktu_add'                     => $now
-          );
-
-          $this->M_PengambilanMaterialProduksi->insert('pengambilan_material',$data);
-        
-
-        //update permintaan tambahan
-          $data_pertam = array(
-            'status'    => 3,
-            'user_edit' => $_SESSION['id_user'],
-            'waktu_edit'=> $now
-          );
-
-          $where_pertam = array(
-            'id_permintaan_tambahan' => $id_pertam
-          );
-
-          $this->M_PengambilanMaterialProduksi->edit('permintaan_tambahan',$data_pertam,$where_pertam); 
-      }
-
       redirect('pengambilanMaterialProduksi/tambah');
     }
 
@@ -544,10 +513,12 @@ class PengambilanMaterialProduksi extends CI_Controller {
       $this->load->view('v_pengambilan_material_produksi_semua',$data);
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////
+
     public function coba_tambah(){
       $this->load->view('v_pengambilan_material_produksi_tambah1');
     }
+
+
 
     public function belum_disetujui_pengambilan_material(){
       $this->load->view('v_pengambilan_material_produksi_belum_disetujui');
