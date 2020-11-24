@@ -155,27 +155,192 @@
                             <?php for($z=0; $z<count($pengambilan); $z++){ 
                                     if ($pengambilan[$z]['id_detail_permintaan_material'] == $detail[$x]['id_detail_permintaan_material']){ ?>
                             <tr>
-                                <td><?php echo $pengambilan[$z]['tanggal_ambil'] ?></td>
-                                <td>3</td>
-                                <td>m3</td>
-                                <td>Sudah Diambil</td>
+                                <td><?php echo $pengambilan[$z]['tanggal_ambil'] ?>
+                                    <input type="hidden" value="<?php echo $pengambilan[$z]['id_pengambilan_material'] ?>" >
+                                </td>
+                                <td><?php $jlhsatu = 0;
+                                for($a=0; $a<count($pengambilan); $a++){
+                                    if ($pengambilan[$a]['id_sub_jenis_material'] == $detail[$x]['id_sub_jenis_material']){
+                                        $jlhsatu = $jlhsatu + $pengambilan[$a]['jumlah_keluar'];
+                                    }
+                                }  ?></td>
+                                <td><?php echo $pengambilan[$z]['satuan_ukuran'] ?></td>
+                                <td><?php
+                                    if ($pengambilan[$z]['status_keluar'] == 0){
+                                        echo "Belum Diambil";
+                                    } else{
+                                        echo "Sudah Diambil";
+                                    } ?>
+                                </td>
                                 <td>
-                                    <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                        title="Detail" href="#modaldetail"></a>
-                                    <a class="modal-with-form col-lg-3 btn btn-success fa fa-check"
-                                        title="Diambil" href="#modaldiambil"></a>
-                                    <a class="modal-with-form col-lg-3 btn btn-danger fa fa-times"
-                                        title="Batal" href="#modalbatal"></a>
+                                    <!-- <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
+                                        title="Detail" href="#modaldetail"></a> -->
+                                    <a class="ambilz modal-with-form col-lg-3 btn btn-success fa fa-check"
+                                        title="Diambil" href="#modaldiambil<?php echo $pengambilan[$z]['id_pengambilan_material'] ?>"></a>
+                                    <a class="batalz modal-with-form col-lg-3 btn btn-danger fa fa-times"
+                                        title="Batal" href="#modalbatal<?php echo $pengambilan[$z]['id_pengambilan_material'] ?>"></a>
                                 </td>
                             </tr>
+                            
+                            <!-- ******************************** MODAL AMBIL ***************************** -->
+                            <!-- ************************************************************************** -->
+                            <div id='modalambil' class="modal-block modal-block-md mfp-hide">
+                                <section class="panel">
+                                    <header class="panel-heading">
+                                        <h2 class="panel-title">Pengambilan Material</h2>
+                                    </header>
+
+                                    <div class="panel-body">
+                                        <input type="hidden" name="id_material" class="form-control" value="" readonly>
+                                        
+                                        <div class="form-group mt-lg">
+                                            <label class="col-sm-4 control-label">Material</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="material" class="form-control"
+                                                value="Reb 55" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group mt-lg">
+                                            <label class="col-sm-4 control-label">Line</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="material" class="form-control"
+                                                value="Reb 55" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group mt-lg">
+                                            <label class="col-sm-4 control-label">Tanggal Pengambilan</label>
+                                            <div class="col-sm-8">
+                                                <input type="date" name="jabatan" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group mt-lg">
+                                            <label class="col-sm-4 control-label">Jumlah</label>
+                                            <div class="col-sm-8">
+                                                <input type="number" name="jabatan" class="form-control" placeholder="Belum diambil : 15.24 m3">
+                                            </div>
+                                        </div>
+                                        <div class="form-group mt-lg">
+                                            <label class="col-sm-4 control-label">Satuan</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="jabatan" class="form-control" value="m3" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <footer class="panel-footer">
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <input type="submit" id="tambah" class="btn btn-primary" value="Simpan" onclick="reload()">
+                                                <button type="button" class="btn btn-default modal-dismiss" onclick="reload()">Batal</button>
+                                            </div>
+                                        </div>
+                                    </footer>
+                                </section>
+                            </div>
+                            <!-- ****************************** END MODAL AMBIL *************************** -->
+                            <!-- ************************************************************************** -->
+
                             <?php } } } ?>
                         </tbody>
                     </table>
                 </div>
+
+                <!-- ******************************** MODAL BELI ****************************** -->
+                <!-- ************************************************************************** -->
+                <div id='modalbeli<?php echo $detail[$x]['id_detail_permintaan_material'] ?>' class="modal-block modal-block-md mfp-hide">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            <h2 class="panel-title">Request Pembelian Material</h2>
+                        </header>
+
+                        <div class="panel-body">
+                            <input type="hidden" name="id_material" class="form-control" value="" readonly>
+                            
+                            <div class="form-group mt-lg">
+                                <label class="col-sm-3 control-label">Material</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="material" class="form-control"
+                                    value="Reb 55" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group mt-lg">
+                                <label class="col-sm-3 control-label">Jumlah Material</label>
+                                <div class="col-sm-9">
+                                    <input type="number" name="jabatan" class="form-control"
+                                    placeholder="Stok Max: 30 m3">
+                                    Stok Di Gudang : 15 m3
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="panel-footer">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <input type="submit" id="tambah" class="btn btn-primary" value="Request" onclick="reload()">
+                                    <button type="button" class="btn btn-default modal-dismiss" onclick="reload()">Batal</button>
+                                </div>
+                            </div>
+                        </footer>
+                    </section>
+                </div>
+                <!-- ****************************** END MODAL BELI **************************** -->
+                <!-- ************************************************************************** -->
+
+                <!-- ****************************** MODAL JADWAL ****************************** -->
+                <!-- ************************************************************************** -->
+                <div id='modaljadwal<?php echo $detail[$x]['id_detail_permintaan_material'] ?>' class="modal-block modal-block-md mfp-hide">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            <h2 class="panel-title">Tambah Jadwal Pengambilan Material</h2>
+                        </header>
+                        
+                        <div class="panel-body">
+                            <input type="hidden" name="id_detail_permintaan_material" class="form-control" value="<?php echo $detail[$x]['id_detail_permintaan_material'] ?>" readonly>
+                            <input type="hidden" name="id_pengambilan_material" class="form-control" value="AMBIL-" readonly>
+                            
+                            <div class="form-group mt-lg">
+                                <label class="col-sm-3 control-label">Material</label>
+                                <div class="col-sm-9">
+                                    <input type="number" name="material" class="form-control" value="" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group mt-lg">
+                                <label class="col-sm-3 control-label">Line</label>
+                                <div class="col-sm-9">
+                                    <input type="number" name="line" class="form-control" value="" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group mt-lg">
+                                <label class="col-sm-3 control-label">Tanggal</label>
+                                <div class="col-sm-9">
+                                    <input type="date" name="tgl_ambil" class="form-control"
+                                    value="Reb 55" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group mt-lg">
+                                <label class="col-sm-3 control-label">Jumlah Material</label>
+                                <div class="col-sm-9">
+                                    <input type="number" name="jumlah" class="form-control"
+                                    placeholder="Stok Max: 30 m3">
+                                    Stok Di Gudang : 15 m3
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="panel-footer">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <input type="submit" id="tambah" class="btn btn-primary" value="Request" onclick="reload()">
+                                    <button type="button" class="btn btn-default modal-dismiss" onclick="reload()">Batal</button>
+                                </div>
+                            </div>
+                        </footer>
+                    </section>
+                </div>
+                <!-- **************************** END MODAL JADWAL **************************** -->
+                <!-- ************************************************************************** -->
+
                 <div class="row">
                     <div class="text-center">
                         <button type="button" class="modal-with-form btn btn-primary" href="#modalbeli">Request Pembelian</button>
-                        <button type="button" class="modal-with-form btn btn-primary" href="#modalambil">Tambah Jadwal Pengambilan</button>
+                        <button type="button" class="modal-with-form btn btn-primary" href="#modaljadwal">Tambah Jadwal Pengambilan</button>
                     </div>
                 </div>
             </div>
@@ -183,98 +348,6 @@
         </section>
         <?php } ?>
 <!-- *************************************** END DAFTAR MATERIAL ************************************** -->
-
-
-        <!-- ******************************** MODAL BELI ****************************** -->
-        <!-- ************************************************************************** -->
-        <div id='modalbeli' class="modal-block modal-block-md mfp-hide">
-            <section class="panel">
-                <header class="panel-heading">
-                    <h2 class="panel-title">Request Pembelian Material</h2>
-                </header>
-
-                <div class="panel-body">
-                    <input type="hidden" name="id_material" class="form-control" value="" readonly>
-                    
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-3 control-label">Material</label>
-                        <div class="col-sm-9">
-                            <input type="text" name="material" class="form-control"
-                            value="Reb 55" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-3 control-label">Jumlah Material</label>
-                        <div class="col-sm-9">
-                            <input type="number" name="jabatan" class="form-control"
-                            placeholder="Stok Max: 30 m3">
-                            Stok Di Gudang : 15 m3
-                        </div>
-                    </div>
-                </div>
-                <footer class="panel-footer">
-                    <div class="row">
-                        <div class="col-md-12 text-right">
-                            <input type="submit" id="tambah" class="btn btn-primary" value="Request" onclick="reload()">
-                            <button type="button" class="btn btn-default modal-dismiss" onclick="reload()">Batal</button>
-                        </div>
-                    </div>
-                </footer>
-            </section>
-        </div>
-        <!-- ****************************** END MODAL BELI **************************** -->
-        <!-- ************************************************************************** -->
-
-
-        <!-- ******************************** MODAL AMBIL ***************************** -->
-        <!-- ************************************************************************** -->
-        <div id='modalambil' class="modal-block modal-block-md mfp-hide">
-            <section class="panel">
-                <header class="panel-heading">
-                    <h2 class="panel-title">Pengambilan Material</h2>
-                </header>
-
-                <div class="panel-body">
-                    <input type="hidden" name="id_material" class="form-control" value="" readonly>
-                    
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-4 control-label">Material</label>
-                        <div class="col-sm-8">
-                            <input type="text" name="material" class="form-control"
-                            value="Reb 55" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-4 control-label">Tanggal Pengambilan</label>
-                        <div class="col-sm-8">
-                            <input type="date" name="jabatan" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-4 control-label">Jumlah</label>
-                        <div class="col-sm-8">
-                            <input type="number" name="jabatan" class="form-control" placeholder="Belum diambil : 15.24 m3">
-                        </div>
-                    </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-4 control-label">Satuan</label>
-                        <div class="col-sm-8">
-                            <input type="text" name="jabatan" class="form-control" value="m3" readonly>
-                        </div>
-                    </div>
-                </div>
-                <footer class="panel-footer">
-                    <div class="row">
-                        <div class="col-md-12 text-right">
-                            <input type="submit" id="tambah" class="btn btn-primary" value="Simpan" onclick="reload()">
-                            <button type="button" class="btn btn-default modal-dismiss" onclick="reload()">Batal</button>
-                        </div>
-                    </div>
-                </footer>
-            </section>
-        </div>
-        <!-- ****************************** END MODAL AMBIL *************************** -->
-        <!-- ************************************************************************** -->
 
 
     </div>
@@ -290,6 +363,49 @@
 <?php //include('_rightbar.php');
 ?>
 
+
+<script>
+    $('.ambilz').click(function(){
+        var no      = $(this).attr('value');
+        var id      = $("#idd"+no).val();
+
+         $.ajax({
+            type:"post",    
+            url:"<?php echo base_url() ?>PermintaanMaterial/ajax_ambil",
+            dataType: "JSON",
+            data: {id:id},
+
+            success: function(respond){
+                $isi = 'Status Pengambilan Material <b>'+respond['permat'][0]['id_pengambilan_material']+'</b> akan diubah menjadi <b>Sudah Diambil</b>.';
+                $("#isiambil").html($isi);
+                $("#idambil").val(id);
+                $("#modalambil").modal();
+            }
+        }); 
+    });
+</script>
+
+
+<script>
+    $('.batalz').click(function(){
+        var no      = $(this).attr('value');
+        var id      = $("#idd"+no).val();
+
+         $.ajax({
+            type:"post",    
+            url:"<?php echo base_url() ?>PermintaanMaterial/ajax_ambil",
+            dataType: "JSON",
+            data: {id:id},
+
+            success: function(respond){
+                $isi = 'Anda akan membatalkan Permintaan Material dengan No. Form <b>'+respond['permat'][0]['id_permintaan_material']+'</b>?';
+                $("#isibatal").html($isi);
+                $("#idbatal").val(id);
+                $("#modalbatal").modal();
+            }
+        }); 
+    });
+</script>
 
 <script>
     function reload() {
