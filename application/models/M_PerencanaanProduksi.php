@@ -180,13 +180,23 @@ class M_PerencanaanProduksi extends CI_Model {
     }
 
     function get_dpl_terisi_reschedule($start){
+        return $this->db->query("SELECT * FROM produksi,produksi_line,detail_produksi_line
+        WHERE (produksi.tanggal BETWEEN '$start' AND ('$start' + INTERVAL 6 DAY)) AND 
+        detail_produksi_line.status_perencanaan='1' AND  produksi.id_produksi = produksi_line.id_produksi 
+        AND produksi_line.id_produksi_line = detail_produksi_line.id_produksi_line 
+        AND detail_produksi_line.status_delete='0' AND produksi.status_delete='0' ");
+    }
+
+    /*
+        function get_dpl_terisi_reschedule($start){
         return $this->db->query("SELECT * FROM produksi,produksi_line,detail_produksi_line,detail_produksi_tertunda
         WHERE (produksi.tanggal BETWEEN '$start' AND ('$start' + INTERVAL 6 DAY)) AND 
         detail_produksi_line.status_perencanaan='1' AND  produksi.id_produksi = produksi_line.id_produksi 
         AND produksi_line.id_produksi_line = detail_produksi_line.id_produksi_line 
         AND detail_produksi_line.id_detail_produksi_line = detail_produksi_tertunda.id_detail_produksi_line
         AND detail_produksi_line.status_delete='0' AND produksi.status_delete='0' ");
-    }
+        }
+    */
 
     function get_dpl_terisi_reschedule_group($start){
         return $this->db->query("SELECT produksi.tanggal,produksi_line.id_produksi_line,detail_produksi_line.id_detail_produksi_line,
@@ -335,6 +345,16 @@ class M_PerencanaanProduksi extends CI_Model {
 
     function get_one_detprodline($id_detprodline){
         return $this->db->query("SELECT * FROM detail_produksi_line WHERE id_detail_produksi_line='$id_detprodline' AND status_delete='0' ");
+    }
+
+    function cek_ubmin($id_permat){
+        return $this->db->query("SELECT * FROM perubahan_permintaan 
+        WHERE status_delete='0' AND status='0' AND id_permintaan_material='$id_permat' ");
+    }
+
+    function get_last_ubmin_id($id_code){
+        return $this->db->query("SELECT id_perubahan_permintaan FROM perubahan_permintaan WHERE id_perubahan_permintaan 
+        LIKE '$id_code%' ORDER BY id_perubahan_permintaan DESC LIMIT 1");
     }
 
 }

@@ -74,6 +74,11 @@
                                     </form>
                                 <?php }?>
                                 <?php if($x->start > $now){?>
+                                    <form method="POST" action="<?= base_url()?>perencanaanProduksi/edit_perencanaan_produksi">
+                                        <input type="hidden" name="id" value="<?= $x->id_produksi?>">
+                                        <button type="submit" class="col-lg-3 btn btn-warning fa fa-pencil-square-o"
+                                        title="Edit"></button>
+                                    </form>
                                     <button type="button" class="bdelete_klik col-lg-3 btn btn-danger fa fa-trash-o" title="Delete"
                                     id="bdelete<?php echo $x->id_produksi?>" value="<?= $no ?>"></button>
                                 <?php } ?>  

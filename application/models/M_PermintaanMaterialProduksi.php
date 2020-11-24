@@ -30,4 +30,13 @@ class M_PermintaanMaterialProduksi extends CI_Model {
         AND detail_permintaan_material.status_delete='0'AND detail_permintaan_material.id_konsumsi_material=konsumsi_material.id_konsumsi_material
         AND sub_jenis_material.id_sub_jenis_material=konsumsi_material.id_sub_jenis_material");
     }
+
+    function get_jumlah_ubmin(){
+        return $this->db->query("SELECT COUNT(id_perubahan_permintaan) AS jumlah_perubahan, id_permintaan_material 
+        FROM perubahan_permintaan WHERE status_delete='0' GROUP BY id_permintaan_material ");
+    }
+
+    function get_ubmin($id){
+        return $this->db->query("SELECT * FROM perubahan_permintaan WHERE id_permintaan_material='$id' AND status_delete='0' ");
+    }
 }

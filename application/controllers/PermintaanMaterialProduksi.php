@@ -18,6 +18,7 @@ class PermintaanMaterialProduksi extends CI_Controller {
 
     public function index(){
         $data['permintaan_material'] = $this->M_PermintaanMaterialProduksi->select_all_aktif()->result();
+        $data['jumlah_ubmin']        = $this->M_PermintaanMaterialProduksi->get_jumlah_ubmin()->result();
     
         $data['warna']            = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
@@ -76,6 +77,15 @@ class PermintaanMaterialProduksi extends CI_Controller {
         $data['permat']       = $this->M_PermintaanMaterialProduksi->get_one_permat($id)->result_array();
         $data['detpermat']    = $this->M_PermintaanMaterialProduksi->get_one_detpermat($id)->result_array();
         $data['jm_detpermat'] = $this->M_PermintaanMaterialProduksi->get_one_detpermat($id)->num_rows();
+
+        echo json_encode($data);
+    }
+
+    function perubahan_permintaan(){
+        $id = $this->input->post('id');
+
+        $data['ubmin']    = $this->M_PermintaanMaterialProduksi->get_ubmin($id)->result_array();
+        $data['jm_ubmin'] = $this->M_PermintaanMaterialProduksi->get_ubmin($id)->num_rows();
 
         echo json_encode($data);
     }

@@ -47,10 +47,9 @@ class M_PengambilanMaterialProduksi extends CI_Model {
 
     function get_pengmat_sebelum(){
         return $this->db->query("SELECT pengambilan_material.id_detail_permintaan_material, 
-        SUM(pengambilan_material.jumlah_ambil) AS jumlah_keluar, SUM(pengeluaran_material.jumlah_keluar) AS jumlah_keluar_gudang
-        FROM pengambilan_material,pengeluaran_material
-        WHERE pengambilan_material.status_delete='0' AND pengambilan_material.id_pengeluaran_material = pengeluaran_material.id_pengeluaran_material
-        GROUP BY pengambilan_material.id_detail_permintaan_material");
+        SUM(pengambilan_material.jumlah_ambil) AS jumlah_keluar
+        FROM pengambilan_material
+        WHERE pengambilan_material.status_delete='0' GROUP BY pengambilan_material.id_detail_permintaan_material");
     }
 
     function get_wip(){
@@ -104,5 +103,18 @@ class M_PengambilanMaterialProduksi extends CI_Model {
 
     function get_det_inline(){
         return $this->db->query("SELECT * FROM detail_inventory_line WHERE status_delete='0' ");
+    }
+
+    function get_pertam($id){
+        return $this->db->query("SELECT permintaan_tambahan.id_permintaan_tambahan,permintaan_tambahan.id_detail_permintaan_material,
+        permintaan_tambahan.jumlah_tambah,permintaan_tambahan.status,sub_jenis_material.nama_sub_jenis_material,
+        sub_jenis_material.satuan_keluar,permintaan_tambahan.waktu_add,konsumsi_material.status_konsumsi
+        FROM permintaan_tambahan,detail_permintaan_material,permintaan_material,konsumsi_material,sub_jenis_material
+        WHERE permintaan_tambahan.status_delete='0' AND permintaan_material.id_permintaan_material='$id' AND
+        permintaan_tambahan.status='1' AND
+        permintaan_tambahan.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material AND
+        detail_permintaan_material.id_konsumsi_material=konsumsi_material.id_konsumsi_material AND
+        konsumsi_material.id_sub_jenis_material=sub_jenis_material.id_sub_jenis_material AND
+        detail_permintaan_material.id_permintaan_material=permintaan_material.id_permintaan_material  ");
     }
 }

@@ -70,3 +70,25 @@
 <script src="<?php echo base_url()?>assets/javascripts/jquery-dateFormat.js"></script>
 
 	
+<script src="<?php echo base_url()?>assets/vendor/jquery-appear/jquery.appear.js"></script>
+<script src="<?php echo base_url()?>assets/vendor/jquery-easypiechart/jquery.easypiechart.js"></script>
+<script src="<?php echo base_url()?>assets/vendor/flot/jquery.flot.js"></script>
+<script src="<?php echo base_url()?>assets/vendor/flot-tooltip/jquery.flot.tooltip.js"></script>
+<script src="<?php echo base_url()?>assets/vendor/flot/jquery.flot.pie.js"></script>
+<script src="<?php echo base_url()?>assets/vendor/flot/jquery.flot.categories.js"></script>
+<script src="<?php echo base_url()?>assets/vendor/flot/jquery.flot.resize.js"></script>
+<script src="<?php echo base_url()?>assets/vendor/jquery-sparkline/jquery.sparkline.js"></script>
+<script src="<?php echo base_url()?>assets/vendor/raphael/raphael.js"></script>
+<script src="<?php echo base_url()?>assets/vendor/morris/morris.js"></script>
+<script src="<?php echo base_url()?>assets/vendor/gauge/gauge.js"></script>
+<script src="<?php echo base_url()?>assets/vendor/snap-svg/snap.svg.js"></script>
+<script src="<?php echo base_url()?>assets/vendor/liquid-meter/liquid.meter.js"></script>
+<script src="<?php echo base_url()?>assets/vendor/jqvmap/jquery.vmap.js"></script>
+<script src="<?php echo base_url()?>assets/vendor/jqvmap/data/jquery.vmap.sampledata.js"></script>
+<script src="<?php echo base_url()?>assets/javascripts/dashboard/examples.dashboard.js"></script>
+
+<script src="<?php echo base_url()?>assets/vendor/modernizr/modernizr.js"></script>
+<script src="<?php echo base_url()?>assets/javascripts/ui-elements/examples.charts.js"></script>
+
+	</body>
+</html>

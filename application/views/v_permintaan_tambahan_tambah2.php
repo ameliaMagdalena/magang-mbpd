@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Permintaan Pengambilan Material</h2>
+        <h2>Buat Permintaan Material Tambahan</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Pengambilan Material</span></li>
+                <li><span>Permintaan Material Tambahan</span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -25,7 +25,7 @@
 <!--KODINGAN ISI HALAMAN-->
     <section class="panel">
         <header class="panel-heading">
-            <h2 class="panel-title">Buat Permintaan Pengambilan Material</h2>
+            <h2 class="panel-title">Buat Permintaan Material Tambahan</h2>
         </header>
 
         <div class="panel-body">
@@ -37,7 +37,6 @@
                     </div>
             </div>
             <br><br>
-
 
             <h4 class="panel-title">Data Produk</h4>
             <br>
@@ -117,10 +116,8 @@
                             <td class="col-lg-3">
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
                                     value="<?= $no;?>" title="Detail"></button>
-                                <button type="button" class="badd_klik col-lg-3 btn btn-success fa fa-plus-square-o" 
-                                    value="<?= $no;?>" title="Buat Pengambilan Material"></button>
-                                <button type="button" class="btambahan_klik col-lg-3 btn btn-warning fa  fa-plus" 
-                                    value="<?= $no;?>" title="Buat Pengambilan Material Tambahan"></button>
+                                <button type="button" class="btambahan_klik col-lg-3 btn btn-success fa  fa-plus-square-o" 
+                                    value="<?= $no;?>" title="Buat Permintaan Tambahan"></button>
                             </td>
                         </tr>
                     <?php $no++; } ?>
@@ -194,81 +191,10 @@
         </div>
     </div>
 
-    <!-- modal tambah -->
-    <div class="modal" id="modaltambah" role="dialog">
-        <div class="modal-dialog modal-xl" style="width:80%">
-            <form method="POST" action="<?= base_url()?>pengambilanMaterialProduksi/tambah_permintaan_pengambilan">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title"><b>Buat Permintaan Pengambilan Material</b></h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group mt-lg">
-                            <label class="col-sm-5 control-label">Nomor Permintaan Material</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="no_permat_add" readonly>
-                                <input type="hidden" class="form-control" id="status_pengambilan" name="status_pengambilan" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group mt-lg">
-                            <label class="col-sm-5 control-label">Kode PO</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="kode_po_add" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group mt-lg">
-                            <label class="col-sm-5 control-label">Nama Line</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="nama_line_add" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group mt-lg">
-                            <label class="col-sm-5 control-label">Tanggal Permintaan</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="tanggal_permintaan_add" name="tanggal_permintaan_add" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group mt-lg">
-                            <label class="col-sm-5 control-label">Tanggal Produksi</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="tanggal_produksi_add" name="tanggal_produksi_add" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group mt-lg">
-                            <label class="col-sm-5 control-label">Jumlah Minta</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="jumlah_minta_add" readonly>
-                            </div>
-                        </div>
-                        <?php if($_SESSION['nama_jabatan'] == "PIC Line Sewing"){?>
-                            <div class="form-group mt-lg">
-                                <label class="col-sm-5 control-label">Keterangan Pengambilan</label>
-                                <div class="col-sm-7">
-                                    <select class="form-control" id="keterangan_pengambilan" onchange="ganti_keterangan_pengambilan()">
-                                        <option value=" ">Keterangan Pengambilan</option>
-                                        <option value="0">Pengambilan Material Untuk Cutting Kain</option>
-                                        <option value="1">Lainnya</option>
-                                    </select>
-                                </div>
-                            </div>
-                        <?php } ?>
-                        <br>
-                        
-                        <div id="table_add"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="submit" id="tambah" class="btn btn-primary" value="Simpan" disabled>
-                        <input type="button" class="btn btn-default modal-dismiss" value="Batal" onclick="reload()">
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- modal tambahan -->
     <div class="modal" id="modaltambahan" role="dialog">
         <div class="modal-dialog modal-xl" style="width:80%">
-            <form method="POST" action="<?= base_url()?>pengambilanMaterialProduksi/buat_permintaan_tambahan">
+            <form method="POST" action="<?= base_url()?>permintaanTambahan/tambah">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title"><b>Buat Permintaan Pengambilan Material Tambahan</b></h4>
@@ -326,10 +252,9 @@
                         <br>
                         
                         <div id="table_add_tambahan"></div>
-                        <div id="pemberitahuan"></div>
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" id="button_pertam" class="btn btn-primary" value="Simpan" disabled>
+                        <input type="submit" id="tambah" class="btn btn-primary" value="Simpan" disabled>
                         <input type="button" class="btn btn-default modal-dismiss" value="Batal" onclick="reload()">
                     </div>
                 </div>
@@ -454,9 +379,9 @@
     });
 </script>
 
-<!-- add permintaan material -->
+<!-- buat permintaan tambahan -->
 <script>
-    $('.badd_klik').click(function(){
+    $('.btambahan_klik').click(function(){
         var no      = $(this).attr('value');
         var id      = $("#id"+no).val();
 
@@ -467,18 +392,18 @@
             data: {id:id},
 
             success: function(respond){
-                $("#no_permat_add").val(respond['permat'][0]['id_permintaan_material']);
-                $("#kode_po_add").val(respond['permat'][0]['kode_purchase_order_customer']);
-                $("#nama_line_add").val(respond['permat'][0]['nama_line']);
-                $("#tanggal_permintaan_add").val(respond['permat'][0]['tanggal_permintaan']);
-                $("#tanggal_produksi_add").val(respond['permat'][0]['tanggal_produksi']);
-                $("#jumlah_minta_add").val(respond['permat'][0]['jumlah_minta']);
+                $("#no_permat_add_tambahan").val(respond['permat'][0]['id_permintaan_material']);
+                $("#kode_po_add_tambahan").val(respond['permat'][0]['kode_purchase_order_customer']);
+                $("#nama_line_add_tambahan").val(respond['permat'][0]['nama_line']);
+                $("#tanggal_permintaan_add_tambahan").val(respond['permat'][0]['tanggal_permintaan']);
+                $("#tanggal_produksi_add_tambahan").val(respond['permat'][0]['tanggal_produksi']);
+                $("#jumlah_minta_add_tambahan").val(respond['permat'][0]['jumlah_minta']);
 
                 if(respond['permat'][0]['nama_line'] == "Line Cutting" || respond['permat'][0]['nama_line'] == "Line Bonding" || respond['permat'][0]['nama_line'] == "Line Assy"){
-                    $("#status_pengambilan").val(1);
+                    $("#status_pengambilan_tambahan").val(1);
                 }
                 else{
-                    $("#status_pengambilan").val($("#keterangan_pengambilan").val());
+                    $("#status_pengambilan_tambahan").val($("#keterangan_pengambilan").val());
                 }
 
                 $isi = "";
@@ -508,24 +433,6 @@
                         }
                     }
 
-                    //wip
-                        $cari_wip = 0;
-                        $wip = 0;
-                        for($p=0;$p<respond['jm_wip'];$p++){
-                            if(respond['wip'][$p]['id_sub_jenis_material']  == respond['detpermat'][$i]['id_sub_jenis_material']){
-                                $wip = respond['wip'][$p]['total_material'];
-                                $cari_wip++;
-                            }
-
-                            if($cari_wip > 0){
-                                $wip = $wip;
-                            }
-                            else{
-                                $wip = 0;
-                            }
-                        }
-                    //tutup wip
-
                     $batas_ambil = respond['detpermat'][$i]['needs'] - $jumlah_sebelum;
 
                     $isi = $isi +
@@ -547,16 +454,10 @@
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             $jumlah_sebelum+
+                            '<input type="hidden" name="batas_ambilnya'+$i+'" id="batas_ambilnya'+$i+'" value="'+$batas_ambil+'">'+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            '<input type="hidden" name="wip'+$i+'" value="'+$wip+'">'+
-                            $wip+
-                        '</td>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+
-                            $batas_ambil+
-                        '</td>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+
-                            '<center><input type="number" min="0" max="'+$batas_ambil+'" step=".01" class="form-control" name="ambil'+$i+'" id="ambil'+$i+'" oninput="cek()"></center>'+
+                            '<center><input type="number" min="0" step=".01" class="form-control" name="ambilnya'+$i+'" id="ambilnya'+$i+'" oninput="cek()"></center>'+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['detpermat'][$i]['satuan_keluar']+
@@ -587,13 +488,7 @@
                                         'Telah Diambil'+
                                     '</th>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
-                                        'WIP Line'+
-                                    '</th>'+
-                                    '<th style="text-align: center;vertical-align: middle;">'+
-                                        'Batas Ambil'+
-                                    '</th>'+
-                                    '<th style="text-align: center;vertical-align: middle;">'+
-                                        'Akan Diambil'+
+                                        'Permintaan Tambahan'+
                                     '</th>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'Satuan Konsumsi'+
@@ -607,114 +502,17 @@
                                $isi+
                             '</tbody>'+
                 '</table>'+
-                '<input type="hidden" name="jumlah_detpermat" id="jumlah_detpermat" value="'+respond['jm_detpermat']+'">';
+                '<input type="hidden" name="jumlah_detpermat_tambahan" id="jumlah_detpermat_tambahan" value="'+respond['jm_detpermat']+'">';
 
-                $("#table_add").html($table);
-                $("#modaltambah").modal();
-            }
-        });  
-    });
-</script>
-
-<!-- tambahan permintaan material -->
-<script>
-    $('.btambahan_klik').click(function(){
-        var no      = $(this).attr('value');
-        var id      = $("#id"+no).val();
-        
-        $.ajax({
-            type:"post",    
-            url:"<?php echo base_url() ?>pengambilanMaterialProduksi/detail_permintaan",
-            dataType: "JSON",
-            data: {id:id},
-
-            success: function(respond){
-                $("#no_permat_add_tambahan").val(respond['permat'][0]['id_permintaan_material']);
-                $("#kode_po_add_tambahan").val(respond['permat'][0]['kode_purchase_order_customer']);
-                $("#nama_line_add_tambahan").val(respond['permat'][0]['nama_line']);
-                $("#tanggal_permintaan_add_tambahan").val(respond['permat'][0]['tanggal_permintaan']);
-                $("#tanggal_produksi_add_tambahan").val(respond['permat'][0]['tanggal_produksi']);
-                $("#jumlah_minta_add_tambahan").val(respond['permat'][0]['jumlah_minta']);
-
-                if(respond['permat'][0]['nama_line'] == "Line Cutting" || respond['permat'][0]['nama_line'] == "Line Bonding" || respond['permat'][0]['nama_line'] == "Line Assy"){
-                    $("#status_pengambilan_tambahan").val(1);
-                }
-                else{
-                    $("#status_pengambilan_tambahan").val($("#keterangan_pengambilan").val());
-                }
-
-                $isi = "";
-                for($i=0;$i<respond['jm_pertam'];$i++){
-                    $isi = $isi +
-                    '<tr>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+
-                            ($i+1)+
-                            '<input type="hidden" id="stat_km'+$i+'" name="stat_km'+$i+'" value="'+respond['pertam'][$i]['status_konsumsi']+'" >'+
-                            '<input type="hidden" name="id_pertam'+$i+'" value="'+respond['pertam'][$i]['id_permintaan_tambahan']+'">'+
-                        '</td>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['pertam'][$i]['waktu_add']+
-                        '</td>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+
-                            '<input type="hidden" name="id_det_permat'+$i+'" value="'+respond['pertam'][$i]['id_detail_permintaan_material']+'">'+
-                            respond['pertam'][$i]['nama_sub_jenis_material']+
-                        '</td>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+
-                            '<input type="hidden" name="jumlah_tambah'+$i+'" value="'+respond['pertam'][$i]['jumlah_tambah']+'">'+
-                            respond['pertam'][$i]['jumlah_tambah']+
-                        '</td>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['pertam'][$i]['satuan_keluar']+
-                        '</td>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+
-                            '<input type="checkbox" id="pilih_pertam'+$i+'" name="pilih_pertam'+$i+'" onclick="cek_pertam()">'+
-                        '</td>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+
-                            '<textarea class="form-control" name="keterangan'+$i+'" rows="3" id="textareaDefault"></textarea>'+
-                        '</td>'+
-                    '</tr>';
-                }
-
-                $table = 
-                '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
-                            '<thead>'+
-                                '<tr>'+
-                                    '<th style="text-align: center;vertical-align: middle;">'+
-                                        'No'+
-                                    '</th>'+
-                                    '<th style="text-align: center;vertical-align: middle;">'+
-                                        'Waktu Permintaan'+
-                                    '</th>'+
-                                    '<th style="text-align: center;vertical-align: middle;">'+
-                                        'Nama Material'+
-                                    '</th>'+
-                                    '<th style="text-align: center;vertical-align: middle;">'+
-                                        'Jumlah Minta'+
-                                    '</th>'+
-                                    '<th style="text-align: center;vertical-align: middle;">'+
-                                        'Satuan'+
-                                    '</th>'+
-                                    '<th style="text-align: center;vertical-align: middle;">'+
-                                        'Ambil'+
-                                    '</th>'+
-                                    '<th style="text-align: center;vertical-align: middle;">'+
-                                        'Keterangan'+
-                                    '</th>'+
-                                '</tr>'+
-                            '</thead>'+
-                            '<tbody>'+
-                               $isi+
-                            '</tbody>'+
-                '</table>'+
-                '<input type="hidden" name="jumlah_pertam_tambahan" id="jumlah_pertam_tambahan" value="'+respond['jm_pertam']+'">';
+                $("#table_add_tambahan").html($table);
                 
-                if(respond['jm_pertam'] == 0){
-                    $pemberitahuan = "<p style='color:red'><b>* Mohon maaf, anda tidak memiliki permintaan material tambahan</b></p>";
-                    $("#pemberitahuan").html($pemberitahuan);
-                } else{
-                    $("#table_add_tambahan").html($table); 
+                $cek_pengambilan = 0;
+                for($p=0;$p<respond['jm_detpermat'];$p++){
+                    if($("#batas_ambilnya"+$p).val() > 0){
+                        $("#ambilnya"+$p).prop('disabled',true);
+                    }
                 }
-               
+
                 $("#modaltambahan").modal();
             }
         });  
@@ -760,16 +558,16 @@
 <!-- cek -->
 <script>
     function cek(){
-        $jumlah_detpermat = $("#jumlah_detpermat").val();
+        $jumlah_detpermat_tambahan = $("#jumlah_detpermat_tambahan").val();
 
         $terisi = 0;
-        for($i=0;$i<$jumlah_detpermat;$i++){
-            if($("#ambil"+$i).val() > 0){
+        for($i=0;$i<$jumlah_detpermat_tambahan;$i++){
+            if($("#ambilnya"+$i).val() > 0){
                 $terisi++;
             }
         }
 
-        if($terisi > 0 && $("#status_pengambilan").val() != " "){
+        if($terisi > 0 && $("#status_pengambilan_tambahan").val() != " "){
             $("#tambah").prop('disabled',false);
         }
         else{
@@ -777,27 +575,6 @@
         }
     }
 </script>
-
-<!-- cek pertam -->
-<script>
-    function cek_pertam(){
-        var jumlah = $("#jumlah_pertam_tambahan").val();
-
-        $count = 0;
-        for($p=0;$p<jumlah;$p++){
-            if($("#pilih_pertam"+$p).is(":checked") ){
-                $count++;
-            }
-        }
-
-        if($count > 0){
-            $("#button_pertam").prop('disabled',false);
-        } else{
-            $("#button_pertam").prop('disabled',true);
-        }
-    }
-</script>
-
 
 
 

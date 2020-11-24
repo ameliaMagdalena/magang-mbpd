@@ -1199,19 +1199,40 @@
                                                             <?php 
                                                                 $z=1;
                                                                 foreach($produksi as $p){
+                                                                    $cek_prodtun = 0;
+                                                                    $id_detail_produksi_line = "";
                                                                     foreach($dpl_reschedule as $dplre){
-                                                                        if($dplre->id_produksi_tertunda == $dpl_rg->id_produksi_tertunda && $dplre->id_produksi == $p->id_produksi){
-                                                                            if($dplre->jumlah_item_perencanaan > 0){
-                                                            ?>
+                                                                        $id_produksi_tertundanya = "";
+                                                                        foreach($det_prodtun as $cari_prodtun){
+                                                                            if($cari_prodtun->id_detail_produksi_line == $dplre->id_detail_produksi_line){
+                                                                                $id_produksi_tertundanya = $cari_prodtun->id_produksi_tertunda;
+                                                                            }
+                                                                        }
+
+                                                                        if($dplre->id_produksi == $p->id_produksi){
+                                                                            $id_detail_produksi_line  = $dplre->id_detail_produksi_line;
+                                                                            if($id_produksi_tertundanya == $dpl_rg->id_produksi_tertunda){
+                                                                                if($dplre->jumlah_item_perencanaan > 0){
+                                                                                    $cek_prodtun++;
+                                                                                    $jumlah_item_perencanaan  = $dplre->jumlah_item_perencanaan;
+                                                                                    $waktu_proses_perencanaan = $dplre->waktu_proses_perencanaan;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    
+
+                                                            ?>  
+                                                                            <?php if($cek_prodtun > 0){?>
                                                                                 <td>
                                                                                     <input id="jm<?=$no?><?=$ct->id_line?>day<?=$z?>" disabled
-                                                                                    type="number" class="input<?=$z?> inputinput form-control" min="0" value="<?= $dplre->jumlah_item_perencanaan ?>"
+                                                                                    type="number" class="input<?=$z?> inputinput form-control" min="0" value="<?=  $jumlah_item_perencanaan ?>"
                                                                                     style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                                     <input id="ef<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                                    type="hidden" class="form-control" disabled min="0" value="<?= $dplre->waktu_proses_perencanaan ?>"
+                                                                                    type="hidden" class="form-control" disabled min="0" value="<?= $waktu_proses_perencanaan ?>"
                                                                                     style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                                     <input id="id_dpl<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                                    type="hidden" class="form-control" disabled min="0" value="<?= $dplre->id_detail_produksi_line ?>"
+                                                                                    type="hidden" class="form-control" disabled min="0" value="<?= $id_detail_produksi_line ?>"
                                                                                     style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                                 </td>
                                                                             <?php } else{ ?>
@@ -1223,11 +1244,11 @@
                                                                                     type="hidden" class="form-control" disabled min="0"
                                                                                     style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                                     <input id="id_dpl<?=$no?><?=$ct->id_line?>day<?=$z?>"
-                                                                                    type="hidden" class="form-control" disabled min="0" value="<?= $dplre->id_detail_produksi_line ?>"
+                                                                                    type="hidden" class="form-control" disabled min="0" value="<?= $id_detail_produksi_line ?>"
                                                                                     style="width:58px;height:15px;font-size:10px;background:transparent;;margin-left:-3px">
                                                                                 </td>
                                                                             <?php } ?>
-                                                            <?php $z++; }}}?>
+                                                            <?php $z++; }?>
                                             </tr>
                                                 <?php $lineke++;}} ?> 
                                             <input type="hidden" id="jumlah_line<?= $no?>" value="<?= $lineke;?>"> 
@@ -1782,13 +1803,13 @@
                                 ?>
                                         <tr id="bg1<?= $ke ?>">
                                             <td class="col-md-6">
-                                                <input type="text" class="input_bgpo1 info_produk1"
+                                                <input type="hidden" class="input_bgpo1 info_produk1"
                                                 value="<?= $pt->id_detail_purchase_order_customer?>">
-                                                <input type="text" class="input_bgpo1 info_produk1" id="renama_customer1<?= $pt->id_detail_purchase_order_customer?>"
+                                                <input type="hidden" class="input_bgpo1 info_produk1" id="renama_customer1<?= $pt->id_detail_purchase_order_customer?>"
                                                 value="<?= $pt->id_customer?>">
-                                                <input type="text" class="input_bgpo1 info_produk1" id="renama_produk1<?= $pt->id_detail_purchase_order_customer?>"
+                                                <input type="hidden" class="input_bgpo1 info_produk1" id="renama_produk1<?= $pt->id_detail_purchase_order_customer?>"
                                                 value="<?= $pt->nama_produk?>">
-                                                <input type="text" class="input_bgpo1 info_produk1" id="reid_produk1<?= $pt->id_detail_purchase_order_customer?>"
+                                                <input type="hidden" class="input_bgpo1 info_produk1" id="reid_produk1<?= $pt->id_detail_purchase_order_customer?>"
                                                 value="<?= $pt->id_produk?>">
                                                 
                                                 <center>
@@ -1838,8 +1859,8 @@
                                             </td>
                                             <td class="col-md-2">
                                                 <?php $jumlanya = $pt->jumlah_tertunda - $pt->jumlah_terencana;?>
-                                                <input type="text" class="input_bgpo1 jumlah_produk1" id="re_id1<?= $ke ?>" value="<?= $pt->id_produksi_tertunda?>">
-                                                <input type="text" class="input_bgpo1 jumlah_produk1" id="rejumlah_produk1<?= $pt->id_detail_purchase_order_customer?>"
+                                                <input type="hidden" class="input_bgpo1 jumlah_produk1" id="re_id1<?= $ke ?>" value="<?= $pt->id_produksi_tertunda?>">
+                                                <input type="hidden" class="input_bgpo1 jumlah_produk1" id="rejumlah_produk1<?= $pt->id_detail_purchase_order_customer?>"
                                                 value="<?= $pt->jumlah_tertunda ?>">
                                                 <center>
                                                     <?= $pt->jumlah_tertunda  ?> 

@@ -1337,7 +1337,7 @@
                             $nomor = 1;
                             for($t=0;$t<respond['jm_km'];$t++){
                                 if(respond['dpl'][$k]['id_produk'] == respond['km'][$t]['id_produk'] && respond['dpl'][$k]['id_line'] == respond['km'][$t]['id_line'] 
-                                && respond['dpl'][$k]['jumlah_item_aktual'] != 0 && respond['km'][$t]['status_konsumsi'] == 1){
+                                && respond['dpl'][$k]['jumlah_item_perencanaan'] != 0 && respond['km'][$t]['status_konsumsi'] == 1){
                                     $jumlah_konsumsi_seharusnya = respond['km'][$t]['jumlah_konsumsi'] * respond['dpl'][$k]['jumlah_item_aktual'];
                                     $ukuran_satuan_keluar       = respond['km'][$t]['ukuran_satuan_keluar'];
                                     $jumlah_detail++;
@@ -1398,39 +1398,40 @@
                                 }
                             }
 
-                            $km_per_line = $km_per_line +
-                            respond['dpl'][$k]['nama_line']+' ('+respond['dpl'][$k]['jumlah_item_aktual']+' pcs)'+
-                            '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
-                                '<thead>'+
-                                    '<tr>'+
-                                        '<th style="text-align: center;vertical-align: middle;">'+
-                                            'No'+
-                                        '</th>'+
-                                        '<th style="text-align: center;vertical-align: middle;">'+
-                                            'Nama Material'+
-                                        '</th>'+
-                                        '<th style="text-align: center;vertical-align: middle;">'+
-                                            'Konsumsi Material'+
-                                        '</th>'+
-                                        '<th style="text-align: center;vertical-align: middle;">'+
-                                            'Konsumsi Seharusnya'+
-                                        '</th>'+
-                                        '<th style="text-align: center;vertical-align: middle;">'+
-                                            'Konsumsi Inventory Line'+
-                                        '</th>'+
-                                        '<th style="text-align: center;vertical-align: middle;">'+
-                                            'Konsumsi Gudang Material'+
-                                        '</th>'+
-                                        '<th style="text-align: center;vertical-align: middle;">'+
-                                            'Sisa Material Di Line'+
-                                        '</th>'+
-                                    '</tr>'+
-                                '</thead>'+
-                                '<tbody>'+
-                                    $isi_km+
-                                '</tbody>'+
-                            '</table><br>';
-
+                            if(respond['dpl'][$k]['jumlah_item_perencanaan'] > 0){
+                                $km_per_line = $km_per_line +
+                                respond['dpl'][$k]['nama_line']+' ('+respond['dpl'][$k]['jumlah_item_aktual']+' pcs)'+
+                                '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
+                                    '<thead>'+
+                                        '<tr>'+
+                                            '<th style="text-align: center;vertical-align: middle;">'+
+                                                'No'+
+                                            '</th>'+
+                                            '<th style="text-align: center;vertical-align: middle;">'+
+                                                'Nama Material'+
+                                            '</th>'+
+                                            '<th style="text-align: center;vertical-align: middle;">'+
+                                                'Konsumsi Material'+
+                                            '</th>'+
+                                            '<th style="text-align: center;vertical-align: middle;">'+
+                                                'Konsumsi Seharusnya'+
+                                            '</th>'+
+                                            '<th style="text-align: center;vertical-align: middle;">'+
+                                                'Konsumsi Inventory Line'+
+                                            '</th>'+
+                                            '<th style="text-align: center;vertical-align: middle;">'+
+                                                'Konsumsi Gudang Material'+
+                                            '</th>'+
+                                            '<th style="text-align: center;vertical-align: middle;">'+
+                                                'Sisa Material Di Line'+
+                                            '</th>'+
+                                        '</tr>'+
+                                    '</thead>'+
+                                    '<tbody>'+
+                                        $isi_km+
+                                    '</tbody>'+
+                                '</table><br>';
+                            }
                         }
                     }
 
@@ -1491,7 +1492,6 @@
                         $konsumsi_material = $konsumsi_material +
                         '<hr><h5><b>'+($ke)+'. '+$namanya+'</b></h5>'+
                         $km_per_line;
-
                         $ke++;
                     }
                 }
