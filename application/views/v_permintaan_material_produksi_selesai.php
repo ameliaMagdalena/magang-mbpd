@@ -112,6 +112,19 @@
                             <td  class="col-lg-3">
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
                                     value="<?= $no;?>" title="Detail"></button>
+                                <?php 
+                                    $cari = 0;
+                                    foreach($jumlah_ubmin as $k){
+                                        if($k->id_permintaan_material == $x->id_permintaan_material){
+                                            $cari++;
+                                        }
+                                    }  
+                                    
+                                    if($cari > 0){
+                                ?>
+                                    <button type="button" class="bubmin_klik col-lg-3 btn btn-warning fa  fa-history" 
+                                        value="<?= $no;?>" title="Perubahan Permintaan Material"></button>
+                                    <?php } ?>
                             </td>
                         </tr>
                     <?php
@@ -180,6 +193,26 @@
     </div>
 </div>
 
+<!-- modal ubmin -->
+<div class="modal" id="modalubmin" role="dialog">
+    <div class="modal-dialog modal-xl" style="width:50%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><b>Detail Perubahan Permintaan Material</b></h4>
+            </div>
+            <div class="modal-body">
+                
+                <div id="table_ubmin">
+                
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default modal-dismiss" value="Ok" onclick="reload()">
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--*****************************-->
 <?php include('_endtitle.php'); ?>
 <?php include('_js.php'); ?>
@@ -220,6 +253,9 @@
                             ($i+1)+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['detpermat'][$i]['id_detail_permintaan_material']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
                             respond['detpermat'][$i]['nama_sub_jenis_material']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
@@ -240,6 +276,9 @@
                                 '<tr>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'No'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Kode Detail Permintaan Material'+
                                     '</th>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'Nama Material'+
@@ -267,6 +306,88 @@
     });
 </script>
 
+<!-- ubmin -->
+<script>
+    $('.bubmin_klik').click(function(){
+        var no      = $(this).attr('value');
+        var id      = $("#id"+no).val();
+        
+        $.ajax({
+            type:"post",    
+            url:"<?php echo base_url() ?>permintaanMaterialProduksi/perubahan_permintaan",
+            dataType: "JSON",
+            data: {id:id},
+
+            success: function(respond){
+                $isi = "";
+
+                for($i=0;$i<respond['jm_ubmin'];$i++){
+                    $status = "";
+
+                    if(respond['ubmin'][$i]['status'] == 0){
+                        $status = "Belum Diproses";
+                    } else if(respond['ubmin'][$i]['status'] == 1){
+                        $status = "Disetujui";
+                    } else if(respond['ubmin'][$i]['status'] == 2){
+                        $status = "Tidak Disetujui";
+                    } else{
+                        $status = "Batal";
+                    }
+
+                    $isi = $isi +
+                    '<tr>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            ($i+1)+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['ubmin'][$i]['waktu_add']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['ubmin'][$i]['jumlah_minta_lama']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['ubmin'][$i]['jumlah_minta_baru']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            $status+
+                        '</td>'+
+                    '</tr>';
+
+                }
+
+                $table = 
+                '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
+                            '<thead>'+
+                                '<tr>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'No'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Waktu Perubahan Permintaan'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Jumlah Minta Lama'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Jumlah Minta Baru'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Status'+
+                                    '</th>'+
+                                '</tr>'+
+                            '</thead>'+
+                            '<tbody>'+
+                               $isi+
+                            '</tbody>'+
+                '</table>';
+
+               
+                $("#table_ubmin").html($table);
+                $("#modalubmin").modal();
+            }
+        });  
+    });
+</script>
 
 
 

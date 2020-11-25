@@ -156,139 +156,16 @@ class PengambilanMaterialProduksi extends CI_Controller {
             $ukuran_satuan_keluar = $sub_jen_mat[0]['ukuran_satuan_keluar'];
 
             //inventory line
-            if($wip == 0){
-              $total_ambil_kotor       = $akan_diambil / $ukuran_satuan_keluar;
-              $total_ambil_kotor_bulat = ceil($total_ambil_kotor);
+              if($wip == 0){
+                $total_ambil_kotor       = $akan_diambil / $ukuran_satuan_keluar;
+                $total_ambil_kotor_bulat = ceil($total_ambil_kotor);
 
-              $data_pengambilan_material = array(
-                'id_pengambilan_material'       => $id_ammat_baru,
-                'id_karyawan'                   => $id_karyawan,
-                'id_detail_permintaan_material' => $id_detail_permat,
-                'tanggal_ambil'                 => $tanggal_ambil,
-                'stok_wip'                      => 0,
-                'jumlah_ambil'                  => $akan_diambil,
-                'keterangan'                    => $keterangan,
-                'status_pengambilan'            => $status_pengambilan,
-                'status_keluar'                 => 0,
-                'user_add'                      => $user,
-                'waktu_add'                     => $now,
-                'status_delete'                 => 0
-              );
-
-              $this->M_PengambilanMaterialProduksi->insert('pengambilan_material',$data_pengambilan_material);              
-            } else{
-              //inventory line
-                $permintaan_material = $this->M_PengambilanMaterialProduksi->get_one_permat_by_detpermat($id_detail_permat)->result_array();
-                $id_line             = $permintaan_material[0]['id_line'];
-
-                $cari_inline = $this->M_LaporanPerencanaanCutting->get_inline($id_line,$id_sub_jenmat)->result_array();
-
-                $id_inline          = $cari_inline[0]['id_inventory_line'];
-                $jumlah_inline_lama = $cari_inline[0]['total_material'];
-
-                if($jumlah_inline_lama > $akan_diambil){
-                  $jumlah_inline_baru = $jumlah_inline_lama - $akan_diambil;
-                } else{
-                  $jumlah_inline_baru = 0;
-                }
-
-                $data_inline = array(
-                  'total_material' => $jumlah_inline_baru,
-                  'user_edit'      => $user,
-                  'waktu_edit'     => $now
-                );
-
-                $where_inline = array(
-                  'id_inventory_line' => $id_inline
-                );
-
-                $this->M_PengambilanMaterialProduksi->edit('inventory_line',$data_inline,$where_inline);
-
-                //DETAIL INVENTORY LINE
-                    //id detail inventory line
-                    $tanggal = date('Y-m-d');
-                    $tahun_sekarang = substr(date('Y',strtotime($now)),2,2);
-                    $bulan_sekarang = date('m',strtotime($now));
-                    $id_code        = "DINLI".$tahun_sekarang.$bulan_sekarang.".";
-        
-                    $last       = $this->M_LaporanPerencanaanCutting->get_last_dinli_id($id_code)->result_array();
-                    $last_cek   = $this->M_LaporanPerencanaanCutting->get_last_dinli_id($id_code)->num_rows();
-        
-                    //id
-                    if($last_cek == 1){
-                        $id_terakhir    = $last[0]['id_detail_inventory_line'];
-        
-                        $tahun_sebelum  = substr($id_terakhir,5,2);
-                    
-                        $bulan_sebelum  = substr($id_terakhir,7,2);
-        
-                        //kalau tahun sama
-                        if($tahun_sebelum == $tahun_sekarang){
-                            //kalau tahun & bulannya sama berarti count+1
-                            if($bulan_sebelum == $bulan_sekarang){
-                                $count = intval(substr($id_terakhir,10,5)) + 1;
-                                $pjg   = strlen($count);
-        
-                                if($pjg == 1){
-                                    $count_baru = "0000".$count;
-                                }
-                                else if($pjg == 2){
-                                    $count_baru = "000".$count;
-                                }
-                                else if($pjg == 3){
-                                    $count_baru = "00".$count;
-                                }
-                                else if($pjg == 4){
-                                    $count_baru = "0".$count;
-                                }
-                                else{
-                                    $count_baru = $count;
-                                }
-                                
-                                //id yang baru
-                                $id_dinli_baru = "DINLI".$tahun_sebelum.$bulan_sebelum.".".$count_baru;
-                            }
-                            //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
-                            else{
-                                //id yang baru
-                                $id_dinli_baru = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-                            }
-                        }
-                        //kalau tahun tidak sama
-                        else{
-                            //id yang baru
-                            $id_dinli_baru = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-                        }
-                    }
-                    else{
-                        //id yang baru
-                        $id_dinli_baru = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-                    }
-
-                    $data_detail_inline = array(
-                            'id_detail_inventory_line'      => $id_dinli_baru,
-                            'id_inventory_line'             => $id_inline,
-                            'id_detail_permintaan_material' => $id_detail_permat,
-                            'tanggal'                       => $tanggal,
-                            'jumlah_material'               => $akan_diambil,
-                            'status'                        => 1,
-                            'user_add'                      => $user,
-                            'waktu_add'                     => $now,
-                            'status_delete'                 => 0
-                    );
-
-                    $this->M_PengambilanMaterialProduksi->insert('detail_inventory_line',$data_detail_inline);
-                //tutup detail inventory line
-                
-              //tutup inventory line
-
-              if($akan_diambil > $wip){
                 $data_pengambilan_material = array(
                   'id_pengambilan_material'       => $id_ammat_baru,
                   'id_karyawan'                   => $id_karyawan,
                   'id_detail_permintaan_material' => $id_detail_permat,
                   'tanggal_ambil'                 => $tanggal_ambil,
-                  'stok_wip'                      => $wip,
+                  'stok_wip'                      => 0,
                   'jumlah_ambil'                  => $akan_diambil,
                   'keterangan'                    => $keterangan,
                   'status_pengambilan'            => $status_pengambilan,
@@ -297,27 +174,152 @@ class PengambilanMaterialProduksi extends CI_Controller {
                   'waktu_add'                     => $now,
                   'status_delete'                 => 0
                 );
-  
-                $this->M_PengambilanMaterialProduksi->insert('pengambilan_material',$data_pengambilan_material);
+
+                $this->M_PengambilanMaterialProduksi->insert('pengambilan_material',$data_pengambilan_material);              
               } else{
-                $data_pengambilan_material = array(
-                  'id_pengambilan_material'       => $id_ammat_baru,
-                  'id_karyawan'                   => $id_karyawan,
-                  'id_detail_permintaan_material' => $id_detail_permat,
-                  'tanggal_ambil'                 => $tanggal_ambil,
-                  'stok_wip'                      => $akan_diambil,
-                  'jumlah_ambil'                  => 0,
-                  'keterangan'                    => $keterangan,
-                  'status_pengambilan'            => $status_pengambilan,
-                  'status_keluar'                 => 0,
-                  'user_add'                      => $user,
-                  'waktu_add'                     => $now,
-                  'status_delete'                 => 0
-                );
-  
-                $this->M_PengambilanMaterialProduksi->insert('pengambilan_material',$data_pengambilan_material);
+                //inventory line
+                  $permintaan_material = $this->M_PengambilanMaterialProduksi->get_one_permat_by_detpermat($id_detail_permat)->result_array();
+                  $id_line             = $permintaan_material[0]['id_line'];
+
+                  $cari_inline = $this->M_LaporanPerencanaanCutting->get_inline($id_line,$id_sub_jenmat)->result_array();
+
+                  $id_inline          = $cari_inline[0]['id_persediaan_line'];
+                  $jumlah_inline_lama = $cari_inline[0]['total_material'];
+
+                  if($jumlah_inline_lama > $akan_diambil){
+                    $jumlah_inline_baru = $jumlah_inline_lama - $akan_diambil;
+                  } else{
+                    $jumlah_inline_baru = 0;
+                  }
+
+                  $data_inline = array(
+                    'total_material' => $jumlah_inline_baru,
+                    'user_edit'      => $user,
+                    'waktu_edit'     => $now
+                  );
+
+                  $where_inline = array(
+                    'id_persediaan_line' => $id_inline
+                  );
+
+                  $this->M_PengambilanMaterialProduksi->edit('persediaan_line',$data_inline,$where_inline);
+
+                  //PERSEDIAAN LINE KELUAR
+                      //id persediaan line keluar
+                        $tanggal = date('Y-m-d');
+                        $tahun_sekarang = substr(date('Y',strtotime($now)),2,2);
+                        $bulan_sekarang = date('m',strtotime($now));
+                        $id_code        = "SELIK".$tahun_sekarang.$bulan_sekarang.".";
+            
+                        $last       = $this->M_LaporanPerencanaanCutting->get_last_dinli_id($id_code)->result_array();
+                        $last_cek   = $this->M_LaporanPerencanaanCutting->get_last_dinli_id($id_code)->num_rows();
+            
+                        //id
+                        if($last_cek == 1){
+                            $id_terakhir    = $last[0]['id_persediaan_line_keluar'];
+            
+                            $tahun_sebelum  = substr($id_terakhir,5,2);
+                        
+                            $bulan_sebelum  = substr($id_terakhir,7,2);
+            
+                            //kalau tahun sama
+                            if($tahun_sebelum == $tahun_sekarang){
+                                //kalau tahun & bulannya sama berarti count+1
+                                if($bulan_sebelum == $bulan_sekarang){
+                                    $count = intval(substr($id_terakhir,10,5)) + 1;
+                                    $pjg   = strlen($count);
+            
+                                    if($pjg == 1){
+                                        $count_baru = "0000".$count;
+                                    }
+                                    else if($pjg == 2){
+                                        $count_baru = "000".$count;
+                                    }
+                                    else if($pjg == 3){
+                                        $count_baru = "00".$count;
+                                    }
+                                    else if($pjg == 4){
+                                        $count_baru = "0".$count;
+                                    }
+                                    else{
+                                        $count_baru = $count;
+                                    }
+                                    
+                                    //id yang baru
+                                    $id_dinli_baru = "SELIK".$tahun_sebelum.$bulan_sebelum.".".$count_baru;
+                                }
+                                //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                                else{
+                                    //id yang baru
+                                    $id_dinli_baru = "SELIK".$tahun_sekarang.$bulan_sekarang.".00001";
+                                }
+                            }
+                            //kalau tahun tidak sama
+                            else{
+                                //id yang baru
+                                $id_dinli_baru = "SELIK".$tahun_sekarang.$bulan_sekarang.".00001";
+                            }
+                        }
+                        else{
+                            //id yang baru
+                            $id_dinli_baru = "SELIK".$tahun_sekarang.$bulan_sekarang.".00001";
+                        }
+                      //tutup id persediaan line keluar
+
+                      $data_detail_inline = array(
+                              'id_persediaan_line_keluar'     => $id_dinli_baru,
+                              'id_inventory_line'             => $id_inline,
+                              'id_pengambilan_material'       => $id_ammat_baru,
+                              'tanggal'                       => $tanggal,
+                              'jumlah_material'               => $akan_diambil,
+                              'status'                        => 1,
+                              'user_add'                      => $user,
+                              'waktu_add'                     => $now,
+                              'status_delete'                 => 0
+                      );
+
+                      $this->M_PengambilanMaterialProduksi->insert('persediaan_line_keluar',$data_detail_inline);
+                  //tutup persediaan line keluar
+                  
+                //tutup inventory line
+
+                if($akan_diambil > $wip){
+                  $data_pengambilan_material = array(
+                    'id_pengambilan_material'       => $id_ammat_baru,
+                    'id_karyawan'                   => $id_karyawan,
+                    'id_detail_permintaan_material' => $id_detail_permat,
+                    'tanggal_ambil'                 => $tanggal_ambil,
+                    'stok_wip'                      => $wip,
+                    'jumlah_ambil'                  => $akan_diambil,
+                    'keterangan'                    => $keterangan,
+                    'status_pengambilan'            => $status_pengambilan,
+                    'status_keluar'                 => 0,
+                    'user_add'                      => $user,
+                    'waktu_add'                     => $now,
+                    'status_delete'                 => 0
+                  );
+    
+                  $this->M_PengambilanMaterialProduksi->insert('pengambilan_material',$data_pengambilan_material);
+                } else{
+                  $data_pengambilan_material = array(
+                    'id_pengambilan_material'       => $id_ammat_baru,
+                    'id_karyawan'                   => $id_karyawan,
+                    'id_detail_permintaan_material' => $id_detail_permat,
+                    'tanggal_ambil'                 => $tanggal_ambil,
+                    'stok_wip'                      => $akan_diambil,
+                    'jumlah_ambil'                  => 0,
+                    'keterangan'                    => $keterangan,
+                    'status_pengambilan'            => $status_pengambilan,
+                    'status_keluar'                 => 0,
+                    'user_add'                      => $user,
+                    'waktu_add'                     => $now,
+                    'status_delete'                 => 0
+                  );
+    
+                  $this->M_PengambilanMaterialProduksi->insert('pengambilan_material',$data_pengambilan_material);
+                }
               }
-            }
+            //tutup inventory line
 
             //jika pengambilan untuk cutting kain, maka input perencanaan cutting kain
             if($status_pengambilan == 0){
@@ -409,7 +411,7 @@ class PengambilanMaterialProduksi extends CI_Controller {
             }
           }
       }
-      //redirect('pengambilanMaterialProduksi/tambah');
+      redirect('pengambilanMaterialProduksi/semua_pengambilan_material');
     }
 
     public function buat_permintaan_tambahan(){
@@ -544,31 +546,208 @@ class PengambilanMaterialProduksi extends CI_Controller {
       $this->load->view('v_pengambilan_material_produksi_semua',$data);
     }
 
+    public function detail_pengambilan(){
+      $id = $this->input->post('id');
+
+      $data['pengmat'] = $this->M_PengambilanMaterialProduksi->get_pengmat($id)->result_array();
+
+      echo json_encode($data);
+    }
+
+    public function detail_permintaan_pengambilan(){
+      $id_permintaan = $this->input->post('id');
+
+      $data['one_pengmat'] = $this->M_PengambilanMaterialProduksi->get_pengmat($id_permintaan)->result_array();
+
+      $id_permintaan_material = $data['one_pengmat'][0]['id_permintaan_material'];
+
+      $data['permat']       = $this->M_PengambilanMaterialProduksi->get_one_permat($id_permintaan_material)->result_array();
+      $data['detpermat']    = $this->M_PengambilanMaterialProduksi->get_one_detpermat($id_permintaan_material)->result_array();
+      $data['jm_detpermat'] = $this->M_PengambilanMaterialProduksi->get_one_detpermat($id_permintaan_material)->num_rows();
+      $data['pengmat']      = $this->M_PengambilanMaterialProduksi->get_pengmat_sebelum()->result_array();
+      $data['jm_pengmat']   = $this->M_PengambilanMaterialProduksi->get_pengmat_sebelum()->num_rows();
+      $data['wip']          = $this->M_PengambilanMaterialProduksi->get_wip()->result_array();
+      $data['jm_wip']       = $this->M_PengambilanMaterialProduksi->get_wip()->num_rows();
+
+      $data['det_inline']   = $this->M_PengambilanMaterialProduksi->get_det_inline()->result_array();
+      $data['jm_det_inline']= $this->M_PengambilanMaterialProduksi->get_det_inline()->num_rows();
+
+      $data['pertam']    = $this->M_PengambilanMaterialProduksi->get_pertam($id_permintaan_material)->result_array();
+      $data['jm_pertam'] = $this->M_PengambilanMaterialProduksi->get_pertam($id_permintaan_material)->num_rows();
+
+      echo json_encode($data);
+    }
+
+    public function edit_permintaan_pengambilan(){
+      $id_pengambilan_material = $this->input->post('id_pengmat_ed');
+      $id_sub_jenis_material   = $this->input->post('id_sub_jenmat');
+      $jumlah_lama             = $this->input->post('jumlah_lama');
+      $jumlah_baru             = $this->input->post('ambil');
+      $jumlah_pakai_wip_sebelum= $this->input->post('jumlah_wip_lama');
+      $wip                     = $this->input->post('wip');
+      $keterangan              = $this->input->post('keterangan');
+
+      $user = $_SESSION['id_user'];
+      $now  = date('Y-m-d H:i:s');
+      
+      if($jumlah_baru > $jumlah_lama){
+          $selisih_tambah = $jumlah_baru - $jumlah_lama;
+
+          if($selisih_tambah <= $wip){
+            $stok_wip              = $jumlah_pakai_wip_sebelum + $selisih_tambah;
+            $ambil_gudang          = 0;
+            $jumlah_pakai_wip_baru = $selisih_tambah;
+          } else if($selisih_tambah > $wip){
+            $stok_wip              = $jumlah_pakai_wip_sebelum + $wip;
+            $ambil_gudang          = $jumlah_baru - $stok_wip;
+            $jumlah_pakai_wip_baru = $wip;
+          }
+
+          //update pengambilan material
+              $data_pengmat = array(
+                'stok_wip'     => $stok_wip,
+                'jumlah_ambil' => $ambil_gudang,
+                'keterangan'   => $keterangan,
+                'user_edit'    => $user,
+                'waktu_edit'   => $now
+              );
+
+              $where_pengmat = array(
+                'id_pengambilan_material' => $id_pengambilan_material
+              );
+
+              $this->M_PengambilanMaterialProduksi->edit('pengambilan_material',$data_pengmat,$where_pengmat);
+          //tutup update pengambilan material
+
+          //update persediaan line
+              if($wip > 0){
+                $selik    = $this->M_PengambilanMaterialProduksi->get_one_selik($id_pengambilan_material)->result_array();
+                $jm_selik = $this->M_PengambilanMaterialProduksi->get_one_selik($id_pengambilan_material)->num_rows();
+
+                //persediaan line keluar
+                  if($jm_selik > 0){
+                    $id_persediaan_line_keluar = $selik[0]['id_persediaan_line_keluar'];
+                    $id_persediaan_line        = $selik[0]['id_persediaan_line'];
+                    $jumlah_selik_sebelum      = $selik[0]['jumlah_material'];
+                    $jumlah_persediaan_sebelum = $selik[0]['total_material'];
+
+
+                    $jumlah_material_baru = $jumlah_selik_sebelum + $jumlah_pakai_wip_baru;
+                      $data_selik = array(
+                        'jumlah_material' => $jumlah_material_baru,
+                        'user_edit'       => $user,
+                        'waktu_edit'      => $now
+                      );
+
+                      $where_selik = array(
+                        'id_persediaan_line_keluar' => $id_persediaan_line_keluar
+                      );
+
+                      $this->M_PengambilanMaterialProduksi->edit('persediaan_line_keluar',$data_selik,$where_selik);
+                  } else{
+                    //id_persediaan_line
+                    $persediaan_line = $this->M_PengambilanMaterialProduksi->get_one_persediaan_line($id_sub_jenis_material)->result_array();
+                    
+                    //id persediaan line keluar
+                      $tanggal = date('Y-m-d');
+                      $tahun_sekarang = substr(date('Y',strtotime($now)),2,2);
+                      $bulan_sekarang = date('m',strtotime($now));
+                      $id_code        = "SELIK".$tahun_sekarang.$bulan_sekarang.".";
+          
+                      $last       = $this->M_LaporanPerencanaanCutting->get_last_dinli_id($id_code)->result_array();
+                      $last_cek   = $this->M_LaporanPerencanaanCutting->get_last_dinli_id($id_code)->num_rows();
+          
+                      //id
+                      if($last_cek == 1){
+                          $id_terakhir    = $last[0]['id_persediaan_line_keluar'];
+          
+                          $tahun_sebelum  = substr($id_terakhir,5,2);
+                      
+                          $bulan_sebelum  = substr($id_terakhir,7,2);
+          
+                          //kalau tahun sama
+                          if($tahun_sebelum == $tahun_sekarang){
+                              //kalau tahun & bulannya sama berarti count+1
+                              if($bulan_sebelum == $bulan_sekarang){
+                                  $count = intval(substr($id_terakhir,10,5)) + 1;
+                                  $pjg   = strlen($count);
+          
+                                  if($pjg == 1){
+                                      $count_baru = "0000".$count;
+                                  }
+                                  else if($pjg == 2){
+                                      $count_baru = "000".$count;
+                                  }
+                                  else if($pjg == 3){
+                                      $count_baru = "00".$count;
+                                  }
+                                  else if($pjg == 4){
+                                      $count_baru = "0".$count;
+                                  }
+                                  else{
+                                      $count_baru = $count;
+                                  }
+                                  
+                                  //id yang baru
+                                  $id_dinli_baru = "SELIK".$tahun_sebelum.$bulan_sebelum.".".$count_baru;
+                              }
+                              //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                              else{
+                                  //id yang baru
+                                  $id_dinli_baru = "SELIK".$tahun_sekarang.$bulan_sekarang.".00001";
+                              }
+                          }
+                          //kalau tahun tidak sama
+                          else{
+                              //id yang baru
+                              $id_dinli_baru = "SELIK".$tahun_sekarang.$bulan_sekarang.".00001";
+                          }
+                      }
+                      else{
+                          //id yang baru
+                          $id_dinli_baru = "SELIK".$tahun_sekarang.$bulan_sekarang.".00001";
+                      }
+                    //tutup id persediaan line keluar
+
+                    $data_selik = array(
+                      'id_persediaan_line_keluar' => $id_dinli_baru,
+                      'id_persediaan_line'        => $persediaan_line[0]['id_persediaan_line'],
+                      'id_pengambilan_material'   => $id_pengambilan_material,
+                      'tanggal'                   => date('Y-m-d'),
+                      'jumlah_material'           => $jumlah_pakai_wip_baru,
+                      'user_add'                  => $user,
+                      'waktu_add'                 => $now,
+                      'status_delete'             => 0
+                    );
+
+                    $this->M_PengambilanMaterialProduksi->insert('persediaan_line_keluar',$data_selik);
+                  }
+                //tutup persediaan line keluar
+
+                //persediaan line
+                    $jumlah_persediaan_baru = $jumlah_persediaan_sebelum - $jumlah_pakai_wip_baru;
+
+                    $data_perline = array(
+                        'total_material' => $jumlah_persediaan_baru,
+                        'user_edit'      => $user,
+                        'waktu_edit'     => $now
+                    );
+
+                    $where_perline = array(
+                        'id_persediaan_line' => $id_persediaan_line
+                    );
+
+                    $this->M_PengambilanMaterialProduksi->edit('persediaan_line',$data_perline,$where_perline);
+                //tutup persediaan line
+              }
+          //tutup update persediaan line  
+      } else if($jumlah_baru < $jumlah_lama){
+          
+      }
+
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////
-    public function coba_tambah(){
-      $this->load->view('v_pengambilan_material_produksi_tambah1');
-    }
-
-    public function belum_disetujui_pengambilan_material(){
-      $this->load->view('v_pengambilan_material_produksi_belum_disetujui');
-    }
-
-    public function belum_diambil_pengambilan_material(){
-      $this->load->view('v_pengambilan_material_produksi_belum_diambil');
-    }
-
-    public function selesai_pengambilan_material(){
-      $this->load->view('v_pengambilan_material_produksi_selesai');
-    }
-
-    public function batal_pengambilan_material(){
-      $this->load->view('v_pengambilan_material_produksi_batal');
-    }
-
-    public function delete(){
-      $this->load->view('v_pengambilan_material_produksi_semua');
-    }
-
     public function print_pengambilan_material(){
       $pdf = new FPDF('l','mm','A5');
       //buat halaman baru

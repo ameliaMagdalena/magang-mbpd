@@ -123,10 +123,80 @@ class PermintaanTambahan extends CI_Controller {
         redirect('permintaanTambahan');
     }
 
+    function detail_permat(){
+        $id = $this->input->post('id');
+
+        $data['permat'] = $this->M_PermintaanTambahan->get_one_permat($id)->result_array();
+
+        echo json_encode($data);
+    }
+
+    function edit_permat(){
+        $id         = $this->input->post('no_permat_ed');
+        $jumlah     = $this->input->post('jumlah_ed');
+        $keterangan = $this->input->post('keterangan_ed');
+
+        $data = array(
+            'jumlah_tambah' => $jumlah,
+            'keterangan'    => $keterangan,
+            'user_edit'     => $_SESSION['id_user'],
+            'waktu_edit'    => date('Y-m-d H:i:s')
+        );
+
+        $where = array(
+            'id_permintaan_tambahan' => $id
+        );
+
+        $this->M_PermintaanTambahan->edit('permintaan_tambahan',$data,$where);
+        
+        redirect('permintaanTambahan/semua');
+    }
+
+    function delete_permat(){
+        $id = $this->input->post('id_pertam_del');
+
+        $data = array(
+            'status_delete' => 1,
+            'user_delete'   => $_SESSION['id_user'],
+            'waktu_delete'  => date('Y-m-d H:i:s')
+        );
+
+        $where = array(
+            'id_permintaan_tambahan' =>$id
+        );
+
+        $this->M_PermintaanTambahan->edit('permintaan_tambahan',$data,$where);
+
+        redirect('permintaanTambahan/semua');
+    }
+
     function semua(){
         $data['pertam'] = $this->M_PermintaanTambahan->select_all_aktif()->result();
 
         $this->load->view('v_permintaan_tambahan_semua', $data);
     }
 
+    function belum_diproses(){
+        $data['pertam'] = $this->M_PermintaanTambahan->select_all_aktif()->result();
+
+        $this->load->view('v_permintaan_tambahan_belum_diproses', $data);
+    }
+
+    function diterima(){
+        $data['pertam'] = $this->M_PermintaanTambahan->select_all_aktif()->result();
+
+        $this->load->view('v_permintaan_tambahan_diterima', $data);
+    }
+
+    function ditolak(){
+        $data['pertam'] = $this->M_PermintaanTambahan->select_all_aktif()->result();
+
+        $this->load->view('v_permintaan_tambahan_ditolak', $data);
+    }
+
+    function selesai(){
+        $data['pertam'] = $this->M_PermintaanTambahan->select_all_aktif()->result();
+
+        $this->load->view('v_permintaan_tambahan_selesai', $data);
+    }
 }

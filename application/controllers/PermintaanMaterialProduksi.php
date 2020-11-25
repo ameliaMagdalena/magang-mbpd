@@ -28,6 +28,7 @@ class PermintaanMaterialProduksi extends CI_Controller {
 
     public function belum_ditindaklanjuti(){
         $data['permintaan_material'] = $this->M_PermintaanMaterialProduksi->select_all_aktif()->result();
+        $data['jumlah_ubmin']        = $this->M_PermintaanMaterialProduksi->get_jumlah_ubmin()->result();
     
         $data['warna']            = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
@@ -37,6 +38,7 @@ class PermintaanMaterialProduksi extends CI_Controller {
 
     public function sedang_diproses(){
         $data['permintaan_material'] = $this->M_PermintaanMaterialProduksi->select_all_aktif()->result();
+        $data['jumlah_ubmin']        = $this->M_PermintaanMaterialProduksi->get_jumlah_ubmin()->result();
     
         $data['warna']            = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
@@ -46,6 +48,7 @@ class PermintaanMaterialProduksi extends CI_Controller {
 
     public function selesai(){
         $data['permintaan_material'] = $this->M_PermintaanMaterialProduksi->select_all_aktif()->result();
+        $data['jumlah_ubmin']        = $this->M_PermintaanMaterialProduksi->get_jumlah_ubmin()->result();
     
         $data['warna']            = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
@@ -55,6 +58,7 @@ class PermintaanMaterialProduksi extends CI_Controller {
 
     public function  batal(){
         $data['permintaan_material'] = $this->M_PermintaanMaterialProduksi->select_all_aktif()->result();
+        $data['jumlah_ubmin']        = $this->M_PermintaanMaterialProduksi->get_jumlah_ubmin()->result();
     
         $data['warna']            = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
@@ -64,6 +68,7 @@ class PermintaanMaterialProduksi extends CI_Controller {
 
     public function ditolak(){
         $data['permintaan_material'] = $this->M_PermintaanMaterialProduksi->select_all_aktif()->result();
+        $data['jumlah_ubmin']        = $this->M_PermintaanMaterialProduksi->get_jumlah_ubmin()->result();
     
         $data['warna']            = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
@@ -81,7 +86,7 @@ class PermintaanMaterialProduksi extends CI_Controller {
         echo json_encode($data);
     }
 
-    function perubahan_permintaan(){
+    public function perubahan_permintaan(){
         $id = $this->input->post('id');
 
         $data['ubmin']    = $this->M_PermintaanMaterialProduksi->get_ubmin($id)->result_array();
@@ -90,6 +95,8 @@ class PermintaanMaterialProduksi extends CI_Controller {
         echo json_encode($data);
     }
 
-   
+    public function edit_permintaan_pengambilan(){
+        
+    }
 
 }

@@ -590,7 +590,6 @@
 <?php include('_js.php'); ?>
 <!--*****************************-->
 <!--*****************************-->
-
 <script>
     function reload() {
         location.reload();
@@ -866,7 +865,7 @@
     });
 </script>
 
-<!-- add sj -->
+<!-- add -->
 <script>
     $('.badd_klik').click(function(){
         var no      = $(this).attr('value');
@@ -897,7 +896,7 @@
     });
 </script>
 
-<!-- ganti add sj -->
+<!-- ganti add -->
 <script>
     function ganti(){
         if($("#id_line").val() == "kosong"){          
@@ -1060,7 +1059,7 @@
     }
 </script>
 
-<!-- hitung efisiensi add sj -->
+<!-- hitung efisiensi add -->
 <script>
     function hitung_ef(obj){
         var count = obj.id;
@@ -1074,7 +1073,7 @@
     }
 </script>
 
-<!-- edit sj -->
+<!-- edit -->
 <script>
     $('.bedit_klik').click(function(){
         var no      = $(this).attr('value');
@@ -1107,7 +1106,7 @@
     });
 </script>
 
-<!-- ganti edit sj -->
+<!-- ganti edit -->
 <script>
     function ganti_edit(){
         if($("#id_line_edit").val() == "kosong"){
@@ -1357,8 +1356,12 @@
                                     //material dari inventory line
                                     $from_inli = 0;
 
+                                    //konsumsi gudang material
+                                    $ambilnya = Math.ceil(parseFloat($material_gudang)/parseFloat($ukuran_satuan_keluar));
+
                                     //wipnya
-                                    $wip = parseFloat($from_inli) + (parseFloat($material_gudang) * parseFloat($ukuran_satuan_keluar))  - parseFloat($jumlah_konsumsi_seharusnya);
+                                    $wip = parseFloat($from_inli) + ($ambilnya * $ukuran_satuan_keluar) - parseFloat($jumlah_konsumsi_seharusnya);
+
 
                                     if($wip < 0){
                                         $cek++;
@@ -1386,7 +1389,7 @@
                                             '<center>'+0+'</center>'+
                                         '</td>'+
                                         '<td>'+
-                                            '<center>'+($material_gudang * $ukuran_satuan_keluar)+'</center>'+
+                                            '<center>'+($ambilnya * $ukuran_satuan_keluar)+'</center>'+
                                         '</td>'+
                                         '<td>'+
                                             '<center>'+$wip+'</center>'+
