@@ -197,14 +197,10 @@
                             href="<?php echo base_url() . 'PerencanaanMaterial/proses_perencanaan/' . $permintaan_material[$x]['id_permintaan_material']?>"></a> -->
                         <a class="col-lg-3 btn btn-info fa fa-file-text" title="Perencanaan"
                             href="<?php echo base_url() . 'PermintaanMaterial/proses_perencanaan/' . $permintaan_material[$x]['id_permintaan_material']?>"></a>
-                        <button type="button" class="beliz col-lg-3 btn btn-warning fa fa-shopping-cart" 
-                            value="<?php echo $x ?>" title="Beli"></button>
                         <button type="button" class="selesaiz col-lg-3 btn btn-success fa fa-check" 
                             value="<?php echo $x ?>" title="Selesaikan"></button>
                         <button type="button" class="batalz col-lg-3 btn btn-danger fa fa-times" 
                             value="<?php echo $x ?>" title="Batal"></button>
-                        <button type="button" class="editz col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                            value="<?php echo $x ?>" title="Edit"></button>
                         <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
                             value="<?php echo $x ?>" title="Hapus"></button>
                     </td>
