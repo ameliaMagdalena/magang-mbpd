@@ -78,8 +78,18 @@ class M_PerencanaanMaterial extends CI_Model {
         return $this->db->query("SELECT * FROM pengambilan_material a
         JOIN detail_permintaan_material b ON a.id_detail_permintaan_material = b.id_detail_permintaan_material
         JOIN karyawan c ON a.id_karyawan = c.id_karyawan
-        JOIN pengeluaran_material d ON a.id_pengeluaran_material = d.id_pengeluaran_material
-        JOIN konsumsi_material e ON b.id_konsumsi_material = e.id_konsumsi_material
+        JOIN konsumsi_material d ON b.id_konsumsi_material = d.id_konsumsi_material
         WHERE a.status_delete = '0' AND b.id_permintaan_material='$id'");
+    }
+
+    function selectSatuPengambilanMaterial($id){
+        return $this->db->query("SELECT * FROM pengambilan_material a
+        JOIN detail_permintaan_material b ON a.id_detail_permintaan_material = b.id_detail_permintaan_material
+        JOIN karyawan c ON a.id_karyawan = c.id_karyawan
+        JOIN konsumsi_material d ON b.id_konsumsi_material = d.id_konsumsi_material
+        JOIN permintaan_material e ON b.id_permintaan_material = e.id_permintaan_material
+        JOIN line f ON e.id_line = f.id_line
+        JOIN sub_jenis_material g ON d.id_sub_jenis_material = g.id_sub_jenis_material
+        WHERE a.status_delete = '0' AND a.id_pengambilan_material='$id'");
     }
 }

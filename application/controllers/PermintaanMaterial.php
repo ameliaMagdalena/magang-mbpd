@@ -117,6 +117,12 @@ class PermintaanMaterial extends CI_Controller {
         $this->load->view('v_detail_perencanaan', $data);
     }
     
+    public function ajax_ambil(){
+        $id             = $this->input->post('id');
+        $data['ambil'] = $this->M_PerencanaanMaterial->selectSatuPengambilanMaterial($id)->result_array();
+
+        echo json_encode($data);
+    }
 
     public function detailPermintaanSementara(){
         $this->load->view('detailPermintaanSementara');

@@ -226,58 +226,58 @@
                 <!-- ****************************** MODAL SELESAI ***************************** -->
                 <!-- ************************************************************************** -->
                 <div class="modal" id="selesai" role="dialog">
-                        <div class="modal-dialog modal-xl" style="width:50%">
-                            <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PermintaanMaterial/setuju" method="post">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title"><b>Menyelesaikan Permintaan Material</b></h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <input type="hidden" name="idnyaa" id="idselesai" class="form-control" value="" readonly>
-                                        <input type="hidden" name="status" class="form-control" value="2" readonly>
-                                        <div id="isiselesai"></div>
-                                    </div>
-                                    <footer class="panel-footer">
-                                        <div class="row">
-                                            <div class="col-md-12 text-right">
-                                                <input type="submit" class="btn btn-primary" value="Ya">
-                                                <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
-                                            </div>
-                                        </div>
-                                    </footer>
+                    <div class="modal-dialog modal-xl" style="width:50%">
+                        <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PermintaanMaterial/setuju" method="post">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"><b>Menyelesaikan Permintaan Material</b></h4>
                                 </div>
-                            </form>
-                        </div>
+                                <div class="modal-body">
+                                    <input type="hidden" name="idnyaa" id="idselesai" class="form-control" value="" readonly>
+                                    <input type="hidden" name="status" class="form-control" value="2" readonly>
+                                    <div id="isiselesai"></div>
+                                </div>
+                                <footer class="panel-footer">
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <input type="submit" class="btn btn-primary" value="Ya">
+                                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                        </div>
+                                    </div>
+                                </footer>
+                            </div>
+                        </form>
                     </div>
+                </div>
                 <!-- **************************** END MODAL SELESAI *************************** -->
                 <!-- ************************************************************************** -->
 
                 <!-- ****************************** MODAL BATAL ***************************** -->
                 <!-- ************************************************************************ -->
                 <div class="modal" id="batal" role="dialog">
-                        <div class="modal-dialog modal-xl" style="width:50%">
-                            <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PermintaanMaterial/setuju" method="post">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title"><b>Menolak Permintaan Material</b></h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <input type="hidden" name="idnyaa" id="idbatal" class="form-control" value="" readonly>
-                                        <input type="hidden" name="status" class="form-control" value="3" readonly>
-                                        <div id="isibatal"></div>
-                                    </div>
-                                    <footer class="panel-footer">
-                                        <div class="row">
-                                            <div class="col-md-12 text-right">
-                                                <input type="submit" class="btn btn-primary" value="Ya">
-                                                <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
-                                            </div>
-                                        </div>
-                                    </footer>
+                    <div class="modal-dialog modal-xl" style="width:50%">
+                        <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PermintaanMaterial/setuju" method="post">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"><b>Menolak Permintaan Material</b></h4>
                                 </div>
-                            </form>
-                        </div>
+                                <div class="modal-body">
+                                    <input type="hidden" name="idnyaa" id="idbatal" class="form-control" value="" readonly>
+                                    <input type="hidden" name="status" class="form-control" value="3" readonly>
+                                    <div id="isibatal"></div>
+                                </div>
+                                <footer class="panel-footer">
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <input type="submit" class="btn btn-primary" value="Ya">
+                                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                        </div>
+                                    </div>
+                                </footer>
+                            </div>
+                        </form>
                     </div>
+                </div>
                 <!-- ***************************** END MODAL BATAL *************************** -->
                 <!-- ************************************************************************* -->
                 <?php $no=$no+1; } } } ?>
