@@ -1388,7 +1388,7 @@
 								<ul class="nav nav-children">
 									<li>
 										<a href="<?= base_url()?>permintaanMaterialProduksi">
-											Semua Permintaan Material
+											Semua
 										</a>
 									</li>
 									<li>
@@ -1620,18 +1620,23 @@
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_disetujui_pengambilan_material">
+										<a href="<?= base_url()?>permintaanTambahan/belum_diproses">
 											Belum Diproses
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_diambil_pengambilan_material">
+										<a href="<?= base_url()?>permintaanTambahan/diterima">
 											Diterima
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_diambil_pengambilan_material">
+										<a href="<?= base_url()?>permintaanTambahan/ditolak">
 											Ditolak
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>permintaanTambahan/selesai">
+											Selesai
 										</a>
 									</li>
 								</ul>
