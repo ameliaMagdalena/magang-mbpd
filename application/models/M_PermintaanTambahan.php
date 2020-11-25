@@ -22,10 +22,22 @@ class M_PermintaanTambahan extends CI_Model {
     }
 
     function select_all_aktif(){
-        return $this->db->query("SELECT permintaan_tambahan.jumlah_tambah,permintaan_tambahan.status,sub_jenis_material.nama_sub_jenis_material,
+        return $this->db->query("SELECT permintaan_tambahan.id_permintaan_tambahan,permintaan_tambahan.id_permintaan_tambahan,permintaan_tambahan.jumlah_tambah,
+        permintaan_tambahan.status,sub_jenis_material.nama_sub_jenis_material,
         sub_jenis_material.satuan_keluar,permintaan_tambahan.waktu_add
         FROM permintaan_tambahan,detail_permintaan_material,konsumsi_material,sub_jenis_material
         WHERE permintaan_tambahan.status_delete='0' AND 
+        permintaan_tambahan.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material AND
+        detail_permintaan_material.id_konsumsi_material=konsumsi_material.id_konsumsi_material AND
+        konsumsi_material.id_sub_jenis_material=sub_jenis_material.id_sub_jenis_material ");
+    }
+
+    function get_one_permat($id){
+        return $this->db->query("SELECT permintaan_tambahan.id_permintaan_tambahan,permintaan_tambahan.jumlah_tambah,
+        permintaan_tambahan.status,sub_jenis_material.nama_sub_jenis_material,detail_permintaan_material.id_permintaan_material,
+        sub_jenis_material.satuan_keluar,permintaan_tambahan.waktu_add,sub_jenis_material.satuan_keluar,permintaan_tambahan.keterangan
+        FROM permintaan_tambahan,detail_permintaan_material,konsumsi_material,sub_jenis_material
+        WHERE permintaan_tambahan.status_delete='0' AND permintaan_tambahan.id_permintaan_tambahan='$id' AND 
         permintaan_tambahan.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material AND
         detail_permintaan_material.id_konsumsi_material=konsumsi_material.id_konsumsi_material AND
         konsumsi_material.id_sub_jenis_material=sub_jenis_material.id_sub_jenis_material ");

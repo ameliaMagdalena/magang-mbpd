@@ -248,7 +248,6 @@
 <?php include('_js.php'); ?>
 <!--*****************************-->
 <!--*****************************-->
-
 <script>
     function reload() {
     location.reload();
@@ -867,9 +866,11 @@
                                     }
                             }
                             
+                            //konsumsi gudang material
+                            $ambilnya = Math.ceil(parseFloat($material_gudang)/parseFloat($ukuran_satuan_keluar));
 
                             //wipnya
-                            $wip = parseFloat($from_inli) + (parseFloat($material_gudang) * parseFloat($ukuran_satuan_keluar)) - parseFloat($jumlah_konsumsi_seharusnya);
+                            $wip = parseFloat($from_inli) + ($ambilnya * $ukuran_satuan_keluar) - parseFloat($jumlah_konsumsi_seharusnya);
 
                             if($wip < 0){
                                 $cek++;
@@ -905,7 +906,7 @@
                                 '</td>'+
                                 '<td>'+
                                     '<center>'+
-                                        ($material_gudang * $ukuran_satuan_keluar)+
+                                        ($ambilnya * $ukuran_satuan_keluar)+
                                     '</center>'+
                                 '</td>'+
                                 '<td>'+

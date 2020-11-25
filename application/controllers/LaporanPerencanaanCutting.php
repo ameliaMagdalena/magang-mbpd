@@ -132,7 +132,7 @@ class LaporanPerencanaanCutting extends CI_Controller {
 
                 //jika ditemukan
                 if($jm_cari_inline > 0){
-                    $id_inli                = $cari_inline[0]['id_inventory_line'];
+                    $id_inli                = $cari_inline[0]['id_persediaan_line'];
                     $total_material_sebelum = $cari_inline[0]['total_material'];
 
                     $total_material_baru = $total_material_sebelum + $wip;
@@ -144,10 +144,10 @@ class LaporanPerencanaanCutting extends CI_Controller {
                     );
 
                     $where_inventory_line = array(
-                        'id_inventory_line' =>  $id_inli
+                        'id_persediaan_line' =>  $id_inli
                     );
 
-                    $this->M_LaporanPerencanaanCutting->edit('inventory_line',$data_inventory_line,$where_inventory_line);
+                    $this->M_LaporanPerencanaanCutting->edit('persediaan_line',$data_inventory_line,$where_inventory_line);
                 }
                 //jika tidak ada, maka
                 else{
@@ -155,10 +155,10 @@ class LaporanPerencanaanCutting extends CI_Controller {
                     $jumlah_inli    = $this->M_HasilProduksi->select_all_inventory_line()->num_rows();
                     $id_number      = $jumlah_inli + 1;
 
-                    $id_inli     = "INLI-".$id_number;
+                    $id_inli     = "SELI-".$id_number;
 
                     $data_inline = array(
-                        'id_inventory_line'     => $id_inli,
+                        'id_persediaan_line'    => $id_inli,
                         'id_line'               => $id_line,
                         'id_sub_jenis_material' => $id_sub_jm,
                         'total_material'        => $wip,
@@ -166,21 +166,21 @@ class LaporanPerencanaanCutting extends CI_Controller {
                         'waktu_add'             => $now,
                         'status_delete'         => 0
                     );
-                    $this->M_LaporanPerencanaanCutting->insert('inventory_line',$data_inline);
+                    $this->M_LaporanPerencanaanCutting->insert('persediaan_line',$data_inline);
                 }
 
                 //DETAIL INVENTORY LINE
                     //id detail inventory line
                     $tahun_sekarang = substr(date('Y',strtotime($now)),2,2);
                     $bulan_sekarang = date('m',strtotime($now));
-                    $id_code        = "DINLI".$tahun_sekarang.$bulan_sekarang.".";
+                    $id_code        = "SELIM".$tahun_sekarang.$bulan_sekarang.".";
         
-                    $last       = $this->M_LaporanPerencanaanCutting->get_last_dinli_id($id_code)->result_array();
-                    $last_cek   = $this->M_LaporanPerencanaanCutting->get_last_dinli_id($id_code)->num_rows();
+                    $last       = $this->M_LaporanPerencanaanCutting->get_last_dinli_id_masuk($id_code)->result_array();
+                    $last_cek   = $this->M_LaporanPerencanaanCutting->get_last_dinli_id_masuk($id_code)->num_rows();
         
                     //id
                     if($last_cek == 1){
-                        $id_terakhir    = $last[0]['id_detail_inventory_line'];
+                        $id_terakhir    = $last[0]['id_persediaan_line_masuk'];
         
                         $tahun_sebelum  = substr($id_terakhir,5,2);
                     
@@ -210,28 +210,28 @@ class LaporanPerencanaanCutting extends CI_Controller {
                                 }
                                 
                                 //id yang baru
-                                $id_dinli_baru = "DINLI".$tahun_sebelum.$bulan_sebelum.".".$count_baru;
+                                $id_dinli_baru = "SELIM".$tahun_sebelum.$bulan_sebelum.".".$count_baru;
                             }
                             //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
                             else{
                                 //id yang baru
-                                $id_dinli_baru = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
+                                $id_dinli_baru = "SELIM".$tahun_sekarang.$bulan_sekarang.".00001";
                             }
                         }
                         //kalau tahun tidak sama
                         else{
                             //id yang baru
-                            $id_dinli_baru = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
+                            $id_dinli_baru = "SELIM".$tahun_sekarang.$bulan_sekarang.".00001";
                         }
                     }
                     else{
                         //id yang baru
-                        $id_dinli_baru = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
+                        $id_dinli_baru = "SELIM".$tahun_sekarang.$bulan_sekarang.".00001";
                     }
 
                     $data_detail_inline = array(
-                            'id_detail_inventory_line' => $id_dinli_baru,
-                            'id_inventory_line'        => $id_inli,
+                            'id_persediaan_line_masuk' => $id_dinli_baru,
+                            'id_persediaan_line'       => $id_inli,
                             'tanggal'                  => $tanggal,
                             'jumlah_material'          => $wip,
                             'status'                   => 0,
@@ -240,7 +240,7 @@ class LaporanPerencanaanCutting extends CI_Controller {
                             'status_delete'            => 0
                     );
 
-                    $this->M_LaporanPerencanaanCutting->insert('detail_inventory_line',$data_detail_inline);
+                    $this->M_LaporanPerencanaanCutting->insert('persediaan_line_masuk',$data_detail_inline);
                 //tutup detail inventory line
             }
         }

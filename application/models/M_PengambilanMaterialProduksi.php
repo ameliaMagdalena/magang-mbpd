@@ -49,11 +49,12 @@ class M_PengambilanMaterialProduksi extends CI_Model {
         return $this->db->query("SELECT pengambilan_material.id_detail_permintaan_material, 
         SUM(pengambilan_material.jumlah_ambil) AS jumlah_keluar
         FROM pengambilan_material
-        WHERE pengambilan_material.status_delete='0' GROUP BY pengambilan_material.id_detail_permintaan_material");
+        WHERE pengambilan_material.status_delete='0' AND pengambilan_material.status_permintaan ='0'
+        GROUP BY pengambilan_material.id_detail_permintaan_material");
     }
 
     function get_wip(){
-        return $this->db->query("SELECT * FROM inventory_line WHERE status_delete='0' ");
+        return $this->db->query("SELECT * FROM persediaan_line WHERE status_delete='0' ");
     }
 
     function get_last_lumat_id($id_code){
@@ -86,15 +87,16 @@ class M_PengambilanMaterialProduksi extends CI_Model {
     }
 
     function select_all_pm($line){
-        return $this->db->query("SELECT sub_jenis_material.nama_sub_jenis_material,pengeluaran_material.tanggal_keluar,pengambilan_material.stok_wip,
-        pengeluaran_material.jumlah_keluar,pengambilan_material.status_keluar 
-        FROM pengambilan_material,pengeluaran_material,sub_jenis_material,detail_permintaan_material,permintaan_material,line
+        return $this->db->query("SELECT sub_jenis_material.nama_sub_jenis_material,pengambilan_material.tanggal_ambil,
+        pengambilan_material.stok_wip,pengambilan_material.jumlah_ambil,pengambilan_material.status_keluar,
+        pengambilan_material.status_pengambilan,pengambilan_material.status_permintaan,pengambilan_material.id_pengambilan_material 
+        FROM pengambilan_material,sub_jenis_material,detail_permintaan_material,permintaan_material,line,konsumsi_material
         WHERE pengambilan_material.status_delete='0' AND line.nama_line='$line'
-        AND pengambilan_material.id_pengeluaran_material=pengeluaran_material.id_pengeluaran_material
-        AND pengeluaran_material.id_sub_jenis_material = sub_jenis_material.id_sub_jenis_material
-        AND pengambilan_material.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material 
         AND detail_permintaan_material.id_permintaan_material=permintaan_material.id_permintaan_material
-        AND permintaan_material.id_line=line.id_line");
+        AND detail_permintaan_material.id_konsumsi_material=konsumsi_material.id_konsumsi_material
+        AND konsumsi_material.id_sub_jenis_material=sub_jenis_material.id_sub_jenis_material
+        AND permintaan_material.id_line=line.id_line 
+        AND pengambilan_material.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material");
     }
 
     function get_sub_jenis_material($id_sub_jenmat){
@@ -102,7 +104,9 @@ class M_PengambilanMaterialProduksi extends CI_Model {
     }
 
     function get_det_inline(){
-        return $this->db->query("SELECT * FROM detail_inventory_line WHERE status_delete='0' ");
+        return $this->db->query("SELECT * FROM persediaan_line_keluar,pengambilan_material 
+        WHERE persediaan_line_keluar.status_delete='0' 
+        AND persediaan_line_keluar.id_pengambilan_material=pengambilan_material.id_pengambilan_material");
     }
 
     function get_pertam($id){
@@ -116,5 +120,29 @@ class M_PengambilanMaterialProduksi extends CI_Model {
         detail_permintaan_material.id_konsumsi_material=konsumsi_material.id_konsumsi_material AND
         konsumsi_material.id_sub_jenis_material=sub_jenis_material.id_sub_jenis_material AND
         detail_permintaan_material.id_permintaan_material=permintaan_material.id_permintaan_material  ");
+    }
+
+    function get_pengmat($id){
+        return $this->db->query("SELECT sub_jenis_material.nama_sub_jenis_material,pengambilan_material.tanggal_ambil,
+        pengambilan_material.stok_wip,pengambilan_material.jumlah_ambil,pengambilan_material.status_keluar,
+        pengambilan_material.status_pengambilan,pengambilan_material.status_permintaan,pengambilan_material.id_pengambilan_material,
+        pengambilan_material.id_detail_permintaan_material,pengambilan_material.keterangan,sub_jenis_material.satuan_keluar,
+        permintaan_material.id_permintaan_material
+        FROM pengambilan_material,sub_jenis_material,detail_permintaan_material,permintaan_material,konsumsi_material
+        WHERE pengambilan_material.id_pengambilan_material='$id'
+        AND detail_permintaan_material.id_permintaan_material=permintaan_material.id_permintaan_material
+        AND detail_permintaan_material.id_konsumsi_material=konsumsi_material.id_konsumsi_material
+        AND konsumsi_material.id_sub_jenis_material=sub_jenis_material.id_sub_jenis_material
+        AND pengambilan_material.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material");
+    }
+
+    function get_one_selik($id_pengambilan_material){
+        return $this->db->query("SELECT * FROM persediaan_line_keluar,persediaan_line 
+        WHERE persediaan_line_keluar.id_pengambilan_material='$id_pengambilan_material' AND persediaan_line_keluar.status_delete='0'
+        AND persediaan_line_keluar.id_persediaan_line=persediaan_line.id_persediaan_line ");
+    }
+
+    function get_one_persediaan_line($id_sub_jenis_material){
+        return $this->db->query("SELECT * FROM persediaan_line WHERE id_sub_jenis_material='$id_sub_jenis_material' AND status_delete='0' ");
     }
 }

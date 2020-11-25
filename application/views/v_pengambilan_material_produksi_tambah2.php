@@ -196,7 +196,7 @@
 
     <!-- modal tambah -->
     <div class="modal" id="modaltambah" role="dialog">
-        <div class="modal-dialog modal-xl" style="width:80%">
+        <div class="modal-dialog modal-xl" style="width:90%">
             <form method="POST" action="<?= base_url()?>pengambilanMaterialProduksi/tambah_permintaan_pengambilan">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -401,6 +401,9 @@
                             ($i+1)+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['detpermat'][$i]['id_detail_permintaan_material']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
                             respond['detpermat'][$i]['nama_sub_jenis_material']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
@@ -424,6 +427,9 @@
                                 '<tr>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'No'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Kode Detail Permintaan Material'+
                                     '</th>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'Nama Material'+
@@ -535,6 +541,9 @@
                             '<input type="hidden" id="stat_km'+$i+'" value="'+respond['detpermat'][$i]['status_konsumsi']+'" >'+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['detpermat'][$i]['id_detail_permintaan_material']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
                             '<input type="hidden" name="id_det_permat'+$i+'" value="'+respond['detpermat'][$i]['id_detail_permintaan_material']+'">'+
                             '<input type="hidden" name="id_sub_jenmat'+$i+'" value="'+respond['detpermat'][$i]['id_sub_jenis_material']+'">'+
                             respond['detpermat'][$i]['nama_sub_jenis_material']+
@@ -573,6 +582,9 @@
                                 '<tr>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'No'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Kode Detail Permintaan Material'+
                                     '</th>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'Nama Material'+
@@ -653,6 +665,9 @@
                             '<input type="hidden" name="id_pertam'+$i+'" value="'+respond['pertam'][$i]['id_permintaan_tambahan']+'">'+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['pertam'][$i]['id_permintaan_tambahan']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
                             respond['pertam'][$i]['waktu_add']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
@@ -681,6 +696,9 @@
                                 '<tr>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'No'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Kode Permintaan Tambahan'+
                                     '</th>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'Waktu Permintaan'+

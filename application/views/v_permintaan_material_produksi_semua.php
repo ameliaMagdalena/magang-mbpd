@@ -265,6 +265,9 @@
                             ($i+1)+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['detpermat'][$i]['id_detail_permintaan_material']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
                             respond['detpermat'][$i]['nama_sub_jenis_material']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
@@ -285,6 +288,9 @@
                                 '<tr>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'No'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Kode Detail Permintaan Material'+
                                     '</th>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'Nama Material'+

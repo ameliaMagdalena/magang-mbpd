@@ -66,7 +66,7 @@
                             <td  class="col-lg-3">
                                 <button type="button" class="bdetail_klik col-lg-3 btn btn-primary fa fa-info-circle" title="Detail"
                                 id="bdetail<?php echo $x->id_produksi?>" value="<?= $no ?>"></button>
-                                <?php if($x->start < $now && $x->end > $now){ ?>
+                                <?php if($x->start <= $now && $x->end > $now){ ?>
                                     <form method="POST" action="<?= base_url()?>perencanaanProduksi/edit_perencanaan_produksi">
                                         <input type="hidden" name="id" value="<?= $x->id_produksi?>">
                                         <button type="submit" class="col-lg-3 btn btn-warning fa fa-pencil-square-o"

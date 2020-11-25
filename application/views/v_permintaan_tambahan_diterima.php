@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Semua Permintaan Tambahan</h2>
+        <h2>Permintaan Tambahan Diterima</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Semua Permintaan Tambahan</span></span></li>
+                <li><span>Permintaan Tambahan Diterima</span></span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -25,7 +25,7 @@
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
         <header class="panel-heading">
-            <h2 class="panel-title">Data Semua Permintaan Tambahan</h2>
+            <h2 class="panel-title">Data Permintaan Tambahan Diterima</h2>
         </header>
 
         <div class="panel-body">
@@ -45,7 +45,9 @@
                 <tbody>
                     <?php 
                         $no = 1;
-                        foreach($pertam as $x){?>
+                        foreach($pertam as $x){
+                            if($x->status == 1){
+                    ?>
                         <tr>
                             <td  style="text-align: center;vertical-align: middle;">
                                 <?= $no ?>
@@ -89,7 +91,7 @@
                                 <?php } ?>
                             </td>
                         </tr>
-                    <?php $no++; } ?>
+                    <?php $no++; }} ?>
                 </tbody>
 	        </table>
         </div>
