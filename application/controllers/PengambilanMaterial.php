@@ -37,7 +37,7 @@ class PengambilanMaterial extends CI_Controller {
             "waktu_add"=>date('Y-m-d H:i:s'),
             "user_edit"=>"0",
             "user_delete"=>"0"
-        )
+        );
         $this->M_PengeluaranMaterial->insert($data2);
         
         $permintaan = $this->input->post('id_permintaan');

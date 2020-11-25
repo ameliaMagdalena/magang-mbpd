@@ -42,7 +42,6 @@
 <hr>
 
 
-<form class="form-horizontal mb-lg" action="<?php //echo base_url()?>" method="post">
     <div class="panel-body">
         <div class="form-group mt-lg">
             <label class="col-sm-3 control-label">ID Permintaan Material</label>
@@ -158,14 +157,15 @@
                                         <input type="hidden" id="idd<?= $z ?>" value="<?php echo $pengambilan[$z]['id_pengambilan_material'] ?>" >
                                         <input type="hidden" id="uksatuan<?= $z ?>" value="<?php echo $detail[$x]['ukuran_satuan_keluar'] ?>" >
                             <tr>
-                                <td><?php echo "test" //$pengambilan[$z]['tanggal_ambil'] ?>
+                                <td><?php echo $pengambilan[$z]['tanggal_ambil'] ?>
                                 </td>
-                                <td><?php $jlhsatu = 0;
+                                <td><?php /* $jlhsatu = 0;
                                     for($a=0; $a<count($pengambilan); $a++){
                                         if ($pengambilan[$a]['id_sub_jenis_material'] == $detail[$x]['id_sub_jenis_material']){
                                             $jlhsatu = $jlhsatu + $pengambilan[$a]['jumlah_ambil']; //jumlah dengan satuan keluar
                                         }
-                                    }
+                                    } */
+                                    $jlhsatu = $pengambilan[$z]['jumlah_ambil'];
                                     $uk=$detail[$x]['ukuran_satuan_keluar']; //ukuran satuan keluar
                                     $jlhnya=$jlhsatu/$uk; //jumlah dengan satuan ukuran
                                     $jumlahnya = ceil($jlhnya); //ceil=roundup
@@ -193,7 +193,7 @@
                             <!-- ************************************************************************** -->
                             <div id='modalambil' class="modal" role="dialog">
                                 <div class="modal-dialog modal-xl" style="width:50%">
-                                    <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PengambilanMaterial/diambil" method="post">
+                                    <form class="" action="<?php echo base_url()?>PengambilanMaterial/diambil" method="post">
                                         
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -236,7 +236,7 @@
                                                         <input type="text" name="satuan" id="asatuan" class="form-control" value="" readonly>
                                                     </div>
                                                 </div>
-                                                <div id="isiambil"></div>
+                                                <div id="isiambil" style="text-align: center"></div>
                                             </div>
                                             <footer class="panel-footer">
                                                 <div class="row">
@@ -265,7 +265,7 @@
                         
                         <!-- ******************************** MODAL BELI ****************************** -->
                         <!-- ************************************************************************** -->
-                        <div id='modalbeli<?php echo $detail[$x]['id_detail_permintaan_material'] ?>' class="modal-block modal-block-md mfp-hide">
+                        <!-- <div id='modalbeli<?php echo $detail[$x]['id_detail_permintaan_material'] ?>' class="modal-block modal-block-md mfp-hide">
                             <section class="panel">
                                 <header class="panel-heading">
                                     <h2 class="panel-title">Request Pembelian Material</h2>
@@ -299,13 +299,13 @@
                                     </div>
                                 </footer>
                             </section>
-                        </div>
+                        </div> -->
                         <!-- ****************************** END MODAL BELI **************************** -->
                         <!-- ************************************************************************** -->
 
                         <!-- ****************************** MODAL JADWAL ****************************** -->
                         <!-- ************************************************************************** -->
-                        <div id='modaljadwal<?php echo $detail[$x]['id_detail_permintaan_material'] ?>' class="modal-block modal-block-md mfp-hide">
+                        <!-- <div id='modaljadwal<?php echo $detail[$x]['id_detail_permintaan_material'] ?>' class="modal-block modal-block-md mfp-hide">
                             <section class="panel">
                             
                             <form class="form-horizontal mb-lg" action="<?php echo base_url()?>" method="post">
@@ -355,7 +355,7 @@
                                 </footer>
                                 </form>
                             </section>
-                        </div>
+                        </div> -->
                         <!-- **************************** END MODAL JADWAL **************************** -->
                         <!-- ************************************************************************** -->
                     
@@ -369,7 +369,6 @@
 
 
     </div>
-</form>
 
 
 

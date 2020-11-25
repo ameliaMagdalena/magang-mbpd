@@ -18,15 +18,15 @@ class M_PengeluaranMaterial extends CI_Model {
         WHERE a.status_delete=0");
     }
 
-    function insertPengeluaranMaterial($data){
+    function insert($data){
         $this->db->insert('pengeluaran_material', $data);
     }
 
-    function editPengeluaranMaterial($data,$where){
+    function edit($data,$where){
         $this->db->update('pengeluaran_material', $data, $where);
     }
 
-    function hapusPengeluaranMaterial($data,$where){
+    function hapus($data,$where){
         $this->db->update('pengeluaran_material', $data, $where);
     }
 
