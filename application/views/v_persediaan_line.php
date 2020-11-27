@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Master Data Inventory Line</h2>
+        <h2>Master Data Persediaan Line</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Master Data Inventory Line</span></li>
+                <li><span>Master Data Persediaan Line</span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -25,7 +25,7 @@
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
         <header class="panel-heading">
-            <h2 class="panel-title">Data Inventory Line</h2>
+            <h2 class="panel-title">Data Persediaan Line</h2>
         </header>
 
         <div class="panel-body">
@@ -52,7 +52,7 @@
                         <tr>
                             <td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
                             <td style="text-align: center;vertical-align: middle;">
-                                <input type="hidden" name="id<?=$no;?>" id="id<?=$no;?>" value="<?= $x->id_inventory_line?>">
+                                <input type="hidden" name="id<?=$no;?>" id="id<?=$no;?>" value="<?= $x->id_persediaan_line?>">
                                 <?= $x->nama_sub_jenis_material; ?>
                             </td>
                             <td style="text-align: center;vertical-align: middle;"><?= $x->total_material; ?></td>
@@ -63,15 +63,18 @@
                                 <td style="text-align: center;vertical-align: middle;"><?= $x->nama_line; ?></td>
                             <?php }?>
                             <td  class="col-lg-3">
-                                <a class="bdet_klik modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                title="Detail" href="#modaldetail<?= $x->id_inventory_line;?>" value="<?= $no;?>"></a>
+                                <a class="bmasuk_klik modal-with-form col-lg-3 btn btn-primary fa  fa-level-down"
+                                title="Persediaan Masuk" href="#modalmasuk<?= $x->id_persediaan_line;?>" value="<?= $no;?>"></a>
+
+                                <a class="bkeluar_klik modal-with-form col-lg-3 btn btn-success fa   fa-level-up"
+                                title="Persediaan Keluar" href="#modalkeluar<?= $x->id_persediaan_line;?>" value="<?= $no;?>"></a>
                             </td>
                         </tr>
 
-                        <div id='modaldetail<?= $x->id_inventory_line;?>' class="modal-block modal-block-primary mfp-hide">
+                        <div id='modalmasuk<?= $x->id_persediaan_line;?>' class="modal-block modal-block-primary mfp-hide">
                             <section class="panel">
                                 <header class="panel-heading">
-                                    <h2 class="panel-title">Detail Inventory Line</h2>
+                                    <h2 class="panel-title">Data Persediaan Line Masuk</h2>
                                 </header>
 
                                 <div class="panel-body">
@@ -97,7 +100,49 @@
                                         </div>
                                     </div>
 
-                                    <div id="table_detail"></div>
+                                    <div id="table_masuk"></div>
+                                </div>
+
+                                <footer class="panel-footer">
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <button type="button" class="btn btn-default modal-dismiss">Ok</button>
+                                        </div>
+                                    </div>
+                                </footer>
+                            </section>
+                        </div>
+
+                        <div id='modalkeluar<?= $x->id_persediaan_line;?>' class="modal-block modal-block-primary mfp-hide">
+                            <section class="panel">
+                                <header class="panel-heading">
+                                    <h2 class="panel-title">Data Persediaan Line Keluar</h2>
+                                </header>
+
+                                <div class="panel-body">
+                                    <div class="form-group mt-lg">
+                                        <label class="col-sm-5 control-label">Nama Material</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control"
+                                            value="<?= $x->nama_sub_jenis_material?>" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-lg">
+                                        <label class="col-sm-5 control-label">Total Material</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control"
+                                            value="<?= $x->total_material?>" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-lg">
+                                        <label class="col-sm-5 control-label">Nama Line</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control"
+                                            value="<?= $x->nama_line?>" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div id="table_keluar"></div>
                                 </div>
 
                                 <footer class="panel-footer">
@@ -191,15 +236,15 @@
     }
 </script>
 
-<!-- detail permintaan material -->
+<!-- masuk -->
 <script>
-    $('.bdet_klik').click(function(){
+    $('.bmasuk_klik').click(function(){
         var no      = $(this).attr('value');
         var id      = $("#id"+no).val();
 
         $.ajax({
             type:"post",    
-            url:"<?php echo base_url() ?>inventoryLine/detail_inline",
+            url:"<?php echo base_url() ?>inventoryLine/persediaan_masuk",
             dataType: "JSON",
             data: {id:id},
 
@@ -208,12 +253,6 @@
                 $status = "";
 
                 for($i=0;$i<respond['jm_det_inline'];$i++){
-                    if(respond['det_inline'][$i]['status'] == 0){
-                        $status = "In";
-                    } else{
-                        $status = "Out";
-                    }
-
                     $isi = $isi +
                     '<tr>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
@@ -227,9 +266,6 @@
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['det_inline'][$i]['satuan_keluar']+
-                        '</td>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+
-                            $status+
                         '</td>'+
                     '</tr>';
 
@@ -251,8 +287,69 @@
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'Satuan'+
                                     '</th>'+
+                                '</tr>'+
+                            '</thead>'+
+                            '<tbody>'+
+                               $isi+
+                            '</tbody>'+
+                '</table>';
+
+                $("#table_masuk").html($table);
+            }
+        });
+    });
+</script>
+
+<!-- keluar -->
+<script>
+    $('.bkeluar_klik').click(function(){
+        var no      = $(this).attr('value');
+        var id      = $("#id"+no).val();
+
+        $.ajax({
+            type:"post",    
+            url:"<?php echo base_url() ?>inventoryLine/persediaan_keluar",
+            dataType: "JSON",
+            data: {id:id},
+
+            success: function(respond){
+                $isi    = "";
+                $status = "";
+
+                for($i=0;$i<respond['jm_det_inline'];$i++){
+                    $isi = $isi +
+                    '<tr>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            ($i+1)+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['det_inline'][$i]['tanggal']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['det_inline'][$i]['jumlah_material']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['det_inline'][$i]['satuan_keluar']+
+                        '</td>'+
+                    '</tr>';
+
+                }
+
+                $table =                 
+                '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
+                            '<thead>'+
+                                '<tr>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
-                                        'Status'+
+                                        'No'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Tanggal'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Jumlah Material'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Satuan'+
                                     '</th>'+
                                 '</tr>'+
                             '</thead>'+
@@ -261,7 +358,7 @@
                             '</tbody>'+
                 '</table>';
 
-                $("#table_detail").html($table);
+                $("#table_keluar").html($table);
             }
         });
     });

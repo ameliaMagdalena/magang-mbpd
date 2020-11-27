@@ -762,7 +762,7 @@ class PerencanaanProduksi extends CI_Controller {
                         //tutup po
                         
                         //PERMINTAAN MATERIAL
-                            if($jumlah_item != "" || $jumlah_item != 0){
+                            if($jumlah_item > 0){
                                 //cari apakah sudah ada sebelumnya permintaan material untuk tanggal,id_det_po_cust,id_line yangsama?
                                 $cari_permat    = $this->M_PerencanaanProduksi->get_one_permat($tanggal,$id_detpo,$idline)->result_array();
                                 $jm_cari_permat = $this->M_PerencanaanProduksi->get_one_permat($tanggal,$id_detpo,$idline)->num_rows();
@@ -2092,188 +2092,336 @@ class PerencanaanProduksi extends CI_Controller {
                                     $permat    = $this->M_PerencanaanProduksi->get_one_permat($tgl,$id_detpo,$idline)->result_array();
                                     $jm_permat = $this->M_PerencanaanProduksi->get_one_permat($tgl,$id_detpo,$idline)->num_rows();
 
-                                    $jumlah_permat = $permat[0]['jumlah_minta'];
-                                    $id_permat     = $permat[0]['id_permintaan_material'];
+                                    if($permat[0]['status_permintaan'] != 0){
+                                        $jumlah_permat = $permat[0]['jumlah_minta'];
+                                        $id_permat     = $permat[0]['id_permintaan_material'];
 
-                                    //cek apakah sudah ada perubahan permintaan yang statusnya belum diproses (status 0)
-                                    $cek_ubmin    = $this->M_PerencanaanProduksi->cek_ubmin($id_permat)->result_array();
-                                    $jm_cek_ubmin = $this->M_PerencanaanProduksi->cek_ubmin($id_permat)->num_rows();
+                                        //cek apakah sudah ada perubahan permintaan yang statusnya belum diproses (status 0)
+                                        $cek_ubmin    = $this->M_PerencanaanProduksi->cek_ubmin($id_permat)->result_array();
+                                        $jm_cek_ubmin = $this->M_PerencanaanProduksi->cek_ubmin($id_permat)->num_rows();
 
-                                    $tahun_sekarang = substr(date('Y',strtotime($tgl)),2,2);
-                                    $bulan_sekarang = date('m',strtotime($tgl));
-                                    $id_code        = "UBMIN".$tahun_sekarang.$bulan_sekarang.".";
-                        
-                                    $last       = $this->M_PerencanaanProduksi->get_last_ubmin_id($id_code)->result_array();
-                                    $last_cek   = $this->M_PerencanaanProduksi->get_last_ubmin_id($id_code)->num_rows();
-                        
-                                    //id
-                                    if($last_cek == 1){
-                                        $id_terakhir    = $last[0]['id_perubahan_permintaan'];
-                        
-                                        $tahun_sebelum  = substr($id_terakhir,5,2);
-                                    
-                                        $bulan_sebelum  = substr($id_terakhir,7,2);
-                        
-                                        //kalau tahun sama
-                                        if($tahun_sebelum == $tahun_sekarang){
-                                            //kalau tahun & bulannya sama berarti count+1
-                                            if($bulan_sebelum == $bulan_sekarang){
-                                                $count = intval(substr($id_terakhir,10,3)) + 1;
-                                                $pjg   = strlen($count);
-                        
-                                                if($pjg == 1){
-                                                    $count_baru = "00".$count;
+                                        $tahun_sekarang = substr(date('Y',strtotime($tgl)),2,2);
+                                        $bulan_sekarang = date('m',strtotime($tgl));
+                                        $id_code        = "UBMIN".$tahun_sekarang.$bulan_sekarang.".";
+                            
+                                        $last       = $this->M_PerencanaanProduksi->get_last_ubmin_id($id_code)->result_array();
+                                        $last_cek   = $this->M_PerencanaanProduksi->get_last_ubmin_id($id_code)->num_rows();
+                            
+                                        //id
+                                        if($last_cek == 1){
+                                            $id_terakhir    = $last[0]['id_perubahan_permintaan'];
+                            
+                                            $tahun_sebelum  = substr($id_terakhir,5,2);
+                                        
+                                            $bulan_sebelum  = substr($id_terakhir,7,2);
+                            
+                                            //kalau tahun sama
+                                            if($tahun_sebelum == $tahun_sekarang){
+                                                //kalau tahun & bulannya sama berarti count+1
+                                                if($bulan_sebelum == $bulan_sekarang){
+                                                    $count = intval(substr($id_terakhir,10,3)) + 1;
+                                                    $pjg   = strlen($count);
+                            
+                                                    if($pjg == 1){
+                                                        $count_baru = "00".$count;
+                                                    }
+                                                    else if($pjg == 2){
+                                                        $count_baru = "0".$count;
+                                                    }
+                                                    else{
+                                                        $count_baru = $count;
+                                                    }
+                                                    
+                                                    //id yang baru
+                                                    $id_ubmin_baru = "UBMIN".$tahun_sebelum.$bulan_sebelum.".".$count_baru;
                                                 }
-                                                else if($pjg == 2){
-                                                    $count_baru = "0".$count;
-                                                }
+                                                //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
                                                 else{
-                                                    $count_baru = $count;
+                                                    //id yang baru
+                                                    $id_ubmin_baru = "UBMIN".$tahun_sekarang.$bulan_sekarang.".001";
                                                 }
-                                                
-                                                //id yang baru
-                                                $id_ubmin_baru = "UBMIN".$tahun_sebelum.$bulan_sebelum.".".$count_baru;
                                             }
-                                            //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                                            //kalau tahun tidak sama
                                             else{
                                                 //id yang baru
                                                 $id_ubmin_baru = "UBMIN".$tahun_sekarang.$bulan_sekarang.".001";
                                             }
                                         }
-                                        //kalau tahun tidak sama
                                         else{
                                             //id yang baru
                                             $id_ubmin_baru = "UBMIN".$tahun_sekarang.$bulan_sekarang.".001";
+                                        }  
+
+                                        $data_ubmin = array(
+                                            'id_perubahan_permintaan' => $id_ubmin_baru,
+                                            'id_permintaan_material'  => $id_permat,
+                                            'jumlah_minta_lama'       => $jumlah_permat,
+                                            'jumlah_minta_baru'       => $jumlah_item_s,
+                                            'status'                  => 0,
+                                            'user_add'                => $user,
+                                            'waktu_add'               => $now,
+                                            'status_delete'           => 0
+                                        );
+
+                                        $this->M_PerencanaanProduksi->insert('perubahan_permintaan',$data_ubmin);
+
+                                        if($jm_cek_ubmin > 0){
+                                            //batal yang lama
+                                            $data_ubmin = array(
+                                                'status'    => 3,
+                                                'user_edit' => $user,
+                                                'waktu_edit'=> $now
+                                            );
+
+                                            $where_ubmin = array(
+                                                'id_perubahan_permintaan' => $cek_ubmin[0]['id_perubahan_permintaan']
+                                            );
+
+                                            $this->M_PerencanaanProduksi->edit('perubahan_permintaan',$data_ubmin,$where_ubmin);
+                                        } 
+
+                                        //cek kalo sebelumnya sudah ada perubahan permintaan (status belum diproses, 0) dengan id_permintaan_material yg sama/tidak
+                                        //jika tidak ada maka tambahkan perubahan permintaan saja
+                                        //jika ada maka tambahkan perubahan permintaan & ubah status perubahan permintaan menjadi 3 (batal)
+
+                                    } else if($permat[0]['status_permintaan'] == 0){
+                                        $jumlah_permat = $permat[0]['jumlah_minta'];
+                                        $id_permat     = $permat[0]['id_permintaan_material'];
+
+                                        //lama lebih besar
+                                        if($jumlah_item_sebelum_edit > $jumlah_item_s){
+                                            $selisih = $jumlah_item_sebelum_edit - $jumlah_item_s;
+
+                                            $jumlah_minta_baru = $jumlah_permat - $selisih;
+
+                                            $data_permat = array(
+                                                'jumlah_minta' => $jumlah_minta_baru
+                                            );
+
+                                            $where_permat = array(
+                                                'id_permintaan_material' => $id_permat
+                                            );
+
+                                            $this->M_PerencanaanProduksi->edit('permintaan_material',$data_permat,$where_permat);
+
+                                            $det_permat    = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->result_array();
+                                            $jm_det_permat = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->num_rows();
+
+                                            for($t=0;$t<$jm_det_permat;$t++){
+                                                $jumlah_konsumsi = $det_permat[$t]['jumlah_konsumsi'];
+                                                $id_det_permat   = $det_permat[$t]['id_detail_permintaan_material'];
+
+                                                $needs = $jumlah_minta_baru * $jumlah_konsumsi;
+
+                                                $data_det_permat = array(
+                                                    'needs' => $needs
+                                                );
+
+                                                $where_det_permat = array(
+                                                    'id_detail_permintaan_material' => $id_det_permat
+                                                );
+
+                                                $this->M_PerencanaanProduksi->edit('detail_permintaan_material',$data_det_permat,$where_det_permat);
+                                            }
+                                        } 
+                                        //baru lebih besar
+                                        else if($jumlah_item_sebelum_edit < $jumlah_item_s){
+                                            $selisih = $jumlah_item_s - $jumlah_item_sebelum_edit;
+
+                                            $jumlah_minta_baru = $jumlah_permat + $selisih;
+
+                                            $data_permat = array(
+                                                'jumlah_minta' => $jumlah_minta_baru
+                                            );
+
+                                            $where_permat = array(
+                                                'id_permintaan_material' => $id_permat
+                                            );
+
+                                            $this->M_PerencanaanProduksi->edit('permintaan_material',$data_permat,$where_permat);
+
+                                            $det_permat    = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->result_array();
+                                            $jm_det_permat = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->num_rows();
+
+                                            for($t=0;$t<$jm_det_permat;$t++){
+                                                $jumlah_konsumsi = $det_permat[$t]['jumlah_konsumsi'];
+                                                $id_det_permat   = $det_permat[$t]['id_detail_permintaan_material'];
+
+                                                $needs = $jumlah_minta_baru * $jumlah_konsumsi;
+
+                                                $data_det_permat = array(
+                                                    'needs' => $needs
+                                                );
+
+                                                $where_det_permat = array(
+                                                    'id_detail_permintaan_material' => $id_det_permat
+                                                );
+
+                                                $this->M_PerencanaanProduksi->edit('detail_permintaan_material',$data_det_permat,$where_det_permat);
+                                            }
                                         }
                                     }
-                                    else{
-                                        //id yang baru
-                                        $id_ubmin_baru = "UBMIN".$tahun_sekarang.$bulan_sekarang.".001";
-                                    }  
-
-                                    $data_ubmin = array(
-                                        'id_perubahan_permintaan' => $id_ubmin_baru,
-                                        'id_permintaan_material'  => $id_permat,
-                                        'jumlah_minta_lama'       => $jumlah_permat,
-                                        'jumlah_minta_baru'       => $jumlah_item_s,
-                                        'status'                  => 0,
-                                        'user_add'                => $user,
-                                        'waktu_add'               => $now,
-                                        'status_delete'           => 0
-                                    );
-
-                                    $this->M_PerencanaanProduksi->insert('perubahan_permintaan',$data_ubmin);
-
-                                    if($jm_cek_ubmin > 0){
-                                        //batal yang lama
-                                        $data_ubmin = array(
-                                            'status'    => 3,
-                                            'user_edit' => $user,
-                                            'waktu_edit'=> $now
-                                        );
-
-                                        $where_ubmin = array(
-                                            'id_perubahan_permintaan' => $cek_ubmin[0]['id_perubahan_permintaan']
-                                        );
-
-                                        $this->M_PerencanaanProduksi->edit('perubahan_permintaan',$data_ubmin,$where_ubmin);
-                                    } 
-
-                                    //cek kalo sebelumnya sudah ada perubahan permintaan (status belum diproses, 0) dengan id_permintaan_material yg sama/tidak
-                                    //jika tidak ada maka tambahkan perubahan permintaan saja
-                                    //jika ada maka tambahkan perubahan permintaan & ubah status perubahan permintaan menjadi 3 (batal)
+                                    
                                 } 
                                 //sebelum ada, jadi tdk ada
                                 else if($jumlah_item_s == 0){
                                     $permat    = $this->M_PerencanaanProduksi->get_one_permat($tgl,$id_detpo,$idline)->result_array();
                                     $jm_permat = $this->M_PerencanaanProduksi->get_one_permat($tgl,$id_detpo,$idline)->num_rows();
 
-                                    $jumlah_permat = $permat[0]['jumlah_minta'];
-                                    $id_permat     = $permat[0]['id_permintaan_material'];
-
-                                    //cek apakah sudah ada perubahan permintaan yang statusnya belum diproses (status 0)
-                                    $cek_ubmin    = $this->M_PerencanaanProduksi->cek_ubmin($id_permat)->result_array();
-                                    $jm_cek_ubmin = $this->M_PerencanaanProduksi->cek_ubmin($id_permat)->num_rows();
-
-                                    $tahun_sekarang = substr(date('Y',strtotime($tgl)),2,2);
-                                    $bulan_sekarang = date('m',strtotime($tgl));
-                                    $id_code        = "UBMIN".$tahun_sekarang.$bulan_sekarang.".";
-                        
-                                    $last       = $this->M_PerencanaanProduksi->get_last_ubmin_id($id_code)->result_array();
-                                    $last_cek   = $this->M_PerencanaanProduksi->get_last_ubmin_id($id_code)->num_rows();
-                        
-                                    //id
-                                    if($last_cek == 1){
-                                        $id_terakhir    = $last[0]['id_perubahan_permintaan'];
-                        
-                                        $tahun_sebelum  = substr($id_terakhir,5,2);
-                                    
-                                        $bulan_sebelum  = substr($id_terakhir,7,2);
-                        
-                                        //kalau tahun sama
-                                        if($tahun_sebelum == $tahun_sekarang){
-                                            //kalau tahun & bulannya sama berarti count+1
-                                            if($bulan_sebelum == $bulan_sekarang){
-                                                $count = intval(substr($id_terakhir,10,3)) + 1;
-                                                $pjg   = strlen($count);
-                        
-                                                if($pjg == 1){
-                                                    $count_baru = "00".$count;
+                                    if($permat[0]['status_permintaan'] != 0){
+                                        $jumlah_permat = $permat[0]['jumlah_minta'];
+                                        $id_permat     = $permat[0]['id_permintaan_material'];
+    
+                                        //cek apakah sudah ada perubahan permintaan yang statusnya belum diproses (status 0)
+                                        $cek_ubmin    = $this->M_PerencanaanProduksi->cek_ubmin($id_permat)->result_array();
+                                        $jm_cek_ubmin = $this->M_PerencanaanProduksi->cek_ubmin($id_permat)->num_rows();
+    
+                                        $tahun_sekarang = substr(date('Y',strtotime($tgl)),2,2);
+                                        $bulan_sekarang = date('m',strtotime($tgl));
+                                        $id_code        = "UBMIN".$tahun_sekarang.$bulan_sekarang.".";
+                            
+                                        $last       = $this->M_PerencanaanProduksi->get_last_ubmin_id($id_code)->result_array();
+                                        $last_cek   = $this->M_PerencanaanProduksi->get_last_ubmin_id($id_code)->num_rows();
+                            
+                                        //id
+                                        if($last_cek == 1){
+                                            $id_terakhir    = $last[0]['id_perubahan_permintaan'];
+                            
+                                            $tahun_sebelum  = substr($id_terakhir,5,2);
+                                        
+                                            $bulan_sebelum  = substr($id_terakhir,7,2);
+                            
+                                            //kalau tahun sama
+                                            if($tahun_sebelum == $tahun_sekarang){
+                                                //kalau tahun & bulannya sama berarti count+1
+                                                if($bulan_sebelum == $bulan_sekarang){
+                                                    $count = intval(substr($id_terakhir,10,3)) + 1;
+                                                    $pjg   = strlen($count);
+                            
+                                                    if($pjg == 1){
+                                                        $count_baru = "00".$count;
+                                                    }
+                                                    else if($pjg == 2){
+                                                        $count_baru = "0".$count;
+                                                    }
+                                                    else{
+                                                        $count_baru = $count;
+                                                    }
+                                                    
+                                                    //id yang baru
+                                                    $id_ubmin_baru = "UBMIN".$tahun_sebelum.$bulan_sebelum.".".$count_baru;
                                                 }
-                                                else if($pjg == 2){
-                                                    $count_baru = "0".$count;
-                                                }
+                                                //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
                                                 else{
-                                                    $count_baru = $count;
+                                                    //id yang baru
+                                                    $id_ubmin_baru = "UBMIN".$tahun_sekarang.$bulan_sekarang.".001";
                                                 }
-                                                
-                                                //id yang baru
-                                                $id_ubmin_baru = "UBMIN".$tahun_sebelum.$bulan_sebelum.".".$count_baru;
                                             }
-                                            //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                                            //kalau tahun tidak sama
                                             else{
                                                 //id yang baru
                                                 $id_ubmin_baru = "UBMIN".$tahun_sekarang.$bulan_sekarang.".001";
                                             }
                                         }
-                                        //kalau tahun tidak sama
                                         else{
                                             //id yang baru
                                             $id_ubmin_baru = "UBMIN".$tahun_sekarang.$bulan_sekarang.".001";
+                                        }  
+    
+                                        $data_ubmin = array(
+                                            'id_perubahan_permintaan' => $id_ubmin_baru,
+                                            'id_permintaan_material'  => $id_permat,
+                                            'jumlah_minta_lama'       => $jumlah_permat,
+                                            'jumlah_minta_baru'       => $jumlah_item_s,
+                                            'status'                  => 0,
+                                            'user_add'                => $user,
+                                            'waktu_add'               => $now,
+                                            'status_delete'           => 0
+                                        );
+    
+                                        $this->M_PerencanaanProduksi->insert('perubahan_permintaan',$data_ubmin);
+    
+                                        if($jm_cek_ubmin > 0){
+                                            //batal yang lama
+                                            $data_ubmin = array(
+                                                'status'    => 3,
+                                                'user_edit' => $user,
+                                                'waktu_edit'=> $now
+                                            );
+    
+                                            $where_ubmin = array(
+                                                'id_perubahan_permintaan' => $cek_ubmin[0]['id_perubahan_permintaan']
+                                            );
+    
+                                            $this->M_PerencanaanProduksi->edit('perubahan_permintaan',$data_ubmin,$where_ubmin);
+                                        } 
+                                    } else if($permat[0]['status_permintaan'] == 0){
+                                        $jumlah_permat = $permat[0]['jumlah_minta'];
+                                        $id_permat     = $permat[0]['id_permintaan_material'];
+
+                                        if($jumlah_item_sebelum_edit == $jumlah_permat){
+                                            $data_permat = array(
+                                                'status_delete' => 1
+                                            );
+
+                                            $where_permat = array(
+                                                'id_permintaan_material' => $id_permat
+                                            );
+
+                                            $this->M_PerencanaanProduksi->edit('permintaan_material',$data_permat,$where_permat);
+
+                                            $det_permat    = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->result_array();
+                                            $jm_det_permat = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->num_rows();
+
+                                            for($t=0;$t<$jm_det_permat;$t++){
+                                                $jumlah_konsumsi = $det_permat[$t]['jumlah_konsumsi'];
+                                                $id_det_permat   = $det_permat[$t]['id_detail_permintaan_material'];
+
+                                                $data_det_permat = array(
+                                                    'status_delete' => 1
+                                                );
+
+                                                $where_det_permat = array(
+                                                    'id_detail_permintaan_material' => $id_det_permat
+                                                );
+
+                                                $this->M_PerencanaanProduksi->edit('detail_permintaan_material',$data_det_permat,$where_det_permat);
+                                            }                                    
+                                        } 
+                                        else if($jumlah_item_sebelum_edit < $jumlah_permat){
+                                            $jumlah_minta_baru =  $jumlah_permat - $jumlah_item_sebelum_edit;
+
+                                            $data_permat = array(
+                                                'jumlah_minta' => $jumlah_minta_baru
+                                            );
+
+                                            $where_permat = array(
+                                                'id_permintaan_material' => $id_permat
+                                            );
+
+                                            $this->M_PerencanaanProduksi->edit('permintaan_material',$data_permat,$where_permat);
+
+                                            $det_permat    = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->result_array();
+                                            $jm_det_permat = $this->M_PerencanaanProduksi->get_detpermat_by_permat($id_permat)->num_rows();
+
+                                            for($t=0;$t<$jm_det_permat;$t++){
+                                                $jumlah_konsumsi = $det_permat[$t]['jumlah_konsumsi'];
+                                                $id_det_permat   = $det_permat[$t]['id_detail_permintaan_material'];
+
+                                                $needs = $jumlah_minta_baru * $jumlah_konsumsi;
+
+                                                $data_det_permat = array(
+                                                    'needs' => $needs
+                                                );
+
+                                                $where_det_permat = array(
+                                                    'id_detail_permintaan_material' => $id_det_permat
+                                                );
+
+                                                $this->M_PerencanaanProduksi->edit('detail_permintaan_material',$data_det_permat,$where_det_permat);
+                                            }                                    
                                         }
                                     }
-                                    else{
-                                        //id yang baru
-                                        $id_ubmin_baru = "UBMIN".$tahun_sekarang.$bulan_sekarang.".001";
-                                    }  
-
-                                    $data_ubmin = array(
-                                        'id_perubahan_permintaan' => $id_ubmin_baru,
-                                        'id_permintaan_material'  => $id_permat,
-                                        'jumlah_minta_lama'       => $jumlah_permat,
-                                        'jumlah_minta_baru'       => $jumlah_item_s,
-                                        'status'                  => 0,
-                                        'user_add'                => $user,
-                                        'waktu_add'               => $now,
-                                        'status_delete'           => 0
-                                    );
-
-                                    $this->M_PerencanaanProduksi->insert('perubahan_permintaan',$data_ubmin);
-
-                                    if($jm_cek_ubmin > 0){
-                                        //batal yang lama
-                                        $data_ubmin = array(
-                                            'status'    => 3,
-                                            'user_edit' => $user,
-                                            'waktu_edit'=> $now
-                                        );
-
-                                        $where_ubmin = array(
-                                            'id_perubahan_permintaan' => $cek_ubmin[0]['id_perubahan_permintaan']
-                                        );
-
-                                        $this->M_PerencanaanProduksi->edit('perubahan_permintaan',$data_ubmin,$where_ubmin);
-                                    } 
                                 }
                             }
                             //sebelum tidak ada, jadi ada

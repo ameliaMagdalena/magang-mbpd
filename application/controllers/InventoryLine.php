@@ -36,14 +36,23 @@ class InventoryLine extends CI_Controller {
         else{
             $data['inventory_line']        = $this->M_InventoryLine->select_all()->result(); 
         }
-        $this->load->view('v_inventory_line',$data);
+        $this->load->view('v_persediaan_line',$data);
     }
 
-    public function detail_inline(){
+    public function persediaan_masuk(){
       $id = $this->input->post('id');
 
-      $data['det_inline']    = $this->M_InventoryLine->get_detail_inline($id)->result_array();
-      $data['jm_det_inline'] = $this->M_InventoryLine->get_detail_inline($id)->num_rows();
+      $data['det_inline']    = $this->M_InventoryLine->get_persediaan_masuk($id)->result_array();
+      $data['jm_det_inline'] = $this->M_InventoryLine->get_persediaan_masuk($id)->num_rows();
+
+      echo json_encode($data);
+    }
+
+    public function persediaan_keluar(){
+      $id = $this->input->post('id');
+
+      $data['det_inline']    = $this->M_InventoryLine->get_persediaan_keluar($id)->result_array();
+      $data['jm_det_inline'] = $this->M_InventoryLine->get_persediaan_keluar($id)->num_rows();
 
       echo json_encode($data);
     }

@@ -9,24 +9,33 @@ class M_InventoryLine extends CI_Model {
     }
 
     function select_inline_line($line){
-        return $this->db->query("SELECT * FROM inventory_line,sub_jenis_material,line
-        WHERE line.nama_line='$line' AND inventory_line.status_delete='0' 
-        AND line.id_line=inventory_line.id_line AND inventory_line.id_sub_jenis_material = sub_jenis_material.id_sub_jenis_material");
+        return $this->db->query("SELECT * FROM persediaan_line,sub_jenis_material,line
+        WHERE line.nama_line='$line' AND persediaan_line.status_delete='0' 
+        AND line.id_line=persediaan_line.id_line AND persediaan_line.id_sub_jenis_material = sub_jenis_material.id_sub_jenis_material");
     }
 
     function select_all(){
-        return $this->db->query("SELECT * FROM inventory_line,sub_jenis_material,line 
-        WHERE inventory_line.id_sub_jenis_material = sub_jenis_material.id_sub_jenis_material AND
-        inventory_line.id_line = line.id_line");
+        return $this->db->query("SELECT * FROM persediaan_line,sub_jenis_material,line 
+        WHERE persediaan_line.id_sub_jenis_material = sub_jenis_material.id_sub_jenis_material AND
+        persediaan_line.id_line = line.id_line");
     }
 
-    function get_detail_inline($id){
-        return $this->db->query("SELECT detail_inventory_line.tanggal, detail_inventory_line.jumlah_material, detail_inventory_line.status,
+    function get_persediaan_masuk($id){
+        return $this->db->query("SELECT persediaan_line_masuk.tanggal, persediaan_line_masuk.jumlah_material, 
         sub_jenis_material.satuan_keluar 
-        FROM detail_inventory_line, inventory_line, sub_jenis_material 
-        WHERE detail_inventory_line.id_inventory_line='$id' AND detail_inventory_line.status_delete='0' 
-        AND detail_inventory_line.id_inventory_line = inventory_line.id_inventory_line
-        AND inventory_line.id_sub_jenis_material = sub_jenis_material.id_sub_jenis_material ");
+        FROM persediaan_line_masuk, persediaan_line, sub_jenis_material 
+        WHERE persediaan_line_masuk.id_persediaan_line='$id' AND persediaan_line_masuk.status_delete='0' 
+        AND persediaan_line_masuk.id_persediaan_line = persediaan_line.id_persediaan_line
+        AND persediaan_line.id_sub_jenis_material = sub_jenis_material.id_sub_jenis_material ");
+    }
+
+    function get_persediaan_keluar($id){
+        return $this->db->query("SELECT persediaan_line_keluar.tanggal, persediaan_line_keluar.jumlah_material,
+        sub_jenis_material.satuan_keluar 
+        FROM persediaan_line_keluar, persediaan_line, sub_jenis_material 
+        WHERE persediaan_line_keluar.id_persediaan_line='$id' AND persediaan_line_keluar.status_delete='0' 
+        AND persediaan_line_keluar.id_persediaan_line = persediaan_line.id_persediaan_line
+        AND persediaan_line.id_sub_jenis_material = sub_jenis_material.id_sub_jenis_material ");
     }
 
 }

@@ -311,18 +311,6 @@
                                 <input type="text" class="form-control" id="jumlah_minta_add_tambahan" readonly>
                             </div>
                         </div>
-                        <?php if($_SESSION['nama_jabatan'] == "PIC Line Sewing"){?>
-                            <div class="form-group mt-lg">
-                                <label class="col-sm-5 control-label">Keterangan Pengambilan</label>
-                                <div class="col-sm-7">
-                                    <select class="form-control" id="keterangan_pengambilan_tambahan" onchange="ganti_keterangan_pengambilan()">
-                                        <option value=" ">Keterangan Pengambilan</option>
-                                        <option value="0">Pengambilan Material Untuk Cutting Kain</option>
-                                        <option value="1">Lainnya</option>
-                                    </select>
-                                </div>
-                            </div>
-                        <?php } ?>
                         <br>
                         
                         <div id="table_add_tambahan"></div>
@@ -375,7 +363,7 @@
                     $jumlah_sebelum = 0;
                     for($o=0;$o<respond['jm_pengmat'];$o++){
                         if(respond['pengmat'][$o]['id_detail_permintaan_material'] == respond['detpermat'][$i]['id_detail_permintaan_material']){
-                            $jumlah_sebelum       = respond['pengmat'][$o]['jumlah_keluar'];
+                            $jumlah_sebelum       = parseFloat(respond['pengmat'][$o]['jumlah_keluar']) + parseFloat(respond['pengmat'][$o]['jumlah_wip_ambil']);
                             $cari++;
                         }
 
@@ -494,7 +482,7 @@
                     $jumlah_sebelum       = 0;
                     for($o=0;$o<respond['jm_pengmat'];$o++){
                         if(respond['pengmat'][$o]['id_detail_permintaan_material'] == respond['detpermat'][$i]['id_detail_permintaan_material']){                
-                            $jumlah_sebelum       = respond['pengmat'][$o]['jumlah_keluar'];
+                            $jumlah_sebelum       = parseFloat(respond['pengmat'][$o]['jumlah_keluar']) + parseFloat(respond['pengmat'][$o]['jumlah_wip_ambil']);
                             $cari++;
                         }
 

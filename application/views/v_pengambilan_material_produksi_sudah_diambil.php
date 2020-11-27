@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Permintaan Pengambilan Material Belum Diambil</h2>
+        <h2>Permintaan Pengambilan Material Sudah Diambil</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Permintaan Pengambilan Material Belum Diambil</span></span></li>
+                <li><span>Permintaan Pengambilan Material Sudah Diambil</span></span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -25,7 +25,7 @@
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
         <header class="panel-heading">
-            <h2 class="panel-title">Data Permintaan Pengambilan Material Belum Diambil</h2>
+            <h2 class="panel-title">Data Permintaan Pengambilan Material Sudah Diambil</h2>
         </header>
 
         <div class="panel-body">
@@ -46,7 +46,7 @@
                     <?php 
                         $no = 1;
                         foreach($pengambilan_material as $x){
-                            if($x->status_keluar == 0){
+                            if($x->status_keluar == 1){
                     ?>
                         <tr>
                             <td  style="text-align: center;vertical-align: middle;">

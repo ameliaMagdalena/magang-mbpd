@@ -300,7 +300,7 @@
                     $jumlah_sebelum = 0;
                     for($o=0;$o<respond['jm_pengmat'];$o++){
                         if(respond['pengmat'][$o]['id_detail_permintaan_material'] == respond['detpermat'][$i]['id_detail_permintaan_material']){
-                            $jumlah_sebelum       = respond['pengmat'][$o]['jumlah_keluar'];
+                            $jumlah_sebelum       = parseFloat(respond['pengmat'][$o]['jumlah_keluar']) + parseFloat(respond['pengmat'][$o]['jumlah_wip_ambil']);
                             $cari++;
                         }
 
@@ -413,7 +413,7 @@
                     $jumlah_sebelum       = 0;
                     for($o=0;$o<respond['jm_pengmat'];$o++){
                         if(respond['pengmat'][$o]['id_detail_permintaan_material'] == respond['detpermat'][$i]['id_detail_permintaan_material']){                
-                            $jumlah_sebelum       = respond['pengmat'][$o]['jumlah_keluar'];
+                            $jumlah_sebelum       = parseFloat(respond['pengmat'][$o]['jumlah_keluar']) + parseFloat(respond['pengmat'][$o]['jumlah_wip_ambil']);
                             $cari++;
                         }
 

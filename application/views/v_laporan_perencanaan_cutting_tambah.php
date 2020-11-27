@@ -362,7 +362,7 @@
                             respond['percut'][$i]['jumlah_percut']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            '<center><input type="number" min="0" max="'+respond['percut'][$i]['jumlah_percut']+'" name="jm_aktual'+$i+'" class="form-control" style="width:80px;height:25px" required></center>'+
+                            '<center><input type="number" min="0" name="jm_aktual'+$i+'" class="form-control" style="width:80px;height:25px" required></center>'+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             '<textarea type="text" class="form-control" name="ket'+$i+'"></textarea>'+
