@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2020 at 10:39 AM
+-- Generation Time: Nov 29, 2020 at 10:02 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -150,48 +150,11 @@ CREATE TABLE `bpbj` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Triggers `bpbj`
---
-DELIMITER $$
-CREATE TRIGGER `edit_bpbj` AFTER UPDATE ON `bpbj` FOR EACH ROW INSERT INTO bpbj_logs (`id_bpbj_logs`,`keterangan_log`,`id_bpbj`,`no_bpbj`,`tanggal`,`keterangan`,`status_bpbj`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES (null,'Edit Data',NEW.id_bpbj,NEW.no_bpbj,NEW.tanggal,NEW.keterangan,NEW.status_bpbj,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `insert_bpbj` AFTER INSERT ON `bpbj` FOR EACH ROW INSERT INTO bpbj_logs (`id_bpbj_logs`,`keterangan_log`,`id_bpbj`,`no_bpbj`,`tanggal`,`keterangan`,`status_bpbj`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES (null,'Insert Data',NEW.id_bpbj,NEW.no_bpbj,NEW.tanggal,NEW.keterangan,NEW.status_bpbj,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bpbj_logs`
+-- Dumping data for table `bpbj`
 --
 
-CREATE TABLE `bpbj_logs` (
-  `id_bpbj_logs` int(11) NOT NULL,
-  `keterangan_log` varchar(15) NOT NULL,
-  `id_bpbj` varchar(15) NOT NULL,
-  `no_bpbj` varchar(10) NOT NULL,
-  `tanggal` date NOT NULL,
-  `keterangan` varchar(500) NOT NULL,
-  `status_bpbj` int(1) NOT NULL,
-  `user_add` varchar(10) NOT NULL,
-  `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
-  `status_delete` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `bpbj_logs`
---
-
-INSERT INTO `bpbj_logs` (`id_bpbj_logs`, `keterangan_log`, `id_bpbj`, `no_bpbj`, `tanggal`, `keterangan`, `status_bpbj`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(1, 'Insert Data', 'BPBJ20.0001', 'BPBJ-0001', '2020-11-13', '', 0, 'USER-1', '2020-11-13 14:40:49', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(2, 'Insert Data', 'BPBJ20.0001', 'BPBJ-0001', '2020-11-15', '', 0, 'USER-6', '2020-11-15 14:57:54', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(3, 'Edit Data', 'BPBJ20.0001', 'BPBJ-0001', '2020-11-15', '', 1, 'USER-6', '2020-11-15 14:57:54', 'USER-3', '2020-11-15 14:58:37', '', '0000-00-00 00:00:00', 0);
+INSERT INTO `bpbj` (`id_bpbj`, `no_bpbj`, `tanggal`, `keterangan`, `status_bpbj`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('BPBJ20.0001', 'BPBJ-0001', '2020-11-28', '', 0, 'USER-1', '2020-11-28 19:20:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -451,107 +414,11 @@ CREATE TABLE `detail_bpbj` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Triggers `detail_bpbj`
---
-DELIMITER $$
-CREATE TRIGGER `edit_detail_bpbj` AFTER UPDATE ON `detail_bpbj` FOR EACH ROW INSERT INTO detail_bpbj_logs (`id_detail_bpbj_logs`,`keterangan_log`,`id_detail_bpbj`,`id_bpbj`,`id_detail_produk`,`jumlah_produk`,`jumlah_terkirim`,`status_detail_bpbj`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`) VALUES(null,'Edit Data',NEW.id_detail_bpbj,NEW.id_bpbj,NEW.id_detail_produk,NEW.jumlah_produk,NEW.jumlah_terkirim,NEW.status_detail_bpbj,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `insert_detail_bpbj` AFTER INSERT ON `detail_bpbj` FOR EACH ROW INSERT INTO detail_bpbj_logs (`id_detail_bpbj_logs`,`keterangan_log`,`id_detail_bpbj`,`id_bpbj`,`id_detail_produk`,`jumlah_produk`,`jumlah_terkirim`,`status_detail_bpbj`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`) VALUES(null,'Insert Data',NEW.id_detail_bpbj,NEW.id_bpbj,NEW.id_detail_produk,NEW.jumlah_produk,NEW.jumlah_terkirim,NEW.status_detail_bpbj,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete)
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `detail_bpbj_logs`
+-- Dumping data for table `detail_bpbj`
 --
 
-CREATE TABLE `detail_bpbj_logs` (
-  `id_detail_bpbj_logs` int(11) NOT NULL,
-  `keterangan_log` varchar(15) NOT NULL,
-  `id_detail_bpbj` varchar(15) NOT NULL,
-  `id_bpbj` varchar(15) NOT NULL,
-  `id_detail_produk` varchar(10) NOT NULL,
-  `jumlah_produk` int(11) NOT NULL,
-  `jumlah_terkirim` int(11) NOT NULL,
-  `status_detail_bpbj` int(1) NOT NULL,
-  `user_add` varchar(10) NOT NULL,
-  `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
-  `status_delete` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `detail_bpbj_logs`
---
-
-INSERT INTO `detail_bpbj_logs` (`id_detail_bpbj_logs`, `keterangan_log`, `id_detail_bpbj`, `id_bpbj`, `id_detail_produk`, `jumlah_produk`, `jumlah_terkirim`, `status_detail_bpbj`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(54, 'Insert Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 0, 0, 'USER-6', '2020-09-29 22:23:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(55, 'Insert Data', 'DBPBJ20.000002', 'BPBJ20.0002', 'DETPRO-2', 25, 0, 0, 'USER-6', '2020-09-29 22:23:43', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(56, 'Insert Data', 'DBPBJ20.000003', 'BPBJ20.0003', 'DETPRO-7', 100, 0, 0, 'USER-6', '2020-09-29 22:23:50', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(57, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 5, 0, 'USER-6', '2020-09-29 22:23:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(58, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 5, 1, 'USER-6', '2020-09-29 22:23:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(59, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 0, 1, 'USER-6', '2020-09-29 22:23:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(60, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 0, 0, 'USER-6', '2020-09-29 22:23:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(61, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 0, 1, 'USER-6', '2020-09-29 22:23:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(62, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 0, 0, 'USER-6', '2020-09-29 22:23:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(63, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 0, 1, 'USER-6', '2020-09-29 22:23:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(64, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 0, 0, 'USER-6', '2020-09-29 22:23:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(65, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 25, 1, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:18:37', '', '0000-00-00 00:00:00', 0),
-(66, 'Edit Data', 'DBPBJ20.000002', 'BPBJ20.0002', 'DETPRO-2', 25, 5, 0, 'USER-6', '2020-09-29 22:23:43', 'USER-3', '2020-09-29 23:19:22', '', '0000-00-00 00:00:00', 0),
-(67, 'Edit Data', 'DBPBJ20.000002', 'BPBJ20.0002', 'DETPRO-2', 25, 0, 0, 'USER-6', '2020-09-29 22:23:43', 'USER-3', '2020-09-29 23:19:38', '', '0000-00-00 00:00:00', 0),
-(68, 'Edit Data', 'DBPBJ20.000002', 'BPBJ20.0002', 'DETPRO-2', 25, 5, 0, 'USER-6', '2020-09-29 22:23:43', 'USER-3', '2020-09-29 23:21:08', '', '0000-00-00 00:00:00', 0),
-(69, 'Edit Data', 'DBPBJ20.000002', 'BPBJ20.0002', 'DETPRO-2', 25, 0, 0, 'USER-6', '2020-09-29 22:23:43', 'USER-3', '2020-09-29 23:26:06', '', '0000-00-00 00:00:00', 0),
-(70, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 20, 0, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:26:19', '', '0000-00-00 00:00:00', 0),
-(71, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 22, 0, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:26:50', '', '0000-00-00 00:00:00', 0),
-(72, 'Edit Data', 'DBPBJ20.000002', 'BPBJ20.0002', 'DETPRO-2', 25, 25, 1, 'USER-6', '2020-09-29 22:23:43', 'USER-3', '2020-09-29 23:27:22', '', '0000-00-00 00:00:00', 0),
-(73, 'Edit Data', 'DBPBJ20.000002', 'BPBJ20.0002', 'DETPRO-2', 25, 0, 0, 'USER-6', '2020-09-29 22:23:43', 'USER-3', '2020-09-29 23:29:49', '', '0000-00-00 00:00:00', 0),
-(74, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 20, 0, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:30:06', '', '0000-00-00 00:00:00', 0),
-(75, 'Edit Data', 'DBPBJ20.000002', 'BPBJ20.0002', 'DETPRO-2', 25, 10, 0, 'USER-6', '2020-09-29 22:23:43', 'USER-3', '2020-09-29 23:30:06', '', '0000-00-00 00:00:00', 0),
-(76, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 0, 0, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:30:26', '', '0000-00-00 00:00:00', 0),
-(77, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 2, 0, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:30:44', '', '0000-00-00 00:00:00', 0),
-(78, 'Edit Data', 'DBPBJ20.000002', 'BPBJ20.0002', 'DETPRO-2', 25, 18, 0, 'USER-6', '2020-09-29 22:23:43', 'USER-3', '2020-09-29 23:30:44', '', '0000-00-00 00:00:00', 0),
-(79, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 0, 0, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:30:52', '', '0000-00-00 00:00:00', 0),
-(80, 'Edit Data', 'DBPBJ20.000002', 'BPBJ20.0002', 'DETPRO-2', 25, 25, 1, 'USER-6', '2020-09-29 22:23:43', 'USER-3', '2020-09-29 23:30:52', '', '0000-00-00 00:00:00', 0),
-(81, 'Edit Data', 'DBPBJ20.000002', 'BPBJ20.0002', 'DETPRO-2', 25, 15, 0, 'USER-6', '2020-09-29 22:23:43', 'USER-3', '2020-09-29 23:31:19', '', '0000-00-00 00:00:00', 0),
-(82, 'Edit Data', 'DBPBJ20.000002', 'BPBJ20.0002', 'DETPRO-2', 25, 7, 0, 'USER-6', '2020-09-29 22:23:43', 'USER-3', '2020-09-29 23:31:19', '', '0000-00-00 00:00:00', 0),
-(83, 'Edit Data', 'DBPBJ20.000002', 'BPBJ20.0002', 'DETPRO-2', 25, 0, 0, 'USER-6', '2020-09-29 22:23:43', 'USER-3', '2020-09-29 23:31:19', '', '0000-00-00 00:00:00', 0),
-(84, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 10, 0, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:31:49', '', '0000-00-00 00:00:00', 0),
-(85, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 25, 1, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:33:26', '', '0000-00-00 00:00:00', 0),
-(86, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 15, 0, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:40:45', '', '0000-00-00 00:00:00', 0),
-(87, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 0, 0, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:40:45', '', '0000-00-00 00:00:00', 0),
-(88, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 5, 0, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:43:52', '', '0000-00-00 00:00:00', 0),
-(89, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 0, 0, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:44:24', '', '0000-00-00 00:00:00', 0),
-(90, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 5, 0, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:46:20', '', '0000-00-00 00:00:00', 0),
-(91, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 0, 0, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:46:28', '', '0000-00-00 00:00:00', 0),
-(92, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 5, 0, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:50:11', '', '0000-00-00 00:00:00', 0),
-(93, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 0, 0, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:50:20', '', '0000-00-00 00:00:00', 0),
-(94, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 10, 0, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:50:50', '', '0000-00-00 00:00:00', 0),
-(95, 'Edit Data', 'DBPBJ20.000002', 'BPBJ20.0002', 'DETPRO-2', 25, 10, 0, 'USER-6', '2020-09-29 22:23:43', 'USER-3', '2020-09-29 23:50:50', '', '0000-00-00 00:00:00', 0),
-(96, 'Edit Data', 'DBPBJ20.000003', 'BPBJ20.0003', 'DETPRO-7', 100, 100, 1, 'USER-6', '2020-09-29 22:23:50', 'USER-3', '2020-09-29 23:51:22', '', '0000-00-00 00:00:00', 0),
-(97, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 20, 0, 'USER-6', '2020-09-29 22:23:35', 'USER-3', '2020-09-29 23:52:22', '', '0000-00-00 00:00:00', 0),
-(98, 'Edit Data', 'DBPBJ20.000002', 'BPBJ20.0002', 'DETPRO-2', 25, 0, 0, 'USER-6', '2020-09-29 22:23:43', 'USER-3', '2020-09-29 23:53:43', '', '0000-00-00 00:00:00', 0),
-(99, 'Insert Data', 'DBPBJ20.000004', 'BPBJ20.0004', 'DETPRO-16', 20, 0, 0, 'USER-6', '2020-10-23 13:33:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(100, 'Insert Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-16', 20, 0, 0, 'USER-6', '2020-10-23 13:36:48', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(101, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-16', 20, 10, 0, 'USER-6', '2020-10-23 13:36:48', 'USER-3', '2020-10-23 13:39:14', '', '0000-00-00 00:00:00', 0),
-(102, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-16', 20, 15, 0, 'USER-6', '2020-10-23 13:36:48', 'USER-3', '2020-10-23 13:41:08', '', '0000-00-00 00:00:00', 0),
-(103, 'Insert Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-16', 200, 0, 0, 'USER-6', '2020-10-26 18:13:48', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(104, 'Insert Data', 'DBPBJ20.000002', 'BPBJ20.0001', 'DETPRO-20', 50, 0, 0, 'USER-6', '2020-10-26 18:13:48', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(105, 'Insert Data', 'DBPBJ20.000003', 'BPBJ20.0002', 'DETPRO-16', 50, 0, 0, 'USER-6', '2020-10-26 18:14:02', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(106, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-16', 200, 50, 0, 'USER-6', '2020-10-26 18:13:48', 'USER-3', '2020-10-26 18:16:22', '', '0000-00-00 00:00:00', 0),
-(107, 'Edit Data', 'DBPBJ20.000002', 'BPBJ20.0001', 'DETPRO-20', 50, 25, 0, 'USER-6', '2020-10-26 18:13:48', 'USER-3', '2020-10-26 18:16:22', '', '0000-00-00 00:00:00', 0),
-(108, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-16', 200, 100, 0, 'USER-6', '2020-10-26 18:13:48', 'USER-3', '2020-10-26 18:17:03', '', '0000-00-00 00:00:00', 0),
-(109, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-16', 200, 105, 0, 'USER-6', '2020-10-26 18:13:48', 'USER-3', '2020-10-26 18:17:21', '', '0000-00-00 00:00:00', 0),
-(110, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-16', 200, 110, 0, 'USER-6', '2020-10-26 18:13:48', 'USER-3', '2020-10-28 17:30:11', '', '0000-00-00 00:00:00', 0),
-(111, 'Edit Data', 'DBPBJ20.000002', 'BPBJ20.0001', 'DETPRO-20', 50, 30, 0, 'USER-6', '2020-10-26 18:13:48', 'USER-3', '2020-10-28 17:30:11', '', '0000-00-00 00:00:00', 0),
-(112, 'Insert Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 5, 0, 0, 'USER-1', '2020-11-13 14:40:49', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(113, 'Insert Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 0, 0, 'USER-6', '2020-11-15 14:57:54', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(114, 'Edit Data', 'DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 25, 10, 0, 'USER-6', '2020-11-15 14:57:54', 'USER-3', '2020-11-15 14:58:37', '', '0000-00-00 00:00:00', 0);
+INSERT INTO `detail_bpbj` (`id_detail_bpbj`, `id_bpbj`, `id_detail_produk`, `jumlah_produk`, `jumlah_terkirim`, `status_detail_bpbj`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 13, 0, 0, 'USER-1', '2020-11-28 19:20:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -617,40 +484,6 @@ CREATE TABLE `detail_item_surat_jalan` (
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Triggers `detail_item_surat_jalan`
---
-DELIMITER $$
-CREATE TRIGGER `edit_detail_item_surat_jalan` AFTER UPDATE ON `detail_item_surat_jalan` FOR EACH ROW INSERT INTO detail_item_surat_jalan_logs(`id_detail_item_surat_jalan_logs`,`keterangan_log`,`id_detail_item_surat_jalan`,`id_item_surat_jalan`,`id_detail_bpbj`,`jumlah_produk`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`)  VALUES(null,'Edit Data',NEW.id_detail_item_surat_jalan,NEW.id_item_surat_jalan,NEW.id_detail_bpbj,NEW.jumlah_produk,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `insert_detail_item_surat_jalan` AFTER INSERT ON `detail_item_surat_jalan` FOR EACH ROW INSERT INTO detail_item_surat_jalan_logs(`id_detail_item_surat_jalan_logs`,`keterangan_log`,`id_detail_item_surat_jalan`,`id_item_surat_jalan`,`id_detail_bpbj`,`jumlah_produk`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`)  VALUES(null,'Insert Data',NEW.id_detail_item_surat_jalan,NEW.id_item_surat_jalan,NEW.id_detail_bpbj,NEW.jumlah_produk,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `detail_item_surat_jalan_logs`
---
-
-CREATE TABLE `detail_item_surat_jalan_logs` (
-  `id_detail_item_surat_jalan_logs` int(11) NOT NULL,
-  `keterangan_log` varchar(15) NOT NULL,
-  `id_detail_item_surat_jalan` varchar(15) NOT NULL,
-  `id_item_surat_jalan` varchar(15) NOT NULL,
-  `id_detail_bpbj` varchar(15) NOT NULL,
-  `jumlah_produk` int(11) NOT NULL,
-  `user_add` varchar(10) NOT NULL,
-  `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
-  `status_delete` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 -- --------------------------------------------------------
 
 --
@@ -672,26 +505,6 @@ CREATE TABLE `detail_permintaan_material` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `detail_permintaan_material`
---
-
-INSERT INTO `detail_permintaan_material` (`id_detail_permintaan_material`, `id_permintaan_material`, `id_konsumsi_material`, `needs`, `ketersediaan_supplier`, `status_detail_permintaan_material`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('DETPERMAT2011.000001', 'PERMAT2011.00001', 'KONMAT-1', '10.00', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2011.000002', 'PERMAT2011.00002', 'KONMAT-1', '14.00', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2011.000003', 'PERMAT2011.00003', 'KONMAT-2', '1100.00', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2011.000004', 'PERMAT2011.00003', 'KONMAT-3', '11.00', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2011.000005', 'PERMAT2011.00004', 'KONMAT-2', '1500.00', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2011.000006', 'PERMAT2011.00004', 'KONMAT-3', '15.00', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2011.000007', 'PERMAT2011.00005', 'KONMAT-4', '30.00', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2011.000008', 'PERMAT2011.00005', 'KONMAT-5', '60.00', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2011.000009', 'PERMAT2011.00006', 'KONMAT-4', '40.00', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2011.000010', 'PERMAT2011.00006', 'KONMAT-5', '80.00', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2011.000011', 'PERMAT2011.00007', 'KONMAT-6', '52.00', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2011.000012', 'PERMAT2011.00007', 'KONMAT-7', '65.00', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2011.000013', 'PERMAT2011.00008', 'KONMAT-6', '68.00', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2011.000014', 'PERMAT2011.00008', 'KONMAT-7', '85.00', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -766,40 +579,6 @@ CREATE TABLE `detail_produksi_line` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `detail_produksi_line`
---
-
-INSERT INTO `detail_produksi_line` (`id_detail_produksi_line`, `id_detail_purchase_order`, `id_produksi_line`, `jumlah_item_perencanaan`, `jumlah_item_aktual`, `waktu_proses_perencanaan`, `waktu_proses_aktual`, `keterangan_aktual`, `status_perencanaan`, `status_aktual`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('DPL2011.00000001', 'DPOC-1', 'PL2011.000001', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000002', 'DPOC-1', 'PL2011.000005', 10, 5, 1000, 500, '', 0, 2, 'USER-7', '2020-11-24 10:49:01', 'USER-4', '2020-11-24 22:06:31', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000003', 'DPOC-1', 'PL2011.000009', 14, 0, 1400, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000004', 'DPOC-1', 'PL2011.000013', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000005', 'DPOC-1', 'PL2011.000017', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000006', 'DPOC-1', 'PL2011.000021', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000007', 'DPOC-1', 'PL2011.000025', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000008', 'DPOC-1', 'PL2011.000002', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000009', 'DPOC-1', 'PL2011.000006', 11, 11, 1100, 1100, '', 0, 1, 'USER-7', '2020-11-24 10:49:01', 'USER-4', '2020-11-24 22:06:39', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000010', 'DPOC-1', 'PL2011.000010', 15, 0, 1500, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000011', 'DPOC-1', 'PL2011.000014', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000012', 'DPOC-1', 'PL2011.000018', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000013', 'DPOC-1', 'PL2011.000022', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000014', 'DPOC-1', 'PL2011.000026', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000015', 'DPOC-1', 'PL2011.000003', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000016', 'DPOC-1', 'PL2011.000007', 12, 6, 1200, 600, '', 0, 2, 'USER-7', '2020-11-24 10:49:01', 'USER-4', '2020-11-24 22:06:48', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000017', 'DPOC-1', 'PL2011.000011', 16, 0, 1600, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000018', 'DPOC-1', 'PL2011.000015', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000019', 'DPOC-1', 'PL2011.000019', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000020', 'DPOC-1', 'PL2011.000023', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000021', 'DPOC-1', 'PL2011.000027', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000022', 'DPOC-1', 'PL2011.000004', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000023', 'DPOC-1', 'PL2011.000008', 13, 13, 1300, 1300, '', 0, 1, 'USER-7', '2020-11-24 10:49:01', 'USER-6', '2020-11-24 22:07:06', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000024', 'DPOC-1', 'PL2011.000012', 17, 0, 1700, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000025', 'DPOC-1', 'PL2011.000016', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000026', 'DPOC-1', 'PL2011.000020', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000027', 'DPOC-1', 'PL2011.000024', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000028', 'DPOC-1', 'PL2011.000028', 0, 0, 0, 0, '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -962,66 +741,6 @@ CREATE TABLE `detail_surat_perintah_lembur` (
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Triggers `detail_surat_perintah_lembur`
---
-DELIMITER $$
-CREATE TRIGGER `edit_dspl` AFTER UPDATE ON `detail_surat_perintah_lembur` FOR EACH ROW INSERT INTO detail_surat_perintah_lembur_logs(`id_detail_surat_perintah_lembur_logs`,`keterangan_log`,`id_detail_surat_perintah_lembur`,`id_surat_perintah_lembur`,`id_karyawan`,`planning_lembur`,`waktu_in_plan`,`waktu_out_plan`,`keterangan_plan`,`aktual_lembur`,`waktu_in_aktual`,`waktu_out_aktual`,`keterangan_aktual`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES (null,'Edit\r\nData',NEW.id_detail_surat_perintah_lembur,NEW.id_surat_perintah_lembur,NEW.id_karyawan,NEW.planning_lembur,NEW.waktu_in_plan,NEW.waktu_out_plan,NEW.keterangan_plan,NEW.aktual_lembur,NEW.waktu_in_aktual,NEW.waktu_out_aktual,NEW.keterangan_aktual,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `insert_dspl` AFTER INSERT ON `detail_surat_perintah_lembur` FOR EACH ROW INSERT INTO detail_surat_perintah_lembur_logs(`id_detail_surat_perintah_lembur_logs`,`keterangan_log`,`id_detail_surat_perintah_lembur`,`id_surat_perintah_lembur`,`id_karyawan`,`planning_lembur`,`waktu_in_plan`,`waktu_out_plan`,`keterangan_plan`,`aktual_lembur`,`waktu_in_aktual`,`waktu_out_aktual`,`keterangan_aktual`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES (null,'Insert Data',NEW.id_detail_surat_perintah_lembur,NEW.id_surat_perintah_lembur,NEW.id_karyawan,NEW.planning_lembur,NEW.waktu_in_plan,NEW.waktu_out_plan,NEW.keterangan_plan,NEW.aktual_lembur,NEW.waktu_in_aktual,NEW.waktu_out_aktual,NEW.keterangan_aktual,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `detail_surat_perintah_lembur_logs`
---
-
-CREATE TABLE `detail_surat_perintah_lembur_logs` (
-  `id_detail_surat_perintah_lembur_logs` int(11) NOT NULL,
-  `keterangan_log` varchar(15) NOT NULL,
-  `id_detail_surat_perintah_lembur` varchar(15) NOT NULL,
-  `id_surat_perintah_lembur` varchar(15) NOT NULL,
-  `id_karyawan` varchar(10) NOT NULL,
-  `planning_lembur` int(2) NOT NULL,
-  `waktu_in_plan` time NOT NULL,
-  `waktu_out_plan` time NOT NULL,
-  `keterangan_plan` varchar(200) NOT NULL,
-  `aktual_lembur` int(2) NOT NULL,
-  `waktu_in_aktual` time NOT NULL,
-  `waktu_out_aktual` time NOT NULL,
-  `keterangan_aktual` varchar(200) NOT NULL,
-  `user_add` varchar(10) NOT NULL,
-  `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
-  `status_delete` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `detail_surat_perintah_lembur_logs`
---
-
-INSERT INTO `detail_surat_perintah_lembur_logs` (`id_detail_surat_perintah_lembur_logs`, `keterangan_log`, `id_detail_surat_perintah_lembur`, `id_surat_perintah_lembur`, `id_karyawan`, `planning_lembur`, `waktu_in_plan`, `waktu_out_plan`, `keterangan_plan`, `aktual_lembur`, `waktu_in_aktual`, `waktu_out_aktual`, `keterangan_aktual`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(1, 'Insert Data', 'DSPL-1', 'SPL-1', 'KAR-15', 1, '16:00:00', '17:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-1', '2020-11-13 10:43:42', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(2, 'Edit\r\nData', 'DSPL-1', 'SPL-1', 'KAR-15', 1, '16:00:00', '17:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-1', '2020-11-13 10:43:42', '', '0000-00-00 00:00:00', 'USER-9', '2020-11-13 12:44:24', 1),
-(3, 'Insert Data', 'DSPL-2', 'SPL-1', 'KAR-16', 2, '16:00:00', '18:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-9', '2020-11-13 12:44:57', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(4, 'Insert Data', 'DSPL-3', 'SPL-3', 'KAR-17', 1, '16:00:00', '17:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-1', '2020-11-13 12:59:20', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(5, 'Edit\r\nData', 'DSPL-3', 'SPL-3', 'KAR-17', 2, '16:00:00', '18:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-1', '2020-11-13 12:59:20', 'USER-1', '2020-11-13 13:05:15', '', '0000-00-00 00:00:00', 0),
-(6, 'Insert Data', 'DSPL-4', 'SPL-4', 'KAR-18', 1, '16:00:00', '17:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-1', '2020-11-13 13:13:55', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(7, 'Insert Data', 'DSPL-5', 'SPL-5', 'KAR-19', 1, '16:00:00', '17:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-1', '2020-11-13 13:25:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(8, 'Insert Data', 'DSPL-6', 'SPL-5', 'KAR-19', 1, '16:00:00', '17:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-1', '2020-11-13 13:25:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(9, 'Insert Data', 'DSPL-7', 'SPL-6', 'KAR-22', 1, '17:00:00', '18:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-1', '2020-11-13 13:26:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(10, 'Edit\r\nData', 'DSPL-3', 'SPL-3', 'KAR-17', 2, '16:00:00', '18:00:00', '', 1, '17:00:00', '18:00:00', '', 'USER-1', '2020-11-13 12:59:20', 'USER-1', '2020-11-13 13:40:02', '', '0000-00-00 00:00:00', 0),
-(11, 'Edit\r\nData', 'DSPL-3', 'SPL-3', 'KAR-17', 2, '16:00:00', '18:00:00', '', 2, '17:00:00', '19:00:00', '', 'USER-1', '2020-11-13 12:59:20', 'USER-1', '2020-11-13 13:41:06', '', '0000-00-00 00:00:00', 0),
-(12, 'Edit\r\nData', 'DSPL-5', 'SPL-5', 'KAR-19', 1, '16:00:00', '17:00:00', '', 1, '16:00:00', '17:00:00', '', 'USER-1', '2020-11-13 13:25:31', 'USER-1', '2020-11-13 13:42:00', '', '0000-00-00 00:00:00', 0),
-(13, 'Edit\r\nData', 'DSPL-6', 'SPL-5', 'KAR-19', 1, '16:00:00', '17:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-1', '2020-11-13 13:25:31', 'USER-1', '2020-11-13 13:42:00', '', '0000-00-00 00:00:00', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -1029,49 +748,6 @@ INSERT INTO `detail_surat_perintah_lembur_logs` (`id_detail_surat_perintah_lembu
 --
 
 CREATE TABLE `invoice` (
-  `id_invoice` varchar(15) NOT NULL,
-  `id_purchase_order_customer` varchar(10) NOT NULL,
-  `id_rekening` varchar(10) NOT NULL,
-  `tanggal` date NOT NULL,
-  `ditujukan_kepada` varchar(100) NOT NULL,
-  `sub_total` int(11) NOT NULL,
-  `discount_rate` decimal(11,2) NOT NULL,
-  `discount` int(11) NOT NULL,
-  `ppn_rate` decimal(11,2) NOT NULL,
-  `ppn` int(11) NOT NULL,
-  `total` int(11) NOT NULL,
-  `keterangan` varchar(500) NOT NULL,
-  `status_invoice` int(1) NOT NULL,
-  `user_add` varchar(10) NOT NULL,
-  `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
-  `status_delete` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Triggers `invoice`
---
-DELIMITER $$
-CREATE TRIGGER `edit_invoice` AFTER UPDATE ON `invoice` FOR EACH ROW INSERT INTO invoice_logs(`id_invoice_logs`,`keterangan_log`,`id_invoice`,`id_purchase_order_customer`,`id_rekening`,`tanggal`,`ditujukan_kepada`,`sub_total`,`discount_rate`,`discount`,`ppn_rate`,`ppn`,`total`,`keterangan`,`status_invoice`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES(null,'Edit Data',NEW.id_invoice,NEW.id_purchase_order_customer,NEW.id_rekening,NEW.tanggal,NEW.ditujukan_kepada,NEW.sub_total,NEW.discount_rate,NEW.discount,NEW.ppn_rate,NEW.ppn,NEW.total,NEW.keterangan,NEW.status_invoice,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `insert_invoice` AFTER INSERT ON `invoice` FOR EACH ROW INSERT INTO invoice_logs(`id_invoice_logs`,`keterangan_log`,`id_invoice`,`id_purchase_order_customer`,`id_rekening`,`tanggal`,`ditujukan_kepada`,`sub_total`,`discount_rate`,`discount`,`ppn_rate`,`ppn`,`total`,`keterangan`,`status_invoice`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES(null,'Insert Data',NEW.id_invoice,NEW.id_purchase_order_customer,NEW.id_rekening,NEW.tanggal,NEW.ditujukan_kepada,NEW.sub_total,NEW.discount_rate,NEW.discount,NEW.ppn_rate,NEW.ppn,NEW.total,NEW.keterangan,NEW.status_invoice,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `invoice_logs`
---
-
-CREATE TABLE `invoice_logs` (
-  `id_invoice_logs` int(11) NOT NULL,
-  `keterangan_log` varchar(15) NOT NULL,
   `id_invoice` varchar(15) NOT NULL,
   `id_purchase_order_customer` varchar(10) NOT NULL,
   `id_rekening` varchar(10) NOT NULL,
@@ -1137,42 +813,6 @@ CREATE TABLE `item_invoice` (
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Triggers `item_invoice`
---
-DELIMITER $$
-CREATE TRIGGER `edit_item_invoice` AFTER UPDATE ON `item_invoice` FOR EACH ROW INSERT INTO item_invoice_logs(`id_item_invoice_logs`,`keterangan_log`,`id_item_invoice`,`id_invoice`,`id_detail_produk`,`jumlah_produk`,`price`,`total_price`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES(null,'Edit Data',NEW.id_item_invoice,NEW.id_invoice,NEW.id_detail_produk,NEW.jumlah_produk,NEW.price,NEW.total_price,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `insert_item_invoice` AFTER INSERT ON `item_invoice` FOR EACH ROW INSERT INTO item_invoice_logs(`id_item_invoice_logs`,`keterangan_log`,`id_item_invoice`,`id_invoice`,`id_detail_produk`,`jumlah_produk`,`price`,`total_price`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES(null,'Insert Data',NEW.id_item_invoice,NEW.id_invoice,NEW.id_detail_produk,NEW.jumlah_produk,NEW.price,NEW.total_price,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `item_invoice_logs`
---
-
-CREATE TABLE `item_invoice_logs` (
-  `id_item_invoice_logs` int(11) NOT NULL,
-  `keterangan_log` varchar(15) NOT NULL,
-  `id_item_invoice` varchar(15) NOT NULL,
-  `id_invoice` varchar(15) NOT NULL,
-  `id_detail_produk` varchar(10) NOT NULL,
-  `jumlah_produk` int(11) NOT NULL,
-  `price` int(11) NOT NULL,
-  `total_price` int(11) NOT NULL,
-  `user_add` varchar(10) NOT NULL,
-  `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
-  `status_delete` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 -- --------------------------------------------------------
 
 --
@@ -1194,48 +834,6 @@ CREATE TABLE `item_surat_jalan` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Triggers `item_surat_jalan`
---
-DELIMITER $$
-CREATE TRIGGER `edit_item_surat_jalan` AFTER UPDATE ON `item_surat_jalan` FOR EACH ROW INSERT INTO item_surat_jalan_logs(`id_item_surat_jalan_logs`,`keterangan_log`,`id_item_surat_jalan`,`id_surat_jalan`,`id_detail_produk`,`jumlah_produk`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES(null,'Edit Data',NEW.id_item_surat_jalan,NEW.id_surat_jalan,NEW.id_detail_produk,NEW.jumlah_produk,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `insert_item_surat_jalan` AFTER INSERT ON `item_surat_jalan` FOR EACH ROW INSERT INTO item_surat_jalan_logs(`id_item_surat_jalan_logs`,`keterangan_log`,`id_item_surat_jalan`,`id_surat_jalan`,`id_detail_produk`,`jumlah_produk`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES(null,'Insert Data',NEW.id_item_surat_jalan,NEW.id_surat_jalan,NEW.id_detail_produk,NEW.jumlah_produk,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `item_surat_jalan_logs`
---
-
-CREATE TABLE `item_surat_jalan_logs` (
-  `id_item_surat_jalan_logs` int(11) NOT NULL,
-  `keterangan_log` varchar(15) NOT NULL,
-  `id_item_surat_jalan` varchar(15) NOT NULL,
-  `id_surat_jalan` varchar(15) NOT NULL,
-  `id_detail_produk` varchar(10) NOT NULL,
-  `jumlah_produk` int(11) NOT NULL,
-  `user_add` varchar(10) NOT NULL,
-  `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
-  `status_delete` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `item_surat_jalan_logs`
---
-
-INSERT INTO `item_surat_jalan_logs` (`id_item_surat_jalan_logs`, `keterangan_log`, `id_item_surat_jalan`, `id_surat_jalan`, `id_detail_produk`, `jumlah_produk`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(1, 'Insert Data', 'ISJ20.000001', 'M2011.0001', 'DETPRO-1', 10, 'USER-3', '2020-11-15 14:58:37', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(2, 'Edit Data', 'ISJ20.000001', 'M2011.0001', 'DETPRO-1', 10, 'USER-3', '2020-11-15 14:58:37', 'USER-6', '2020-11-15 15:00:06', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2015,21 +1613,6 @@ CREATE TABLE `pengambilan_material` (
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `pengambilan_material`
---
-
-INSERT INTO `pengambilan_material` (`id_pengambilan_material`, `id_karyawan`, `id_detail_permintaan_material`, `id_pengeluaran_material`, `tanggal_ambil`, `stok_wip`, `jumlah_ambil`, `keterangan`, `status_pengambilan`, `status_keluar`, `status_permintaan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('MBP/AMBIL/11/20/001', 'KAR-9', 'DETPERMAT2011.000001', '', '2020-11-24', '0.00', '3.00', '', 1, 0, 0, 'USER-9', '2020-11-24 12:55:15', 'USER-9', '2020-11-24 15:38:00', '', '0000-00-00 00:00:00', 0),
-('MBP/AMBIL/11/20/002', 'KAR-9', 'DETPERMAT2011.000001', '', '2020-11-24', '0.00', '7.00', '', 1, 0, 0, 'USER-9', '2020-11-24 12:55:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('MBP/AMBIL/11/20/003', 'KAR-9', 'DETPERMAT2011.000001', '', '2020-11-24', '0.00', '3.00', 'ambil 3', 1, 0, 1, 'USER-9', '2020-11-24 13:16:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('MBP/AMBIL/11/20/004', 'KAR-9', 'DETPERMAT2011.000003', '', '2020-11-24', '0.00', '1100.00', '', 1, 0, 0, 'USER-9', '2020-11-24 22:04:57', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('MBP/AMBIL/11/20/005', 'KAR-9', 'DETPERMAT2011.000004', '', '2020-11-24', '0.00', '11.00', '', 1, 0, 0, 'USER-9', '2020-11-24 22:04:57', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('MBP/AMBIL/11/20/006', 'KAR-10', 'DETPERMAT2011.000007', '', '2020-11-24', '0.00', '30.00', '', 0, 0, 0, 'USER-10', '2020-11-24 22:05:20', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('MBP/AMBIL/11/20/007', 'KAR-10', 'DETPERMAT2011.000008', '', '2020-11-24', '0.00', '60.00', '', 1, 0, 0, 'USER-10', '2020-11-24 22:05:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('MBP/AMBIL/11/20/008', 'KAR-11', 'DETPERMAT2011.000011', '', '2020-11-24', '0.00', '52.00', '', 1, 0, 0, 'USER-11', '2020-11-24 22:06:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('MBP/AMBIL/11/20/009', 'KAR-11', 'DETPERMAT2011.000012', '', '2020-11-24', '0.00', '65.00', '', 1, 0, 0, 'USER-11', '2020-11-24 22:06:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -2075,13 +1658,6 @@ CREATE TABLE `perencanaan_cutting` (
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `perencanaan_cutting`
---
-
-INSERT INTO `perencanaan_cutting` (`id_perencanaan_cutting`, `id_detail_produksi_line`, `tanggal`, `jumlah_perencanaan`, `jumlah_aktual`, `status_laporan`, `keterangan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('PCUT2011.00001', 'DPL2011.00000016', '2020-11-24', 12, 10, 2, '', 'USER-10', '2020-11-24', 'USER-4', '2020-11-24 22:17:36', '', '0000-00-00 00:00:00', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -2104,20 +1680,6 @@ CREATE TABLE `permintaan_material` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `permintaan_material`
---
-
-INSERT INTO `permintaan_material` (`id_permintaan_material`, `id_detail_purchase_order_customer`, `id_line`, `jumlah_minta`, `tanggal_permintaan`, `tanggal_produksi`, `status_permintaan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('PERMAT2011.00001', 'DPOC-1', 'LINE-1', 10, '2020-11-24', '2020-11-24', 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PERMAT2011.00002', 'DPOC-1', 'LINE-1', 14, '2020-11-24', '2020-11-25', 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PERMAT2011.00003', 'DPOC-1', 'LINE-2', 11, '2020-11-24', '2020-11-24', 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PERMAT2011.00004', 'DPOC-1', 'LINE-2', 15, '2020-11-24', '2020-11-25', 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PERMAT2011.00005', 'DPOC-1', 'LINE-3', 12, '2020-11-24', '2020-11-24', 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PERMAT2011.00006', 'DPOC-1', 'LINE-3', 16, '2020-11-24', '2020-11-25', 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PERMAT2011.00007', 'DPOC-1', 'LINE-4', 13, '2020-11-24', '2020-11-24', 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PERMAT2011.00008', 'DPOC-1', 'LINE-4', 17, '2020-11-24', '2020-11-25', 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2153,6 +1715,7 @@ CREATE TABLE `permintaan_pembelian` (
 CREATE TABLE `permintaan_tambahan` (
   `id_permintaan_tambahan` varchar(15) NOT NULL,
   `id_detail_permintaan_material` varchar(20) NOT NULL,
+  `id_pengambilan_material` varchar(20) NOT NULL,
   `jumlah_tambah` int(11) NOT NULL,
   `keterangan` varchar(50) NOT NULL,
   `status` int(1) NOT NULL,
@@ -2164,13 +1727,6 @@ CREATE TABLE `permintaan_tambahan` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `permintaan_tambahan`
---
-
-INSERT INTO `permintaan_tambahan` (`id_permintaan_tambahan`, `id_detail_permintaan_material`, `jumlah_tambah`, `keterangan`, `status`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('PERTAM2011.001', 'DETPERMAT2011.000001', 3, '', 3, 'USER-9', '2020-11-24 13:15:05', 'USER-9', '2020-11-24 13:16:08', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2215,13 +1771,6 @@ CREATE TABLE `persediaan_line` (
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `persediaan_line`
---
-
-INSERT INTO `persediaan_line` (`id_persediaan_line`, `id_line`, `id_sub_jenis_material`, `total_material`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('SELI-1', 'LINE-3', 'SUBJM-4', '35.00', 'USER-7', '2020-11-25 07:58:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -2233,7 +1782,7 @@ CREATE TABLE `persediaan_line_keluar` (
   `id_persediaan_line` varchar(10) NOT NULL,
   `id_pengambilan_material` varchar(20) NOT NULL,
   `tanggal` date NOT NULL,
-  `jumlah_material` int(11) NOT NULL,
+  `jumlah_material` decimal(11,2) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
   `user_edit` varchar(10) NOT NULL,
@@ -2264,13 +1813,6 @@ CREATE TABLE `persediaan_line_masuk` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `persediaan_line_masuk`
---
-
-INSERT INTO `persediaan_line_masuk` (`id_persediaan_line_masuk`, `id_persediaan_line`, `id_detail_permintaan_material`, `tanggal`, `jumlah_material`, `status`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('SELIM2011.00001', 'SELI-1', '', '2020-11-24', '35.00', 0, 'USER-7', '2020-11-25 07:58:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2390,19 +1932,6 @@ CREATE TABLE `produksi` (
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `produksi`
---
-
-INSERT INTO `produksi` (`id_produksi`, `tanggal`, `status_perencanaan`, `status_laporan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('P2011.0001', '2020-11-23', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('P2011.0002', '2020-11-24', 1, 2, 'USER-7', '2020-11-24 10:49:01', 'USER-6', '2020-11-24 22:07:06', '', '0000-00-00 00:00:00', 0),
-('P2011.0003', '2020-11-25', 1, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('P2011.0004', '2020-11-26', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('P2011.0005', '2020-11-27', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('P2011.0006', '2020-11-28', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('P2011.0007', '2020-11-29', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -2429,40 +1958,6 @@ CREATE TABLE `produksi_line` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `produksi_line`
---
-
-INSERT INTO `produksi_line` (`id_produksi_line`, `id_line`, `id_produksi`, `total_processing_time`, `total_waktu_perencanaan`, `total_waktu_aktual`, `efisiensi_perencanaan`, `efisiensi_aktual`, `keterangan_laporan`, `status_perencanaan`, `status_laporan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('PL2011.000001', 'LINE-1', 'P2011.0001', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000002', 'LINE-2', 'P2011.0001', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000003', 'LINE-3', 'P2011.0001', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000004', 'LINE-4', 'P2011.0001', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000005', 'LINE-1', 'P2011.0002', 9, 1000, 500, '3.09', '1.54', '                                ', 1, 1, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000006', 'LINE-2', 'P2011.0002', 9, 1100, 1100, '3.40', '3.40', '                                ', 1, 1, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000007', 'LINE-3', 'P2011.0002', 90, 1200, 600, '0.37', '0.19', '                                ', 1, 1, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000008', 'LINE-4', 'P2011.0002', 27, 1300, 1300, '1.34', '1.34', '                                ', 1, 1, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000009', 'LINE-1', 'P2011.0003', 9, 1400, 0, '4.32', '0.00', '', 1, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000010', 'LINE-2', 'P2011.0003', 9, 1500, 0, '4.63', '0.00', '', 1, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000011', 'LINE-3', 'P2011.0003', 90, 1600, 0, '0.49', '0.00', '', 1, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000012', 'LINE-4', 'P2011.0003', 27, 1700, 0, '1.75', '0.00', '', 1, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000013', 'LINE-1', 'P2011.0004', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000014', 'LINE-2', 'P2011.0004', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000015', 'LINE-3', 'P2011.0004', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000016', 'LINE-4', 'P2011.0004', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000017', 'LINE-1', 'P2011.0005', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000018', 'LINE-2', 'P2011.0005', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000019', 'LINE-3', 'P2011.0005', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000020', 'LINE-4', 'P2011.0005', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000021', 'LINE-1', 'P2011.0006', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000022', 'LINE-2', 'P2011.0006', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000023', 'LINE-3', 'P2011.0006', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000024', 'LINE-4', 'P2011.0006', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000025', 'LINE-1', 'P2011.0007', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000026', 'LINE-2', 'P2011.0007', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000027', 'LINE-3', 'P2011.0007', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PL2011.000028', 'LINE-4', 'P2011.0007', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-7', '2020-11-24 10:49:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2511,8 +2006,7 @@ CREATE TABLE `produksi_tertunda` (
 --
 
 INSERT INTO `produksi_tertunda` (`id_produksi_tertunda`, `id_detail_produksi_line`, `jumlah_tertunda`, `jumlah_terencana`, `status_penjadwalan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('PRODTUN2011.00000001', 'DPL2011.00000002', 5, 0, 0, 'USER-4', '2020-11-24 22:06:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PRODTUN2011.00000002', 'DPL2011.00000016', 6, 0, 0, 'USER-4', '2020-11-24 22:06:48', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+('PRODTUN2011.00000001', 'DPL2011.00000006', 9, 0, 0, 'USER-4', '2020-11-28 18:40:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2579,7 +2073,7 @@ CREATE TABLE `purchase_order_customer` (
 --
 
 INSERT INTO `purchase_order_customer` (`id_purchase_order_customer`, `kode_purchase_order_customer`, `id_customer`, `tanggal_po`, `harga_sebelum_pajak`, `ppn`, `total_harga_akhir`, `keterangan`, `status_po`, `tanggal_selesai`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('POC-1', 'L2001231', 'CUST-1', '2020-11-11', 120000000, 12000000, 132000000, '', 2, '0000-00-00', 'USER-1', '2020-11-11 21:15:00', 'USER-7', '2020-11-24 10:49:01', '0', '0000-00-00 00:00:00', 0),
+('POC-1', 'L2001231', 'CUST-1', '2020-11-11', 120000000, 12000000, 132000000, '', 2, '0000-00-00', 'USER-1', '2020-11-11 21:15:00', 'USER-7', '2020-11-28 18:28:17', '0', '0000-00-00 00:00:00', 0),
 ('POC-2', 'L2001232', 'CUST-1', '2020-11-11', 90000000, 9000000, 99000000, '', 2, '0000-00-00', 'USER-1', '2020-11-11 21:15:10', 'USER-7', '2020-11-19 00:29:08', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
@@ -2917,41 +2411,6 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `surat_jalan_logs`
---
-
-CREATE TABLE `surat_jalan_logs` (
-  `id_surat_jalan_logs` int(11) NOT NULL,
-  `keterangan_log` varchar(15) NOT NULL,
-  `id_surat_jalan` varchar(15) NOT NULL,
-  `id_purchase_order_customer` varchar(10) NOT NULL,
-  `id_invoice` varchar(15) NOT NULL,
-  `tanggal` date NOT NULL,
-  `kendaraan` varchar(100) NOT NULL,
-  `nama_pengirim` varchar(50) NOT NULL,
-  `keterangan_pengiriman` varchar(100) NOT NULL,
-  `keterangan` varchar(500) NOT NULL,
-  `status_surat_jalan` int(1) NOT NULL,
-  `user_add` varchar(10) NOT NULL,
-  `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
-  `status_delete` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `surat_jalan_logs`
---
-
-INSERT INTO `surat_jalan_logs` (`id_surat_jalan_logs`, `keterangan_log`, `id_surat_jalan`, `id_purchase_order_customer`, `id_invoice`, `tanggal`, `kendaraan`, `nama_pengirim`, `keterangan_pengiriman`, `keterangan`, `status_surat_jalan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(1, 'Insert Data', 'M2011.0001', 'POC-1', '', '2020-11-15', 'B2001', 'Laurencia', 'Gosend', '                                    ', 0, 'USER-3', '2020-11-15 14:58:37', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(2, 'Edit Data', 'M2011.0001', 'POC-1', '', '2020-11-15', 'B2001', 'Laurencia', 'Gosend', '                                    ', 1, 'USER-3', '2020-11-15 14:58:37', 'USER-3', '2020-11-15 00:00:00', '', '0000-00-00 00:00:00', 0);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `surat_perintah_lembur`
 --
 
@@ -2972,145 +2431,6 @@ CREATE TABLE `surat_perintah_lembur` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `surat_perintah_lembur`
---
-
-INSERT INTO `surat_perintah_lembur` (`id_surat_perintah_lembur`, `id_line`, `tanggal`, `waktu_lembur`, `keterangan_perintah`, `keterangan_laporan`, `status_spl`, `keterangan_spl`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('SPL-1', 'LINE-1', '2020-11-21', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SPL-2', 'LINE-2', '2020-11-21', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SPL-3', 'LINE-3', '2020-11-21', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SPL-4', 'LINE-4', '2020-11-21', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SPL-5', 'LINE-1', '2020-11-22', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SPL-6', 'LINE-2', '2020-11-22', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SPL-7', 'LINE-3', '2020-11-22', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SPL-8', 'LINE-4', '2020-11-22', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
-
---
--- Triggers `surat_perintah_lembur`
---
-DELIMITER $$
-CREATE TRIGGER `edit_spl` AFTER UPDATE ON `surat_perintah_lembur` FOR EACH ROW INSERT INTO `surat_perintah_lembur_logs` (`id_surat_perintah_lembur_logs`,`keterangan_log`,`id_surat_perintah_lembur`,`id_line`,`tanggal`,`waktu_lembur`,`keterangan_perintah`,`keterangan_laporan`,`status_spl`,`keterangan_spl`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES(null,'Edit Data',NEW.id_surat_perintah_lembur,NEW.id_line,NEW.tanggal,NEW.waktu_lembur,NEW.keterangan_perintah,NEW.keterangan_laporan,NEW.status_spl,NEW.keterangan_spl,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `insert_spl` AFTER INSERT ON `surat_perintah_lembur` FOR EACH ROW INSERT INTO `surat_perintah_lembur_logs` (`id_surat_perintah_lembur_logs`,`keterangan_log`,`id_surat_perintah_lembur`,`id_line`,`tanggal`,`waktu_lembur`,`keterangan_perintah`,`keterangan_laporan`,`status_spl`,`keterangan_spl`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES(null,'Insert Data',NEW.id_surat_perintah_lembur,NEW.id_line,NEW.tanggal,NEW.waktu_lembur,NEW.keterangan_perintah,NEW.keterangan_laporan,NEW.status_spl,NEW.keterangan_spl,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `surat_perintah_lembur_logs`
---
-
-CREATE TABLE `surat_perintah_lembur_logs` (
-  `id_surat_perintah_lembur_logs` int(11) NOT NULL,
-  `keterangan_log` varchar(15) NOT NULL,
-  `id_surat_perintah_lembur` varchar(15) NOT NULL,
-  `id_line` varchar(10) NOT NULL,
-  `tanggal` date NOT NULL,
-  `waktu_lembur` varchar(15) NOT NULL,
-  `keterangan_perintah` varchar(500) NOT NULL,
-  `keterangan_laporan` varchar(500) NOT NULL,
-  `status_spl` int(1) NOT NULL,
-  `keterangan_spl` int(1) NOT NULL,
-  `user_add` varchar(10) NOT NULL,
-  `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
-  `status_delete` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `surat_perintah_lembur_logs`
---
-
-INSERT INTO `surat_perintah_lembur_logs` (`id_surat_perintah_lembur_logs`, `keterangan_log`, `id_surat_perintah_lembur`, `id_line`, `tanggal`, `waktu_lembur`, `keterangan_perintah`, `keterangan_laporan`, `status_spl`, `keterangan_spl`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(1, 'Insert Data', 'SPL-1', 'LINE-1', '2020-11-13', 'Hari Produksi', 'Coba', '', 0, 1, 'USER-7', '2020-11-13 10:25:51', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(2, 'Edit Data', 'SPL-1', 'LINE-1', '2020-11-13', 'Hari Produksi', 'Coba', '', 1, 1, 'USER-7', '2020-11-13 10:25:51', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(3, 'Edit Data', 'SPL-1', 'LINE-1', '2020-11-13', 'Hari Produksi', 'Coba', '', 2, 1, 'USER-7', '2020-11-13 10:25:51', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(4, 'Edit Data', 'SPL-1', 'LINE-1', '2020-11-13', 'Hari Produksi', 'Coba', '', 1, 1, 'USER-7', '2020-11-13 10:25:51', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(5, 'Insert Data', 'SPL-2', 'LINE-1', '2020-11-14', 'Hari Libur', '', '', 0, 1, 'USER-1', '2020-11-13 10:48:28', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(6, 'Edit Data', 'SPL-1', 'LINE-1', '2020-11-13', 'Hari Produksi', 'Coba', '', 0, 1, 'USER-7', '2020-11-13 10:25:51', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(7, 'Edit Data', 'SPL-1', 'LINE-1', '2020-11-13', 'Hari Produksi', 'Coba', '', 1, 1, 'USER-7', '2020-11-13 10:25:51', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(8, 'Insert Data', 'SPL-3', 'LINE-2', '2020-11-13', 'Hari Produksi', '', '', 0, 1, 'USER-1', '2020-11-13 12:58:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(9, 'Edit Data', 'SPL-3', 'LINE-2', '2020-11-13', 'Hari Produksi', '', '', 1, 1, 'USER-1', '2020-11-13 12:58:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(10, 'Edit Data', 'SPL-3', 'LINE-2', '2020-11-13', 'Hari Produksi', '', '', 2, 1, 'USER-1', '2020-11-13 12:58:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(11, 'Edit Data', 'SPL-3', 'LINE-2', '2020-11-13', 'Hari Produksi', '', '', 3, 1, 'USER-1', '2020-11-13 12:58:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(12, 'Insert Data', 'SPL-4', 'LINE-2', '2020-11-14', 'Hari Libur', '', '', 0, 1, 'USER-7', '2020-11-13 13:13:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(13, 'Edit Data', 'SPL-4', 'LINE-2', '2020-11-14', 'Hari Libur', '', '', 1, 1, 'USER-7', '2020-11-13 13:13:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(14, 'Edit Data', 'SPL-4', 'LINE-2', '2020-11-14', 'Hari Libur', '', '', 2, 1, 'USER-7', '2020-11-13 13:13:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(15, 'Insert Data', 'SPL-5', 'LINE-3', '2020-11-13', 'Hari Produksi', '', '', 0, 1, 'USER-1', '2020-11-13 13:25:18', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(16, 'Edit Data', 'SPL-5', 'LINE-3', '2020-11-13', 'Hari Produksi', '', '', 1, 1, 'USER-1', '2020-11-13 13:25:18', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(17, 'Edit Data', 'SPL-5', 'LINE-3', '2020-11-13', 'Hari Produksi', '', '', 1, 1, 'USER-1', '2020-11-13 13:25:18', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(18, 'Edit Data', 'SPL-5', 'LINE-3', '2020-11-13', 'Hari Produksi', '', '', 2, 1, 'USER-1', '2020-11-13 13:25:18', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(19, 'Edit Data', 'SPL-5', 'LINE-3', '2020-11-13', 'Hari Produksi', '', '', 3, 1, 'USER-1', '2020-11-13 13:25:18', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(20, 'Insert Data', 'SPL-6', 'LINE-4', '2020-11-13', 'Hari Produksi', '', '', 0, 1, 'USER-1', '2020-11-13 13:26:12', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(21, 'Edit Data', 'SPL-6', 'LINE-4', '2020-11-13', 'Hari Produksi', '', '', 1, 1, 'USER-1', '2020-11-13 13:26:12', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(22, 'Edit Data', 'SPL-6', 'LINE-4', '2020-11-13', 'Hari Produksi', '', '', 2, 1, 'USER-1', '2020-11-13 13:26:12', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(23, 'Edit Data', 'SPL-6', 'LINE-4', '2020-11-13', 'Hari Produksi', '', '', 3, 1, 'USER-1', '2020-11-13 13:26:12', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(24, 'Edit Data', 'SPL-3', 'LINE-2', '2020-11-13', 'Hari Produksi', '', '', 4, 1, 'USER-1', '2020-11-13 12:58:58', 'USER-1', '2020-11-13 13:40:02', '', '0000-00-00 00:00:00', 0),
-(25, 'Edit Data', 'SPL-3', 'LINE-2', '2020-11-13', 'Hari Produksi', '', '', 4, 1, 'USER-1', '2020-11-13 12:58:58', 'USER-1', '2020-11-13 13:41:06', '', '0000-00-00 00:00:00', 0),
-(26, 'Edit Data', 'SPL-5', 'LINE-3', '2020-11-13', 'Hari Produksi', '', '', 4, 1, 'USER-1', '2020-11-13 13:25:18', 'USER-1', '2020-11-13 13:42:00', '', '0000-00-00 00:00:00', 0),
-(27, 'Edit Data', 'SPL-5', 'LINE-3', '2020-11-13', 'Hari Produksi', '', '', 5, 1, 'USER-1', '2020-11-13 13:25:18', 'USER-1', '2020-11-13 13:42:24', '', '0000-00-00 00:00:00', 0),
-(28, 'Insert Data', 'SPL-1', 'LINE-1', '2020-11-14', 'Hari Libur', '', '', 0, 0, 'USER-1', '2020-11-14 14:34:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(29, 'Insert Data', 'SPL-2', 'LINE-2', '2020-11-14', 'Hari Libur', '', '', 0, 0, 'USER-1', '2020-11-14 14:34:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(30, 'Insert Data', 'SPL-3', 'LINE-3', '2020-11-14', 'Hari Libur', '', '', 0, 0, 'USER-1', '2020-11-14 14:34:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(31, 'Insert Data', 'SPL-4', 'LINE-4', '2020-11-14', 'Hari Libur', '', '', 0, 0, 'USER-1', '2020-11-14 14:34:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(32, 'Insert Data', 'SPL-5', 'LINE-1', '2020-11-15', 'Hari Libur', '', '', 0, 0, 'USER-1', '2020-11-14 14:34:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(33, 'Insert Data', 'SPL-6', 'LINE-2', '2020-11-15', 'Hari Libur', '', '', 0, 0, 'USER-1', '2020-11-14 14:34:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(34, 'Insert Data', 'SPL-7', 'LINE-3', '2020-11-15', 'Hari Libur', '', '', 0, 0, 'USER-1', '2020-11-14 14:34:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(35, 'Insert Data', 'SPL-8', 'LINE-4', '2020-11-15', 'Hari Libur', '', '', 0, 0, 'USER-1', '2020-11-14 14:34:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(36, 'Insert Data', 'SPL-1', 'LINE-1', '2020-11-14', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-14 16:27:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(37, 'Insert Data', 'SPL-2', 'LINE-2', '2020-11-14', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-14 16:27:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(38, 'Insert Data', 'SPL-3', 'LINE-3', '2020-11-14', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-14 16:27:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(39, 'Insert Data', 'SPL-4', 'LINE-4', '2020-11-14', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-14 16:27:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(40, 'Insert Data', 'SPL-5', 'LINE-1', '2020-11-15', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-14 16:27:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(41, 'Insert Data', 'SPL-6', 'LINE-2', '2020-11-15', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-14 16:27:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(42, 'Insert Data', 'SPL-7', 'LINE-3', '2020-11-15', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-14 16:27:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(43, 'Insert Data', 'SPL-8', 'LINE-4', '2020-11-15', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-14 16:27:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(44, 'Insert Data', 'SPL-1', 'LINE-1', '2020-11-14', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-14 16:29:32', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(45, 'Insert Data', 'SPL-2', 'LINE-3', '2020-11-14', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-14 16:29:32', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(46, 'Insert Data', 'SPL-3', 'LINE-4', '2020-11-14', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-14 16:29:32', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(47, 'Insert Data', 'SPL-4', 'LINE-1', '2020-11-15', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-14 16:29:32', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(48, 'Insert Data', 'SPL-5', 'LINE-2', '2020-11-15', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-14 16:29:32', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(49, 'Insert Data', 'SPL-6', 'LINE-3', '2020-11-15', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-14 16:29:32', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(50, 'Insert Data', 'SPL-7', 'LINE-4', '2020-11-15', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-14 16:29:32', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(51, 'Edit Data', 'SPL-1', 'LINE-1', '2020-11-14', 'Hari Libur', '', '', 0, 2, 'USER-7', '2020-11-14 16:29:32', 'USER-7', '2020-11-14 19:31:40', '', '0000-00-00 00:00:00', 0),
-(52, 'Insert Data', 'SPL-8', 'LINE-2', '2020-11-14', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-14 19:31:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(53, 'Edit Data', 'SPL-2', 'LINE-3', '2020-11-14', 'Hari Libur', '', '', 0, 2, 'USER-7', '2020-11-14 16:29:32', 'USER-7', '2020-11-14 19:31:40', '', '0000-00-00 00:00:00', 0),
-(54, 'Edit Data', 'SPL-3', 'LINE-4', '2020-11-14', 'Hari Libur', '', '', 0, 2, 'USER-7', '2020-11-14 16:29:32', 'USER-7', '2020-11-14 19:31:40', '', '0000-00-00 00:00:00', 0),
-(55, 'Edit Data', 'SPL-1', 'LINE-1', '2020-11-14', 'Hari Libur', '', '', 6, 2, 'USER-7', '2020-11-14 16:29:32', 'USER-7', '2020-11-14 19:31:40', '', '0000-00-00 00:00:00', 0),
-(56, 'Edit Data', 'SPL-2', 'LINE-3', '2020-11-14', 'Hari Libur', '', '', 6, 2, 'USER-7', '2020-11-14 16:29:32', 'USER-7', '2020-11-14 19:31:40', '', '0000-00-00 00:00:00', 0),
-(57, 'Edit Data', 'SPL-3', 'LINE-4', '2020-11-14', 'Hari Libur', '', '', 6, 2, 'USER-7', '2020-11-14 16:29:32', 'USER-7', '2020-11-14 19:31:40', '', '0000-00-00 00:00:00', 0),
-(58, 'Edit Data', 'SPL-8', 'LINE-2', '2020-11-14', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-14 19:31:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(59, 'Insert Data', 'SPL-1', 'LINE-1', '2020-11-15', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-15 10:32:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(60, 'Insert Data', 'SPL-2', 'LINE-3', '2020-11-15', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-15 10:32:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(61, 'Insert Data', 'SPL-3', 'LINE-4', '2020-11-15', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-15 10:32:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(62, 'Edit Data', 'SPL-1', 'LINE-1', '2020-11-15', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-15 10:32:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(63, 'Edit Data', 'SPL-2', 'LINE-3', '2020-11-15', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-15 10:32:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(64, 'Edit Data', 'SPL-3', 'LINE-4', '2020-11-15', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-15 10:32:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(65, 'Insert Data', 'SPL-1', 'LINE-1', '2020-11-21', 'Hari Libur', '', '', 0, 1, 'USER-7', '2020-11-21 10:22:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(66, 'Insert Data', 'SPL-1', 'LINE-1', '2020-11-21', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(67, 'Insert Data', 'SPL-2', 'LINE-2', '2020-11-21', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(68, 'Insert Data', 'SPL-3', 'LINE-3', '2020-11-21', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(69, 'Insert Data', 'SPL-4', 'LINE-4', '2020-11-21', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(70, 'Insert Data', 'SPL-5', 'LINE-1', '2020-11-22', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(71, 'Insert Data', 'SPL-6', 'LINE-2', '2020-11-22', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(72, 'Insert Data', 'SPL-7', 'LINE-3', '2020-11-22', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(73, 'Insert Data', 'SPL-8', 'LINE-4', '2020-11-22', 'Hari Libur', '', '', 0, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(74, 'Edit Data', 'SPL-1', 'LINE-1', '2020-11-21', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(75, 'Edit Data', 'SPL-2', 'LINE-2', '2020-11-21', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(76, 'Edit Data', 'SPL-3', 'LINE-3', '2020-11-21', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(77, 'Edit Data', 'SPL-4', 'LINE-4', '2020-11-21', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(78, 'Edit Data', 'SPL-5', 'LINE-1', '2020-11-22', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(79, 'Edit Data', 'SPL-6', 'LINE-2', '2020-11-22', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(80, 'Edit Data', 'SPL-7', 'LINE-3', '2020-11-22', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(81, 'Edit Data', 'SPL-8', 'LINE-4', '2020-11-22', 'Hari Libur', '', '', 6, 0, 'USER-7', '2020-11-21 10:48:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -3516,12 +2836,6 @@ ALTER TABLE `bpbj`
   ADD PRIMARY KEY (`id_bpbj`);
 
 --
--- Indexes for table `bpbj_logs`
---
-ALTER TABLE `bpbj_logs`
-  ADD PRIMARY KEY (`id_bpbj_logs`);
-
---
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
@@ -3564,12 +2878,6 @@ ALTER TABLE `detail_bpbj`
   ADD PRIMARY KEY (`id_detail_bpbj`);
 
 --
--- Indexes for table `detail_bpbj_logs`
---
-ALTER TABLE `detail_bpbj_logs`
-  ADD PRIMARY KEY (`id_detail_bpbj_logs`);
-
---
 -- Indexes for table `detail_delivery_note`
 --
 ALTER TABLE `detail_delivery_note`
@@ -3586,12 +2894,6 @@ ALTER TABLE `detail_item_bpbd`
 --
 ALTER TABLE `detail_item_surat_jalan`
   ADD PRIMARY KEY (`id_detail_item_surat_jalan`);
-
---
--- Indexes for table `detail_item_surat_jalan_logs`
---
-ALTER TABLE `detail_item_surat_jalan_logs`
-  ADD PRIMARY KEY (`id_detail_item_surat_jalan_logs`);
 
 --
 -- Indexes for table `detail_permintaan_material`
@@ -3648,22 +2950,10 @@ ALTER TABLE `detail_surat_perintah_lembur`
   ADD PRIMARY KEY (`id_detail_surat_perintah_lembur`);
 
 --
--- Indexes for table `detail_surat_perintah_lembur_logs`
---
-ALTER TABLE `detail_surat_perintah_lembur_logs`
-  ADD PRIMARY KEY (`id_detail_surat_perintah_lembur_logs`);
-
---
 -- Indexes for table `invoice`
 --
 ALTER TABLE `invoice`
   ADD PRIMARY KEY (`id_invoice`);
-
---
--- Indexes for table `invoice_logs`
---
-ALTER TABLE `invoice_logs`
-  ADD PRIMARY KEY (`id_invoice_logs`);
 
 --
 -- Indexes for table `item_bpbd`
@@ -3678,22 +2968,10 @@ ALTER TABLE `item_invoice`
   ADD PRIMARY KEY (`id_item_invoice`);
 
 --
--- Indexes for table `item_invoice_logs`
---
-ALTER TABLE `item_invoice_logs`
-  ADD PRIMARY KEY (`id_item_invoice_logs`);
-
---
 -- Indexes for table `item_surat_jalan`
 --
 ALTER TABLE `item_surat_jalan`
   ADD PRIMARY KEY (`id_item_surat_jalan`);
-
---
--- Indexes for table `item_surat_jalan_logs`
---
-ALTER TABLE `item_surat_jalan_logs`
-  ADD PRIMARY KEY (`id_item_surat_jalan_logs`);
 
 --
 -- Indexes for table `jabatan`
@@ -3972,22 +3250,10 @@ ALTER TABLE `surat_jalan`
   ADD PRIMARY KEY (`id_surat_jalan`);
 
 --
--- Indexes for table `surat_jalan_logs`
---
-ALTER TABLE `surat_jalan_logs`
-  ADD PRIMARY KEY (`id_surat_jalan_logs`);
-
---
 -- Indexes for table `surat_perintah_lembur`
 --
 ALTER TABLE `surat_perintah_lembur`
   ADD PRIMARY KEY (`id_surat_perintah_lembur`);
-
---
--- Indexes for table `surat_perintah_lembur_logs`
---
-ALTER TABLE `surat_perintah_lembur_logs`
-  ADD PRIMARY KEY (`id_surat_perintah_lembur_logs`);
 
 --
 -- Indexes for table `tetapan`
@@ -4048,12 +3314,6 @@ ALTER TABLE `bank_logs`
   MODIFY `id_bank_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `bpbj_logs`
---
-ALTER TABLE `bpbj_logs`
-  MODIFY `id_bpbj_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
 -- AUTO_INCREMENT for table `cycle_time_logs`
 --
 ALTER TABLE `cycle_time_logs`
@@ -4066,46 +3326,10 @@ ALTER TABLE `departemen_logs`
   MODIFY `id_departemen_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `detail_bpbj_logs`
---
-ALTER TABLE `detail_bpbj_logs`
-  MODIFY `id_detail_bpbj_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
-
---
--- AUTO_INCREMENT for table `detail_item_surat_jalan_logs`
---
-ALTER TABLE `detail_item_surat_jalan_logs`
-  MODIFY `id_detail_item_surat_jalan_logs` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `detail_produk_logs`
 --
 ALTER TABLE `detail_produk_logs`
   MODIFY `id_detail_produk_logs` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `detail_surat_perintah_lembur_logs`
---
-ALTER TABLE `detail_surat_perintah_lembur_logs`
-  MODIFY `id_detail_surat_perintah_lembur_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT for table `invoice_logs`
---
-ALTER TABLE `invoice_logs`
-  MODIFY `id_invoice_logs` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `item_invoice_logs`
---
-ALTER TABLE `item_invoice_logs`
-  MODIFY `id_item_invoice_logs` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `item_surat_jalan_logs`
---
-ALTER TABLE `item_surat_jalan_logs`
-  MODIFY `id_item_surat_jalan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `jabatan_karyawan_logs`
@@ -4160,18 +3384,6 @@ ALTER TABLE `produk_logs`
 --
 ALTER TABLE `rekening_logs`
   MODIFY `id_rekening_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `surat_jalan_logs`
---
-ALTER TABLE `surat_jalan_logs`
-  MODIFY `id_surat_jalan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `surat_perintah_lembur_logs`
---
-ALTER TABLE `surat_perintah_lembur_logs`
-  MODIFY `id_surat_perintah_lembur_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `tetapan_logs`
