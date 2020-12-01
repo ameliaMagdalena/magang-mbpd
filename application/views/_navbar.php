@@ -297,13 +297,12 @@
 											</li>
 											<li>
 												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/1'?>">
-													Sedang Proses
-													<!-- disetujui / proses beli / belum diambil -->
+													Disetujui
 												</a>
 											</li>
 											<li>
 												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/2'?>">
-													Selesai
+													Tidak Disetujui
 												</a>
 											</li>
 											<li>
@@ -313,6 +312,38 @@
 											</li>
 											<li>
 												<a href="<?php echo base_url() . 'PermintaanMaterial/index/4'?>">
+													Semua
+												</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a title="Permintaan Material">
+											<span>Permintaan Material Tambahan</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/0'?>">
+													Belum Ditinjau <span class="badge badge-light">1</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/1'?>">
+													Disetujui
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/2'?>">
+													Tidak Disetujui
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/3'?>">
+													Batal
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/4'?>">
 													Semua
 												</a>
 											</li>

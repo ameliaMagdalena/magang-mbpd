@@ -19,8 +19,9 @@ class PerubahanPermintaan extends CI_Controller {
 
 	public function index($status){
         $data['status'] = $status;
-        $data['permintaan_material'] = $this->M_PerubahanPermintaan->selectPermintaanMaterialAktif()->result_array();
-        $data['detail'] = $this->M_PerubahanPermintaan->selectDetailPermintaanMaterialAktif()->result_array();
+        $data['perubahan'] = $this->M_PerubahanPermintaan->selectPerubahanPermintaanAktif()->result_array();
+        //$data['permintaan_material'] = $this->M_PerubahanPermintaan->selectPermintaanMaterial()->result_array();
+        //$data['detail'] = $this->M_PerubahanPermintaan->selectDetailPermintaanMaterial()->result_array();
 
         $data['warna'] = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran'] = $this->M_UkuranProduk->select_all_aktif()->result();
@@ -30,8 +31,8 @@ class PerubahanPermintaan extends CI_Controller {
     }
 
     public function ajax(){
-        $id             = $this->input->post('id');
-        $data['permat'] = $this->M_PerencanaanMaterial->selectSatuPermintaanMaterial($id)->result_array();
+        $id = $this->input->post('id');
+        $data['ubah'] = $this->M_PerubahanPermintaan->selectSatuPerubahanPermintaan($id)->result_array();
 
         echo json_encode($data);
     }
@@ -49,25 +50,36 @@ class PerubahanPermintaan extends CI_Controller {
 
     public function setuju(){
         $where = array(
-            'id_permintaan_material' => $this->input->post("idnyaa")
+            'id_perubahan_permintaan' => $this->input->post("idnyaa")
         );
-
         $data = array (
-            "id_permintaan_material" => $this->input->post("idnyaa"),
             "status_permintaan" => $this->input->post("status"),
+            "user_edit"=>$_SESSION['id_user'],
+            "waktu_add"=>date('Y-m-d H:i:s'),
+        );
+        $this->M_PerubahanPermintaan->editPerubahanPermintaan($data, $where);
+
+        $where2 = array(
+            'id_permintaan_material' => $this->input->post("idmintaa")
+        );
+        $data2 = array (
+            "jumlah_minta" => $this->input->post("jumlahnya"),
             "user_edit"=>$_SESSION['id_user'],
             "waktu_add"=>date('Y-m-d H:i:s'),
         );
         $this->M_PerencanaanMaterial->editPermintaanMaterial($data, $where);
         
         if ($this->input->post("status") == 1){
-            redirect('PermintaanMaterial/index/1');
+            redirect('PerubahanPermintaan/index/1');
         }
         else if ($this->input->post("status") == 2){
-            redirect('PermintaanMaterial/index/2');
+            redirect('PerubahanPermintaan/index/2');
+        }
+        else if ($this->input->post("status") == 3){
+            redirect('PerubahanPermintaan/index/3');
         }
         else{
-            redirect('PermintaanMaterial/index/3');
+            redirect('PerubahanPermintaan/index/4');
         }
     }
 
