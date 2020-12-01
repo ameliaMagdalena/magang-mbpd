@@ -65,14 +65,14 @@
                     <td><?= $perubahan[$x]['id_permintaan_material'] ?>
                         <input type="hidden" id="id2<?= $x ?>" value="<?= $perubahan[$x]['id_permintaan_material'] ?>">
                     </td>
-                    <td><?= $perubahan[$x]['jumlah_sebelum'] ?></td>
-                    <td><?= $perubahan[$x]['jumlah_sesudah'] ?>
-                        <input type="hidden" id="jumla<?= $x ?>" value="<?= $perubahan[$x]['jumlah_sesudah'] ?>">
+                    <td><?= $perubahan[$x]['jumlah_minta_lama'] ?></td>
+                    <td><?= $perubahan[$x]['jumlah_minta_baru'] ?>
+                        <input type="hidden" id="jumla<?= $x ?>" value="<?= $perubahan[$x]['jumlah_minta_baru'] ?>">
                     </td>
                     <td>Belum Ditinjau / Menunggu Persetujuan </td>
                     <td>
                         <a class="col-lg-3 btn btn-primary fa fa-info-circle"
-                            title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail/' . $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
+                            title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail/' . $perubahan[$x]['id_permintaan_material'] ?>"></a>
                         
                         <button type="button" class="konfirmz col-lg-3 btn btn-success fa fa-check" 
                             value="<?php echo $x //$permintaan_material[$x]['id_permintaan_material'] ?>" title="Konfirmasi"></button>
@@ -178,13 +178,13 @@
             </thead>
             <tbody>
                 <?php $no=1;
-                    for($x=0 ; $x<count($permintaan_material) ; $x++){
+                    for($x=0 ; $x<count($perubahan) ; $x++){
                         if ($status == 1 || $status == 4){ 
-                            if($permintaan_material[$x]['status_permintaan'] == 1){
+                            if($perubahan[$x]['status'] == 1){
                 ?>
                 <tr>
                     <td> <?php echo $no ?>
-                    <input type="hidden" id="idd<?= $x ?>" value="<?= $permintaan_material[$x]['id_permintaan_material'] ?>"> </td>
+                    <input type="hidden" id="idd<?= $x ?>" value="<?= $perubahan[$x]['id_permintaan_material'] ?>"> </td>
                     <!-- <td style="text-align: center;vertical-align: middle;"></td> -->
                     <td><?= $permintaan_material[$x]['tanggal_permintaan'] ?></td>
                     <td><?= $permintaan_material[$x]['tanggal_produksi'] ?></td>

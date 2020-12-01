@@ -53,7 +53,7 @@ class PerubahanPermintaan extends CI_Controller {
             'id_perubahan_permintaan' => $this->input->post("idnyaa")
         );
         $data = array (
-            "status_permintaan" => $this->input->post("status"),
+            "status" => $this->input->post("status"),
             "user_edit"=>$_SESSION['id_user'],
             "waktu_add"=>date('Y-m-d H:i:s'),
         );
@@ -63,11 +63,11 @@ class PerubahanPermintaan extends CI_Controller {
             'id_permintaan_material' => $this->input->post("idmintaa")
         );
         $data2 = array (
-            "jumlah_minta" => $this->input->post("jumlahnya"),
+            "jumlah_minta" => $this->input->post("jumlahnyaa"),
             "user_edit"=>$_SESSION['id_user'],
             "waktu_add"=>date('Y-m-d H:i:s'),
         );
-        $this->M_PerencanaanMaterial->editPermintaanMaterial($data, $where);
+        $this->M_PerencanaanMaterial->editPermintaanMaterial($data2, $where2);
         
         if ($this->input->post("status") == 1){
             redirect('PerubahanPermintaan/index/1');

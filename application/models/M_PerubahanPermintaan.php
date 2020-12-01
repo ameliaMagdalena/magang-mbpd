@@ -28,8 +28,8 @@ class M_PerubahanPermintaan extends CI_Model {
         WHERE a.status_delete=0 AND a.id_perubahan_permintaan='$id'");
     }
 
-    function editPermintaanMaterial($data,$where){
-        $this->db->update('permintaan_material', $data, $where);
+    function editPerubahanPermintaan($data,$where){
+        $this->db->update('perubahan_permintaan', $data, $where);
     }
 
     function hapusPerubahanPermintaan($data,$where){
