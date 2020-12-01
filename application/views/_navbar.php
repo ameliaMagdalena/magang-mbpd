@@ -99,7 +99,7 @@
 									</li>
 									<li>
 										<a href="<?= base_url()?>inventoryLine">
-											Inventory Line
+											Persediaan Line
 										</a>
 									</li>
 									<li>
@@ -1330,7 +1330,7 @@
 							<li>
 								<a href="<?= base_url()?>inventoryLine">
 									<i class="fa  fa-building" aria-hidden="true"></i>
-									<span>Inventory Line</span>
+									<span>Persediaan Line</span>
 								</a>
 							</li>
 							<!-- po 
@@ -1601,7 +1601,7 @@
 							<li>
 								<a href="<?= base_url()?>inventoryLine">
 									<i class="fa  fa-building" aria-hidden="true"></i>
-									<span>Inventory Line</span>
+									<span>Persediaan Line</span>
 								</a>
 							</li>
 							<!-- perencanaan produksi line -->
@@ -1629,13 +1629,18 @@
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_disetujui_pengambilan_material">
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_diambil_pengambilan_material">
 											Belum Diambil
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_diambil_pengambilan_material">
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/sudah_diambil_pengambilan_material">
 											Sudah Diambil
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/batal_pengambilan_material">
+											Batal
 										</a>
 									</li>
 								</ul>

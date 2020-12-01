@@ -33,7 +33,7 @@ class PermintaanTambahan extends CI_Controller {
         
         //ini belum
         if($nmline == "Line Sewing"){
-          $this->load->view('v_pengambilan_material_produksi_tambah1',$data);
+          $this->load->view('v_permintaan_tambahan_tambah1',$data);
         }
         else{
           $data['permat']        = $this->M_PengambilanMaterialProduksi->get_one_permat_by_line($nmline,$data['min_date'])->result();
@@ -42,6 +42,17 @@ class PermintaanTambahan extends CI_Controller {
   
           $this->load->view('v_permintaan_tambahan_tambah2',$data);
         }
+    }
+
+    function buat_permintaan_tambahan(){
+        $data['min_date'] = $this->input->post('tanggal');
+        $nmline = "Line Sewing";
+
+        $data['permat']        = $this->M_PengambilanMaterialProduksi->get_one_permat_by_line($nmline,$data['min_date'])->result();
+        $data['warna']         = $this->M_Warna->select_all_aktif()->result();
+        $data['ukuran']        = $this->M_UkuranProduk->select_all_aktif()->result();
+
+        $this->load->view('v_permintaan_tambahan_tambah2',$data);
     }
 
     function tambah(){

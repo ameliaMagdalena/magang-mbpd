@@ -18,7 +18,7 @@ class M_PengambilanMaterialProduksi extends CI_Model {
 
     function get_one_permat_by_line($nmline,$tanggal){
         return $this->db->query(" SELECT * FROM permintaan_material,detail_purchase_order_customer,purchase_order_customer,line,detail_produk,produk
-        WHERE line.nama_line='$nmline' AND permintaan_material.tanggal_produksi='$tanggal'
+        WHERE line.nama_line='$nmline' AND permintaan_material.tanggal_produksi='$tanggal' AND permintaan_material.status_permintaan='1'
         AND permintaan_material.id_detail_purchase_order_customer=detail_purchase_order_customer.id_detail_purchase_order_customer 
         AND purchase_order_customer.id_purchase_order_customer=detail_purchase_order_customer.id_purchase_order_customer 
         AND detail_purchase_order_customer.id_detail_produk=detail_produk.id_detail_produk AND produk.id_produk=detail_produk.id_produk
@@ -46,8 +46,8 @@ class M_PengambilanMaterialProduksi extends CI_Model {
     }
 
     function get_pengmat_sebelum(){
-        return $this->db->query("SELECT pengambilan_material.id_detail_permintaan_material, 
-        SUM(pengambilan_material.jumlah_ambil) AS jumlah_keluar
+        return $this->db->query("SELECT pengambilan_material.id_detail_permintaan_material, pengambilan_material.keterangan,
+        SUM(pengambilan_material.jumlah_ambil) AS jumlah_keluar, SUM(pengambilan_material.stok_wip) AS jumlah_wip_ambil
         FROM pengambilan_material
         WHERE pengambilan_material.status_delete='0' AND pengambilan_material.status_permintaan ='0'
         GROUP BY pengambilan_material.id_detail_permintaan_material");
