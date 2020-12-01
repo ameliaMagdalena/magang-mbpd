@@ -286,13 +286,51 @@
 										</ul>
 									</li>
 									<li class="nav-parent">
+										<a title="Permintaan Material">
+											<span>Perubahan Permintaan</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/0'?>">
+													Belum Ditinjau <span class="badge badge-light">1</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/1'?>">
+													Sedang Proses
+													<!-- disetujui / proses beli / belum diambil -->
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/2'?>">
+													Selesai
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/3'?>">
+													Batal
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/4'?>">
+													Semua
+												</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
 										<a title="Pengambilan Material Produksi">
 											<span>Pengambilan Material Produksi</span>
 										</a>
 										<ul class="nav nav-children">
 											<li>
 												<a href="<?php echo base_url() . 'PerencanaanMaterial/index/1'?>">
-													Perencanaan Pengambilan <span class="badge badge-light">2</span>
+													Pengambilan Hari Ini <span class="badge badge-light">2</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PerencanaanMaterial/index/1'?>">
+													Semua Pengambilan <span class="badge badge-light">5</span>
 												</a>
 											</li>
 											<li>
