@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Permintaan Material Ditolak</h2>
+        <h2>Permintaan Material - Material Tersedia</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Permintaan Material Ditolak</span></li>
+                <li><span>Permintaan Material - Material Tersedia</span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -25,7 +25,7 @@
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
         <header class="panel-heading">
-            <h2 class="panel-title">Data Permintaan Material Ditolak</h2>
+            <h2 class="panel-title">Data Permintaan Material - Material Tersedia</h2>
         </header>
 
         <div class="panel-body">
@@ -136,86 +136,62 @@
         </div>
     </div>
 
-<!-- detail permintaan material -->
-<script>
-    $('.bdet_klik').click(function(){
-        var no      = $(this).attr('value');
-        var id      = $("#id"+no).val();
-
-        $.ajax({
-            type:"post",    
-            url:"<?php echo base_url() ?>permintaanMaterialProduksi/detail_permintaan",
-            dataType: "JSON",
-            data: {id:id},
-
-            success: function(respond){
-                $("#no_permat").val(respond['permat'][0]['id_permintaan_material']);
-                $("#kode_po").val(respond['permat'][0]['kode_purchase_order_customer']);
-                $("#nama_line").val(respond['permat'][0]['nama_line']);
-                $("#tanggal_permintaan").val(respond['permat'][0]['tanggal_permintaan']);
-                $("#tanggal_produksi").val(respond['permat'][0]['tanggal_produksi']);
-                $("#jumlah_minta").val(respond['permat'][0]['jumlah_minta']);
-
-                $isi = "";
-                for($i=0;$i<respond['jm_detpermat'];$i++){
-                    $isi = $isi +
-                    '<tr>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+
-                            ($i+1)+
-                        '</td>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['detpermat'][$i]['id_detail_permintaan_material']+
-                        '</td>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['detpermat'][$i]['nama_sub_jenis_material']+
-                        '</td>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['detpermat'][$i]['jumlah_konsumsi']+
-                        '</td>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['detpermat'][$i]['needs']+
-                        '</td>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['detpermat'][$i]['satuan_ukuran']+
-                        '</td>'+
-                    '</tr>';
-                }
-
-                $table = 
-                '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
-                            '<thead>'+
-                                '<tr>'+
-                                    '<th style="text-align: center;vertical-align: middle;">'+
-                                        'No'+
-                                    '</th>'+
-                                    '<th style="text-align: center;vertical-align: middle;">'+
-                                        'Kode Detail Permintaan Material'+
-                                    '</th>'+
-                                    '<th style="text-align: center;vertical-align: middle;">'+
-                                        'Nama Material'+
-                                    '</th>'+
-                                    '<th style="text-align: center;vertical-align: middle;">'+
-                                        'Jumlah Konsumsi'+
-                                    '</th>'+
-                                    '<th style="text-align: center;vertical-align: middle;">'+
-                                        'Jumlah Permintaan'+
-                                    '</th>'+
-                                    '<th style="text-align: center;vertical-align: middle;">'+
-                                        'Satuan Konsumsi'+
-                                    '</th>'+
-                                '</tr>'+
-                            '</thead>'+
-                            '<tbody>'+
-                               $isi+
-                            '</tbody>'+
-                '</table>';
-
-                $("#table_detail").html($table);
-                $("#modaldetail").modal();
-            }
-        });  
-    });
-</script>
+<!-- modal detail -->
+<div class="modal" id="modaldetail" role="dialog">
+    <div class="modal-dialog modal-xl" style="width:50%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><b>Detail Permintaan Material</b></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mt-lg">
+                    <label class="col-sm-5 control-label">Nomor Permintaan Material</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="no_permat" readonly>
+                    </div>
+                </div>
+                <div class="form-group mt-lg">
+                    <label class="col-sm-5 control-label">Kode PO</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="kode_po" readonly>
+                    </div>
+                </div>
+                <div class="form-group mt-lg">
+                    <label class="col-sm-5 control-label">Nama Line</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="nama_line" readonly>
+                    </div>
+                </div>
+                <div class="form-group mt-lg">
+                    <label class="col-sm-5 control-label">Tanggal Permintaan</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="tanggal_permintaan" readonly>
+                    </div>
+                </div>
+                <div class="form-group mt-lg">
+                    <label class="col-sm-5 control-label">Tanggal Produksi</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="tanggal_produksi" readonly>
+                    </div>
+                </div>
+                <div class="form-group mt-lg">
+                    <label class="col-sm-5 control-label">Jumlah Minta</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="jumlah_minta" readonly>
+                    </div>
+                </div>
+                <br>
+                
+                <div id="table_detail">
+                
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default modal-dismiss" value="Ok" onclick="reload()">
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- modal ubmin -->
 <div class="modal" id="modalubmin" role="dialog">
@@ -277,6 +253,9 @@
                             ($i+1)+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['detpermat'][$i]['id_detail_permintaan_material']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
                             respond['detpermat'][$i]['nama_sub_jenis_material']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
@@ -297,6 +276,9 @@
                                 '<tr>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'No'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Kode Detail Permintaan Material'+
                                     '</th>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'Nama Material'+

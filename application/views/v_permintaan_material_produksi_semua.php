@@ -115,16 +115,18 @@
                                 <?php } else if($x->status_permintaan == 1){?>
                                     Sedang diproses
                                 <?php } else if($x->status_permintaan == 2){?>
-                                    Selesai 
+                                    Material Tersedia
                                 <?php } else if($x->status_permintaan == 3){?>
-                                    Batal
+                                    Selesai 
                                 <?php } else if($x->status_permintaan == 4){?>
+                                    Batal
+                                <?php } else if($x->status_permintaan == 5){?>
                                     Ditolak
                                 <?php } ?>
                             </td>
                             <td  class="col-lg-3">
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                    value="<?= $no;?>" title="Detail"></button>
+                                    value="<?= $no;?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php 
                                     $cari = 0;
                                     foreach($jumlah_ubmin as $k){
@@ -136,7 +138,7 @@
                                     if($cari > 0){
                                 ?>
                                     <button type="button" class="bubmin_klik col-lg-3 btn btn-warning fa  fa-history" 
-                                        value="<?= $no;?>" title="Perubahan Permintaan Material"></button>
+                                        value="<?= $no;?>" title="Perubahan Permintaan Material" style="margin-right:5px;margin-bottom:5px"></button>
                                     <?php } ?>
                             </td>
                         </tr>

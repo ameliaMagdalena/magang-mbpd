@@ -1384,7 +1384,7 @@
                                                         </td>
                                                         <td class="col-md-4">
                                                             <button type="button" class="btn btn-success fa fa-plus-square-o btn1 add_produk" 
-                                                            title="Add" id="add<?= $ke ?>" value="<?= $ke ?>"></button>
+                                                            title="Add" id="add<?= $ke ?>" value="<?= $ke ?>" style="margin-bottom:5px"></button>
                                                             <a class="modal-with-form btn btn-primary fa fa-info-circle btn1"
                                                             title="Detail" href="#modaldetail<?= $dt_dpo->id_detail_purchase_order_customer?>"></a>
                                                         </td>
@@ -1412,14 +1412,14 @@
                                                                     <label class="col-sm-5 control-label">Kode PO</label>
                                                                     <div class="col-sm-7">
                                                                         <input type="text" class="form-control"
-                                                                        value="<?= $dt_dpo->kode_purchase_order_customer?>" readonly>
+                                                                        value="<?= date("l, d F Y", strtotime( $dt_dpo->kode_purchase_order_customer )); ?>" readonly>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group mt-lg">
                                                                     <label class="col-sm-5 control-label">Tanggal Pesanan</label>
                                                                     <div class="col-sm-7">
                                                                         <input type="text" class="form-control"
-                                                                        value="<?= $dt_dpo->tanggal_po?>" readonly>
+                                                                        value="<?= date("l, d F Y", strtotime( $dt_dpo->tanggal_po ));?>" readonly>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group mt-lg">
@@ -1477,7 +1477,7 @@
                                                                     <label class="col-sm-5 control-label">Tanggal Penerimaan</label>
                                                                     <div class="col-sm-7">
                                                                         <input type="text" class="form-control"
-                                                                        value="<?= $dt_dpo->tanggal_penerimaan?>" readonly>
+                                                                        value="<?=  date("l, d F Y", strtotime( $dt_dpo->tanggal_penerimaan ));?>" readonly>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group mt-lg">
@@ -1609,7 +1609,7 @@
                                                                     </td>
                                                                     <td class="col-md-4">
                                                                         <button type="button" class="btn btn-success fa fa-plus-square-o btn1 add_produk" 
-                                                                        title="Add" id="add<?= $ke ?>" value="<?= $ke ?>" disabled></button>
+                                                                        title="Add" id="add<?= $ke ?>" value="<?= $ke ?>" disabled style="margin-bottom:5px"></button>
                                                                         <a class="modal-with-form btn btn-primary fa fa-info-circle btn1"
                                                                         title="Detail" href="#modaldetail<?= $dt_dpo->id_detail_purchase_order_customer?>"></a>
                                                                     </td>
@@ -1637,14 +1637,14 @@
                                                                                 <label class="col-sm-5 control-label">Kode PO</label>
                                                                                 <div class="col-sm-7">
                                                                                     <input type="text" class="form-control"
-                                                                                    value="<?= $dt_dpo->kode_purchase_order_customer?>" readonly>
+                                                                                    value="<?= $dt_dpo->kode_purchase_order_customer ?>" readonly>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group mt-lg">
                                                                                 <label class="col-sm-5 control-label">Tanggal Pesanan</label>
                                                                                 <div class="col-sm-7">
                                                                                     <input type="text" class="form-control"
-                                                                                    value="<?= $dt_dpo->tanggal_po?>" readonly>
+                                                                                    value="<?= date("l, d F Y", strtotime( $dt_dpo->tanggal_po ));?>" readonly>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group mt-lg">
@@ -1702,7 +1702,7 @@
                                                                                 <label class="col-sm-5 control-label">Tanggal Penerimaan</label>
                                                                                 <div class="col-sm-7">
                                                                                     <input type="text" class="form-control"
-                                                                                    value="<?= $dt_dpo->tanggal_penerimaan?>" readonly>
+                                                                                    value="<?= date("l, d F Y", strtotime( $dt_dpo->tanggal_penerimaan )); ?>" readonly>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group mt-lg">
@@ -1868,7 +1868,7 @@
                                             </td>
                                             <td class="col-md-4">
                                                 <button type="button" class="btn btn-success fa fa-plus-square-o btn1 add_produk" 
-                                                title="Add" id="add<?= $ke ?>" value="<?= $ke ?>"></button>
+                                                title="Add" id="add<?= $ke ?>" value="<?= $ke ?>" style="margin-bottom:5px"></button>
                                                 <button type="button" class="btn btn-primary fa fa-info-circle btn1 detail_reschedule" 
                                                 title="Detail" value="<?= $ke ?>"></button>
                                             </td>

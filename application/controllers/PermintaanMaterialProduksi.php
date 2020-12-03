@@ -46,6 +46,16 @@ class PermintaanMaterialProduksi extends CI_Controller {
 		$this->load->view('v_permintaan_material_produksi_sedang_diproses',$data);
     }
 
+    public function material_tersedia(){
+        $data['permintaan_material'] = $this->M_PermintaanMaterialProduksi->select_all_aktif()->result();
+        $data['jumlah_ubmin']        = $this->M_PermintaanMaterialProduksi->get_jumlah_ubmin()->result();
+    
+        $data['warna']            = $this->M_Warna->select_all_aktif()->result();
+        $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
+
+		$this->load->view('v_permintaan_material_produksi_material_tersedia',$data);
+    }
+
     public function selesai(){
         $data['permintaan_material'] = $this->M_PermintaanMaterialProduksi->select_all_aktif()->result();
         $data['jumlah_ubmin']        = $this->M_PermintaanMaterialProduksi->get_jumlah_ubmin()->result();
