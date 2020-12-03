@@ -86,7 +86,7 @@
             </header>
 
             <div class="panel-body">
-                <input type="text" name="id_detail" class="form-control" value="<?php echo $detail[$x]['id_detail_permintaan_material'] ?>" readonly>
+                <input type="hidden" name="id_detail" class="form-control" value="<?php echo $detail[$x]['id_detail_permintaan_material'] ?>" readonly>
             
                 <div class="form-group mt-lg">
                     <label class="col-sm-3 control-label">Kebutuhan</label>
@@ -112,8 +112,15 @@
                             for($y=0; $y<count($pengambilan); $y++){
                                 if ($pengambilan[$y]['id_detail_permintaan_material'] == $detail[$x]['id_detail_permintaan_material']){
                                     if ($pengambilan[$y]['status_keluar'] == 1){
-                                        $jumlahambil = $pengambilan[$y]['jumlah_keluar']; //jumlah dengan satuan ukuran
-                                        $diambil=$diambil+$jumlahambil;
+                                        /*$jumlahambil = $pengambilan[$y]['jumlah_keluar']; //jumlah dengan satuan ukuran
+                                        $diambil=$diambil+$jumlahambil; */
+
+                                         
+                                        $jumlahambil = 0;
+                                        for ($aa=0; $aa<count($pengeluaran); $aa++){
+                                            $jumlahambil = $jumlahambil+$pengeluaran[$aa]['jumlah_keluar'];
+                                        } //jumlah dengan satuan ukuran
+
                                     }
                                 }
                             } echo $diambil ?>"
@@ -185,7 +192,7 @@
                                     <button type="button" class="ambilz col-lg-3 btn btn-success fa fa-check" 
                                         value="<?php echo $z ?>" title="Ambil"></button>
                                     <button type="button" class="batalz col-lg-3 btn btn-danger fa fa-times" 
-                                        value="<?php echo $z ?>" title="Batal"></button>
+                                        value="<?php echo $z ?>" title="Tolak"></button>
                                 </td>
                             </tr>
                             
@@ -208,32 +215,32 @@
                                                 <div class="form-group mt-lg">
                                                     <label class="col-sm-4 control-label">Material</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" name="material" id="amaterial" class="form-control" value="" readonly>
+                                                        <input type="text" name="amaterial" id="amaterial" class="form-control" value="" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mt-lg">
                                                     <label class="col-sm-4 control-label">Line</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" name="line" id="aline" class="form-control" value="" readonly>
+                                                        <input type="text" name="aline" id="aline" class="form-control" value="" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mt-lg">
                                                     <label class="col-sm-4 control-label">Tanggal Pengambilan</label>
                                                     <div class="col-sm-8">
-                                                        <input type="date" name="tgl_ambil" id="atgl_ambil" class="form-control" value="" readonly>
+                                                        <input type="date" name="atgl_ambil" id="atgl_ambil" class="form-control" value="" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mt-lg">
                                                     <label class="col-sm-4 control-label">Jumlah</label>
                                                     <div class="col-sm-8">
-                                                        <input type="number" name="jumlah" id="ajumlah" class="form-control"  value="" readonly>
+                                                        <input type="number" name="ajumlah" id="ajumlah" class="form-control"  value="" readonly>
                                                         <small>Belum diambil : 15.24 m3</small>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mt-lg">
                                                     <label class="col-sm-4 control-label">Satuan</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" name="satuan" id="asatuan" class="form-control" value="" readonly>
+                                                        <input type="text" name="asatuan" id="asatuan" class="form-control" value="" readonly>
                                                     </div>
                                                 </div>
                                                 <div id="isiambil" style="text-align: center"></div>
@@ -261,32 +268,30 @@
                 <div class="row">
                     <div class="text-center">
                         <button type="button" class="modal-with-form btn btn-primary" href="#modalbeli<?php echo $detail[$x]['id_detail_permintaan_material'] ?>">Request Pembelian</button>
-                        <button type="button" class="modal-with-form btn btn-primary" href="#modaljadwal<?php echo $detail[$x]['id_detail_permintaan_material'] ?>">Tambah Jadwal Pengambilan</button>
+                        <!-- <button type="button" class="modal-with-form btn btn-primary" href="#modaljadwal<?php echo $detail[$x]['id_detail_permintaan_material'] ?>">Tambah Jadwal Pengambilan</button> -->
                         
                         <!-- ******************************** MODAL BELI ****************************** -->
                         <!-- ************************************************************************** -->
-                        <!-- <div id='modalbeli<?php echo $detail[$x]['id_detail_permintaan_material'] ?>' class="modal-block modal-block-md mfp-hide">
+                        <div id='modalbeli' class="modal-block modal-block-md mfp-hide">
                             <section class="panel">
                                 <header class="panel-heading">
                                     <h2 class="panel-title">Request Pembelian Material</h2>
                                 </header>
 
                                 <div class="panel-body">
-                                    <input type="hidden" name="id_material" class="form-control" value="" readonly>
+                                    <input type="hidden" name="idmaterial" id="idmaterial" class="form-control" value="<?php echo $detail[$x]['id_sub_jenis_material'] ?>" readonly>
                                     
                                     <div class="form-group mt-lg">
                                         <label class="col-sm-3 control-label">Material</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="material" class="form-control"
-                                            value="Reb 55" readonly>
+                                            <input type="text" name="materialz" id="materialz" class="form-control" value="" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group mt-lg">
                                         <label class="col-sm-3 control-label">Jumlah Material</label>
                                         <div class="col-sm-9">
-                                            <input type="number" name="jabatan" class="form-control"
-                                            placeholder="Stok Max: 30 m3">
-                                            Stok Di Gudang : 15 m3
+                                            <input type="number" name="jumlahz" id="jumlahz" class="form-control"
+                                            placeholder="Stok Max: <?php ?>" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -299,7 +304,7 @@
                                     </div>
                                 </footer>
                             </section>
-                        </div> -->
+                        </div>
                         <!-- ****************************** END MODAL BELI **************************** -->
                         <!-- ************************************************************************** -->
 
@@ -398,7 +403,7 @@
             success: function(respond){
                 $("#amaterial").val(respond['ambil'][0]['nama_sub_jenis_material']);
                 $("#aline").val(respond['ambil'][0]['nama_line']);
-                //$("#atgl_ambil").val(respond['ambil'][0]['tanggal_ambil']);
+                $("#atgl_ambil").val(respond['ambil'][0]['tanggal_ambil']);
                 $("#asatuan").val(respond['ambil'][0]['satuan_ukuran']);
 
                 jlhsatu = respond['ambil'][0]['jumlah_ambil'];
@@ -434,6 +439,27 @@
                 $("#isibatal").html($isi);
                 $("#idbatal").val(id);
                 $("#modalbatal").modal();
+            }
+        }); 
+    });
+</script>
+
+
+<script>
+    $('.beliz').click(function(){
+        var no      = $(this).attr('value');
+        var id      = $("#idd"+no).val();
+
+         $.ajax({
+            type:"post",    
+            url:"<?php echo base_url() ?>PermintaanMaterial/ajax",
+            dataType: "JSON",
+            data: {id:id},
+
+            success: function(respond){
+                $("#materialz").val($isi);
+                $("#idsedia").val(id);
+                $("#sedia").modal();
             }
         }); 
     });

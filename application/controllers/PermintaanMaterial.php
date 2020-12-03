@@ -113,6 +113,7 @@ class PermintaanMaterial extends CI_Controller {
         $data['detail'] = $this->M_PerencanaanMaterial->selectSatuDetailPermintaanMaterial($id)->result_array();
 
         $data['pengambilan'] = $this->M_PerencanaanMaterial->selectPengambilanMaterial($id)->result_array();
+        $data['pengeluaran'] = $this->M_PerencanaanMaterial->selectPengeluaranMaterial($id)->result_array();
         $result = $this->M_PerencanaanMaterial->selectKetersediaanMaterial($id)->result_array();
         $this->load->view('v_detail_perencanaan', $data);
     }
