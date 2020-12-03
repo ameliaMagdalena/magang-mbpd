@@ -90,11 +90,14 @@
                     if($permintaan_material[0]['status_permintaan'] == 0){
                         echo "Belum Ditinjau/Menunggu Persetujuan";
                     } else if($permintaan_material[0]['status_permintaan'] == 1){
-                        echo "Disetujui, Diproses";
+                        echo "Proses Pembelian";
                     } else if($permintaan_material[0]['status_permintaan'] == 2){
-                        echo "Selesai";
+                        echo "Material Tersedia";
                     }
                     else if($permintaan_material[0]['status_permintaan'] == 3){
+                        echo "Selesai";
+                    }
+                    else if($permintaan_material[0]['status_permintaan'] == 4){
                         echo "Batal";
                     }
                     else {
