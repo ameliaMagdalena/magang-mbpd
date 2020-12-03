@@ -7,6 +7,7 @@ class JenisMaterial extends CI_Controller {
         date_default_timezone_set('Asia/Jakarta');
 
         $this->load->model('M_JenisMaterial');
+        $this->load->model('M_Dashboard');
         
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');

@@ -45,7 +45,7 @@
                     <?php 
                     $no = 1;
                     foreach($permintaan_material as $x){ 
-                        if($x->status_permintaan == 2){
+                        if($x->status_permintaan == 5){
                     ?>
                         <tr>
                             <td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>

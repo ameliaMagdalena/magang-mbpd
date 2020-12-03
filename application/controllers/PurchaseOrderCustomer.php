@@ -9,6 +9,7 @@ class PurchaseOrderCustomer extends CI_Controller {
         $this->load->model('M_PurchaseOrderCustomer');
         $this->load->model('M_Customer');
         $this->load->model('M_Produk');
+        $this->load->model('M_Dashboard');
 
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');
@@ -21,6 +22,17 @@ class PurchaseOrderCustomer extends CI_Controller {
         $data['detail_po_cust'] = $this->M_PurchaseOrderCustomer->selectDetailPOCustomerAktif()->result_array();
         $data['customer'] = $this->M_Customer->selectCustomerAktif()->result_array();
         $data['sales_order'] = $this->M_PurchaseOrderCustomer->selectSalesOrderAktif()->result_array();
+
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+    
 
 		$this->load->view('v_po_customer', $data);
     }
@@ -35,6 +47,17 @@ class PurchaseOrderCustomer extends CI_Controller {
         $data['sales_order'] = $this->M_PurchaseOrderCustomer->selectSatuSalesOrder($id_po)->result_array();
         $data['jumlah_so'] = $this->M_PurchaseOrderCustomer->selectSalesOrderAktif()->num_rows();
 
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+    
+
 		$this->load->view('v_detail_po_customer', $data);
     }
 
@@ -45,6 +68,17 @@ class PurchaseOrderCustomer extends CI_Controller {
         $data['ukuran'] = $this->M_PurchaseOrderCustomer->selectUkuranProduk()->result_array();
         $data['warna'] = $this->M_PurchaseOrderCustomer->selectWarnaProduk()->result_array();
         $data['sales_order'] = $this->M_PurchaseOrderCustomer->selectSalesOrderAktif()->result_array();
+
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+    
         
 		$this->load->view('v_po_customer_baru', $data);
     }
@@ -177,6 +211,17 @@ class PurchaseOrderCustomer extends CI_Controller {
         $data['sales_order'] = $this->M_PurchaseOrderCustomer->selectSatuSalesOrder($id_po)->result_array();
         $data['user'] = $this->M_PurchaseOrderCustomer->selectKaryawan()->result_array();
 
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+
+        
 		$this->load->view('v_sales_order', $data);
     }
 

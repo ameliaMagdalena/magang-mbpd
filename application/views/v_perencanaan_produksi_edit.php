@@ -2682,12 +2682,6 @@
     }
 </script>
 
-<script>
-$(window).on("load", function(){
-  //cek_tanggal();
-});
-</script>
-
 <!-- close modal -->
 <script>
     function close_modal(){

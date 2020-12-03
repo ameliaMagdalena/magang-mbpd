@@ -15,6 +15,7 @@ class PerencanaanProduksi extends CI_Controller {
         $this->load->model('M_Warna');
         $this->load->model('M_SuratPerintahLembur');
         $this->load->model('M_Tetapan');
+        $this->load->model('M_Dashboard');
 
         $this->load->library('pdf');
 
@@ -73,6 +74,16 @@ class PerencanaanProduksi extends CI_Controller {
         } else{
             $data['min_date'] = $real_date;
         }
+
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
         
         $this->load->view('v_perencanaan_produksi1', $data);
     }
@@ -168,6 +179,19 @@ class PerencanaanProduksi extends CI_Controller {
             $data['month_end'] = "Desember";
         }
 
+        $data['sekarang'] = date('Y-m-d');
+        for($p=1;$p<=7;$p++){
+            $new_date = date('Y-m-d', strtotime('+'.($p-1).'days', strtotime($data['start_date'])));
+
+            //0 klau belum lewat
+            //1 kalau sudah lewat
+            if($new_date < $data['sekarang']){
+                $data['stat_date'.$p] = 1;
+            } else{
+                $data['stat_date'.$p] = 0;
+            }
+        }
+
         $data['line']             = $this->M_Line->select_all_aktif()->result();
         $data['dpo']              = $this->M_PerencanaanProduksi->select_all_detpoxproduk()->result();
         $data['produksi_tertunda']= $this->M_PerencanaanProduksi->select_all_prodtun_aktif()->result();
@@ -178,6 +202,16 @@ class PerencanaanProduksi extends CI_Controller {
         $data['jm_perc_seb']      = $this->M_PerencanaanProduksi->jm_perc_sebelum()->result();
         $data['cycle_time']       = $this->M_Produk->select_all_ct_lengkap()->result();
         $data['jumlah_ct_produk'] = $this->M_Produk->jumlah_ct_produk()->result();
+
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
 
         $this->load->view('v_perencanaan_produksi2',$data);
     }
@@ -1132,6 +1166,16 @@ class PerencanaanProduksi extends CI_Controller {
             }
         }
 
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+
         $this->load->view('v_perencanaan_produksi_edit',$data);
     }
 
@@ -1326,7 +1370,7 @@ class PerencanaanProduksi extends CI_Controller {
                         //jika sebelumnya ada spl
                         } else{
                             //ada
-                            if($total_waktu_perencanaan != 0){
+                            if($total_waktu_perencanaan != 0 && $efisiensi_perencanaan > 100){
                                 if($spl[0]['keterangan_spl'] == 1){
                                     $data_spl = array(
                                         'keterangan_spl' => 2,
@@ -3230,7 +3274,7 @@ class PerencanaanProduksi extends CI_Controller {
                                 $id_po_tam  = $id_pos[0]['id_purchase_order_customer'];
 
                                 $data_po = array (
-                                    'status_po' => 2,
+                                    'status_po' => 1,
                                     'user_edit' => $user,
                                     'waktu_edit'=> $now
                                 );
@@ -3787,11 +3831,31 @@ class PerencanaanProduksi extends CI_Controller {
         $data['count_monday'] = $this->M_PerencanaanProduksi->select_all_monday()->num_rows();
         $data['now']          = date('Y-m-d');
 
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+
         $this->load->view('v_perencanaan_produksi_semua',$data);
     }
 
     public function perencanaan_produksi_line0(){
         $data['line'] = $this->M_Line->select_all_aktif()->result();
+
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
 
         $this->load->view('v_perencanaan_produksi_line0',$data);
     }
@@ -3820,6 +3884,16 @@ class PerencanaanProduksi extends CI_Controller {
         $data['count_monday'] = $this->M_PerencanaanProduksi->select_all_monday()->num_rows();
 
         $data['status_monday'] = $this->M_PerencanaanProduksi->select_status_monday($data['linenya'])->result();
+
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
 
         $this->load->view('v_perencanaan_produksi_line',$data);
     }

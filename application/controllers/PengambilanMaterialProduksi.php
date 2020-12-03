@@ -11,12 +11,25 @@ class PengambilanMaterialProduksi extends CI_Controller {
         $this->load->model('M_Line');
         $this->load->model('M_UkuranProduk');
         $this->load->model('M_Warna');
+        $this->load->model('M_Dashboard');
+        
         $this->load->library('pdf');
 
     }
 
     public function tambah0(){
       $data['line'] = $this->M_Line->select_all_aktif()->result();
+
+          //notif permintaan material produksi
+          $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+          $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+          $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+          $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+          $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+          $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+          $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+      //tutup notif permintaan material produksi
+  
 
       $this->load->view('v_pengambilan_material_produksi_tambah0',$data);
     }
@@ -35,6 +48,17 @@ class PengambilanMaterialProduksi extends CI_Controller {
       } else{
         $nmline = $this->input->post('select_line');
       }
+
+          //notif permintaan material produksi
+          $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+          $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+          $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+          $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+          $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+          $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+          $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+      //tutup notif permintaan material produksi
+  
 
       if($nmline == "Line Sewing"){
         $this->load->view('v_pengambilan_material_produksi_tambah1',$data);
@@ -55,6 +79,17 @@ class PengambilanMaterialProduksi extends CI_Controller {
       $data['permat']        = $this->M_PengambilanMaterialProduksi->get_one_permat_by_line($nmline,$data['min_date'])->result();
       $data['warna']         = $this->M_Warna->select_all_aktif()->result();
       $data['ukuran']        = $this->M_UkuranProduk->select_all_aktif()->result();
+
+          //notif permintaan material produksi
+          $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+          $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+          $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+          $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+          $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+          $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+          $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+      //tutup notif permintaan material produksi
+  
 
       $this->load->view('v_pengambilan_material_produksi_tambah2',$data);
     }
@@ -551,6 +586,17 @@ class PengambilanMaterialProduksi extends CI_Controller {
           $data['pengambilan_material']  = $this->M_PengambilanMaterialProduksi->select_all_pm($line)->result();
       }
 
+          //notif permintaan material produksi
+          $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+          $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+          $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+          $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+          $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+          $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+          $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+      //tutup notif permintaan material produksi
+  
+
       $this->load->view('v_pengambilan_material_produksi_semua',$data);
     }
 
@@ -576,6 +622,17 @@ class PengambilanMaterialProduksi extends CI_Controller {
           $data['pengambilan_material']  = $this->M_PengambilanMaterialProduksi->select_all_pm($line)->result();
       }
 
+          //notif permintaan material produksi
+          $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+          $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+          $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+          $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+          $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+          $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+          $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+      //tutup notif permintaan material produksi
+
+      
       $this->load->view('v_pengambilan_material_produksi_belum_diambil',$data);
     }
 
@@ -601,6 +658,17 @@ class PengambilanMaterialProduksi extends CI_Controller {
           $data['pengambilan_material']  = $this->M_PengambilanMaterialProduksi->select_all_pm($line)->result();
       }
 
+          //notif permintaan material produksi
+          $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+          $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+          $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+          $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+          $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+          $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+          $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+      //tutup notif permintaan material produksi
+  
+
       $this->load->view('v_pengambilan_material_produksi_sudah_diambil',$data);
     }
 
@@ -625,6 +693,17 @@ class PengambilanMaterialProduksi extends CI_Controller {
           $line = $this->input->post('select_line');
           $data['pengambilan_material']  = $this->M_PengambilanMaterialProduksi->select_all_pm($line)->result();
       }
+
+          //notif permintaan material produksi
+          $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+          $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+          $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+          $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+          $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+          $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+          $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+      //tutup notif permintaan material produksi
+  
 
       $this->load->view('v_pengambilan_material_produksi_batal',$data);
     }

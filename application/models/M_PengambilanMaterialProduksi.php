@@ -18,7 +18,7 @@ class M_PengambilanMaterialProduksi extends CI_Model {
 
     function get_one_permat_by_line($nmline,$tanggal){
         return $this->db->query(" SELECT * FROM permintaan_material,detail_purchase_order_customer,purchase_order_customer,line,detail_produk,produk
-        WHERE line.nama_line='$nmline' AND permintaan_material.tanggal_produksi='$tanggal' AND permintaan_material.status_permintaan='1'
+        WHERE line.nama_line='$nmline' AND permintaan_material.tanggal_produksi='$tanggal' AND permintaan_material.status_permintaan='2'
         AND permintaan_material.id_detail_purchase_order_customer=detail_purchase_order_customer.id_detail_purchase_order_customer 
         AND purchase_order_customer.id_purchase_order_customer=detail_purchase_order_customer.id_purchase_order_customer 
         AND detail_purchase_order_customer.id_detail_produk=detail_produk.id_detail_produk AND produk.id_produk=detail_produk.id_produk

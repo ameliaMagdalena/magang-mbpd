@@ -9,6 +9,7 @@ class DeliveryNote extends CI_Controller {
         $this->load->model('M_PemasukanMaterial');
         $this->load->model('M_PurchaseOrderSupplier');
         $this->load->model('M_DeliveryNote');
+        $this->load->model('M_Dashboard');
 
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');

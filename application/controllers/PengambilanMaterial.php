@@ -8,6 +8,7 @@ class PengambilanMaterial extends CI_Controller {
 
         $this->load->model('M_PengambilanMaterial');
         $this->load->model('M_PengeluaranMaterial');
+        $this->load->model('M_Dashboard');
     }
     
     public function jadwal(){

@@ -8,11 +8,23 @@ class ProcessCost extends CI_Controller {
 
         $this->load->library('pdf');
         $this->load->model('M_ProcessCost');
+        $this->load->model('M_Dashboard');
 
     }
 
 	  public function index(){
       $data['produk'] = $this->M_ProcessCost->select_all_produk()->result();
+
+          //notif permintaan material produksi
+          $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+          $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+          $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+          $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+          $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+          $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+          $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+      //tutup notif permintaan material produksi
+  
 
       $this->load->view('v_process_cost',$data);
     }

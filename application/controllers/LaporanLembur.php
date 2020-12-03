@@ -9,6 +9,7 @@ class LaporanLembur extends CI_Controller {
 
         $this->load->model('M_LaporanLembur');
         $this->load->model('M_Line');
+        $this->load->model('M_Dashboard');
 
         $this->load->library('pdf');
 
@@ -43,6 +44,16 @@ class LaporanLembur extends CI_Controller {
         else{
             $data['laporan_lembur'] = $this->M_LaporanLembur->select_all_aktif()->result();
         }
+
+            //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi    
 
         $this->load->view('v_laporan_lembur_semua',$data);
     }
@@ -81,6 +92,17 @@ class LaporanLembur extends CI_Controller {
             $data['laporan_lembur']        = $this->M_LaporanLembur->select_all_aktif_status($status)->result(); 
         }
 
+            //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+
+        
         $this->load->view('v_laporan_lembur_belum_diproses',$data);
     }
 
@@ -118,6 +140,17 @@ class LaporanLembur extends CI_Controller {
             $data['laporan_lembur']        = $this->M_LaporanLembur->select_all_aktif_status($status)->result(); 
         }
 
+            //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+    
+
         $this->load->view('v_laporan_lembur_sudah_diproses',$data);
     }
 
@@ -154,6 +187,17 @@ class LaporanLembur extends CI_Controller {
         else{
             $data['laporan_lembur']        = $this->M_LaporanLembur->select_all_aktif_status($status)->result(); 
         }
+
+            //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+    
 
         $this->load->view('v_laporan_lembur_selesai',$data);
     }

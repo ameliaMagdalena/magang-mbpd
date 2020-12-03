@@ -9,6 +9,7 @@ class Bank extends CI_Controller {
 
         $this->load->model('M_Bank');
         $this->load->model('M_User');
+        $this->load->model('M_Dashboard');
 
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');
@@ -17,6 +18,16 @@ class Bank extends CI_Controller {
 
     public function index(){
         $data['bank'] = $this->M_Bank->select_all_aktif()->result();
+
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
 
 		$this->load->view('v_bank',$data);
     }
@@ -45,8 +56,6 @@ class Bank extends CI_Controller {
 
         echo json_encode($data);
     }
-
-
 
     public function tambah_bank(){
         $nama_bank = $this->input->post('nama_bank_input');
@@ -84,7 +93,6 @@ class Bank extends CI_Controller {
         }
         Redirect('Bank');
     }
-
 
     public function edit_bank(){
         $id_bank   = $this->input->post('id_bank');

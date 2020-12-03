@@ -11,6 +11,7 @@ class Karyawan extends CI_Controller {
         $this->load->model('M_Departemen');
         $this->load->model('M_SpesifikasiJabatan');
         $this->load->model('M_User');
+        $this->load->model('M_Dashboard');
 
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');

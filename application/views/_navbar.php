@@ -501,37 +501,66 @@
 								<li class="nav-parent">
 									<a title="Permintaan Material">
 										<i class="fa fa-calendar" aria-hidden="true"></i>
-										<span>Permintaan Material</span>
+										<?php if($jm_permat[0]['jumlah_permat'] == 0){?>
+											<span>Permintaan Material</span>
+										<?php } else{?>
+											<span>Permintaan Material <span class="badge badge-light"><?= $jm_permat[0]['jumlah_permat']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
 											<a href="<?= base_url()?>permintaanMaterialProduksi">
-												Semua Permintaan Material
+													Semua Permintaan Material
 											</a>
 										</li>
 										<li>
 											<a href="<?= base_url()?>permintaanMaterialProduksi/belum_ditindaklanjuti">
-												Belum Ditindaklanjuti
+												<?php if($jm_permat_0[0]['jumlah_0'] == 0){?>
+													Belum Ditindaklanjuti
+												<?php } else{?>
+													<span>Belum Ditindaklanjuti <span class="badge badge-light"><?= $jm_permat_0[0]['jumlah_0']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
 											<a href="<?= base_url()?>permintaanMaterialProduksi/sedang_diproses">
-												Sedang Diproses
+												<?php if($jm_permat_1[0]['jumlah_1'] == 0){?>
+													Sedang Diproses
+												<?php } else{?>
+													<span>Sedang Diproses <span class="badge badge-light"><?= $jm_permat_1[0]['jumlah_1']?></span></span>
+												<?php } ?>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>permintaanMaterialProduksi/material_tersedia">
+												<?php if($jm_permat_2[0]['jumlah_2'] == 0){?>
+													Material Tersedia
+												<?php } else{?>
+													<span>Material Tersedia <span class="badge badge-light"><?= $jm_permat_2[0]['jumlah_2']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
 											<a href="<?= base_url()?>permintaanMaterialProduksi/selesai">
-												Selesai
+													Selesai
 											</a>
 										</li>
 										<li>
 											<a href="<?= base_url()?>permintaanMaterialProduksi/batal">
-												Batal
+												<?php if($jm_permat_4[0]['jumlah_4'] == 0){?>
+													Batal
+												<?php } else{?>
+													<span>Batal <span class="badge badge-light"><?= $jm_permat_4[0]['jumlah_4']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
 											<a href="<?= base_url()?>permintaanMaterialProduksi/ditolak">
-												Ditolak
+												<?php if($jm_permat_5[0]['jumlah_5'] == 0){?>
+													Ditolak
+												<?php } else{?>
+													<span>Ditolak <span class="badge badge-light"><?= $jm_permat_5[0]['jumlah_5']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 									</ul>
@@ -998,6 +1027,11 @@
 										<li>
 											<a href="<?= base_url()?>permintaanMaterialProduksi/sedang_diproses">
 												Sedang Diproses
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>permintaanMaterialProduksi/material_tersedia">
+												Material Tersedia
 											</a>
 										</li>
 										<li>

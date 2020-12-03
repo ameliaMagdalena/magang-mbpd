@@ -9,6 +9,7 @@ class PemasukanMaterial extends CI_Controller {
         $this->load->model('M_PemasukanMaterial');
         $this->load->model('M_Material');
         $this->load->model('M_DeliveryNote');
+        $this->load->model('M_Dashboard');
 
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');

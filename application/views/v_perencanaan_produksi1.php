@@ -37,6 +37,7 @@
                     <input class="form-control col-md-5" type="date" id="tanggal_mulai" name="tanggal_mulai"
                     onchange="tanggal_mulai_change()" required> 
 -->
+                    
                     <div class="col-sm-9">
                         <input class="form-control col-md-5" type="date" id="tanggal_mulai" name="tanggal_mulai" placeholder="dd-mm-yyyy"
                         min="<?php echo $min_date;?>" step="7" onchange="tanggal_mulai_change()" required> 

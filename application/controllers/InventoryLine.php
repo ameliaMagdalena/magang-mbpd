@@ -8,6 +8,7 @@ class InventoryLine extends CI_Controller {
         date_default_timezone_set('Asia/Jakarta');
         
         $this->load->model('M_InventoryLine');
+        $this->load->model('M_Dashboard');
 
         $this->load->library('pdf');
 
