@@ -65,27 +65,27 @@
                             </td>
                             <td  class="col-lg-3">
                                 <button type="button" class="bdetail_klik col-lg-3 btn btn-primary fa fa-info-circle" title="Detail"
-                                id="bdetail<?php echo $x->id_produksi?>" value="<?= $no ?>"></button>
+                                id="bdetail<?php echo $x->id_produksi?>" value="<?= $no ?>" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php if($x->start <= $now && $x->end > $now){ ?>
                                     <form method="POST" action="<?= base_url()?>perencanaanProduksi/edit_perencanaan_produksi">
                                         <input type="hidden" name="id" value="<?= $x->id_produksi?>">
                                         <button type="submit" class="col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                        title="Edit"></button>
+                                        title="Edit"  style="margin-right:5px;;margin-bottom:5px"></button>
                                     </form>
                                 <?php }?>
                                 <?php if($x->start > $now){?>
                                     <form method="POST" action="<?= base_url()?>perencanaanProduksi/edit_perencanaan_produksi">
                                         <input type="hidden" name="id" value="<?= $x->id_produksi?>">
                                         <button type="submit" class="col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                        title="Edit"></button>
+                                        title="Edit"  style="margin-right:5px;;margin-bottom:5px"></button>
                                     </form>
                                     <button type="button" class="bdelete_klik col-lg-3 btn btn-danger fa fa-trash-o" title="Delete"
-                                    id="bdelete<?php echo $x->id_produksi?>" value="<?= $no ?>"></button>
+                                    id="bdelete<?php echo $x->id_produksi?>" value="<?= $no ?>"  style="margin-right:5px;;margin-bottom:5px"></button>
                                 <?php } ?>  
                                 <form method="POST" action="<?= base_url()?>perencanaanProduksi/print_perencanaan_produksi">
                                     <input type="hidden" name="id" value="<?= $x->id_produksi?>">
                                     <button type="submit" class="col-lg-3 btn fa fa-print" style="background-color:#E56B1F;color:white;"
-                                    title="Print"></button>
+                                    title="Print"  style="margin-right:5px;;margin-bottom:5px"></button>
                                 </form>  
                             </td>
                         </tr>

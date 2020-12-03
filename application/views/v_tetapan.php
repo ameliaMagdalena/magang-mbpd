@@ -24,7 +24,7 @@
 <!--*****************************-->
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
-        <a class="modal-with-form col-lg-2  btn btn-success" id="button_tambah" 
+        <a class="modal-with-form col-lg-2  btn btn-success" id="button_tambah"
             href="#modaltambah">+ Tetapan</a>
         <br><br>
 
@@ -71,91 +71,89 @@
                     <?php 
                     $no++;
                     ?>
-
-
     
-    <div id='modaledit<?= $x->id_tetapan;?>' class="modal-block modal-block-primary mfp-hide">
-        <form method="POST" action="<?= base_url()?>tetapan/edit_tetapan">
-            <section class="panel">
-                <header class="panel-heading">
-                    <h2 class="panel-title">Edit Tetapan</h2>
-                </header>
+                        <div id='modaledit<?= $x->id_tetapan;?>' class="modal-block modal-block-primary mfp-hide">
+                            <form method="POST" action="<?= base_url()?>tetapan/edit_tetapan">
+                                <section class="panel">
+                                    <header class="panel-heading">
+                                        <h2 class="panel-title">Edit Tetapan</h2>
+                                    </header>
 
-                <div class="panel-body">
-                    <input type="hidden" name="id_tetapan" class="form-control"
-                            value="<?= $x->id_tetapan?>" required>
+                                    <div class="panel-body">
+                                        <input type="hidden" name="id_tetapan" class="form-control"
+                                                value="<?= $x->id_tetapan?>" required>
 
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Nama Tetapan</label>
-                    <div class="col-sm-7">
-                            <input type="text" name="nama_tetapan" class="form-control"
-                            value="<?= $x->nama_tetapan?>" required readonly>
+                                        <div class="form-group mt-lg">
+                                            <label class="col-sm-5 control-label">Nama Tetapan</label>
+                                        <div class="col-sm-7">
+                                                <input type="text" name="nama_tetapan" class="form-control"
+                                                value="<?= $x->nama_tetapan?>" required readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group mt-lg">
+                                            <label class="col-sm-5 control-label">
+                                                <?php
+                                                    if($x->nama_tetapan == "Processing Time"){
+                                                        echo "Isi Tetapan (Jam)";
+                                                    }
+                                                    else{
+                                                        echo "Isi Tetapan";
+                                                    }
+                                                ?>
+                                            </label>
+                                            <div class="col-sm-7">
+                                                <?php if($x->nama_tetapan == "Processing time"){?>
+                                                    <input type="number" name="isi_tetapan_pt" class="form-control" value="<?= $x->isi_tetapan?>">
+                                                <?php } else if($x->nama_tetapan == "Senin" || $x->nama_tetapan == "Selasa" || $x->nama_tetapan == "Rabu" || 
+                                                $x->nama_tetapan == "Kamis" || $x->nama_tetapan == "Jumat" || $x->nama_tetapan == "Sabtu" || 
+                                                $x->nama_tetapan == "Minggu"){?>
+                                                    <select class="form-control" name="isi_tetapan_lain">
+                                                        <?php if($x->isi_tetapan == "Hari Produksi"){?>
+                                                            <option value="Hari Produksi" selected>Hari Produksi</option>
+                                                        <?php } else{?>
+                                                            <option value="Hari Produksi">Hari Produksi</option>
+                                                        <?php } ?>
+
+                                                        <?php if($x->isi_tetapan == "Hari Libur"){?>
+                                                            <option value="Hari Libur" selected>Hari Libur</option>
+                                                        <?php } else{?>
+                                                            <option value="Hari Libur">Hari Libur</option>
+                                                        <?php } ?>
+                                                    </select>
+                                                <?php } else{?>
+                                                    <input type="text" name="isi_tetapan_lain" class="form-control" value="<?= $x->isi_tetapan?>">
+                                                <?php } ?>
+                                                
+                                                <!--
+                                                    <input type="number" 
+                                                    <?php if($x->nama_tetapan == "Processing time"){?>
+                                                    type="number"
+                                                    <?php } else{?>
+                                                    type="text"
+                                                    <?php }?>
+                                                    name="isi_tetapan" class="form-control"
+                                                    value="<?= $x->isi_tetapan?>" required>
+                                                -->
+                                            
+                                                <!--
+                                                    <input type="text" name="isi_tetapan" class="form-control"
+                                                    value="<?= $x->isi_tetapan?>" required>
+                                                -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <footer class="panel-footer">
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <input type="submit" id="tambah" class="btn btn-primary" value="Simpan">
+                                                <button type="button" class="btn btn-default modal-dismiss">Batal</button>
+                                            </div>
+                                        </div>
+                                    </footer>
+                                </section>
+                            </form>
                         </div>
-                    </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">
-                            <?php
-                                if($x->nama_tetapan == "Processing Time"){
-                                    echo "Isi Tetapan (Jam)";
-                                }
-                                else{
-                                    echo "Isi Tetapan";
-                                }
-                            ?>
-                        </label>
-                        <div class="col-sm-7">
-                            <?php if($x->nama_tetapan == "Processing Time"){?>
-                                <input type="number" name="isi_tetapan_pt" class="form-control" value="<?= $x->isi_tetapan?>">
-                            <?php } else if($x->nama_tetapan == "Senin" || $x->nama_tetapan == "Selasa" || $x->nama_tetapan == "Rabu" || 
-                            $x->nama_tetapan == "Kamis" || $x->nama_tetapan == "Jumat" || $x->nama_tetapan == "Sabtu" || 
-                            $x->nama_tetapan == "Minggu"){?>
-                                <select class="form-control" name="isi_tetapan_lain">
-                                    <?php if($x->isi_tetapan == "Hari Produksi"){?>
-                                        <option value="Hari Produksi" selected>Hari Produksi</option>
-                                    <?php } else{?>
-                                        <option value="Hari Produksi">Hari Produksi</option>
-                                    <?php } ?>
-
-                                    <?php if($x->isi_tetapan == "Hari Libur"){?>
-                                        <option value="Hari Libur" selected>Hari Libur</option>
-                                    <?php } else{?>
-                                        <option value="Hari Libur">Hari Libur</option>
-                                    <?php } ?>
-                                </select>
-                            <?php } else{?>
-                                <input type="text" name="isi_tetapan_lain" class="form-control" value="<?= $x->isi_tetapan?>">
-                            <?php } ?>
-                            
-                            <!--
-                                <input type="number" 
-                                <?php if($x->nama_tetapan == "Processing time"){?>
-                                type="number"
-                                <?php } else{?>
-                                type="text"
-                                <?php }?>
-                                name="isi_tetapan" class="form-control"
-                                value="<?= $x->isi_tetapan?>" required>
-                            -->
-                          
-                            <!--
-                                <input type="text" name="isi_tetapan" class="form-control"
-                                value="<?= $x->isi_tetapan?>" required>
-                            -->
-                        </div>
-                    </div>
-                </div>
-
-                <footer class="panel-footer">
-                    <div class="row">
-                        <div class="col-md-12 text-right">
-                            <input type="submit" id="tambah" class="btn btn-primary" value="Simpan">
-                            <button type="button" class="btn btn-default modal-dismiss">Batal</button>
-                        </div>
-                    </div>
-                </footer>
-            </section>
-        </form>
-    </div>
 
                     <?php
                     } 
@@ -176,8 +174,292 @@
                     <div class="form-group mt-lg">
                         <label class="col-sm-5 control-label">Nama Tetapan</label>
                         <div class="col-sm-7">
-                            <input type="text" name="nama_tetapan" id="nama_tetapan" required class="form-control"
-                            onchange="cek_nama_tetapan()">
+                            <?php 
+                                $count = 0;
+                                foreach($tetapan as $y){
+                                    if($x->nama_tetapan == "Nama Perusahaan"){
+                                        $count++;
+                                    } else if($x->nama_tetapan == "Rabu"){
+                                        $count++;
+                                    } else if($x->nama_tetapan == "Kamis"){
+                                        $count++;
+                                    } else if($x->nama_tetapan == "Jumat"){
+                                        $count++;
+                                    } else if($x->nama_tetapan == "Sabtu"){
+                                        $count++;
+                                    } else if($x->nama_tetapan == "Minggu"){
+                                        $count++;
+                                    } else if($x->nama_tetapan == "Bidang Usaha"){
+                                        $count++;
+                                    } else if($x->nama_tetapan == "Kota Perusahaan"){
+                                        $count++;
+                                    } else if($x->nama_tetapan == "E-mail Perusahaan"){
+                                        $count++;
+                                    } else if($x->nama_tetapan == "Alamat Perusahaan"){
+                                        $count++;
+                                    } else if($x->nama_tetapan == "Phone/Fax"){
+                                        $count++;
+                                    } else if($x->nama_tetapan == "Website"){
+                                        $count++;
+                                    } else if($x->nama_tetapan == "Processing time"){
+                                        $count++;
+                                    } else if($x->nama_tetapan == "PPN"){
+                                        $count++;
+                                    } else if($x->nama_tetapan == "Senin"){
+                                        $count++;
+                                    } else if($x->nama_tetapan == "Selasa"){
+                                        $count++;
+                                    }
+                                }
+
+                                if($count < 16){
+                            ?>
+                                <select class="form-control" name="nama_tetapan_wajib" required>
+                                    <!-- 1. Nama Perusahaan -->
+                                        <?php 
+                                            $count1 = 0;
+                                            foreach($tetapan as $y){
+                                                if($y->nama_tetapan == "Nama Perusahaan"){
+                                                    $count1++;
+                                                }
+                                            }
+
+                                            if($count1 == 0){
+                                        ?>
+                                                <option value="Nama Perusahaan">Nama Perusahaan</option>
+                                        <?php } ?>
+                                    <!-- -->
+
+                                    <!-- 2. Rabu -->
+                                        <?php 
+                                            $count2 = 0;
+                                            foreach($tetapan as $y){
+                                                if($y->nama_tetapan == "Rabu"){
+                                                    $count2++;
+                                                }
+                                            }
+
+                                            if($count2 == 0){
+                                        ?>
+                                                <option value="Rabu">Rabu</option>
+                                        <?php } ?>
+                                    <!-- -->
+
+                                    <!-- 3. Kamis -->
+                                        <?php 
+                                            $count3 = 0;
+                                            foreach($tetapan as $y){
+                                                if($y->nama_tetapan == "Kamis"){
+                                                    $count3++;
+                                                }
+                                            }
+
+                                            if($count3 == 0){
+                                        ?>
+                                                <option value="Kamis">Kamis</option>
+                                        <?php } ?>
+                                    <!-- -->
+
+                                    <!-- 4. Jumat -->
+                                        <?php 
+                                            $count4 = 0;
+                                            foreach($tetapan as $y){
+                                                if($y->nama_tetapan == "Jumat"){
+                                                    $count4++;
+                                                }
+                                            }
+
+                                            if($count4 == 0){
+                                        ?>
+                                                <option value="Jumat">Jumat</option>
+                                        <?php } ?>
+                                    <!-- -->
+
+                                    <!-- 5. Sabtu -->
+                                        <?php 
+                                            $count5 = 0;
+                                            foreach($tetapan as $y){
+                                                if($y->nama_tetapan == "Sabtu"){
+                                                    $count5++;
+                                                }
+                                            }
+
+                                            if($count5 == 0){
+                                        ?>
+                                                <option value="Sabtu">Sabtu</option>
+                                        <?php } ?>
+                                    <!-- -->
+
+                                    <!-- 6. Minggu -->
+                                        <?php 
+                                            $count6 = 0;
+                                            foreach($tetapan as $y){
+                                                if($y->nama_tetapan == "Minggu"){
+                                                    $count6++;
+                                                }
+                                            }
+
+                                            if($count6 == 0){
+                                        ?>
+                                                <option value="Minggu">Minggu</option>
+                                        <?php } ?>
+                                    <!-- -->
+
+                                    <!-- 7. Bidang Usaha -->
+                                        <?php 
+                                            $count7 = 0;
+                                            foreach($tetapan as $y){
+                                                if($y->nama_tetapan == "Bidang Usaha"){
+                                                    $count7++;
+                                                }
+                                            }
+
+                                            if($count7 == 0){
+                                        ?>
+                                                <option value="Bidang Usaha">Bidang Usaha</option>
+                                        <?php } ?>
+                                    <!-- -->
+
+                                    <!-- 8. Kota Perusahaan -->
+                                        <?php 
+                                            $count8 = 0;
+                                            foreach($tetapan as $y){
+                                                if($y->nama_tetapan == "Kota Perusahaan"){
+                                                    $count8++;
+                                                }
+                                            }
+
+                                            if($count8 == 0){
+                                        ?>
+                                                <option value="Kota Perusahaan">Kota Perusahaan</option>
+                                        <?php } ?>
+                                    <!-- -->
+
+                                    <!-- 9. E-mail Perusahaan -->
+                                        <?php 
+                                            $count9 = 0;
+                                            foreach($tetapan as $y){
+                                                if($y->nama_tetapan == "E-mail Perusahaan"){
+                                                    $count9++;
+                                                }
+                                            }
+
+                                            if($count9 == 0){
+                                        ?>
+                                                <option value="E-mail Perusahaan">E-mail Perusahaan</option>
+                                        <?php } ?>
+                                    <!-- -->
+
+                                    <!-- 10. Alamat Perusahaan -->
+                                        <?php 
+                                            $count10 = 0;
+                                            foreach($tetapan as $y){
+                                                if($y->nama_tetapan == "Alamat Perusahaan"){
+                                                    $count10++;
+                                                }
+                                            }
+
+                                            if($count10 == 0){
+                                        ?>
+                                                <option value="Alamat Perusahaan">Alamat Perusahaan</option>
+                                        <?php } ?>
+                                    <!-- -->
+
+                                    <!-- 11. Phone/Fax -->
+                                        <?php 
+                                            $count11 = 0;
+                                            foreach($tetapan as $y){
+                                                if($y->nama_tetapan == "Phone/Fax"){
+                                                    $count11++;
+                                                }
+                                            }
+
+                                            if($count11 == 0){
+                                        ?>
+                                                <option value="Phone/Fax">Phone/Fax</option>
+                                        <?php } ?>
+                                    <!-- -->
+
+                                    <!-- 12. Website -->
+                                        <?php 
+                                            $count12 = 0;
+                                            foreach($tetapan as $y){
+                                                if($y->nama_tetapan == "Website"){
+                                                    $count12++;
+                                                }
+                                            }
+
+                                            if($count12 == 0){
+                                        ?>
+                                                <option value="Website">Website</option>
+                                        <?php } ?>
+                                    <!-- -->
+
+                                    <!-- 13. Processing time -->
+                                        <?php 
+                                            $count13 = 0;
+                                            foreach($tetapan as $y){
+                                                if($y->nama_tetapan == "Processing time"){
+                                                    $count13++;
+                                                }
+                                            }
+
+                                            if($count13 == 0){
+                                        ?>
+                                                <option value="Processing time">Processing time</option>
+                                        <?php } ?>
+                                    <!-- -->
+
+                                    <!-- 14. PPN -->
+                                        <?php 
+                                            $count14 = 0;
+                                            foreach($tetapan as $y){
+                                                if($y->nama_tetapan == "PPN"){
+                                                    $count14++;
+                                                }
+                                            }
+
+                                            if($count14 == 0){
+                                        ?>
+                                                <option value="PPN">PPN</option>
+                                        <?php } ?>
+                                    <!-- -->
+
+                                    <!-- 15. Senin -->
+                                        <?php 
+                                            $count15 = 0;
+                                            foreach($tetapan as $y){
+                                                if($y->nama_tetapan == "Senin"){
+                                                    $count15++;
+                                                }
+                                            }
+
+                                            if($count15 == 0){
+                                        ?>
+                                                <option value="Senin">Senin</option>
+                                        <?php } ?>
+                                    <!-- -->
+
+                                    <!-- 16. Selasa -->
+                                        <?php 
+                                            $count16 = 0;
+                                            foreach($tetapan as $y){
+                                                if($y->nama_tetapan == "Selasa"){
+                                                    $count16++;
+                                                }
+                                            }
+
+                                            if($count16 == 0){
+                                        ?>
+                                                <option value="Selasa">Selasa</option>
+                                        <?php } ?>
+                                    <!-- -->
+                                </select>
+                            <?php } else{?>
+                                <input type="text" name="nama_tetapan" id="nama_tetapan" required class="form-control" 
+                                onchange="cek_nama_tetapan()">
+                            <?php } ?>
+                            <input type="hidden" name="jumlah_tetapan" value="<?= $count ?>">
                         </div>
                     </div>
                     <div class="form-group mt-lg">
@@ -241,13 +523,13 @@
 <!--*****************************-->
 <!--*****************************-->
 
-
 <script>
     function reload() {
         location.reload();
     }
 </script>
 
+<!-- cek nama tetapan -->
 <script>
     function cek_nama_tetapan(){
         var nama_tetapan = $("#nama_tetapan").val();
@@ -268,7 +550,7 @@
     }
 </script>
 
-
+<!-- untuk log -->
 <script>
     $('.blog_klik').click(function(){
         var id = $(('#blog')+$(this).attr('value')).val();
@@ -363,6 +645,12 @@
     });
 </script>
 
+<!-- select option buat tetapan yang wajib -->
+<script>
+    function cek_tetapan(){
+        
+    }
+</script>
 
 
     

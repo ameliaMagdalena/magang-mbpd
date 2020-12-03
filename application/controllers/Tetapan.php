@@ -35,8 +35,15 @@ class Tetapan extends CI_Controller {
     }
 
     public function tambah_tetapan(){
+        $jumlah_tetapan = $this->input->post('jumlah_tetapan');
+
+        if($jumlah_tetapan == 16){
+            $nama_tetapan = $this->input->post('nama_tetapan');
+        } else{
+            $nama_tetapan = $this->input->post('nama_tetapan_wajib');
+        }
+
         $isi_tetapan  = $this->input->post('isi_tetapan');
-        $nama_tetapan = $this->input->post('nama_tetapan');
         $now = date('Y-m-d H:i:s');
 
         $jumlah_tetapan = $this->M_Tetapan->select_all()->num_rows();

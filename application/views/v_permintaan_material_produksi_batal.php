@@ -111,7 +111,7 @@
                             <td style="text-align: center;vertical-align: middle;"><?= $x->nama_line ?></td>
                             <td  class="col-lg-3">
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                    value="<?= $no;?>" title="Detail"></button>
+                                    value="<?= $no;?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php 
                                     $cari = 0;
                                     foreach($jumlah_ubmin as $k){
@@ -123,7 +123,7 @@
                                     if($cari > 0){
                                 ?>
                                     <button type="button" class="bubmin_klik col-lg-3 btn btn-warning fa  fa-history" 
-                                        value="<?= $no;?>" title="Perubahan Permintaan Material"></button>
+                                        value="<?= $no;?>" title="Perubahan Permintaan Material" style="margin-right:5px;margin-bottom:5px"></button>
                                     <?php } ?>
                             </td>
                         </tr>

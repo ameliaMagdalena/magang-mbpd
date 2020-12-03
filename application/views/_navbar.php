@@ -1471,6 +1471,11 @@
 										</a>
 									</li>
 									<li>
+										<a href="<?= base_url()?>permintaanMaterialProduksi/material_tersedia">
+											Material Tersedia
+										</a>
+									</li>
+									<li>
 										<a href="<?= base_url()?>permintaanMaterialProduksi/selesai">
 											Selesai
 										</a>
