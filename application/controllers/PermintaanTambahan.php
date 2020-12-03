@@ -12,6 +12,8 @@ class PermintaanTambahan extends CI_Controller {
         $this->load->model('M_Line');
         $this->load->model('M_UkuranProduk');
         $this->load->model('M_Warna');
+        $this->load->model('M_Dashboard');
+        
         $this->load->library('pdf');
 
     }

@@ -9,6 +9,7 @@ class PermohonanAkses extends CI_Controller {
 
         $this->load->model('M_PermohonanAkses');
         $this->load->model('M_User');
+        $this->load->model('M_Dashboard');
 
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');

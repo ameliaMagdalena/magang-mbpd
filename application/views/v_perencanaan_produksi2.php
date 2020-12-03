@@ -89,6 +89,14 @@
                         $hitung++;
                         }
                     ?>
+
+                        <input type="hidden" id="stat_date1" value="<?= $stat_date1?>">
+                        <input type="hidden" id="stat_date2" value="<?= $stat_date2?>">
+                        <input type="hidden" id="stat_date3" value="<?= $stat_date3?>">
+                        <input type="hidden" id="stat_date4" value="<?= $stat_date4?>">
+                        <input type="hidden" id="stat_date5" value="<?= $stat_date5?>">
+                        <input type="hidden" id="stat_date6" value="<?= $stat_date6?>">
+                        <input type="hidden" id="stat_date7" value="<?= $stat_date7?>">
                 </table>
             </div>
         </section>
@@ -1479,12 +1487,29 @@
                 document.getElementById("track"+i).style.display = "block";  
                 $("#bedit"+i).prop('disabled',true);
 
+                /*
                 //undisabled inputan
                 for($k=1;$k<=$jumlah_line_dpo;$k++){
                     $id_line = $("#"+i+"id_line"+$k).val();
 
                     for($z=1;$z<=7;$z++){
                         $("#jm"+i+$id_line+'day'+$z).prop('disabled',false);
+                    }
+                }
+                */
+
+                //undisabled inputan
+                for($k=1;$k<=$jumlah_line_dpo;$k++){
+                    $id_line = $("#"+i+"id_line"+$k).val();
+
+                    for($z=1;$z<=7;$z++){
+                        $stat             = $("#stat_date"+$z).val();
+
+                        if($stat == 1){
+                            $("#jm"+i+$id_line+'day'+$z).prop('disabled',true);
+                        } else{
+                            $("#jm"+i+$id_line+'day'+$z).prop('disabled',false);
+                        }
                     }
                 }
 
@@ -1629,7 +1654,13 @@
                     $id_line = $("#"+i+"id_line"+$k).val();
 
                     for($z=1;$z<=7;$z++){
-                        $("#jm"+i+$id_line+'day'+$z).prop('disabled',false);
+                        $stat             = $("#stat_date"+$z).val();
+
+                        if($stat == 1){
+                            $("#jm"+i+$id_line+'day'+$z).prop('disabled',true);
+                        } else{
+                            $("#jm"+i+$id_line+'day'+$z).prop('disabled',false);
+                        }
                     }
                 }
             }

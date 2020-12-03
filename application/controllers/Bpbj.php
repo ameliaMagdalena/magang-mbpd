@@ -15,6 +15,8 @@ class Bpbj extends CI_Controller {
         $this->load->model('M_UkuranProduk');
         $this->load->model('M_Warna');
         $this->load->model('M_Tetapan');
+        $this->load->model('M_Dashboard');
+
         $this->load->library('pdf');
         
     }
@@ -75,6 +77,16 @@ class Bpbj extends CI_Controller {
     }
     $data['idnya'] = $id_bpbj_baru;
     $data['nonya'] = $no_bpbj_baru;
+
+    //notif permintaan material produksi
+        $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+        $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+        $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+        $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+        $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+        $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+        $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+    //tutup notif permintaan material produksi
     
 		$this->load->view('v_bpbj_tambah',$data);
   }
@@ -176,6 +188,16 @@ class Bpbj extends CI_Controller {
     $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
     $data['bpbj_sebelum']     = $this->M_Bpbj->select_all_detail_bpbj_aktif($tanggal)->result();    
     $data['jmbpbj_sebelum']   = $this->M_Bpbj->select_all_detail_bpbj_aktif($tanggal)->num_rows();    
+
+    //notif permintaan material produksi
+        $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+        $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+        $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+        $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+        $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+        $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+        $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+    //tutup notif permintaan material produksi
 
 		$this->load->view('v_bpbj_semua',$data);
   }
@@ -484,6 +506,17 @@ class Bpbj extends CI_Controller {
     $data['bpbj_sebelum']     = $this->M_Bpbj->select_all_detail_bpbj_aktif($tanggal)->result();    
     $data['jmbpbj_sebelum']   = $this->M_Bpbj->select_all_detail_bpbj_aktif($tanggal)->num_rows();   
 
+
+    //notif permintaan material produksi
+        $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+        $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+        $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+        $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+        $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+        $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+        $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+    //tutup notif permintaan material produksi
+
     $this->load->view('v_bpbj_belum_diproses',$data);
   }
 
@@ -499,6 +532,16 @@ class Bpbj extends CI_Controller {
     $data['bpbj_sebelum']     = $this->M_Bpbj->select_all_detail_bpbj_aktif($tanggal)->result();    
     $data['jmbpbj_sebelum']   = $this->M_Bpbj->select_all_detail_bpbj_aktif($tanggal)->num_rows();   
 
+    //notif permintaan material produksi
+        $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+        $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+        $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+        $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+        $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+        $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+        $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+    //tutup notif permintaan material produksi
+
     $this->load->view('v_bpbj_sedang_diproses',$data);
   }
   
@@ -513,6 +556,16 @@ class Bpbj extends CI_Controller {
     $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
     $data['bpbj_sebelum']     = $this->M_Bpbj->select_all_detail_bpbj_aktif($tanggal)->result();    
     $data['jmbpbj_sebelum']   = $this->M_Bpbj->select_all_detail_bpbj_aktif($tanggal)->num_rows();   
+
+    //notif permintaan material produksi
+        $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+        $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+        $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+        $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+        $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+        $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+        $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+    //tutup notif permintaan material produksi
 
     $this->load->view('v_bpbj_selesai',$data);
   }

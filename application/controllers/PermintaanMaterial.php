@@ -9,6 +9,7 @@ class PermintaanMaterial extends CI_Controller {
         $this->load->model('M_PerencanaanMaterial');
         $this->load->model('M_UkuranProduk');
         $this->load->model('M_Warna');
+        $this->load->model('M_Dashboard');
 
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');

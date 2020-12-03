@@ -10,6 +10,7 @@ class PermintaanMaterialProduksi extends CI_Controller {
         $this->load->model('M_PermintaanMaterialProduksi');
         $this->load->model('M_UkuranProduk');
         $this->load->model('M_Warna');
+        $this->load->model('M_Dashboard');
 
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');
@@ -23,6 +24,16 @@ class PermintaanMaterialProduksi extends CI_Controller {
         $data['warna']            = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
 
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+
 		$this->load->view('v_permintaan_material_produksi_semua',$data);
     }
 
@@ -32,6 +43,16 @@ class PermintaanMaterialProduksi extends CI_Controller {
     
         $data['warna']            = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
+
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
 
 		$this->load->view('v_permintaan_material_produksi_belum_ditindaklanjuti',$data);
     }
@@ -43,6 +64,16 @@ class PermintaanMaterialProduksi extends CI_Controller {
         $data['warna']            = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
 
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+
 		$this->load->view('v_permintaan_material_produksi_sedang_diproses',$data);
     }
 
@@ -52,6 +83,16 @@ class PermintaanMaterialProduksi extends CI_Controller {
     
         $data['warna']            = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
+
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
 
 		$this->load->view('v_permintaan_material_produksi_material_tersedia',$data);
     }
@@ -63,6 +104,16 @@ class PermintaanMaterialProduksi extends CI_Controller {
         $data['warna']            = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
 
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+
 		$this->load->view('v_permintaan_material_produksi_selesai',$data);
     }
 
@@ -73,6 +124,16 @@ class PermintaanMaterialProduksi extends CI_Controller {
         $data['warna']            = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
 
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+
 		$this->load->view('v_permintaan_material_produksi_batal',$data);
     }
 
@@ -82,6 +143,16 @@ class PermintaanMaterialProduksi extends CI_Controller {
     
         $data['warna']            = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
+
+        //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
 
 		$this->load->view('v_permintaan_material_produksi_ditolak',$data);
     }
@@ -103,10 +174,6 @@ class PermintaanMaterialProduksi extends CI_Controller {
         $data['jm_ubmin'] = $this->M_PermintaanMaterialProduksi->get_ubmin($id)->num_rows();
 
         echo json_encode($data);
-    }
-
-    public function edit_permintaan_pengambilan(){
-        
     }
 
 }

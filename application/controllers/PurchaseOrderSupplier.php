@@ -9,6 +9,7 @@ class PurchaseOrderSupplier extends CI_Controller {
         $this->load->model('M_PurchaseOrderSupplier');
         $this->load->model('M_Supplier');
         $this->load->model('M_Produk');
+        $this->load->model('M_Dashboard');
 
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');

@@ -11,6 +11,7 @@ class SuratJalan extends CI_Controller {
         $this->load->model('M_Warna');
         $this->load->model('M_UkuranProduk');
         $this->load->model('M_Tetapan');
+        $this->load->model('M_Dashboard');
 
         $this->load->library('pdf');
 
@@ -64,6 +65,17 @@ class SuratJalan extends CI_Controller {
             $id_sj_baru = "M".$year_now.$month_now.".0001";
         }
         $data['idnya'] = $id_sj_baru;
+
+            //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+    
 
 
 		$this->load->view('v_surat_jalan_tambah',$data);
@@ -391,6 +403,17 @@ class SuratJalan extends CI_Controller {
     public function semua_surat_jalan(){
         $data['po_aktif']              = $this->M_SuratJalan->select_all_po_aktif()->result();
         $data['surat_jalan'] = $this->M_SuratJalan->select_all_aktif()->result();
+
+            //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+    
         
 	    $this->load->view('v_surat_jalan_semua',$data);
     }
@@ -1385,6 +1408,17 @@ class SuratJalan extends CI_Controller {
         $data['po_aktif']    = $this->M_SuratJalan->select_all_po_aktif()->result();
         $data['surat_jalan'] = $this->M_SuratJalan->select_all_aktif()->result();
 
+            //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+    
+
         $this->load->view('v_surat_jalan_belum_dikonfirmasi',$data);
     }
 
@@ -1392,12 +1426,34 @@ class SuratJalan extends CI_Controller {
         $data['po_aktif']    = $this->M_SuratJalan->select_all_po_aktif()->result();
         $data['surat_jalan'] = $this->M_SuratJalan->select_all_aktif()->result();
 
+            //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+    
+
         $this->load->view('v_surat_jalan_terkonfirmasi',$data);
     }
 
     public function selesai_surat_jalan(){
         $data['po_aktif']    = $this->M_SuratJalan->select_all_po_aktif()->result();
         $data['surat_jalan'] = $this->M_SuratJalan->select_all_aktif()->result();
+
+            //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+    
 
         $this->load->view('v_surat_jalan_selesai',$data);
     }

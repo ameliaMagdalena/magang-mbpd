@@ -9,6 +9,7 @@ class Supplier extends CI_Controller {
 
         $this->load->model('M_Supplier');
         $this->load->model('M_JenisMaterial');
+        $this->load->model('M_Dashboard');
 
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');

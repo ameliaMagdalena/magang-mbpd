@@ -6,6 +6,8 @@ class PengeluaranMaterial extends CI_Controller {
         parent::__construct();
         date_default_timezone_set('Asia/Jakarta');
 
+        $this->load->model('M_Dashboard');
+
     }
 
 	public function index(){

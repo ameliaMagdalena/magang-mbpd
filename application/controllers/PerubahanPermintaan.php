@@ -10,6 +10,7 @@ class PerubahanPermintaan extends CI_Controller {
         $this->load->model('M_PerubahanPermintaan');
         $this->load->model('M_UkuranProduk');
         $this->load->model('M_Warna');
+        $this->load->model('M_Dashboard');
 
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');

@@ -14,6 +14,7 @@ class Bpbd extends CI_Controller {
         $this->load->model('M_Warna');
         $this->load->model('M_UkuranProduk');
         $this->load->model('M_Tetapan');
+        $this->load->model('M_Dashboard');
 
         $this->load->library('pdf');
     }
@@ -22,6 +23,16 @@ class Bpbd extends CI_Controller {
     $data['purchase_order']        = $this->M_Bpbd->get_po()->result();
     $data['detail_purchase_order'] = $this->M_Bpbd->get_dpo()->result();
     $data['surat_jalan']           = $this->M_Bpbd->get_surat_jalan_belum_selesai()->result();
+
+    //notif permintaan material produksi
+        $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+        $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+        $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+        $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+        $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+        $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+        $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+    //tutup notif permintaan material produksi
 
 		$this->load->view('v_bpbd_tambah',$data);
   }
@@ -291,17 +302,47 @@ class Bpbd extends CI_Controller {
   public function semua_bpbd(){
     $data['bpbd'] = $this->M_Bpbd->select_all_bpbd()->result();
 
+    //notif permintaan material produksi
+        $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+        $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+        $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+        $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+        $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+        $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+        $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+    //tutup notif permintaan material produksi
+
 		$this->load->view('v_bpbd_semua',$data);
   }
 
   public function belum_konfirmasi_bpbd(){
     $data['bpbd'] = $this->M_Bpbd->select_all_bpbd()->result();
 
+    //notif permintaan material produksi
+        $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+        $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+        $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+        $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+        $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+        $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+        $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+    //tutup notif permintaan material produksi
+
 		$this->load->view('v_bpbd_belum_konfirmasi',$data);
   }
 
   public function terkonfirmasi_bpbd(){
     $data['bpbd'] = $this->M_Bpbd->select_all_bpbd()->result();
+
+    //notif permintaan material produksi
+        $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+        $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+        $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+        $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+        $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+        $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+        $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+    //tutup notif permintaan material produksi
 
 		$this->load->view('v_bpbd_terkonfirmasi',$data);
   }

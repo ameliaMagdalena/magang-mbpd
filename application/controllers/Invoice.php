@@ -11,6 +11,7 @@ class Invoice extends CI_Controller {
         $this->load->model('M_Warna');
         $this->load->model('M_UkuranProduk');
         $this->load->model('M_Tetapan');
+        $this->load->model('M_Dashboard');
 
         $this->load->library('pdf');
 
@@ -22,6 +23,18 @@ class Invoice extends CI_Controller {
     public function index(){
         $data['purchase_order']     = $this->M_Invoice->get_po()->result();
         $data['surat_jalan']        = $this->M_Invoice->get_sj()->result();
+
+            //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+
+        
 		$this->load->view('v_invoice_tambah1',$data);
     }
 
@@ -264,6 +277,17 @@ class Invoice extends CI_Controller {
         $data['po']             = $this->M_Invoice->get_po()->result();
         $data['invoice']        = $this->M_Invoice->select_all_aktif()->result();
         $data['penanda_tangan'] = $this->M_Invoice->get_penanda_tangan()->result();
+
+            //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+    
 
 	    $this->load->view('v_invoice_semua',$data);
     }
@@ -748,6 +772,17 @@ class Invoice extends CI_Controller {
         $data['po']             = $this->M_Invoice->get_po()->result();
         $data['invoice']        = $this->M_Invoice->select_all_aktif()->result();
         $data['penanda_tangan'] = $this->M_Invoice->get_penanda_tangan()->result();
+
+            //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+    
         
 	    $this->load->view('v_invoice_belum_diproses',$data);
     }
@@ -756,6 +791,17 @@ class Invoice extends CI_Controller {
         $data['po']             = $this->M_Invoice->get_po()->result();
         $data['invoice']        = $this->M_Invoice->select_all_aktif()->result();
         $data['penanda_tangan'] = $this->M_Invoice->get_penanda_tangan()->result();
+
+            //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+    
 
 	    $this->load->view('v_invoice_selesai',$data);
     }

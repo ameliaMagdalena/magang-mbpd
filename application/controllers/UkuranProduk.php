@@ -10,6 +10,7 @@ class UkuranProduk extends CI_Controller {
         $this->load->model('M_UkuranProduk');
         $this->load->model('M_JenisProduk');
         $this->load->model('M_User');
+        $this->load->model('M_Dashboard');
 
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');

@@ -12,6 +12,7 @@ class LaporanPerencanaanCutting extends CI_Controller {
         $this->load->model('M_HasilProduksi');
         $this->load->model('M_UkuranProduk');
         $this->load->model('M_Warna');
+        $this->load->model('M_Dashboard');
 
         $this->load->library('pdf');
 
@@ -23,6 +24,17 @@ class LaporanPerencanaanCutting extends CI_Controller {
     function index(){
         $data['tanggal'] = $this->M_LaporanPerencanaanCutting->get_tanggal_perccutt_0()->result();
 
+            //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+    
+
         $this->load->view('v_laporan_perencanaan_cutting_tambah',$data);
     }
 
@@ -31,6 +43,17 @@ class LaporanPerencanaanCutting extends CI_Controller {
 
         $data['tanggal']          = $this->M_LaporanPerencanaanCutting->get_tanggal_perccutt_semua()->result();
         $data['permohonan_akses'] = $this->M_PermohonanAkses->select_belum_selesai_by_id($id_user)->result();
+
+            //notif permintaan material produksi
+            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+        //tutup notif permintaan material produksi
+    
 
         $this->load->view('v_laporan_perencanaan_cutting_semua',$data);
     }
