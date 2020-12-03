@@ -61,10 +61,10 @@ class PermintaanMaterial extends CI_Controller {
         );
         $this->M_PerencanaanMaterial->editPermintaanMaterial($data, $where);
         
-        if ($this->input->post("status") == 1){
+        if ($this->input->post("status") == 1 || $this->input->post("status") == 2){
             redirect('PermintaanMaterial/index/1');
         }
-        else if ($this->input->post("status") == 2){
+        else if ($this->input->post("status") == 3){
             redirect('PermintaanMaterial/index/2');
         }
         else{
