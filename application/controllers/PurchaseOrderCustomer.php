@@ -102,6 +102,21 @@ class PurchaseOrderCustomer extends CI_Controller {
             "user_delete"=>"0"
         );
         $this->M_PurchaseOrderCustomer->insertPOCustomer($data2);
+
+        $data3 = array (
+            "id_purchase_order_customer" => $id_po,
+            "id_sales_order" => $this->input->post("id_sales_order"),
+            "tanggal_so" => $this->input->post("tgl_so"),
+            "tanggal_pengantaran" => $this->input->post("tgl_antar"),
+            "dibuat_oleh" => $_SESSION['id_user'],
+            "tanggal_dibuat" => date('Y-m-d H:i:s'),
+            "user_add"=>$_SESSION['id_user'],
+            "waktu_add"=>date('Y-m-d H:i:s'),
+            "user_edit"=>"0",
+            "user_delete"=>"0"
+        );
+        $this->M_PurchaseOrderCustomer->insertSalesOrder($data3);
+
         redirect('PurchaseOrderCustomer/index/0');
     }
 
@@ -129,7 +144,7 @@ class PurchaseOrderCustomer extends CI_Controller {
             "id_purchase_order_customer" => $this->input->post("id_po_customer"),
         );
         $data = array(
-            "status_po" => "4",
+            "status_po" => "3",
             "keterangan" => $this->input->post("keterangan"),
             "user_edit"=>$_SESSION['id_user'],
             "waktu_add"=>date('Y-m-d H:i:s'),

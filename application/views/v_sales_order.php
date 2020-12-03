@@ -131,7 +131,7 @@
                 <section class="panel">
                     <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PurchaseOrderCustomer/edit_so" method="post">
                         <header class="panel-heading">
-                            <h2 class="panel-title">Edit Sales Order <?php echo $sales_order[0]['kode_sales_order'] ?></h2>
+                            <h2 class="panel-title">Edit Sales Order <?php echo $sales_order[0]['id_sales_order'] ?></h2>
                         </header>
 
                         <div class="panel-body">
@@ -142,13 +142,13 @@
                                 <label class="col-sm-4 control-label">Tanggal Pengantaran<span class="required">*</span></label>
                                 <div class="col-sm-8">
                                     <input type="date" name="tgl_pengantaran" class="form-control"
-                                        value="<?php echo $sales_order[0]['tanggal_pengantaran'] ?>" required>
+                                        value="<?php echo $sales_order[0]['tanggal_pengantaran'] ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
                                 <label class="col-sm-4 control-label">Dibuat Oleh<span class="required">*</span></label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" name="dibuat_oleh" id="customer" required>
+                                    <select class="form-control" name="dibuat_oleh" id="customer" readonly>
                                         <?php for($a=0; $a<count($user); $a++){ ?>
                                             <option value="<?php echo $user[$a]['id_user'] ?>"
                                             <?php if($user[$a]['id_user'] == $sales_order[0]['dibuat_oleh']){ echo "selected"; } ?>>

@@ -63,7 +63,19 @@
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Nomor SO<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="text" name="no_so_customer" class="form-control" value="SO-<?php echo count($sales_order)+1 ?>" readonly>
+                        <input type="text" name="id_sales_order" class="form-control" value="SO-<?php echo count($sales_order)+1 ?>" readonly>
+                    </div>
+                </div>
+                <div class="form-group mt-lg">
+					<label class="col-sm-3 control-label">Tanggal SO<span class="required">*</span></label>
+					<div class="col-sm-7">
+                        <input type="date" name="tgl_so" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group mt-lg">
+					<label class="col-sm-3 control-label">Tanggal Pengantaran<span class="required">*</span></label>
+					<div class="col-sm-7">
+                        <input type="date" name="tgl_antar" class="form-control" required>
                     </div>
                 </div>
                 <br>
