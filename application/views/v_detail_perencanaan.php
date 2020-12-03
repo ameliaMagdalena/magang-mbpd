@@ -115,10 +115,8 @@
                                         /*$jumlahambil = $pengambilan[$y]['jumlah_keluar']; //jumlah dengan satuan ukuran
                                         $diambil=$diambil+$jumlahambil; */
 
-                                         
-                                        $jumlahambil = 0;
                                         for ($aa=0; $aa<count($pengeluaran); $aa++){
-                                            $jumlahambil = $jumlahambil+$pengeluaran[$aa]['jumlah_keluar'];
+                                            $diambil = $diambil+$pengeluaran[$aa]['jumlah_keluar'];
                                         } //jumlah dengan satuan ukuran
 
                                     }
