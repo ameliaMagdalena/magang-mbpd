@@ -48,7 +48,43 @@
                     ?>
                         <tr>
                             <td style="text-align: center;vertical-align: middle;"><?= $no;?></td>
-                            <td style="text-align: center;vertical-align: middle;"><?= $spl->tanggal;?></td>
+                            <td style="text-align: center;vertical-align: middle;">
+                                <?php 
+                                    $waktu = $spl->tanggal;
+
+                                    $hari_array = array(
+                                        'Minggu',
+                                        'Senin',
+                                        'Selasa',
+                                        'Rabu',
+                                        'Kamis',
+                                        'Jumat',
+                                        'Sabtu'
+                                    );
+                                    $hr = date('w', strtotime($waktu));
+                                    $hari = $hari_array[$hr];
+                                    $tanggal = date('j', strtotime($waktu));
+                                    $bulan_array = array(
+                                        1 => 'Januari',
+                                        2 => 'Februari',
+                                        3 => 'Maret',
+                                        4 => 'April',
+                                        5 => 'Mei',
+                                        6 => 'Juni',
+                                        7 => 'Juli',
+                                        8 => 'Agustus',
+                                        9 => 'September',
+                                        10 => 'Oktober',
+                                        11 => 'November',
+                                        12 => 'Desember',
+                                    );
+                                    $bl = date('n', strtotime($waktu));
+                                    $bulan = $bulan_array[$bl];
+                                    $tahun = date('Y', strtotime($waktu));
+                                    
+                                    echo "$hari, $tanggal $bulan $tahun";
+                                ?>
+                            </td>
                             <td style="text-align: center;vertical-align: middle;"><?= $spl->nama_line;?> </td>
                             <td style="text-align: center;vertical-align: middle;">
                                 <?php if($spl->status_spl == 0){
@@ -129,7 +165,7 @@
                                 <!--- STATUS 2 -->
                                 <?php } else if($spl->status_spl == 2){?>
                                     <button type="button" class="bdet1_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                        id="bdet1<?= $spl->id_surat_perintah_lembur?>" value="<?= $spl->id_surat_perintah_lembur?>" title="Detail"></button>
+                                        id="bdet1<?= $spl->id_surat_perintah_lembur?>" value="<?= $spl->id_surat_perintah_lembur?>" title="Detail"  style="margin-bottom:5px;margin-right:5px"></button>
                                     <?php if($_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi" ||
                                             $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
                                             $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
@@ -320,7 +356,41 @@
                                             <div class="modal-wrapper">
                                                 <div class="modal-text">
                                                     <input type="hidden" name="id_spl" value="<?= $spl->id_surat_perintah_lembur?>"> 
-                                                    <p>Apakah anda yakin akan mengkonfirmasi surat printah lembur untuk <?= $spl->nama_line ?> pada tanggal <?= $spl->tanggal?>?</p>
+                                                    <p>Apakah anda yakin akan mengkonfirmasi surat printah lembur untuk <?= $spl->nama_line ?> pada tanggal <?php 
+                                                        $waktu = $spl->tanggal;
+
+                                                        $hari_array = array(
+                                                            'Minggu',
+                                                            'Senin',
+                                                            'Selasa',
+                                                            'Rabu',
+                                                            'Kamis',
+                                                            'Jumat',
+                                                            'Sabtu'
+                                                        );
+                                                        $hr = date('w', strtotime($waktu));
+                                                        $hari = $hari_array[$hr];
+                                                        $tanggal = date('j', strtotime($waktu));
+                                                        $bulan_array = array(
+                                                            1 => 'Januari',
+                                                            2 => 'Februari',
+                                                            3 => 'Maret',
+                                                            4 => 'April',
+                                                            5 => 'Mei',
+                                                            6 => 'Juni',
+                                                            7 => 'Juli',
+                                                            8 => 'Agustus',
+                                                            9 => 'September',
+                                                            10 => 'Oktober',
+                                                            11 => 'November',
+                                                            12 => 'Desember',
+                                                        );
+                                                        $bl = date('n', strtotime($waktu));
+                                                        $bulan = $bulan_array[$bl];
+                                                        $tahun = date('Y', strtotime($waktu));
+                                                        
+                                                        echo "$hari, $tanggal $bulan $tahun";
+                                                    ?>?</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -349,7 +419,41 @@
                                                 <div class="modal-text">
                                                     <input type="hidden" name="id_spl" value="<?= $spl->id_surat_perintah_lembur?>"> 
                                                     <p>Apakah anda yakin akan membatalkan konfirmasi terhadap surat printah lembur untuk 
-                                                    <?= $spl->nama_line?> pada tanggal <?=  $spl->tanggal?>?</p>
+                                                    <?= $spl->nama_line?> pada tanggal <?php 
+                                                        $waktu = $spl->tanggal;
+
+                                                        $hari_array = array(
+                                                            'Minggu',
+                                                            'Senin',
+                                                            'Selasa',
+                                                            'Rabu',
+                                                            'Kamis',
+                                                            'Jumat',
+                                                            'Sabtu'
+                                                        );
+                                                        $hr = date('w', strtotime($waktu));
+                                                        $hari = $hari_array[$hr];
+                                                        $tanggal = date('j', strtotime($waktu));
+                                                        $bulan_array = array(
+                                                            1 => 'Januari',
+                                                            2 => 'Februari',
+                                                            3 => 'Maret',
+                                                            4 => 'April',
+                                                            5 => 'Mei',
+                                                            6 => 'Juni',
+                                                            7 => 'Juli',
+                                                            8 => 'Agustus',
+                                                            9 => 'September',
+                                                            10 => 'Oktober',
+                                                            11 => 'November',
+                                                            12 => 'Desember',
+                                                        );
+                                                        $bl = date('n', strtotime($waktu));
+                                                        $bulan = $bulan_array[$bl];
+                                                        $tahun = date('Y', strtotime($waktu));
+                                                        
+                                                        echo "$hari, $tanggal $bulan $tahun";
+                                                    ?>?</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -377,7 +481,41 @@
                                             <div class="modal-wrapper">
                                                 <div class="modal-text">
                                                     <input type="hidden" name="id_spl" value="<?= $spl->id_surat_perintah_lembur?>"> 
-                                                    <p>Apakah anda yakin akan mengkonfirmasi surat printah lembur untuk <?= $spl->nama_line ?> pada tanggal <?= $spl->tanggal?>?</p>
+                                                    <p>Apakah anda yakin akan mengkonfirmasi surat printah lembur untuk <?= $spl->nama_line ?> pada tanggal <?php 
+                                                            $waktu = $spl->tanggal;
+
+                                                            $hari_array = array(
+                                                                'Minggu',
+                                                                'Senin',
+                                                                'Selasa',
+                                                                'Rabu',
+                                                                'Kamis',
+                                                                'Jumat',
+                                                                'Sabtu'
+                                                            );
+                                                            $hr = date('w', strtotime($waktu));
+                                                            $hari = $hari_array[$hr];
+                                                            $tanggal = date('j', strtotime($waktu));
+                                                            $bulan_array = array(
+                                                                1 => 'Januari',
+                                                                2 => 'Februari',
+                                                                3 => 'Maret',
+                                                                4 => 'April',
+                                                                5 => 'Mei',
+                                                                6 => 'Juni',
+                                                                7 => 'Juli',
+                                                                8 => 'Agustus',
+                                                                9 => 'September',
+                                                                10 => 'Oktober',
+                                                                11 => 'November',
+                                                                12 => 'Desember',
+                                                            );
+                                                            $bl = date('n', strtotime($waktu));
+                                                            $bulan = $bulan_array[$bl];
+                                                            $tahun = date('Y', strtotime($waktu));
+                                                            
+                                                            echo "$hari, $tanggal $bulan $tahun";
+                                                        ?></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -489,7 +627,7 @@
                     <div class="form-group mt-lg">
                         <label class="col-sm-3 control-label">Tanggal</label>
                         <div class="col-sm-9">
-                            <input class="form-control col-md-5" type="date" id="det2_tanggal"
+                            <input class="form-control col-md-5" type="text" id="det2_tanggal"
                             readonly> 
                         </div>
                     </div>
@@ -892,7 +1030,21 @@
             data: {id:id},
 
             success: function(respond){
-                $("#det2_tanggal").val(respond['spl'][0]['tanggal']);
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['spl'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['spl'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['spl'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['spl'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#det2_tanggal").val($tanggalnya);
                 $("#det2_line").val(respond['spl'][0]['nama_line']);
                 $("#det2_waktu").val(respond['spl'][0]['waktu_lembur']);
                 $("#det2_keterangan").val(respond['spl'][0]['keterangan_perintah']);

@@ -12,7 +12,8 @@ class M_Dashboard extends CI_Model {
         //permintaan material produksi
             public function get_jm_permat(){
                 return $this->db->query("SELECT COUNT(id_permintaan_material) AS jumlah_permat
-                FROM permintaan_material WHERE status_delete='0'");
+                FROM permintaan_material WHERE status_delete='0' AND (status_permintaan='0' OR status_permintaan='1')
+                OR status_permintaan='3' OR status_permintaan='4' OR status_permintaan='5' ");
             }
 
             public function get_jm_permat_0(){
@@ -44,6 +45,95 @@ class M_Dashboard extends CI_Model {
                 return $this->db->query("SELECT COUNT(id_permintaan_material) AS jumlah_5 
                 FROM permintaan_material WHERE status_delete='0' AND status_permintaan='5' ");
             }
+        //tutup
+
+        //surat perintah lembur
+            function get_jm_spl(){
+                return $this->db->query("SELECT COUNT(id_surat_perintah_lembur) AS jumlah_spl
+                FROM surat_perintah_lembur WHERE status_delete='0' AND (status_spl='0' OR status_spl='1' OR status_spl='2' )  ");
+            }
+
+            function get_jm_spl_0(){
+                return $this->db->query("SELECT COUNT(id_surat_perintah_lembur) AS jumlah_spl
+                FROM surat_perintah_lembur WHERE status_delete='0' AND status_spl='0' ");
+            }
+
+            function get_jm_spl_1(){
+                return $this->db->query("SELECT COUNT(id_surat_perintah_lembur) AS jumlah_spl
+                FROM surat_perintah_lembur WHERE status_delete='0' AND status_spl='1' ");
+            }
+
+            function get_jm_spl_2(){
+                return $this->db->query("SELECT COUNT(id_surat_perintah_lembur) AS jumlah_spl
+                FROM surat_perintah_lembur WHERE status_delete='0' AND status_spl='2' ");
+            }
+
+            function get_jm_spl_line($nama_line){
+                return $this->db->query("SELECT COUNT(id_surat_perintah_lembur) AS jumlah_spl
+                FROM surat_perintah_lembur,line 
+                WHERE surat_perintah_lembur.status_delete='0' AND (status_spl='0' OR status_spl='1' OR status_spl='2' )
+                AND line.nama_line='$nama_line' AND surat_perintah_lembur.id_line=line.id_line  ");
+            }
+
+            function get_jm_spl_line_0($nama_line){
+                return $this->db->query("SELECT COUNT(id_surat_perintah_lembur) AS jumlah_spl
+                FROM surat_perintah_lembur,line 
+                WHERE surat_perintah_lembur.status_delete='0' AND status_spl='0'
+                AND line.nama_line='$nama_line' AND surat_perintah_lembur.id_line=line.id_line  ");
+            }
+
+            function get_jm_spl_line_1($nama_line){
+                return $this->db->query("SELECT COUNT(id_surat_perintah_lembur) AS jumlah_spl
+                FROM surat_perintah_lembur,line 
+                WHERE surat_perintah_lembur.status_delete='0' AND status_spl='1'
+                AND line.nama_line='$nama_line' AND surat_perintah_lembur.id_line=line.id_line  ");
+            }
+
+            function get_jm_spl_line_2($nama_line){
+                return $this->db->query("SELECT COUNT(id_surat_perintah_lembur) AS jumlah_spl
+                FROM surat_perintah_lembur,line 
+                WHERE surat_perintah_lembur.status_delete='0' AND status_spl='2'
+                AND line.nama_line='$nama_line' AND surat_perintah_lembur.id_line=line.id_line  ");
+            }
+        //tutup
+
+        //notif laporan lembur
+            function get_jm_ll($tanggal){
+                return $this->db->query("SELECT COUNT(id_surat_perintah_lembur) AS jumlah_ll FROM surat_perintah_lembur WHERE 
+                surat_perintah_lembur.status_delete=0 AND (surat_perintah_lembur.status_spl BETWEEN 3 AND 4) AND surat_perintah_lembur.tanggal<='$tanggal'");
+            }
+
+            function get_jm_ll_3($tanggal){
+                return $this->db->query("SELECT COUNT(id_surat_perintah_lembur) AS jumlah_ll FROM surat_perintah_lembur WHERE 
+                surat_perintah_lembur.status_delete=0 AND (surat_perintah_lembur.status_spl ='3') AND surat_perintah_lembur.tanggal<='$tanggal'");
+            }
+
+            function get_jm_ll_4($tanggal){
+                return $this->db->query("SELECT COUNT(id_surat_perintah_lembur) AS jumlah_ll FROM surat_perintah_lembur WHERE 
+                surat_perintah_lembur.status_delete=0 AND (surat_perintah_lembur.status_spl ='4') AND surat_perintah_lembur.tanggal<='$tanggal'");
+            }
+
+            function get_jm_ll_line($line,$tanggal){
+                return $this->db->query("SELECT COUNT(id_surat_perintah_lembur) AS jumlah_ll
+                FROM surat_perintah_lembur,line 
+                WHERE surat_perintah_lembur.status_delete='0' AND (status_spl='3' OR status_spl='4')
+                AND line.nama_line='$line' AND surat_perintah_lembur.id_line=line.id_line AND surat_perintah_lembur.tanggal<='$tanggal' ");
+            }
+
+            function get_jm_ll_line_3($nama_line,$tanggal){
+                return $this->db->query("SELECT COUNT(id_surat_perintah_lembur) AS jumlah_ll
+                FROM surat_perintah_lembur,line 
+                WHERE surat_perintah_lembur.status_delete='0' AND status_spl='3'
+                AND line.nama_line='$nama_line' AND surat_perintah_lembur.id_line=line.id_line AND surat_perintah_lembur.tanggal<='$tanggal' ");
+            }
+
+            function get_jm_ll_line_4($nama_line,$tanggal){
+                return $this->db->query("SELECT COUNT(id_surat_perintah_lembur) AS jumlah_ll
+                FROM surat_perintah_lembur,line 
+                WHERE surat_perintah_lembur.status_delete='0' AND status_spl='4'
+                AND line.nama_line='$nama_line' AND surat_perintah_lembur.id_line=line.id_line AND surat_perintah_lembur.tanggal<='$tanggal' ");
+            }
+
         //tutup
 
 

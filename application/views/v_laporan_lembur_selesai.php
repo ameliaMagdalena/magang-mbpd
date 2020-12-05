@@ -45,7 +45,43 @@
                         foreach($laporan_lembur as $ll){?>
                         <tr>
                             <td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
-                            <td style="text-align: center;vertical-align: middle;"><?= $ll->tanggal; ?></td>
+                            <td style="text-align: center;vertical-align: middle;">
+                                <?php 
+                                    $waktu = $ll->tanggal;
+
+                                    $hari_array = array(
+                                        'Minggu',
+                                        'Senin',
+                                        'Selasa',
+                                        'Rabu',
+                                        'Kamis',
+                                        'Jumat',
+                                        'Sabtu'
+                                    );
+                                    $hr = date('w', strtotime($waktu));
+                                    $hari = $hari_array[$hr];
+                                    $tanggal = date('j', strtotime($waktu));
+                                    $bulan_array = array(
+                                        1 => 'Januari',
+                                        2 => 'Februari',
+                                        3 => 'Maret',
+                                        4 => 'April',
+                                        5 => 'Mei',
+                                        6 => 'Juni',
+                                        7 => 'Juli',
+                                        8 => 'Agustus',
+                                        9 => 'September',
+                                        10 => 'Oktober',
+                                        11 => 'November',
+                                        12 => 'Desember',
+                                    );
+                                    $bl = date('n', strtotime($waktu));
+                                    $bulan = $bulan_array[$bl];
+                                    $tahun = date('Y', strtotime($waktu));
+                                    
+                                    echo "$hari, $tanggal $bulan $tahun";
+                                ?>
+                            </td>
                             <td style="text-align: center;vertical-align: middle;"><?= $ll->nama_line; ?></td>
                             <td style="text-align: center;vertical-align: middle;">
                                 Selesai
@@ -54,7 +90,7 @@
                                 <!-- STATUS = 3 -->
                                 <?php if($ll->status_spl == 3){ ?>
                                     <button type="button" class="bdet1_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                    id="bdet1<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Detail"></button>
+                                    id="bdet1<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Detail" style="margin-bottom:5px;margin-right:5px"></button>
 
                                     <?php if($_SESSION['nama_jabatan'] == "PIC Line Cutting" && $_SESSION['nama_departemen'] == "Produksi" || 
                                         $_SESSION['nama_jabatan'] == "PIC Line Bonding" && $_SESSION['nama_departemen'] == "Produksi" ||
@@ -63,11 +99,11 @@
                                         $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
                                         $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
                                             <button type="button" class="bproses_klik col-lg-3 btn btn-success fa fa-gear" 
-                                            id="bproses<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Edit"></button>
+                                            id="bproses<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Edit" style="margin-bottom:5px;margin-right:5px"></button>
                                     <?php }?>
                                 <?php } else if($ll->status_spl == 4){ ?>
                                     <button type="button" class="bdet2_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                    id="bdet2<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Detail"></button>
+                                    id="bdet2<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Detail" style="margin-bottom:5px;margin-right:5px"></button>
 
                                     <?php if($_SESSION['nama_jabatan'] == "PIC Line Cutting" && $_SESSION['nama_departemen'] == "Produksi" || 
                                         $_SESSION['nama_jabatan'] == "PIC Line Bonding" && $_SESSION['nama_departemen'] == "Produksi" ||
@@ -76,21 +112,21 @@
                                         $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
                                         $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
                                             <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                            id="bedit<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Edit"></button>
+                                            id="bedit<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Edit" style="margin-bottom:5px;margin-right:5px"></button>
                                     <?php } ?>
                                     <?php if($_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi" ||
                                             $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
                                             $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
                                                 <a class="modal-with-form col-lg-3 btn btn-success fa fa-check-square"
-                                                title="Konfirmasi" href="#modalsetuju<?= $ll->id_surat_perintah_lembur ?>"></a>
+                                                title="Konfirmasi" href="#modalsetuju<?= $ll->id_surat_perintah_lembur ?>" style="margin-bottom:5px;margin-right:5px"></a>
                                     <?php } ?>
                                 <?php } else if($ll->status_spl == 5){ ?>
                                         <button type="button" class="bdet2_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                        id="bdet2<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Detail"></button>
+                                        id="bdet2<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Detail" style="margin-bottom:5px;margin-right:5px"></button>
                                         <form method="POST" action="<?= base_url()?>laporanLembur/print">
                                             <input type="hidden" name="id" value="<?= $ll->id_surat_perintah_lembur?>">
                                             <button type="submit" class="col-lg-3 btn fa fa-print" style="background-color:#E56B1F;color:white;"
-                                            title="Print"></button>
+                                            title="Print" style="margin-bottom:5px;margin-right:5px"></button>
                                         </form>  
                                 <?php } ?>
                             </td>
@@ -107,7 +143,41 @@
                                             <div class="modal-wrapper">
                                                 <div class="modal-text">
                                                     <input type="hidden" name="id_spl" value="<?= $ll->id_surat_perintah_lembur?>">
-                                                    <p>Apakah anda yakin akan mengkonfirmasi laporan lembur untuk <?= $ll->nama_line?> pada tanggal <?= $ll->tanggal?>?</p>
+                                                    <p>Apakah anda yakin akan mengkonfirmasi laporan lembur untuk <?= $ll->nama_line?> pada tanggal                                 <?php 
+                                                        $waktu = $ll->tanggal;
+
+                                                        $hari_array = array(
+                                                            'Minggu',
+                                                            'Senin',
+                                                            'Selasa',
+                                                            'Rabu',
+                                                            'Kamis',
+                                                            'Jumat',
+                                                            'Sabtu'
+                                                        );
+                                                        $hr = date('w', strtotime($waktu));
+                                                        $hari = $hari_array[$hr];
+                                                        $tanggal = date('j', strtotime($waktu));
+                                                        $bulan_array = array(
+                                                            1 => 'Januari',
+                                                            2 => 'Februari',
+                                                            3 => 'Maret',
+                                                            4 => 'April',
+                                                            5 => 'Mei',
+                                                            6 => 'Juni',
+                                                            7 => 'Juli',
+                                                            8 => 'Agustus',
+                                                            9 => 'September',
+                                                            10 => 'Oktober',
+                                                            11 => 'November',
+                                                            12 => 'Desember',
+                                                        );
+                                                        $bl = date('n', strtotime($waktu));
+                                                        $bulan = $bulan_array[$bl];
+                                                        $tahun = date('Y', strtotime($waktu));
+                                                        
+                                                        echo "$hari, $tanggal $bulan $tahun";
+                                                    ?>?</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -139,7 +209,7 @@
                         <div class="form-group mt-lg">
                             <label class="col-sm-3 control-label">Tanggal</label>
                             <div class="col-sm-9">
-                                <input class="form-control col-md-5" type="date" id="det2_tanggal"
+                                <input class="form-control col-md-5" type="text" id="det2_tanggal"
                                 readonly> 
                             </div>
                         </div>
@@ -185,7 +255,7 @@
                         <div class="form-group mt-lg">
                             <label class="col-sm-3 control-label">Tanggal</label>
                             <div class="col-sm-9">
-                                <input class="form-control col-md-5" type="date" id="detail_tanggal"
+                                <input class="form-control col-md-5" type="text" id="detail_tanggal"
                                 readonly> 
                             </div>
                         </div>
@@ -241,7 +311,7 @@
                             <div class="form-group mt-lg">
                                 <label class="col-sm-3 control-label">Tanggal</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control col-md-5" type="date" readonly
+                                    <input class="form-control col-md-5" type="text" readonly
                                     name="ak_tanggal" id="ak_tanggal"> 
                                 </div>
                             </div>
@@ -301,7 +371,7 @@
                             <div class="form-group mt-lg">
                                 <label class="col-sm-3 control-label">Tanggal</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control col-md-5" type="date" readonly
+                                    <input class="form-control col-md-5" type="text" readonly
                                     name="edit_tanggal" id="edit_tanggal"> 
                                 </div>
                             </div>
@@ -373,7 +443,21 @@
             data: {id:id},
 
             success: function(respond){
-                $("#det2_tanggal").val(respond['spl'][0]['tanggal']);
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['spl'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['spl'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['spl'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['spl'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#det2_tanggal").val($tanggalnya);
                 $("#det2_line").val(respond['spl'][0]['nama_line']);
                 $("#det2_waktu").val(respond['spl'][0]['waktu_lembur']);
                 $("#det2_keterangan").val(respond['spl'][0]['keterangan_perintah']);
@@ -448,7 +532,21 @@
             data: {id:id},
 
             success: function(respond){
-                $("#detail_tanggal").val(respond['spl'][0]['tanggal']);
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['spl'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['spl'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['spl'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['spl'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#detail_tanggal").val($tanggalnya);
                 $("#detail_line").val(respond['spl'][0]['nama_line']);
                 $("#detail_waktu").val(respond['spl'][0]['waktu_lembur']);
                 $("#detail_keterangan").val(respond['spl'][0]['keterangan_perintah']);
@@ -552,7 +650,21 @@
             success: function(respond){
                 $("#ak_id_spl").val(id);
 
-                $("#ak_tanggal").val(respond['spl'][0]['tanggal']);
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['spl'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['spl'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['spl'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['spl'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#ak_tanggal").val($tanggalnya);
                 $("#ak_line").val(respond['spl'][0]['nama_line']);
                 $("#ak_waktu").val(respond['spl'][0]['waktu_lembur']);
                 $("#ak_keterangan").val(respond['spl'][0]['keterangan_perintah']);
@@ -666,7 +778,21 @@
             success: function(respond){
                 $("#edit_id_spl").val(id);
 
-                $("#edit_tanggal").val(respond['spl'][0]['tanggal']);
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['spl'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['spl'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['spl'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['spl'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#edit_tanggal").val($tanggalnya);
                 $("#edit_line").val(respond['spl'][0]['nama_line']);
                 $("#edit_waktu").val(respond['spl'][0]['waktu_lembur']);
                 $("#edit_keterangan").val(respond['spl'][0]['keterangan_perintah']);

@@ -49,7 +49,43 @@
                     ?>
                         <tr>
                             <td style="text-align: center;vertical-align: middle;"><?= $no;?></td>
-                            <td style="text-align: center;vertical-align: middle;"><?= $spl->tanggal;?></td>
+                            <td style="text-align: center;vertical-align: middle;">
+                                <?php 
+                                    $waktu = $spl->tanggal;
+
+                                    $hari_array = array(
+                                        'Minggu',
+                                        'Senin',
+                                        'Selasa',
+                                        'Rabu',
+                                        'Kamis',
+                                        'Jumat',
+                                        'Sabtu'
+                                    );
+                                    $hr = date('w', strtotime($waktu));
+                                    $hari = $hari_array[$hr];
+                                    $tanggal = date('j', strtotime($waktu));
+                                    $bulan_array = array(
+                                        1 => 'Januari',
+                                        2 => 'Februari',
+                                        3 => 'Maret',
+                                        4 => 'April',
+                                        5 => 'Mei',
+                                        6 => 'Juni',
+                                        7 => 'Juli',
+                                        8 => 'Agustus',
+                                        9 => 'September',
+                                        10 => 'Oktober',
+                                        11 => 'November',
+                                        12 => 'Desember',
+                                    );
+                                    $bl = date('n', strtotime($waktu));
+                                    $bulan = $bulan_array[$bl];
+                                    $tahun = date('Y', strtotime($waktu));
+                                    
+                                    echo "$hari, $tanggal $bulan $tahun";
+                                ?>
+                            </td>
                             <td style="text-align: center;vertical-align: middle;"><?= $spl->nama_line;?> </td>
                             <td style="text-align: center;vertical-align: middle;">
                                 <?php if($spl->status_spl == 0){

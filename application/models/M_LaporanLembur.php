@@ -8,10 +8,10 @@ class M_LaporanLembur extends CI_Model {
         date_default_timezone_set('Asia/Jakarta');
     }
     
-    function select_all_aktif(){
+    function select_all_aktif($tanggal){
         return $this->db->query("SELECT * FROM surat_perintah_lembur,line WHERE 
         surat_perintah_lembur.status_delete=0 AND surat_perintah_lembur.id_line = line.id_line AND 
-        (surat_perintah_lembur.status_spl BETWEEN 3 AND 5)");
+        (surat_perintah_lembur.status_spl BETWEEN 3 AND 5) AND surat_perintah_lembur.tanggal<='$tanggal'");
     }
 
     function select_ll_pic($line,$tanggal){
@@ -40,16 +40,16 @@ class M_LaporanLembur extends CI_Model {
         $this->db->update($table,$data,$where);
     }
 
-    function select_ll_pic_status($line,$status){
+    function select_ll_pic_status($line,$status,$tanggal){
         return $this->db->query("SELECT * FROM surat_perintah_lembur,line WHERE 
         surat_perintah_lembur.status_delete=0 AND surat_perintah_lembur.id_line = line.id_line AND line.nama_line='$line' AND
-        surat_perintah_lembur.status_spl = '$status' ");
+        surat_perintah_lembur.status_spl = '$status' AND surat_perintah_lembur.tanggal<='$tanggal' ");
     }
     
-    function select_all_aktif_status($status){
+    function select_all_aktif_status($status,$tanggal){
         return $this->db->query("SELECT * FROM surat_perintah_lembur,line WHERE 
         surat_perintah_lembur.status_delete=0 AND surat_perintah_lembur.id_line = line.id_line AND
-        surat_perintah_lembur.status_spl = '$status' ");
+        surat_perintah_lembur.status_spl = '$status' AND surat_perintah_lembur.tanggal<='$tanggal' ");
     }
    
 

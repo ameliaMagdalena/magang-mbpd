@@ -36,16 +36,11 @@
                     <!--
                     <input class="form-control col-md-5" type="date" id="tanggal_mulai" name="tanggal_mulai"
                     onchange="tanggal_mulai_change()" required> 
--->
-                    
+                    -->
                     <div class="col-sm-9">
-                        <input class="form-control col-md-5" type="date" id="tanggal_mulai" name="tanggal_mulai" placeholder="dd-mm-yyyy"
+                        <input class="form-control col-md-5" type="date" id="tanggal_mulai" name="tanggal_mulai"
                         min="<?php echo $min_date;?>" step="7" onchange="tanggal_mulai_change()" required> 
                     </div>
-                    <!--
-                    <input class="form-control col-md-5" type="date" id="tanggal_mulai" name="tanggal_mulai"
-                    onchange="tanggal_mulai_change()" required> 
-                    -->
                 </div>
             </div>
             <div class="form-group mt-lg">
@@ -64,9 +59,7 @@
             </div>
         </footer>
     </section>
-</form>
-
-                    
+</form>              
 <!--*****************************-->
 <?php include('_endtitle.php'); ?>
 <?php include('_js.php'); ?>
