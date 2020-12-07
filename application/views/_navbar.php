@@ -565,14 +565,14 @@
 										</li>
 									</ul>
 								</li>
-								<!-- surat perintah lembur
+								<!-- surat perintah lembur  -->
 								<li class="nav-parent">
 									<a title="Surat Perintah Lembur">
 										<i class="fa  fa-file-text" aria-hidden="true"></i>
 										<?php if($jm_spl[0]['jumlah_spl'] == 0){?>
 											<span>Surat Perintah Lembur</span>
 										<?php } else{?>
-											<span>Surat Perintah Lembur<span class="badge badge-light"><?= $jm_spl[0]['jumlah_spl']?></span></span>
+											<span>Surat Perintah Lembur <span class="badge badge-light"><?= $jm_spl[0]['jumlah_spl']?></span></span>
 										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
@@ -625,7 +625,6 @@
 										</li>
 									</ul>
 								</li>
-								 -->
 								<!-- laporan lembur -->
 								<li class="nav-parent">
 									<a>
@@ -671,12 +670,20 @@
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-th-list" aria-hidden="true"></i>
-										<span>Laporan Hasil Produksi</span>
+										<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
+											<span>Laporan Hasil Produksi</span>
+										<?php } else{?>
+											<span>Laporan Hasil Produksi <span class="badge badge-light"><?= $jm_hasprod[0]['jumlah_hasprod']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
 											<a href="<?= base_url()?>hasilProduksi/tambah_hasil_produksi">
-												<span>+ Laporan Hasil Produksi </span>
+												<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
+													<span>+ Laporan Hasil Produksi</span>
+												<?php } else{?>
+													<span>+ Laporan Hasil Produksi <span class="badge badge-light"><?= $jm_hasprod[0]['jumlah_hasprod']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
@@ -700,8 +707,11 @@
 								<li class="nav-parent">
 									<a title="Permohonan Akses">
 										<i class="fa   fa-unlock-alt" aria-hidden="true"></i>
-										<span>Permohonan Akses</span>
-										<span class="label" style="background-color:#BE2525;border-radius:50px;">1</span>
+										<?php if($jm_peraks[0]['jumlah_peraks'] == 0){?>
+											<span>Permohonan Akses</span>
+										<?php } else{?>
+											<span>Permohonan Akses <span class="badge badge-light"><?= $jm_peraks[0]['jumlah_peraks']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
@@ -711,8 +721,11 @@
 										</li>
 										<li>
 											<a href="<?= base_url()?>permohonanAkses/belum_disetujui">
-												Belum Disetujui
-												<span class="pull-right label" style="background-color:#BE2525;border-radius:50px;">1</span>
+												<?php if($jm_peraks[0]['jumlah_peraks'] == 0){?>
+													<span>Belum Disetujui</span>
+												<?php } else{?>
+													<span>Belum Disetujui <span class="badge badge-light"><?= $jm_peraks[0]['jumlah_peraks']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
@@ -736,7 +749,11 @@
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-th-list" aria-hidden="true"></i>
-										<span>Laporan Perencanaan Cutting</span>
+										<?php if($jm_percut[0]['jumlah_percut'] == 0){?>
+											<span>Laporan Perencanaan Cutting</span>
+										<?php } else{?>
+											<span>Laporan Perencanaan Cutting <span class="badge badge-light"><?= $jm_percut[0]['jumlah_percut']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
@@ -750,17 +767,25 @@
 											</a>
 										</li>
 										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>Belum Ada Laporan </span>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/belum_ada">
+												<?php if($jm_percut_0[0]['jumlah_percut'] == 0){?>
+													<span>Belum Ada Laporan</span>
+												<?php } else{?>
+													<span>Belum Ada Laporan <span class="badge badge-light"><?= $jm_percut_0[0]['jumlah_percut']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>Sudah Ada Laporan</span>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/sudah_ada">
+												<?php if($jm_percut_1[0]['jumlah_percut'] == 0){?>
+													<span>Sudah Ada Laporan</span>
+												<?php } else{?>
+													<span>Sudah Ada Laporan <span class="badge badge-light"><?= $jm_percut_1[0]['jumlah_percut']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+											<a href="<?= base_url()?>laporanPerencanaanCutting/selesai">
 												<span>Selesai </span>
 											</a>
 										</li>
@@ -799,7 +824,11 @@
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-file-text-o" aria-hidden="true"></i>
-										<span>BPBJ</span>
+										<?php if($jm_bpbj[0]['jumlah_bpbj'] == 0){?>
+											<span>BPBJ</span>
+										<?php } else{?>
+											<span>BPBJ <span class="badge badge-light"><?= $jm_bpbj[0]['jumlah_bpbj']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
@@ -814,12 +843,20 @@
 										</li>
 										<li>
 											<a href="<?= base_url()?>bpbj/bpbj_belum_diproses">
-												Belum Diproses
+												<?php if($jm_bpbj_0[0]['jumlah_bpbj'] == 0){?>
+													<span>Belum Diproses</span>
+												<?php } else{?>
+													<span>Belum Diproses <span class="badge badge-light"><?= $jm_bpbj_0[0]['jumlah_bpbj']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
 											<a href="<?= base_url()?>bpbj/bpbj_sedang_diproses">
-												Sedang Diproses
+												<?php if($jm_bpbj_1[0]['jumlah_bpbj'] == 0){?>
+													<span>Sedang Diproses</span>
+												<?php } else{?>
+													<span>Sedang Diproses <span class="badge badge-light"><?= $jm_bpbj_1[0]['jumlah_bpbj']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
@@ -833,7 +870,11 @@
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-file-o" aria-hidden="true"></i>
-										<span>BPBD</span>
+										<?php if($jm_bpbd[0]['jumlah_bpbd'] == 0){?>
+											<span>BPBD</span>
+										<?php } else{?>
+											<span>BPBD <span class="badge badge-light"><?= $jm_bpbd[0]['jumlah_bpbd']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
@@ -848,7 +889,11 @@
 										</li>
 										<li>
 											<a href="<?= base_url()?>bpbd/belum_konfirmasi_bpbd">
-												Belum Konfirmasi
+												<?php if($jm_bpbd[0]['jumlah_bpbd'] == 0){?>
+													<span>Belum Konfirmasi</span>
+												<?php } else{?>
+													<span>Belum Konfirmasi <span class="badge badge-light"><?= $jm_bpbd[0]['jumlah_bpbd']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
@@ -862,7 +907,11 @@
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-envelope" aria-hidden="true"></i>
-										<span>Surat Jalan</span>
+										<?php if($jm_sj[0]['jumlah_sj'] == 0){?>
+											<span>Surat Jalan</span>
+										<?php } else{?>
+											<span>Surat Jalan <span class="badge badge-light"><?= $jm_sj[0]['jumlah_sj']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
@@ -877,12 +926,20 @@
 										</li>
 										<li>
 											<a href="<?= base_url()?>suratJalan/belum_dikonfirmasi_surat_jalan">
-												Belum Dikonfirmasi
+											<?php if($jm_sj_0[0]['jumlah_sj'] == 0){?>
+												<span>Belum Dikonfirmasi</span>
+											<?php } else{?>
+												<span>Belum Dikonfirmasi <span class="badge badge-light"><?= $jm_sj_0[0]['jumlah_sj']?></span></span>
+											<?php } ?>
 											</a>
 										</li>
 										<li>
 											<a href="<?= base_url()?>suratJalan/terkonfirmasi_surat_jalan">
-												Terkonfirmasi
+												<?php if($jm_sj_1[0]['jumlah_sj'] == 0){?>
+													<span>Terkonfirmasi</span>
+												<?php } else{?>
+													<span>Terkonfirmasi <span class="badge badge-light"><?= $jm_sj_1[0]['jumlah_sj']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
@@ -896,7 +953,11 @@
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-file-text-o" aria-hidden="true"></i>
-										<span>Invoice</span>
+										<?php if($jm_invoice[0]['jumlah_invoice'] == 0){?>
+											<span>Invoice</span>
+										<?php } else{?>
+											<span>Invoice <span class="badge badge-light"><?= $jm_invoice[0]['jumlah_invoice']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
@@ -911,7 +972,11 @@
 										</li>
 										<li>
 											<a href="<?= base_url()?>invoice/belum_diproses_invoice">
-												Belum Diproses
+											<?php if($jm_invoice[0]['jumlah_invoice'] == 0){?>
+												<span>Belum Diproses</span>
+											<?php } else{?>
+												<span>Belum Diproses <span class="badge badge-light"><?= $jm_invoice[0]['jumlah_invoice']?></span></span>
+											<?php } ?>
 											</a>
 										</li>
 										<li>
@@ -936,79 +1001,6 @@
 
 					<!-- Manager -->
 						<?php if(($_SESSION['nama_jabatan'] == "Manager") && ($_SESSION['nama_departemen'] == "Management")){?>
-							<li class="nav-parent">
-								<a title="Permohonan Akses">
-									<i class="fa   fa-unlock-alt" aria-hidden="true"></i>
-									<span>Permohonan Akses</span>
-									<span class="label" style="background-color:#BE2525;border-radius:50px;">1</span>
-								</a>
-								<ul class="nav nav-children">
-									<li>
-										<a href="<?= base_url()?>permohonanAkses/semua">
-											Semua
-										</a>
-									</li>
-									<li>
-										<a href="<?= base_url()?>permohonanAkses/belum_disetujui">
-											Belum Disetujui
-											<span class="pull-right label" style="background-color:#BE2525;border-radius:50px;">1</span>
-										</a>
-									</li>
-									<li>
-										<a href="<?= base_url()?>permohonanAkses/disetujui">
-											Disetujui
-										</a>
-									</li>
-									<li>
-										<a href="<?= base_url()?>permohonanAkses/tidak_disetujui">
-											Tidak Disetujui
-										</a>
-									</li>
-									<li>
-										<a href="<?= base_url()?>permohonanAkses/selesai">
-											Selesai
-										</a>
-									</li>
-								</ul>
-							</li>
-							<li class="nav-parent">
-								<a title="Surat Perintah Lembur">
-									<i class="fa  fa-file-text" aria-hidden="true"></i>
-									<span>Surat Perintah Lembur</span>
-								</a>
-								<ul class="nav nav-children">
-									<li>
-										<a href="<?= base_url()?>suratPerintahLembur/semua">
-											Semua
-										</a>
-									</li>
-									<li>
-										<a href="<?= base_url()?>suratPerintahLembur/belum_diproses">
-											Belum Diproses
-										</a>
-									</li>
-									<li>
-										<a href="<?= base_url()?>suratPerintahLembur/belum_disetujui">
-											Belum Disetujui
-										</a>
-									</li>
-									<li>
-										<a href="<?= base_url()?>suratPerintahLembur/belum_dikonfirmasi">
-											Belum Dikonfirmasi
-										</a>
-									</li>
-									<li>
-										<a href="<?= base_url()?>suratPerintahLembur/terkonfirmasi">
-											Terkonfirmasi
-										</a>
-									</li>
-									<li>
-										<a href="<?= base_url()?>suratPerintahLembur/batal">
-											Batal
-										</a>
-									</li>
-								</ul>
-							</li>
 							<!-- produksi -->
 								<!-- prencanaan produksi -->
 								<li class="nav-parent">
@@ -1111,7 +1103,7 @@
 										<?php if($jm_spl[0]['jumlah_spl'] == 0){?>
 											<span>Surat Perintah Lembur</span>
 										<?php } else{?>
-											<span>Surat Perintah Lembur<span class="badge badge-light"><?= $jm_spl[0]['jumlah_spl']?></span></span>
+											<span>Surat Perintah Lembur <span class="badge badge-light"><?= $jm_spl[0]['jumlah_spl']?></span></span>
 										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
@@ -1209,12 +1201,20 @@
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-th-list" aria-hidden="true"></i>
-										<span>Laporan Hasil Produksi</span>
+										<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
+											<span>Laporan Hasil Produksi</span>
+										<?php } else{?>
+											<span>Laporan Hasil Produksi <span class="badge badge-light"><?= $jm_hasprod[0]['jumlah_hasprod']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
 											<a href="<?= base_url()?>hasilProduksi/tambah_hasil_produksi">
-												<span>+ Laporan Hasil Produksi </span>
+												<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
+													<span>+ Laporan Hasil Produksi</span>
+												<?php } else{?>
+													<span>+ Laporan Hasil Produksi <span class="badge badge-light"><?= $jm_hasprod[0]['jumlah_hasprod']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
@@ -1238,8 +1238,11 @@
 								<li class="nav-parent">
 									<a title="Permohonan Akses">
 										<i class="fa   fa-unlock-alt" aria-hidden="true"></i>
-										<span>Permohonan Akses</span>
-										<span class="label" style="background-color:#BE2525;border-radius:50px;">1</span>
+										<?php if($jm_peraks[0]['jumlah_peraks'] == 0){?>
+											<span>Permohonan Akses</span>
+										<?php } else{?>
+											<span>Permohonan Akses <span class="badge badge-light"><?= $jm_peraks[0]['jumlah_peraks']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
@@ -1249,8 +1252,11 @@
 										</li>
 										<li>
 											<a href="<?= base_url()?>permohonanAkses/belum_disetujui">
-												Belum Disetujui
-												<span class="pull-right label" style="background-color:#BE2525;border-radius:50px;">1</span>
+												<?php if($jm_peraks[0]['jumlah_peraks'] == 0){?>
+													<span>Belum Disetujui</span>
+												<?php } else{?>
+													<span>Belum Disetujui <span class="badge badge-light"><?= $jm_peraks[0]['jumlah_peraks']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
@@ -1274,7 +1280,11 @@
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-th-list" aria-hidden="true"></i>
-										<span>Laporan Perencanaan Cutting</span>
+										<?php if($jm_percut[0]['jumlah_percut'] == 0){?>
+											<span>Laporan Perencanaan Cutting</span>
+										<?php } else{?>
+											<span>Laporan Perencanaan Cutting <span class="badge badge-light"><?= $jm_percut[0]['jumlah_percut']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
@@ -1288,17 +1298,25 @@
 											</a>
 										</li>
 										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>Belum Ada Laporan </span>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/belum_ada">
+												<?php if($jm_percut_0[0]['jumlah_percut'] == 0){?>
+													<span>Belum Ada Laporan</span>
+												<?php } else{?>
+													<span>Belum Ada Laporan <span class="badge badge-light"><?= $jm_percut_0[0]['jumlah_percut']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>Sudah Ada Laporan</span>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/sudah_ada">
+												<?php if($jm_percut_1[0]['jumlah_percut'] == 0){?>
+													<span>Sudah Ada Laporan</span>
+												<?php } else{?>
+													<span>Sudah Ada Laporan <span class="badge badge-light"><?= $jm_percut_1[0]['jumlah_percut']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+											<a href="<?= base_url()?>laporanPerencanaanCutting/selesai">
 												<span>Selesai </span>
 											</a>
 										</li>
@@ -1337,7 +1355,11 @@
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-file-text-o" aria-hidden="true"></i>
-										<span>BPBJ</span>
+										<?php if($jm_bpbj[0]['jumlah_bpbj'] == 0){?>
+											<span>BPBJ</span>
+										<?php } else{?>
+											<span>BPBJ <span class="badge badge-light"><?= $jm_bpbj[0]['jumlah_bpbj']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
@@ -1352,12 +1374,20 @@
 										</li>
 										<li>
 											<a href="<?= base_url()?>bpbj/bpbj_belum_diproses">
-												Belum Diproses
+												<?php if($jm_bpbj_0[0]['jumlah_bpbj'] == 0){?>
+													<span>Belum Diproses</span>
+												<?php } else{?>
+													<span>Belum Diproses <span class="badge badge-light"><?= $jm_bpbj_0[0]['jumlah_bpbj']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
 											<a href="<?= base_url()?>bpbj/bpbj_sedang_diproses">
-												Sedang Diproses
+												<?php if($jm_bpbj_1[0]['jumlah_bpbj'] == 0){?>
+													<span>Sedang Diproses</span>
+												<?php } else{?>
+													<span>Sedang Diproses <span class="badge badge-light"><?= $jm_bpbj_1[0]['jumlah_bpbj']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
@@ -1371,7 +1401,11 @@
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-file-o" aria-hidden="true"></i>
-										<span>BPBD</span>
+										<?php if($jm_bpbd[0]['jumlah_bpbd'] == 0){?>
+											<span>BPBD</span>
+										<?php } else{?>
+											<span>BPBD <span class="badge badge-light"><?= $jm_bpbd[0]['jumlah_bpbd']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
@@ -1386,7 +1420,11 @@
 										</li>
 										<li>
 											<a href="<?= base_url()?>bpbd/belum_konfirmasi_bpbd">
-												Belum Konfirmasi
+												<?php if($jm_bpbd[0]['jumlah_bpbd'] == 0){?>
+													<span>Belum Konfirmasi</span>
+												<?php } else{?>
+													<span>Belum Konfirmasi <span class="badge badge-light"><?= $jm_bpbd[0]['jumlah_bpbd']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
@@ -1400,7 +1438,11 @@
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-envelope" aria-hidden="true"></i>
-										<span>Surat Jalan</span>
+										<?php if($jm_sj[0]['jumlah_sj'] == 0){?>
+											<span>Surat Jalan</span>
+										<?php } else{?>
+											<span>Surat Jalan <span class="badge badge-light"><?= $jm_sj[0]['jumlah_sj']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
@@ -1415,12 +1457,20 @@
 										</li>
 										<li>
 											<a href="<?= base_url()?>suratJalan/belum_dikonfirmasi_surat_jalan">
-												Belum Dikonfirmasi
+											<?php if($jm_sj_0[0]['jumlah_sj'] == 0){?>
+												<span>Belum Dikonfirmasi</span>
+											<?php } else{?>
+												<span>Belum Dikonfirmasi <span class="badge badge-light"><?= $jm_sj_0[0]['jumlah_sj']?></span></span>
+											<?php } ?>
 											</a>
 										</li>
 										<li>
 											<a href="<?= base_url()?>suratJalan/terkonfirmasi_surat_jalan">
-												Terkonfirmasi
+												<?php if($jm_sj_1[0]['jumlah_sj'] == 0){?>
+													<span>Terkonfirmasi</span>
+												<?php } else{?>
+													<span>Terkonfirmasi <span class="badge badge-light"><?= $jm_sj_1[0]['jumlah_sj']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
@@ -1434,7 +1484,11 @@
 								<li class="nav-parent">
 									<a>
 										<i class="fa fa-file-text-o" aria-hidden="true"></i>
-										<span>Invoice</span>
+										<?php if($jm_invoice[0]['jumlah_invoice'] == 0){?>
+											<span>Invoice</span>
+										<?php } else{?>
+											<span>Invoice <span class="badge badge-light"><?= $jm_invoice[0]['jumlah_invoice']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
@@ -1449,7 +1503,11 @@
 										</li>
 										<li>
 											<a href="<?= base_url()?>invoice/belum_diproses_invoice">
-												Belum Diproses
+											<?php if($jm_invoice[0]['jumlah_invoice'] == 0){?>
+												<span>Belum Diproses</span>
+											<?php } else{?>
+												<span>Belum Diproses <span class="badge badge-light"><?= $jm_invoice[0]['jumlah_invoice']?></span></span>
+											<?php } ?>
 											</a>
 										</li>
 										<li>
@@ -1818,7 +1876,11 @@
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-plus-square-o" aria-hidden="true"></i>
-									<span>Pengambilan Material</span>
+									<?php if($jm_pengmat[0]['jumlah_pengmat'] == 0){?>
+										<span>Pengambilan Material</span>
+									<?php } else{?>
+										<span>Pengambilan Material <span class="badge badge-light"><?= $jm_pengmat[0]['jumlah_pengmat']?></span></span>
+									<?php } ?>
 								</a>
 								<ul class="nav nav-children">
 									<li>
@@ -1833,7 +1895,11 @@
 									</li>
 									<li>
 										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_diambil_pengambilan_material">
-											Belum Diambil
+											<?php if($jm_pengmat[0]['jumlah_pengmat'] == 0){?>
+												<span>Belum Diambil</span>
+											<?php } else{?>
+												<span>Belum Diambil <span class="badge badge-light"><?= $jm_pengmat[0]['jumlah_pengmat']?></span></span>
+											<?php } ?>
 										</a>
 									</li>
 									<li>
@@ -1852,7 +1918,11 @@
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-plus-square-o" aria-hidden="true"></i>
-									<span>Permintaan Material Tambahan</span>
+									<?php if($jm_pertam[0]['jumlah_pertam'] == 0){?>
+										<span>Permintaan Material Tambahan</span>
+									<?php } else{?>
+										<span>Permintaan Material Tambahan <span class="badge badge-light"><?= $jm_pertam[0]['jumlah_pertam']?></span></span>
+									<?php } ?>
 								</a>
 								<ul class="nav nav-children">
 									<li>
@@ -1867,22 +1937,39 @@
 									</li>
 									<li>
 										<a href="<?= base_url()?>permintaanTambahan/belum_diproses">
-											Belum Diproses
+										<?php if($jm_pertam_0[0]['jumlah_pertam'] == 0){?>
+											<span>Belum Diproses</span>
+										<?php } else{?>
+											<span>Belum Diproses <span class="badge badge-light"><?= $jm_pertam_0[0]['jumlah_pertam']?></span></span>
+										<?php } ?>
 										</a>
 									</li>
 									<li>
 										<a href="<?= base_url()?>permintaanTambahan/diterima">
-											Diterima
+											<?php if($jm_pertam_1[0]['jumlah_pertam'] == 0){?>
+												<span>Diterima</span>
+											<?php } else{?>
+												<span>Diterima <span class="badge badge-light"><?= $jm_pertam_1[0]['jumlah_pertam']?></span></span>
+											<?php } ?>
 										</a>
 									</li>
 									<li>
 										<a href="<?= base_url()?>permintaanTambahan/ditolak">
-											Ditolak
+											<?php if($jm_pertam_2[0]['jumlah_pertam'] == 0){?>
+												<span>Ditolak</span>
+											<?php } else{?>
+												<span>Ditolak <span class="badge badge-light"><?= $jm_pertam_2[0]['jumlah_pertam']?></span></span>
+											<?php } ?>
 										</a>
 									</li>
 									<li>
 										<a href="<?= base_url()?>permintaanTambahan/selesai">
 											Selesai
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>permintaanTambahan/batal">
+											Batal
 										</a>
 									</li>
 								</ul>
@@ -1894,7 +1981,7 @@
 									<?php if($jm_spl[0]['jumlah_spl'] == 0){?>
 										<span>Surat Perintah Lembur</span>
 									<?php } else{?>
-										<span>Surat Perintah Lembur<span class="badge badge-light"><?= $jm_spl[0]['jumlah_spl']?></span></span>
+										<span>Surat Perintah Lembur <span class="badge badge-light"><?= $jm_spl[0]['jumlah_spl']?></span></span>
 									<?php } ?>
 								</a>
 								<ul class="nav nav-children">
@@ -2058,7 +2145,11 @@
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-file-text-o" aria-hidden="true"></i>
-									<span>BPBJ</span>
+									<?php if($jm_bpbj[0]['jumlah_bpbj'] == 0){?>
+										<span>BPBJ</span>
+									<?php } else{?>
+										<span>BPBJ <span class="badge badge-light"><?= $jm_bpbj[0]['jumlah_bpbj']?></span></span>
+									<?php } ?>
 								</a>
 								<ul class="nav nav-children">
 									<li>
@@ -2073,12 +2164,20 @@
 									</li>
 									<li>
 										<a href="<?= base_url()?>bpbj/bpbj_belum_diproses">
-											Belum Diproses
+											<?php if($jm_bpbj_0[0]['jumlah_bpbj'] == 0){?>
+												<span>Belum Diproses</span>
+											<?php } else{?>
+												<span>Belum Diproses <span class="badge badge-light"><?= $jm_bpbj_0[0]['jumlah_bpbj']?></span></span>
+											<?php } ?>
 										</a>
 									</li>
 									<li>
 										<a href="<?= base_url()?>bpbj/bpbj_sedang_diproses">
-											Sedang Diproses
+											<?php if($jm_bpbj_1[0]['jumlah_bpbj'] == 0){?>
+												<span>Sedang Diproses</span>
+											<?php } else{?>
+												<span>Sedang Diproses <span class="badge badge-light"><?= $jm_bpbj_1[0]['jumlah_bpbj']?></span></span>
+											<?php } ?>
 										</a>
 									</li>
 									<li>
@@ -2092,7 +2191,11 @@
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-file-o" aria-hidden="true"></i>
-									<span>BPBD</span>
+									<?php if($jm_bpbd[0]['jumlah_bpbd'] == 0){?>
+										<span>BPBD</span>
+									<?php } else{?>
+										<span>BPBD <span class="badge badge-light"><?= $jm_bpbd[0]['jumlah_bpbd']?></span></span>
+									<?php } ?>
 								</a>
 								<ul class="nav nav-children">
 									<li>
@@ -2107,7 +2210,11 @@
 									</li>
 									<li>
 										<a href="<?= base_url()?>bpbd/belum_konfirmasi_bpbd">
-											Belum Konfirmasi
+											<?php if($jm_bpbd[0]['jumlah_bpbd'] == 0){?>
+												<span>Belum Konfirmasi</span>
+											<?php } else{?>
+												<span>Belum Konfirmasi <span class="badge badge-light"><?= $jm_bpbd[0]['jumlah_bpbd']?></span></span>
+											<?php } ?>
 										</a>
 									</li>
 									<li>
@@ -2121,12 +2228,20 @@
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-th-list" aria-hidden="true"></i>
-									<span>Laporan Hasil Produksi</span>
+									<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
+										<span>Laporan Hasil Produksi</span>
+									<?php } else{?>
+										<span>Laporan Hasil Produksi <span class="badge badge-light"><?= $jm_hasprod[0]['jumlah_hasprod']?></span></span>
+									<?php } ?>
 								</a>
 								<ul class="nav nav-children">
 									<li>
 										<a href="<?= base_url()?>hasilProduksi/tambah_hasil_produksi">
-											<span>+ Laporan Hasil Produksi </span>
+											<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
+												<span>+ Laporan Hasil Produksi</span>
+											<?php } else{?>
+												<span>+ Laporan Hasil Produksi <span class="badge badge-light"><?= $jm_hasprod[0]['jumlah_hasprod']?></span></span>
+											<?php } ?>
 										</a>
 									</li>
 									<li>
@@ -2150,8 +2265,11 @@
 							<li class="nav-parent">
 								<a title="Permohonan Akses">
 									<i class="fa   fa-unlock-alt" aria-hidden="true"></i>
-									<span>Permohonan Akses</span>
-									<span class="label" style="background-color:#BE2525;border-radius:50px;">1</span>
+									<?php if($jm_peraks[0]['jumlah_peraks'] == 0){?>
+										<span>Permohonan Akses</span>
+									<?php } else{?>
+										<span>Permohonan Akses <span class="badge badge-light"><?= $jm_peraks[0]['jumlah_peraks']?></span></span>
+									<?php } ?>
 								</a>
 								<ul class="nav nav-children">
 									<li>
@@ -2161,8 +2279,11 @@
 									</li>
 									<li>
 										<a href="<?= base_url()?>permohonanAkses/belum_disetujui">
-											Belum Disetujui
-											<span class="pull-right label" style="background-color:#BE2525;border-radius:50px;">1</span>
+											<?php if($jm_peraks[0]['jumlah_peraks'] == 0){?>
+												<span>Belum Disetujui</span>
+											<?php } else{?>
+												<span>Belum Disetujui <span class="badge badge-light"><?= $jm_peraks[0]['jumlah_peraks']?></span></span>
+											<?php } ?>
 										</a>
 									</li>
 									<li>
@@ -2204,12 +2325,20 @@
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-th-list" aria-hidden="true"></i>
-									<span>Laporan Hasil Produksi</span>
+									<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
+										<span>Laporan Hasil Produksi</span>
+									<?php } else{?>
+										<span>Laporan Hasil Produksi <span class="badge badge-light"><?= $jm_hasprod[0]['jumlah_hasprod']?></span></span>
+									<?php } ?>
 								</a>
 								<ul class="nav nav-children">
 									<li>
 										<a href="<?= base_url()?>hasilProduksi/tambah_hasil_produksi">
-											<span>+ Laporan Hasil Produksi </span>
+											<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
+												<span>+ Laporan Hasil Produksi</span>
+											<?php } else{?>
+												<span>+ Laporan Hasil Produksi <span class="badge badge-light"><?= $jm_hasprod[0]['jumlah_hasprod']?></span></span>
+											<?php } ?>
 										</a>
 									</li>
 									<li>
@@ -2233,7 +2362,11 @@
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-th-list" aria-hidden="true"></i>
-									<span>Laporan Perencanaan Cutting</span>
+									<?php if($jm_percut[0]['jumlah_percut'] == 0){?>
+										<span>Laporan Perencanaan Cutting</span>
+									<?php } else{?>
+										<span>Laporan Perencanaan Cutting <span class="badge badge-light"><?= $jm_percut[0]['jumlah_percut']?></span></span>
+									<?php } ?>
 								</a>
 								<ul class="nav nav-children">
 									<li>
@@ -2247,17 +2380,25 @@
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-											<span>Belum Ada Laporan </span>
+										<a href="<?= base_url()?>laporanPerencanaanCutting/belum_ada">
+											<?php if($jm_percut_0[0]['jumlah_percut'] == 0){?>
+												<span>Belum Ada Laporan</span>
+											<?php } else{?>
+												<span>Belum Ada Laporan <span class="badge badge-light"><?= $jm_percut_0[0]['jumlah_percut']?></span></span>
+											<?php } ?>
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-											<span>Sudah Ada Laporan</span>
+										<a href="<?= base_url()?>laporanPerencanaanCutting/sudah_ada">
+											<?php if($jm_percut_1[0]['jumlah_percut'] == 0){?>
+												<span>Sudah Ada Laporan</span>
+											<?php } else{?>
+												<span>Sudah Ada Laporan <span class="badge badge-light"><?= $jm_percut_1[0]['jumlah_percut']?></span></span>
+											<?php } ?>
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+										<a href="<?= base_url()?>laporanPerencanaanCutting/selesai">
 											<span>Selesai </span>
 										</a>
 									</li>
@@ -2267,8 +2408,11 @@
 							<li class="nav-parent">
 								<a title="Permohonan Akses">
 									<i class="fa   fa-unlock-alt" aria-hidden="true"></i>
-									<span>Permohonan Akses</span>
-									<span class="label" style="background-color:#BE2525;border-radius:50px;">1</span>
+									<?php if($jm_peraks[0]['jumlah_peraks'] == 0){?>
+										<span>Permohonan Akses</span>
+									<?php } else{?>
+										<span>Permohonan Akses <span class="badge badge-light"><?= $jm_peraks[0]['jumlah_peraks']?></span></span>
+									<?php } ?>
 								</a>
 								<ul class="nav nav-children">
 									<li>
@@ -2278,8 +2422,11 @@
 									</li>
 									<li>
 										<a href="<?= base_url()?>permohonanAkses/belum_disetujui">
-											Belum Disetujui
-											<span class="pull-right label" style="background-color:#BE2525;border-radius:50px;">1</span>
+											<?php if($jm_peraks[0]['jumlah_peraks'] == 0){?>
+												<span>Belum Disetujui</span>
+											<?php } else{?>
+												<span>Belum Disetujui <span class="badge badge-light"><?= $jm_peraks[0]['jumlah_peraks']?></span></span>
+											<?php } ?>
 										</a>
 									</li>
 									<li>
@@ -2315,7 +2462,11 @@
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-envelope" aria-hidden="true"></i>
-									<span>Surat Jalan</span>
+									<?php if($jm_sj[0]['jumlah_sj'] == 0){?>
+										<span>Surat Jalan</span>
+									<?php } else{?>
+										<span>Surat Jalan <span class="badge badge-light"><?= $jm_sj[0]['jumlah_sj']?></span></span>
+									<?php } ?>
 								</a>
 								<ul class="nav nav-children">
 									<li>
@@ -2330,12 +2481,20 @@
 									</li>
 									<li>
 										<a href="<?= base_url()?>suratJalan/belum_dikonfirmasi_surat_jalan">
-											Belum Dikonfirmasi
+										<?php if($jm_sj_0[0]['jumlah_sj'] == 0){?>
+											<span>Belum Dikonfirmasi</span>
+										<?php } else{?>
+											<span>Belum Dikonfirmasi <span class="badge badge-light"><?= $jm_sj_0[0]['jumlah_sj']?></span></span>
+										<?php } ?>
 										</a>
 									</li>
 									<li>
 										<a href="<?= base_url()?>suratJalan/terkonfirmasi_surat_jalan">
-											Terkonfirmasi
+											<?php if($jm_sj_1[0]['jumlah_sj'] == 0){?>
+												<span>Terkonfirmasi</span>
+											<?php } else{?>
+												<span>Terkonfirmasi <span class="badge badge-light"><?= $jm_sj_1[0]['jumlah_sj']?></span></span>
+											<?php } ?>
 										</a>
 									</li>
 									<li>
@@ -2349,7 +2508,11 @@
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-file-text-o" aria-hidden="true"></i>
-									<span>Invoice</span>
+									<?php if($jm_invoice[0]['jumlah_invoice'] == 0){?>
+										<span>Invoice</span>
+									<?php } else{?>
+										<span>Invoice <span class="badge badge-light"><?= $jm_invoice[0]['jumlah_invoice']?></span></span>
+									<?php } ?>
 								</a>
 								<ul class="nav nav-children">
 									<li>
@@ -2364,7 +2527,11 @@
 									</li>
 									<li>
 										<a href="<?= base_url()?>invoice/belum_diproses_invoice">
-											Belum Diproses
+										<?php if($jm_invoice[0]['jumlah_invoice'] == 0){?>
+											<span>Belum Diproses</span>
+										<?php } else{?>
+											<span>Belum Diproses <span class="badge badge-light"><?= $jm_invoice[0]['jumlah_invoice']?></span></span>
+										<?php } ?>
 										</a>
 									</li>
 									<li>

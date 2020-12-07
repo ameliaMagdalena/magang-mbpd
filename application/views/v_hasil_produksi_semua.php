@@ -128,7 +128,41 @@
                                     <?= $no; ?>
                                 </td>
                                 <td style="text-align: center;vertical-align: middle;">
-                                    <?= $p->tanggal ?>
+                                    <?php 
+                                        $waktu = $p->tanggal;
+
+                                        $hari_array = array(
+                                            'Minggu',
+                                            'Senin',
+                                            'Selasa',
+                                            'Rabu',
+                                            'Kamis',
+                                            'Jumat',
+                                            'Sabtu'
+                                        );
+                                        $hr = date('w', strtotime($waktu));
+                                        $hari = $hari_array[$hr];
+                                        $tanggal = date('j', strtotime($waktu));
+                                        $bulan_array = array(
+                                            1 => 'Januari',
+                                            2 => 'Februari',
+                                            3 => 'Maret',
+                                            4 => 'April',
+                                            5 => 'Mei',
+                                            6 => 'Juni',
+                                            7 => 'Juli',
+                                            8 => 'Agustus',
+                                            9 => 'September',
+                                            10 => 'Oktober',
+                                            11 => 'November',
+                                            12 => 'Desember',
+                                        );
+                                        $bl = date('n', strtotime($waktu));
+                                        $bulan = $bulan_array[$bl];
+                                        $tahun = date('Y', strtotime($waktu));
+                                        
+                                        echo "$hari, $tanggal $bulan $tahun";
+                                    ?>
                                     <input type="hidden" id="id<?= $no ?>" value="<?= $p->id_produksi ?>">
                                     <input type="hidden" id="tgl<?= $no ?>" value="<?= $p->tanggal ?>">
                                 </td>
@@ -228,11 +262,11 @@
                                         $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
                                         $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
                                             <button type="button" class="badd_klik col-lg-3 btn btn-success fa fa-plus-square-o" 
-                                            value="<?= $no;?>" title="Buat Laporan Hasil Produksi"></button>
+                                            value="<?= $no;?>" title="Buat Laporan Hasil Produksi" style="margin-right:5px;margin-bottom:5px"></button>
                                         <?php } ?>
                                     <?php } ?>
                                     <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                        value="<?= $no;?>" title="Detail"></button>
+                                        value="<?= $no;?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
                                     <!-- if status 1 & 2 & untuk admin finish good & admin produksi -->
                                         <?php if(($p->status_laporan == 1 || $p->status_laporan == 2) && 
                                                 ($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Finish Good" 
@@ -251,14 +285,14 @@
                                                 <?php if($peraks->status_permohonan == 0){?>
                                                     <input type="hidden" id="id_peraks_tam<?= $no; ?>" value="<?= $peraks->id_permohonan_akses?>">
                                                     <button type="button" class="bbatalpermaks_klik col-lg-3 btn btn-danger fa fa-pencil-square-o" 
-                                                        value="<?= $no;?>" title="Batalkan Permintaan Akses"></button>
+                                                        value="<?= $no;?>" title="Batalkan Permintaan Akses" style="margin-right:5px;margin-bottom:5px"></button>
                                                 <?php } else if($peraks->status_permohonan == 1){?>
                                                     <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                                        value="<?= $no;?>" title="Edit"></button>
+                                                        value="<?= $no;?>" title="Edit" style="margin-right:5px;margin-bottom:5px"></button>
                                                 <?php } ?>
                                             <?php }}} else{ ?>
                                                 <button type="button" class="bpermaks_klik col-lg-3 btn btn-success fa fa-pencil-square-o" 
-                                                    value="<?= $no;?>" title="Buat Permintaan Akses"></button>
+                                                    value="<?= $no;?>" title="Buat Permintaan Akses" style="margin-right:5px;margin-bottom:5px"></button>
                                             <?php } ?>
                                         <?php } ?>
                                     <!-- tutup -->
@@ -267,18 +301,18 @@
                                             ($_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
                                             $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management")){ ?>
                                                 <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                                    value="<?= $no;?>" title="Edit"></button>
+                                                    value="<?= $no;?>" title="Edit" style="margin-right:5px;margin-bottom:5px"></button>
                                         <?php } ?>
                                     <!-- tutup -->
                                     <?php if($p->status_laporan == 2 && ($_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi" ||
                                             $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
                                             $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management")){?>
                                         <button type="button" class="bse7_klik col-lg-3 btn btn-success fa fa-check-square" 
-                                            value="<?= $no;?>" title="Disetujui"></button>
+                                            value="<?= $no;?>" title="Disetujui" style="margin-right:5px;margin-bottom:5px"></button>
                                     <?php } ?>
                                     <?php if($p->status_laporan == 3){?>
                                         <button type="button" class="bprint_klik col-lg-3 btn fa fa-print" style="background-color:#E56B1F;color:white;"
-                                            value="<?= $no;?>" title="Print"></button>
+                                            value="<?= $no;?>" title="Print" style="margin-right:5px;margin-bottom:5px"></button>
                                     <?php } ?>
                                 </td>
                             </tr>
@@ -610,7 +644,22 @@
 
             success: function(respond){
                 $status = "";
-                $("#tanggal_det").val(respond['p'][0]['tanggal']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['p'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['p'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['p'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['p'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_det").val($tanggalnya);
                 if(respond['p'][0]['status_laporan'] == 0){
                     $status = "Belum Ada";
                 } else if(respond['p'][0]['status_laporan'] == 1){
@@ -878,7 +927,21 @@
             data: {id:id},
 
             success: function(respond){
-                $("#tanggal_add").val(respond['pl'][0]['tanggal']);
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['pl'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['pl'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['pl'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['pl'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_add").val($tanggalnya);
                 $("#id_add").val(id);
 
                 for($i=0;$i<respond['jm_pl'];$i++){
@@ -1086,7 +1149,22 @@
             data: {id:id},
 
             success: function(respond){
-                $("#tanggal_edit").val(respond['pl'][0]['tanggal']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['pl'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['pl'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['pl'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['pl'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_edit").val($tanggalnya);
                 $("#id_edit").val(id);
 
                 for($i=0;$i<respond['jm_pl'];$i++){
@@ -1278,8 +1356,22 @@
         var id      = $("#id"+no).val();
         var tgl     = $("#tgl"+no).val();
 
+        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+        var tanggal = new Date(tgl).getDate();
+        var xhari = new Date(tgl).getDay();
+        var xbulan = new Date(tgl).getMonth();
+        var xtahun = new Date(tgl).getYear();
+        
+        var hari = hari[xhari];
+        var bulan = bulan[xbulan];
+        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+        $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
         $("#id_peraks").val(id);
-        $("#tanggal_peraks").html(tgl);
+        $("#tanggal_peraks").html($tanggalnya);
 
         $("#modalpermintaanakses").modal();
         
@@ -1293,8 +1385,22 @@
         var id      = $("#id_peraks_tam"+no).val();
         var tgl     = $("#tgl"+no).val();
 
+        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+        var tanggal = new Date(tgl).getDate();
+        var xhari = new Date(tgl).getDay();
+        var xbulan = new Date(tgl).getMonth();
+        var xtahun = new Date(tgl).getYear();
+        
+        var hari = hari[xhari];
+        var bulan = bulan[xbulan];
+        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+        $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
         $("#id_peraks_batal").val(id);
-        $("#tanggal_peraks_batal").html(tgl);
+        $("#tanggal_peraks_batal").html($tanggalnya);
 
         $("#modalpermintaanaksesbatal").modal();
         
@@ -1315,9 +1421,23 @@
             data: {id:id},
 
             success: function(respond){
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(tgl).getDate();
+                var xhari = new Date(tgl).getDay();
+                var xbulan = new Date(tgl).getMonth();
+                var xtahun = new Date(tgl).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
                 $("#id_produksinya").val(id);
-                $("#tanggal_produksinya").html(tgl);
-                $("#tanggalnya").val(tgl);
+                $("#tanggal_produksinya").html($tanggalnya);
+                $("#tanggalnya").val($tanggalnya);
 
                 //cek apakah ada permintaan_material yang minus dari yang seharusnya
                 $cek = 0;

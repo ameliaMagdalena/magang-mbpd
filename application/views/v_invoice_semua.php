@@ -46,7 +46,43 @@
                         foreach($invoice as $iv){?>
                         <tr>
                             <td  style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
-                            <td  style="text-align: center;vertical-align: middle;"><?= $iv->tanggal?></td>
+                            <td  style="text-align: center;vertical-align: middle;">
+                                <?php 
+                                    $waktu = $iv->tanggal;
+
+                                    $hari_array = array(
+                                        'Minggu',
+                                        'Senin',
+                                        'Selasa',
+                                        'Rabu',
+                                        'Kamis',
+                                        'Jumat',
+                                        'Sabtu'
+                                    );
+                                    $hr = date('w', strtotime($waktu));
+                                    $hari = $hari_array[$hr];
+                                    $tanggal = date('j', strtotime($waktu));
+                                    $bulan_array = array(
+                                        1 => 'Januari',
+                                        2 => 'Februari',
+                                        3 => 'Maret',
+                                        4 => 'April',
+                                        5 => 'Mei',
+                                        6 => 'Juni',
+                                        7 => 'Juli',
+                                        8 => 'Agustus',
+                                        9 => 'September',
+                                        10 => 'Oktober',
+                                        11 => 'November',
+                                        12 => 'Desember',
+                                    );
+                                    $bl = date('n', strtotime($waktu));
+                                    $bulan = $bulan_array[$bl];
+                                    $tahun = date('Y', strtotime($waktu));
+                                    
+                                    echo "$hari, $tanggal $bulan $tahun";
+                                ?>
+                            </td>
                             <td  style="text-align: center;vertical-align: middle;">
                                 <?= $iv->id_invoice?>
                                 <input type="hidden" id="id<?= $no ?>" value="<?= $iv->id_invoice?>">
@@ -69,23 +105,23 @@
                             </td>
                             <td class="col-lg-3"> 
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                    value="<?= $no;?>" title="Detail"></button> 
+                                    value="<?= $no;?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button> 
                                 <?php if($iv->status_invoice == 0){?>
                                     <form method="POST" action="<?= base_url()?>invoice/edit">
                                         <input type="hidden" name="id_invoice" value="<?= $iv->id_invoice?>">
                                         <input type="hidden" name="id_po" value="<?= $iv->id_purchase_order_customer?>">
                                         <button type="submit" class="col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                        title="Edit"></button>
+                                        title="Edit" style="margin-right:5px;margin-bottom:5px"></button>
                                     </form> 
                                     <button type="button" class="bdel_klik col-lg-3 btn btn-danger fa fa-trash-o" 
-                                        value="<?= $no;?>" title="Delete"></button>
+                                        value="<?= $no;?>" title="Delete" style="margin-right:5px;margin-bottom:5px"></button>
                                     <button type="button" class="bkonf_klik col-lg-3 btn btn-success fa fa-check-square" 
-                                        value="<?= $no;?>" title="Konfirmasi"></button>
+                                        value="<?= $no;?>" title="Konfirmasi" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php } ?>
                                     <form method="POST" action="<?= base_url()?>invoice/print_invoice">
                                         <input type="hidden" name="id_invoice" value="<?= $iv->id_invoice?>">
                                         <button type="button" class="bprint_klik col-lg-3 btn fa fa-print" style="background-color:#E56B1F;color:white;"
-                                        value="<?= $no;?>" title="Print"></button>
+                                        value="<?= $no;?>" title="Print" style="margin-right:5px;margin-bottom:5px"></button>
                                     </form> 
                             </td>
                         </tr>
@@ -286,7 +322,22 @@
                         $("#nama_cust_det").val(respond['po'][$q]['nama_customer']);
                    }
                }
-               $("#tanggal_det").val(respond['inv'][0]['tanggal']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['inv'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['inv'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['inv'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['inv'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+               $("#tanggal_det").val($tanggalnya);
                $("#ditujukan_det").val(respond['inv'][0]['ditujukan_kepada']);
 
                $rekening = respond['inv'][0]['nama_bank'] + " (" + respond['inv'][0]['atas_nama'] + 
@@ -350,6 +401,9 @@
                 else{
                     $namanya = respond['det_inv'][$i]['nama_produk'];
                 }
+                    
+                    var price  = "Rp "+  new Number(respond['det_inv'][$i]['price']).toLocaleString("id-ID") + ",00";
+                    var tprice = "Rp "+  new Number(respond['det_inv'][$i]['total_price']).toLocaleString("id-ID") + ",00";
 
                    $isi = $isi + 
                    '<tr>'+
@@ -364,13 +418,18 @@
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">Pcs</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['det_inv'][$i]['price']+
+                            price+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['det_inv'][$i]['total_price']+
+                            tprice+
                         '</td>'+
                     '</tr>';
                }
+
+               $subtotal = "Rp "+  new Number(respond['inv'][0]['sub_total']).toLocaleString("id-ID") + ",00";
+               $disc     = "Rp "+  new Number(respond['inv'][0]['discount']).toLocaleString("id-ID") + ",00";
+               $ppn      = "Rp "+  new Number(respond['inv'][0]['ppn']).toLocaleString("id-ID") + ",00";
+               $total    = "Rp "+  new Number(respond['inv'][0]['total']).toLocaleString("id-ID") + ",00";
 
                $table = 
                '<br><table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
@@ -402,7 +461,7 @@
                                 '<td colspan="3"  rowspan="4" style="text-align: center;vertical-align: middle; background-color:white;border-left: 1px solid white;border-bottom: 1px solid white;"></td>'+
                                 '<td colspan="2" style="text-align: center;vertical-align: middle;">Subtotal</td>'+
                                 '<td style="text-align: center;vertical-align: middle;">'+
-                                    respond['inv'][0]['sub_total']+
+                                    $subtotal+
                                 '</td>'+
                             '</tr>'+
                             '<tr>'+
@@ -411,7 +470,7 @@
                                     respond['inv'][0]['discount_rate']+ " %"+
                                 '</td>'+
                                 '<td style="text-align: center;vertical-align: middle;">'+
-                                    respond['inv'][0]['discount']+
+                                    $disc+
                                 '</td>'+
                             '</tr>'+
                             '<tr>'+
@@ -420,13 +479,13 @@
                                     respond['inv'][0]['ppn_rate']+ " %"+
                                 '</td>'+
                                 '<td style="text-align: center;vertical-align: middle;">'+
-                                    respond['inv'][0]['ppn']+
+                                    $ppn+
                                 '</td>'+
                             '</tr>'+
                             '<tr>'+
                                 '<td colspan="2" style="text-align: center;vertical-align: middle;">Total</td>'+
                                 '<td style="text-align: center;vertical-align: middle;">'+
-                                    respond['inv'][0]['total']+
+                                    $total+
                                 '</td>'+
                             '</tr>'+
                         '</tbody>'+

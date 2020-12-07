@@ -64,18 +64,52 @@
                                     <?= $sj->id_surat_jalan ?>
                                 </td>
                                 <td style="text-align: center;vertical-align: middle;">
-                                    <?= $sj->tanggal ?>
+                                    <?php 
+                                        $waktu = $sj->tanggal;
+
+                                        $hari_array = array(
+                                            'Minggu',
+                                            'Senin',
+                                            'Selasa',
+                                            'Rabu',
+                                            'Kamis',
+                                            'Jumat',
+                                            'Sabtu'
+                                        );
+                                        $hr = date('w', strtotime($waktu));
+                                        $hari = $hari_array[$hr];
+                                        $tanggal = date('j', strtotime($waktu));
+                                        $bulan_array = array(
+                                            1 => 'Januari',
+                                            2 => 'Februari',
+                                            3 => 'Maret',
+                                            4 => 'April',
+                                            5 => 'Mei',
+                                            6 => 'Juni',
+                                            7 => 'Juli',
+                                            8 => 'Agustus',
+                                            9 => 'September',
+                                            10 => 'Oktober',
+                                            11 => 'November',
+                                            12 => 'Desember',
+                                        );
+                                        $bl = date('n', strtotime($waktu));
+                                        $bulan = $bulan_array[$bl];
+                                        $tahun = date('Y', strtotime($waktu));
+                                        
+                                        echo "$hari, $tanggal $bulan $tahun";
+                                    ?>
                                 </td>
                                 <td style="text-align: center;vertical-align: middle;">
                                     <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                        value="<?= $nonya;?>" title="Detail"></button>
+                                        value="<?= $nonya;?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
                                     <div id="div_badd<?= $nonya; ?>">
                                         <button type="button" class="add_sj col-lg-3 btn btn-success fa fa-plus-square-o" 
-                                        value="<?= $nonya;?>" title="Add"></button>
+                                        value="<?= $nonya;?>" title="Add" style="margin-right:5px;margin-bottom:5px"></button>
                                     </div>
                                     <div id="div_bremove<?= $nonya; ?>" style="display:none">
                                         <button type="button" class="remove_sj col-lg-3 btn btn-danger fa fa-minus-square-o" 
-                                        value="<?= $nonya;?>" title="Remove"></button>
+                                        value="<?= $nonya;?>" title="Remove" style="margin-right:5px;margin-bottom:5px"></button>
                                     </div>
                                 </td>
                             </tr>
@@ -236,7 +270,8 @@
                                         </td>
                                         <td style="text-align: center;vertical-align: middle;">
                                             <input type="hidden" id="price<?=$no;?>" name="price<?=$no;?>" value="<?= $dpo->harga_satuan?>" class="form-control">
-                                            <p id="prices<?=$no;?>"><?= $dpo->harga_satuan?></p>
+                                            <?php $harga =  "Rp " . number_format($dpo->harga_satuan,2,',','.'); ?>
+                                            <p id="prices<?=$no;?>"><?= $harga ?></p>
                                         </td>
                                         <td style="text-align: center;vertical-align: middle;">
                                             <input type="hidden" id="tprice<?=$no;?>" name="tprice<?=$no;?>" value="0" class="form-control">
@@ -343,99 +378,6 @@
             </div>
         </div>
     </div>
-
-    <div id='modaldetailnya' class="modal-block modal-block-primary mfp-hide">
-		<section class="panel">
-            <header class="panel-heading">
-                <h2 class="panel-title">Detail Surat Jalan</h2>
-            </header>
-
-            <div class="panel-body">
-                <div class="form-group mt-lg">
-                    <label class="col-sm-5 control-label">Nomor Surat Jalan</label>
-                    <div class="col-sm-7">
-                        <input type="text" class="form-control"
-                        value="M2002.0198" readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-5 control-label">Tanggal</label>
-                    <div class="col-sm-7">
-                        <input type="text" class="form-control"
-                        value="Selasa, 07-07-2020" readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-5 control-label">Keterangan</label>
-                    <div class="col-sm-7">
-                        <textarea class="form-control" rows="3" id="textareaDefault" readonly>
-                        </textarea>
-                    </div>
-                </div>
-                <br>
-
-                <table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">
-                    <thead>
-                        <tr>
-                            <th style="text-align: center;vertical-align: middle;">
-                                No
-                            </th>
-                            <th style="text-align: center;vertical-align: middle;">
-                                Nama Produk
-                            </th>
-                            <th style="text-align: center;vertical-align: middle;">
-                                Kode Produk
-                            </th>
-                            <th style="text-align: center;vertical-align: middle;">
-                                Total Produk
-                            </th>
-                            <th style="text-align: center;vertical-align: middle;">
-                                Satuan
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="text-align: center;vertical-align: middle;">1</td>
-                            <td style="text-align: center;vertical-align: middle;">Compact Mattress Aoki Merah</td>
-                            <td style="text-align: center;vertical-align: middle;">N-COM00-Z001.0J</td>
-                            <td style="text-align: center;vertical-align: middle;">50</td>
-                            <td style="text-align: center;vertical-align: middle;">Pcs</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;vertical-align: middle;">2</td>
-                            <td style="text-align: center;vertical-align: middle;">Compact Mattress Aoki Coklat</td>
-                            <td style="text-align: center;vertical-align: middle;">N-COM00-Z001.0J</td>
-                            <td style="text-align: center;vertical-align: middle;">100</td>
-                            <td style="text-align: center;vertical-align: middle;">Pcs</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;vertical-align: middle;">3</td>
-                            <td style="text-align: center;vertical-align: middle;">Compact Mattress Aoki Hitam</td>
-                            <td style="text-align: center;vertical-align: middle;">N-COM00-Z001.0J</td>
-                            <td style="text-align: center;vertical-align: middle;">50</td>
-                            <td style="text-align: center;vertical-align: middle;">Pcs</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;vertical-align: middle;">4</td>
-                            <td style="text-align: center;vertical-align: middle;">Compact Mattress Aoki Hijau</td>
-                            <td style="text-align: center;vertical-align: middle;">N-COM00-Z001.0J</td>
-                            <td style="text-align: center;vertical-align: middle;">50</td>
-                            <td style="text-align: center;vertical-align: middle;">Pcs</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-			<footer class="panel-footer">
-				<div class="row">
-					<div class="col-md-12 text-right">
-						<button type="button" class="btn btn-default modal-dismiss">Ok</button>
-					</div>
-				</div>
-			</footer>
-		</section>
-    </div>
     
 <!--*****************************-->
 <?php include('_endtitle.php'); ?>
@@ -463,7 +405,23 @@
 
             success: function(respond){
                 $("#no_sj_ed").val(respond['sj'][0]['id_surat_jalan']);
-                $("#tgl_ed").val(respond['sj'][0]['tanggal']);
+                
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['sj'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['sj'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['sj'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['sj'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+
+                $("#tgl_ed").val($tanggalnya);
                 $("#ket_ed").val(respond['sj'][0]['keterangan']);
 
                 $isi = "";
@@ -575,89 +533,6 @@
     });
 </script>
 
-<!--
-<script>
-    $('.add_sj').click(function(){
-        $tengah = 
-        '<tr>'+
-            '<td style="text-align: center;vertical-align: middle;">1</td>'+
-            '<td style="text-align: center;vertical-align: middle;">Compact Mattrass Aoki Merah</td>'+
-            '<td style="text-align: center;vertical-align: middle;">50</td>'+
-            '<td style="text-align: center;vertical-align: middle;">Pcs</td>'+
-            '<td style="text-align: center;vertical-align: middle;">500.000</td>'+
-            '<td style="text-align: center;vertical-align: middle;">25.000.000</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td style="text-align: center;vertical-align: middle;">2</td>'+
-            '<td style="text-align: center;vertical-align: middle;">Compact Mattrass Aoki Hitam</td>'+
-            '<td style="text-align: center;vertical-align: middle;">10</td>'+
-            '<td style="text-align: center;vertical-align: middle;">Pcs</td>'+
-            '<td style="text-align: center;vertical-align: middle;">500.000</td>'+
-            '<td style="text-align: center;vertical-align: middle;">5.000.000</td>'+
-        '</tr>';
-
-        $bawah = 
-        '<tr>'+
-            '<td colspan="3" style="text-align: center;vertical-align: middle;"></td>'+
-            '<td colspan="2" style="text-align: center;vertical-align: middle;">Subtotal</td>'+
-            '<td style="text-align: center;vertical-align: middle;">30.000.000</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td colspan="3" style="text-align: center;vertical-align: middle;"></td>'+
-            '<td style="text-align: center;vertical-align: middle;">Discount</td>'+
-            '<td style="text-align: center;vertical-align: middle;">'+
-                '<input type="number" class="form-control" style="width:70px">'+
-            '</td>'+
-            '<td style="text-align: center;vertical-align: middle;"></td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td colspan="3" style="text-align: center;vertical-align: middle;"></td>'+
-            '<td style="text-align: center;vertical-align: middle;">PPN</td>'+
-            '<td style="text-align: center;vertical-align: middle;">'+
-                '<input type="number" class="form-control" style="width:70px" value="10" disabled>'+
-            '</td>'+
-            '<td style="text-align: center;vertical-align: middle;">3.000.000</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td colspan="3" style="text-align: center;vertical-align: middle;"></td>'+
-            '<td colspan="2" style="text-align: center;vertical-align: middle;">Total</td>'+
-            '<td style="text-align: center;vertical-align: middle;">33.000.000</td>'+
-        '</tr>';
-
-        $all = '<table class="table table-bordered table-striped mb-none" id="datatable-default">'+
-                    '<thead>'+
-                        '<tr>'+
-                            '<th style="text-align: center;vertical-align: middle;">'+
-                                'No'+
-                            '</th>'+
-                            '<th style="text-align: center;vertical-align: middle;">'+
-                                'Item Description'+
-                            '</th>'+
-                            '<th style="text-align: center;vertical-align: middle;">'+
-                                'Qty'+
-                            '</th>'+
-                            '<th style="text-align: center;vertical-align: middle;">'+
-                                'Unit (Qty)'+
-                            '</th>'+
-                            '<th style="text-align: center;vertical-align: middle;">'+
-                                'Price'+
-                            '</th>'+
-                            '<th style="text-align: center;vertical-align: middle;">'+
-                                'Total Price'+
-                            '</th>'+
-                        '</tr>'+
-                    '</thead>'+
-                    '<tbody>'+
-                    $tengah+
-                    $bawah+
-                    '</tbody>'+
-                '</table>';
-        
-        $("#isinya").html($all);
-    });
-</script>
--->
-
 <!-- add sj -->
 <script>
     $('.add_sj').click(function(){
@@ -674,24 +549,25 @@
                 for($i=0;$i<respond['jm_isj'];$i++){
                     $id_isj     = respond['isj'][$i]['id_item_surat_jalan'];
                     $id_detprod = respond['isj'][$i]['id_detail_produk'];
-                    $jumlah_prd = respond['isj'][$i]['jumlah_produk'];
+                    var jumlah_prd = respond['isj'][$i]['jumlah_produk'];
 
-                    
                     for($j=1;$j<=$("#jumlah").val();$j++){
                         $id_detpro_inv = $("#id_detprod"+$j).val();
                         
                         if($id_detpro_inv == $id_detprod){
-                            $qty_bfr = $("#qty"+$j).val();
-                            $qty_aft = parseInt($qty_bfr) + parseInt($jumlah_prd);
+                            var qty_bfr = $("#qty"+$j).val();
+                            var qty_aft = parseInt(qty_bfr) + parseInt(jumlah_prd);
 
-                            $("#qty"+$j).val($qty_aft);
-                            $("#qtys"+$j).html($qty_aft);
+                            $("#qty"+$j).val(qty_aft);
+                            $("#qtys"+$j).html(qty_aft);
 
-                            $price_bfr = $("#price"+$j).val();
-                            $tprice_aft = $qty_aft * $price_bfr;
+                            var price_bfr  = $("#price"+$j).val();
+                            var tprice_aft =  parseInt(qty_aft) * parseInt(price_bfr);
 
-                            $("#tprice"+$j).val($tprice_aft);
-                            $("#tprices"+$j).html($tprice_aft);
+                            var num = "Rp "+  new Number( tprice_aft).toLocaleString("id-ID") + ",00";
+                     
+                            $("#tprice"+$j).val(tprice_aft);
+                            $("#tprices"+$j).html(num);
                         }
                     }
                 }
@@ -712,8 +588,9 @@
 
                 //alert($subtotal);
                 $("#subtotal").val($subtotal);
-                $("#subtotals").html($subtotal);
 
+                var num = "Rp "+  new Number($subtotal).toLocaleString("id-ID") + ",00";
+                $("#subtotals").html(num);
 
                 //discount
                 if($("#disc_rate").val() != "" || $("#disc_rate").val() != 0){
@@ -722,8 +599,8 @@
                     $discountnya = $subtotal * $discount_rate / 100;
 
                     $("#disc").val($discountnya);
-                    $("#discs").html($discountnya);
-                    
+                    var num = "Rp "+  new Number($discountnya).toLocaleString("id-ID") + ",00";
+                    $("#discs").html(num);
                 }
                 else{
                     $discountnya = 0;
@@ -736,12 +613,14 @@
                 $ppnnya = $subtotal * $ppn_rate / 100;
 
                 $("#ppn").val($ppnnya);
-                $("#ppns").html($ppnnya);
+                var num = "Rp "+  new Number($ppnnya).toLocaleString("id-ID") + ",00";
+                $("#ppns").html(num);
 
                 $total = parseInt($subtotal) - parseInt($discountnya) + parseInt($ppnnya);
 
                 $("#total").val($total);
-                $("#totals").html($total);
+                var num = "Rp "+  new Number($total).toLocaleString("id-ID") + ",00";
+                $("#totals").html(num);
 
                 $("#stat"+no).val(1);
                 $("#div_badd"+no).hide();
@@ -803,7 +682,8 @@
                             $tprice_aft = $qty_aft * $price_bfr;
 
                             $("#tprice"+$j).val($tprice_aft);
-                            $("#tprices"+$j).html($tprice_aft);
+                            var num = "Rp "+  new Number($tprice_aft).toLocaleString("id-ID") + ",00";
+                            $("#tprices"+$j).html(num);
                         }
                     }
                 }
@@ -820,7 +700,8 @@
                 }
                 else{
                     $("#subtotal").val($subtotal);
-                    $("#subtotals").html($subtotal);
+                    var num = "Rp "+  new Number($subtotal).toLocaleString("id-ID") + ",00";
+                    $("#subtotals").html(num);
                 }
 
                 //discount
@@ -835,7 +716,8 @@
                     }
                     else{
                         $("#disc").val($discountnya);
-                        $("#discs").html($discountnya);
+                        var num = "Rp "+  new Number($discountnya).toLocaleString("id-ID") + ",00";
+                        $("#discs").html($num);
                     }
                     
                 }
@@ -855,7 +737,8 @@
                 }
                 else{
                     $("#ppn").val($ppnnya);
-                    $("#ppns").html($ppnnya);
+                    var num = "Rp "+  new Number($ppnnya).toLocaleString("id-ID") + ",00";
+                    $("#ppns").html(num);
                 }
 
                 $total = parseInt($subtotal) - parseInt($discountnya) + parseInt($ppnnya);
@@ -866,7 +749,8 @@
                 }
                 else{
                     $("#total").val($total);
-                    $("#totals").html($total);
+                    var num = "Rp "+  new Number($total).toLocaleString("id-ID") + ",00";
+                    $("#totals").html(num);
                 }
 
                 //button
@@ -910,16 +794,16 @@
         }
         else{
             $("#disc").val($disc_aft);
-            $("#discs").html($disc_aft);
+            var num = "Rp "+  new Number($disc_aft).toLocaleString("id-ID") + ",00";
+            $("#discs").html(num);
         }
 
        
         $total = parseInt($("#subtotal").val()) - parseInt($disc_aft) + parseInt($("#ppn").val());
 
         $("#total").val($total);
-        $("#totals").html($total);
-
-
+        var num = "Rp "+  new Number($total).toLocaleString("id-ID") + ",00";
+        $("#totals").html(num);
     }
 </script>
 

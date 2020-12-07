@@ -49,7 +49,41 @@
                                 <?= $no; ?>
                             </td>
                             <td  style="text-align: center;vertical-align: middle;">
-                                <?= $x->tanggal; ?>
+                                <?php 
+                                    $waktu = $x->tanggal;
+
+                                    $hari_array = array(
+                                        'Minggu',
+                                        'Senin',
+                                        'Selasa',
+                                        'Rabu',
+                                        'Kamis',
+                                        'Jumat',
+                                        'Sabtu'
+                                    );
+                                    $hr = date('w', strtotime($waktu));
+                                    $hari = $hari_array[$hr];
+                                    $tanggal = date('j', strtotime($waktu));
+                                    $bulan_array = array(
+                                        1 => 'Januari',
+                                        2 => 'Februari',
+                                        3 => 'Maret',
+                                        4 => 'April',
+                                        5 => 'Mei',
+                                        6 => 'Juni',
+                                        7 => 'Juli',
+                                        8 => 'Agustus',
+                                        9 => 'September',
+                                        10 => 'Oktober',
+                                        11 => 'November',
+                                        12 => 'Desember',
+                                    );
+                                    $bl = date('n', strtotime($waktu));
+                                    $bulan = $bulan_array[$bl];
+                                    $tahun = date('Y', strtotime($waktu));
+                                    
+                                    echo "$hari, $tanggal $bulan $tahun";
+                                ?>
                             </td>
                             <td  style="text-align: center;vertical-align: middle;">
                                 <?= $x->nama_permohonan_akses ?>
@@ -74,16 +108,16 @@
                             </td>
                             <td class="col-lg-3"> 
                                 <button type="button" class="bdetail_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                    value="<?= $no;?>" title="Detail"></button>
+                                    value="<?= $no;?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
                                 
                                 <?php if($x->status_permohonan == 0){
                                     if($_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management" || 
                                     $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management"){
                                 ?>    
                                     <button type="button" class="bse7_klik col-lg-3 btn btn-success fa fa-check-square" 
-                                    value="<?= $no;?>" title="Disetujui"></button>
+                                    value="<?= $no;?>" title="Disetujui" style="margin-right:5px;margin-bottom:5px"></button>
                                     <button type="button" class="btolak_klik col-lg-3 btn btn-danger fa  fa-times-circle" 
-                                    value="<?= $no;?>" title="Tidak Disetujui"></button>
+                                    value="<?= $no;?>" title="Tidak Disetujui" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php }  }?>
                             </td>
                         </tr>
@@ -210,7 +244,24 @@
             data: {id:id},
 
             success: function(respond){
-                $("#tanggal").val(respond['peraks'][0]['waktu_add']);
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['peraks'][0]['waktu_add']).getDate();
+                var xhari   = new Date(respond['peraks'][0]['waktu_add']).getDay();
+                var xbulan  = new Date(respond['peraks'][0]['waktu_add']).getMonth();
+                var xtahun  = new Date(respond['peraks'][0]['waktu_add']).getYear();
+                var jam     = new Date(respond['peraks'][0]['waktu_add']).getHours();
+                var menit   = new Date(respond['peraks'][0]['waktu_add']).getMinutes();
+                var detik   = new Date(respond['peraks'][0]['waktu_add']).getSeconds();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun +' '+jam+':'+menit+':'+detik;
+
+                $("#tanggal").val($tanggalnya);
                 $("#nama_permohonan").val(respond['peraks'][0]['nama_permohonan_akses']);
 
                 for($i=0;$i<respond['jm_user'];$i++){

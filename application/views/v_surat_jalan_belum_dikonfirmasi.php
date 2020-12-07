@@ -52,7 +52,41 @@
                                 <?= $no ?>
                             </td>
                             <td  style="text-align: center;vertical-align: middle;">
-                                <?= $sj->tanggal ?>
+                                <?php 
+                                    $waktu = $sj->tanggal;
+
+                                    $hari_array = array(
+                                        'Minggu',
+                                        'Senin',
+                                        'Selasa',
+                                        'Rabu',
+                                        'Kamis',
+                                        'Jumat',
+                                        'Sabtu'
+                                    );
+                                    $hr = date('w', strtotime($waktu));
+                                    $hari = $hari_array[$hr];
+                                    $tanggal = date('j', strtotime($waktu));
+                                    $bulan_array = array(
+                                        1 => 'Januari',
+                                        2 => 'Februari',
+                                        3 => 'Maret',
+                                        4 => 'April',
+                                        5 => 'Mei',
+                                        6 => 'Juni',
+                                        7 => 'Juli',
+                                        8 => 'Agustus',
+                                        9 => 'September',
+                                        10 => 'Oktober',
+                                        11 => 'November',
+                                        12 => 'Desember',
+                                    );
+                                    $bl = date('n', strtotime($waktu));
+                                    $bulan = $bulan_array[$bl];
+                                    $tahun = date('Y', strtotime($waktu));
+                                    
+                                    echo "$hari, $tanggal $bulan $tahun";
+                                ?>
                             </td>
                             <td  style="text-align: center;vertical-align: middle;">
                                 <?= $sj->id_surat_jalan?>
@@ -75,21 +109,38 @@
                                 ?>
                             </td>
                             <td  style="text-align: center;vertical-align: middle;">
-                                Belum Dikonfirmasi
+                                <?php 
+                                    if($sj->status_surat_jalan == 0){
+                                        echo "Belum Dikonfirmasi";
+                                    } else if($sj->status_surat_jalan == 1){
+                                        echo "Terkonfirmasi";
+                                    } else{
+                                        echo "Selesai";
+                                    }
+                                ?>
                             </td>
                             <td class="col-lg-3"> 
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                    value="<?= $no;?>" title="Detail"></button>
+                                    value="<?= $no;?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php if($sj->status_surat_jalan == 0){?>
                                     <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                        value="<?= $no;?>" title="Edit"></button>
+                                        value="<?= $no;?>" title="Edit" style="margin-right:5px;margin-bottom:5px"></button>
                                     <button type="button" class="bdel_klik col-lg-3 btn btn-danger fa fa-trash-o" 
-                                        value="<?= $no;?>" title="Delete"></button>
+                                        value="<?= $no;?>" title="Delete" style="margin-right:5px;margin-bottom:5px"></button>
+                                    <button type="button" class="bkonf_klik col-lg-3 btn btn-success fa fa-check-square" 
+                                        value="<?= $no;?>" title="Konfirmasi" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php }?>
+                                <?php foreach($det_item_bpbd as $y){
+                                        if($y->id_surat_jalan == $sj->id_surat_jalan){
+                                            if($y->jumlah_det_item_bpbd > 0){
+                                ?>
+                                                <button type="button" class="bdetit_bpbd_klik col-lg-3 btn btn-success fa  fa-history" 
+                                                    value="<?= $no;?>" title="Detail Item BPBD" style="margin-right:5px;margin-bottom:5px"></button>
+                                <?php  } }  } ?>
                                     <form method="POST" action="<?= base_url()?>suratJalan/print">
                                         <input type="hidden" name="id_sj" value="<?= $sj->id_surat_jalan?>">
                                         <button type="submit" class="col-lg-3 btn fa fa-print" style="background-color:#E56B1F;color:white;"
-                                        value="<?= $no;?>" title="Print"></button>
+                                        value="<?= $no;?>" title="Print" style="margin-right:5px;margin-bottom:5px"></button>
                                     </form> 
                             </td>
                         </tr>
@@ -269,318 +320,41 @@
         </div>
     </div>
 
-
-    
-    <div id='modaldetail1' class="modal-block modal-block-primary mfp-hide">
-		<section class="panel">
-            <header class="panel-heading">
-                <h2 class="panel-title">Detail Surat Jalan</h2>
-            </header>
-
-            <div class="panel-body">
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Nomor Surat Jalan</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control"
-                            value="M2002.0198" readonly>
-                        </div>
+    <!-- modal se7 -->
+    <div class="modal" id="modalkonf" role="dialog">
+        <div class="modal-dialog modal-xl" style="width:35%">
+            <form method="POST" action="<?= base_url()?>suratJalan/konfirmasi">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"><b>Konfirmasi Surat Jalan</b></h4>
                     </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Nomor PO</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control"
-                            value="L2001231" readonly>
-                        </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id_sjnya" id="id_sjnya">
+                        <p>Apakah anda yakin akan mengkonfirmasi surat jalan dengan nomor <span id="id_sj_tampil"></span>?</p>
+                        <p><b>*</b>jika sudah dikonfirmasi, surat jalan sudah bisa dibuatkan BPBD dan tidak dapat diedit lagi</p>
                     </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Kepada</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control"
-                            value="PT. INOAC POLYTECHNO INDONESIA" readonly>
-                        </div>
+                    <div class="modal-footer">
+                        <input type="submit" id="edit" class="btn btn-primary" value="Simpan">
+                        <input type="button" class="btn btn-default modal-dismiss" value="Batal" onclick="reload()">
                     </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Tanggal</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control"
-                            value="Selasa, 07-07-2020" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Keterangan</label>
-                        <div class="col-sm-7">
-                            <textarea class="form-control" rows="3" id="textareaDefault" readonly>
-                            </textarea>
-                        </div>
-                    </div>
-                    <br>
-
-                    <table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">
-                        <thead>
-                            <tr>
-                                <th style="text-align: center;vertical-align: middle;">
-                                    No
-                                </th>
-                                <th style="text-align: center;vertical-align: middle;">
-                                    Nama Produk
-                                </th>
-                                <th style="text-align: center;vertical-align: middle;">
-                                    Kode Produk
-                                </th>
-                                <th style="text-align: center;vertical-align: middle;">
-                                    Total Produk
-                                </th>
-                                <th style="text-align: center;vertical-align: middle;">
-                                    Satuan
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="text-align: center;vertical-align: middle;">1</td>
-                                <td style="text-align: center;vertical-align: middle;">Compact Mattress Aoki Merah</td>
-                                <td style="text-align: center;vertical-align: middle;">N-COM00-Z001.0J</td>
-                                <td style="text-align: center;vertical-align: middle;">50</td>
-                                <td style="text-align: center;vertical-align: middle;">Pcs</td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center;vertical-align: middle;">2</td>
-                                <td style="text-align: center;vertical-align: middle;">Compact Mattress Aoki Coklat</td>
-                                <td style="text-align: center;vertical-align: middle;">N-COM00-Z001.0J</td>
-                                <td style="text-align: center;vertical-align: middle;">100</td>
-                                <td style="text-align: center;vertical-align: middle;">Pcs</td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center;vertical-align: middle;">3</td>
-                                <td style="text-align: center;vertical-align: middle;">Compact Mattress Aoki Hitam</td>
-                                <td style="text-align: center;vertical-align: middle;">N-COM00-Z001.0J</td>
-                                <td style="text-align: center;vertical-align: middle;">50</td>
-                                <td style="text-align: center;vertical-align: middle;">Pcs</td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center;vertical-align: middle;">4</td>
-                                <td style="text-align: center;vertical-align: middle;">Compact Mattress Aoki Hijau</td>
-                                <td style="text-align: center;vertical-align: middle;">N-COM00-Z001.0J</td>
-                                <td style="text-align: center;vertical-align: middle;">50</td>
-                                <td style="text-align: center;vertical-align: middle;">Pcs</td>
-                            </tr>
-                        </tbody>
-                    </table>
-            </div>
-
-			<footer class="panel-footer">
-				<div class="row">
-					<div class="col-md-12 text-right">
-						<button type="button" class="btn btn-default modal-dismiss">Ok</button>
-					</div>
-				</div>
-			</footer>
-		</section>
-    </div>
-
-    <div id='modaledit1' class="modal-block modal-block-primary mfp-hide">
-        <form method="POST" action="<?= base_url()?>suratJalan/semua_surat_jalan">
-            <section class="panel">
-                <header class="panel-heading">
-                    <h2 class="panel-title">Buat Surat Jalan</h2>
-                </header>
-
-                <div class="panel-body">
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Nomor Surat Jalan</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control"
-                            value="M2002.0198" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Tanggal</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control"
-                            value="Selasa, 07-07-2020" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Kepada</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control"
-                            value="PT. INOAC POLYTECHNO INDONESIA" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Nomor PO</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control"
-                            value="L2001231" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Keterangan</label>
-                        <div class="col-sm-7">
-                            <textarea class="form-control" rows="3" id="textareaDefault">Isi Keterangannya
-                            </textarea>
-                        </div>
-                    </div>
-
-                    <br>
-
-                    <table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">
-                        <thead>
-                            <tr>
-                                <th style="text-align: center;vertical-align: middle;">
-                                    No
-                                </th>
-                                <th style="text-align: center;vertical-align: middle;">
-                                    Nama Produk
-                                </th>
-                                <th style="text-align: center;vertical-align: middle;">
-                                    Kode Produk
-                                </th>
-                                <th style="text-align: center;vertical-align: middle;">
-                                    Total Produk
-                                </th>
-                                <th style="text-align: center;vertical-align: middle;">
-                                    Belum Terkirim
-                                </th>
-                                <th style="text-align: center;vertical-align: middle;">
-                                    Selesai Produksi
-                                </th>
-                                <th style="text-align: center;vertical-align: middle;">
-                                    Yang Akan Dikirim
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="text-align: center;vertical-align: middle;">1</td>
-                                <td style="text-align: center;vertical-align: middle;">Compact Mattress Aoki Merah</td>
-                                <td style="text-align: center;vertical-align: middle;">N-COM00-Z001.0J</td>
-                                <td style="text-align: center;vertical-align: middle;">50</td>
-                                <td style="text-align: center;vertical-align: middle;">20</td>
-                                <td style="text-align: center;vertical-align: middle;">50</td>
-                                <td style="text-align: center;vertical-align: middle;">
-                                    <center>
-                                        <input type="number" class="form-control" 
-                                        style="width:60px;height:25px" required value="20">
-                                    </center>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center;vertical-align: middle;">2</td>
-                                <td style="text-align: center;vertical-align: middle;">Compact Mattress Aoki Coklat</td>
-                                <td style="text-align: center;vertical-align: middle;">N-COM00-Z001.0J</td>
-                                <td style="text-align: center;vertical-align: middle;">100</td>
-                                <td style="text-align: center;vertical-align: middle;">100</td>
-                                <td style="text-align: center;vertical-align: middle;">50</td>
-                                <td style="text-align: center;vertical-align: middle;">
-                                    <center>
-                                        <input type="number" class="form-control" style="width:60px;height:25px" 
-                                        required value="50">
-                                    </center>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center;vertical-align: middle;">3</td>
-                                <td style="text-align: center;vertical-align: middle;">Compact Mattress Aoki Hitam</td>
-                                <td style="text-align: center;vertical-align: middle;">N-COM00-Z001.0J</td>
-                                <td style="text-align: center;vertical-align: middle;">50</td>
-                                <td style="text-align: center;vertical-align: middle;">0</td>
-                                <td style="text-align: center;vertical-align: middle;">50</td>
-                                <td style="text-align: center;vertical-align: middle;">
-                                    <center>
-                                        <input type="number" class="form-control" style="width:60px;height:25px" required disabled>
-                                    </center>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center;vertical-align: middle;">4</td>
-                                <td style="text-align: center;vertical-align: middle;">Compact Mattress Aoki Hijau</td>
-                                <td style="text-align: center;vertical-align: middle;">N-COM00-Z001.0J</td>
-                                <td style="text-align: center;vertical-align: middle;">50</td>
-                                <td style="text-align: center;vertical-align: middle;">50</td>
-                                <td style="text-align: center;vertical-align: middle;">0</td>
-                                <td style="text-align: center;vertical-align: middle;">
-                                    <center>
-                                        <input type="number" class="form-control" style="width:60px;height:25px" required disabled>
-                                    </center>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    *Yang akan dikirim harus terisi. Jika jumlah yang akan dikirim untuk suatu produk tidak ada, silahkan masukkan 0
-
-
                 </div>
-
-                <footer class="panel-footer">
-                    <div class="row">
-                        <div class="col-md-12 text-right">
-                            <input type="submit" id="tambah" class="btn btn-primary" value="Simpan">
-                            <button type="button" class="btn btn-default modal-dismiss">Batal</button>
-                        </div>
-                    </div>
-                </footer>
-            </section>
-        </form>
+            </form>
+        </div>
     </div>
 
-    <div id="modalhapus" class="modal-block modal-block-sm mfp-hide">
-        <form method="POST" action="<?= base_url()?>suratJalan/delete_surat_jalan">
-            <section class="panel">
-                <header class="panel-heading">
-                    <h2 class="panel-title">Hapus Data Surat Jalan</h2>
-                </header>
-
-                    <div class="panel-body">
-                        <div class="modal-wrapper">
-                            <div class="modal-text">
-                                <p>Apakah anda yakin akan menghapus data surat jalan dengan nomor M2002.0198 ?</p>
-                            </div>
-                        </div>
-                    </div>
-                    <footer class="panel-footer">
-                        <div class="row">
-                            <div class="col-md-12 text-right">
-                                <input type="submit" class="btn btn-primary hapus" value="Hapus">
-                                <button class="btn btn-default modal-dismiss">Batal</button>
-                            </div>
-                        </div>
-                    </footer>
-            </section>
-        </form>
-
-    </div>
-    
-    <div class="modal" id="modallog" role="dialog">
-        <div class="modal-dialog modal-xl" style="width:80%">
+    <!-- modal detail item bpbd -->
+    <div class="modal" id="modaldetit_bpbd" role="dialog">
+        <div class="modal-dialog modal-xl" style="width:50%">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Log Surat Jalan</h4>
+                    <h4 class="modal-title"><b>Surat Jalan Pada BPBD</b></h4>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" id="id_terpilih">
-
-                    <table>
-                        <tr>
-                            <td class="col-md-6">
-                                <center>
-                                    <b>Input Date:</b><span id="input_date"></span>
-                                </center>
-                            </td>
-                            <td class="col-md-6">
-                                <center>
-                                    <b>User Input:</b><span id="input_user"></span>
-                                </center>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <div id="isi_log">
-
+                    <div id="table_detail_bpbd">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                    <input type="button" class="btn btn-default modal-dismiss" value="Ok" onclick="reload()">
                 </div>
             </div>
         </div>
@@ -612,7 +386,22 @@
 
             success: function(respond){
                 $("#no_sj_det").val(respond['sj'][0]['id_surat_jalan']);
-                $("#tgl_det").val(respond['sj'][0]['tanggal']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['sj'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['sj'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['sj'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['sj'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tgl_det").val($tanggalnya);
                 $("#ket_det").val(respond['sj'][0]['keterangan']);
                 $("#no_po_det").val(respond['po'][0]['kode_purchase_order_customer']);
                 $("#cust_det").val(respond['po'][0]['nama_customer']);
@@ -755,7 +544,22 @@
 
             success: function(respond){
                 $("#nomor_sj_edit").val(respond['sj'][0]['id_surat_jalan']);
-                $("#tanggal_sj_edit").val(respond['sj'][0]['tanggal']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['sj'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['sj'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['sj'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['sj'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_sj_edit").val($tanggalnya);
                 $("#nomor_po_edit").val(respond['po'][0]['kode_purchase_order_customer']);
                 $("#nama_cust_edit").val(respond['po'][0]['nama_customer']);
                 $("#kendaraan_edit").val(respond['sj'][0]['kendaraan']);
@@ -1075,6 +879,136 @@
             $("#edit").prop('disabled',true);
         }
     }
+</script>
+
+<!-- setuju-->
+<script>
+    $('.bkonf_klik').click(function(){
+        var no      = $(this).attr('value');
+        var id      = $("#id"+no).val();
+
+        $("#id_sjnya").val(id);
+        $("#id_sj_tampil").html(id);
+        $("#modalkonf").modal();
+    });
+</script>
+
+<!-- detail item bpbd -->
+<script>
+    $('.bdetit_bpbd_klik').click(function(){
+        var no      = $(this).attr('value');
+        var id      = $("#id"+no).val();
+
+        $.ajax({
+            type:"post",
+            url:"<?php echo base_url() ?>suratJalan/detail_item_bpbd",
+            dataType: "JSON",
+            data: {id:id},
+
+            success: function(respond){
+                $isi = "";
+                for($i=0;$i<respond['jm_isj'];$i++){
+                    $namanya = "";
+
+                    if(respond['isj'][$i]['keterangan'] == 0){
+                        $id_ukuran = respond['isj'][$i]['id_ukuran'];
+                        $id_warna  = respond['isj'][$i]['id_warna'];
+
+                        for($l=0;$l<respond['jmukuran'];$l++){
+                            if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
+                                $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
+                                $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
+
+                                $ukurannya = $nama_ukuran + $satuan_ukuran;
+                            }
+                        }
+
+                        for($k=0;$k<respond['jmwarna'];$k++){
+                            if(respond['warna'][$k]['id_warna'] == $id_warna){
+                                $warnanya = respond['warna'][$k]['nama_warna'];
+                            }
+                        }
+
+                        $namanya = respond['isj'][$i]['nama_produk'] + $ukurannya + " (" + $warnanya + ")";
+                    }
+                    else if(respond['isj'][$i]['keterangan'] == 1){
+                        $id_ukuran = respond['isj'][$i]['id_ukuran'];
+
+                        for($l=0;$l<respond['jmukuran'];$l++){
+                            if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
+                                $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
+                                $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
+
+                                $ukurannya = $nama_ukuran + $satuan_ukuran;
+                            }
+                        }
+
+                        $namanya = respond['isj'][$i]['nama_produk'] + $ukurannya;
+
+                    }
+                    else if(respond['isj'][$i]['keterangan'] == 2){
+                        $id_warna  = respond['isj'][$i]['id_warna'];
+
+                        for($k=0;$k<respond['jmwarna'];$k++){
+                            if(respond['warna'][$k]['id_warna'] == $id_warna){
+                                $warnanya = respond['warna'][$k]['nama_warna'];
+                            }
+                        }
+
+                        $namanya = respond['isj'][$i]['nama_produk'] + " (" + $warnanya + ")";
+                    }
+                    else{
+                        $namanya = respond['isj'][$i]['nama_produk'];
+                    }
+                    
+                    $tablenya     = "";
+                    $isi_tablenya = "";
+                    
+                    for($j=0;$j<respond['jm_datanya'];$j++){
+                        if(respond['datanya'][$j]['id_surat_jalan'] == id && respond['datanya'][$j]['id_detail_produk'] == respond['isj'][$i]['id_detail_produk']){
+                            $isi_tablenya = $isi_tablenya +
+                            '<tr>'+
+                                '<td>'+
+                                    '<center>'+($j+1)+'</center>'+
+                                '</td>'+
+                                '<td>'+
+                                    '<center>'+respond['datanya'][$j]['id_bpbd']+'</center>'+
+                                '</td>'+
+                                '<td>'+
+                                    '<center>'+respond['datanya'][$j]['jumlah_produk']+'</center>'+
+                                '</td>'+
+                            '</tr>';
+                        }
+                    }
+
+                    $tablenya = 
+                        '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
+                            '<thead>'+
+                                '<tr>'+
+                                    '<th style="text-align: center;vertical-align: middle;">No</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">Nomor Surat Jalan</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">Qty (pcs)</th>'+
+                                '</tr>'+
+                            '</thead>'+
+                            '<tbody>'+
+                                $isi_tablenya+
+                            '</tbody>'+
+                        '</table>';
+
+                    $isi = $isi + 
+                            '<h5><b>'+($i+1)+'. '+$namanya+'</b></h5>'+
+                            $tablenya+
+                    '<br>';
+
+                }
+                
+                $("#table_detail_bpbd").html($isi);
+                $("#modaldetit_bpbd").modal();
+            }
+        });  
+
+
+    });
 </script>
 
 

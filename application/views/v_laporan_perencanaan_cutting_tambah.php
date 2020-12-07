@@ -48,17 +48,50 @@
                             </td>
                             <td style="text-align: center;vertical-align: middle;">
                                 <input type="hidden" id="tanggal<?= $no?>" value="<?= $x->tanggal ?>">
-                                <?= $x->tanggal;?>
+                                <?php 
+                                    $waktu = $x->tanggal;
+
+                                    $hari_array = array(
+                                        'Minggu',
+                                        'Senin',
+                                        'Selasa',
+                                        'Rabu',
+                                        'Kamis',
+                                        'Jumat',
+                                        'Sabtu'
+                                    );
+                                    $hr = date('w', strtotime($waktu));
+                                    $hari = $hari_array[$hr];
+                                    $tanggal = date('j', strtotime($waktu));
+                                    $bulan_array = array(
+                                        1 => 'Januari',
+                                        2 => 'Februari',
+                                        3 => 'Maret',
+                                        4 => 'April',
+                                        5 => 'Mei',
+                                        6 => 'Juni',
+                                        7 => 'Juli',
+                                        8 => 'Agustus',
+                                        9 => 'September',
+                                        10 => 'Oktober',
+                                        11 => 'November',
+                                        12 => 'Desember',
+                                    );
+                                    $bl = date('n', strtotime($waktu));
+                                    $bulan = $bulan_array[$bl];
+                                    $tahun = date('Y', strtotime($waktu));
+                                    
+                                    echo "$hari, $tanggal $bulan $tahun";
+                                ?>
                             </td>
                             <td  class="col-lg-3">
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                    value="<?= $no;?>" title="Detail"></button>
+                                    value="<?= $no;?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
                                 <button type="button" class="badd_klik col-lg-3 btn btn-success fa fa-plus-square-o" 
-                                    value="<?= $no;?>" title="Buat Laporan Perencanaan Cutting"></button>
+                                    value="<?= $no;?>" title="Buat Laporan Perencanaan Cutting" style="margin-right:5px;margin-bottom:5px"></button>
                             </td>
                         </tr>
                     <?php $no; } ?>
-                    
                 </tbody>
             </table>
         </div>
@@ -150,7 +183,21 @@
             data: {tanggal:tanggal},
 
             success: function(respond){
-                $("#tanggal_det").val(respond['percut'][0]['tanggal_percut']);
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['percut'][0]['tanggal_percut']).getDate();
+                var xhari = new Date(respond['percut'][0]['tanggal_percut']).getDay();
+                var xbulan = new Date(respond['percut'][0]['tanggal_percut']).getMonth();
+                var xtahun = new Date(respond['percut'][0]['tanggal_percut']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_det").val($tanggalnya);
 
                 $isi = "";
 
@@ -282,7 +329,21 @@
             data: {tanggal:tanggal},
 
             success: function(respond){
-                $("#tanggal_add").val(respond['percut'][0]['tanggal_percut']);
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['percut'][0]['tanggal_percut']).getDate();
+                var xhari = new Date(respond['percut'][0]['tanggal_percut']).getDay();
+                var xbulan = new Date(respond['percut'][0]['tanggal_percut']).getMonth();
+                var xtahun = new Date(respond['percut'][0]['tanggal_percut']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_add").val($tanggalnya);
 
                 $isi = "";
 

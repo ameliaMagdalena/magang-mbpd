@@ -24,7 +24,7 @@ class M_Bpbd extends CI_Model {
 
     function get_po(){
         return $this->db->query("SELECT * FROM purchase_order_customer,customer 
-        WHERE status_po='2' AND purchase_order_customer.status_delete='0' AND customer.id_customer=purchase_order_customer.id_customer");
+        WHERE status_po='1' AND purchase_order_customer.status_delete='0' AND customer.id_customer=purchase_order_customer.id_customer");
     }
 
     function get_dpo(){

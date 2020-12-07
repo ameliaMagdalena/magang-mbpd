@@ -130,7 +130,41 @@
                                     <?= $no; ?>
                                 </td>
                                 <td style="text-align: center;vertical-align: middle;">
-                                    <?= $p->tanggal ?>
+                                    <?php 
+                                        $waktu = $p->tanggal;
+
+                                        $hari_array = array(
+                                            'Minggu',
+                                            'Senin',
+                                            'Selasa',
+                                            'Rabu',
+                                            'Kamis',
+                                            'Jumat',
+                                            'Sabtu'
+                                        );
+                                        $hr = date('w', strtotime($waktu));
+                                        $hari = $hari_array[$hr];
+                                        $tanggal = date('j', strtotime($waktu));
+                                        $bulan_array = array(
+                                            1 => 'Januari',
+                                            2 => 'Februari',
+                                            3 => 'Maret',
+                                            4 => 'April',
+                                            5 => 'Mei',
+                                            6 => 'Juni',
+                                            7 => 'Juli',
+                                            8 => 'Agustus',
+                                            9 => 'September',
+                                            10 => 'Oktober',
+                                            11 => 'November',
+                                            12 => 'Desember',
+                                        );
+                                        $bl = date('n', strtotime($waktu));
+                                        $bulan = $bulan_array[$bl];
+                                        $tahun = date('Y', strtotime($waktu));
+                                        
+                                        echo "$hari, $tanggal $bulan $tahun";
+                                    ?>
                                     <input type="hidden" id="id<?= $no ?>" value="<?= $p->id_produksi ?>">
                                     <input type="hidden" id="tgl<?= $no ?>" value="<?= $p->tanggal ?>">
                                 </td>
@@ -225,53 +259,62 @@
                                 
                                 <td class="col-lg-3">
                                     <?php if($p->status_laporan < 2){?>
-                                        <?php if($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Finish Good" || $_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Produksi"){?>
-                                        <button type="button" class="badd_klik col-lg-3 btn btn-success fa fa-plus-square-o" 
-                                        value="<?= $no;?>" title="Buat Laporan Hasil Produksi"></button>
-                                    <?php }} ?>
-                                    <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                        value="<?= $no;?>" title="Detail"></button>
-                                    <?php if(($p->status_laporan == 1 || $p->status_laporan == 2) && ($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Finish Good" || $_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Produksi")){?>
-                                        <?php 
-                                            $hitung = 0;
-                                            foreach($permohonan_akses as $peraks){
-                                            if($peraks->id_data == $p->id_produksi){
-                                                $hitung++;
-                                            }}
-
-                                            if($hitung > 0){
-                                                foreach($permohonan_akses as $peraks){
-                                                    if($peraks->id_data == $p->id_produksi){
-                                        ?>
-                                            <?php if($peraks->status_permohonan == 0){?>
-                                                <input type="hidden" id="id_peraks_tam<?= $no; ?>" value="<?= $peraks->id_permohonan_akses?>">
-                                                <button type="button" class="bbatalpermaks_klik col-lg-3 btn btn-danger fa fa-pencil-square-o" 
-                                                    value="<?= $no;?>" title="Batalkan Permintaan Akses"></button>
-                                            <?php } else if($peraks->status_permohonan == 1){?>
-                                                <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                                    value="<?= $no;?>" title="Edit"></button>
-                                            <?php } ?>
-                                        <?php }}} else{ ?>
-                                            <button type="button" class="bpermaks_klik col-lg-3 btn btn-success fa fa-pencil-square-o" 
-                                                value="<?= $no;?>" title="Buat Permintaan Akses"></button>
+                                        <?php if($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Finish Good" || 
+                                        $_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Produksi" || 
+                                        $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
+                                        $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
+                                            <button type="button" class="badd_klik col-lg-3 btn btn-success fa fa-plus-square-o" 
+                                            value="<?= $no;?>" title="Buat Laporan Hasil Produksi" style="margin-right:5px;margin-bottom:5px"></button>
                                         <?php } ?>
-                                    
-                                        <!--
-                                        <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                            value="<?= $no;?>" title="Edit"></button>
-                                        -->
                                     <?php } ?>
-                                    <?php if($p->status_laporan == 2 && $_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi"){?>
+                                    <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
+                                        value="<?= $no;?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
+                                    <!-- if status 1 & 2 & untuk admin finish good & admin produksi -->
+                                        <?php if(($p->status_laporan == 1 || $p->status_laporan == 2) && 
+                                                ($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Finish Good" 
+                                                || $_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Produksi")){?>
+                                            <?php 
+                                                $hitung = 0;
+                                                foreach($permohonan_akses as $peraks){
+                                                if($peraks->id_data == $p->id_produksi){
+                                                    $hitung++;
+                                                }}
+
+                                                if($hitung > 0){
+                                                    foreach($permohonan_akses as $peraks){
+                                                        if($peraks->id_data == $p->id_produksi){
+                                            ?>
+                                                <?php if($peraks->status_permohonan == 0){?>
+                                                    <input type="hidden" id="id_peraks_tam<?= $no; ?>" value="<?= $peraks->id_permohonan_akses?>">
+                                                    <button type="button" class="bbatalpermaks_klik col-lg-3 btn btn-danger fa fa-pencil-square-o" 
+                                                        value="<?= $no;?>" title="Batalkan Permintaan Akses" style="margin-right:5px;margin-bottom:5px"></button>
+                                                <?php } else if($peraks->status_permohonan == 1){?>
+                                                    <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
+                                                        value="<?= $no;?>" title="Edit" style="margin-right:5px;margin-bottom:5px"></button>
+                                                <?php } ?>
+                                            <?php }}} else{ ?>
+                                                <button type="button" class="bpermaks_klik col-lg-3 btn btn-success fa fa-pencil-square-o" 
+                                                    value="<?= $no;?>" title="Buat Permintaan Akses" style="margin-right:5px;margin-bottom:5px"></button>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    <!-- tutup -->
+                                    <!-- if status 1 & 2 & untuk direktur & manajemen -->
+                                        <?php if($p->status_laporan == 1 || $p->status_laporan == 2 && 
+                                            ($_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
+                                            $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management")){ ?>
+                                                <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
+                                                    value="<?= $no;?>" title="Edit" style="margin-right:5px;margin-bottom:5px"></button>
+                                        <?php } ?>
+                                    <!-- tutup -->
+                                    <?php if($p->status_laporan == 2 && ($_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi" ||
+                                            $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
+                                            $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management")){?>
                                         <button type="button" class="bse7_klik col-lg-3 btn btn-success fa fa-check-square" 
-                                            value="<?= $no;?>" title="Disetujui"></button>
-                                    <?php } ?>
-                                    <?php if($p->status_laporan == 2 && ($_SESSION['nama_jabatan'] != "Admin" && $_SESSION['nama_departemen'] != "Produksi" || $_SESSION['nama_jabatan'] != "Admin" && $_SESSION['nama_departemen'] != "Finish Good")){?>
-                                        <button type="button" class="bprint_klik col-lg-3 btn fa fa-print" style="background-color:#E56B1F;color:white;"
-                                            value="<?= $no;?>" title="Print"></button>
+                                            value="<?= $no;?>" title="Disetujui" style="margin-right:5px;margin-bottom:5px"></button>
                                     <?php } ?>
                                     <?php if($p->status_laporan == 3){?>
                                         <button type="button" class="bprint_klik col-lg-3 btn fa fa-print" style="background-color:#E56B1F;color:white;"
-                                            value="<?= $no;?>" title="Print"></button>
+                                            value="<?= $no;?>" title="Print" style="margin-right:5px;margin-bottom:5px"></button>
                                     <?php } ?>
                                 </td>
                             </tr>
@@ -1294,7 +1337,22 @@
 
             success: function(respond){
                 $status = "";
-                $("#tanggal_det").val(respond['p'][0]['tanggal']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['p'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['p'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['p'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['p'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_det").val($tanggalnya);
                 if(respond['p'][0]['status_laporan'] == 0){
                     $status = "Belum Ada";
                 } else if(respond['p'][0]['status_laporan'] == 1){
@@ -1549,7 +1607,7 @@
     });
 </script>
 
-<!-- add sj -->
+<!-- add -->
 <script>
     $('.badd_klik').click(function(){
         var no      = $(this).attr('value');
@@ -1562,7 +1620,21 @@
             data: {id:id},
 
             success: function(respond){
-                $("#tanggal_add").val(respond['pl'][0]['tanggal']);
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['pl'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['pl'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['pl'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['pl'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_add").val($tanggalnya);
                 $("#id_add").val(id);
 
                 for($i=0;$i<respond['jm_pl'];$i++){
@@ -1580,7 +1652,7 @@
     });
 </script>
 
-<!-- ganti add sj -->
+<!-- ganti add -->
 <script>
     function ganti(){
         if($("#id_line").val() == "kosong"){          
@@ -1600,142 +1672,150 @@
                 data: {id_produksi:id_produksi,id_line:id_line},
 
                 success: function(respond){
-                    $isi = "";
-                    $hitung=0;
+                    if(respond['pl'][0]['status_perencanaan'] > 0){
+                        $isi = "";
+                        $hitung=0;
 
-                    for($i=0;$i<respond['jm_dpl'];$i++){
-                        if(respond['dpl'][$i]['jumlah_item_perencanaan'] != 0){
-                            $namanya = "";
+                        $num = 0;
+                        for($i=0;$i<respond['jm_dpl'];$i++){
+                            if(respond['dpl'][$i]['jumlah_item_perencanaan'] != 0){
+                                $num++;
+                                $namanya = "";
 
-                            //nama produk
-                            if(respond['dpl'][$i]['keterangan'] == 0){
-                                $id_ukuran = respond['dpl'][$i]['id_ukuran'];
-                                $id_warna  = respond['dpl'][$i]['id_warna'];
+                                //nama produk
+                                if(respond['dpl'][$i]['keterangan'] == 0){
+                                    $id_ukuran = respond['dpl'][$i]['id_ukuran'];
+                                    $id_warna  = respond['dpl'][$i]['id_warna'];
 
-                                for($l=0;$l<respond['jmukuran'];$l++){
-                                    if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
-                                        $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
-                                        $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
+                                    for($l=0;$l<respond['jmukuran'];$l++){
+                                        if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
+                                            $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
+                                            $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
 
-                                        $ukurannya = $nama_ukuran + $satuan_ukuran;
+                                            $ukurannya = $nama_ukuran + $satuan_ukuran;
+                                        }
+                                    }
+
+                                    for($k=0;$k<respond['jmwarna'];$k++){
+                                        if(respond['warna'][$k]['id_warna'] == $id_warna){
+                                            $warnanya = respond['warna'][$k]['nama_warna'];
+                                        }
+                                    }
+
+                                    $namanya = respond['dpl'][$i]['nama_produk'] + $ukurannya + " (" + $warnanya + ")";
+                                }
+                                else if(respond['dpl'][$i]['keterangan'] == 1){
+                                    $id_ukuran = respond['dpl'][$i]['id_ukuran'];
+
+                                    for($l=0;$l<respond['jmukuran'];$l++){
+                                        if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
+                                            $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
+                                            $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
+
+                                            $ukurannya = $nama_ukuran + $satuan_ukuran;
+                                        }
+                                    }
+
+                                    $namanya = respond['dpl'][$i]['nama_produk'] + $ukurannya;
+
+                                }
+                                else if(respond['dpl'][$i]['keterangan'] == 2){
+                                    $id_warna  = respond['dpl'][$i]['id_warna'];
+
+                                    for($k=0;$k<respond['jmwarna'];$k++){
+                                        if(respond['warna'][$k]['id_warna'] == $id_warna){
+                                            $warnanya = respond['warna'][$k]['nama_warna'];
+                                        }
+                                    }
+
+                                    $namanya = respond['dpl'][$i]['nama_produk'] + " (" + $warnanya + ")";
+                                }
+                                else{
+                                    $namanya = respond['dpl'][$i]['nama_produk'];
+                                }
+                                
+                                $max = respond['dpl'][$i]['jumlah_item_perencanaan'];
+
+                                $id_linenya    = id_line;
+                                $id_produknya  = respond['dpl'][$i]['id_produk'];
+
+                                for($y=0;$y<respond['jm_ct'];$y++){
+                                    if(respond['ct'][$y]['id_line'] == $id_linenya && respond['ct'][$y]['id_produk'] == $id_produknya){
+                                        $cycle_timenya = respond['ct'][$y]['cycle_time'];
                                     }
                                 }
 
-                                for($k=0;$k<respond['jmwarna'];$k++){
-                                    if(respond['warna'][$k]['id_warna'] == $id_warna){
-                                        $warnanya = respond['warna'][$k]['nama_warna'];
-                                    }
-                                }
-
-                                $namanya = respond['dpl'][$i]['nama_produk'] + $ukurannya + " (" + $warnanya + ")";
+                                $isi = $isi +
+                                '<tr>'+
+                                    '<td style="text-align: center;vertical-align: middle;">'+
+                                        $num+
+                                    '</td>'+
+                                    '<td style="text-align: center;vertical-align: middle;">'+
+                                        '<input type="hidden" name="id_dpl'+$hitung+'" value="'+respond['dpl'][$i]['id_detail_produksi_line']+'">'+
+                                        $namanya+
+                                    '</td>'+
+                                    '<td style="text-align: center;vertical-align: middle;">'+
+                                        '<input type="hidden" name="jm_perc'+$hitung+'" value="'+respond['dpl'][$i]['jumlah_item_perencanaan']+'">'+
+                                        respond['dpl'][$i]['jumlah_item_perencanaan']+ " pcs"+
+                                    '</td>'+
+                                    '<td style="text-align: center;vertical-align: middle;">'+
+                                        '<input type="hidden" id="ct'+$hitung+'" value="'+$cycle_timenya+'">'+
+                                        '<input type="hidden" name="wkt_aktual'+$hitung+'" id="wkt'+$hitung+'">'+
+                                        '<center><input type="number" min="0" max="'+$max+'" name="jm_aktual'+$hitung+'" id="'+$hitung+'" oninput="hitung_ef(this)" class="form-control" style="width:80px;height:25px" required></center>'+
+                                    '</td>'+
+                                    '<td style="text-align: center;vertical-align: middle;">'+
+                                        '<textarea type="text" class="form-control" name="ket'+$hitung+'"></textarea>'+
+                                    '</td>'+
+                                '</tr>';
+                                $hitung++;
                             }
-                            else if(respond['dpl'][$i]['keterangan'] == 1){
-                                $id_ukuran = respond['dpl'][$i]['id_ukuran'];
-
-                                for($l=0;$l<respond['jmukuran'];$l++){
-                                    if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
-                                        $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
-                                        $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
-
-                                        $ukurannya = $nama_ukuran + $satuan_ukuran;
-                                    }
-                                }
-
-                                $namanya = respond['dpl'][$i]['nama_produk'] + $ukurannya;
-
-                            }
-                            else if(respond['dpl'][$i]['keterangan'] == 2){
-                                $id_warna  = respond['dpl'][$i]['id_warna'];
-
-                                for($k=0;$k<respond['jmwarna'];$k++){
-                                    if(respond['warna'][$k]['id_warna'] == $id_warna){
-                                        $warnanya = respond['warna'][$k]['nama_warna'];
-                                    }
-                                }
-
-                                $namanya = respond['dpl'][$i]['nama_produk'] + " (" + $warnanya + ")";
-                            }
-                            else{
-                                $namanya = respond['dpl'][$i]['nama_produk'];
-                            }
-
-
-                            $hitung++; 
-                            $max = respond['dpl'][$i]['jumlah_item_perencanaan'];
-
-                            $id_linenya    = id_line;
-                            $id_produknya  = respond['dpl'][$i]['id_produk'];
-
-                            for($y=0;$y<respond['jm_ct'];$y++){
-                                if(respond['ct'][$y]['id_line'] == $id_linenya && respond['ct'][$y]['id_produk'] == $id_produknya){
-                                    $cycle_timenya = respond['ct'][$y]['cycle_time'];
-                                }
-                            }
-
-                            $isi = $isi +
-                            '<tr>'+
-                                '<td style="text-align: center;vertical-align: middle;">'+
-                                    ($i+1)+
-                                '</td>'+
-                                '<td style="text-align: center;vertical-align: middle;">'+
-                                    '<input type="hidden" name="id_dpl'+$i+'" value="'+respond['dpl'][$i]['id_detail_produksi_line']+'">'+
-                                    $namanya+
-                                '</td>'+
-                                '<td style="text-align: center;vertical-align: middle;">'+
-                                    '<input type="hidden" name="jm_perc'+$i+'" value="'+respond['dpl'][$i]['jumlah_item_perencanaan']+'">'+
-                                    respond['dpl'][$i]['jumlah_item_perencanaan']+ " pcs"+
-                                '</td>'+
-                                '<td style="text-align: center;vertical-align: middle;">'+
-                                    '<input type="hidden" id="ct'+$i+'" value="'+$cycle_timenya+'">'+
-                                    '<input type="hidden" name="wkt_aktual'+$i+'" id="wkt'+$i+'">'+
-                                    '<center><input type="number" min="0" max="'+$max+'" name="jm_aktual'+$i+'" id="'+$i+'" oninput="hitung_ef(this)" class="form-control" style="width:80px;height:25px" required></center>'+
-                                '</td>'+
-                                '<td style="text-align: center;vertical-align: middle;">'+
-                                    '<textarea type="text" class="form-control" name="ket'+$i+'"></textarea>'+
-                                '</td>'+
-                            '</tr>';
                         }
+
+                        $table =
+                        '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
+                            '<thead>'+
+                                '<tr>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'No'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Nama Produk'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Perencanaan (pcs)'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Aktual (pcs)'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Keterangan'+
+                                    '</th>'+
+                                '</tr>'+
+                            '</thead>'+
+                            '<tbody>'+
+                                $isi+
+                            '</tbody>'+
+                        '</table>'+
+                        '*Aktual harus terisi. Jika aktual produksi untuk suatu item tidak ada, silahkan masukkan 0';
+
+                        $("#jumlah_detail").val($hitung);
+                        $("#id_pl").val(respond['dpl'][0]['id_produksi_line']);
+                        $("#total_pt").val(respond['dpl'][0]['total_processing_time']);
+
+                        $("#table_tambah").html($table);
+                    } else{
+                        $("#tambah").prop('disabled',true);
+                        $("#table_tambah").html("");
+                        alert("Mohon maaf tidak ada perencanaan produksi untuk line di hari yang dipilih");
                     }
-
-                    $table =
-                    '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
-                        '<thead>'+
-                            '<tr>'+
-                                '<th style="text-align: center;vertical-align: middle;">'+
-                                    'No'+
-                                '</th>'+
-                                '<th style="text-align: center;vertical-align: middle;">'+
-                                    'Nama Produk'+
-                                '</th>'+
-                                '<th style="text-align: center;vertical-align: middle;">'+
-                                    'Perencanaan (pcs)'+
-                                '</th>'+
-                                '<th style="text-align: center;vertical-align: middle;">'+
-                                    'Aktual (pcs)'+
-                                '</th>'+
-                                '<th style="text-align: center;vertical-align: middle;">'+
-                                    'Keterangan'+
-                                '</th>'+
-                            '</tr>'+
-                        '</thead>'+
-                        '<tbody>'+
-                            $isi+
-                        '</tbody>'+
-                    '</table>'+
-                    '*Aktual harus terisi. Jika aktual produksi untuk suatu item tidak ada, silahkan masukkan 0';
-
-                    $("#jumlah_detail").val($hitung);
-                    $("#id_pl").val(respond['dpl'][0]['id_produksi_line']);
-                    $("#total_pt").val(respond['dpl'][0]['total_processing_time']);
-
-                    $("#table_tambah").html($table);
+                    
                 }
             }); 
         }
     }
 </script>
 
-<!-- hitung efisiensi add sj -->
+<!-- hitung efisiensi add -->
 <script>
     function hitung_ef(obj){
         var count = obj.id;
@@ -1749,7 +1829,7 @@
     }
 </script>
 
-<!-- edit sj -->
+<!-- edit -->
 <script>
     $('.bedit_klik').click(function(){
         var no      = $(this).attr('value');
@@ -1762,7 +1842,22 @@
             data: {id:id},
 
             success: function(respond){
-                $("#tanggal_edit").val(respond['pl'][0]['tanggal']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['pl'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['pl'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['pl'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['pl'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_edit").val($tanggalnya);
                 $("#id_edit").val(id);
 
                 for($i=0;$i<respond['jm_pl'];$i++){
@@ -1782,7 +1877,7 @@
     });
 </script>
 
-<!-- ganti edit sj -->
+<!-- ganti edit -->
 <script>
     function ganti_edit(){
         if($("#id_line_edit").val() == "kosong"){
@@ -1954,8 +2049,22 @@
         var id      = $("#id"+no).val();
         var tgl     = $("#tgl"+no).val();
 
+        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+        var tanggal = new Date(tgl).getDate();
+        var xhari = new Date(tgl).getDay();
+        var xbulan = new Date(tgl).getMonth();
+        var xtahun = new Date(tgl).getYear();
+        
+        var hari = hari[xhari];
+        var bulan = bulan[xbulan];
+        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+        $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
         $("#id_peraks").val(id);
-        $("#tanggal_peraks").html(tgl);
+        $("#tanggal_peraks").html($tanggalnya);
 
         $("#modalpermintaanakses").modal();
         
@@ -1969,8 +2078,22 @@
         var id      = $("#id_peraks_tam"+no).val();
         var tgl     = $("#tgl"+no).val();
 
+        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+        var tanggal = new Date(tgl).getDate();
+        var xhari = new Date(tgl).getDay();
+        var xbulan = new Date(tgl).getMonth();
+        var xtahun = new Date(tgl).getYear();
+        
+        var hari = hari[xhari];
+        var bulan = bulan[xbulan];
+        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+        $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
         $("#id_peraks_batal").val(id);
-        $("#tanggal_peraks_batal").html(tgl);
+        $("#tanggal_peraks_batal").html($tanggalnya);
 
         $("#modalpermintaanaksesbatal").modal();
         
@@ -1983,11 +2106,226 @@
         var no      = $(this).attr('value');
         var id      = $("#id"+no).val();
         var tgl      = $("#tgl"+no).val();
+                
+        $.ajax({
+            type:"post",
+            url:"<?php echo base_url() ?>hasilProduksi/konsumsi_material",
+            dataType: "JSON",
+            data: {id:id},
 
-        $("#id_produksinya").val(id);
-        $("#tanggal_produksinya").html(tgl);
+            success: function(respond){
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 
-        $("#modalse7").modal();
+                var tanggal = new Date(tgl).getDate();
+                var xhari = new Date(tgl).getDay();
+                var xbulan = new Date(tgl).getMonth();
+                var xtahun = new Date(tgl).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#id_produksinya").val(id);
+                $("#tanggal_produksinya").html($tanggalnya);
+                $("#tanggalnya").val($tanggalnya);
+
+                //cek apakah ada permintaan_material yang minus dari yang seharusnya
+                $cek = 0;
+                $jumlah_detail = 0;
+
+                $konsumsi_material = "";
+                $ke = 1;
+                for($i=0;$i<respond['jm_total_dpl'];$i++){
+                    $km_per_line = "";
+                    for($k=0;$k<respond['jm_dpl'];$k++){
+                        $isi_km = "";
+                        if(respond['total_dpl'][$i]['id_detail_produk'] == respond['dpl'][$k]['id_detail_produk'] 
+                        && respond['total_dpl'][$i]['jumlah_produk'] != 0
+                        && respond['dpl'][$k]['id_detail_purchase_order'] == respond['total_dpl'][$i]['id_detail_purchase_order']){
+                            //isi table konsumsi material
+                            $nomor = 1;
+                            for($t=0;$t<respond['jm_km'];$t++){
+                                if(respond['dpl'][$k]['id_produk'] == respond['km'][$t]['id_produk'] && respond['dpl'][$k]['id_line'] == respond['km'][$t]['id_line'] 
+                                && respond['dpl'][$k]['jumlah_item_perencanaan'] != 0 && respond['km'][$t]['status_konsumsi'] == 1){
+                                    $jumlah_konsumsi_seharusnya = respond['km'][$t]['jumlah_konsumsi'] * respond['dpl'][$k]['jumlah_item_aktual'];
+                                    $ukuran_satuan_keluar       = respond['km'][$t]['ukuran_satuan_keluar'];
+                                    $jumlah_detail++;
+                                    //material dari gudang material
+                                    $cari_pm = 0;
+                                    $material_gudang = 0;
+                                    for($p=0;$p<respond['jm_pm'];$p++){
+                                        if(respond['pm'][$p]['id_detail_purchase_order_customer'] == respond['dpl'][$k]['id_detail_purchase_order'] 
+                                            && respond['pm'][$p]['id_line'] == respond['dpl'][$k]['id_line'] 
+                                            && respond['pm'][$p]['id_konsumsi_material'] == respond['km'][$t]['id_konsumsi_material']){
+                                                $cari_pm++;
+                                                $material_gudang = respond['pm'][$p]['total_keluar'];
+                                                $id_line = respond['pm'][$p]['id_line'];
+                                        }
+                                    }
+
+                                    //material dari inventory line
+                                    $from_inli = 0;
+
+                                    //konsumsi gudang material
+                                    $ambilnya = Math.ceil(parseFloat($material_gudang)/parseFloat($ukuran_satuan_keluar));
+
+                                    //wipnya
+                                    $wip = parseFloat($from_inli) + ($ambilnya * $ukuran_satuan_keluar) - parseFloat($jumlah_konsumsi_seharusnya);
+
+
+                                    if($wip < 0){
+                                        $cek++;
+                                    }
+                                    
+                                    $isi_km = $isi_km+
+                                    '<tr>'+
+                                        '<td>'+
+                                            '<center>'+$nomor+'</center>'+
+                                        '</td>'+
+                                        '<td>'+
+                                            '<center>'+
+                                                respond['km'][$t]['nama_sub_jenis_material']+
+                                                '<input type="text" name="id_line'+$jumlah_detail+'" value="'+$id_line+'">'+
+                                                '<input type="text" name="id_sub_jm'+$jumlah_detail+'" value="'+respond['km'][$t]['id_sub_jenis_material']+'">'+
+                                            '</center>'+
+                                        '</td>'+
+                                        '<td>'+
+                                            '<center>'+respond['km'][$t]['jumlah_konsumsi']+'</center>'+
+                                        '</td>'+
+                                        '<td>'+
+                                            '<center>'+$jumlah_konsumsi_seharusnya+'</center>'+
+                                        '</td>'+
+                                        '<td>'+
+                                            '<center>'+0+'</center>'+
+                                        '</td>'+
+                                        '<td>'+
+                                            '<center>'+($ambilnya * $ukuran_satuan_keluar)+'</center>'+
+                                        '</td>'+
+                                        '<td>'+
+                                            '<center>'+$wip+'</center>'+
+                                            '<input type="text" name="wip'+$jumlah_detail+'" value="'+$wip+'">'+
+                                        '</td>'+
+                                    '</tr>';
+
+                                    $nomor++;
+                                }
+                            }
+
+                            if(respond['dpl'][$k]['jumlah_item_perencanaan'] > 0){
+                                $km_per_line = $km_per_line +
+                                respond['dpl'][$k]['nama_line']+' ('+respond['dpl'][$k]['jumlah_item_aktual']+' pcs)'+
+                                '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
+                                    '<thead>'+
+                                        '<tr>'+
+                                            '<th style="text-align: center;vertical-align: middle;">'+
+                                                'No'+
+                                            '</th>'+
+                                            '<th style="text-align: center;vertical-align: middle;">'+
+                                                'Nama Material'+
+                                            '</th>'+
+                                            '<th style="text-align: center;vertical-align: middle;">'+
+                                                'Konsumsi Material'+
+                                            '</th>'+
+                                            '<th style="text-align: center;vertical-align: middle;">'+
+                                                'Konsumsi Seharusnya'+
+                                            '</th>'+
+                                            '<th style="text-align: center;vertical-align: middle;">'+
+                                                'Konsumsi Inventory Line'+
+                                            '</th>'+
+                                            '<th style="text-align: center;vertical-align: middle;">'+
+                                                'Konsumsi Gudang Material'+
+                                            '</th>'+
+                                            '<th style="text-align: center;vertical-align: middle;">'+
+                                                'Sisa Material Di Line'+
+                                            '</th>'+
+                                        '</tr>'+
+                                    '</thead>'+
+                                    '<tbody>'+
+                                        $isi_km+
+                                    '</tbody>'+
+                                '</table><br>';
+                            }
+                        }
+                    }
+
+                    //nama produk
+                        if(respond['total_dpl'][$i]['keterangan'] == 0){
+                            $id_ukuran = respond['total_dpl'][$i]['id_ukuran'];
+                            $id_warna  = respond['total_dpl'][$i]['id_warna'];
+
+                            for($l=0;$l<respond['jmukuran'];$l++){
+                                if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
+                                    $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
+                                    $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
+
+                                    $ukurannya = $nama_ukuran + $satuan_ukuran;
+                                }
+                            }
+
+                            for($k=0;$k<respond['jmwarna'];$k++){
+                                if(respond['warna'][$k]['id_warna'] == $id_warna){
+                                    $warnanya = respond['warna'][$k]['nama_warna'];
+                                }
+                            }
+
+                            $namanya = respond['total_dpl'][$i]['nama_produk'] + $ukurannya + " (" + $warnanya + " )";
+                        }
+                        else if(respond['total_dpl'][$i]['keterangan'] == 1){
+                            $id_ukuran = respond['total_dpl'][$i]['id_ukuran'];
+
+                            for($l=0;$l<respond['jmukuran'];$l++){
+                                if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
+                                    $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
+                                    $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
+
+                                    $ukurannya = $nama_ukuran + $satuan_ukuran;
+                                }
+                            }
+
+                            $namanya = respond['total_dpl'][$i]['nama_produk'] + $ukurannya;
+
+                        }
+                        else if(respond['total_dpl'][$i]['keterangan'] == 2){
+                            $id_warna  = respond['total_dpl'][$i]['id_warna'];
+
+                            for($k=0;$k<respond['jmwarna'];$k++){
+                                if(respond['warna'][$k]['id_warna'] == $id_warna){
+                                    $warnanya = respond['warna'][$k]['nama_warna'];
+                                }
+                            }
+
+                            $namanya = respond['total_dpl'][$i]['nama_produk'] + " (" + $warnanya + ")";
+                        }
+                        else{
+                            $namanya = respond['total_dpl'][$i]['nama_produk'];
+                        }
+                    //tutup nama produk
+
+                    if(respond['total_dpl'][$i]['jumlah_produk'] != 0){
+                        $konsumsi_material = $konsumsi_material +
+                        '<hr><h5><b>'+($ke)+'. '+$namanya+'</b></h5>'+
+                        $km_per_line;
+                        $ke++;
+                    }
+                }
+
+                $("#konsumsi_material").html($konsumsi_material);
+
+                if($cek != 0){
+                    $("#alert").show();
+                    $("#setuju").prop('disabled',true);
+                } else{
+                    $("#alert").hide();
+                    $("#setuju").prop('disabled',false);
+                }
+
+                $("#jumlah_detail_se7").val($jumlah_detail);
+                $("#modalse7").modal();
+            }
+        });
     });
 </script>
 

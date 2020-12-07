@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Semua Laporan Perencanaan Cutting</h2>
+        <h2>Laporan Perencanaan Cutting Belum Ada </h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Semua Laporan Perencanaan Cutting</span></li>
+                <li><span>Laporan Perencanaan Cutting Belum Ada</span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -25,7 +25,7 @@
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
         <header class="panel-heading">
-            <h2 class="panel-title">Data Laporan Perencanaan Cutting</h2>
+            <h2 class="panel-title">Data Laporan Perencanaan Cutting Belum Ada</h2>
         </header>
 
         <div class="panel-body">
@@ -34,14 +34,15 @@
                     <tr>
                         <th style="text-align: center;vertical-align: middle;">No</th>
                         <th style="text-align: center;vertical-align: middle;">Tanggal</th>
-                        <th style="text-align: center;vertical-align: middle;">Status</th>
                         <th style="text-align: center;vertical-align: middle;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php 
                         $no = 1;
-                        foreach($tanggal as $x){ ?>
+                        foreach($tanggal as $x){ 
+                            if($x->status_laporan == 0){
+                    ?>
                         <tr>
                             <td style="text-align: center;vertical-align: middle;">
                                 <?= $no; ?>
@@ -120,7 +121,7 @@
                                 <?php } ?>
                             </td>
                         </tr>
-                    <?php $no++; } ?>
+                    <?php $no++; }} ?>
                     
                 </tbody>
             </table>

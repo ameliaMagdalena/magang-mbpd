@@ -136,6 +136,159 @@ class M_Dashboard extends CI_Model {
 
         //tutup
 
+        //notif bpbj
+            function get_jm_bpbj(){
+                return $this->db->query("SELECT COUNT(id_bpbj) AS jumlah_bpbj FROM bpbj WHERE 
+                bpbj.status_delete=0 AND (bpbj.status_bpbj BETWEEN 0 AND 1) ");
+            }
+
+            function get_jm_bpbj_0(){
+                return $this->db->query("SELECT COUNT(id_bpbj) AS jumlah_bpbj FROM bpbj WHERE 
+                bpbj.status_delete=0 AND bpbj.status_bpbj ='0' ");
+            }
+
+            function get_jm_bpbj_1(){
+                return $this->db->query("SELECT COUNT(id_bpbj) AS jumlah_bpbj FROM bpbj WHERE 
+                bpbj.status_delete=0 AND bpbj.status_bpbj ='1' ");
+            }
+        //tutup
+
+        //notif bpbd
+            function get_jm_bpbd(){
+                return $this->db->query("SELECT COUNT(id_bpbd) AS jumlah_bpbd FROM bpbd WHERE 
+                bpbd.status_delete=0 AND (bpbd.status_bpbd ='0') ");
+            }
+        //tutup
+
+        //notif sj
+            function get_jm_sj(){
+                return $this->db->query("SELECT COUNT(id_surat_jalan) AS jumlah_sj FROM surat_jalan WHERE 
+                surat_jalan.status_delete=0 AND (surat_jalan.status_surat_jalan BETWEEN 0 AND 1) ");
+            }
+
+            function get_jm_sj_0(){
+                return $this->db->query("SELECT COUNT(id_surat_jalan) AS jumlah_sj FROM surat_jalan WHERE 
+                surat_jalan.status_delete=0 AND (surat_jalan.status_surat_jalan ='0') ");
+            }
+
+            function get_jm_sj_1(){
+                return $this->db->query("SELECT COUNT(id_surat_jalan) AS jumlah_sj FROM surat_jalan WHERE 
+                surat_jalan.status_delete=0 AND (surat_jalan.status_surat_jalan ='1') ");
+            }
+        //tutup
+
+        //notif invoice
+            function get_jm_invoice(){
+                return $this->db->query("SELECT COUNT(id_invoice) AS jumlah_invoice FROM invoice WHERE 
+                invoice.status_delete=0 AND (invoice.status_invoice ='0') ");
+            }
+        //tutup
+
+        //notif pengmat
+            function get_jm_pengmat(){
+                return $this->db->query("SELECT COUNT(id_pengambilan_material) AS jumlah_pengmat FROM pengambilan_material WHERE 
+                pengambilan_material.status_delete=0 AND (pengambilan_material.status_keluar ='0') ");
+            }
+
+            function get_jm_pengmat_line($line){
+                return $this->db->query("SELECT COUNT(id_pengambilan_material) AS jumlah_pengmat 
+                FROM pengambilan_material,detail_permintaan_material,permintaan_material,line WHERE line.nama_line='$line' AND
+                pengambilan_material.status_delete=0 AND (pengambilan_material.status_keluar ='0') AND 
+                pengambilan_material.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material AND
+                detail_permintaan_material.id_permintaan_material=permintaan_material.id_permintaan_material AND
+                permintaan_material.id_line=line.id_line");
+            }
+        //tutup
+
+        //notif pertam
+            function get_jm_pertam(){
+                return $this->db->query("SELECT COUNT(id_permintaan_tambahan) AS jumlah_pertam FROM permintaan_tambahan WHERE 
+                permintaan_tambahan.status_delete=0 AND (permintaan_tambahan.status BETWEEN 0 AND 2) ");
+            }
+
+            function get_jm_pertam_0(){
+                return $this->db->query("SELECT COUNT(id_permintaan_tambahan) AS jumlah_pertam FROM permintaan_tambahan WHERE 
+                permintaan_tambahan.status_delete=0 AND (permintaan_tambahan.status ='0') ");
+            }
+
+            function get_jm_pertam_1(){
+                return $this->db->query("SELECT COUNT(id_permintaan_tambahan) AS jumlah_pertam FROM permintaan_tambahan WHERE 
+                permintaan_tambahan.status_delete=0 AND (permintaan_tambahan.status ='1') ");
+            }
+
+            function get_jm_pertam_2(){
+                return $this->db->query("SELECT COUNT(id_permintaan_tambahan) AS jumlah_pertam FROM permintaan_tambahan WHERE 
+                permintaan_tambahan.status_delete=0 AND (permintaan_tambahan.status ='2') ");
+            }
+
+            function get_jm_pertam_line($line){
+                return $this->db->query("SELECT COUNT(id_permintaan_tambahan) AS jumlah_pertam 
+                FROM permintaan_tambahan,detail_permintaan_material,permintaan_material,line 
+                WHERE permintaan_tambahan.status_delete=0 AND line.nama_line='$line' AND 
+                (permintaan_tambahan.status BETWEEN 0 AND 2) AND permintaan_tambahan.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material
+                AND detail_permintaan_material.id_permintaan_material=permintaan_material.id_permintaan_material AND 
+                permintaan_material.id_line=line.id_line ");
+            }
+
+            function get_jm_pertam_line_0($line){
+                return $this->db->query("SELECT COUNT(id_permintaan_tambahan) AS jumlah_pertam 
+                FROM permintaan_tambahan,detail_permintaan_material,permintaan_material,line 
+                WHERE permintaan_tambahan.status_delete=0 AND line.nama_line='$line' AND 
+                (permintaan_tambahan.status ='0') AND permintaan_tambahan.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material
+                AND detail_permintaan_material.id_permintaan_material=permintaan_material.id_permintaan_material AND 
+                permintaan_material.id_line=line.id_line ");
+            }
+
+            function get_jm_pertam_line_1($line){
+                return $this->db->query("SELECT COUNT(id_permintaan_tambahan) AS jumlah_pertam 
+                FROM permintaan_tambahan,detail_permintaan_material,permintaan_material,line 
+                WHERE permintaan_tambahan.status_delete=0 AND line.nama_line='$line' AND 
+                (permintaan_tambahan.status ='1') AND permintaan_tambahan.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material
+                AND detail_permintaan_material.id_permintaan_material=permintaan_material.id_permintaan_material AND 
+                permintaan_material.id_line=line.id_line ");
+            }
+
+            function get_jm_pertam_line_2($line){
+                return $this->db->query("SELECT COUNT(id_permintaan_tambahan) AS jumlah_pertam 
+                FROM permintaan_tambahan,detail_permintaan_material,permintaan_material,line 
+                WHERE permintaan_tambahan.status_delete=0 AND line.nama_line='$line' AND 
+                (permintaan_tambahan.status ='2') AND permintaan_tambahan.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material
+                AND detail_permintaan_material.id_permintaan_material=permintaan_material.id_permintaan_material AND 
+                permintaan_material.id_line=line.id_line ");
+            }
+        //tutup
+
+        //notif hasil produksi
+            function get_jm_hasprod(){
+                return $this->db->query("SELECT COUNT(id_produksi) AS jumlah_hasprod FROM produksi WHERE 
+                produksi.status_delete=0 AND (produksi.status_laporan BETWEEN 0 AND 1) AND produksi.status_perencanaan='1' ");
+            }
+        //tutup
+
+        //notif percut
+            function get_jm_percut(){
+                return $this->db->query("SELECT COUNT(id_perencanaan_cutting) AS jumlah_percut FROM perencanaan_cutting 
+                WHERE perencanaan_cutting.status_delete=0 AND (perencanaan_cutting.status_laporan BETWEEN 0 AND 1) ");
+            }
+
+            function get_jm_percut_0(){
+                return $this->db->query("SELECT COUNT(id_perencanaan_cutting) AS jumlah_percut FROM perencanaan_cutting 
+                WHERE perencanaan_cutting.status_delete=0 AND (perencanaan_cutting.status_laporan ='0') ");
+            }
+
+            function get_jm_percut_1(){
+                return $this->db->query("SELECT COUNT(id_perencanaan_cutting) AS jumlah_percut FROM perencanaan_cutting 
+                WHERE perencanaan_cutting.status_delete=0 AND (perencanaan_cutting.status_laporan ='1') ");
+            }
+        //tutup
+
+        //notif peraks
+            function get_jm_peraks(){
+                return $this->db->query("SELECT COUNT(id_permohonan_akses) AS jumlah_peraks FROM permohonan_akses WHERE 
+                permohonan_akses.status_delete=0 AND (permohonan_akses.status_permohonan ='0') ");
+            }
+        //tutup
+
 
 
     //tutup notif produksi

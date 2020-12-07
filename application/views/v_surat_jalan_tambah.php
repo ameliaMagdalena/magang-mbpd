@@ -25,7 +25,7 @@
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
         <header class="panel-heading">
-            <h2 class="panel-title">Data Purchase Order</h2>
+            <h2 class="panel-title">Data Purchase Order Customer</h2>
         </header>
 
         <div class="panel-body">
@@ -105,7 +105,41 @@
                                 <?= $no ?>
                             </td>
                             <td style="text-align: center;vertical-align: middle;">
-                                <?= $po->tanggal_po?>
+                                <?php 
+                                    $waktu = $po->tanggal_po;
+
+                                    $hari_array = array(
+                                        'Minggu',
+                                        'Senin',
+                                        'Selasa',
+                                        'Rabu',
+                                        'Kamis',
+                                        'Jumat',
+                                        'Sabtu'
+                                    );
+                                    $hr = date('w', strtotime($waktu));
+                                    $hari = $hari_array[$hr];
+                                    $tanggal = date('j', strtotime($waktu));
+                                    $bulan_array = array(
+                                        1 => 'Januari',
+                                        2 => 'Februari',
+                                        3 => 'Maret',
+                                        4 => 'April',
+                                        5 => 'Mei',
+                                        6 => 'Juni',
+                                        7 => 'Juli',
+                                        8 => 'Agustus',
+                                        9 => 'September',
+                                        10 => 'Oktober',
+                                        11 => 'November',
+                                        12 => 'Desember',
+                                    );
+                                    $bl = date('n', strtotime($waktu));
+                                    $bulan = $bulan_array[$bl];
+                                    $tahun = date('Y', strtotime($waktu));
+                                    
+                                    echo "$hari, $tanggal $bulan $tahun";
+                                ?>
                                 <input type="hidden" id="id<?= $no;?>" value="<?= $po->id_purchase_order_customer?>">
                             </td>
                             <td style="text-align: center;vertical-align: middle;">
@@ -277,7 +311,21 @@
             data: {id:id},
 
             success: function(respond){
-                $("#tanggal_po_detail").val(respond['po'][0]['tanggal_po']);
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['po'][0]['tanggal_po']).getDate();
+                var xhari = new Date(respond['po'][0]['tanggal_po']).getDay();
+                var xbulan = new Date(respond['po'][0]['tanggal_po']).getMonth();
+                var xtahun = new Date(respond['po'][0]['tanggal_po']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_po_detail").val($tanggalnya);
                 $("#nomor_po_detail").val(respond['po'][0]['kode_purchase_order_customer']);
                 $("#nama_cust_detail").val(respond['po'][0]['nama_customer']);
 
@@ -439,7 +487,21 @@
             data: {id:id},
 
             success: function(respond){
-                $("#tanggal_po_tambah").val(respond['po'][0]['tanggal_po']);
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['po'][0]['tanggal_po']).getDate();
+                var xhari = new Date(respond['po'][0]['tanggal_po']).getDay();
+                var xbulan = new Date(respond['po'][0]['tanggal_po']).getMonth();
+                var xtahun = new Date(respond['po'][0]['tanggal_po']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_po_tambah").val($tanggalnya);
                 $("#id_po_tambah").val(respond['po'][0]['id_purchase_order_customer']);
                 $("#nomor_po_tambah").val(respond['po'][0]['kode_purchase_order_customer']);
                 $("#nama_cust_tambah").val(respond['po'][0]['nama_customer']);

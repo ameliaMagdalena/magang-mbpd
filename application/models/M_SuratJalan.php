@@ -27,7 +27,7 @@ class M_SuratJalan extends CI_Model {
     //where status deletenya juga 0
     function get_po(){
         return $this->db->query("SELECT * FROM purchase_order_customer,customer 
-        WHERE status_po='2' AND purchase_order_customer.status_delete='0' AND customer.id_customer=purchase_order_customer.id_customer");
+        WHERE status_po='1' AND purchase_order_customer.status_delete='0' AND customer.id_customer=purchase_order_customer.id_customer");
     }
 
     function get_dpo(){
@@ -145,6 +145,22 @@ class M_SuratJalan extends CI_Model {
 
     function get_jm_produk_det_bpbj($id_detail_bpbj){
         return $this->db->query("SELECT jumlah_terkirim FROM detail_bpbj WHERE id_detail_bpbj='$id_detail_bpbj' ");
+    }
+
+    function select_sj_det_item_bpbd(){
+        return $this->db->query("SELECT surat_jalan.id_surat_jalan, COUNT(id_detail_item_bpbd) AS jumlah_det_item_bpbd
+        FROM detail_item_bpbd,item_surat_jalan,surat_jalan WHERE detail_item_bpbd.status_delete='0' AND
+        detail_item_bpbd.id_item_surat_jalan = item_surat_jalan.id_item_surat_jalan AND 
+        item_surat_jalan.id_surat_jalan=surat_jalan.id_surat_jalan GROUP BY surat_jalan.id_surat_jalan ");
+    }
+
+    function select_one_sj_det_item_bpbd($id){
+        return $this->db->query("SELECT bpbd.id_bpbd, item_bpbd.id_detail_produk, detail_item_bpbd.jumlah_produk, surat_jalan.id_surat_jalan
+        FROM detail_item_bpbd, item_surat_jalan, surat_jalan, item_bpbd, bpbd
+        WHERE surat_jalan.id_surat_jalan='$id' AND detail_item_bpbd.status_delete='0' AND 
+        detail_item_bpbd.id_item_surat_jalan=item_surat_jalan.id_item_surat_jalan AND 
+        item_surat_jalan.id_surat_jalan=surat_jalan.id_surat_jalan AND detail_item_bpbd.id_item_bpbd=item_bpbd.id_item_bpbd AND 
+        item_bpbd.id_bpbd=bpbd.id_bpbd ");
     }
 
 }

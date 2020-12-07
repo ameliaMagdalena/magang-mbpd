@@ -637,6 +637,7 @@
 <!-- BG 1 PO -->
         <div class="panel-group" id="accordion2"  style="margin:50px 0px 0px 25px" >
             <div class="panel panel-accordion panel-accordion-primary">
+                
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a class="accordion-toggle" data-toggle="collapse" style="background-color:rgb(189, 36, 40);color:white;font-size:12px;height:30px;padding:5;"

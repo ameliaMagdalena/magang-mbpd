@@ -25,7 +25,7 @@
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
         <header class="panel-heading">
-            <h2 class="panel-title">Data Purchase Order</h2>
+            <h2 class="panel-title">Data Purchase Order Customer</h2>
         </header>
 
         <div class="panel-body">
@@ -58,7 +58,41 @@
                                 <?= $no ?>
                             </td>
                             <td style="text-align: center;vertical-align: middle;">
-                                <?= $po->tanggal_po?>
+                                <?php 
+                                    $waktu = $po->tanggal_po;
+
+                                    $hari_array = array(
+                                        'Minggu',
+                                        'Senin',
+                                        'Selasa',
+                                        'Rabu',
+                                        'Kamis',
+                                        'Jumat',
+                                        'Sabtu'
+                                    );
+                                    $hr = date('w', strtotime($waktu));
+                                    $hari = $hari_array[$hr];
+                                    $tanggal = date('j', strtotime($waktu));
+                                    $bulan_array = array(
+                                        1 => 'Januari',
+                                        2 => 'Februari',
+                                        3 => 'Maret',
+                                        4 => 'April',
+                                        5 => 'Mei',
+                                        6 => 'Juni',
+                                        7 => 'Juli',
+                                        8 => 'Agustus',
+                                        9 => 'September',
+                                        10 => 'Oktober',
+                                        11 => 'November',
+                                        12 => 'Desember',
+                                    );
+                                    $bl = date('n', strtotime($waktu));
+                                    $bulan = $bulan_array[$bl];
+                                    $tahun = date('Y', strtotime($waktu));
+                                    
+                                    echo "$hari, $tanggal $bulan $tahun";
+                                ?>
                             </td>
                             <td style="text-align: center;vertical-align: middle;">
                                 <input type="hidden" id="id<?= $no ?>" value="<?= $po->id_purchase_order_customer?>">
@@ -88,11 +122,11 @@
                             </td>
                             <td class="col-lg-3">
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                    value="<?= $no;?>" title="Detail"></button>
+                                    value="<?= $no;?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
                                 <form method="POST" action="<?= base_url()?>invoice/tambah_invoice">
                                     <input type="hidden" name="id_PO" value="<?= $po->id_purchase_order_customer?>">
                                     <input type="hidden" name="kode_PO" value="<?= $po->kode_purchase_order_customer?>">
-                                    <button type="submit" class="col-lg-3 btn btn-success fa fa-plus-square-o" title="Buat Laporan Hasil Produksi"></button>
+                                    <button type="submit" class="col-lg-3 btn btn-success fa fa-plus-square-o" title="Buat Laporan Hasil Produksi" style="margin-right:5px;margin-bottom:5px"></button>
                                 </form> 
                             </td>
                         </tr>
@@ -309,7 +343,21 @@
             data: {id:id},
 
             success: function(respond){
-                $("#tanggal_po").val(respond['po'][0]['tanggal_po']);
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['po'][0]['tanggal_po']).getDate();
+                var xhari = new Date(respond['po'][0]['tanggal_po']).getDay();
+                var xbulan = new Date(respond['po'][0]['tanggal_po']).getMonth();
+                var xtahun = new Date(respond['po'][0]['tanggal_po']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_po").val($tanggalnya);
                 $("#nomor_po").val(respond['po'][0]['kode_purchase_order_customer']);
                 $("#nama_customer").val(respond['po'][0]['nama_customer']);
 
@@ -492,7 +540,19 @@
                             }
                         }
                     
+                        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 
+                        var tanggal = new Date(respond['sj'][$i]['tanggal']).getDate();
+                        var xhari = new Date(respond['sj'][$i]['tanggal']).getDay();
+                        var xbulan = new Date(respond['sj'][$i]['tanggal']).getMonth();
+                        var xtahun = new Date(respond['sj'][$i]['tanggal']).getYear();
+                        
+                        var hari = hari[xhari];
+                        var bulan = bulan[xbulan];
+                        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                        $tanggal_sj = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
 
 
                         $isi = $isi + 
@@ -506,7 +566,7 @@
                         '<div class="form-group mt-lg">'+
                             '<label class="col-sm-5 control-label">Tanggal</label>'+
                             '<div class="col-sm-7">'+
-                                '<input type="text" class="form-control" value="'+respond['sj'][$i]['tanggal']+'" readonly>'+
+                                '<input type="text" class="form-control" value="'+$tanggal_sj+'" readonly>'+
                             '</div>'+
                         '</div>'+
                         '<div class="form-group mt-lg">'+

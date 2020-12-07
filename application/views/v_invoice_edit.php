@@ -68,28 +68,62 @@
                                     <?= $sj->id_surat_jalan ?>
                                 </td>
                                 <td style="text-align: center;vertical-align: middle;">
-                                    <?= $sj->tanggal ?>
+                                    <?php 
+                                        $waktu =  $sj->tanggal;
+
+                                        $hari_array = array(
+                                            'Minggu',
+                                            'Senin',
+                                            'Selasa',
+                                            'Rabu',
+                                            'Kamis',
+                                            'Jumat',
+                                            'Sabtu'
+                                        );
+                                        $hr = date('w', strtotime($waktu));
+                                        $hari = $hari_array[$hr];
+                                        $tanggal = date('j', strtotime($waktu));
+                                        $bulan_array = array(
+                                            1 => 'Januari',
+                                            2 => 'Februari',
+                                            3 => 'Maret',
+                                            4 => 'April',
+                                            5 => 'Mei',
+                                            6 => 'Juni',
+                                            7 => 'Juli',
+                                            8 => 'Agustus',
+                                            9 => 'September',
+                                            10 => 'Oktober',
+                                            11 => 'November',
+                                            12 => 'Desember',
+                                        );
+                                        $bl = date('n', strtotime($waktu));
+                                        $bulan = $bulan_array[$bl];
+                                        $tahun = date('Y', strtotime($waktu));
+                                        
+                                        echo "$hari, $tanggal $bulan $tahun";
+                                    ?>
                                 </td>
                                 <td style="text-align: center;vertical-align: middle;">
                                     <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                        value="<?= $nonya;?>" title="Detail"></button>
+                                        value="<?= $nonya;?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
                                     <?php if($sj->id_invoice == ""){?>
                                         <div id="div_badd<?= $nonya; ?>">
                                             <button type="button" class="add_sj col-lg-3 btn btn-success fa fa-plus-square-o" 
-                                            value="<?= $nonya;?>" title="Add"></button>
+                                            value="<?= $nonya;?>" title="Add" style="margin-right:5px;margin-bottom:5px"></button>
                                         </div>
                                         <div id="div_bremove<?= $nonya; ?>" style="display:none">
                                             <button type="button" class="remove_sj col-lg-3 btn btn-danger fa fa-minus-square-o" 
-                                            value="<?= $nonya;?>" title="Remove"></button>
+                                            value="<?= $nonya;?>" title="Remove" style="margin-right:5px;margin-bottom:5px"></button>
                                         </div>
                                     <?php } else{?>
                                         <div id="div_badd<?= $nonya; ?>" style="display:none">
                                             <button type="button" class="add_sj col-lg-3 btn btn-success fa fa-plus-square-o" 
-                                            value="<?= $nonya;?>" title="Add"></button>
+                                            value="<?= $nonya;?>" title="Add" style="margin-right:5px;margin-bottom:5px"></button>
                                         </div>
                                         <div id="div_bremove<?= $nonya; ?>" >
                                             <button type="button" class="remove_sj col-lg-3 btn btn-danger fa fa-minus-square-o" 
-                                            value="<?= $nonya;?>" title="Remove"></button>
+                                            value="<?= $nonya;?>" title="Remove" style="margin-right:5px;margin-bottom:5px"></button>
                                         </div>
                                     <?php } ?>
 
@@ -127,7 +161,41 @@
                         <label class="col-sm-5 control-label">Tanggal</label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control" name="tanggal"
-                            value="<?= $invoice[0]['tanggal'] ?>" readonly>
+                            value=" <?php 
+                                    $waktu = $invoice[0]['tanggal']; 
+
+                                    $hari_array = array(
+                                        'Minggu',
+                                        'Senin',
+                                        'Selasa',
+                                        'Rabu',
+                                        'Kamis',
+                                        'Jumat',
+                                        'Sabtu'
+                                    );
+                                    $hr = date('w', strtotime($waktu));
+                                    $hari = $hari_array[$hr];
+                                    $tanggal = date('j', strtotime($waktu));
+                                    $bulan_array = array(
+                                        1 => 'Januari',
+                                        2 => 'Februari',
+                                        3 => 'Maret',
+                                        4 => 'April',
+                                        5 => 'Mei',
+                                        6 => 'Juni',
+                                        7 => 'Juli',
+                                        8 => 'Agustus',
+                                        9 => 'September',
+                                        10 => 'Oktober',
+                                        11 => 'November',
+                                        12 => 'Desember',
+                                    );
+                                    $bl = date('n', strtotime($waktu));
+                                    $bulan = $bulan_array[$bl];
+                                    $tahun = date('Y', strtotime($waktu));
+                                    
+                                    echo "$hari, $tanggal $bulan $tahun";
+                                ?>" readonly>
                         </div>
                     </div>
                     <div class="form-group mt-lg">
@@ -269,11 +337,13 @@
                                                         </td>
                                                         <td style="text-align: center;vertical-align: middle;">
                                                             <input type="hidden" id="price<?=$no;?>" name="price<?=$no;?>" value="<?= $dinv->price?>" class="form-control">
-                                                            <p id="prices<?=$no;?>"><?= $dinv->price?></p>
+                                                            <?php $price =  "Rp " . number_format($dinv->price,2,',','.'); ?>
+                                                            <p id="prices<?=$no;?>"><?= $price ?></p>
                                                         </td>
                                                         <td style="text-align: center;vertical-align: middle;">
                                                             <input type="hidden" id="tprice<?=$no;?>" name="tprice<?=$no;?>" value="<?= $dinv->total_price?>" class="form-control">
-                                                            <p id="tprices<?=$no;?>"><?= $dinv->total_price?></p>
+                                                            <?php $tprice =  "Rp " . number_format($dinv->total_price,2,',','.'); ?>
+                                                            <p id="tprices<?=$no;?>"><?= $tprice ?></p>
                                                         </td>
                                                     </tr>
                                 <?php
@@ -340,7 +410,8 @@
                                                         </td>
                                                         <td style="text-align: center;vertical-align: middle;">
                                                             <input type="hidden" id="price<?=$no;?>" name="price<?=$no;?>" value="<?= $dpo->harga_satuan ?>" class="form-control">
-                                                            <p id="prices<?=$no;?>"><?= $dpo->harga_satuan ?></p>
+                                                            <?php $price =  "Rp " . number_format($dpo->harga_satuan,2,',','.'); ?>
+                                                            <p id="prices<?=$no;?>"><?= $price ?></p>
                                                         </td>
                                                         <td style="text-align: center;vertical-align: middle;">
                                                             <input type="hidden" id="tprice<?=$no;?>" name="tprice<?=$no;?>" class="form-control">
@@ -354,7 +425,8 @@
                                     <td colspan="2" style="text-align: center;vertical-align: middle;">Subtotal</td>
                                     <td style="text-align: center;vertical-align: middle;">
                                         <input type="hidden" name="subtotal" id="subtotal" value="<?= $invoice[0]['sub_total']?>">
-                                        <p name="subtotals" id="subtotals"><?= $invoice[0]['sub_total']?></p>
+	                                    <?php $subtotal =  "Rp " . number_format($invoice[0]['sub_total'],2,',','.'); ?>
+                                        <p name="subtotals" id="subtotals"><?= $subtotal ?></p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -366,8 +438,9 @@
                                         </center>
                                     </td>
                                     <td style="text-align: center;vertical-align: middle;">
-                                        <input type="hidden" name="disc" id="disc" value="<?= $invoice[0]['discount']?>">
-                                        <p name="discs" id="discs"><?= $invoice[0]['discount']?></p>
+                                        <input type ="hidden" name="disc" id="disc" value="<?= $invoice[0]['discount']?>">
+                                        <?php $disc =  "Rp " . number_format($invoice[0]['discount'],2,',','.'); ?>
+                                        <p name="discs" id="discs"><?= $disc?></p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -380,14 +453,16 @@
                                     </td>
                                     <td style="text-align: center;vertical-align: middle;">
                                         <input type="hidden" name="ppn" id="ppn" value="<?= $invoice[0]['ppn']?>">
-                                        <p name="ppns" id="ppns"><?= $invoice[0]['ppn']?></p>
+                                        <?php $ppn =  "Rp " . number_format($invoice[0]['ppn'],2,',','.'); ?>
+                                        <p name="ppns" id="ppns"><?= $ppn ?></p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="text-align: center;vertical-align: middle;">Total</td>
                                     <td style="text-align: center;vertical-align: middle;">
                                         <input type="hidden" name="total" id="total" value="<?= $invoice[0]['total']?>">
-                                        <p name="totals" id="totals"><?= $invoice[0]['total']?></p>
+                                        <?php $total =  "Rp " . number_format($invoice[0]['total'],2,',','.'); ?>
+                                        <p name="totals" id="totals"><?= $total ?></p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -447,106 +522,12 @@
             </div>
         </div>
     </div>
-
-    <div id='modaldetailnya' class="modal-block modal-block-primary mfp-hide">
-		<section class="panel">
-            <header class="panel-heading">
-                <h2 class="panel-title">Detail Surat Jalan</h2>
-            </header>
-
-            <div class="panel-body">
-                <div class="form-group mt-lg">
-                    <label class="col-sm-5 control-label">Nomor Surat Jalan</label>
-                    <div class="col-sm-7">
-                        <input type="text" class="form-control"
-                        value="M2002.0198" readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-5 control-label">Tanggal</label>
-                    <div class="col-sm-7">
-                        <input type="text" class="form-control"
-                        value="Selasa, 07-07-2020" readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-5 control-label">Keterangan</label>
-                    <div class="col-sm-7">
-                        <textarea class="form-control" rows="3" id="textareaDefault" readonly>
-                        </textarea>
-                    </div>
-                </div>
-                <br>
-
-                <table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">
-                    <thead>
-                        <tr>
-                            <th style="text-align: center;vertical-align: middle;">
-                                No
-                            </th>
-                            <th style="text-align: center;vertical-align: middle;">
-                                Nama Produk
-                            </th>
-                            <th style="text-align: center;vertical-align: middle;">
-                                Kode Produk
-                            </th>
-                            <th style="text-align: center;vertical-align: middle;">
-                                Total Produk
-                            </th>
-                            <th style="text-align: center;vertical-align: middle;">
-                                Satuan
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="text-align: center;vertical-align: middle;">1</td>
-                            <td style="text-align: center;vertical-align: middle;">Compact Mattress Aoki Merah</td>
-                            <td style="text-align: center;vertical-align: middle;">N-COM00-Z001.0J</td>
-                            <td style="text-align: center;vertical-align: middle;">50</td>
-                            <td style="text-align: center;vertical-align: middle;">Pcs</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;vertical-align: middle;">2</td>
-                            <td style="text-align: center;vertical-align: middle;">Compact Mattress Aoki Coklat</td>
-                            <td style="text-align: center;vertical-align: middle;">N-COM00-Z001.0J</td>
-                            <td style="text-align: center;vertical-align: middle;">100</td>
-                            <td style="text-align: center;vertical-align: middle;">Pcs</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;vertical-align: middle;">3</td>
-                            <td style="text-align: center;vertical-align: middle;">Compact Mattress Aoki Hitam</td>
-                            <td style="text-align: center;vertical-align: middle;">N-COM00-Z001.0J</td>
-                            <td style="text-align: center;vertical-align: middle;">50</td>
-                            <td style="text-align: center;vertical-align: middle;">Pcs</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;vertical-align: middle;">4</td>
-                            <td style="text-align: center;vertical-align: middle;">Compact Mattress Aoki Hijau</td>
-                            <td style="text-align: center;vertical-align: middle;">N-COM00-Z001.0J</td>
-                            <td style="text-align: center;vertical-align: middle;">50</td>
-                            <td style="text-align: center;vertical-align: middle;">Pcs</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-			<footer class="panel-footer">
-				<div class="row">
-					<div class="col-md-12 text-right">
-						<button type="button" class="btn btn-default modal-dismiss">Ok</button>
-					</div>
-				</div>
-			</footer>
-		</section>
-    </div>
     
 <!--*****************************-->
 <?php include('_endtitle.php'); ?>
 <?php include('_js.php'); ?>
 <!--*****************************-->
 <!--*****************************-->
-
 <script>
     function reload() {
         location.reload();
@@ -567,7 +548,22 @@
 
             success: function(respond){
                 $("#no_sj_ed").val(respond['sj'][0]['id_surat_jalan']);
-                $("#tgl_ed").val(respond['sj'][0]['tanggal']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['sj'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['sj'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['sj'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['sj'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tgl_ed").val($tanggalnya);
                 $("#ket_ed").val(respond['sj'][0]['keterangan']);
 
                 $isi = "";
@@ -712,7 +708,8 @@
                             $tprice_aft = $qty_aft * $price_bfr;
 
                             $("#tprice"+$j).val($tprice_aft);
-                            $("#tprices"+$j).html($tprice_aft);
+	                        var num = "Rp "+  new Number($tprice_aft).toLocaleString("id-ID") + ",00";
+                            $("#tprices"+$j).html(num);
                         }
                     }
                 }
@@ -723,7 +720,8 @@
                     $subtotal = parseInt($subtotal) + $("#tprice"+$j).val();
                 }
                 $("#subtotal").val($subtotal);
-                $("#subtotals").html($subtotal);
+                var num = "Rp "+  new Number($subtotal).toLocaleString("id-ID") + ",00";
+                $("#subtotals").html(num);
 
 
                 //discount
@@ -733,7 +731,8 @@
                     $discountnya = $subtotal * $discount_rate / 100;
 
                     $("#disc").val($discountnya);
-                    $("#discs").html($discountnya);
+                    var num = "Rp "+  new Number($discountnya).toLocaleString("id-ID") + ",00";
+                    $("#discs").html(num);
                     
                 }
                 else{
@@ -747,12 +746,14 @@
                 $ppnnya = $subtotal * $ppn_rate / 100;
 
                 $("#ppn").val($ppnnya);
-                $("#ppns").html($ppnnya);
+                var num = "Rp "+  new Number($ppnnya).toLocaleString("id-ID") + ",00";
+                $("#ppns").html(num);
 
                 $total = parseInt($subtotal) - parseInt($discountnya) + parseInt($ppnnya);
 
                 $("#total").val($total);
-                $("#totals").html($total);
+                var num = "Rp "+  new Number($total).toLocaleString("id-ID") + ",00";
+                $("#totals").html(num);
 
                 if($("#stat"+no).val() == 0){
                     $("#stat"+no).val(1);
@@ -830,7 +831,8 @@
                             $tprice_aft = $qty_aft * $price_bfr;
 
                             $("#tprice"+$j).val($tprice_aft);
-                            $("#tprices"+$j).html($tprice_aft);
+                            var num = "Rp "+  new Number($tprice_aft).toLocaleString("id-ID") + ",00";
+                            $("#tprices"+$j).html(num);
                         }
                     }
                 }
@@ -847,7 +849,8 @@
                 }
                 else{
                     $("#subtotal").val($subtotal);
-                    $("#subtotals").html($subtotal);
+                    var num = "Rp "+  new Number($subtotal).toLocaleString("id-ID") + ",00";
+                    $("#subtotals").html(num);
                 }
 
                 //discount
@@ -862,7 +865,8 @@
                     }
                     else{
                         $("#disc").val($discountnya);
-                        $("#discs").html($discountnya);
+                        var num = "Rp "+  new Number($discountnya).toLocaleString("id-ID") + ",00";
+                        $("#discs").html(num);
                     }
                     
                 }
@@ -882,7 +886,8 @@
                 }
                 else{
                     $("#ppn").val($ppnnya);
-                    $("#ppns").html($ppnnya);
+                    var num = "Rp "+  new Number($ppnnya).toLocaleString("id-ID") + ",00";
+                    $("#ppns").html(num);
                 }
 
                 $total = parseInt($subtotal) - parseInt($discountnya) + parseInt($ppnnya);
@@ -893,7 +898,8 @@
                 }
                 else{
                     $("#total").val($total);
-                    $("#totals").html($total);
+                    var num = "Rp "+  new Number($total).toLocaleString("id-ID") + ",00";
+                    $("#totals").html(num);
                 }
 
                 //button
@@ -954,16 +960,16 @@
         }
         else{
             $("#disc").val($disc_aft);
-            $("#discs").html($disc_aft);
+            var num = "Rp "+  new Number($disc_aft).toLocaleString("id-ID") + ",00";
+            $("#discs").html(num);
         }
 
        
         $total = parseInt($("#subtotal").val()) - parseInt($disc_aft) + parseInt($("#ppn").val());
 
         $("#total").val($total);
-        $("#totals").html($total);
-
-
+        var num = "Rp "+  new Number($total).toLocaleString("id-ID") + ",00";
+        $("#totals").html(num);
     }
 </script>
 

@@ -56,7 +56,43 @@
                             </td>
                             <td  style="text-align: center;vertical-align: middle;"><?= $x->kode_purchase_order_customer?></td>
                             <td  style="text-align: center;vertical-align: middle;"><?= $x->nama_customer?></td>
-                            <td  style="text-align: center;vertical-align: middle;"><?= $x->tanggal ?></td>
+                            <td  style="text-align: center;vertical-align: middle;">
+                                <?php 
+                                    $waktu = $x->tanggal;
+
+                                    $hari_array = array(
+                                        'Minggu',
+                                        'Senin',
+                                        'Selasa',
+                                        'Rabu',
+                                        'Kamis',
+                                        'Jumat',
+                                        'Sabtu'
+                                    );
+                                    $hr = date('w', strtotime($waktu));
+                                    $hari = $hari_array[$hr];
+                                    $tanggal = date('j', strtotime($waktu));
+                                    $bulan_array = array(
+                                        1 => 'Januari',
+                                        2 => 'Februari',
+                                        3 => 'Maret',
+                                        4 => 'April',
+                                        5 => 'Mei',
+                                        6 => 'Juni',
+                                        7 => 'Juli',
+                                        8 => 'Agustus',
+                                        9 => 'September',
+                                        10 => 'Oktober',
+                                        11 => 'November',
+                                        12 => 'Desember',
+                                    );
+                                    $bl = date('n', strtotime($waktu));
+                                    $bulan = $bulan_array[$bl];
+                                    $tahun = date('Y', strtotime($waktu));
+                                    
+                                    echo "$hari, $tanggal $bulan $tahun";
+                                ?>
+                            </td>
                             <td  style="text-align: center;vertical-align: middle;">
                                 <?php 
                                     if($x->status_bpbd == 0){
@@ -68,23 +104,21 @@
                             </td>
                             <td class="col-lg-3"> 
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                    value="<?= $no;?>" title="Detail"></button>
+                                    value="<?= $no;?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php if($x->status_bpbd == 0){?>
                                     <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                        value="<?= $no;?>" title="Edit"></button>
+                                        value="<?= $no;?>" title="Edit" style="margin-right:5px;margin-bottom:5px"></button>
                                         <button type="button" class="bkonf_klik col-lg-3 btn btn-success fa fa-check-square" 
-                                        value="<?= $no;?>" title="Konfirmasi"></button>
+                                        value="<?= $no;?>" title="Konfirmasi" style="margin-right:5px;margin-bottom:5px"></button>
                                     <button type="button" class="bdel_klik col-lg-3 btn btn-danger fa fa-trash-o" 
-                                        value="<?= $no;?>" title="Delete"></button>
+                                        value="<?= $no;?>" title="Delete" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php } else{?>
                                     <form method="POST" action="<?= base_url()?>bpbd/print">
                                         <input type="hidden" name="id_bpbd" value="<?= $x->id_bpbd?>">
                                         <button type="submit" class="col-lg-3 btn fa fa-print" style="background-color:#E56B1F;color:white;"
-                                        value="<?= $no;?>" title="Print"></button>
+                                        value="<?= $no;?>" title="Print" style="margin-right:5px;margin-bottom:5px"></button>
                                     </form> 
                                 <?php } ?>
-                                
-
                             </td>
                         </tr>
                     <?php $no++;}} ?>
@@ -299,7 +333,23 @@
                 $("#no_bpbd_det").val(respond['bpbd'][0]['no_bpbd']);
                 $("#no_po_det").val(respond['po'][0]['kode_purchase_order_customer']);
                 $("#cust_det").val(respond['po'][0]['nama_customer']);
-                $("#tgl_det").val(respond['bpbd'][0]['tanggal']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['bpbd'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['bpbd'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['bpbd'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['bpbd'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+
+                $("#tgl_det").val($tanggalnya);
                 $("#plat_no_det").val(respond['bpbd'][0]['plat_no']);
                 $("#driver_det").val(respond['bpbd'][0]['driver']);
                 $("#ket_det").val(respond['bpbd'][0]['keterangan']);
@@ -426,153 +476,6 @@
     });
 </script>
 
-<!-- edit bpbd 
-<script>
-    $('.bedit_klik').click(function(){
-        var no      = $(this).attr('value');
-        var id      = $("#id"+no).val();
-
-        $.ajax({
-            type:"post",
-            url:"<?php echo base_url() ?>bpbd/detail_bpbd",
-            dataType: "JSON",
-            data: {id:id},
-
-            success: function(respond){
-               
-                $("#no_bpbd_ed").val(respond['bpbd'][0]['no_bpbd']);
-                $("#id_bpbd_ed").val(respond['bpbd'][0]['id_bpbd']);
-                $("#no_po_ed").val(respond['po'][0]['kode_purchase_order_customer']);
-                $("#cust_ed").val(respond['po'][0]['nama_customer']);
-                $("#tgl_ed").val(respond['bpbd'][0]['tanggal']);
-                $("#plat_no_ed").val(respond['bpbd'][0]['plat_no']);
-                $("#driver_ed").val(respond['bpbd'][0]['driver']);
-                $("#ket_ed").val(respond['bpbd'][0]['keterangan']);
-
-                $("#jumlah_detail").val(respond['jm_item_bpbd']);
-
-                $isi = "";
-
-                for($i=0;$i<respond['jm_item_bpbd'];$i++){
-                    $namanya = "";
-                    $keterangan = "";
-
-                    for($o=0;$o<respond['jm_produk'];$o++){
-                        if(respond['item_bpbd'][$i]['id_detail_produk'] == respond['produk'][$o]['id_detail_produk']){
-                            $keterangan = respond['produk'][$o]['keterangan'];
-                            $nama_produk= respond['produk'][$o]['nama_produk'];
-
-                            if($keterangan == 0){
-                                $id_ukuran = respond['produk'][$o]['id_ukuran'];
-                                $id_warna  = respond['produk'][$o]['id_warna'];
-
-                                for($l=0;$l<respond['jmukuran'];$l++){
-                                    if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
-                                        $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
-                                        $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
-
-                                        $ukurannya = $nama_ukuran + $satuan_ukuran;
-                                    }
-                                }
-
-                                for($k=0;$k<respond['jmwarna'];$k++){
-                                    if(respond['warna'][$k]['id_warna'] == $id_warna){
-                                        $warnanya = respond['warna'][$k]['nama_warna'];
-                                    }
-                                }
-
-                                $namanya = $nama_produk + $ukurannya + " (" + $warnanya + ")";
-                            }
-                            else if($keterangan == 1){
-                                $id_ukuran = respond['produk'][$o]['id_ukuran'];
-
-                                for($l=0;$l<respond['jmukuran'];$l++){
-                                    if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
-                                        $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
-                                        $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
-
-                                        $ukurannya = $nama_ukuran + $satuan_ukuran;
-                                    }
-                                }
-
-                                $namanya = $nama_produk + $ukurannya;
-
-                            }
-                            else if($keterangan == 2){
-                                $id_warna  = respond['produk'][$o]['id_warna'];
-
-                                for($k=0;$k<respond['jmwarna'];$k++){
-                                    if(respond['warna'][$k]['id_warna'] == $id_warna){
-                                        $warnanya = respond['warna'][$k]['nama_warna'];
-                                    }
-                                }
-
-                                $namanya = $nama_produk + " (" + $warnanya + ")";
-                            }
-                            else{
-                                $namanya = $nama_produk;
-                            }
-                        }
-                    }
-
-                    $isi = $isi + 
-                        '<tr>'+
-                            '<td style="text-align: center;vertical-align: middle;">'+
-                                ($i+1)+
-                            '</td>'+
-                            '<td style="text-align: center;vertical-align: middle;">'+
-                                $namanya+
-                            '</td>'+
-                            '<td style="text-align: center;vertical-align: middle;">'+
-                                respond['item_bpbd'][$i]['jumlah_produk']+
-                            '</td>'+
-                            '<td style="text-align: center;vertical-align: middle;">'+
-                                "Pcs"+
-                            '</td>'+
-                            '<td style="text-align: center;vertical-align: middle;">'+
-                                respond['item_bpbd'][$i]['keterangan']+
-                            '</td>'+
-                        '</tr>';
-
-
-                }
-
-                $table = 
-                '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
-                    '<thead>'+
-                        '<tr>'+
-                            '<th style="text-align: center;vertical-align: middle;">'+
-                                'No'+
-                            '</th>'+
-                            '<th style="text-align: center;vertical-align: middle;">'+
-                                'Item'+
-                            '</th>'+
-                            '<th style="text-align: center;vertical-align: middle;">'+
-                                'Qty'+
-                            '</th>'+
-                            '<th style="text-align: center;vertical-align: middle;">'+
-                                'Unit'+
-                            '</th>'+
-                            '<th style="text-align: center;vertical-align: middle;">'+
-                                'Keterangan'+
-                            '</th>'+
-                        '</tr>'+
-                    '</thead>'+
-                    '<tbody>'+
-                       $isi+
-                    '</tbody>'+
-                '</table>';
-
-
-                $("#table_edit").html($table);
-                
-                $("#modaledit").modal();
-            }
-        });  
-    });
-</script>
--->
-
 <!-- edit bpbd -->
 <script>
     $('.bedit_klik').click(function(){
@@ -591,7 +494,23 @@
                 $("#no_po_ed").val(respond['po_by_id'][0]['kode_purchase_order_customer']);
                 $("#id_po_ed").val(respond['po_by_id'][0]['id_purchase_order_customer']);
                 $("#cust_ed").val(respond['po_by_id'][0]['nama_customer']);
-                $("#tgl_ed").val(respond['bpbd'][0]['tanggal']);
+
+                
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['bpbd'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['bpbd'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['bpbd'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['bpbd'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tgl_ed").val($tanggalnya);
                 $("#plat_no_ed").val(respond['bpbd'][0]['plat_no']);
                 $("#driver_ed").val(respond['bpbd'][0]['driver']);
                 $("#ket_ed").val(respond['bpbd'][0]['keterangan']);

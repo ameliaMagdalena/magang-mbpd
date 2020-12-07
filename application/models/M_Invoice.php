@@ -17,7 +17,7 @@ class M_Invoice extends CI_Model {
     }
 
     function get_po(){
-        return $this->db->query("SELECT * FROM purchase_order_customer,customer WHERE status_PO='2' 
+        return $this->db->query("SELECT * FROM purchase_order_customer,customer WHERE status_PO='1' 
         AND purchase_order_customer.id_customer=customer.id_customer");
     }
 

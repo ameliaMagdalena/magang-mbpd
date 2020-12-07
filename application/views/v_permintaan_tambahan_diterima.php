@@ -53,7 +53,42 @@
                                 <?= $no ?>
                             </td>
                             <td  style="text-align: center;vertical-align: middle;">
-                                <?= $x->waktu_add ?>
+                                <?php 
+                                    $waktu = $x->waktu_add;
+
+                                    $hari_array = array(
+                                        'Minggu',
+                                        'Senin',
+                                        'Selasa',
+                                        'Rabu',
+                                        'Kamis',
+                                        'Jumat',
+                                        'Sabtu'
+                                    );
+                                    $hr = date('w', strtotime($waktu));
+                                    $hari = $hari_array[$hr];
+                                    $tanggal = date('j', strtotime($waktu));
+                                    $bulan_array = array(
+                                        1 => 'Januari',
+                                        2 => 'Februari',
+                                        3 => 'Maret',
+                                        4 => 'April',
+                                        5 => 'Mei',
+                                        6 => 'Juni',
+                                        7 => 'Juli',
+                                        8 => 'Agustus',
+                                        9 => 'September',
+                                        10 => 'Oktober',
+                                        11 => 'November',
+                                        12 => 'Desember',
+                                    );
+                                    $bl = date('n', strtotime($waktu));
+                                    $bulan = $bulan_array[$bl];
+                                    $tahun = date('Y', strtotime($waktu));
+                                    $times = date('H:i:s', strtotime($waktu));
+                                    
+                                    echo "$hari, $tanggal $bulan $tahun  $times";
+                                ?>
                             </td>
                             <td  style="text-align: center;vertical-align: middle;">
                                 <?= $x->id_permintaan_tambahan ?>
@@ -82,12 +117,12 @@
                             </td>
                             <td class="col-lg-3">
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                    value="<?= $no;?>" title="Detail"></button>
+                                    value="<?= $no;?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php if($x->status == 0){?>
                                     <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                        value="<?= $no;?>" title="Edit"></button>
+                                        value="<?= $no;?>" title="Edit" style="margin-right:5px;margin-bottom:5px"></button>
                                     <button type="button" class="bdelete_klik col-lg-3 btn btn-danger fa fa-trash-o" 
-                                        value="<?= $no;?>" title="Delete"></button>
+                                        value="<?= $no;?>" title="Delete" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php } ?>
                             </td>
                         </tr>
@@ -276,7 +311,25 @@
             success: function(respond){
                 $("#no_permat_det").val(respond['permat'][0]['id_permintaan_tambahan']);
                 $("#no_permintaan_material_det").val(respond['permat'][0]['id_permintaan_material']);
-                $("#waktu_permat_det").val(respond['permat'][0]['waktu_add']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['permat'][0]['waktu_add']).getDate();
+                var xhari   = new Date(respond['permat'][0]['waktu_add']).getDay();
+                var xbulan  = new Date(respond['permat'][0]['waktu_add']).getMonth();
+                var xtahun  = new Date(respond['permat'][0]['waktu_add']).getYear();
+                var jam     = new Date(respond['permat'][0]['waktu_add']).getHours();
+                var menit   = new Date(respond['permat'][0]['waktu_add']).getMinutes();
+                var detik   = new Date(respond['permat'][0]['waktu_add']).getSeconds();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun +' '+jam+':'+menit+':'+detik;
+
+                $("#waktu_permat_det").val($tanggalnya);
                 $("#nama_mat_det").val(respond['permat'][0]['nama_sub_jenis_material']);
                 $("#jumlah_det").val(respond['permat'][0]['jumlah_tambah']);
                 $("#satuan_det").val(respond['permat'][0]['satuan_keluar']);
@@ -313,7 +366,25 @@
             success: function(respond){
                 $("#no_permat_ed").val(respond['permat'][0]['id_permintaan_tambahan']);
                 $("#no_permintaan_material_ed").val(respond['permat'][0]['id_permintaan_material']);
-                $("#waktu_permat_ed").val(respond['permat'][0]['waktu_add']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['permat'][0]['waktu_add']).getDate();
+                var xhari   = new Date(respond['permat'][0]['waktu_add']).getDay();
+                var xbulan  = new Date(respond['permat'][0]['waktu_add']).getMonth();
+                var xtahun  = new Date(respond['permat'][0]['waktu_add']).getYear();
+                var jam     = new Date(respond['permat'][0]['waktu_add']).getHours();
+                var menit   = new Date(respond['permat'][0]['waktu_add']).getMinutes();
+                var detik   = new Date(respond['permat'][0]['waktu_add']).getSeconds();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun +' '+jam+':'+menit+':'+detik;
+
+                $("#waktu_permat_ed").val($tanggalnya);
                 $("#nama_mat_ed").val(respond['permat'][0]['nama_sub_jenis_material']);
                 $("#jumlah_ed").val(respond['permat'][0]['jumlah_tambah']);
                 $("#satuan_ed").val(respond['permat'][0]['satuan_keluar']);
@@ -335,7 +406,7 @@
     });
 </script>
 
-<!-- edit -->
+<!-- delete -->
 <script>
     $('.bdelete_klik').click(function(){
         var no      = $(this).attr('value');

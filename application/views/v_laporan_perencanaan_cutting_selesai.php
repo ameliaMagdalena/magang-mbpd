@@ -34,14 +34,15 @@
                     <tr>
                         <th style="text-align: center;vertical-align: middle;">No</th>
                         <th style="text-align: center;vertical-align: middle;">Tanggal</th>
-                        <th style="text-align: center;vertical-align: middle;">Status</th>
                         <th style="text-align: center;vertical-align: middle;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php 
                         $no = 1;
-                        foreach($tanggal as $x){ ?>
+                        foreach($tanggal as $x){ 
+                            if($x->status_laporan == 2){
+                    ?>
                         <tr>
                             <td style="text-align: center;vertical-align: middle;">
                                 <?= $no; ?>
@@ -120,7 +121,7 @@
                                 <?php } ?>
                             </td>
                         </tr>
-                    <?php $no++; } ?>
+                    <?php $no++; }} ?>
                     
                 </tbody>
             </table>

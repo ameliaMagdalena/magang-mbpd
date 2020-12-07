@@ -60,7 +60,41 @@
                                 <input type="hidden" name="id<?=$no;?>" id="id<?=$no;?>" value="<?= $x->id_pengambilan_material?>">
                             </td>
                             <td  style="text-align: center;vertical-align: middle;">
-                                <?= $x->tanggal_ambil ?>
+                                <?php 
+                                    $waktu = $x->tanggal_ambil;
+
+                                    $hari_array = array(
+                                        'Minggu',
+                                        'Senin',
+                                        'Selasa',
+                                        'Rabu',
+                                        'Kamis',
+                                        'Jumat',
+                                        'Sabtu'
+                                    );
+                                    $hr = date('w', strtotime($waktu));
+                                    $hari = $hari_array[$hr];
+                                    $tanggal = date('j', strtotime($waktu));
+                                    $bulan_array = array(
+                                        1 => 'Januari',
+                                        2 => 'Februari',
+                                        3 => 'Maret',
+                                        4 => 'April',
+                                        5 => 'Mei',
+                                        6 => 'Juni',
+                                        7 => 'Juli',
+                                        8 => 'Agustus',
+                                        9 => 'September',
+                                        10 => 'Oktober',
+                                        11 => 'November',
+                                        12 => 'Desember',
+                                    );
+                                    $bl = date('n', strtotime($waktu));
+                                    $bulan = $bulan_array[$bl];
+                                    $tahun = date('Y', strtotime($waktu));
+                                    
+                                    echo "$hari, $tanggal $bulan $tahun";
+                                ?>
                             </td>
                             <td  style="text-align: center;vertical-align: middle;">
                                 <?php if($x->status_permintaan == 0){?>
@@ -85,18 +119,18 @@
                             </td>
                             <td class="col-lg-3"> 
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                    value="<?= $no;?>" title="Detail"></button>
+                                    value="<?= $no;?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
                                 <!-- jika belum diambil dan normal case-->
                                 <?php if($x->status_keluar == 0 && $x->status_permintaan == 0){?>
                                     <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                        value="<?= $no;?>" title="Edit"></button>
+                                        value="<?= $no;?>" title="Edit" style="margin-right:5px;margin-bottom:5px"></button>
                                     <button type="button" class="bdelete_normal_klik col-lg-3 btn btn-danger fa fa-trash-o" 
-                                        value="<?= $no;?>" title="Delete"></button>
+                                        value="<?= $no;?>" title="Delete" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php } ?>
                                 <!-- jika belum diambil dan tambahan -->
                                 <?php if($x->status_keluar == 0 && $x->status_permintaan == 1){?>
                                     <button type="button" class="bdelete_tambahan_klik col-lg-3 btn btn-danger fa fa-trash-o" 
-                                        value="<?= $no;?>" title="Delete"></button>
+                                        value="<?= $no;?>" title="Delete" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php } ?>
                             </td>
                         </tr>
@@ -320,7 +354,22 @@
                 $("#kode_pengmat").val(respond['pengmat'][0]['id_pengambilan_material']);
                 $("#kode_detpermat").val(respond['pengmat'][0]['id_detail_permintaan_material']);
                 $("#nama_material").val(respond['pengmat'][0]['nama_sub_jenis_material']);
-                $("#tanggal").val(respond['pengmat'][0]['tanggal_ambil']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['pengmat'][0]['tanggal_ambil']).getDate();
+                var xhari = new Date(respond['pengmat'][0]['tanggal_ambil']).getDay();
+                var xbulan = new Date(respond['pengmat'][0]['tanggal_ambil']).getMonth();
+                var xtahun = new Date(respond['pengmat'][0]['tanggal_ambil']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal").val($tanggalnya);
                 $("#jm_inline").val(respond['pengmat'][0]['stok_wip']);
                 $("#jm_gudang").val(respond['pengmat'][0]['jumlah_ambil']);
                 $("#satuan").val(respond['pengmat'][0]['satuan_keluar']);
@@ -366,8 +415,38 @@
                 $("#no_permat_add").val(respond['permat'][0]['id_permintaan_material']);
                 $("#kode_po_add").val(respond['permat'][0]['kode_purchase_order_customer']);
                 $("#nama_line_add").val(respond['permat'][0]['nama_line']);
-                $("#tanggal_permintaan_add").val(respond['permat'][0]['tanggal_permintaan']);
-                $("#tanggal_produksi_add").val(respond['permat'][0]['tanggal_produksi']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['permat'][0]['tanggal_permintaan']).getDate();
+                var xhari = new Date(respond['permat'][0]['tanggal_permintaan']).getDay();
+                var xbulan = new Date(respond['permat'][0]['tanggal_permintaan']).getMonth();
+                var xtahun = new Date(respond['permat'][0]['tanggal_permintaan']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggal_permintaan = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_permintaan_add").val($tanggal_permintaan);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['permat'][0]['tanggal_produksi']).getDate();
+                var xhari = new Date(respond['permat'][0]['tanggal_produksi']).getDay();
+                var xbulan = new Date(respond['permat'][0]['tanggal_produksi']).getMonth();
+                var xtahun = new Date(respond['permat'][0]['tanggal_produksi']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggal_produksi = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_produksi_add").val($tanggal_produksi);
                 $("#jumlah_minta_add").val(respond['permat'][0]['jumlah_minta']);
 
                 if(respond['permat'][0]['nama_line'] == "Line Cutting" || respond['permat'][0]['nama_line'] == "Line Bonding" || respond['permat'][0]['nama_line'] == "Line Assy"){

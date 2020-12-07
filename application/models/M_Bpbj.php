@@ -73,7 +73,23 @@ class M_Bpbj extends CI_Model {
         WHERE detail_bpbj.status_delete='0' AND detail_item_surat_jalan.status_delete='0' AND item_surat_jalan.status_delete='0' 
         AND surat_jalan.status_delete='0' AND detail_bpbj.id_detail_bpbj=detail_item_surat_jalan.id_detail_bpbj AND 
         detail_item_surat_jalan.id_item_surat_jalan=item_surat_jalan.id_item_surat_jalan AND 
-        item_surat_jalan.id_surat_jalan=surat_jalan.id_surat_jalan");
+        item_surat_jalan.id_surat_jalan=surat_jalan.id_surat_jalan GROUP BY  detail_bpbj.id_detail_bpbj,surat_jalan.id_purchase_order_customer  ");
+    }
+
+    function select_bpbj_det_item_sj(){
+        return $this->db->query("SELECT bpbj.id_bpbj, COUNT(id_detail_item_surat_jalan) AS jumlah_det_item_sj
+        FROM detail_item_surat_jalan,detail_bpbj,bpbj WHERE detail_item_surat_jalan.status_delete='0' AND
+        detail_item_surat_jalan.id_detail_bpbj = detail_bpbj.id_detail_bpbj AND detail_bpbj.id_bpbj=bpbj.id_bpbj GROUP BY bpbj.id_bpbj ");
+    }
+
+    function select_one_bpbj_det_item_sj($id){
+        return $this->db->query("SELECT surat_jalan.id_purchase_order_customer, detail_bpbj.id_detail_produk, 
+        detail_item_surat_jalan.jumlah_produk, surat_jalan.id_surat_jalan, bpbj.id_bpbj
+        FROM detail_item_surat_jalan,detail_bpbj,bpbj,item_surat_jalan,surat_jalan 
+        WHERE bpbj.id_bpbj='$id'
+        AND detail_item_surat_jalan.status_delete='0' AND detail_item_surat_jalan.id_detail_bpbj = detail_bpbj.id_detail_bpbj 
+        AND detail_bpbj.id_bpbj=bpbj.id_bpbj AND detail_item_surat_jalan.id_item_surat_jalan=item_surat_jalan.id_item_surat_jalan
+        AND item_surat_jalan.id_surat_jalan=surat_jalan.id_surat_jalan");
     }
 
 

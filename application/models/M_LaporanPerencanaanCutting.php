@@ -27,6 +27,21 @@ class M_LaporanPerencanaanCutting extends CI_Model {
         WHERE perencanaan_cutting.status_delete='0' GROUP BY tanggal");
     }
 
+    function get_tanggal_perccutt_belum_ada(){
+        return $this->db->query("SELECT tanggal,status_laporan FROM perencanaan_cutting 
+        WHERE perencanaan_cutting.status_delete='0' AND perencanaan_cutting.status_laporan='0' GROUP BY tanggal");
+    }
+
+    function get_tanggal_perccutt_sudah_ada(){
+        return $this->db->query("SELECT tanggal,status_laporan FROM perencanaan_cutting 
+        WHERE perencanaan_cutting.status_delete='0' AND perencanaan_cutting.status_laporan='1' GROUP BY tanggal");
+    }
+
+    function get_tanggal_perccutt_selesai(){
+        return $this->db->query("SELECT tanggal,status_laporan FROM perencanaan_cutting 
+        WHERE perencanaan_cutting.status_delete='0' AND perencanaan_cutting.status_laporan='2' GROUP BY tanggal");
+    }
+
     function get_semua_percut($tanggal){
         return $this->db->query("SELECT perencanaan_cutting.id_perencanaan_cutting,perencanaan_cutting.tanggal AS tanggal_percut, perencanaan_cutting.jumlah_perencanaan AS jumlah_percut,
         perencanaan_cutting.jumlah_aktual AS jumlah_aktual_cut,perencanaan_cutting.status_laporan AS status_percut, produksi.tanggal AS tanggal_produksi, produk.id_produk,
