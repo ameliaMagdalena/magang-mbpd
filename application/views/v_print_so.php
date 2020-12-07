@@ -1,7 +1,7 @@
 
 <?php
     $pdf = new Pdf_oc('P', 'mm', 'A4', true, 'UTF-8', false);
-    $pdf->SetTitle('INVOICE');
+    $pdf->SetTitle('Sales Order');
     $pdf->SetTopMargin(15);
     $pdf->setFooterMargin(20);
     $pdf->SetAutoPageBreak(true,22);
@@ -9,10 +9,10 @@
     $pdf->SetDisplayMode('real', 'default');
     $pdf->setPrintHeader(true);
       $pdf->setPrintFooter(true);
-    $pdf->AddPage('L','A5');
+    $pdf->AddPage('P','A4'); //orientasi Portrait, ukuran A4
     
     $fontname = TCPDF_FONTS::addTTFfont('../../../libraries/tcpdf/fonts/tahoma.ttf', 'TrueTypeUnicode', '', 96);
-    $pdf->SetFont('Tahoma','', 12); //untuk font, liat dokumentasui
+    $pdf->SetFont('Tahoma','', 12); //nama font, , ukuran
 
 
     $content='
@@ -22,47 +22,30 @@
         </head>
         <body>';
 
-        if($apakek[0]['jenis_nota']==1){
             $content = $content .'
 
                 <table>
                     <tr>
                         <td colspan="2" style="text-align:center; font-size:20pt;">
-                            <b>I N V O I C E</b><br>
+                            <b>SALES ORDER</b><br>
                         </td>
                     </tr>
                     <tr>
-                        <td>No. Nota : <b>'. $apakek[0]['id_nota'] .'</b> </td>
-                        <td style="text-align: right"> Tanggal : <b>' . date("l, d M Y",strtotime($apakek[0]['waktu_add'])) . '</b> </td>
+                        <td>No. SO : <b>'. $so[0]['id_sales_order'] .'</b> </td>
+                        <td style="text-align: right"> Tanggal : <b>' . date("l, d M Y",strtotime($so[0]['tanggal_so'])) . '</b> </td>
                     </tr>
                 </table>
-                <br><br>
-                <table style="background-color: #FFBE88; padding: 5px">
+                <br><br>';
+
+                /* <table style="background-color: #FFBE88; padding: 5px">
                     <tr>
                         <td>Nama File : '. $select_printing[0]['file_printing'] .' </td>
                     </tr>
                     <tr>
                         <td>Deskripsi : '. $select_printing[0]['deskripsi_printing'] .' </td>
                     </tr>
-                </table>';
-
-                if($apakek[0]['status_pengantaran']=="0"){
-
-                }else if($apakek[0]['status_pengantaran']=="4"){
-                    $content = $content . "<table>
-                        <tr>
-                            <td>Dengan pengantaran (dibatalkan)</td>
-                        </tr>
-                    </table>";
-                }else{
-                    $totalnganter = $apakek[0]['total_tagihan']-(( $select_printing[0]['jumlah_warna'] * $select_printing[0]['harga_satuan_warna']) + ( $select_printing[0]['jumlah_bw'] * $select_printing[0]['harga_satuan_bw']));
-                    $content = $content . "<table>
-                        <tr>
-                            <td>Dengan pengantaran (biaya: Rp ".number_format($totalnganter).",-)</td>
-                        </tr>
-                    </table>";
-                }
-
+                </table> */
+                
                 $content = $content .'
 
                 <br><br>
@@ -74,7 +57,7 @@
                         <th width="145px" border="1" style="background-color: #CBCBCB">Total Harga</th>
                     </tr>';
 
-                for($a=0; $a<count($select_printing); $a++) {
+                /* for($a=0; $a<count($select_printing); $a++) {
                     if($select_printing[$a]['id_nota']== $selectNota[0]['id_nota']){
                         if ($select_printing[$a]['jumlah_bw']!=0){
                             $jlhbw = $select_printing[$a]['jumlah_bw'];
@@ -101,7 +84,7 @@
                             </tr>';
                         }
                     }
-                }
+                } */
                     $content = $content .'
                     <tr>
                         <td colspan="2"></td>
@@ -109,10 +92,8 @@
                         <td border="1">Rp ' . number_format($selectNota[0]['total_tagihan']) . ',-</td>
                     </tr>
                 </table>';
-            
-        }
-        else{
-            $content = $content .'
+        
+        /* $content = $content .'
 
             <table>
                 <tr>
@@ -207,7 +188,7 @@
             $content = $content .'
             <img src="' . base_url('assets/images/batal.png') . '" width="70px">
             '; 
-        }
+        } */
 
             $content = $content .'
         </body>

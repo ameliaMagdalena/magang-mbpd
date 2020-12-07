@@ -10,6 +10,8 @@ class PurchaseOrderCustomer extends CI_Controller {
         $this->load->model('M_Customer');
         $this->load->model('M_Produk');
         $this->load->model('M_Dashboard');
+        
+        $this->load->library('Pdf_oc');
 
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');
@@ -887,6 +889,19 @@ class PurchaseOrderCustomer extends CI_Controller {
 
         
 		$this->load->view('v_sales_order', $data);
+    }
+
+    public function print_so($id){
+        $id_po = array(
+            "id_purchase_order_customer" => $id
+        );
+        $data['id_po'] = $id;
+        $data['po_cust'] = $this->M_PurchaseOrderCustomer->selectSatuPOCustomer($id_po)->result_array();
+        $data['detail_po_cust'] = $this->M_PurchaseOrderCustomer->selectSatuDetailPOCustomer($id_po)->result_array();
+        $data['so'] = $this->M_PurchaseOrderCustomer->selectSatuSalesOrder($id_po)->result_array();
+        $data['user'] = $this->M_PurchaseOrderCustomer->selectKaryawan()->result_array();
+
+		$this->load->view('v_print_so', $data);
     }
 
     public function insert_so(){

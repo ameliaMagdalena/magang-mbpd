@@ -187,10 +187,12 @@
                                 <td>
                                     <!-- <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
                                         title="Detail" href="#modaldetail"></a> -->
-                                    <button type="button" class="ambilz col-lg-3 btn btn-success fa fa-check" 
-                                        value="<?php echo $z ?>" title="Ambil"></button>
-                                    <button type="button" class="batalz col-lg-3 btn btn-danger fa fa-times" 
-                                        value="<?php echo $z ?>" title="Tolak"></button>
+                                    <?php if ($pengambilan[$z]['status_keluar'] == 0){ ?>
+                                        <button type="button" class="ambilz col-lg-3 btn btn-success fa fa-check" 
+                                            value="<?php echo $z ?>" title="Ambil"></button>
+                                        <button type="button" class="batalz col-lg-3 btn btn-danger fa fa-times" 
+                                            value="<?php echo $z ?>" title="Tolak"></button>
+                                    <?php } ?>
                                 </td>
                             </tr>
                             
