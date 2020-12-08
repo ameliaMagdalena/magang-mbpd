@@ -84,6 +84,17 @@
                                     </div>
                                 </div>
                                 <div class="form-group mt-lg">
+                                    <label class="col-sm-4 control-label">Sumber<span class="required">*</span></label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control" name="sumber" required>
+                                            <option value="0">Supplier</option>
+                                            <option value="1">WIP Line Cutting</option>
+                                            <option value="2">WIP Line Bonding</option>
+                                            <option value="3">WIP Line Sewing</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-lg">
                                     <label class="col-sm-4 control-label">Satuan<span class="required">*</span></label>
                                     <div class="col-sm-7">
                                         <input type="text" name="satuan" class="form-control"
@@ -140,9 +151,10 @@
                     <thead>
                         <tr>
                             <th class="col-lg-3">Sub Jenis Material</th>
-                            <th class="col-lg-2">Unit</th>
+                            <th class="col-lg-1">Unit</th>
                             <th class="col-lg-2">Unit Keluar</th>
-                            <th class="col-lg-2">Jumlah Di Gudang</th>
+                            <th class="col-lg-2">Sumber</th>
+                            <th class="col-lg-1">Jumlah Di Gudang</th>
                             <th class="col-lg-3">Aksi</th>
                         </tr>
                     </thead>
@@ -155,6 +167,15 @@
                             <td> <?php echo $sub_jenis[$y]['nama_sub_jenis_material']?></td>
                             <td> <?php echo $sub_jenis[$y]['satuan_ukuran']?></td>
                             <td> <?php echo $sub_jenis[$y]['satuan_keluar']?></td>
+                            <td> <?php if ($sub_jenis[$y]['sumber'] == 0){
+                                echo "Supplier";
+                            } else if ($sub_jenis[$y]['sumber'] == 1){
+                                echo "WIP Line Cutting";
+                            } else if ($sub_jenis[$y]['sumber'] == 2){
+                                echo "WIP Line Bonding";
+                            } else{
+                                echo "WIP Line Sewing";
+                            } ?></td>
                             <td>
                                 <?php
                                 $jumlah_material = 0;
@@ -215,6 +236,21 @@
                                         </div>
                                     </div>
                                     <div class="form-group mt-lg">
+                                        <label class="col-sm-4 control-label">Sumber</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="sumber" 
+                                                value="<?php if ($sub_jenis[$y]['sumber'] == 0){
+                                                    echo "Supplier";
+                                                } else if ($sub_jenis[$y]['sumber'] == 1){
+                                                    echo "WIP Line Cutting";
+                                                } else if ($sub_jenis[$y]['sumber'] == 2){
+                                                    echo "WIP Line Bonding";
+                                                } else{
+                                                    echo "WIP Line Sewing";
+                                                } ?>" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-lg">
                                         <label class="col-sm-4 control-label">Satuan Keluar</label>
                                         <div class="col-sm-8">
                                             <input type="text" name="satuan_keluar" class="form-control"
@@ -222,7 +258,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group mt-lg">
-                                        <label class="col-sm-12 control-label" style="text-align: center">Ukuran Satuan Keluar <?php echo $jenis_material[0]['nama_jenis_material'] . " " . $sub_jenis[$y]['nama_sub_jenis_material'] ?></label>
+                                        <label class="col-sm-12 control-label" style="text-align: center">Ukuran Satuan Keluar <b><?php echo $jenis_material[0]['nama_jenis_material'] . " " . $sub_jenis[$y]['nama_sub_jenis_material'] ?></b></label>
                                         <div class="col-sm-12" style="text-align: center">
                                             1 <?php echo $sub_jenis[$y]['satuan_ukuran'] ?> = <?php echo $sub_jenis[$y]['ukuran_satuan_keluar'] . " " . $sub_jenis[$y]['satuan_keluar'] ?>
                                         </div>
@@ -300,6 +336,17 @@
                                             <div class="col-sm-8">
                                                 <input type="text" name="jenis" class="form-control"
                                                 value="<?php echo $sub_jenis[$y]['nama_jenis_material'] ?>" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group mt-lg">
+                                            <label class="col-sm-4 control-label">Sumber<span class="required">*</span></label>
+                                            <div class="col-sm-7">
+                                                <select class="form-control" name="sumber" required>
+                                                    <option value="0" <?php if ($sub_jenis[$y]['sumber'] == 0){ echo "selected"; } ?>>Supplier</option>
+                                                    <option value="1" <?php if ($sub_jenis[$y]['sumber'] == 1){ echo "selected"; } ?>>WIP Line Cutting</option>
+                                                    <option value="2" <?php if ($sub_jenis[$y]['sumber'] == 2){ echo "selected"; } ?>>WIP Line Bonding</option>
+                                                    <option value="3" <?php if ($sub_jenis[$y]['sumber'] == 3){ echo "selected"; } ?>>WIP Line Sewing</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group mt-lg">
