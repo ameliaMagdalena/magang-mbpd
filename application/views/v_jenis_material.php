@@ -56,6 +56,15 @@
                         placeholder="Kode jenis material"  required>
 					</div>
 				</div>
+                <div class="form-group mt-lg">
+					<label class="col-sm-4 control-label">Sumber Jenis Material<span class="required">*</span></label>
+					<div class="col-sm-7">
+                        <select class="form-control" name="sumber" required>
+                            <option value="0">Supplier</option>
+                            <option value="1">Produksi</option>
+                        </select>
+					</div>
+				</div>
             </div>
             <footer class="panel-footer">
 				<div class="row">
@@ -85,10 +94,11 @@
         <table class="table table-bordered table-striped mb-none" id="datatable-default">
             <thead>
                 <tr>
-                    <th class="col-2">No.</th>
-                    <th class="col-lg-4">Nama Jenis Material</th>
-                    <th class="col-lg-4">Kode Jenis Material</th>
-                    <th class="col-lg-4">Aksi</th>
+                    <th class="col-1">No.</th>
+                    <th class="col-lg-3">Nama Jenis Material</th>
+                    <th class="col-lg-3">Kode Jenis Material</th>
+                    <th class="col-lg-2">Sumber</th>
+                    <th class="col-lg-3">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -100,6 +110,11 @@
                         <td><?php echo $x+1?> </td>
                         <td><?php echo $jenis_material[$x]['nama_jenis_material']?> </td>
                         <td><?php echo $jenis_material[$x]['kode_jenis_material']?> </td>
+                        <td><?php if ($jenis_material[$x]['sumber_material'] == 0){
+                            echo "Supplier";
+                        } else{
+                            echo "Produksi";
+                        }?> </td>
                         <td>
                             <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                                 title="Detail" href="<?php echo base_url() . "JenisMaterial/sub_jenis_material/" . $jenis_material[$x]['id_jenis_material'] ?>"></a>
@@ -135,6 +150,15 @@
                                         <div class="col-sm-8">
                                             <input type="text" name="kode_jenis_material" class="form-control"
                                             value="<?php echo $jenis_material[$x]['kode_jenis_material']?>" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-lg">
+                                        <label class="col-sm-4 control-label">Sumber Jenis Material</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="sumber" required>
+                                                <option value="0" <?php if ($jenis_material[$y]['sumber_material'] == 0){ echo "selected"; } ?>>Supplier</option>
+                                                <option value="1" <?php if ($jenis_material[$y]['sumber_material'] == 1){ echo "selected"; } ?>>Produksi</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

@@ -46,8 +46,19 @@
         <div class="form-group mt-lg">
             <label class="col-sm-3 control-label">Kode Jenis Material</label>
             <div class="col-sm-9">
-                <input type="email" name="kode" class="form-control"
+                <input type="text" name="kode" class="form-control"
                 value="<?php echo $jenis_material[0]['kode_jenis_material'] ?> " readonly>
+            </div>
+        </div>
+        <div class="form-group mt-lg">
+            <label class="col-sm-3 control-label">Sumber Jenis Material</label>
+            <div class="col-sm-9">
+                <input type="text" name="sumber" class="form-control"
+                value="<?php if ($jenis_material[0]['sumber_material'] == 0){
+                    echo "Supplier";
+                } else{
+                    echo "Produksi";
+                } ?> " readonly>
             </div>
         </div>
 
