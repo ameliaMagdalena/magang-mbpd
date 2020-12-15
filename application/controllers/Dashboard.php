@@ -200,9 +200,6 @@ class Dashboard extends CI_Controller {
         //tutup notif permohonan akses
     //tutup
 
-
-
-    
     //isi dashboard produksi
           if($_SESSION['nama_departemen'] == "Management" && $_SESSION['nama_jabatan'] == "Direktur"){
         // DIREKTUR
@@ -388,8 +385,8 @@ class Dashboard extends CI_Controller {
           }
     //isi dashboard produksi
     
-    //$this->load->view('v_dashboard',$data);
-    $this->load->view('v_dashboards',$data);
+    $this->load->view('v_dashboard',$data);
+    //$this->load->view('v_dashboards',$data);
   }
 
     

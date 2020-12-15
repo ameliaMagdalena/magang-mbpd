@@ -1412,14 +1412,48 @@
                                                                     <label class="col-sm-5 control-label">Kode PO</label>
                                                                     <div class="col-sm-7">
                                                                         <input type="text" class="form-control"
-                                                                        value="<?= date("l, d F Y", strtotime( $dt_dpo->kode_purchase_order_customer )); ?>" readonly>
+                                                                        value="<?= $dt_dpo->kode_purchase_order_customer?>" readonly>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group mt-lg">
                                                                     <label class="col-sm-5 control-label">Tanggal Pesanan</label>
                                                                     <div class="col-sm-7">
                                                                         <input type="text" class="form-control"
-                                                                        value="<?= date("l, d F Y", strtotime( $dt_dpo->tanggal_po ));?>" readonly>
+                                                                        value="<?php 
+                                                                            $waktu = $dt_dpo->tanggal_po;
+
+                                                                            $hari_array = array(
+                                                                                'Minggu',
+                                                                                'Senin',
+                                                                                'Selasa',
+                                                                                'Rabu',
+                                                                                'Kamis',
+                                                                                'Jumat',
+                                                                                'Sabtu'
+                                                                            );
+                                                                            $hr = date('w', strtotime($waktu));
+                                                                            $hari = $hari_array[$hr];
+                                                                            $tanggal = date('j', strtotime($waktu));
+                                                                            $bulan_array = array(
+                                                                                1 => 'Januari',
+                                                                                2 => 'Februari',
+                                                                                3 => 'Maret',
+                                                                                4 => 'April',
+                                                                                5 => 'Mei',
+                                                                                6 => 'Juni',
+                                                                                7 => 'Juli',
+                                                                                8 => 'Agustus',
+                                                                                9 => 'September',
+                                                                                10 => 'Oktober',
+                                                                                11 => 'November',
+                                                                                12 => 'Desember',
+                                                                            );
+                                                                            $bl = date('n', strtotime($waktu));
+                                                                            $bulan = $bulan_array[$bl];
+                                                                            $tahun = date('Y', strtotime($waktu));
+                                                                            
+                                                                            echo "$hari, $tanggal $bulan $tahun";
+                                                                        ?>" readonly>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group mt-lg">
@@ -1477,7 +1511,41 @@
                                                                     <label class="col-sm-5 control-label">Tanggal Penerimaan</label>
                                                                     <div class="col-sm-7">
                                                                         <input type="text" class="form-control"
-                                                                        value="<?=  date("l, d F Y", strtotime( $dt_dpo->tanggal_penerimaan ));?>" readonly>
+                                                                        value="<?php 
+                                                                            $waktu = $dt_dpo->tanggal_penerimaan;
+
+                                                                            $hari_array = array(
+                                                                                'Minggu',
+                                                                                'Senin',
+                                                                                'Selasa',
+                                                                                'Rabu',
+                                                                                'Kamis',
+                                                                                'Jumat',
+                                                                                'Sabtu'
+                                                                            );
+                                                                            $hr = date('w', strtotime($waktu));
+                                                                            $hari = $hari_array[$hr];
+                                                                            $tanggal = date('j', strtotime($waktu));
+                                                                            $bulan_array = array(
+                                                                                1 => 'Januari',
+                                                                                2 => 'Februari',
+                                                                                3 => 'Maret',
+                                                                                4 => 'April',
+                                                                                5 => 'Mei',
+                                                                                6 => 'Juni',
+                                                                                7 => 'Juli',
+                                                                                8 => 'Agustus',
+                                                                                9 => 'September',
+                                                                                10 => 'Oktober',
+                                                                                11 => 'November',
+                                                                                12 => 'Desember',
+                                                                            );
+                                                                            $bl = date('n', strtotime($waktu));
+                                                                            $bulan = $bulan_array[$bl];
+                                                                            $tahun = date('Y', strtotime($waktu));
+                                                                            
+                                                                            echo "$hari, $tanggal $bulan $tahun";
+                                                                        ?>" readonly>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group mt-lg">
@@ -1644,7 +1712,41 @@
                                                                                 <label class="col-sm-5 control-label">Tanggal Pesanan</label>
                                                                                 <div class="col-sm-7">
                                                                                     <input type="text" class="form-control"
-                                                                                    value="<?= date("l, d F Y", strtotime( $dt_dpo->tanggal_po ));?>" readonly>
+                                                                                    value="<?php 
+                                                                                        $waktu = $dt_dpo->tanggal_po;
+
+                                                                                        $hari_array = array(
+                                                                                            'Minggu',
+                                                                                            'Senin',
+                                                                                            'Selasa',
+                                                                                            'Rabu',
+                                                                                            'Kamis',
+                                                                                            'Jumat',
+                                                                                            'Sabtu'
+                                                                                        );
+                                                                                        $hr = date('w', strtotime($waktu));
+                                                                                        $hari = $hari_array[$hr];
+                                                                                        $tanggal = date('j', strtotime($waktu));
+                                                                                        $bulan_array = array(
+                                                                                            1 => 'Januari',
+                                                                                            2 => 'Februari',
+                                                                                            3 => 'Maret',
+                                                                                            4 => 'April',
+                                                                                            5 => 'Mei',
+                                                                                            6 => 'Juni',
+                                                                                            7 => 'Juli',
+                                                                                            8 => 'Agustus',
+                                                                                            9 => 'September',
+                                                                                            10 => 'Oktober',
+                                                                                            11 => 'November',
+                                                                                            12 => 'Desember',
+                                                                                        );
+                                                                                        $bl = date('n', strtotime($waktu));
+                                                                                        $bulan = $bulan_array[$bl];
+                                                                                        $tahun = date('Y', strtotime($waktu));
+                                                                                        
+                                                                                        echo "$hari, $tanggal $bulan $tahun";
+                                                                                    ?>" readonly>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group mt-lg">
@@ -1702,7 +1804,41 @@
                                                                                 <label class="col-sm-5 control-label">Tanggal Penerimaan</label>
                                                                                 <div class="col-sm-7">
                                                                                     <input type="text" class="form-control"
-                                                                                    value="<?= date("l, d F Y", strtotime( $dt_dpo->tanggal_penerimaan )); ?>" readonly>
+                                                                                    value="<?php 
+                                                                                        $waktu = $dt_dpo->tanggal_penerimaan;
+
+                                                                                        $hari_array = array(
+                                                                                            'Minggu',
+                                                                                            'Senin',
+                                                                                            'Selasa',
+                                                                                            'Rabu',
+                                                                                            'Kamis',
+                                                                                            'Jumat',
+                                                                                            'Sabtu'
+                                                                                        );
+                                                                                        $hr = date('w', strtotime($waktu));
+                                                                                        $hari = $hari_array[$hr];
+                                                                                        $tanggal = date('j', strtotime($waktu));
+                                                                                        $bulan_array = array(
+                                                                                            1 => 'Januari',
+                                                                                            2 => 'Februari',
+                                                                                            3 => 'Maret',
+                                                                                            4 => 'April',
+                                                                                            5 => 'Mei',
+                                                                                            6 => 'Juni',
+                                                                                            7 => 'Juli',
+                                                                                            8 => 'Agustus',
+                                                                                            9 => 'September',
+                                                                                            10 => 'Oktober',
+                                                                                            11 => 'November',
+                                                                                            12 => 'Desember',
+                                                                                        );
+                                                                                        $bl = date('n', strtotime($waktu));
+                                                                                        $bulan = $bulan_array[$bl];
+                                                                                        $tahun = date('Y', strtotime($waktu));
+                                                                                        
+                                                                                        echo "$hari, $tanggal $bulan $tahun";
+                                                                                    ?>" readonly>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group mt-lg">
@@ -2874,11 +3010,56 @@
 
                 $("#det_nama_cust").val(respond['prodtun'][0]['nama_customer']);
                 $("#det_kode_po").val(respond['prodtun'][0]['kode_purchase_order_customer']);
-                $("#det_tanggal_po").val(respond['prodtun'][0]['tanggal_po']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['prodtun'][0]['tanggal_po']).getDate();
+                var xhari = new Date(respond['prodtun'][0]['tanggal_po']).getDay();
+                var xbulan = new Date(respond['prodtun'][0]['tanggal_po']).getMonth();
+                var xtahun = new Date(respond['prodtun'][0]['tanggal_po']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#det_tanggal_po").val($tanggalnya);
                 $("#det_nama_produk").val($namanya);
-                $("#det_tanggal_penerimaan").val(respond['prodtun'][0]['tanggal_penerimaan']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['prodtun'][0]['tanggal_penerimaan']).getDate();
+                var xhari = new Date(respond['prodtun'][0]['tanggal_penerimaan']).getDay();
+                var xbulan = new Date(respond['prodtun'][0]['tanggal_penerimaan']).getMonth();
+                var xtahun = new Date(respond['prodtun'][0]['tanggal_penerimaan']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#det_tanggal_penerimaan").val($tanggalnya);
                 $("#det_jumlah_produk").val(respond['prodtun'][0]['jumlah_produk']);
-                $("#det_tanggal_sebelum").val(respond['prodtun'][0]['tanggal']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['prodtun'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['prodtun'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['prodtun'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['prodtun'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#det_tanggal_sebelum").val($tanggalnya);
                 $("#det_jumlah_perencanaan").val(respond['prodtun'][0]['jumlah_item_perencanaan']);
                 $("#det_jumlah_aktual").val(respond['prodtun'][0]['jumlah_item_aktual']);
                 $("#det_jumlah_tertunda").val(respond['prodtun'][0]['jumlah_tertunda']);
@@ -2967,9 +3148,6 @@
                 }
             }
             $("#jumlah_div_ada_isi").val($jumlah_div_terisi);
-
-
-
         }
         //cek_tanggal();
     });

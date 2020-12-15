@@ -24,193 +24,193 @@ class HasilProduksi extends CI_Controller {
     }
 
 	public function tambah_hasil_produksi(){
-    $now                      = date('Y-m-d');
-    $id_user                  = $_SESSION['id_user'];
+        $now                      = date('Y-m-d');
+        $id_user                  = $_SESSION['id_user'];
 
-    $data['produksi']         = $this->M_HasilProduksi->get_produksi_proses($now)->result();
-    $data['produksi_line']    = $this->M_HasilProduksi->get_produksi_line()->result();
-    $data['line']             = $this->M_Line->select_all_aktif()->result();
-    $data['permohonan_akses'] = $this->M_PermohonanAkses->select_belum_selesai_by_id($id_user)->result();
+        $data['produksi']         = $this->M_HasilProduksi->get_produksi_proses($now)->result();
+        $data['produksi_line']    = $this->M_HasilProduksi->get_produksi_line()->result();
+        $data['line']             = $this->M_Line->select_all_aktif()->result();
+        $data['permohonan_akses'] = $this->M_PermohonanAkses->select_belum_selesai_by_id($id_user)->result();
 
-    //notif produksi
-        //notif permintaan material produksi
-            $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
-            $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
-            $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
-            $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
-            $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
-            $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
-            $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
-        //tutup notif permintaan material produksi
+        //notif produksi
+            //notif permintaan material produksi
+                $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
+                $data['jm_permat_0'] = $this->M_Dashboard->get_jm_permat_0()->result_array();
+                $data['jm_permat_1'] = $this->M_Dashboard->get_jm_permat_1()->result_array();
+                $data['jm_permat_2'] = $this->M_Dashboard->get_jm_permat_2()->result_array();
+                $data['jm_permat_3'] = $this->M_Dashboard->get_jm_permat_3()->result_array();
+                $data['jm_permat_4'] = $this->M_Dashboard->get_jm_permat_4()->result_array();
+                $data['jm_permat_5'] = $this->M_Dashboard->get_jm_permat_5()->result_array();
+            //tutup notif permintaan material produksi
 
-        //notif surat perintah lembur
-              if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Cutting"){
-                $line = "Line Cutting";
-                $data['jm_spl']   = $this->M_Dashboard->get_jm_spl_line($line)->result_array();
-                $data['jm_spl_0'] = $this->M_Dashboard->get_jm_spl_line_0($line)->result_array();
-                $data['jm_spl_1'] = $this->M_Dashboard->get_jm_spl_line_1($line)->result_array();
-                $data['jm_spl_2'] = $this->M_Dashboard->get_jm_spl_line_2($line)->result_array();
-            }
-            else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Bonding"){
-                $line = "Line Bonding";
-                $data['jm_spl'] = $this->M_Dashboard->get_jm_spl_line($line)->result_array();
-                $data['jm_spl_0'] = $this->M_Dashboard->get_jm_spl_line_0($line)->result_array();
-                $data['jm_spl_1'] = $this->M_Dashboard->get_jm_spl_line_1($line)->result_array();
-                $data['jm_spl_2'] = $this->M_Dashboard->get_jm_spl_line_2($line)->result_array();
-            }
-            else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Sewing"){
-                $line = "Line Sewing";
-                $data['jm_spl'] = $this->M_Dashboard->get_jm_spl_line($line)->result_array();
-                $data['jm_spl_0'] = $this->M_Dashboard->get_jm_spl_line_0($line)->result_array();
-                $data['jm_spl_1'] = $this->M_Dashboard->get_jm_spl_line_1($line)->result_array();
-                $data['jm_spl_2'] = $this->M_Dashboard->get_jm_spl_line_2($line)->result_array();
-            }
-            else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Assy"){
-                $line = "Line Assy";
-                $data['jm_spl'] = $this->M_Dashboard->get_jm_spl_line($line)->result_array();
-                $data['jm_spl_0'] = $this->M_Dashboard->get_jm_spl_line_0($line)->result_array();
-                $data['jm_spl_1'] = $this->M_Dashboard->get_jm_spl_line_1($line)->result_array();
-                $data['jm_spl_2'] = $this->M_Dashboard->get_jm_spl_line_2($line)->result_array();
-            }
-            else{
-                $data['jm_spl']   = $this->M_Dashboard->get_jm_spl()->result_array();
-                $data['jm_spl_0'] = $this->M_Dashboard->get_jm_spl_0()->result_array();
-                $data['jm_spl_1'] = $this->M_Dashboard->get_jm_spl_1()->result_array();
-                $data['jm_spl_2'] = $this->M_Dashboard->get_jm_spl_2()->result_array();
-            }
-        //tutup notif surat perintah lembur
+            //notif surat perintah lembur
+                if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Cutting"){
+                    $line = "Line Cutting";
+                    $data['jm_spl']   = $this->M_Dashboard->get_jm_spl_line($line)->result_array();
+                    $data['jm_spl_0'] = $this->M_Dashboard->get_jm_spl_line_0($line)->result_array();
+                    $data['jm_spl_1'] = $this->M_Dashboard->get_jm_spl_line_1($line)->result_array();
+                    $data['jm_spl_2'] = $this->M_Dashboard->get_jm_spl_line_2($line)->result_array();
+                }
+                else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Bonding"){
+                    $line = "Line Bonding";
+                    $data['jm_spl'] = $this->M_Dashboard->get_jm_spl_line($line)->result_array();
+                    $data['jm_spl_0'] = $this->M_Dashboard->get_jm_spl_line_0($line)->result_array();
+                    $data['jm_spl_1'] = $this->M_Dashboard->get_jm_spl_line_1($line)->result_array();
+                    $data['jm_spl_2'] = $this->M_Dashboard->get_jm_spl_line_2($line)->result_array();
+                }
+                else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Sewing"){
+                    $line = "Line Sewing";
+                    $data['jm_spl'] = $this->M_Dashboard->get_jm_spl_line($line)->result_array();
+                    $data['jm_spl_0'] = $this->M_Dashboard->get_jm_spl_line_0($line)->result_array();
+                    $data['jm_spl_1'] = $this->M_Dashboard->get_jm_spl_line_1($line)->result_array();
+                    $data['jm_spl_2'] = $this->M_Dashboard->get_jm_spl_line_2($line)->result_array();
+                }
+                else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Assy"){
+                    $line = "Line Assy";
+                    $data['jm_spl'] = $this->M_Dashboard->get_jm_spl_line($line)->result_array();
+                    $data['jm_spl_0'] = $this->M_Dashboard->get_jm_spl_line_0($line)->result_array();
+                    $data['jm_spl_1'] = $this->M_Dashboard->get_jm_spl_line_1($line)->result_array();
+                    $data['jm_spl_2'] = $this->M_Dashboard->get_jm_spl_line_2($line)->result_array();
+                }
+                else{
+                    $data['jm_spl']   = $this->M_Dashboard->get_jm_spl()->result_array();
+                    $data['jm_spl_0'] = $this->M_Dashboard->get_jm_spl_0()->result_array();
+                    $data['jm_spl_1'] = $this->M_Dashboard->get_jm_spl_1()->result_array();
+                    $data['jm_spl_2'] = $this->M_Dashboard->get_jm_spl_2()->result_array();
+                }
+            //tutup notif surat perintah lembur
 
-        //notif laporan lembur
-            $tanggal = date('Y-m-d');
+            //notif laporan lembur
+                $tanggal = date('Y-m-d');
 
-            if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Cutting"){
-                $line = "Line Cutting";
-                $data['jm_ll'] = $this->M_Dashboard->get_jm_ll_line($line,$tanggal)->result_array();
-                $data['jm_ll_3'] = $this->M_Dashboard->get_jm_ll_line_3($line,$tanggal)->result_array();
-                $data['jm_ll_4'] = $this->M_Dashboard->get_jm_ll_line_4($line,$tanggal)->result_array();
-            }
-            else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Bonding"){
-                $line = "Line Bonding";
-                $data['jm_ll'] = $this->M_Dashboard->get_jm_ll_line($line,$tanggal)->result_array();
-                $data['jm_ll_3'] = $this->M_Dashboard->get_jm_ll_line_3($line,$tanggal)->result_array();
-                $data['jm_ll_4'] = $this->M_Dashboard->get_jm_ll_line_4($line,$tanggal)->result_array();
-            }
-            else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Sewing"){
-                $line = "Line Sewing";
-                $data['jm_ll'] = $this->M_Dashboard->get_jm_ll_line($line,$tanggal)->result_array();
-                $data['jm_ll_3'] = $this->M_Dashboard->get_jm_ll_line_3($line,$tanggal)->result_array();
-                $data['jm_ll_4'] = $this->M_Dashboard->get_jm_ll_line_4($line,$tanggal)->result_array();
-            }
-            else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Assy"){
-                $line = "Line Assy";
-                $data['jm_ll'] = $this->M_Dashboard->get_jm_ll_line($line,$tanggal)->result_array();
-                $data['jm_ll_3'] = $this->M_Dashboard->get_jm_ll_line_3($line,$tanggal)->result_array();
-                $data['jm_ll_4'] = $this->M_Dashboard->get_jm_ll_line_4($line,$tanggal)->result_array();
-            }
-            else{
-                $data['jm_ll']   = $this->M_Dashboard->get_jm_ll($tanggal)->result_array();
-                $data['jm_ll_3'] = $this->M_Dashboard->get_jm_ll_3($tanggal)->result_array();
-                $data['jm_ll_4'] = $this->M_Dashboard->get_jm_ll_4($tanggal)->result_array();
-            }
-        //tutup notif laporan lembur
+                if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Cutting"){
+                    $line = "Line Cutting";
+                    $data['jm_ll'] = $this->M_Dashboard->get_jm_ll_line($line,$tanggal)->result_array();
+                    $data['jm_ll_3'] = $this->M_Dashboard->get_jm_ll_line_3($line,$tanggal)->result_array();
+                    $data['jm_ll_4'] = $this->M_Dashboard->get_jm_ll_line_4($line,$tanggal)->result_array();
+                }
+                else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Bonding"){
+                    $line = "Line Bonding";
+                    $data['jm_ll'] = $this->M_Dashboard->get_jm_ll_line($line,$tanggal)->result_array();
+                    $data['jm_ll_3'] = $this->M_Dashboard->get_jm_ll_line_3($line,$tanggal)->result_array();
+                    $data['jm_ll_4'] = $this->M_Dashboard->get_jm_ll_line_4($line,$tanggal)->result_array();
+                }
+                else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Sewing"){
+                    $line = "Line Sewing";
+                    $data['jm_ll'] = $this->M_Dashboard->get_jm_ll_line($line,$tanggal)->result_array();
+                    $data['jm_ll_3'] = $this->M_Dashboard->get_jm_ll_line_3($line,$tanggal)->result_array();
+                    $data['jm_ll_4'] = $this->M_Dashboard->get_jm_ll_line_4($line,$tanggal)->result_array();
+                }
+                else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Assy"){
+                    $line = "Line Assy";
+                    $data['jm_ll'] = $this->M_Dashboard->get_jm_ll_line($line,$tanggal)->result_array();
+                    $data['jm_ll_3'] = $this->M_Dashboard->get_jm_ll_line_3($line,$tanggal)->result_array();
+                    $data['jm_ll_4'] = $this->M_Dashboard->get_jm_ll_line_4($line,$tanggal)->result_array();
+                }
+                else{
+                    $data['jm_ll']   = $this->M_Dashboard->get_jm_ll($tanggal)->result_array();
+                    $data['jm_ll_3'] = $this->M_Dashboard->get_jm_ll_3($tanggal)->result_array();
+                    $data['jm_ll_4'] = $this->M_Dashboard->get_jm_ll_4($tanggal)->result_array();
+                }
+            //tutup notif laporan lembur
 
-        //notif bpbj
-            $data['jm_bpbj']   = $this->M_Dashboard->get_jm_bpbj()->result_array();
-            $data['jm_bpbj_0'] = $this->M_Dashboard->get_jm_bpbj_0()->result_array();
-            $data['jm_bpbj_1'] = $this->M_Dashboard->get_jm_bpbj_1()->result_array();
-        //tutup notif bpbj
+            //notif bpbj
+                $data['jm_bpbj']   = $this->M_Dashboard->get_jm_bpbj()->result_array();
+                $data['jm_bpbj_0'] = $this->M_Dashboard->get_jm_bpbj_0()->result_array();
+                $data['jm_bpbj_1'] = $this->M_Dashboard->get_jm_bpbj_1()->result_array();
+            //tutup notif bpbj
 
-        //notig bpbd
-            $data['jm_bpbd']   = $this->M_Dashboard->get_jm_bpbd()->result_array();
-        //tutup notif bpbd
+            //notig bpbd
+                $data['jm_bpbd']   = $this->M_Dashboard->get_jm_bpbd()->result_array();
+            //tutup notif bpbd
 
-        //notif surat jalan
-            $data['jm_sj']   = $this->M_Dashboard->get_jm_sj()->result_array();
-            $data['jm_sj_0'] = $this->M_Dashboard->get_jm_sj_0()->result_array();
-            $data['jm_sj_1'] = $this->M_Dashboard->get_jm_sj_1()->result_array();
-        //tutup notif surat jalan
+            //notif surat jalan
+                $data['jm_sj']   = $this->M_Dashboard->get_jm_sj()->result_array();
+                $data['jm_sj_0'] = $this->M_Dashboard->get_jm_sj_0()->result_array();
+                $data['jm_sj_1'] = $this->M_Dashboard->get_jm_sj_1()->result_array();
+            //tutup notif surat jalan
 
-        //notif invoice
-            $data['jm_invoice']   = $this->M_Dashboard->get_jm_invoice()->result_array();
-        //tutup notif invoice
+            //notif invoice
+                $data['jm_invoice']   = $this->M_Dashboard->get_jm_invoice()->result_array();
+            //tutup notif invoice
 
-        //notif pengambilan material
-              if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Cutting"){
-                $line = "Line Cutting";
-                $data['jm_pengmat']   = $this->M_Dashboard->get_jm_pengmat_line($line)->result_array();
-            }
-            else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Bonding"){
-                $line = "Line Bonding";
-                $data['jm_pengmat']   = $this->M_Dashboard->get_jm_pengmat_line($line)->result_array();
-            }
-            else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Sewing"){
-                $line = "Line Sewing";
-                $data['jm_pengmat']   = $this->M_Dashboard->get_jm_pengmat_line($line)->result_array();
-            }
-            else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Assy"){
-                $line = "Line Assy";
-                $data['jm_pengmat']   = $this->M_Dashboard->get_jm_pengmat_line($line)->result_array();
-            }
-            else{
-                $data['jm_pengmat']   = $this->M_Dashboard->get_jm_pengmat()->result_array();
-            }
-        //tutup notif pengambilan material
+            //notif pengambilan material
+                if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Cutting"){
+                    $line = "Line Cutting";
+                    $data['jm_pengmat']   = $this->M_Dashboard->get_jm_pengmat_line($line)->result_array();
+                }
+                else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Bonding"){
+                    $line = "Line Bonding";
+                    $data['jm_pengmat']   = $this->M_Dashboard->get_jm_pengmat_line($line)->result_array();
+                }
+                else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Sewing"){
+                    $line = "Line Sewing";
+                    $data['jm_pengmat']   = $this->M_Dashboard->get_jm_pengmat_line($line)->result_array();
+                }
+                else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Assy"){
+                    $line = "Line Assy";
+                    $data['jm_pengmat']   = $this->M_Dashboard->get_jm_pengmat_line($line)->result_array();
+                }
+                else{
+                    $data['jm_pengmat']   = $this->M_Dashboard->get_jm_pengmat()->result_array();
+                }
+            //tutup notif pengambilan material
 
-        //notif permintaan tambahan
-            if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Cutting"){
-                $line = "Line Cutting";
-                $data['jm_pertam']     = $this->M_Dashboard->get_jm_pertam_line($line)->result_array();
-                $data['jm_pertam_0']   = $this->M_Dashboard->get_jm_pertam_line_0($line)->result_array();
-                $data['jm_pertam_1']   = $this->M_Dashboard->get_jm_pertam_line_1($line)->result_array();
-                $data['jm_pertam_2']   = $this->M_Dashboard->get_jm_pertam_line_2($line)->result_array();
-            }
-            else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Bonding"){
-                $line = "Line Bonding";
-                $data['jm_pertam']     = $this->M_Dashboard->get_jm_pertam_line($line)->result_array();
-                $data['jm_pertam_0']   = $this->M_Dashboard->get_jm_pertam_line_0($line)->result_array();
-                $data['jm_pertam_1']   = $this->M_Dashboard->get_jm_pertam_line_1($line)->result_array();
-                $data['jm_pertam_2']   = $this->M_Dashboard->get_jm_pertam_line_2($line)->result_array();
-            }
-            else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Sewing"){
-                $line = "Line Sewing";
-                $data['jm_pertam']     = $this->M_Dashboard->get_jm_pertam_line($line)->result_array();
-                $data['jm_pertam_0']   = $this->M_Dashboard->get_jm_pertam_line_0($line)->result_array();
-                $data['jm_pertam_1']   = $this->M_Dashboard->get_jm_pertam_line_1($line)->result_array();
-                $data['jm_pertam_2']   = $this->M_Dashboard->get_jm_pertam_line_2($line)->result_array();
-            }
-            else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Assy"){
-                $line = "Line Assy";
-                $data['jm_pertam']     = $this->M_Dashboard->get_jm_pertam_line($line)->result_array();
-                $data['jm_pertam_0']   = $this->M_Dashboard->get_jm_pertam_line_0($line)->result_array();
-                $data['jm_pertam_1']   = $this->M_Dashboard->get_jm_pertam_line_1($line)->result_array();
-                $data['jm_pertam_2']   = $this->M_Dashboard->get_jm_pertam_line_2($line)->result_array();
-            }
-            else{
-                $data['jm_pertam']     = $this->M_Dashboard->get_jm_pertam()->result_array();
-                $data['jm_pertam_0']   = $this->M_Dashboard->get_jm_pertam_0()->result_array();
-                $data['jm_pertam_1']   = $this->M_Dashboard->get_jm_pertam_1()->result_array();
-                $data['jm_pertam_2']   = $this->M_Dashboard->get_jm_pertam_2()->result_array();
-            }
-        //tutup notif permintaan tambahan
+            //notif permintaan tambahan
+                if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Cutting"){
+                    $line = "Line Cutting";
+                    $data['jm_pertam']     = $this->M_Dashboard->get_jm_pertam_line($line)->result_array();
+                    $data['jm_pertam_0']   = $this->M_Dashboard->get_jm_pertam_line_0($line)->result_array();
+                    $data['jm_pertam_1']   = $this->M_Dashboard->get_jm_pertam_line_1($line)->result_array();
+                    $data['jm_pertam_2']   = $this->M_Dashboard->get_jm_pertam_line_2($line)->result_array();
+                }
+                else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Bonding"){
+                    $line = "Line Bonding";
+                    $data['jm_pertam']     = $this->M_Dashboard->get_jm_pertam_line($line)->result_array();
+                    $data['jm_pertam_0']   = $this->M_Dashboard->get_jm_pertam_line_0($line)->result_array();
+                    $data['jm_pertam_1']   = $this->M_Dashboard->get_jm_pertam_line_1($line)->result_array();
+                    $data['jm_pertam_2']   = $this->M_Dashboard->get_jm_pertam_line_2($line)->result_array();
+                }
+                else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Sewing"){
+                    $line = "Line Sewing";
+                    $data['jm_pertam']     = $this->M_Dashboard->get_jm_pertam_line($line)->result_array();
+                    $data['jm_pertam_0']   = $this->M_Dashboard->get_jm_pertam_line_0($line)->result_array();
+                    $data['jm_pertam_1']   = $this->M_Dashboard->get_jm_pertam_line_1($line)->result_array();
+                    $data['jm_pertam_2']   = $this->M_Dashboard->get_jm_pertam_line_2($line)->result_array();
+                }
+                else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Assy"){
+                    $line = "Line Assy";
+                    $data['jm_pertam']     = $this->M_Dashboard->get_jm_pertam_line($line)->result_array();
+                    $data['jm_pertam_0']   = $this->M_Dashboard->get_jm_pertam_line_0($line)->result_array();
+                    $data['jm_pertam_1']   = $this->M_Dashboard->get_jm_pertam_line_1($line)->result_array();
+                    $data['jm_pertam_2']   = $this->M_Dashboard->get_jm_pertam_line_2($line)->result_array();
+                }
+                else{
+                    $data['jm_pertam']     = $this->M_Dashboard->get_jm_pertam()->result_array();
+                    $data['jm_pertam_0']   = $this->M_Dashboard->get_jm_pertam_0()->result_array();
+                    $data['jm_pertam_1']   = $this->M_Dashboard->get_jm_pertam_1()->result_array();
+                    $data['jm_pertam_2']   = $this->M_Dashboard->get_jm_pertam_2()->result_array();
+                }
+            //tutup notif permintaan tambahan
 
-        //notif hasil produksi
-            $data['jm_hasprod'] = $this->M_Dashboard->get_jm_hasprod()->result_array();
-        //tutup notif hasil produksi
+            //notif hasil produksi
+                $data['jm_hasprod'] = $this->M_Dashboard->get_jm_hasprod()->result_array();
+            //tutup notif hasil produksi
 
-        //notif laporan perencanaan cutting
-            $data['jm_percut']   = $this->M_Dashboard->get_jm_percut()->result_array();
-            $data['jm_percut_0'] = $this->M_Dashboard->get_jm_percut_0()->result_array();
-            $data['jm_percut_1'] = $this->M_Dashboard->get_jm_percut_1()->result_array();
-        //tutup notif laporan perencanaan cutting
+            //notif laporan perencanaan cutting
+                $data['jm_percut']   = $this->M_Dashboard->get_jm_percut()->result_array();
+                $data['jm_percut_0'] = $this->M_Dashboard->get_jm_percut_0()->result_array();
+                $data['jm_percut_1'] = $this->M_Dashboard->get_jm_percut_1()->result_array();
+            //tutup notif laporan perencanaan cutting
 
-        //notif permohonan akses
-            $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
-        //tutup notif permohonan akses
-    //tutup
+            //notif permohonan akses
+                $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
+            //tutup notif permohonan akses
+        //tutup
 
 
-		$this->load->view('v_hasil_produksi_tambah',$data);
-  }
+            $this->load->view('v_hasil_produksi_tambah',$data);
+    }
 
   public function semua_hasil_produksi(){
     $now                      = date('Y-m-d');
@@ -951,7 +951,7 @@ class HasilProduksi extends CI_Controller {
 
     }
 
-      $efisiensi_aktual = round(($total_waktu_aktual /($total_pt * 3600))*100,2);
+    $efisiensi_aktual = round(($total_waktu_aktual /($total_pt * 3600))*100,2);
 
     //update produksi line
       $data_pl = array(
@@ -964,7 +964,7 @@ class HasilProduksi extends CI_Controller {
       $where_pl = array(
         'id_produksi_line'  => $id_produksi_line
       );
-
+      
       $this->M_HasilProduksi->edit('produksi_line',$data_pl,$where_pl);
     
 
@@ -973,7 +973,7 @@ class HasilProduksi extends CI_Controller {
       $jm_prodline = $this->M_HasilProduksi->get_produksi_line_by_produksi($id_produksi)->num_rows();
 
       $cek_perc = 0;
-      $cak_lap  = 0;
+      $cek_lap  = 0;
 
       for($o=0;$o<$jm_prodline;$o++){
         if($prodline[$o]['status_perencanaan'] == 1 || $prodline[$o]['status_perencanaan'] == 2){
@@ -1007,7 +1007,7 @@ class HasilProduksi extends CI_Controller {
 
       $this->M_HasilProduksi->edit('produksi',$data_produksi,$where_produksi);
 
-   redirect('hasilProduksi/tambah_hasil_produksi');
+   //redirect('hasilProduksi/tambah_hasil_produksi');
   }
 
   public function edit(){
@@ -1268,7 +1268,7 @@ class HasilProduksi extends CI_Controller {
     $user = $_SESSION['id_user'];
     $now  = date('Y-m-d H:i:s');
 
-    $data = array (
+    $data = array(
       'status_laporan' => 3,
       'user_edit'      => $user,
       'waktu_edit'     => $now
@@ -1284,18 +1284,17 @@ class HasilProduksi extends CI_Controller {
 
     for($i=0;$i<=$jumlah_detail;$i++){
       $wip       = $this->input->post('wip'.$i);
-
     
       if($wip > 0){
           $id_line   = $this->input->post('id_line'.$i);
           $id_sub_jm = $this->input->post('id_sub_jm'.$i);
           
           $cari_inline    = $this->M_HasilProduksi->get_inline($id_line,$id_sub_jm)->result_array();
-          $jm_cari_inline = $this->M_HasilProduksi->get_inline($id_line,$id_sub_jm)->num_rows();
-
+          $jm_cari_inline = $this->M_HasilProduksi->get_inline($id_line,$id_sub_jm)->num_rows(); 
+         
           //jika ditemukan
           if($jm_cari_inline > 0){
-              $id_inli                = $cari_inline[0]['id_inventory_line'];
+              $id_inli                = $cari_inline[0]['id_persediaan_line']; 
               $total_material_sebelum = $cari_inline[0]['total_material'];
 
               $total_material_baru = $total_material_sebelum + $wip;
@@ -1307,10 +1306,10 @@ class HasilProduksi extends CI_Controller {
               );
 
               $where_inventory_line = array(
-                  'id_inventory_line' =>  $id_inli
+                  'id_persediaan_line' =>  $id_inli
               );
 
-              $this->M_LaporanPerencanaanCutting->edit('inventory_line',$data_inventory_line,$where_inventory_line);
+              $this->M_LaporanPerencanaanCutting->edit('persediaan_line',$data_inventory_line,$where_inventory_line);
           }
           //jika tidak ada, maka
           else{
@@ -1318,10 +1317,10 @@ class HasilProduksi extends CI_Controller {
               $jumlah_inli    = $this->M_HasilProduksi->select_all_inventory_line()->num_rows();
               $id_number      = $jumlah_inli + 1;
 
-              $id_inli     = "INLI-".$id_number;
+              $id_inli     = "SELI-".$id_number;
 
               $data_inline = array(
-                  'id_inventory_line'     => $id_inli,
+                  'id_persediaan_line'     => $id_inli,
                   'id_line'               => $id_line,
                   'id_sub_jenis_material' => $id_sub_jm,
                   'total_material'        => $wip,
@@ -1329,72 +1328,72 @@ class HasilProduksi extends CI_Controller {
                   'waktu_add'             => $now,
                   'status_delete'         => 0
               );
-              $this->M_LaporanPerencanaanCutting->insert('inventory_line',$data_inline);
-          }
+              $this->M_LaporanPerencanaanCutting->insert('persediaan_line',$data_inline);
+          } 
 
-          //DETAIL INVENTORY LINE
+          //PERSEDIAAN LINE MASUK
               //id detail inventory line
               $tahun_sekarang = substr(date('Y',strtotime($now)),2,2);
               $bulan_sekarang = date('m',strtotime($now));
-              $id_code        = "DINLI".$tahun_sekarang.$bulan_sekarang.".";
+              $id_code        = "SELIM".$tahun_sekarang.$bulan_sekarang.".";
 
-              $last       = $this->M_LaporanPerencanaanCutting->get_last_dinli_id($id_code)->result_array();
-              $last_cek   = $this->M_LaporanPerencanaanCutting->get_last_dinli_id($id_code)->num_rows();
-
-              //id
-              if($last_cek == 1){
-                  $id_terakhir    = $last[0]['id_detail_inventory_line'];
-
-                  $tahun_sebelum  = substr($id_terakhir,5,2);
+              $last       = $this->M_HasilProduksi->get_last_dinli_id($id_code)->result_array();
+              $last_cek   = $this->M_HasilProduksi->get_last_dinli_id($id_code)->num_rows();
               
-                  $bulan_sebelum  = substr($id_terakhir,7,2);
+                //id
+                if($last_cek == 1){
+                    $id_terakhir    = $last[0]['id_persediaan_line_masuk'];
+                    //echo $last[0]['id_persediaan_line_masuk'];
+                    $tahun_sebelum  = substr($id_terakhir,5,2);
+                
+                    $bulan_sebelum  = substr($id_terakhir,7,2);
 
-                  //kalau tahun sama
-                  if($tahun_sebelum == $tahun_sekarang){
-                      //kalau tahun & bulannya sama berarti count+1
-                      if($bulan_sebelum == $bulan_sekarang){
-                          $count = intval(substr($id_terakhir,10,5)) + 1;
-                          $pjg   = strlen($count);
+                    //kalau tahun sama
+                    if($tahun_sebelum == $tahun_sekarang){
+                        //kalau tahun & bulannya sama berarti count+1
+                        if($bulan_sebelum == $bulan_sekarang){
+                            $count = intval(substr($id_terakhir,10,5)) + 1;
+                            $pjg   = strlen($count);
 
-                          if($pjg == 1){
-                              $count_baru = "0000".$count;
-                          }
-                          else if($pjg == 2){
-                              $count_baru = "000".$count;
-                          }
-                          else if($pjg == 3){
-                              $count_baru = "00".$count;
-                          }
-                          else if($pjg == 4){
-                              $count_baru = "0".$count;
-                          }
-                          else{
-                              $count_baru = $count;
-                          }
-                          
-                          //id yang baru
-                          $id_dinli_baru = "DINLI".$tahun_sebelum.$bulan_sebelum.".".$count_baru;
-                      }
-                      //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
-                      else{
-                          //id yang baru
-                          $id_dinli_baru = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-                      }
-                  }
-                  //kalau tahun tidak sama
-                  else{
-                      //id yang baru
-                      $id_dinli_baru = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-                  }
-              }
-              else{
-                  //id yang baru
-                  $id_dinli_baru = "DINLI".$tahun_sekarang.$bulan_sekarang.".00001";
-              }
+                            if($pjg == 1){
+                                $count_baru = "0000".$count;
+                            }
+                            else if($pjg == 2){
+                                $count_baru = "000".$count;
+                            }
+                            else if($pjg == 3){
+                                $count_baru = "00".$count;
+                            }
+                            else if($pjg == 4){
+                                $count_baru = "0".$count;
+                            }
+                            else{
+                                $count_baru = $count;
+                            }
+                            
+                            //id yang baru
+                            $id_dinli_baru = "SELIM".$tahun_sebelum.$bulan_sebelum.".".$count_baru;
+                        }
+                        //kalau tahun sama, bulan beda berarti ganti bulan dan count mulai dari 1
+                        else{
+                            //id yang baru
+                            $id_dinli_baru = "SELIM".$tahun_sekarang.$bulan_sekarang.".00001";
+                        }
+                    }
+                    //kalau tahun tidak sama
+                    else{
+                        //id yang baru
+                        $id_dinli_baru = "SELIM".$tahun_sekarang.$bulan_sekarang.".00001";
+                    }
+                }
+                else{
+                    //id yang baru
+                    $id_dinli_baru = "SELIM".$tahun_sekarang.$bulan_sekarang.".00001";
+                }
 
               $data_detail_inline = array(
-                      'id_detail_inventory_line' => $id_dinli_baru,
-                      'id_inventory_line'        => $id_inli,
+                      'id_persediaan_line_masuk' => $id_dinli_baru,
+                      'id_persediaan_line'       => $id_inli,
                       'tanggal'                  => $tanggal,
                       'jumlah_material'          => $wip,
                       'status'                   => 0,
@@ -1403,12 +1402,10 @@ class HasilProduksi extends CI_Controller {
                       'status_delete'            => 0
               );
 
-              $this->M_LaporanPerencanaanCutting->insert('detail_inventory_line',$data_detail_inline);
+              $this->M_LaporanPerencanaanCutting->insert('persediaan_line_masuk',$data_detail_inline);
           //tutup detail inventory line
       }
-    
     }
- 
     redirect('hasilProduksi/selesai_hasil_produksi');
   }
 
@@ -1427,9 +1424,21 @@ class HasilProduksi extends CI_Controller {
     $data['km']    = $this->M_HasilProduksi->get_all_km()->result_array();
     $data['jm_km'] = $this->M_HasilProduksi->get_all_km()->num_rows();
 
-    $data['pm']    = $this->M_HasilProduksi->get_all_pengambilan_material($tanggal_produksi)->result_array();
-    $data['jm_pm'] = $this->M_HasilProduksi->get_all_pengambilan_material($tanggal_produksi)->num_rows();
+    $data['pm']    = $this->M_HasilProduksi->get_all_pengambilan_material_group($tanggal_produksi)->result_array();
+    $data['jm_pm'] = $this->M_HasilProduksi->get_all_pengambilan_material_group($tanggal_produksi)->num_rows();
+
+    $data['pms']    = $this->M_HasilProduksi->get_all_pengambilan_material($tanggal_produksi)->result_array();
+    $data['jm_pms'] = $this->M_HasilProduksi->get_all_pengambilan_material($tanggal_produksi)->num_rows();
+
+    $data['pmt']    = $this->M_HasilProduksi->get_all_pengambilan_material_tambahan_group($tanggal_produksi)->result_array();
+    $data['jm_pmt'] = $this->M_HasilProduksi->get_all_pengambilan_material_tambahan_group($tanggal_produksi)->num_rows();
+
+    $data['pmts']    = $this->M_HasilProduksi->get_all_pengambilan_material_tambahan($tanggal_produksi)->result_array();
+    $data['jm_pmts'] = $this->M_HasilProduksi->get_all_pengambilan_material_tambahan($tanggal_produksi)->num_rows();
     
+    $data['det_inline']    = $this->M_HasilProduksi->get_detail_inline_out()->result_array();
+    $data['jm_det_inline'] = $this->M_HasilProduksi->get_detail_inline_out()->num_rows();
+
     $data['warna']      = $this->M_Warna->select_all_aktif()->result_array();
     $data['jmwarna']    = $this->M_Warna->select_all_aktif()->num_rows();
     $data['ukuran']     = $this->M_UkuranProduk->select_all_aktif()->result_array();

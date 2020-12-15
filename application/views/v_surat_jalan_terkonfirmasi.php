@@ -226,11 +226,11 @@
             <form method="POST" action="<?= base_url()?>suratJalan/delete">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title"><b>Hapus Data Invoice</b></h4>
+                        <h4 class="modal-title"><b>Hapus Data Surat Jalan</b></h4>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id_sj_hapus" id="id_sj_hapus"> 
-                        <p>Apakah anda yakin akan menghapus data invoice dengan nomor invoice <span id="kode_sj_hapus"></span> ? </p>
+                        <p>Apakah anda yakin akan menghapus data surat jalan dengan nomor surat jalan <span id="kode_sj_hapus"></span> ? </p>
                     </div>
                     <div class="modal-footer">
                         <input type="submit" class="btn btn-primary" value="Ya">
@@ -247,7 +247,7 @@
             <form method="POST" action="<?= base_url()?>suratJalan/edit">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title"><b>Buat Surat Jalan</b></h4>
+                        <h4 class="modal-title"><b>Edit Surat Jalan</b></h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group mt-lg">
@@ -938,7 +938,7 @@
                             '<thead>'+
                                 '<tr>'+
                                     '<th style="text-align: center;vertical-align: middle;">No</th>'+
-                                    '<th style="text-align: center;vertical-align: middle;">Nomor Surat Jalan</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">Nomor BPBD</th>'+
                                     '<th style="text-align: center;vertical-align: middle;">Qty (pcs)</th>'+
                                 '</tr>'+
                             '</thead>'+

@@ -200,7 +200,7 @@ class PengambilanMaterialProduksi extends CI_Controller {
       $this->load->view('v_pengambilan_material_produksi_tambah0',$data);
     }
 
-	  public function tambah(){
+	public function tambah(){
       $data['min_date'] = date('Y-m-d');
 
       if($_SESSION['nama_jabatan'] == "PIC Line Cutting"){
@@ -1053,7 +1053,7 @@ class PengambilanMaterialProduksi extends CI_Controller {
           $this->M_PengambilanMaterialProduksi->edit('permintaan_tambahan',$data_pertam,$where_pertam); 
       }
 
-      redirect('pengambilanMaterialProduksi/tambah');
+      redirect('pengambilanMaterialProduksi/semua_pengambilan_material');
     }
 
     public function semua_pengambilan_material0(){
@@ -2086,11 +2086,11 @@ class PengambilanMaterialProduksi extends CI_Controller {
       $jumlah_pakai_wip_sebelum= $this->input->post('jumlah_wip_lama');
       $wip                     = $this->input->post('wip');
       $keterangan              = $this->input->post('keterangan');
-
+    
       $user = $_SESSION['id_user'];
       $now  = date('Y-m-d H:i:s');
       
-      if($jumlah_baru > $jumlah_lama){
+      if($jumlah_baru >= $jumlah_lama){
           $selisih_tambah = $jumlah_baru - $jumlah_lama;
 
           if($selisih_tambah <= $wip){

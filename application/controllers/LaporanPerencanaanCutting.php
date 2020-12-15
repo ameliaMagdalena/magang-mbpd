@@ -200,7 +200,6 @@ class LaporanPerencanaanCutting extends CI_Controller {
             //tutup notif permohonan akses
         //tutup
     
-
         $this->load->view('v_laporan_perencanaan_cutting_tambah',$data);
     }
 
@@ -953,8 +952,17 @@ class LaporanPerencanaanCutting extends CI_Controller {
         $data['km']    = $this->M_LaporanPerencanaanCutting->get_all_km()->result_array();
         $data['jm_km'] = $this->M_LaporanPerencanaanCutting->get_all_km()->num_rows();
     
-        $data['pm']    = $this->M_LaporanPerencanaanCutting->get_all_pengambilan_material($tanggal)->result_array();
-        $data['jm_pm'] = $this->M_LaporanPerencanaanCutting->get_all_pengambilan_material($tanggal)->num_rows();
+        $data['pm']    = $this->M_LaporanPerencanaanCutting->get_all_pengambilan_material_group($tanggal)->result_array();
+        $data['jm_pm'] = $this->M_LaporanPerencanaanCutting->get_all_pengambilan_material_group($tanggal)->num_rows();
+
+        $data['pms']    = $this->M_LaporanPerencanaanCutting->get_all_pengambilan_material($tanggal)->result_array();
+        $data['jm_pms'] = $this->M_LaporanPerencanaanCutting->get_all_pengambilan_material($tanggal)->num_rows();
+
+        $data['pmt']    = $this->M_LaporanPerencanaanCutting->get_all_pengambilan_material_tambahan_group($tanggal)->result_array();
+        $data['jm_pmt'] = $this->M_LaporanPerencanaanCutting->get_all_pengambilan_material_tambahan_group($tanggal)->num_rows();
+
+        $data['pmts']    = $this->M_LaporanPerencanaanCutting->get_all_pengambilan_material_tambahan($tanggal)->result_array();
+        $data['jm_pmts'] = $this->M_LaporanPerencanaanCutting->get_all_pengambilan_material_tambahan($tanggal)->num_rows();
 
         $data['det_inline']    = $this->M_LaporanPerencanaanCutting->get_detail_inline_out()->result_array();
         $data['jm_det_inline'] = $this->M_LaporanPerencanaanCutting->get_detail_inline_out()->num_rows();
@@ -1028,24 +1036,24 @@ class LaporanPerencanaanCutting extends CI_Controller {
 
         //add di inventory line
         $jumlah_detail = $this->input->post('jumlah_detail_setuju');
-
+        
         for($i=0;$i<$jumlah_detail;$i++){
             $wip       = $this->input->post('wip'.$i);
-
+            
             if($wip > 0){
                 $id_line   = $this->input->post('id_line'.$i);
                 $id_sub_jm = $this->input->post('id_sub_jm'.$i);
                 
                 $cari_inline    = $this->M_LaporanPerencanaanCutting->get_inline($id_line,$id_sub_jm)->result_array();
                 $jm_cari_inline = $this->M_LaporanPerencanaanCutting->get_inline($id_line,$id_sub_jm)->num_rows();
-
+                
                 //jika ditemukan
                 if($jm_cari_inline > 0){
                     $id_inli                = $cari_inline[0]['id_persediaan_line'];
                     $total_material_sebelum = $cari_inline[0]['total_material'];
 
                     $total_material_baru = $total_material_sebelum + $wip;
-
+                    
                     $data_inventory_line = array(
                         'total_material' => $total_material_baru,
                         'user_edit'      => $user,
@@ -1077,7 +1085,7 @@ class LaporanPerencanaanCutting extends CI_Controller {
                     );
                     $this->M_LaporanPerencanaanCutting->insert('persediaan_line',$data_inline);
                 }
-
+                
                 //DETAIL INVENTORY LINE
                     //id detail inventory line
                     $tahun_sekarang = substr(date('Y',strtotime($now)),2,2);
@@ -1151,8 +1159,13 @@ class LaporanPerencanaanCutting extends CI_Controller {
 
                     $this->M_LaporanPerencanaanCutting->insert('persediaan_line_masuk',$data_detail_inline);
                 //tutup detail inventory line
+                
             }
         }
+
+        $this->M_LaporanPerencanaanCutting->update_selesai($tanggal);
+
+        redirect('laporanPerencanaanCutting/selesai');
     }
 
 }

@@ -45,6 +45,7 @@
                     <?php 
                         $no = 1;
                         foreach($surat_perintah_lembur as $spl){
+                            if($spl->status_spl == 2){
                     ?>
                         <tr>
                             <td style="text-align: center;vertical-align: middle;"><?= $no;?></td>
@@ -531,7 +532,7 @@
                             </form>
                         </div>
 
-                    <?php $no++; } ?>
+                    <?php $no++; }} ?>
 
                 </tbody>
 	        </table>

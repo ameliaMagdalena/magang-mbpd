@@ -266,7 +266,7 @@ class Produk extends CI_Controller {
         $now = date('Y-m-d H:i:s');
         $jumlah_produk = $this->M_Produk->select_all()->num_rows();
         $id_number      = $jumlah_produk + 1;
-        $id_produk     = "PRODUK-".$id_number;
+        $id_produk     = "PRDK-".$id_number;
 
         //ADD CYCLE TIME, IF PURCHASE COVER
         if($keterangan == 1){

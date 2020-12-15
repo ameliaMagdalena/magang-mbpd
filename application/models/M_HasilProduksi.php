@@ -146,8 +146,8 @@ class M_HasilProduksi extends CI_Model {
     }
 
     function get_last_dinli_id($id_code){
-        return $this->db->query("SELECT id_detail_inventory_line FROM detail_inventory_line 
-        WHERE id_detail_inventory_line LIKE '$id_code%' ORDER BY id_detail_inventory_line DESC LIMIT 1");
+        return $this->db->query("SELECT id_persediaan_line_masuk FROM persediaan_line_masuk 
+        WHERE id_persediaan_line_masuk LIKE '$id_code%' ORDER BY id_persediaan_line_masuk DESC LIMIT 1");
     }
 
     function get_all_km(){
@@ -155,12 +155,12 @@ class M_HasilProduksi extends CI_Model {
         WHERE konsumsi_material.status_delete='0' AND konsumsi_material.id_sub_jenis_material=sub_jenis_material.id_sub_jenis_material ");
     }
 
-    function get_all_pengambilan_material($tanggal_produksi){
+    function get_all_pengambilan_material_group($tanggal_produksi){
         return $this->db->query("SELECT permintaan_material.id_line,permintaan_material.id_detail_purchase_order_customer,
         detail_permintaan_material.id_konsumsi_material,SUM(pengambilan_material.jumlah_ambil) as total_keluar 
         FROM permintaan_material,detail_permintaan_material,pengambilan_material,detail_purchase_order_customer,detail_produk
         WHERE permintaan_material.tanggal_produksi='$tanggal_produksi' AND pengambilan_material.status_delete='0'
-        AND pengambilan_material.status_pengambilan='1' AND pengambilan_material.status_permintaan='0'
+        AND pengambilan_material.status_pengambilan='1' AND pengambilan_material.status_permintaan='0' AND pengambilan_material.status_keluar='1'
         AND permintaan_material.id_permintaan_material=detail_permintaan_material.id_permintaan_material
         AND detail_permintaan_material.id_detail_permintaan_material=pengambilan_material.id_detail_permintaan_material
         AND permintaan_material.id_detail_purchase_order_customer=detail_purchase_order_customer.id_detail_purchase_order_customer
@@ -168,9 +168,59 @@ class M_HasilProduksi extends CI_Model {
         GROUP BY permintaan_material.id_line,detail_produk.id_detail_produk,
         detail_permintaan_material.id_konsumsi_material,detail_purchase_order_customer.id_detail_purchase_order_customer");
     }
+
+    function get_all_pengambilan_material($tanggal_produksi){
+        return $this->db->query("SELECT permintaan_material.id_line,permintaan_material.id_detail_purchase_order_customer,
+        detail_permintaan_material.id_konsumsi_material,pengambilan_material.jumlah_ambil
+        FROM permintaan_material,detail_permintaan_material,pengambilan_material,detail_purchase_order_customer,detail_produk
+        WHERE permintaan_material.tanggal_produksi='$tanggal_produksi' AND pengambilan_material.status_delete='0'
+        AND pengambilan_material.status_pengambilan='1' AND pengambilan_material.status_permintaan='0' AND pengambilan_material.status_keluar='1'
+        AND permintaan_material.id_permintaan_material=detail_permintaan_material.id_permintaan_material
+        AND detail_permintaan_material.id_detail_permintaan_material=pengambilan_material.id_detail_permintaan_material
+        AND permintaan_material.id_detail_purchase_order_customer=detail_purchase_order_customer.id_detail_purchase_order_customer
+        AND detail_purchase_order_customer.id_detail_produk=detail_produk.id_detail_produk");
+    }
+
+    function get_all_pengambilan_material_tambahan_group($tanggal_produksi){
+        return $this->db->query("SELECT permintaan_material.id_line,permintaan_material.id_detail_purchase_order_customer,
+        detail_permintaan_material.id_konsumsi_material,SUM(pengambilan_material.jumlah_ambil) as total_keluar 
+        FROM permintaan_material,detail_permintaan_material,pengambilan_material,detail_purchase_order_customer,detail_produk
+        WHERE permintaan_material.tanggal_produksi='$tanggal_produksi' AND pengambilan_material.status_delete='0'
+        AND pengambilan_material.status_pengambilan='1' AND pengambilan_material.status_permintaan='1' AND pengambilan_material.status_keluar='1'
+        AND permintaan_material.id_permintaan_material=detail_permintaan_material.id_permintaan_material
+        AND detail_permintaan_material.id_detail_permintaan_material=pengambilan_material.id_detail_permintaan_material
+        AND permintaan_material.id_detail_purchase_order_customer=detail_purchase_order_customer.id_detail_purchase_order_customer
+        AND detail_purchase_order_customer.id_detail_produk=detail_produk.id_detail_produk
+        GROUP BY permintaan_material.id_line,detail_produk.id_detail_produk,
+        detail_permintaan_material.id_konsumsi_material,detail_purchase_order_customer.id_detail_purchase_order_customer");
+    }
+
+    function get_all_pengambilan_material_tambahan($tanggal_produksi){
+        return $this->db->query("SELECT permintaan_material.id_line,permintaan_material.id_detail_purchase_order_customer,
+        detail_permintaan_material.id_konsumsi_material,pengambilan_material.jumlah_ambil
+        FROM permintaan_material,detail_permintaan_material,pengambilan_material,detail_purchase_order_customer,detail_produk
+        WHERE permintaan_material.tanggal_produksi='$tanggal_produksi' AND pengambilan_material.status_delete='0'
+        AND pengambilan_material.status_pengambilan='1' AND pengambilan_material.status_permintaan='1' AND pengambilan_material.status_keluar='1'
+        AND permintaan_material.id_permintaan_material=detail_permintaan_material.id_permintaan_material
+        AND detail_permintaan_material.id_detail_permintaan_material=pengambilan_material.id_detail_permintaan_material
+        AND permintaan_material.id_detail_purchase_order_customer=detail_purchase_order_customer.id_detail_purchase_order_customer
+        AND detail_purchase_order_customer.id_detail_produk=detail_produk.id_detail_produk");
+    }
     
     function get_inline($id_line,$id_sub_jm){
-        return $this->db->query("SELECT * FROM inventory_line WHERE id_line='$id_line' AND id_sub_jenis_material='$id_sub_jm' AND status_delete='0'  ");
+        return $this->db->query("SELECT * FROM persediaan_line WHERE id_line='$id_line' AND id_sub_jenis_material='$id_sub_jm' AND status_delete='0'  ");
+    }
+
+    function get_detail_inline_out(){
+        return $this->db->query("SELECT SUM(persediaan_line_keluar.jumlah_material) AS jumlah_material,
+        detail_permintaan_material.id_konsumsi_material,permintaan_material.id_line,permintaan_material.id_detail_purchase_order_customer,
+        permintaan_material.tanggal_produksi
+        FROM persediaan_line,persediaan_line_keluar,pengambilan_material,detail_permintaan_material,permintaan_material
+        WHERE persediaan_line.id_persediaan_line=persediaan_line_keluar.id_persediaan_line 
+        AND persediaan_line_keluar.id_pengambilan_material=pengambilan_material.id_pengambilan_material
+        AND pengambilan_material.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material
+        AND permintaan_material.id_permintaan_material=detail_permintaan_material.id_permintaan_material
+        AND persediaan_line_keluar.status_delete='0' GROUP BY pengambilan_material.id_detail_permintaan_material ");
     }
 
 }

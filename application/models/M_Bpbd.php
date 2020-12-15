@@ -97,7 +97,11 @@ class M_Bpbd extends CI_Model {
     }
 
     function get_one_item_bpbd($id){
-        return $this->db->query("SELECT * FROM item_bpbd WHERE item_bpbd.id_bpbd='$id' AND item_bpbd.status_delete='0' ");
+        return $this->db->query("SELECT item_bpbd.id_item_bpbd,item_bpbd.id_detail_produk, item_bpbd.jumlah_produk, item_bpbd.keterangan AS keterangan_bpbd,
+        detail_produk.keterangan, detail_produk.id_produk, detail_produk.id_ukuran_produk, detail_produk.id_warna,produk.nama_produk
+        FROM item_bpbd,detail_produk,produk 
+        WHERE item_bpbd.id_bpbd='$id' AND item_bpbd.status_delete='0' AND item_bpbd.id_detail_produk=detail_produk.id_detail_produk AND
+        detail_produk.id_produk=produk.id_produk ");
     }
 
     function get_one_detail_item_bpbd($id_item_bpbd){
@@ -105,7 +109,7 @@ class M_Bpbd extends CI_Model {
         item_surat_jalan.id_item_surat_jalan, item_surat_jalan.jumlah_keluar
         FROM detail_item_bpbd,item_surat_jalan
         WHERE detail_item_bpbd.id_item_bpbd='$id_item_bpbd' 
-        AND detail_item_bpbd.id_item_surat_jalan=item_surat_jalan.id_item_surat_jalan AND detail_item_bpbd.status_delete='0'  ");
+        AND detail_item_bpbd.id_item_surat_jalan=item_surat_jalan.id_item_surat_jalan AND detail_item_bpbd.status_delete='0'");
     }
 
     function get_produk(){
@@ -115,6 +119,10 @@ class M_Bpbd extends CI_Model {
     function get_one_detail_produk($id_detail_produk){
         return $this->db->query("SELECT * FROM detail_produk,produk 
         WHERE detail_produk.id_detail_produk='$id_detail_produk' AND detail_produk.id_produk=produk.id_produk ");
+    }
+
+    function get_one_item_bpbd_fr_bpbd($id_bpbd){
+        return $this->db->query("SELECT * FROM item_bpbd WHERE id_bpbd='$id_bpbd' AND item_bpbd.status_delete='0' ");
     }
 
 

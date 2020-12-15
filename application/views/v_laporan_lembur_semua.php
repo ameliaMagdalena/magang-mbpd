@@ -132,10 +132,10 @@
                                     <?php } ?>
                                 <?php } else if($ll->status_spl == 5){ ?>
                                         <button type="button" class="bdet2_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                        id="bdet2<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Detail"></button>
+                                        id="bdet2<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
                                         <form method="POST" action="<?= base_url()?>laporanLembur/print">
                                             <input type="hidden" name="id" value="<?= $ll->id_surat_perintah_lembur?>">
-                                            <button type="submit" class="col-lg-3 btn fa fa-print" style="background-color:#E56B1F;color:white;"
+                                            <button type="submit" class="col-lg-3 btn fa fa-print" style="background-color:#E56B1F;color:white;margin-right:5px;margin-bottom:5px"
                                             title="Print"></button>
                                         </form>  
                                 <?php } ?>
@@ -146,7 +146,7 @@
                             <form method="POST" action="<?= base_url()?>laporanLembur/ppic_setuju">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        <h2 class="panel-title">Konfirmasi Surat Perintah Lembur</h2>
+                                        <h2 class="panel-title">Konfirmasi Laporan Lembur</h2>
                                     </header>
 
                                         <div class="panel-body">
@@ -213,7 +213,7 @@
             <div class="modal-dialog modal-xl" style="width:50%">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title"><b>Detail Surat Perintah Lembur</b></h4>
+                        <h4 class="modal-title"><b>Detail Laporan Lembur</b></h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group mt-lg">
@@ -259,7 +259,7 @@
             <div class="modal-dialog modal-xl" style="width:80%">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title"><b>Detail Surat Perintah Lembur</b></h4>
+                        <h4 class="modal-title"><b>Detail Laporan Lembur</b></h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group mt-lg">
@@ -314,7 +314,7 @@
                 <form method="POST" action="<?= base_url()?>laporanLembur/proses_pic">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title"><b>Proses Surat Perintah Lembur</b></h4>
+                            <h4 class="modal-title"><b>Proses Laporan Lembur</b></h4>
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="ak_id_spl" id="ak_id_spl">
@@ -374,7 +374,7 @@
                 <form method="POST" action="<?= base_url()?>laporanLembur/edit_pic">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title"><b>Edit Surat Perintah Lembur</b></h4>
+                            <h4 class="modal-title"><b>Edit Laporan Lembur</b></h4>
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="edit_id_spl" id="edit_id_spl">

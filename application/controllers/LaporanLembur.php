@@ -11,8 +11,6 @@ class LaporanLembur extends CI_Controller {
         $this->load->model('M_Line');
         $this->load->model('M_Dashboard');
 
-        $this->load->library('pdf');
-
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');
         }
@@ -469,7 +467,7 @@ class LaporanLembur extends CI_Controller {
             $data['laporan_lembur']        = $this->M_LaporanLembur->select_spl_pic_status($line,$status,$tanggal)->result();
         }
         else{
-            $data['laporan_lembur']        = $this->M_LaporanLembur->select_all_aktif_status($status)->result(); 
+            $data['laporan_lembur']        = $this->M_LaporanLembur->select_all_aktif_status($status,$tanggal)->result(); 
         }
 
         //notif produksi
@@ -683,7 +681,7 @@ class LaporanLembur extends CI_Controller {
             $data['laporan_lembur']        = $this->M_LaporanLembur->select_spl_pic_status($line,$status,$tanggal)->result();
         }
         else{
-            $data['laporan_lembur']        = $this->M_LaporanLembur->select_all_aktif_status($status)->result(); 
+            $data['laporan_lembur']        = $this->M_LaporanLembur->select_all_aktif_status($status,$tanggal)->result(); 
         }
 
         //notif produksi
@@ -1035,6 +1033,51 @@ class LaporanLembur extends CI_Controller {
     }
 
     public function print(){
+        $id              = $this->input->post('id');
+        $data['spl']     = $this->M_LaporanLembur->get_spl($id)->result_array();
+        $data['dspl']    = $this->M_LaporanLembur->get_dspl($id)->result_array();
+        $data['jm_dspl'] = $this->M_LaporanLembur->get_dspl($id)->num_rows();
+
+        
+        $waktu = $data['spl'][0]['tanggal'];
+
+        $hari_array = array(
+            'Minggu',
+            'Senin',
+            'Selasa',
+            'Rabu',
+            'Kamis',
+            'Jumat',
+            'Sabtu'
+        );
+        $hr = date('w', strtotime($waktu));
+        $hari = $hari_array[$hr];
+        $tanggal = date('j', strtotime($waktu));
+        $bulan_array = array(
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        );
+        $bl = date('n', strtotime($waktu));
+        $bulan = $bulan_array[$bl];
+        $tahun = date('Y', strtotime($waktu));
+        
+        $data['tanggal'] = "$hari, $tanggal $bulan $tahun";
+
+        $this->load->view('v_print_ll',$data);
+        
+    }
+
+    public function printx(){
         $id      = $this->input->post('id');
         $spl     = $this->M_LaporanLembur->get_spl($id)->result_array();
         $dspl    = $this->M_LaporanLembur->get_dspl($id)->result_array();

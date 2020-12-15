@@ -267,17 +267,17 @@ class M_Dashboard extends CI_Model {
 
         //notif percut
             function get_jm_percut(){
-                return $this->db->query("SELECT COUNT(id_perencanaan_cutting) AS jumlah_percut FROM perencanaan_cutting 
+                return $this->db->query("SELECT tanggal,COUNT(id_perencanaan_cutting) AS jumlah_percut FROM perencanaan_cutting 
                 WHERE perencanaan_cutting.status_delete=0 AND (perencanaan_cutting.status_laporan BETWEEN 0 AND 1) ");
             }
 
             function get_jm_percut_0(){
-                return $this->db->query("SELECT COUNT(id_perencanaan_cutting) AS jumlah_percut FROM perencanaan_cutting 
+                return $this->db->query("SELECT tanggal,COUNT(id_perencanaan_cutting) AS jumlah_percut FROM perencanaan_cutting 
                 WHERE perencanaan_cutting.status_delete=0 AND (perencanaan_cutting.status_laporan ='0') ");
             }
 
             function get_jm_percut_1(){
-                return $this->db->query("SELECT COUNT(id_perencanaan_cutting) AS jumlah_percut FROM perencanaan_cutting 
+                return $this->db->query("SELECT tanggal,COUNT(id_perencanaan_cutting) AS jumlah_percut FROM perencanaan_cutting 
                 WHERE perencanaan_cutting.status_delete=0 AND (perencanaan_cutting.status_laporan ='1') ");
             }
         //tutup

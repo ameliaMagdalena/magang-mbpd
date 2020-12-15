@@ -379,7 +379,7 @@
                             respond['detpermat'][$i]['needs']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['detpermat'][$i]['satuan_ukuran']+
+                            respond['detpermat'][$i]['satuan_keluar']+
                         '</td>'+
                     '</tr>';
                 }

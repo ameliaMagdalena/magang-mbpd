@@ -216,8 +216,10 @@
                                         <button type="submit" class="col-lg-3 btn btn-warning fa fa-pencil-square-o"
                                         title="Edit"  style="margin-right:5px;;margin-bottom:5px"></button>
                                     </form>
+                                    <!--
                                     <button type="button" class="bdelete_klik col-lg-3 btn btn-danger fa fa-trash-o" title="Delete"
                                     id="bdelete<?php echo $x->id_produksi?>" value="<?= $no ?>"  style="margin-right:5px;;margin-bottom:5px"></button>
+                                    -->
                                 <?php } ?>  
                                 <form method="POST" action="<?= base_url()?>perencanaanProduksi/print_perencanaan_produksi">
                                     <input type="hidden" name="id" value="<?= $x->id_produksi?>">

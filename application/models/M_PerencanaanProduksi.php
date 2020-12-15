@@ -365,4 +365,26 @@ class M_PerencanaanProduksi extends CI_Model {
         LIKE '$id_code%' ORDER BY id_perubahan_permintaan DESC LIMIT 1");
     }
 
+    function get_all_jumlah_ct(){
+        return $this->db->query("SELECT COUNT(id_cycle_time) AS jumlah_ctnya, id_produk FROM cycle_time WHERE status_delete='0' 
+        GROUP BY id_produk");
+    }
+
+    function get_semua_ct(){
+        return $this->db->query("SELECT * FROM cycle_time,line WHERE cycle_time.status_delete='0' AND cycle_time.id_line=line.id_line");
+    }
+
+    function get_semua_perc_line($start,$line){
+        return $this->db->query("SELECT detail_produksi_line.id_detail_purchase_order, produk.nama_produk, detail_purchase_order_customer.jumlah_produk, 
+        produk.id_produk, detail_produksi_line.id_detail_purchase_order, detail_produk.keterangan, detail_produk.id_warna, detail_produk.id_ukuran_produk
+        FROM produksi,produksi_line,detail_produksi_line, detail_purchase_order_customer,detail_produk,produk,line 
+        WHERE (produksi.tanggal BETWEEN '$start' AND ('$start' + INTERVAL 6 DAY)) AND detail_produksi_line.status_perencanaan='0' AND 
+        line.nama_line='$line' AND produksi.id_produksi = produksi_line.id_produksi AND 
+        produksi_line.id_produksi_line = detail_produksi_line.id_produksi_line AND 
+        detail_produksi_line.id_detail_purchase_order = detail_purchase_order_customer.id_detail_purchase_order_customer 
+        AND detail_purchase_order_customer.id_detail_produk = detail_produk.id_detail_produk AND
+        detail_produk.id_produk = produk.id_produk AND detail_produksi_line.status_delete='0' AND
+        produksi_line.id_line=line.id_line
+        GROUP BY detail_produksi_line.id_detail_purchase_order ORDER BY produk.nama_produk ");
+    }
 }

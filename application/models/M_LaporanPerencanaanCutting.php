@@ -62,18 +62,56 @@ class M_LaporanPerencanaanCutting extends CI_Model {
         WHERE konsumsi_material.status_delete='0' AND konsumsi_material.id_sub_jenis_material=sub_jenis_material.id_sub_jenis_material ");
     }
 
-    function get_all_pengambilan_material($tanggal_produksi){
+    function get_all_pengambilan_material_group($tanggal_produksi){
         return $this->db->query("SELECT permintaan_material.id_line,permintaan_material.id_detail_purchase_order_customer,
         detail_permintaan_material.id_konsumsi_material,SUM(pengambilan_material.jumlah_ambil) as total_keluar 
         FROM permintaan_material,detail_permintaan_material,pengambilan_material,detail_purchase_order_customer,detail_produk
         WHERE permintaan_material.tanggal_produksi='$tanggal_produksi' AND pengambilan_material.status_delete='0'
-        AND pengambilan_material.status_pengambilan='0' AND pengambilan_material.status_permintaan='0'
+        AND pengambilan_material.status_pengambilan='0' AND pengambilan_material.status_permintaan='0' AND pengambilan_material.status_keluar='1'
         AND permintaan_material.id_permintaan_material=detail_permintaan_material.id_permintaan_material
         AND detail_permintaan_material.id_detail_permintaan_material=pengambilan_material.id_detail_permintaan_material
         AND permintaan_material.id_detail_purchase_order_customer=detail_purchase_order_customer.id_detail_purchase_order_customer
         AND detail_purchase_order_customer.id_detail_produk=detail_produk.id_detail_produk
         GROUP BY permintaan_material.id_line,detail_produk.id_detail_produk,
         detail_permintaan_material.id_konsumsi_material,detail_purchase_order_customer.id_detail_purchase_order_customer");
+    }
+
+    function get_all_pengambilan_material($tanggal_produksi){
+        return $this->db->query("SELECT permintaan_material.id_line,permintaan_material.id_detail_purchase_order_customer,
+        detail_permintaan_material.id_konsumsi_material,pengambilan_material.jumlah_ambil
+        FROM permintaan_material,detail_permintaan_material,pengambilan_material,detail_purchase_order_customer,detail_produk
+        WHERE permintaan_material.tanggal_produksi='$tanggal_produksi' AND pengambilan_material.status_delete='0'
+        AND pengambilan_material.status_pengambilan='0' AND pengambilan_material.status_permintaan='0' AND pengambilan_material.status_keluar='1'
+        AND permintaan_material.id_permintaan_material=detail_permintaan_material.id_permintaan_material
+        AND detail_permintaan_material.id_detail_permintaan_material=pengambilan_material.id_detail_permintaan_material
+        AND permintaan_material.id_detail_purchase_order_customer=detail_purchase_order_customer.id_detail_purchase_order_customer
+        AND detail_purchase_order_customer.id_detail_produk=detail_produk.id_detail_produk");
+    }
+
+    function get_all_pengambilan_material_tambahan_group($tanggal_produksi){
+        return $this->db->query("SELECT permintaan_material.id_line,permintaan_material.id_detail_purchase_order_customer,
+        detail_permintaan_material.id_konsumsi_material,SUM(pengambilan_material.jumlah_ambil) as total_keluar 
+        FROM permintaan_material,detail_permintaan_material,pengambilan_material,detail_purchase_order_customer,detail_produk
+        WHERE permintaan_material.tanggal_produksi='$tanggal_produksi' AND pengambilan_material.status_delete='0'
+        AND pengambilan_material.status_pengambilan='0' AND pengambilan_material.status_permintaan='1' AND pengambilan_material.status_keluar='1'
+        AND permintaan_material.id_permintaan_material=detail_permintaan_material.id_permintaan_material
+        AND detail_permintaan_material.id_detail_permintaan_material=pengambilan_material.id_detail_permintaan_material
+        AND permintaan_material.id_detail_purchase_order_customer=detail_purchase_order_customer.id_detail_purchase_order_customer
+        AND detail_purchase_order_customer.id_detail_produk=detail_produk.id_detail_produk
+        GROUP BY permintaan_material.id_line,detail_produk.id_detail_produk,
+        detail_permintaan_material.id_konsumsi_material,detail_purchase_order_customer.id_detail_purchase_order_customer");
+    }
+
+    function get_all_pengambilan_material_tambahan($tanggal_produksi){
+        return $this->db->query("SELECT permintaan_material.id_line,permintaan_material.id_detail_purchase_order_customer,
+        detail_permintaan_material.id_konsumsi_material,pengambilan_material.jumlah_ambil
+        FROM permintaan_material,detail_permintaan_material,pengambilan_material,detail_purchase_order_customer,detail_produk
+        WHERE permintaan_material.tanggal_produksi='$tanggal_produksi' AND pengambilan_material.status_delete='0' AND pengambilan_material.status_keluar='1'
+        AND pengambilan_material.status_pengambilan='0' AND pengambilan_material.status_permintaan='1'
+        AND permintaan_material.id_permintaan_material=detail_permintaan_material.id_permintaan_material
+        AND detail_permintaan_material.id_detail_permintaan_material=pengambilan_material.id_detail_permintaan_material
+        AND permintaan_material.id_detail_purchase_order_customer=detail_purchase_order_customer.id_detail_purchase_order_customer
+        AND detail_purchase_order_customer.id_detail_produk=detail_produk.id_detail_produk");
     }
 
     function konfirmasi_ppic($tanggal){
@@ -106,5 +144,9 @@ class M_LaporanPerencanaanCutting extends CI_Model {
         AND pengambilan_material.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material
         AND permintaan_material.id_permintaan_material=detail_permintaan_material.id_permintaan_material
         AND persediaan_line_keluar.status_delete='0' GROUP BY pengambilan_material.id_detail_permintaan_material ");
+    }
+
+    function update_selesai($tanggal){
+        return $this->db->query("UPDATE perencanaan_cutting SET status_laporan='2' WHERE tanggal='$tanggal' AND status_delete='0' ");
     }
 }

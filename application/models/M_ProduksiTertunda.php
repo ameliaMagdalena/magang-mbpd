@@ -15,7 +15,8 @@ class M_ProduksiTertunda extends CI_Model {
         purchase_order_customer.kode_purchase_order_customer
         FROM produksi_tertunda, detail_produksi_line, produksi_line, produksi, line, detail_purchase_order_customer, purchase_order_customer,
         detail_produk, produk
-        WHERE produksi_tertunda.status_delete='0' AND produksi_tertunda.id_detail_produksi_line=detail_produksi_line.id_detail_produksi_line
+        WHERE produksi_tertunda.status_delete='0' AND produksi.status_laporan='3' AND
+        produksi_tertunda.id_detail_produksi_line=detail_produksi_line.id_detail_produksi_line
         AND detail_produksi_line.id_produksi_line=produksi_line.id_produksi_line AND produksi_line.id_produksi=produksi.id_produksi
         AND produksi_line.id_line=line.id_line AND 
         detail_produksi_line.id_detail_purchase_order=detail_purchase_order_customer.id_detail_purchase_order_customer AND

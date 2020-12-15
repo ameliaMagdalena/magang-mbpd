@@ -137,7 +137,7 @@
                 <form method="POST" action="<?= base_url()?>invoice/tertagih">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title"><b>Detail Surat Jalan</b></h4>
+                            <h4 class="modal-title"><b>Konfirmasi Invoice</b></h4>
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="id_invoice" id="id_invoice"> 

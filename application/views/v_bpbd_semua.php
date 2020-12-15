@@ -194,7 +194,7 @@
     <!-- modal edit -->
     <div class="modal" id="modaledit" role="dialog">
         <form method="POST" action="<?= base_url()?>bpbd/edit_bpbd">
-            <div class="modal-dialog modal-xl" style="width:70%">
+            <div class="modal-dialog modal-xl" style="width:85%">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title"><b>Edit BPBD</b></h4>
@@ -434,7 +434,7 @@
                                 "Pcs"+
                             '</td>'+
                             '<td style="text-align: center;vertical-align: middle;">'+
-                                respond['item_bpbd'][$i]['keterangan']+
+                                respond['item_bpbd'][$i]['keterangan_bpbd']+
                             '</td>'+
                         '</tr>';
 
@@ -481,7 +481,7 @@
     $('.bedit_klik').click(function(){
         var no      = $(this).attr('value');
         var id      = $("#id"+no).val();
-
+        
         $.ajax({
             type:"post",
             url:"<?php echo base_url() ?>bpbd/detail_bpbd",
@@ -618,12 +618,15 @@
                     //tutup terambil
                     $cari_sebelum = 0;
                     $sebelum = 0;
+                    $keterangan = "";
+                    $id_item_bpbd ="";
+
                     for($f=0;$f<respond['jm_item_bpbd'];$f++){
                         if(respond['item_bpbd'][$f]['id_detail_produk'] == respond['dpo'][$q]['id_detail_produk']){
                             $cari_sebelum++;
                             $sebelum      = respond['item_bpbd'][$f]['jumlah_produk'];
                             $id_item_bpbd = respond['item_bpbd'][$f]['id_item_bpbd'];
-                            $keterangan   = respond['item_bpbd'][$f]['keterangan'];
+                            $keterangan   = respond['item_bpbd'][$f]['keterangan_bpbd'];
                         }
                     }
                     

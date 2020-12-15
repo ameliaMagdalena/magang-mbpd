@@ -17,8 +17,6 @@ class PerencanaanProduksi extends CI_Controller {
         $this->load->model('M_Tetapan');
         $this->load->model('M_Dashboard');
 
-        $this->load->library('pdf');
-
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');
         }
@@ -4893,8 +4891,422 @@ class PerencanaanProduksi extends CI_Controller {
         $this->load->view('v_perencanaan_produksi_line',$data);
     }
     
-    
     public function print_perencanaan_produksi(){
+        $id = $this->input->post('id');
+
+        $data['nama_perusahaan'] = $this->M_Tetapan->cari_tetapan("Nama Perusahaan")->result_array();
+
+        $date   = $this->M_PerencanaanProduksi->get_tanggal_produksi($id)->result_array();
+        $start  = $date[0]['tanggal_awal'];
+        $end    = $date[0]['tanggal_akhir'];
+
+        $start_month = date('F',strtotime($start));
+        $end_month = date('F',strtotime($end));
+
+        if($start_month == $end_month){
+            $data['tanggalnya'] = "(".$start_month.")";
+        }
+        else{
+            $data['tanggalnya'] = "(".$start_month."-".$end_month.")";
+        }
+
+        $data['semua_tanggal'] = $this->M_PerencanaanProduksi->get_semua_tanggal($start)->result_array();
+        for($i=0;$i<7;$i++){
+            $data['day'][$i] = intval(date('d', strtotime($data['semua_tanggal'][$i]['tanggal'])));
+        }
+
+        $data['pl']         = $this->M_PerencanaanProduksi->get_pl($start)->result();
+
+        $data['dpo']        = $this->M_PerencanaanProduksi->get_dpo_normal($start)->result_array();
+        $data['jm_dpo']     = $this->M_PerencanaanProduksi->get_dpo_normal($start)->num_rows();
+        $data['dpl']        = $this->M_PerencanaanProduksi->get_dpl_normal($start)->result_array();
+        $data['jm_dpl']     = $this->M_PerencanaanProduksi->get_dpl_normal($start)->num_rows();
+
+        $data['dpore']      = $this->M_PerencanaanProduksi->get_dpo_re($start)->result_array();
+        $data['jm_dpore']   = $this->M_PerencanaanProduksi->get_dpo_re($start)->num_rows();
+        $data['dplre']      = $this->M_PerencanaanProduksi->get_dpl_re($start)->result_array();
+        $data['jm_dplre']   = $this->M_PerencanaanProduksi->get_dpl_re($start)->num_rows();
+
+        $data['warna']      = $this->M_Warna->select_all_aktif()->result_array();
+        $data['jmwarna']    = $this->M_Warna->select_all_aktif()->num_rows();
+        $data['ukuran']     = $this->M_UkuranProduk->select_all_aktif()->result_array();
+        $data['jmukuran']   = $this->M_UkuranProduk->select_all_aktif()->num_rows();
+
+        $data['jumlah_ct']   = $this->M_PerencanaanProduksi->get_all_jumlah_ct()->result_array();
+        $data['jm_jumlah_ct']= $this->M_PerencanaanProduksi->get_all_jumlah_ct()->num_rows();
+
+        $data['semua_ct']    = $this->M_PerencanaanProduksi->get_semua_ct()->result_array();
+        $data['jm_semua_ct'] = $this->M_PerencanaanProduksi->get_semua_ct()->num_rows();
+
+        $this->load->view('v_print_perencanaan_produksi', $data);
+    }
+
+    public function print_perencanaan_produksi_line(){
+        $id = $this->input->post('id');
+
+        $data['nama_perusahaan'] = $this->M_Tetapan->cari_tetapan("Nama Perusahaan")->result_array();
+
+        if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Cutting"){
+            $data['linenya'] = "Line Cutting";
+        }
+        else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Bonding"){
+            $data['linenya'] = "Line Bonding";
+        }
+        else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Sewing"){
+            $data['linenya'] = "Line Sewing";
+        }
+        else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Assy"){
+            $data['linenya'] = "Line Assy";
+        } else{
+            $data['linenya'] = $this->input->post('nama_line');
+        }
+
+        $date   = $this->M_PerencanaanProduksi->get_tanggal_produksi($id)->result_array();
+        $start  = $date[0]['tanggal_awal'];
+        $end    = $date[0]['tanggal_akhir'];
+
+        $start_month = date('F',strtotime($start));
+        $end_month = date('F',strtotime($end));
+
+        if($start_month == $end_month){
+            $data['tanggalnya'] = "(".$start_month.")";
+        }
+        else{
+            $data['tanggalnya'] = "(".$start_month."-".$end_month.")";
+        }
+
+        $data['semua_tanggal'] = $this->M_PerencanaanProduksi->get_semua_tanggal($start)->result_array();
+        for($i=0;$i<7;$i++){
+            $data['day'][$i] = intval(date('d', strtotime($data['semua_tanggal'][$i]['tanggal'])));
+        }
+
+        $data['dpo']        = $this->M_PerencanaanProduksi->get_dpo_normal($start)->result_array();
+        $data['jm_dpo']     = $this->M_PerencanaanProduksi->get_dpo_normal($start)->num_rows();
+        $data['dpl']        = $this->M_PerencanaanProduksi->get_dpl_normal($start)->result_array();
+        $data['jm_dpl']     = $this->M_PerencanaanProduksi->get_dpl_normal($start)->num_rows();
+
+        $data['dpore']      = $this->M_PerencanaanProduksi->get_dpo_re($start)->result_array();
+        $data['jm_dpore']   = $this->M_PerencanaanProduksi->get_dpo_re($start)->num_rows();
+        $data['dplre']      = $this->M_PerencanaanProduksi->get_dpl_re($start)->result_array();
+        $data['jm_dplre']   = $this->M_PerencanaanProduksi->get_dpl_re($start)->num_rows();
+
+        $data['warna']      = $this->M_Warna->select_all_aktif()->result_array();
+        $data['jmwarna']    = $this->M_Warna->select_all_aktif()->num_rows();
+        $data['ukuran']     = $this->M_UkuranProduk->select_all_aktif()->result_array();
+        $data['jmukuran']   = $this->M_UkuranProduk->select_all_aktif()->num_rows();
+
+        $data['semua_ct']    = $this->M_PerencanaanProduksi->get_semua_ct()->result_array();
+        $data['jm_semua_ct'] = $this->M_PerencanaanProduksi->get_semua_ct()->num_rows();
+
+        $data['perc_line']    = $this->M_PerencanaanProduksi->get_semua_perc_line($start,$data['linenya'])->result_array();
+        $data['jm_perc_line'] = $this->M_PerencanaanProduksi->get_semua_perc_line($start,$data['linenya'])->num_rows();
+
+        $this->load->view('v_print_perencanaan_produksi_line',$data);
+    }
+
+    public function print_perencanaan_produksi_linex(){
+        $id = $this->input->post('id');
+
+        $nama_perusahaan = $this->M_Tetapan->cari_tetapan("Nama Perusahaan")->result_array();
+
+        $pdf = new FPDF('l','mm','A4');
+
+        if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Cutting"){
+            $linenya = "Line Cutting";
+        }
+        else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Bonding"){
+            $linenya = "Line Bonding";
+        }
+        else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Sewing"){
+            $linenya = "Line Sewing";
+        }
+        else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Assy"){
+            $linenya = "Line Assy";
+        } else{
+            $linenya = $this->input->post('nama_line');
+        }
+
+        $date   = $this->M_PerencanaanProduksi->get_tanggal_produksi($id)->result_array();
+        $start  = $date[0]['tanggal_awal'];
+        $end    = $date[0]['tanggal_akhir'];
+        $data['start']  = $date[0]['tanggal_awal'];
+
+        $start_month = date('F',strtotime($start));
+        $end_month = date('F',strtotime($end));
+
+        if($start_month == $end_month){
+            $tanggalnya = "(".$start_month.")";
+        }
+        else{
+            $tanggalnya = "(".$start_month."-".$end_month.")";
+        }
+
+        $semua_tanggal      = $this->M_PerencanaanProduksi->get_semua_tanggal($start)->result_array();
+        for($i=0;$i<7;$i++){
+            $day[$i] = intval(date('d', strtotime($semua_tanggal[$i]['tanggal'])));
+        }
+
+        $dpo        = $this->M_PerencanaanProduksi->get_dpo_normal($start)->result_array();
+        $jm_dpo     = $this->M_PerencanaanProduksi->get_dpo_normal($start)->num_rows();
+        $dpl        = $this->M_PerencanaanProduksi->get_dpl_normal($start)->result_array();
+        $jm_dpl     = $this->M_PerencanaanProduksi->get_dpl_normal($start)->num_rows();
+
+        $dpore      = $this->M_PerencanaanProduksi->get_dpo_re($start)->result_array();
+        $jm_dpore   = $this->M_PerencanaanProduksi->get_dpo_re($start)->num_rows();
+        $dplre      = $this->M_PerencanaanProduksi->get_dpl_re($start)->result_array();
+        $jm_dplre   = $this->M_PerencanaanProduksi->get_dpl_re($start)->num_rows();
+
+        $warna      = $this->M_Warna->select_all_aktif()->result_array();
+        $jmwarna    = $this->M_Warna->select_all_aktif()->num_rows();
+        $ukuran     = $this->M_UkuranProduk->select_all_aktif()->result_array();
+        $jmukuran   = $this->M_UkuranProduk->select_all_aktif()->num_rows();
+
+
+        //buat halaman baru
+        $pdf->AddPage();
+
+        //logo
+        $pdf->Image(base_url('assets/images/logombp.png'),7,7,-300);
+
+        //setting font
+        $pdf->SetFont('Arial','B','12');
+        //cetak string
+        $pdf->Cell(15); //move
+        $pdf->Cell(190,7,strtoupper($nama_perusahaan[0]['isi_tetapan']),0,1,'L');
+        
+        $pdf->SetFont('Arial','B',12);
+        $pdf->Cell(15);
+        $pdf->Cell(190,7,'PERENCANAAN PRODUKSI '.$linenya.' '.$tanggalnya,0,1,'L');
+        
+
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(20,10,' ',0,1,'C');
+        $pdf->Cell(10,10,'NO',1,0,'C');
+        $pdf->Cell(90,10,'NAMA PRODUK',1,0,'C');
+        $pdf->Cell(20,10,'QTY',1,0,'C');
+        $pdf->Cell(30,10,'KET',1,0,'C');
+        for($i=0;$i<7;$i++){
+            $pdf->Cell(15,10,$day[$i],1,0,'C');
+         }
+        $pdf->Cell(20,10,'TOTAL',1,1,'C');
+
+            
+        for($k=0;$k<$jm_dpo;$k++){
+            $cekcek = $this->M_PerencanaanProduksi->cekcek($start,$dpo[$k]['id_detail_purchase_order'],$linenya)->result_array();
+            
+            $ct    = $this->M_PerencanaanProduksi->get_ct($dpo[$k]['id_produk'])->result_array();
+            $jm_ct = $this->M_PerencanaanProduksi->get_ct($dpo[$k]['id_produk'])->num_rows();
+
+            $id_dpo = $dpo[$k]['id_detail_purchase_order'];
+
+            if($cekcek[0]['total'] > 0){
+                $pdf->SetFont('Arial','',10);
+                //nama produk
+                if($dpo[$k]['keterangan'] == 0){
+                    for($w=0;$w<$jmwarna;$w++){
+                        if($warna[$w]['id_warna'] == $dpo[$k]['id_warna']){
+                            $nama_warna = $warna[$w]['nama_warna'];
+                        }
+                    }
+    
+                    for($w=0;$w<$jmukuran;$w++){
+                        if($ukuran[$w]['id_ukuran_produk'] == $dpo[$k]['id_ukuran_produk']){
+                            $nama_ukuran = $ukuran[$w]['ukuran_produk'] . $ukuran[$w]['satuan_ukuran'];
+                        }
+                    }
+    
+                    $nama_produk = $dpo[$k]['nama_produk'] ." ". $nama_ukuran . " (" . $nama_warna . ")";
+                }
+                else if($dpo[$k]['keterangan'] == 1){
+                    for($w=0;$w<$jmukuran;$w++){
+                        if($ukuran[$w]['id_ukuran_produk'] == $dpo[$k]['id_ukuran_produk']){
+                            $nama_ukuran = $ukuran[$w]['ukuran_produk'] ." ". $ukuran[$w]['satuan_ukuran'];
+                        }
+                    }
+    
+                    $nama_produk = $dpo[$k]['nama_produk'] . $nama_ukuran;
+                }
+                else if($dpo[$k]['keterangan'] == 2){
+                    for($w=0;$w<$jmwarna;$w++){
+                        if($warna[$w]['id_warna'] == $dpo[$k]['id_warna']){
+                            $nama_warna = $warna[$w]['nama_warna'];
+                        }
+                    }
+    
+                    $nama_produk = $dpo[$k]['nama_produk'] . " (" . $nama_warna . ")";
+                }
+                else{
+                    $nama_produk = $dpo[$k]['nama_produk'];
+                }
+    
+                $pdf->Cell(10,12,($k+1),1,0,'C');
+                $pdf->Cell(90,12,$nama_produk,1,0,'C');
+                $pdf->Cell(20,12,$dpo[$k]['jumlah_produk'],1,0,'C');
+                
+                for($o=0;$o<$jm_ct;$o++){
+                    if($ct[$o]['nama_line'] == $linenya){
+    
+                        $id_line = $ct[$o]['id_line'];
+                        $total[$o] = 0;
+    
+                        $pdf->Cell(30,6,"Perencanaan",1,0,'C');
+    
+                        for($u=0;$u<7;$u++){
+                            for($q=0;$q<$jm_dpl;$q++){
+                                $id_dpo_dpl  = $dpl[$q]['id_detail_purchase_order'];
+                                $id_line_dpl = $dpl[$q]['id_line'];
+                                $tgl_dpl     = $dpl[$q]['tanggal'];
+    
+                                $tanggal_cek = $semua_tanggal[$u]['tanggal'];
+    
+                                if($id_dpo_dpl == $id_dpo && $id_line_dpl == $id_line && $tgl_dpl == $tanggal_cek){
+                                    if($dpl[$q]['jumlah_item_perencanaan'] == 0){
+                                        $pdf->Cell(15,6,'',1,0,'C');
+                                    }
+                                    else{
+                                        $pdf->Cell(15,6,$dpl[$q]['jumlah_item_perencanaan'],1,0,'C');
+                                        $total[$o] = $total[$o] + intval($dpl[$q]['jumlah_item_perencanaan']);
+                                    }
+                                }
+                            }
+                        }
+                        if($total[$o] == 0){
+                            $pdf->Cell(20,6,'-',1,0,'C');
+                        }
+                        else{
+                            $pdf->Cell(20,6,$total[$o],1,0,'C');
+                        }
+                    }
+                }
+    
+                $pdf->Cell(5,6,'',0,1,'C');
+                $pdf->Cell(10,6,'',0,0,'C');
+                $pdf->Cell(90,6,'',0,0,'C');
+                $pdf->Cell(20,6,'',0,0,'C');
+                $pdf->Cell(30,6,'Aktual',1,0,'C');
+                $pdf->Cell(15,6,'',1,0,'C');
+                $pdf->Cell(15,6,'',1,0,'C');
+                $pdf->Cell(15,6,'',1,0,'C');
+                $pdf->Cell(15,6,'',1,0,'C');
+                $pdf->Cell(15,6,'',1,0,'C');
+                $pdf->Cell(15,6,'',1,0,'C');
+                $pdf->Cell(15,6,'',1,0,'C');
+                $pdf->Cell(20,6,'',1,1,'C');
+            }
+        }
+
+        $count = $jm_dpo+1;
+
+        for($k=0;$k<$jm_dpore;$k++){
+            $cekcek = $this->M_PerencanaanProduksi->cekcek($start,$dpore[$k]['id_detail_purchase_order'],$linenya)->result_array();
+            
+            $ct    = $this->M_PerencanaanProduksi->get_ct($dpore[$k]['id_produk'])->result_array();
+            $jm_ct = $this->M_PerencanaanProduksi->get_ct($dpore[$k]['id_produk'])->num_rows();
+
+            $id_dpo = $dpore[$k]['id_detail_purchase_order'];
+
+            if($cekcek[0]['total'] > 0){
+                $pdf->SetFont('Arial','',10);
+                //nama produk
+                if($dpore[$k]['keterangan'] == 0){
+                    for($w=0;$w<$jmwarna;$w++){
+                        if($warna[$w]['id_warna'] == $dpore[$k]['id_warna']){
+                            $nama_warna = $warna[$w]['nama_warna'];
+                        }
+                    }
+    
+                    for($w=0;$w<$jmukuran;$w++){
+                        if($ukuran[$w]['id_ukuran_produk'] == $dpore[$k]['id_ukuran_produk']){
+                            $nama_ukuran = $ukuran[$w]['ukuran_produk'] . $ukuran[$w]['satuan_ukuran'];
+                        }
+                    }
+    
+                    $nama_produk = $dpore[$k]['nama_produk'] ." ". $nama_ukuran . " (" . $nama_warna . ")";
+                }
+                else if($dpore[$k]['keterangan'] == 1){
+                    for($w=0;$w<$jmukuran;$w++){
+                        if($ukuran[$w]['id_ukuran_produk'] == $dpore[$k]['id_ukuran_produk']){
+                            $nama_ukuran = $ukuran[$w]['ukuran_produk'] ." ". $ukuran[$w]['satuan_ukuran'];
+                        }
+                    }
+    
+                    $nama_produk = $dpore[$k]['nama_produk'] . $nama_ukuran;
+                }
+                else if($dpore[$k]['keterangan'] == 2){
+                    for($w=0;$w<$jmwarna;$w++){
+                        if($warna[$w]['id_warna'] == $dpore[$k]['id_warna']){
+                            $nama_warna = $warna[$w]['nama_warna'];
+                        }
+                    }
+    
+                    $nama_produk = $dpore[$k]['nama_produk'] . " (" . $nama_warna . ")";
+                }
+                else{
+                    $nama_produk = $dpore[$k]['nama_produk'];
+                }
+    
+                $pdf->Cell(10,12,$count,1,0,'C');
+                $pdf->Cell(90,12,$nama_produk,1,0,'C');
+                $pdf->Cell(20,12,$dpore[$k]['jumlah_tertunda'],1,0,'C');
+                
+                for($o=0;$o<$jm_ct;$o++){
+                    if($ct[$o]['nama_line'] == $linenya){
+    
+                        $id_line = $ct[$o]['id_line'];
+                        $total[$o] = 0;
+    
+                        $pdf->Cell(30,6,"Perencanaan",1,0,'C');
+    
+                        for($u=0;$u<7;$u++){
+                            for($q=0;$q<$jm_dplre;$q++){
+                                $id_dpo_dpl  = $dplre[$q]['id_detail_purchase_order'];
+                                $id_line_dpl = $dplre[$q]['id_line'];
+                                $tgl_dpl     = $dplre[$q]['tanggal'];
+    
+                                $tanggal_cek = $semua_tanggal[$u]['tanggal'];
+    
+                                if($id_dpo_dpl == $id_dpo && $id_line_dpl == $id_line && $tgl_dpl == $tanggal_cek){
+                                    if($dplre[$q]['jumlah_item_perencanaan'] == 0){
+                                        $pdf->Cell(15,6,'',1,0,'C');
+                                    }
+                                    else{
+                                        $pdf->Cell(15,6,$dplre[$q]['jumlah_item_perencanaan'],1,0,'C');
+                                        $total[$o] = $total[$o] + intval($dplre[$q]['jumlah_item_perencanaan']);
+                                    }
+                                }
+                            }
+                        }
+                        if($total[$o] == 0){
+                            $pdf->Cell(20,6,'-',1,0,'C');
+                        }
+                        else{
+                            $pdf->Cell(20,6,$total[$o],1,0,'C');
+                        }
+                    }
+                }
+    
+                $pdf->Cell(5,6,'',0,1,'C');
+                $pdf->Cell(10,6,'',0,0,'C');
+                $pdf->Cell(90,6,'',0,0,'C');
+                $pdf->Cell(20,6,'',0,0,'C');
+                $pdf->Cell(30,6,'Aktual',1,0,'C');
+                $pdf->Cell(15,6,'',1,0,'C');
+                $pdf->Cell(15,6,'',1,0,'C');
+                $pdf->Cell(15,6,'',1,0,'C');
+                $pdf->Cell(15,6,'',1,0,'C');
+                $pdf->Cell(15,6,'',1,0,'C');
+                $pdf->Cell(15,6,'',1,0,'C');
+                $pdf->Cell(15,6,'',1,0,'C');
+                $pdf->Cell(20,6,'',1,1,'C');
+
+                $count++;
+            }
+        }
+
+        $pdf->Output();
+    }
+
+    public function print_perencanaan_produksix(){
         $id = $this->input->post('id');
 
         $nama_perusahaan = $this->M_Tetapan->cari_tetapan("Nama Perusahaan")->result_array();
@@ -5204,396 +5616,6 @@ class PerencanaanProduksi extends CI_Controller {
             }
             $count++;
         }
-
-        $pdf->Output();
-    }
-    
-
-    /*
-    function print_perencanaan_produksi(){
-        $id = $this->input->post('id');
-
-        $data['nama_perusahaan'] = $this->M_Tetapan->cari_tetapan("Nama Perusahaan")->result_array();
-
-        $date   = $this->M_PerencanaanProduksi->get_tanggal_produksi($id)->result_array();
-        $start  = $date[0]['tanggal_awal'];
-        $end    = $date[0]['tanggal_akhir'];
-
-        $start_month = date('F',strtotime($start));
-        $end_month = date('F',strtotime($end));
-
-        if($start_month == $end_month){
-            $data['tanggalnya'] = "(".$start_month.")";
-        }
-        else{
-            $data['tanggalnya'] = "(".$start_month."-".$end_month.")";
-        }
-
-        $data['semua_tanggal']      = $this->M_PerencanaanProduksi->get_semua_tanggal($start)->result_array();
-
-        $pl         = $this->M_PerencanaanProduksi->get_pl($start)->result();
-
-        $dpo        = $this->M_PerencanaanProduksi->get_dpo_normal($start)->result_array();
-        $jm_dpo     = $this->M_PerencanaanProduksi->get_dpo_normal($start)->num_rows();
-        $dpl        = $this->M_PerencanaanProduksi->get_dpl_normal($start)->result_array();
-        $jm_dpl     = $this->M_PerencanaanProduksi->get_dpl_normal($start)->num_rows();
-
-        $dpore      = $this->M_PerencanaanProduksi->get_dpo_re($start)->result_array();
-        $jm_dpore   = $this->M_PerencanaanProduksi->get_dpo_re($start)->num_rows();
-        $dplre      = $this->M_PerencanaanProduksi->get_dpl_re($start)->result_array();
-        $jm_dplre   = $this->M_PerencanaanProduksi->get_dpl_re($start)->num_rows();
-
-        $warna      = $this->M_Warna->select_all_aktif()->result_array();
-        $jmwarna    = $this->M_Warna->select_all_aktif()->num_rows();
-        $ukuran     = $this->M_UkuranProduk->select_all_aktif()->result_array();
-        $jmukuran   = $this->M_UkuranProduk->select_all_aktif()->num_rows();
-
-        $this->load->view('v_print_perencanaan_produksi',$data);
-    }
-    
-
-    function print_perencanaan_produksi(){
-        $id = $this->input->post('id');
-
-        $data['nama_perusahaan'] = $this->M_Tetapan->cari_tetapan("Nama Perusahaan")->result_array();
-
-        $date   = $this->M_PerencanaanProduksi->get_tanggal_produksi($id)->result_array();
-        $start  = $date[0]['tanggal_awal'];
-        $end    = $date[0]['tanggal_akhir'];
-
-        $start_month = date('F',strtotime($start));
-        $end_month = date('F',strtotime($end));
-
-        if($start_month == $end_month){
-            $data['tanggalnya'] = "(".$start_month.")";
-        }
-        else{
-            $data['tanggalnya'] = "(".$start_month."-".$end_month.")";
-        }
-
-        $data['semua_tanggal']      = $this->M_PerencanaanProduksi->get_semua_tanggal($start)->result_array();
-
-        $pl         = $this->M_PerencanaanProduksi->get_pl($start)->result();
-
-        $dpo        = $this->M_PerencanaanProduksi->get_dpo_normal($start)->result_array();
-        $jm_dpo     = $this->M_PerencanaanProduksi->get_dpo_normal($start)->num_rows();
-        $dpl        = $this->M_PerencanaanProduksi->get_dpl_normal($start)->result_array();
-        $jm_dpl     = $this->M_PerencanaanProduksi->get_dpl_normal($start)->num_rows();
-
-        $dpore      = $this->M_PerencanaanProduksi->get_dpo_re($start)->result_array();
-        $jm_dpore   = $this->M_PerencanaanProduksi->get_dpo_re($start)->num_rows();
-        $dplre      = $this->M_PerencanaanProduksi->get_dpl_re($start)->result_array();
-        $jm_dplre   = $this->M_PerencanaanProduksi->get_dpl_re($start)->num_rows();
-
-        $warna      = $this->M_Warna->select_all_aktif()->result_array();
-        $jmwarna    = $this->M_Warna->select_all_aktif()->num_rows();
-        $ukuran     = $this->M_UkuranProduk->select_all_aktif()->result_array();
-        $jmukuran   = $this->M_UkuranProduk->select_all_aktif()->num_rows();
-
-        $this->load->view('v_print_perencanaan_produksi',$data);
-    }
-    */
-    
-
-    public function print_perencanaan_produksi_line(){
-        $id = $this->input->post('id');
-
-        $nama_perusahaan = $this->M_Tetapan->cari_tetapan("Nama Perusahaan")->result_array();
-
-        $pdf = new FPDF('l','mm','A4');
-
-        if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Cutting"){
-            $linenya = "Line Cutting";
-        }
-        else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Bonding"){
-            $linenya = "Line Bonding";
-        }
-        else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Sewing"){
-            $linenya = "Line Sewing";
-        }
-        else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "PIC Line Assy"){
-            $linenya = "Line Assy";
-        } else{
-            $linenya = $this->input->post('nama_line');
-        }
-
-        $date   = $this->M_PerencanaanProduksi->get_tanggal_produksi($id)->result_array();
-        $start  = $date[0]['tanggal_awal'];
-        $end    = $date[0]['tanggal_akhir'];
-
-        $start_month = date('F',strtotime($start));
-        $end_month = date('F',strtotime($end));
-
-        if($start_month == $end_month){
-            $tanggalnya = "(".$start_month.")";
-        }
-        else{
-            $tanggalnya = "(".$start_month."-".$end_month.")";
-        }
-
-        $semua_tanggal      = $this->M_PerencanaanProduksi->get_semua_tanggal($start)->result_array();
-        for($i=0;$i<7;$i++){
-            $day[$i] = intval(date('d', strtotime($semua_tanggal[$i]['tanggal'])));
-        }
-
-        $dpo        = $this->M_PerencanaanProduksi->get_dpo_normal($start)->result_array();
-        $jm_dpo     = $this->M_PerencanaanProduksi->get_dpo_normal($start)->num_rows();
-        $dpl        = $this->M_PerencanaanProduksi->get_dpl_normal($start)->result_array();
-        $jm_dpl     = $this->M_PerencanaanProduksi->get_dpl_normal($start)->num_rows();
-
-        $dpore      = $this->M_PerencanaanProduksi->get_dpo_re($start)->result_array();
-        $jm_dpore   = $this->M_PerencanaanProduksi->get_dpo_re($start)->num_rows();
-        $dplre      = $this->M_PerencanaanProduksi->get_dpl_re($start)->result_array();
-        $jm_dplre   = $this->M_PerencanaanProduksi->get_dpl_re($start)->num_rows();
-
-        $warna      = $this->M_Warna->select_all_aktif()->result_array();
-        $jmwarna    = $this->M_Warna->select_all_aktif()->num_rows();
-        $ukuran     = $this->M_UkuranProduk->select_all_aktif()->result_array();
-        $jmukuran   = $this->M_UkuranProduk->select_all_aktif()->num_rows();
-
-
-        //buat halaman baru
-        $pdf->AddPage();
-
-        //logo
-        $pdf->Image(base_url('assets/images/logombp.png'),7,7,-300);
-
-        //setting font
-        $pdf->SetFont('Arial','B','12');
-        //cetak string
-        $pdf->Cell(15); //move
-        $pdf->Cell(190,7,strtoupper($nama_perusahaan[0]['isi_tetapan']),0,1,'L');
-        
-        $pdf->SetFont('Arial','B',12);
-        $pdf->Cell(15);
-        $pdf->Cell(190,7,'PERENCANAAN PRODUKSI '.$linenya.' '.$tanggalnya,0,1,'L');
-        
-
-        $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(20,10,' ',0,1,'C');
-        $pdf->Cell(10,10,'NO',1,0,'C');
-        $pdf->Cell(90,10,'NAMA PRODUK',1,0,'C');
-        $pdf->Cell(20,10,'QTY',1,0,'C');
-        $pdf->Cell(30,10,'KET',1,0,'C');
-        for($i=0;$i<7;$i++){
-            $pdf->Cell(15,10,$day[$i],1,0,'C');
-         }
-        $pdf->Cell(20,10,'TOTAL',1,1,'C');
-
-            
-        for($k=0;$k<$jm_dpo;$k++){
-            $cekcek = $this->M_PerencanaanProduksi->cekcek($start,$dpo[$k]['id_detail_purchase_order'],$linenya)->result_array();
-            
-            $ct    = $this->M_PerencanaanProduksi->get_ct($dpo[$k]['id_produk'])->result_array();
-            $jm_ct = $this->M_PerencanaanProduksi->get_ct($dpo[$k]['id_produk'])->num_rows();
-
-            $id_dpo = $dpo[$k]['id_detail_purchase_order'];
-
-            if($cekcek[0]['total'] > 0){
-                $pdf->SetFont('Arial','',10);
-                //nama produk
-                if($dpo[$k]['keterangan'] == 0){
-                    for($w=0;$w<$jmwarna;$w++){
-                        if($warna[$w]['id_warna'] == $dpo[$k]['id_warna']){
-                            $nama_warna = $warna[$w]['nama_warna'];
-                        }
-                    }
-    
-                    for($w=0;$w<$jmukuran;$w++){
-                        if($ukuran[$w]['id_ukuran_produk'] == $dpo[$k]['id_ukuran_produk']){
-                            $nama_ukuran = $ukuran[$w]['ukuran_produk'] . $ukuran[$w]['satuan_ukuran'];
-                        }
-                    }
-    
-                    $nama_produk = $dpo[$k]['nama_produk'] ." ". $nama_ukuran . " (" . $nama_warna . ")";
-                }
-                else if($dpo[$k]['keterangan'] == 1){
-                    for($w=0;$w<$jmukuran;$w++){
-                        if($ukuran[$w]['id_ukuran_produk'] == $dpo[$k]['id_ukuran_produk']){
-                            $nama_ukuran = $ukuran[$w]['ukuran_produk'] ." ". $ukuran[$w]['satuan_ukuran'];
-                        }
-                    }
-    
-                    $nama_produk = $dpo[$k]['nama_produk'] . $nama_ukuran;
-                }
-                else if($dpo[$k]['keterangan'] == 2){
-                    for($w=0;$w<$jmwarna;$w++){
-                        if($warna[$w]['id_warna'] == $dpo[$k]['id_warna']){
-                            $nama_warna = $warna[$w]['nama_warna'];
-                        }
-                    }
-    
-                    $nama_produk = $dpo[$k]['nama_produk'] . " (" . $nama_warna . ")";
-                }
-                else{
-                    $nama_produk = $dpo[$k]['nama_produk'];
-                }
-    
-                $pdf->Cell(10,12,($k+1),1,0,'C');
-                $pdf->Cell(90,12,$nama_produk,1,0,'C');
-                $pdf->Cell(20,12,$dpo[$k]['jumlah_produk'],1,0,'C');
-                
-                for($o=0;$o<$jm_ct;$o++){
-                    if($ct[$o]['nama_line'] == $linenya){
-    
-                        $id_line = $ct[$o]['id_line'];
-                        $total[$o] = 0;
-    
-                        $pdf->Cell(30,6,"Perencanaan",1,0,'C');
-    
-                        for($u=0;$u<7;$u++){
-                            for($q=0;$q<$jm_dpl;$q++){
-                                $id_dpo_dpl  = $dpl[$q]['id_detail_purchase_order'];
-                                $id_line_dpl = $dpl[$q]['id_line'];
-                                $tgl_dpl     = $dpl[$q]['tanggal'];
-    
-                                $tanggal_cek = $semua_tanggal[$u]['tanggal'];
-    
-                                if($id_dpo_dpl == $id_dpo && $id_line_dpl == $id_line && $tgl_dpl == $tanggal_cek){
-                                    if($dpl[$q]['jumlah_item_perencanaan'] == 0){
-                                        $pdf->Cell(15,6,'',1,0,'C');
-                                    }
-                                    else{
-                                        $pdf->Cell(15,6,$dpl[$q]['jumlah_item_perencanaan'],1,0,'C');
-                                        $total[$o] = $total[$o] + intval($dpl[$q]['jumlah_item_perencanaan']);
-                                    }
-                                }
-                            }
-                        }
-                        if($total[$o] == 0){
-                            $pdf->Cell(20,6,'-',1,0,'C');
-                        }
-                        else{
-                            $pdf->Cell(20,6,$total[$o],1,0,'C');
-                        }
-                    }
-                }
-    
-                $pdf->Cell(5,6,'',0,1,'C');
-                $pdf->Cell(10,6,'',0,0,'C');
-                $pdf->Cell(90,6,'',0,0,'C');
-                $pdf->Cell(20,6,'',0,0,'C');
-                $pdf->Cell(30,6,'Aktual',1,0,'C');
-                $pdf->Cell(15,6,'',1,0,'C');
-                $pdf->Cell(15,6,'',1,0,'C');
-                $pdf->Cell(15,6,'',1,0,'C');
-                $pdf->Cell(15,6,'',1,0,'C');
-                $pdf->Cell(15,6,'',1,0,'C');
-                $pdf->Cell(15,6,'',1,0,'C');
-                $pdf->Cell(15,6,'',1,0,'C');
-                $pdf->Cell(20,6,'',1,1,'C');
-            }
-        }
-
-        $count = $jm_dpo+1;
-
-        for($k=0;$k<$jm_dpore;$k++){
-            $cekcek = $this->M_PerencanaanProduksi->cekcek($start,$dpore[$k]['id_detail_purchase_order'],$linenya)->result_array();
-            
-            $ct    = $this->M_PerencanaanProduksi->get_ct($dpore[$k]['id_produk'])->result_array();
-            $jm_ct = $this->M_PerencanaanProduksi->get_ct($dpore[$k]['id_produk'])->num_rows();
-
-            $id_dpo = $dpore[$k]['id_detail_purchase_order'];
-
-            if($cekcek[0]['total'] > 0){
-                $pdf->SetFont('Arial','',10);
-                //nama produk
-                if($dpore[$k]['keterangan'] == 0){
-                    for($w=0;$w<$jmwarna;$w++){
-                        if($warna[$w]['id_warna'] == $dpore[$k]['id_warna']){
-                            $nama_warna = $warna[$w]['nama_warna'];
-                        }
-                    }
-    
-                    for($w=0;$w<$jmukuran;$w++){
-                        if($ukuran[$w]['id_ukuran_produk'] == $dpore[$k]['id_ukuran_produk']){
-                            $nama_ukuran = $ukuran[$w]['ukuran_produk'] . $ukuran[$w]['satuan_ukuran'];
-                        }
-                    }
-    
-                    $nama_produk = $dpore[$k]['nama_produk'] ." ". $nama_ukuran . " (" . $nama_warna . ")";
-                }
-                else if($dpore[$k]['keterangan'] == 1){
-                    for($w=0;$w<$jmukuran;$w++){
-                        if($ukuran[$w]['id_ukuran_produk'] == $dpore[$k]['id_ukuran_produk']){
-                            $nama_ukuran = $ukuran[$w]['ukuran_produk'] ." ". $ukuran[$w]['satuan_ukuran'];
-                        }
-                    }
-    
-                    $nama_produk = $dpore[$k]['nama_produk'] . $nama_ukuran;
-                }
-                else if($dpore[$k]['keterangan'] == 2){
-                    for($w=0;$w<$jmwarna;$w++){
-                        if($warna[$w]['id_warna'] == $dpore[$k]['id_warna']){
-                            $nama_warna = $warna[$w]['nama_warna'];
-                        }
-                    }
-    
-                    $nama_produk = $dpore[$k]['nama_produk'] . " (" . $nama_warna . ")";
-                }
-                else{
-                    $nama_produk = $dpore[$k]['nama_produk'];
-                }
-    
-                $pdf->Cell(10,12,$count,1,0,'C');
-                $pdf->Cell(90,12,$nama_produk,1,0,'C');
-                $pdf->Cell(20,12,$dpore[$k]['jumlah_tertunda'],1,0,'C');
-                
-                for($o=0;$o<$jm_ct;$o++){
-                    if($ct[$o]['nama_line'] == $linenya){
-    
-                        $id_line = $ct[$o]['id_line'];
-                        $total[$o] = 0;
-    
-                        $pdf->Cell(30,6,"Perencanaan",1,0,'C');
-    
-                        for($u=0;$u<7;$u++){
-                            for($q=0;$q<$jm_dplre;$q++){
-                                $id_dpo_dpl  = $dplre[$q]['id_detail_purchase_order'];
-                                $id_line_dpl = $dplre[$q]['id_line'];
-                                $tgl_dpl     = $dplre[$q]['tanggal'];
-    
-                                $tanggal_cek = $semua_tanggal[$u]['tanggal'];
-    
-                                if($id_dpo_dpl == $id_dpo && $id_line_dpl == $id_line && $tgl_dpl == $tanggal_cek){
-                                    if($dplre[$q]['jumlah_item_perencanaan'] == 0){
-                                        $pdf->Cell(15,6,'',1,0,'C');
-                                    }
-                                    else{
-                                        $pdf->Cell(15,6,$dplre[$q]['jumlah_item_perencanaan'],1,0,'C');
-                                        $total[$o] = $total[$o] + intval($dplre[$q]['jumlah_item_perencanaan']);
-                                    }
-                                }
-                            }
-                        }
-                        if($total[$o] == 0){
-                            $pdf->Cell(20,6,'-',1,0,'C');
-                        }
-                        else{
-                            $pdf->Cell(20,6,$total[$o],1,0,'C');
-                        }
-                    }
-                }
-    
-                $pdf->Cell(5,6,'',0,1,'C');
-                $pdf->Cell(10,6,'',0,0,'C');
-                $pdf->Cell(90,6,'',0,0,'C');
-                $pdf->Cell(20,6,'',0,0,'C');
-                $pdf->Cell(30,6,'Aktual',1,0,'C');
-                $pdf->Cell(15,6,'',1,0,'C');
-                $pdf->Cell(15,6,'',1,0,'C');
-                $pdf->Cell(15,6,'',1,0,'C');
-                $pdf->Cell(15,6,'',1,0,'C');
-                $pdf->Cell(15,6,'',1,0,'C');
-                $pdf->Cell(15,6,'',1,0,'C');
-                $pdf->Cell(15,6,'',1,0,'C');
-                $pdf->Cell(20,6,'',1,1,'C');
-
-                $count++;
-            }
-        }
-
-
 
         $pdf->Output();
     }

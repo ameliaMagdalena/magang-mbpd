@@ -125,4 +125,9 @@ class M_Invoice extends CI_Model {
         spesifikasi_jabatan.id_jabatan=jabatan.id_jabatan AND spesifikasi_jabatan.id_departemen=departemen.id_departemen");
     }
 
+    function get_nama_cust($id_po){
+        return $this->db->query("SELECT * FROM purchase_order_customer,customer WHERE
+        purchase_order_customer.id_customer=customer.id_customer");
+    }
+
 }

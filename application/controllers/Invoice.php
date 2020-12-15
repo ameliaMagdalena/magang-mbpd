@@ -13,8 +13,6 @@ class Invoice extends CI_Controller {
         $this->load->model('M_Tetapan');
         $this->load->model('M_Dashboard');
 
-        $this->load->library('pdf');
-
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');
         }
@@ -1247,210 +1245,6 @@ class Invoice extends CI_Controller {
         redirect('invoice/belum_diproses_invoice');
     }
 
-    public function print_invoice(){
-        $id              = $this->input->post('id_invoice_print');
-        $nama_ttd        = $this->input->post('nama_ttd');
-        $jabatan_ttd     = $this->input->post('jabatan_ttd');
-
-        $nama_perusahaan = $this->M_Tetapan->cari_tetapan("Nama Perusahaan")->result_array();
-        $bidang_usaha    = $this->M_Tetapan->cari_tetapan("Bidang Usaha")->result_array();
-        $alamat          = $this->M_Tetapan->cari_tetapan("Alamat Perusahaan")->result_array();
-        $phone           = $this->M_Tetapan->cari_tetapan("Phone/Fax")->result_array();
-        $website         = $this->M_Tetapan->cari_tetapan("Website")->result_array();
-        $email           = $this->M_Tetapan->cari_tetapan("E-mail Perusahaan")->result_array();
-        
-        $warna      = $this->M_Warna->select_all_aktif()->result_array();
-        $jmwarna    = $this->M_Warna->select_all_aktif()->num_rows();
-        $ukuran     = $this->M_UkuranProduk->select_all_aktif()->result_array();
-        $jmukuran   = $this->M_UkuranProduk->select_all_aktif()->num_rows();
-
-        $inv             = $this->M_Invoice->get_invoice($id)->result_array();
-        $dinv            = $this->M_Invoice->get_detail_invoice($id)->result_array();
-        $jm_dinv         = $this->M_Invoice->get_detail_invoice($id)->num_rows();
-
-        $id_po           = $inv[0]['id_purchase_order_customer'];
-        $po              = $this->M_Invoice->cari_po($id_po)->result_array();
-        
-        $pdf = new FPDF('p','mm','A4');
-        //buat halaman baru
-        $pdf->AddPage();
-        
-        //logo
-        $pdf->Image(base_url('assets/images/logombp.png'),15,7,-250);
-    
-        //setting font
-        $pdf->SetFont('Arial','B','12');
-
-        $pdf->setFillColor(102, 15, 19); 
-        //x,y,width,height
-        $pdf->Rect(203, 5,7, 25, 'F');
-
-        $pdf->setFillColor(190, 37, 37); 
-        //x,y,width,height
-        $pdf->Rect(45,5,158, 25, 'F');
-
-        $pdf->SetTextColor(255,255,255);
-        $pdf->Cell(-5); //move
-        $pdf->Cell(190,0,strtoupper($nama_perusahaan[0]['isi_tetapan']),0,1,'R');
-        
-        $pdf->Cell(-5); //move
-        $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(190,10,$bidang_usaha[0]['isi_tetapan'],0,1,'R');
-
-        $pdf->Cell(-5); //move
-        $pdf->SetFont('Arial','B',8);
-        $pdf->Cell(190,0,$alamat[0]['isi_tetapan'],0,1,'R');
-
-        $pdf->Cell(-5); //move
-        $pdf->Cell(190,9,'Phone/Fax:'. $phone[0]['isi_tetapan'] .' | Website: '. $website[0]['isi_tetapan'] .' | Email: '. $email[0]['isi_tetapan'] ,0,1,'R');
-
-        $pdf->SetTextColor(0,0,0);
-
-        $pdf->Cell(190,6,'',0,1,'C');
-        $pdf->SetFont('Arial','B',13);
-        $pdf->Cell(190,6,'INVOICE',0,1,'C');
-        $pdf->SetFont('Arial','B',11);
-        $pdf->Cell(190,6,'No:'. $inv[0]['id_invoice'],0,1,'C');
-
-
-        $pdf->SetFont('Arial','B',11);
-        $pdf->Cell(190,6,'',0,1,'L');
-        $pdf->Cell(190,6,'Ditujukan Kepada:',0,1,'L');
-        $pdf->SetFont('Arial','',11);
-        $pdf->Cell(190,6,$inv[0]['ditujukan_kepada'],0,1,'L');
-        $pdf->Cell(190,0,'Tanggal:'.$inv[0]['tanggal'],0,1,'R');
-        $pdf->Cell(190,6,strtoupper($po[0]['nama_customer']),0,1,'L');
-        //$pdf->Cell(-14); //move
-        $pdf->Cell(190,0,$po[0]['kode_purchase_order_customer'],0,1,'R');
-        $pdf->Cell(190,6,$po[0]['alamat_customer'],0,1,'L');
-
-        $pdf->Cell(190,6,'',0,1,'C');
-        $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(10,6,'No',1,0,'C');
-        $pdf->Cell(85,6,'Item Description',1,0,'C');
-        $pdf->Cell(20,6,'Qty',1,0,'C');
-        $pdf->Cell(20,6,'Unit (Qty)',1,0,'C');
-        $pdf->Cell(25,6,'Price',1,0,'C');
-        $pdf->Cell(30,6,'Total Price',1,1,'C');
-        
-        $pdf->SetFont('Arial','',10);
-
-        for($i=0;$i<$jm_dinv;$i++){
-            //nama produk
-            if($dinv[$i]['keterangan'] == 0){
-                for($w=0;$w<$jmwarna;$w++){
-                    if($warna[$w]['id_warna'] == $dinv[$i]['id_warna']){
-                        $nama_warna = $warna[$w]['nama_warna'];
-                    }
-                }
-
-                for($w=0;$w<$jmukuran;$w++){
-                    if($ukuran[$w]['id_ukuran_produk'] == $dinv[$i]['id_ukuran_produk']){
-                        $nama_ukuran = $ukuran[$w]['ukuran_produk'] . $ukuran[$w]['satuan_ukuran'];
-                    }
-                }
-
-                $nama_produk = $dinv[$i]['nama_produk'] ." ". $nama_ukuran . " (" . $nama_warna . ")";
-            }
-            else if($dinv[$i]['keterangan'] == 1){
-                for($w=0;$w<$jmukuran;$w++){
-                    if($ukuran[$w]['id_ukuran_produk'] == $dinv[$i]['id_ukuran_produk']){
-                        $nama_ukuran = $ukuran[$w]['ukuran_produk'] ." ". $ukuran[$w]['satuan_ukuran'];
-                    }
-                }
-
-                $nama_produk = $dinv[$i]['nama_produk'] . $nama_ukuran;
-            }
-            else if($dinv[$i]['keterangan'] == 2){
-                for($w=0;$w<$jmwarna;$w++){
-                    if($warna[$w]['id_warna'] == $dinv[$i]['id_warna']){
-                        $nama_warna = $warna[$w]['nama_warna'];
-                    }
-                }
-
-                $nama_produk = $dinv[$i]['nama_produk'] . " (" . $nama_warna . ")";
-            }
-            else{
-                $nama_produk = $dinv[$i]['nama_produk'];
-            }
-
-            $pdf->Cell(10,6,($i+1),1,0,'C');
-            $pdf->Cell(85,6,$nama_produk,1,0,'C');
-            $pdf->Cell(20,6,$dinv[$i]['jumlah_produk'],1,0,'C');
-            $pdf->Cell(20,6,'Pcs',1,0,'C');
-            $pdf->Cell(25,6,$dinv[$i]['price'],1,0,'C');
-            $pdf->Cell(30,6,$dinv[$i]['total_price'],1,1,'C');
-        }
-
-        $pdf->SetFont('Arial','',10);
-        $pdf->Cell(115);
-        $pdf->Cell(45,6,'Sub Total',1,0,'C');
-        $pdf->Cell(30,6,$inv[0]['sub_total'],1,1,'C');
-
-        $pdf->Cell(115);
-        if($inv[0]['discount_rate'] == 0){
-            $pdf->Cell(45,6,'Discount 0%',1,0,'C');
-            $pdf->Cell(30,6,"-",1,1,'C');
-        }
-        else{
-            $pdf->Cell(45,6,'Discount '. $inv[0]['discount_rate'].' %',1,0,'C');
-            $pdf->Cell(30,6,$inv[0]['discount'],1,1,'C');
-        }
-
-
-        $pdf->SetFont('Arial','',10);
-        $pdf->Cell(115);
-        if($inv[0]['ppn_rate'] == 0){
-            $pdf->Cell(45,6,'PPN 0%',1,0,'C');
-            $pdf->Cell(30,6,"-",1,1,'C');
-        }
-        else{
-            $pdf->Cell(45,6,'PPN '. $inv[0]['ppn_rate']. "%",1,0,'C');
-            $pdf->Cell(30,6,$inv[0]['ppn'],1,1,'C');
-        }
-
-        $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(115);
-        $pdf->Cell(45,6,'Total',1,0,'C');
-        $pdf->Cell(30,6,$inv[0]['total'],1,1,'C');
-
-        $pdf->Cell(190,6,'',0,1,'L');
-        $pdf->SetFont('Arial','',11);
-        $pdf->Cell(190,6,'Pembayaran untuk invoice ini mohon ditransfer ke rekening:',0,1,'L');
-        $pdf->SetFont('Arial','B',11);
-        $pdf->SetFont('Arial','BI');
-        $pdf->Cell(190,6,$inv[0]['nama_bank'] ." Cab. " .$inv[0]['kantor_cabang'],0,1,'L');
-        $pdf->Cell(190,6,'No. Rekening:'. $inv[0]['nomor_rekening'],0,1,'L');
-        $pdf->SetFont('Arial','B',11);
-        $pdf->Cell(190,6,'Atas Nama'. $inv[0]['atas_nama'],0,1,'L');
-
-        //TANDA TANGAN
-        $pdf->SetFont('Arial','B',10);
-    
-        $pdf->Cell(190,6,'',0,1);
-        $pdf->Cell(110);
-        $pdf->Cell(80,6,'PT. MAJU BERSAMA PERSADA DAYAMU',0,1,'C');
-        $pdf->Cell(110);
-        $pdf->Cell(80,25,'',0,1,'C');
-        $pdf->Cell(110);
-        $pdf->SetFont('Arial','BU');
-        $pdf->Cell(80,6,$nama_ttd,0,1,'C');
-        $pdf->Cell(110);
-        $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(80,6,$jabatan_ttd,0,1,'C');
-
-        //FOOTER
-        $pdf->setFillColor(190, 37, 37); 
-        //x,y,width,height
-        $pdf->Rect(0,285,210,5, 'F');
-
-        $pdf->setFillColor(102, 15, 19); 
-        //x,y,width,height
-        $pdf->Rect(0,290,210, 10, 'F'); 
-
-        $pdf->Output();
-    }
-
     public function belum_diproses_invoice(){
         $data['po']             = $this->M_Invoice->get_po()->result();
         $data['invoice']        = $this->M_Invoice->select_all_aktif()->result();
@@ -1818,5 +1612,271 @@ class Invoice extends CI_Controller {
     
 
 	    $this->load->view('v_invoice_selesai',$data);
+    }
+
+    public function print_invoice(){
+        $id                      = $this->input->post('id_invoice_print');
+        $data['nama_ttd']        = $this->input->post('nama_ttd');
+        $data['jabatan_ttd']     = $this->input->post('jabatan_ttd');
+
+        $data['nama_perusahaan'] = $this->M_Tetapan->cari_tetapan("Nama Perusahaan")->result_array();
+        $data['bidang_usaha']    = $this->M_Tetapan->cari_tetapan("Bidang Usaha")->result_array();
+        $data['alamat']          = $this->M_Tetapan->cari_tetapan("Alamat Perusahaan")->result_array();
+        $data['phone']           = $this->M_Tetapan->cari_tetapan("Phone/Fax")->result_array();
+        $data['website']         = $this->M_Tetapan->cari_tetapan("Website")->result_array();
+        $data['email']           = $this->M_Tetapan->cari_tetapan("E-mail Perusahaan")->result_array();
+        
+        $data['warna']      = $this->M_Warna->select_all_aktif()->result_array();
+        $data['jmwarna']    = $this->M_Warna->select_all_aktif()->num_rows();
+        $data['ukuran']     = $this->M_UkuranProduk->select_all_aktif()->result_array();
+        $data['jmukuran']   = $this->M_UkuranProduk->select_all_aktif()->num_rows();
+
+        $data['inv']        = $this->M_Invoice->get_invoice($id)->result_array();
+        $data['dinv']       = $this->M_Invoice->get_detail_invoice($id)->result_array();
+        $data['jm_dinv']    = $this->M_Invoice->get_detail_invoice($id)->num_rows();
+
+        $data['id_po']      = $data['inv'][0]['id_purchase_order_customer'];
+        $data['po']         = $this->M_Invoice->cari_po($data['id_po'])->result_array();
+        $data['cust']       = $this->M_Invoice->get_nama_cust($data['id_po'])->result_array();
+
+        $waktu = $data['inv'][0]['tanggal'];
+
+        $hari_array = array(
+            'Minggu',
+            'Senin',
+            'Selasa',
+            'Rabu',
+            'Kamis',
+            'Jumat',
+            'Sabtu'
+        );
+        $hr = date('w', strtotime($waktu));
+        $hari = $hari_array[$hr];
+        $tanggal = date('j', strtotime($waktu));
+        $bulan_array = array(
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        );
+        $bl = date('n', strtotime($waktu));
+        $bulan = $bulan_array[$bl];
+        $tahun = date('Y', strtotime($waktu));
+        
+        $data['tanggal'] = "$hari, $tanggal $bulan $tahun";
+        
+        $this->load->view('v_print_invoice',$data);
+    }
+
+    public function print_invoicex(){
+        $id              = $this->input->post('id_invoice_print');
+        $nama_ttd        = $this->input->post('nama_ttd');
+        $jabatan_ttd     = $this->input->post('jabatan_ttd');
+
+        $nama_perusahaan = $this->M_Tetapan->cari_tetapan("Nama Perusahaan")->result_array();
+        $bidang_usaha    = $this->M_Tetapan->cari_tetapan("Bidang Usaha")->result_array();
+        $alamat          = $this->M_Tetapan->cari_tetapan("Alamat Perusahaan")->result_array();
+        $phone           = $this->M_Tetapan->cari_tetapan("Phone/Fax")->result_array();
+        $website         = $this->M_Tetapan->cari_tetapan("Website")->result_array();
+        $email           = $this->M_Tetapan->cari_tetapan("E-mail Perusahaan")->result_array();
+        
+        $warna      = $this->M_Warna->select_all_aktif()->result_array();
+        $jmwarna    = $this->M_Warna->select_all_aktif()->num_rows();
+        $ukuran     = $this->M_UkuranProduk->select_all_aktif()->result_array();
+        $jmukuran   = $this->M_UkuranProduk->select_all_aktif()->num_rows();
+
+        $inv             = $this->M_Invoice->get_invoice($id)->result_array();
+        $dinv            = $this->M_Invoice->get_detail_invoice($id)->result_array();
+        $jm_dinv         = $this->M_Invoice->get_detail_invoice($id)->num_rows();
+
+        $id_po           = $inv[0]['id_purchase_order_customer'];
+        $po              = $this->M_Invoice->cari_po($id_po)->result_array();
+        
+        $pdf = new FPDF('p','mm','A4');
+        //buat halaman baru
+        $pdf->AddPage();
+        
+        //logo
+        $pdf->Image(base_url('assets/images/logombp.png'),15,7,-250);
+    
+        //setting font
+        $pdf->SetFont('Arial','B','12');
+
+        $pdf->setFillColor(102, 15, 19); 
+        //x,y,width,height
+        $pdf->Rect(203, 5,7, 25, 'F');
+
+        $pdf->setFillColor(190, 37, 37); 
+        //x,y,width,height
+        $pdf->Rect(45,5,158, 25, 'F');
+
+        $pdf->SetTextColor(255,255,255);
+        $pdf->Cell(-5); //move
+        $pdf->Cell(190,0,strtoupper($nama_perusahaan[0]['isi_tetapan']),0,1,'R');
+        
+        $pdf->Cell(-5); //move
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(190,10,$bidang_usaha[0]['isi_tetapan'],0,1,'R');
+
+        $pdf->Cell(-5); //move
+        $pdf->SetFont('Arial','B',8);
+        $pdf->Cell(190,0,$alamat[0]['isi_tetapan'],0,1,'R');
+
+        $pdf->Cell(-5); //move
+        $pdf->Cell(190,9,'Phone/Fax:'. $phone[0]['isi_tetapan'] .' | Website: '. $website[0]['isi_tetapan'] .' | Email: '. $email[0]['isi_tetapan'] ,0,1,'R');
+
+        $pdf->SetTextColor(0,0,0);
+
+        $pdf->Cell(190,6,'',0,1,'C');
+        $pdf->SetFont('Arial','B',13);
+        $pdf->Cell(190,6,'INVOICE',0,1,'C');
+        $pdf->SetFont('Arial','B',11);
+        $pdf->Cell(190,6,'No:'. $inv[0]['id_invoice'],0,1,'C');
+
+
+        $pdf->SetFont('Arial','B',11);
+        $pdf->Cell(190,6,'',0,1,'L');
+        $pdf->Cell(190,6,'Ditujukan Kepada:',0,1,'L');
+        $pdf->SetFont('Arial','',11);
+        $pdf->Cell(190,6,$inv[0]['ditujukan_kepada'],0,1,'L');
+        $pdf->Cell(190,0,'Tanggal:'.$inv[0]['tanggal'],0,1,'R');
+        $pdf->Cell(190,6,strtoupper($po[0]['nama_customer']),0,1,'L');
+        //$pdf->Cell(-14); //move
+        $pdf->Cell(190,0,$po[0]['kode_purchase_order_customer'],0,1,'R');
+        $pdf->Cell(190,6,$po[0]['alamat_customer'],0,1,'L');
+
+        $pdf->Cell(190,6,'',0,1,'C');
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(10,6,'No',1,0,'C');
+        $pdf->Cell(85,6,'Item Description',1,0,'C');
+        $pdf->Cell(20,6,'Qty',1,0,'C');
+        $pdf->Cell(20,6,'Unit (Qty)',1,0,'C');
+        $pdf->Cell(25,6,'Price',1,0,'C');
+        $pdf->Cell(30,6,'Total Price',1,1,'C');
+        
+        $pdf->SetFont('Arial','',10);
+
+        for($i=0;$i<$jm_dinv;$i++){
+            //nama produk
+            if($dinv[$i]['keterangan'] == 0){
+                for($w=0;$w<$jmwarna;$w++){
+                    if($warna[$w]['id_warna'] == $dinv[$i]['id_warna']){
+                        $nama_warna = $warna[$w]['nama_warna'];
+                    }
+                }
+
+                for($w=0;$w<$jmukuran;$w++){
+                    if($ukuran[$w]['id_ukuran_produk'] == $dinv[$i]['id_ukuran_produk']){
+                        $nama_ukuran = $ukuran[$w]['ukuran_produk'] . $ukuran[$w]['satuan_ukuran'];
+                    }
+                }
+
+                $nama_produk = $dinv[$i]['nama_produk'] ." ". $nama_ukuran . " (" . $nama_warna . ")";
+            }
+            else if($dinv[$i]['keterangan'] == 1){
+                for($w=0;$w<$jmukuran;$w++){
+                    if($ukuran[$w]['id_ukuran_produk'] == $dinv[$i]['id_ukuran_produk']){
+                        $nama_ukuran = $ukuran[$w]['ukuran_produk'] ." ". $ukuran[$w]['satuan_ukuran'];
+                    }
+                }
+
+                $nama_produk = $dinv[$i]['nama_produk'] . $nama_ukuran;
+            }
+            else if($dinv[$i]['keterangan'] == 2){
+                for($w=0;$w<$jmwarna;$w++){
+                    if($warna[$w]['id_warna'] == $dinv[$i]['id_warna']){
+                        $nama_warna = $warna[$w]['nama_warna'];
+                    }
+                }
+
+                $nama_produk = $dinv[$i]['nama_produk'] . " (" . $nama_warna . ")";
+            }
+            else{
+                $nama_produk = $dinv[$i]['nama_produk'];
+            }
+
+            $pdf->Cell(10,6,($i+1),1,0,'C');
+            $pdf->Cell(85,6,$nama_produk,1,0,'C');
+            $pdf->Cell(20,6,$dinv[$i]['jumlah_produk'],1,0,'C');
+            $pdf->Cell(20,6,'Pcs',1,0,'C');
+            $pdf->Cell(25,6,$dinv[$i]['price'],1,0,'C');
+            $pdf->Cell(30,6,$dinv[$i]['total_price'],1,1,'C');
+        }
+
+        $pdf->SetFont('Arial','',10);
+        $pdf->Cell(115);
+        $pdf->Cell(45,6,'Sub Total',1,0,'C');
+        $pdf->Cell(30,6,$inv[0]['sub_total'],1,1,'C');
+
+        $pdf->Cell(115);
+        if($inv[0]['discount_rate'] == 0){
+            $pdf->Cell(45,6,'Discount 0%',1,0,'C');
+            $pdf->Cell(30,6,"-",1,1,'C');
+        }
+        else{
+            $pdf->Cell(45,6,'Discount '. $inv[0]['discount_rate'].' %',1,0,'C');
+            $pdf->Cell(30,6,$inv[0]['discount'],1,1,'C');
+        }
+
+
+        $pdf->SetFont('Arial','',10);
+        $pdf->Cell(115);
+        if($inv[0]['ppn_rate'] == 0){
+            $pdf->Cell(45,6,'PPN 0%',1,0,'C');
+            $pdf->Cell(30,6,"-",1,1,'C');
+        }
+        else{
+            $pdf->Cell(45,6,'PPN '. $inv[0]['ppn_rate']. "%",1,0,'C');
+            $pdf->Cell(30,6,$inv[0]['ppn'],1,1,'C');
+        }
+
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(115);
+        $pdf->Cell(45,6,'Total',1,0,'C');
+        $pdf->Cell(30,6,$inv[0]['total'],1,1,'C');
+
+        $pdf->Cell(190,6,'',0,1,'L');
+        $pdf->SetFont('Arial','',11);
+        $pdf->Cell(190,6,'Pembayaran untuk invoice ini mohon ditransfer ke rekening:',0,1,'L');
+        $pdf->SetFont('Arial','B',11);
+        $pdf->SetFont('Arial','BI');
+        $pdf->Cell(190,6,$inv[0]['nama_bank'] ." Cab. " .$inv[0]['kantor_cabang'],0,1,'L');
+        $pdf->Cell(190,6,'No. Rekening:'. $inv[0]['nomor_rekening'],0,1,'L');
+        $pdf->SetFont('Arial','B',11);
+        $pdf->Cell(190,6,'Atas Nama'. $inv[0]['atas_nama'],0,1,'L');
+
+        //TANDA TANGAN
+        $pdf->SetFont('Arial','B',10);
+    
+        $pdf->Cell(190,6,'',0,1);
+        $pdf->Cell(110);
+        $pdf->Cell(80,6,'PT. MAJU BERSAMA PERSADA DAYAMU',0,1,'C');
+        $pdf->Cell(110);
+        $pdf->Cell(80,25,'',0,1,'C');
+        $pdf->Cell(110);
+        $pdf->SetFont('Arial','BU');
+        $pdf->Cell(80,6,$nama_ttd,0,1,'C');
+        $pdf->Cell(110);
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(80,6,$jabatan_ttd,0,1,'C');
+
+        //FOOTER
+        $pdf->setFillColor(190, 37, 37); 
+        //x,y,width,height
+        $pdf->Rect(0,285,210,5, 'F');
+
+        $pdf->setFillColor(102, 15, 19); 
+        //x,y,width,height
+        $pdf->Rect(0,290,210, 10, 'F'); 
+
+        $pdf->Output();
     }
 }

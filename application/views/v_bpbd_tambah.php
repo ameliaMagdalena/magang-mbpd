@@ -104,7 +104,7 @@
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
                                     value="<?= $no;?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
                                 <button type="button" class="badd_klik col-lg-3 btn btn-success fa fa-plus-square-o" 
-                                    value="<?= $no;?>" title="Buat Surat Jalan" style="margin-right:5px;margin-bottom:5px"></button>
+                                    value="<?= $no;?>" title="Buat BPBD" style="margin-right:5px;margin-bottom:5px"></button>
                             </td>
                         </tr>
                     <?php $no++; }}?>
@@ -159,7 +159,7 @@
 
         <!-- modal tambah -->
         <div class="modal" id="modaltambah" role="dialog">
-            <div class="modal-dialog modal-xl" style="width:70%">
+            <div class="modal-dialog modal-xl" style="width:85%">
                 <form method="POST" action="<?= base_url()?>bpbd/buat_bpbd">
                     <div class="modal-content">
                         <div class="modal-header">
