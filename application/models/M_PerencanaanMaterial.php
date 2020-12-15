@@ -99,6 +99,8 @@ class M_PerencanaanMaterial extends CI_Model {
         JOIN karyawan c ON a.id_karyawan = c.id_karyawan
         JOIN konsumsi_material d ON b.id_konsumsi_material = d.id_konsumsi_material
         JOIN pengeluaran_material e ON a.id_pengeluaran_material = e.id_pengeluaran_material
-        WHERE a.status_delete = '0' AND b.id_permintaan_material='$id' AND a.status_keluar=1");
+        WHERE a.status_delete = '0' 
+        /* AND d.id_sub_jenis_material = e.id_sub_jenis_material */
+        AND b.id_permintaan_material='$id' AND a.status_keluar=1");
     }
 }

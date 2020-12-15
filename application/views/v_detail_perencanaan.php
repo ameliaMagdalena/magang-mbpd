@@ -401,7 +401,7 @@
             data: {id:id},
 
             success: function(respond){
-                $("#amaterial").val(respond['ambil'][0]['nama_sub_jenis_material']);
+                $("#amaterial").val(respond['ambil'][0]['id_sub_jenis_material']);
                 $("#aline").val(respond['ambil'][0]['nama_line']);
                 $("#atgl_ambil").val(respond['ambil'][0]['tanggal_ambil']);
                 $("#asatuan").val(respond['ambil'][0]['satuan_ukuran']);
