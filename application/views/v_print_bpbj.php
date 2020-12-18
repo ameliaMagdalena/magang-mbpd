@@ -141,7 +141,7 @@ class Pdfx extends TCPDF
                             <td style="text-align: center;vertical-align: middle">'.$selected_pos.'</td>
                             <td style="text-align: center;vertical-align: middle"></td>
                         </tr>';
-          }
+        }
 
 
         $table = '<table border="1" style="border-collapse: collapse;padding:5px">

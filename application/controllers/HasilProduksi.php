@@ -19,8 +19,6 @@ class HasilProduksi extends CI_Controller {
         $this->load->model('M_Tetapan');
         $this->load->model('M_LaporanPerencanaanCutting');
         $this->load->model('M_Dashboard');
-
-        $this->load->library('pdf');
     }
 
 	public function tambah_hasil_produksi(){
@@ -1007,7 +1005,7 @@ class HasilProduksi extends CI_Controller {
 
       $this->M_HasilProduksi->edit('produksi',$data_produksi,$where_produksi);
 
-   redirect('hasilProduksi/tambah_hasil_produksi');
+   redirect('hasilProduksi/semua_hasil_produksi');
   }
 
   public function edit(){
@@ -1448,6 +1446,58 @@ class HasilProduksi extends CI_Controller {
   }
 
   public function print(){
+    $id      = $this->input->post('id_produksi');
+    $id_line = $this->input->post('id_line');
+
+    $data['nama_perusahaan'] = $this->M_Tetapan->cari_tetapan("Nama Perusahaan")->result_array();
+    $data['produksi']        = $this->M_HasilProduksi->get_produksi_line_by_id($id)->result_array();
+    $data['prodline']        = $this->M_HasilProduksi->get_one_produksi_line($id,$id_line)->result_array();
+    $data['detprodline']     = $this->M_HasilProduksi->get_one_detail_produksi_line($id,$id_line)->result_array();
+    $data['jm_detprodline']  = $this->M_HasilProduksi->get_one_detail_produksi_line($id,$id_line)->num_rows();
+
+    $data['warna']      = $this->M_Warna->select_all_aktif()->result_array();
+    $data['jmwarna']    = $this->M_Warna->select_all_aktif()->num_rows();
+    $data['ukuran']     = $this->M_UkuranProduk->select_all_aktif()->result_array();
+    $data['jmukuran']   = $this->M_UkuranProduk->select_all_aktif()->num_rows();
+
+    $waktu = $data['produksi'][0]['tanggal'];
+
+    $hari_array = array(
+        'Minggu',
+        'Senin',
+        'Selasa',
+        'Rabu',
+        'Kamis',
+        'Jumat',
+        'Sabtu'
+    );
+    $hr = date('w', strtotime($waktu));
+    $hari = $hari_array[$hr];
+    $tanggal = date('j', strtotime($waktu));
+    $bulan_array = array(
+        1 => 'Januari',
+        2 => 'Februari',
+        3 => 'Maret',
+        4 => 'April',
+        5 => 'Mei',
+        6 => 'Juni',
+        7 => 'Juli',
+        8 => 'Agustus',
+        9 => 'September',
+        10 => 'Oktober',
+        11 => 'November',
+        12 => 'Desember',
+    );
+    $bl = date('n', strtotime($waktu));
+    $bulan = $bulan_array[$bl];
+    $tahun = date('Y', strtotime($waktu));
+    
+    $data['tanggal'] = "$hari, $tanggal $bulan $tahun";
+
+    $this->load->view('v_print_hasil_produksi',$data);
+  }
+
+  public function printx(){
     $id      = $this->input->post('id_produksi');
     $id_line = $this->input->post('id_line');
 

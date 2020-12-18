@@ -2629,7 +2629,6 @@ class PerencanaanProduksi extends CI_Controller {
                                     }
                                 //tutup permat */
                                 
-                                echo $id_det_prodline.' || '.$jumlah_item_sebelum_edit.' || '.$jumlah_item_s.'<br>';
                                 //permat
                                 if($jumlah_item_sebelum_edit > 0 && $jumlah_item_sebelum_edit != $jumlah_item_s){
                                     //sebelum ada & tetap ada
@@ -4362,7 +4361,7 @@ class PerencanaanProduksi extends CI_Controller {
             }
         //tutup detail produksi line
 
-        //redirect('perencanaanProduksi/semua_perencanaan_produksi');
+        redirect('perencanaanProduksi/semua_perencanaan_produksi');
     }
 
     public function delete_perencanaan_produksi(){

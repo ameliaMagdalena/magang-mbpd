@@ -89,7 +89,9 @@
                                 <?php if($x->status_laporan == 0){?>
                                     <button type="button" class="bdet1_klik col-lg-3 btn btn-primary fa fa-info-circle" 
                                     value="<?= $no;?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
-                                    <?php if($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Produksi"){?>
+                                    <?php if($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Produksi" || 
+                                        $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
+                                        $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
                                         <button type="button" class="badd_klik col-lg-3 btn btn-success fa fa-plus-square-o" 
                                         value="<?= $no;?>" title="Buat Laporan Perencanaan Cutting" style="margin-right:5px;margin-bottom:5px"></button>
                                     <?php } ?>

@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Semua Permintaan Pengambilan Material</h2>
+        <h2>Semua Pengambilan Material</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Semua Permintaan Pengambilan Material</span></span></li>
+                <li><span>Semua Pengambilan Material</span></span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -25,7 +25,7 @@
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
         <header class="panel-heading">
-            <h2 class="panel-title">Data Semua Permintaan Pengambilan Material</h2>
+            <h2 class="panel-title">Data Semua Pengambilan Material</h2>
         </header>
 
         <div class="panel-body">

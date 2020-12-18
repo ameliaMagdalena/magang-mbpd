@@ -1991,6 +1991,7 @@
                                                     <?php } else{?>
                                                         <?= $pt->nama_produk ?>
                                                     <?php } ?>
+                                                    - <?= $pt->nama_line?>
                                                 </center>
                                             </td>
                                             <td class="col-md-2">

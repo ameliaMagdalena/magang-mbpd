@@ -243,7 +243,7 @@
 
     <!-- modal se7 -->
     <div class="modal" id="modalse7" role="dialog">
-        <div class="modal-dialog modal-xl" style="width:80%">
+        <div class="modal-dialog modal-xl" style="width:90%">
             <form method="POST" action="<?= base_url()?>laporanPerencanaanCutting/konfirmasi_ppic">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -256,7 +256,7 @@
                         
                         <h4><b>Konsumsi Material</b></h4>
                         <div id="konsumsi_material"></div>
-                        <input type="text" name="jumlah_detail_setuju" id="jumlah_detail_setuju"> 
+                        <input type="hidden" name="jumlah_detail_setuju" id="jumlah_detail_setuju"> 
                         <div id="alert" type="hidden">
                             <p><span style="color:red">* </span><b>Mohon maaf, proses konfirmasi tidak dapat dilanjutkan karena data laporan hasil
                             produksi dengan data pengambilan material tidak sesuai.</b></p>
@@ -962,7 +962,7 @@
                 var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
                 var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 
-                var tanggal = new Date(tanggal).getDate();
+                var tanggaly = new Date(tanggal).getDate();
                 var xhari = new Date(tanggal).getDay();
                 var xbulan = new Date(tanggal).getMonth();
                 var xtahun = new Date(tanggal).getYear();
@@ -971,7 +971,7 @@
                 var bulan = bulan[xbulan];
                 var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
 
-                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+                $tanggalnya = hari +', ' + tanggaly + ' ' + bulan + ' ' + tahun;
 
                 $("#tanggal_perencanaannya").html($tanggalnya);
 
@@ -990,11 +990,13 @@
                         && respond['km'][$k]['status_konsumsi'] == 0){
                             $jumlah_konsumsi_seharusnya = respond['km'][$k]['jumlah_konsumsi'] * respond['percut'][$i]['jumlah_aktual_cut'];
                             $ukuran_satuan_keluar       = respond['km'][$k]['ukuran_satuan_keluar'];
+                            $satuan_keluar              = respond['km'][$k]['satuan_keluar'];
+                            $satuan_ukuran              = respond['km'][$k]['satuan_ukuran'];
 
                             //material dari gudang
                             $cari_pm         = 0;
                             $material_gudang = 0;
-                            $id_dpo          = "";
+                            $id_line         = "";
 
                             for($p=0;$p<respond['jm_pm'];$p++){
                                 if(respond['pm'][$p]['id_detail_purchase_order_customer'] == respond['percut'][$i]['id_detail_purchase_order_customer'] 
@@ -1003,8 +1005,97 @@
                                         $cari_pm++;
                                         $material_gudang = respond['pm'][$p]['total_keluar'];
                                         $id_line = respond['pm'][$p]['id_line'];
-                                        $id_dpo = respond['pm'][$p]['id_detail_purchase_order_customer']+" || "+respond['percut'][$i]['id_detail_purchase_order_customer'];
                                 }
+                            }
+
+                            $total_ambilnya = 0;
+                            $isi_detpeng    = "";
+                            //detail pengambilan materialnya
+                            if($material_gudang > 0){
+                                $isi2 = "";
+                                $hit_isi2 = 1;
+
+                                for($p=0;$p<respond['jm_pms'];$p++){
+                                    if(respond['pms'][$p]['id_detail_purchase_order_customer'] == respond['percut'][$i]['id_detail_purchase_order_customer'] 
+                                        && respond['pms'][$p]['id_line'] == respond['percut'][$i]['id_line'] 
+                                        && respond['pms'][$p]['id_konsumsi_material'] == respond['km'][$k]['id_konsumsi_material']){
+
+                                            $ambe = Math.ceil(parseFloat(respond['pms'][$p]['jumlah_ambil'])/parseFloat($ukuran_satuan_keluar));
+                                            $isi2 = $isi2 +
+                                                    '<tr>'+
+                                                        '<td style="text-align: center;vertical-align: middle;">'+$hit_isi2+'</td>'+
+                                                        '<td style="text-align: center;vertical-align: middle;">'+respond['pms'][$p]['jumlah_ambil']+'</td>'+
+                                                        '<td style="text-align: center;vertical-align: middle;">'+$ambe+' '+$satuan_ukuran+'</td>'+
+                                                    '</tr>';
+                                                    
+                                            $total_ambilnya = $total_ambilnya + $ambe;
+                                            $hit_isi2++;
+                                    }
+                                }
+
+                                $isi_detpeng ='<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:9px;margin-top:5px">'+
+                                                '<tr>'+
+                                                    '<td style="text-align: center;vertical-align: middle;"><b>No</b></td>'+
+                                                    '<td style="text-align: center;vertical-align: middle;"><b>Minta</b></td>'+
+                                                    '<td style="text-align: center;vertical-align: middle;"><b>Ambil</b></td>'+
+                                                '</tr>'+
+                                                $isi2+
+                                              '</table>'+
+                                              '1 '+$satuan_ukuran+' = '+ $ukuran_satuan_keluar+' '+$satuan_keluar;
+                            }
+
+                            //material dari gudang (material berlebihan)
+                            $material_tambahan = 0;
+                            for($p=0;$p<respond['jm_pmt'];$p++){
+                                if(respond['pmt'][$p]['id_detail_purchase_order_customer'] == respond['percut'][$i]['id_detail_purchase_order_customer'] 
+                                    && respond['pmt'][$p]['id_line'] == respond['percut'][$i]['id_line'] 
+                                    && respond['pmt'][$p]['id_konsumsi_material'] == respond['km'][$k]['id_konsumsi_material']){
+                                        $cari_pm++;
+                                        $material_tambahan = respond['pmt'][$p]['total_keluar'];
+                                }
+                            }
+
+                            $isi_detpengt = "";
+                            $tampilkan_perhitungan = "";
+                            //detail pengambilan material tambahan
+                            if($material_tambahan > 0){
+                                $isit2 = "";
+                                $hit_isit2 = 1;
+                                $total_ambilnyat = 0;
+
+                                for($p=0;$p<respond['jm_pmts'];$p++){
+                                    if(respond['pmts'][$p]['id_detail_purchase_order_customer'] == respond['percut'][$i]['id_detail_purchase_order_customer'] 
+                                        && respond['pmts'][$p]['id_line'] == respond['percut'][$i]['id_line'] 
+                                        && respond['pmts'][$p]['id_konsumsi_material'] == respond['km'][$k]['id_konsumsi_material']){
+
+                                            $ambet = Math.ceil(parseFloat(respond['pmts'][$p]['jumlah_ambil'])/parseFloat($ukuran_satuan_keluar));
+                                            $isit2 = $isit2 +
+                                                    '<tr>'+
+                                                        '<td style="text-align: center;vertical-align: middle;">'+$hit_isit2+'</td>'+
+                                                        '<td style="text-align: center;vertical-align: middle;">'+respond['pmts'][$p]['jumlah_ambil']+'</td>'+
+                                                        '<td style="text-align: center;vertical-align: middle;">'+$ambet+' '+$satuan_ukuran+'</td>'+
+                                                    '</tr>';
+                                                    
+                                            $total_ambilnyat = $total_ambilnyat + $ambet;
+                                            $hit_isit2++;
+                                    }
+                                }
+
+                                $isi_detpengt ='<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:9px;margin-top:5px">'+
+                                                '<tr>'+
+                                                    '<td style="text-align: center;vertical-align: middle;"><b>No</b></td>'+
+                                                    '<td style="text-align: center;vertical-align: middle;"><b>Minta</b></td>'+
+                                                    '<td style="text-align: center;vertical-align: middle;"><b>Ambil</b></td>'+
+                                                '</tr>'+
+                                                $isit2+
+                                              '</table>'+
+                                              '1 '+$satuan_ukuran+' = '+ $ukuran_satuan_keluar+' '+$satuan_keluar;
+                                
+                                $total_ambil_tambah    = $total_ambilnyat * $ukuran_satuan_keluar;
+                                $tampilkan_perhitungan = '<center>'+$material_tambahan+' || diberikan gudang '+$total_ambilnyat+' '+$satuan_ukuran+' ('+ $total_ambil_tambah+')'+'</center>';
+                            } else{
+                                $total_ambil_tambah    = 0;
+                                $tampilkan_perhitungan = '<center>0</center>';
                             }
 
                             //material wip (inventory line)
@@ -1020,14 +1111,20 @@
                             }
                             
                             //konsumsi gudang material
+                            $jumlah_minta = $material_gudang;
                             $ambilnya = Math.ceil(parseFloat($material_gudang)/parseFloat($ukuran_satuan_keluar));
 
                             //wipnya
-                            $wip = parseFloat($from_inli) + ($ambilnya * $ukuran_satuan_keluar) - parseFloat($jumlah_konsumsi_seharusnya);
+                            $wip     = parseFloat($from_inli) + ($total_ambilnya * $ukuran_satuan_keluar) - parseFloat($jumlah_konsumsi_seharusnya);
+                            $wip_sem = parseFloat($wip) + parseFloat($total_ambil_tambah);
 
-                            if($wip < 0){
+                            if($wip_sem < 0){
                                 $cek++;
                             }
+
+                            //perhitungan 
+                            $pemakaian_tambahan = 0;
+                            $perhitungan = '('+$from_inli+' + '+($total_ambilnya * $ukuran_satuan_keluar)+' + '+$total_ambil_tambah+')'+' - ('+$jumlah_konsumsi_seharusnya+' + '+$pemakaian_tambahan+')';
 
                             $isi_km = $isi_km+
                             '<tr>'+
@@ -1037,9 +1134,8 @@
                                 '<td>'+
                                     '<center>'+
                                         respond['km'][$k]['nama_sub_jenis_material']+
-                                        '<input type="text" name="id_line'+$hitung+'" value="'+$id_line+'">'+
-                                        '<input type="text" name="id_sub_jm'+$hitung+'" value="'+respond['km'][$k]['id_sub_jenis_material']+'">'+
-                                        $id_dpo+
+                                        '<input type="hidden" name="id_line'+$hitung+'" value="'+$id_line+'">'+
+                                        '<input type="hidden" name="id_sub_jm'+$hitung+'" value="'+respond['km'][$k]['id_sub_jenis_material']+'">'+
                                     '</center>'+
                                 '</td>'+
                                 '<td>'+
@@ -1049,23 +1145,43 @@
                                 '</td>'+
                                 '<td>'+
                                     '<center>'+
-                                        $jumlah_konsumsi_seharusnya+
-                                    '</center>'+
-                                '</td>'+
-                                '<td>'+
-                                    '<center>'+
                                         $from_inli+
+                                        '<input type="hidden" id="jmln'+$hitung+'" value="'+$from_inli+'">'+
                                     '</center>'+
                                 '</td>'+
                                 '<td>'+
                                     '<center>'+
-                                        ($ambilnya * $ukuran_satuan_keluar)+
+                                        $jumlah_minta +' ||  diberikan gudang '+ $total_ambilnya+' '+$satuan_ukuran+' ('+ ( $total_ambilnya * $ukuran_satuan_keluar)+')'+
+                                        '<input type="hidden" id="jmgd'+$hitung+'" value="'+( $total_ambilnya * $ukuran_satuan_keluar)+'">'+
+                                        $isi_detpeng+
                                     '</center>'+
                                 '</td>'+
                                 '<td>'+
                                     '<center>'+
-                                        $wip+
-                                        '<input type="text" name="wip'+$hitung+'" value="'+$wip+'">'+
+                                        $tampilkan_perhitungan+
+                                        '<input type="hidden" id="jmtm'+$hitung+'" value="'+$total_ambil_tambah+'">'+
+                                        $isi_detpengt+
+                                    '</center>'+
+                                '</td>'+
+                                '<td>'+
+                                    '<center>'+
+                                        $jumlah_konsumsi_seharusnya+
+                                        '<input type="hidden" id="jmsh'+$hitung+'" value="'+$jumlah_konsumsi_seharusnya+'">'+
+                                    '</center>'+
+                                '</td>'+
+                                '<td>'+
+                                    '<center><input class="form-control" id="jmlain'+$hitung+'" type="number" step="0.01" min="0" oninput="hitung(this)"></center>'+
+                                '</td>'+
+                                '<td>'+
+                                    '<center><b>'+
+                                        '<div id="idnya_wip'+$hitung+'">'+$wip_sem+'</div>'+
+                                        '<input type="hidden" name="wip'+$hitung+'" id="wip'+$hitung+'" value="'+$wip_sem+'">'+
+                                        '<div id="perhitungannya'+$hitung+'">'+$perhitungan+'</div>'+
+                                    '</center></b>'+
+                                '</td>'+
+                                '<td>'+
+                                    '<center>'+
+                                       $satuan_keluar+
                                     '</center>'+
                                 '</td>'+
                             '</tr>';
@@ -1089,16 +1205,25 @@
                                     'Konsumsi Material'+
                                 '</th>'+
                                 '<th style="text-align: center;vertical-align: middle;">'+
-                                    'Konsumsi Seharusnya'+
+                                    'Konsumsi Persediaan Line'+
                                 '</th>'+
                                 '<th style="text-align: center;vertical-align: middle;">'+
-                                    'Konsumsi Inventory Line'+
+                                    'Pengambilan Dari Gudang'+
                                 '</th>'+
                                 '<th style="text-align: center;vertical-align: middle;">'+
-                                    'Konsumsi Gudang Material'+
+                                    'Pengambilan Tambahan'+
+                                '</th>'+
+                                '<th style="text-align: center;vertical-align: middle;">'+
+                                    'Pemakaian Seharusnya'+
+                                '</th>'+
+                                '<th style="text-align: center;vertical-align: middle;">'+
+                                    'Pemakaian Lainnya'+
                                 '</th>'+
                                 '<th style="text-align: center;vertical-align: middle;">'+
                                     'Sisa Material Di Line'+
+                                '</th>'+
+                                '<th style="text-align: center;vertical-align: middle;">'+
+                                    'Satuan Konsumsi'+
                                 '</th>'+
                             '</tr>'+
                         '</thead>'+
@@ -1106,8 +1231,6 @@
                             $isi_km+
                         '</tbody>'+
                     '</table><br>';
-
-
 
                     //nama produk
                         if(respond['percut'][$i]['keterangan'] == 0){
@@ -1163,7 +1286,7 @@
                     //tutup nama produk
                         
                     $konsumsi_material = $konsumsi_material +
-                    '<hr><h5><b>'+($i+1)+'. '+$namanya+' ('+respond['percut'][$i]['jumlah_aktual_cut']+') '+'</b></h5>'+
+                    '<hr><h5><b>'+($i+1)+'. '+$namanya+' ('+respond['percut'][$i]['jumlah_percut']+' - '+respond['percut'][$i]['jumlah_aktual_cut']+') '+'</b></h5>'+
                     $table_km;
                 }
 
@@ -1182,4 +1305,51 @@
             }
         });
     });
+</script>
+
+<!-- hitung pada setuju -->
+<script>
+    function hitung(obj){
+        var id = obj.id;
+        var length = id.length;
+
+        if(length == 7){
+            var hitung = id.charAt(6);
+        } else if(length == 8){
+            var hitung = id.charAt(7) + id.charAt(8);
+        } else if(length == 9){
+            var hitung = id.charAt(7) + id.charAt(8) + id.charAt(9);
+        } else if(length == 10){
+            var hitung = id.charAt(7) + id.charAt(8) + id.charAt(9) + id.charAt(10);
+        }
+
+        $jmln   = $("#jmln"+hitung).val();
+        $jmgd   = $("#jmgd"+hitung).val();
+        $jmtm   = $("#jmtm"+hitung).val();
+        $jmsh   = $("#jmsh"+hitung).val();
+        $jmlain = $("#jmlain"+hitung).val();
+
+        $perhitungan = "("+$jmln+" + "+$jmgd+" + "+$jmtm+") - ("+$jmsh+" + "+$jmlain+") ";
+        $hitungnya   = parseFloat($jmln) + parseFloat($jmgd) + parseFloat($jmtm) - parseFloat($jmsh) - parseFloat($jmlain);
+        //$hitungnya   = (parseInt($jmln) + parseInt($jmgd) + parseInt($jmtm)) - (parseInt($jmsh) + parseInt($jmlain));
+
+        $("#perhitungannya"+hitung).html($perhitungan);
+        $("#wip"+hitung).val($hitungnya);
+        $("#idnya_wip"+hitung).html($hitungnya);
+
+        $count = 0;
+        for($p=0;$p<$("#jumlah_detail_setuju").val();$p++){
+            if($("#wip"+$p).val() < 0){
+                $count++;
+            }
+        }
+
+        if($count != 0){
+            $("#alert").show();
+            $("#setuju").prop('disabled',true);
+        } else{
+            $("#alert").hide();
+            $("#setuju").prop('disabled',false);
+        }
+    }
 </script>

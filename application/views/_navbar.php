@@ -497,6 +497,34 @@
 										<span>Perencanaan Produksi Line</span>
 									</a>
 								</li>
+								<!-- produksi tertunda -->
+								<li class="nav-parent">
+									<a title="Produksi Tertunda">
+										<i class="fa fa-calendar-o" aria-hidden="true"></i>
+										<span>Produksi Tertunda</span>
+									</a>
+									<ul class="nav nav-children">
+										<li>
+											<a href="<?= base_url()?>produksiTertunda/semua">
+												Semua
+											</a>
+										<li>
+											<a href="<?= base_url()?>produksiTertunda/belum_diproses">
+												Belum Diproses
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>produksiTertunda/sedang_diproses">
+												Sedang Diproses
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>produksiTertunda/selesai">
+												Selesai
+											</a>
+										</li>
+									</ul>
+								</li>
 								<!-- permintaan material -->
 								<li class="nav-parent">
 									<a title="Permintaan Material">
@@ -711,6 +739,11 @@
 									</a>
 									<ul class="nav nav-children">
 										<li>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+												<span>+ Laporan Perencanaan Cutting </span>
+											</a>
+										</li>
+										<li>
 											<a href="<?= base_url()?>laporanPerencanaanCutting/semua">
 												<span>Semua</span>
 											</a>
@@ -838,15 +871,59 @@
 											</a>
 										</li>
 										<li>
-										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_disetujui_pengambilan_material">
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_diambil_pengambilan_material0">
 											Belum Diambil
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_diambil_pengambilan_material">
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/sudah_diambil_pengambilan_material0">
 											Sudah Diambil
 										</a>
 									</li>
+									</ul>
+								</li>
+								<!-- permintaan material tambahan -->
+								<li class="nav-parent">
+									<a>
+										<i class="fa fa-plus-square-o" aria-hidden="true"></i>
+											<span>Permintaan Material Tambahan</span>
+									</a>
+									<ul class="nav nav-children">
+										<li>
+											<a href="<?= base_url()?>permintaanTambahan/tambah0">
+												+ Permintaan Material Tambahan
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>permintaanTambahan/semua0">
+												Semua 
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>permintaanTambahan/belum_diproses0">
+												<span>Belum Diproses</span>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>permintaanTambahan/diterima0">
+													<span>Diterima</span>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>permintaanTambahan/ditolak0">
+													<span>Ditolak</span>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>permintaanTambahan/selesai0">
+												Selesai
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>permintaanTambahan/batal0">
+												Batal
+											</a>
+										</li>
 									</ul>
 								</li>
 								<!-- bpbj -->

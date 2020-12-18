@@ -1587,9 +1587,10 @@
                                     $ambilnya = Math.ceil(parseFloat($material_gudang)/parseFloat($ukuran_satuan_keluar));
 
                                     //wipnya
-                                    $wip = parseFloat($from_inli) + ($ambilnya * $ukuran_satuan_keluar) - parseFloat($jumlah_konsumsi_seharusnya);
+                                    $wip = parseFloat($from_inli) + ($total_ambilnya * $ukuran_satuan_keluar) - parseFloat($jumlah_konsumsi_seharusnya);
                                     $wip_sem = parseFloat($wip) + parseFloat($total_ambil_tambah);
 
+                                    
                                     if($wip_sem < 0){
                                         $cek++;
                                     }

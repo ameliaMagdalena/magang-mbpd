@@ -301,12 +301,12 @@ class M_PerencanaanProduksi extends CI_Model {
     function select_all_prodtun(){
         return $this->db->query("SELECT * 
         FROM produksi_tertunda,detail_produksi_line,produksi_line,produksi,detail_purchase_order_customer,
-        purchase_order_customer,customer,detail_produk,produk
+        purchase_order_customer,customer,detail_produk,produk,line
         WHERE produksi_tertunda.status_delete='0' AND
         produksi.status_laporan='3' AND
         produksi_tertunda.id_detail_produksi_line=detail_produksi_line.id_detail_produksi_line AND 
         produksi_line.id_produksi_line=detail_produksi_line.id_produksi_line AND
-        produksi_line.id_produksi = produksi.id_produksi AND
+        produksi_line.id_produksi = produksi.id_produksi AND produksi_line.id_line = line.id_line AND
         detail_produksi_line.id_detail_purchase_order=detail_purchase_order_customer.id_detail_purchase_order_customer AND 
         purchase_order_customer.id_purchase_order_customer=detail_purchase_order_customer.id_purchase_order_customer AND
         purchase_order_customer.id_customer=customer.id_customer AND

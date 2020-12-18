@@ -997,7 +997,7 @@ class LaporanPerencanaanCutting extends CI_Controller {
 
             $this->M_LaporanPerencanaanCutting->edit('perencanaan_cutting',$data_percut,$where_percut);
         }
-        redirect('laporanPerencanaanCutting/index');
+        redirect('laporanPerencanaanCutting/semua');
     }
 
     function edit_laporan(){

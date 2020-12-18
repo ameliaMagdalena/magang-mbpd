@@ -274,7 +274,7 @@
                                 <input type="text" class="form-control" id="jumlah_minta_add" readonly>
                             </div>
                         </div>
-                        <?php if($_SESSION['nama_jabatan'] == "PIC Line Sewing"){?>
+                        <?php if($nmline == "Line Sewing"){?>
                             <div class="form-group mt-lg">
                                 <label class="col-sm-5 control-label">Keterangan Pengambilan</label>
                                 <div class="col-sm-7">
