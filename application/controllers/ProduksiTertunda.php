@@ -386,7 +386,7 @@ class ProduksiTertunda extends CI_Controller {
             //tutup notif permohonan akses
         //tutup
 
-        $this->load->view('v_produksi_tertunda_semua',$data);
+        $this->load->view('v_produksi_tertunda_belum_diproses',$data);
     }
 
     public function sedang_diproses(){
@@ -570,7 +570,7 @@ class ProduksiTertunda extends CI_Controller {
             //tutup notif permohonan akses
         //tutup
 
-        $this->load->view('v_produksi_tertunda_semua',$data);
+        $this->load->view('v_produksi_tertunda_sedang_diproses',$data);
     }
 
     public function selesai(){
@@ -752,7 +752,7 @@ class ProduksiTertunda extends CI_Controller {
             //tutup notif permohonan akses
         //tutup
 
-        $this->load->view('v_produksi_tertunda_semua',$data);
+        $this->load->view('v_produksi_tertunda_selesai',$data);
     }
 
     public function detail(){

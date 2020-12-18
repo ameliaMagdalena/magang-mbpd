@@ -1392,6 +1392,8 @@ class Bpbd extends CI_Controller {
                 $jumlah_di_detail_item = $detail_item_bpbds[$u]['jumlah_produk'];
                 $sisa_target           = $target - $capaian;
 
+                $one_item_bpbds = $this->M_Bpbd->get_one_item_bpbds($detail_item_bpbds[$u]['id_detail_item_bpbd'])->result_array();
+
                 if($sisa_target >= $jumlah_di_detail_item){
                   $max     = $jumlah_di_detail_item;
                   $capaian = $capaian + $max;
@@ -1408,7 +1410,7 @@ class Bpbd extends CI_Controller {
 
                   $this->M_Bpbd->edit('detail_item_bpbd',$data_detail_item_bpbd,$where_detail_item_bpbd);
 
-                  $jumlah_keluar_baru = $detail_item_bpbds[$u]['jumlah_keluar'] - $max;
+                  $jumlah_keluar_baru = $one_item_bpbds[0]['jumlah_keluar'] - $max;
 
                   $data_item_surat_jalan = array(
                     'jumlah_keluar' => $jumlah_keluar_baru,
@@ -1441,7 +1443,7 @@ class Bpbd extends CI_Controller {
 
                   $this->M_Bpbd->edit('detail_item_bpbd',$data_detail_item_bpbd,$where_detail_item_bpbd);
 
-                  $jumlah_keluar_baru = $detail_item_bpbds[$u]['jumlah_keluar'] - $max;
+                  $jumlah_keluar_baru = $one_item_bpbds[0]['jumlah_keluar'] - $max;
 
                   $data_item_surat_jalan = array(
                     'jumlah_keluar' => $jumlah_keluar_baru,
@@ -1456,6 +1458,7 @@ class Bpbd extends CI_Controller {
 
                   $this->M_Bpbd->edit('item_surat_jalan',$data_item_surat_jalan,$where_item_surat_jalan);
                 }
+                
               }
             }
           }

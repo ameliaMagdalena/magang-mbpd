@@ -1435,7 +1435,7 @@
 
                 $("#id_produksinya").val(id);
                 $("#tanggal_produksinya").html($tanggalnya);
-                $("#tanggalnya").val($tanggalnya);
+                $("#tanggalnya").val(tgl);
 
                 //cek apakah ada permintaan_material yang minus dari yang seharusnya
                 $cek = 0;
@@ -1448,7 +1448,7 @@
                     for($k=0;$k<respond['jm_dpl'];$k++){
                         $isi_km = "";
                         if(respond['total_dpl'][$i]['id_detail_produk'] == respond['dpl'][$k]['id_detail_produk'] 
-                        && respond['total_dpl'][$i]['jumlah_produk'] != 0
+                        && respond['total_dpl'][$i]['jumlah_produk']
                         && respond['dpl'][$k]['id_detail_purchase_order'] == respond['total_dpl'][$i]['id_detail_purchase_order']){
                             //isi table konsumsi material
                             $nomor = 1;
@@ -1465,6 +1465,7 @@
                                     //material dari gudang material
                                     $cari_pm = 0;
                                     $material_gudang = 0;
+                                    $id_line = "";
                                     for($p=0;$p<respond['jm_pm'];$p++){
                                         if(respond['pm'][$p]['id_detail_purchase_order_customer'] == respond['dpl'][$k]['id_detail_purchase_order'] 
                                             && respond['pm'][$p]['id_line'] == respond['dpl'][$k]['id_line'] 
@@ -1754,12 +1755,10 @@
                         }
                     //tutup nama produk
 
-                    if(respond['total_dpl'][$i]['jumlah_produk'] != 0){
-                        $konsumsi_material = $konsumsi_material +
-                        '<hr><h5><b>'+($ke)+'. '+$namanya+'</b></h5>'+
-                        $km_per_line;
-                        $ke++;
-                    }
+                    $konsumsi_material = $konsumsi_material +
+                    '<hr><h5><b>'+($ke)+'. '+$namanya+'</b></h5>'+
+                    $km_per_line;
+                    $ke++;
                 }
 
                 $("#konsumsi_material").html($konsumsi_material);
@@ -1816,7 +1815,7 @@
             $jmlain = 0;
         }
 
-        $perhitungan = "("+$jmln+" + "+$jmgd+" + "+$jmtm+") - ("+$jmsh+" + "+$jmlain+") ";
+        $perhitungan = "<b>("+$jmln+" + "+$jmgd+" + "+$jmtm+") - ("+$jmsh+" + "+$jmlain+")</b> ";
         $hitungnya   = parseFloat($jmln) + parseFloat($jmgd) + parseFloat($jmtm) - parseFloat($jmsh) - parseFloat($jmlain);
         //$hitungnya   = (parseInt($jmln) + parseInt($jmgd) + parseInt($jmtm)) - (parseInt($jmsh) + parseInt($jmlain));
 

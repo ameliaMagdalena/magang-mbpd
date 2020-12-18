@@ -502,8 +502,8 @@
                 <footer class="panel-footer">
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <input type="submit" id="tambah" class="btn btn-primary" value="Save" disabled>
-                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Cancel</button>
+                            <input type="submit" id="tambah" class="btn btn-primary" value="Simpan" disabled>
+                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
                         </div>
                     </div>
                 </footer>

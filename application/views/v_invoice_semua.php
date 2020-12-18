@@ -253,20 +253,30 @@
                                         <option>Pilih Penanda Tangan</option>
                                         <?php 
                                             $count = 1;
-                                            foreach($penanda_tangan as $pt){?>
-                                            <option value="<?= $count ?>">
-                                                <?= $pt->nama_karyawan ." (". $pt->nama_jabatan .")" ?>
-                                            </option>
-                                        <?php $count++; } ?>
+                                            foreach($penanda_tangan as $pt){
+                                                if($pt->nama_karyawan == "Julius Julianto"){?>
+                                                    <option value="<?= $count ?>">
+                                                        <?= $pt->nama_karyawan ." (Acc and Finance Manager)" ?>
+                                                    </option>
+                                                <?php } else{?>
+                                                    <option value="<?= $count ?>">
+                                                        <?= $pt->nama_karyawan ." (". $pt->nama_jabatan .")" ?>
+                                                    </option>
+                                        <?php $count++; }} ?>
                                     </select>
                                 </div>
                             </div>
                             <?php 
                                 $no = 1;
-                                foreach($penanda_tangan as $pt){?>
+                                foreach($penanda_tangan as $pt){
+                                    if($pt->nama_karyawan == "Julius Julianto"){    
+                                ?>
+                                    <input type="hidden" id="nm<?= $no?>" value="<?= $pt->nama_karyawan?>">
+                                    <input type="hidden" id="jb<?= $no?>" value="Acc and Finance Manager">
+                                <?php } else{?>
                                     <input type="hidden" id="nm<?= $no?>" value="<?= $pt->nama_karyawan?>">
                                     <input type="hidden" id="jb<?= $no?>" value="<?= $pt->nama_jabatan?>">
-                            <?php $no++; }?>
+                            <?php $no++; }}?>
                             <input type="hidden" name="nama_ttd" id="nama_ttd">
                             <input type="hidden" name="jabatan_ttd" id="jabatan_ttd">  
                         </div>

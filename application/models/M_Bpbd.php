@@ -125,5 +125,13 @@ class M_Bpbd extends CI_Model {
         return $this->db->query("SELECT * FROM item_bpbd WHERE id_bpbd='$id_bpbd' AND item_bpbd.status_delete='0' ");
     }
 
+    function get_one_item_bpbds($id){
+        return $this->db->query("SELECT detail_item_bpbd.id_detail_item_bpbd, detail_item_bpbd.jumlah_produk, 
+        item_surat_jalan.id_item_surat_jalan, item_surat_jalan.jumlah_keluar
+        FROM detail_item_bpbd,item_surat_jalan
+        WHERE detail_item_bpbd.id_detail_item_bpbd='$id' 
+        AND detail_item_bpbd.id_item_surat_jalan=item_surat_jalan.id_item_surat_jalan AND detail_item_bpbd.status_delete='0'");
+    }
+
 
 }

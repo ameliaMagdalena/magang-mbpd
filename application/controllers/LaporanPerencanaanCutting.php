@@ -1167,5 +1167,4 @@ class LaporanPerencanaanCutting extends CI_Controller {
 
         redirect('laporanPerencanaanCutting/selesai');
     }
-
 }

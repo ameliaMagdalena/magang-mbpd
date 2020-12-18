@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Semua Produksi Tertunda</h2>
+        <h2>Produksi Tertunda Belum Diproses</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Semua Produksi Tertunda</span></li>
+                <li><span>Produksi Tertunda Belum Diproses</span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -25,7 +25,7 @@
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
         <header class="panel-heading">
-            <h2 class="panel-title">Data Semua Produksi Tertunda</h2>
+            <h2 class="panel-title">Data Produksi Tertunda Belum Diproses</h2>
         </header>
 
         <div class="panel-body">
@@ -38,7 +38,6 @@
                         <th style="text-align: center;vertical-align: middle;">Nama Produk</th>
                         <th style="text-align: center;vertical-align: middle;">Nama Line</th>
                         <th style="text-align: center;vertical-align: middle;">Jumlah Tertunda</th>
-                        <th style="text-align: center;vertical-align: middle;">Status Penjadwalan</th>
                         <th style="text-align: center;vertical-align: middle;">Aksi</th>
                     </tr>
                 </thead>
@@ -46,6 +45,7 @@
                     <?php 
                     $no = 1;
                     foreach($prodtun as $x){ 
+                        if($x->status_penjadwalan == 0){
                     ?>
                         <tr>
                             <td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
@@ -145,15 +145,6 @@
                             <td style="text-align: center;vertical-align: middle;">
                                 <?= $x->jumlah_tertunda?> Pcs
                             </td>
-                            <td style="text-align: center;vertical-align: middle;">
-                                <?php if($x->status_penjadwalan == 0){?>
-                                    Belum Diproses
-                                <?php } else if($x->status_penjadwalan == 1){?>
-                                    Sedang Diproses
-                                <?php } else{?>
-                                    Selesai
-                                <?php } ?>
-                            </td>
                             <td  class="col-lg-3">
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
                                     value="<?= $no;?>" title="Detail"></button>
@@ -161,7 +152,7 @@
                         </tr>
                     <?php
                     $no++;
-                    } 
+                    }} 
                     ?>
                     </tbody>
 	        </table>

@@ -1210,10 +1210,10 @@
                                                                         }
 
                                                                         if($dplre->id_produksi == $p->id_produksi){
-                                                                            $id_detail_produksi_line  = $dplre->id_detail_produksi_line;
                                                                             if($id_produksi_tertundanya == $dpl_rg->id_produksi_tertunda){
                                                                                 if($dplre->jumlah_item_perencanaan > 0){
                                                                                     $cek_prodtun++;
+                                                                                    $id_detail_produksi_line  = $dplre->id_detail_produksi_line;
                                                                                     $jumlah_item_perencanaan  = $dplre->jumlah_item_perencanaan;
                                                                                     $waktu_proses_perencanaan = $dplre->waktu_proses_perencanaan;
                                                                                 }

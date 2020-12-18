@@ -1007,7 +1007,7 @@ class HasilProduksi extends CI_Controller {
 
       $this->M_HasilProduksi->edit('produksi',$data_produksi,$where_produksi);
 
-   //redirect('hasilProduksi/tambah_hasil_produksi');
+   redirect('hasilProduksi/tambah_hasil_produksi');
   }
 
   public function edit(){

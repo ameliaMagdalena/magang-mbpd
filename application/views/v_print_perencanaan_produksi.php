@@ -69,6 +69,7 @@ class Pdfx extends TCPDF
             $tanggal =  $tanggal. '<td style="text-align:center;vertical-align:middle;width:40px"><b>'.$day[$i].'</b></td>';
         }
 
+        $jumlah_normal = "";
         $baris_table = "";
         for($k=0;$k<$jm_dpo;$k++){
             $id_dpo = $dpo[$k]['id_detail_purchase_order'];
@@ -216,6 +217,7 @@ class Pdfx extends TCPDF
                             '<tr>
                                 <td rowspan="4" style="text-align: center;vertical-align: middle">'.($k+1).'</td>
                                 <td rowspan="4" style="text-align: center;vertical-align: middle">'.$nama_produk.'</td>
+                                <td rowspan="4" style="text-align: center;vertical-align: middle">'.$dpo[$k]['kode_purchase_order_customer'].'</td>
                                 <td rowspan="4" style="text-align: center;vertical-align: middle">'.$dpo[$k]['jumlah_produk'].'</td>
                                 <td style="text-align: center;vertical-align: middle">'.$nama_line0.'</td>'.
                                 $inputan0.
@@ -225,12 +227,115 @@ class Pdfx extends TCPDF
                             '<tr>
                                 <td rowspan="3" style="text-align: center;vertical-align: middle">'.($k+1).'</td>
                                 <td rowspan="3" style="text-align: center;vertical-align: middle">'.$nama_produk.'</td>
+                                <td rowspan="3" style="text-align: center;vertical-align: middle">'.$dpo[$k]['kode_purchase_order_customer'].'</td>
                                 <td rowspan="3" style="text-align: center;vertical-align: middle">'.$dpo[$k]['jumlah_produk'].'</td>
                                 <td style="text-align: center;vertical-align: middle">'.$nama_line0.'</td>'.
                                 $inputan0.
                             '</tr>'.$ket;
-            }          
+            } 
+            
+            $jumlah_normal++;
         }
+
+        $tertunda = "";
+        for($k=0;$k<$jm_dpore;$k++){
+            $id_dpo = $dpore[$k]['id_detail_purchase_order'];
+            $id_produksi_tertunda = $dpore[$k]['id_produksi_tertunda'];
+           
+            
+            $jumlah_normal++;
+
+            //nama produk
+                if($dpore[$k]['keterangan'] == 0){
+                    for($w=0;$w<$jmwarna;$w++){
+                        if($warna[$w]['id_warna'] == $dpore[$k]['id_warna']){
+                            $nama_warna = $warna[$w]['nama_warna'];
+                        }
+                    }
+
+                    for($w=0;$w<$jmukuran;$w++){
+                        if($ukuran[$w]['id_ukuran_produk'] == $dpore[$k]['id_ukuran_produk']){
+                            $nama_ukuran = $ukuran[$w]['ukuran_produk'] . $ukuran[$w]['satuan_ukuran'];
+                        }
+                    }
+
+                    $nama_produk = $dpore[$k]['nama_produk'] ." ". $nama_ukuran . " (" . $nama_warna . ")";
+                }
+                else if($dpore[$k]['keterangan'] == 1){
+                    for($w=0;$w<$jmukuran;$w++){
+                        if($ukuran[$w]['id_ukuran_produk'] == $dpore[$k]['id_ukuran_produk']){
+                            $nama_ukuran = $ukuran[$w]['ukuran_produk'] ." ". $ukuran[$w]['satuan_ukuran'];
+                        }
+                    }
+
+                    $nama_produk = $dpore[$k]['nama_produk'] . $nama_ukuran;
+                }
+                else if($dpore[$k]['keterangan'] == 2){
+                    for($w=0;$w<$jmwarna;$w++){
+                        if($warna[$w]['id_warna'] == $dpore[$k]['id_warna']){
+                            $nama_warna = $warna[$w]['nama_warna'];
+                        }
+                    }
+
+                    $nama_produk = $dpore[$k]['nama_produk'] . " (" . $nama_warna . ")";
+                }
+                else{
+                    $nama_produk = $dpore[$k]['nama_produk'];
+                }
+            //tutup
+
+            //inputan
+                $total[$k] = 0;
+                $inputan = "";
+
+                for($u=0;$u<7;$u++){
+                    $tanggal_cek = $semua_tanggal[$u]['tanggal'];
+
+                    $cari_terisi = 0;
+                    for($q=0;$q<$jm_dplre;$q++){
+                        $id_prodtun  = $dplre[$q]['id_produksi_tertunda'];
+                        $tgl_dpl     = $dplre[$q]['tanggal'];
+
+                        if($id_prodtun == $id_produksi_tertunda && $tgl_dpl == $tanggal_cek){
+                            $cari_terisi++;
+                        } 
+                    }
+
+                    if($cari_terisi == 0){
+                        $inputan = $inputan.'<td style="text-align: center;vertical-align: middle"></td>';
+                    } else{
+                        for($q=0;$q<$jm_dplre;$q++){
+                            $id_prodtun  = $dplre[$q]['id_produksi_tertunda'];
+                            $tgl_dpl     = $dplre[$q]['tanggal'];
+    
+                            if($id_prodtun == $id_produksi_tertunda && $tgl_dpl == $tanggal_cek){
+                                $inputan = $inputan.'<td style="text-align: center;vertical-align: middle">'.$dplre[$q]['jumlah_item_perencanaan'].'</td>';
+                                $total[$k] = $total[$k] + intval($dplre[$q]['jumlah_item_perencanaan']);
+                            } 
+                        }
+                    }
+                }
+
+                if($total[$k] == 0){
+                    $inputan = $inputan.'<td style="text-align: center;vertical-align: middle">-</td>';
+                }
+                else{
+                    $inputan = $inputan.'<td style="text-align: center;vertical-align: middle">'.$total[$k].'</td>';
+                }
+            //tutup
+
+            $tertunda = $tertunda.
+                        '<tr>
+                            <td style="text-align: center;vertical-align: middle">'.($jumlah_normal).'</td>
+                            <td style="text-align: center;vertical-align: middle">'.$nama_produk.'</td>
+                            <td style="text-align: center;vertical-align: middle">'.$dpore[$k]['kode_purchase_order_customer'].'</td>
+                            <td style="text-align: center;vertical-align: middle">'.$dpore[$k]['jumlah_tertunda'].'</td>
+                            <td style="text-align: center;vertical-align: middle">'.$dpore[$k]['nama_line'].'</td>'.
+                            $inputan.
+                        '</tr>';    
+                
+            }
+
         
         $content =
             '<html>
@@ -239,13 +344,15 @@ class Pdfx extends TCPDF
                     <table border="1" style="border-collapse: collapse;padding:5px">
                         <tr>
                             <td style="text-align: center;vertical-align: middle;width:30px"><b>NO</b></td>
-                            <td style="text-align: center;vertical-align: middle;width:250px"><b>NAMA PRODUK</b></td>
+                            <td style="text-align: center;vertical-align: middle;width:180px"><b>NAMA PRODUK</b></td>
+                            <td style="text-align: center;vertical-align: middle;width:70px"><b>KODE PO</b></td>
                             <td style="text-align: center;vertical-align: middle;width:50px"><b>QTY</b></td>
                             <td style="text-align: center;vertical-align: middle;width:100px"><b>KET</b></td>'.
                                 $tanggal.
                             '<td style="text-align: center;vertical-align: middle;width:55px"><b>TOTAL</b></td>
                         </tr>'.
                             $baris_table.
+                            $tertunda.
                     '</table>
                 </body>
             </html>';

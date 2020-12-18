@@ -293,7 +293,7 @@ class InventoryLine extends CI_Controller {
                 'status_delete'        => 0
             );
 
-            //$this->M_InventoryLine->insert('persediaan_line',$data_persediaan_line);
+            $this->M_InventoryLine->insert('persediaan_line',$data_persediaan_line);
         }
             //id persediaan line masuk
             $tanggal = date('Y-m-d');
