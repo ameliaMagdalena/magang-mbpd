@@ -20,6 +20,10 @@ class M_Karyawan extends CI_Model {
         return $this->db->query("SELECT * FROM karyawan WHERE nama_karyawan='$nama_karyawan' AND status_delete='0'");
     }
 
+    function cari_nik($nik_karyawan){
+        return $this->db->query("SELECT * FROM karyawan WHERE nik='$nik_karyawan' AND status_delete='0'");
+    }
+
     function cari_karyawan_email($email){
         return $this->db->query("SELECT * FROM karyawan,user WHERE user.email_user='$email' AND user.id_karyawan = karyawan.id_karyawan
         AND karyawan.status_delete='0'");
@@ -31,6 +35,7 @@ class M_Karyawan extends CI_Model {
 
     function select_all_jabatan_karyawans(){
         return $this->db->query("SELECT * FROM jabatan_karyawan,spesifikasi_jabatan,departemen,jabatan WHERE
+        jabatan_karyawan.status_delete='0' AND
         jabatan_karyawan.id_spesifikasi_jabatan = spesifikasi_jabatan.id_spesifikasi_jabatan AND
         spesifikasi_jabatan.id_jabatan = jabatan.id_jabatan AND spesifikasi_jabatan.id_departemen = departemen.id_departemen");
     }
@@ -39,18 +44,23 @@ class M_Karyawan extends CI_Model {
         $this->db->insert($table,$data);
     }
 
+    function get_one_karyawan($id){
+        return $this->db->query("SELECT * FROM karyawan WHERE id_karyawan='$id' ");
+    }
 
+    function get_one_user($id){
+        return $this->db->query("SELECT * FROM user WHERE id_karyawan='$id' ");
+    }
 
-
-
+    function get_one_jabatan_karyawan($id){
+        return $this->db->query("SELECT * FROM jabatan_karyawan,spesifikasi_jabatan,jabatan,departemen
+        WHERE jabatan_karyawan.id_karyawan='$id' AND jabatan_karyawan.status_delete='0'
+        AND jabatan_karyawan.id_spesifikasi_jabatan=spesifikasi_jabatan.id_spesifikasi_jabatan
+        AND spesifikasi_jabatan.id_departemen=departemen.id_departemen AND spesifikasi_jabatan.id_jabatan=jabatan.id_jabatan ");
+    }
 
     function edit($table,$data,$where){
         $this->db->update($table,$data,$where);
-    }
-
-    function select_user_add($id){
-        return $this->db->query("SELECT user_add, waktu_add FROM departemen 
-        WHERE id_departemen='$id'");
     }
 
     function cari_user($id){
@@ -58,10 +68,11 @@ class M_Karyawan extends CI_Model {
         FROM user,karyawan WHERE user.id_user='$id' AND user.id_karyawan = karyawan.id_karyawan");
     }
 
-    function select_log($id){
-        return $this->db->query("SELECT * FROM departemen_logs WHERE id_departemen='$id' 
-        ORDER BY id_departemen_logs DESC");
+    function select_user_add($id){
+        return $this->db->query("SELECT karyawan.waktu_add, karyawan.user_add FROM karyawan WHERE karyawan.id_karyawan = '$id' ");
     }
 
-
+    function select_log($id){
+        return $this->db->query("SELECT * FROM karyawan_logs WHERE id_karyawan='$id' ORDER BY id_karyawan_logs DESC");
+    }
 }

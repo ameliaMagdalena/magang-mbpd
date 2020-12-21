@@ -223,7 +223,13 @@ class Departemen extends CI_Controller {
     }
 
     public function tambah_departemen(){
-        $nama_departemen = $this->input->post('nama_departemen_input');
+        $jumlah_departemen = $this->input->post('jumlah_departemen');
+
+        if($jumlah_departemen == 6){
+            $nama_departemen = $this->input->post('nama_departemen_input');
+        } else{
+            $nama_departemen = $this->input->post('nama_departemen_wajib');
+        }
 
         $now = date('Y-m-d H:i:s');
         $jumlah_departemen   = $this->M_Departemen->select_all()->num_rows();

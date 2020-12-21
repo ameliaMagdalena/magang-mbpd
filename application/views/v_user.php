@@ -36,6 +36,7 @@
                         <th style="text-align: center;vertical-align: middle;">No</th>
                         <th style="text-align: center;vertical-align: middle;">Nama User</th>
                         <th style="text-align: center;vertical-align: middle;">Email User</th>
+                        <th style="text-align: center;vertical-align: middle;">Status</th>
                         <th style="text-align: center;vertical-align: middle;">Aksi</th>
                     </tr>
                 </thead>
@@ -48,11 +49,30 @@
                             <td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
                             <td style="text-align: center;vertical-align: middle;"><?= $x->nama_karyawan; ?></td>
                             <td style="text-align: center;vertical-align: middle;"><?= $x->email_user; ?></td>
+                            <td style="text-align: center;vertical-align: middle;">
+                                <?php if($x->status_user == 0){
+                                        echo "Aktif";
+                                    } else{
+                                        echo "Non Aktif";
+                                    }    
+                                ?>
+                            </td>
                             <td  class="col-lg-3">
+                                <?php if($x->nama_karyawan != "x"){?>
+                                <?php if($x->status_user == 1){?>
+                                    <a class="modal-with-form col-lg-3 btn btn-success fa  fa-check"
+                                        title="Aktif" href="#modalaktif<?= $x->id_user;?>" style="margin-right:5px;margin-bottom:5px"></a>
+                                <?php } else{
+                                    if($x->id_user != $_SESSION['id_user']){    
+                                ?>
+                                    <a class="modal-with-form col-lg-3 btn btn-danger fa  fa-times"
+                                        title="Non Aktif" href="#modalnonaktif<?= $x->id_user;?>" style="margin-right:5px;margin-bottom:5px"></a>
+                                <?php }} ?>
                                 <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                    title="Edit" href="#modaledit<?= $x->id_user;?>"></a>
+                                    title="Edit" href="#modaledit<?= $x->id_user;?>" style="margin-right:5px;margin-bottom:5px"></a>
                                 <button type="button" class="blog_klik col-lg-3 btn btn-info fa fa-file" 
-                                id="blog<?php echo $x->id_user?>" value="<?php echo $x->id_user;?>"></button>
+                                id="blog<?php echo $x->id_user?>" value="<?php echo $x->id_user;?>" style="margin-right:5px;margin-bottom:5px"></button>
+                                <?php } ?>
                             </td>
                         </tr>
 
@@ -94,27 +114,27 @@
             </section>
         </form>
     </div>
-<!--
-    <div id="modalhapus<?= $x->id_departemen;?>" class="modal-block modal-block-sm mfp-hide">
-        <form method="POST" action="<?= base_url()?>departemen/delete_departemen">
+
+    <div id="modalaktif<?= $x->id_user;?>" class="modal-block modal-block-sm mfp-hide">
+        <form method="POST" action="<?= base_url()?>user/aktifkan">
             <section class="panel">
                 <header class="panel-heading">
-                    <h2 class="panel-title">Hapus Data Departemen</h2>
+                    <h2 class="panel-title">Aktifkan User</h2>
                 </header>
 
                     <div class="panel-body">
                         <div class="modal-wrapper">
                             <div class="modal-text">
-                                <input type="hidden" name="id_departemen" value="<?= $x->id_departemen;?>">
-                                <p>Apakah anda yakin akan menghapus data departemen dengan nama departemen <?= $x->nama_departemen?>?</p>
+                                <input type="hidden" name="id_user" value="<?= $x->id_user;?>">
+                                <p>Apakah anda yakin akan meng-<b>aktifkan</b> user dengan nama <b><?= $x->nama_karyawan?></b>?</p>
                             </div>
                         </div>
                     </div>
                     <footer class="panel-footer">
                         <div class="row">
                             <div class="col-md-12 text-right">
-                                <input type="submit" class="btn btn-primary" value="Hapus">
-                                <button class="btn btn-default modal-dismiss">Batal</button>
+                                <input type="submit" class="btn btn-primary" value="Ya">
+                                <button class="btn btn-default modal-dismiss">Tidak</button>
                             </div>
                         </div>
                     </footer>
@@ -122,7 +142,34 @@
         </form>
 
     </div>
--->
+
+    <div id="modalnonaktif<?= $x->id_user;?>" class="modal-block modal-block-sm mfp-hide">
+        <form method="POST" action="<?= base_url()?>user/nonaktifkan">
+            <section class="panel">
+                <header class="panel-heading">
+                    <h2 class="panel-title">Nonaktifkan User</h2>
+                </header>
+
+                    <div class="panel-body">
+                        <div class="modal-wrapper">
+                            <div class="modal-text">
+                                <input type="hidden" name="id_user" value="<?= $x->id_user;?>">
+                                <p>Apakah anda yakin akan meng-<b>nonaktifkan</b> user dengan nama <b><?= $x->nama_karyawan?></b>?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <input type="submit" class="btn btn-primary" value="Ya">
+                                <button class="btn btn-default modal-dismiss">Tidak</button>
+                            </div>
+                        </div>
+                    </footer>
+            </section>
+        </form>
+
+    </div>
 
                     <?php
                     $no++;
@@ -200,8 +247,6 @@
 <?php include('_js.php'); ?>
 <!--*****************************-->
 <!--*****************************-->
-
-
 <script>
     function reload() {
         location.reload();
@@ -263,7 +308,25 @@
                             }
                         } 
 
-                        $tanggal = respond['log'][$i]['waktu_add'];
+                        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                        var tanggal = new Date(respond['log'][$i]['waktu_add']).getDate();
+                        var xhari = new Date(respond['log'][$i]['waktu_add']).getDay();
+                        var xbulan = new Date(respond['log'][$i]['waktu_add']).getMonth();
+                        var xtahun = new Date(respond['log'][$i]['waktu_add']).getYear();
+                        
+                        var jam     = new Date(respond['log'][$i]['waktu_add']).getHours();
+                        var menit   = new Date(respond['log'][$i]['waktu_add']).getMinutes();
+                        var detik   = new Date(respond['log'][$i]['waktu_add']).getSeconds();
+                        
+                        var hari = hari[xhari];
+                        var bulan = bulan[xbulan];
+                        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                        $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun +' '+jam+':'+menit+':'+detik;
+
+                        $tanggal = $tanggalnya;
                         $user = $nama_user;
                         $password = respond['log'][$i]['password_user'].length;
 
@@ -322,9 +385,27 @@
                             $count++;
                         }
 
+                        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                        var tanggal = new Date(respond['log'][$i]['waktu_add']).getDate();
+                        var xhari = new Date(respond['log'][$i]['waktu_add']).getDay();
+                        var xbulan = new Date(respond['log'][$i]['waktu_add']).getMonth();
+                        var xtahun = new Date(respond['log'][$i]['waktu_add']).getYear();
+                        
+                        var jam     = new Date(respond['log'][$i]['waktu_add']).getHours();
+                        var menit   = new Date(respond['log'][$i]['waktu_add']).getMinutes();
+                        var detik   = new Date(respond['log'][$i]['waktu_add']).getSeconds();
+                        
+                        var hari = hari[xhari];
+                        var bulan = bulan[xbulan];
+                        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                        $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun +' '+jam+':'+menit+':'+detik;
+
                         $tampung_isi = $tampung_isi + 
                         '<tr>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+ respond['log'][$i]['waktu_edit'] +'</td>' +
+                        '<td style="text-align: center;vertical-align: middle;">'+ $tanggalnya +'</td>' +
                         '<td style="text-align: center;vertical-align: middle;">'+ $user +'</td>' +
                         '<td style="text-align: center;vertical-align: middle;">'+ respond['log'][$i]['keterangan_log'] +'</td>' +
                         '<td style="vertical-align: middle;">'+ $data +'</td>' +

@@ -251,6 +251,42 @@ class User extends CI_Controller {
         redirect('user');
     }
 
+    public function aktifkan(){
+        $id_user = $this->input->post('id_user');
+
+        $data = array(
+            'status_user' => 0,
+            'user_edit'   => $_SESSION['id_user'],
+            'waktu_edit'  => date('Y-m-d H:i:s')
+        );
+
+        $where = array(
+            'id_user'     => $id_user
+        );
+
+        $this->M_User->edit('user',$data,$where);
+
+        redirect('user');
+    }
+
+    public function nonaktifkan(){
+        $id_user = $this->input->post('id_user');
+
+        $data = array(
+            'status_user' => 1,
+            'user_edit'   => $_SESSION['id_user'],
+            'waktu_edit'  => date('Y-m-d H:i:s')
+        );
+
+        $where = array(
+            'id_user'     => $id_user
+        );
+
+        $this->M_User->edit('user',$data,$where);
+
+        redirect('user');
+    }
+
     public function ambil_data_log(){
         $id = $this->input->post('id');
         $data['id'] = $id;

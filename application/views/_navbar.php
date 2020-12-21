@@ -22,9 +22,11 @@
 							</a>
 						</li>
 
+
 					<!-- Direktur -->
 						<?php
-							if ($_SESSION['nama_departemen']=="Management" && $_SESSION['nama_jabatan']=="Direktur"){
+							if ($_SESSION['nama_departemen']=="Management" && $_SESSION['nama_jabatan']=="Direktur" || 
+							$_SESSION['nama_departemen']=="x" && $_SESSION['nama_jabatan']=="x"){
 						?>
 							<li class="nav-parent">
 								<a>
