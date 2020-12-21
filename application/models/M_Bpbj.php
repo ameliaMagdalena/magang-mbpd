@@ -18,7 +18,7 @@ class M_Bpbj extends CI_Model {
 
    function select_produk($tanggal){
        return $this->db->query("SELECT produk.nama_produk, detail_produk.id_detail_produk, produk.id_produk, line.urutan_line, line.nama_line,
-       detail_produk.keterangan,detail_produk.id_warna,detail_produk.id_ukuran_produk, produk.kode_produk,
+       detail_produk.keterangan,detail_produk.id_warna,detail_produk.id_ukuran_produk, detail_produk.kode_produk,
        SUM(detail_produksi_line.jumlah_item_perencanaan) AS total,produksi_line.id_line 
        FROM produksi,produksi_line,detail_produksi_line,detail_purchase_order_customer,detail_produk,produk,line
        WHERE produksi.tanggal='$tanggal' AND produksi.id_produksi=produksi_line.id_produksi AND  detail_produksi_line.jumlah_item_perencanaan != 0 AND

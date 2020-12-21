@@ -40,6 +40,7 @@
                 <thead>
                     <tr>
                         <th style="text-align: center;vertical-align: middle;">No</th>
+                        <th style="text-align: center;vertical-align: middle;">Kode Produk</th>
                         <th style="text-align: center;vertical-align: middle;">Jenis Produk</th>
                         <th style="text-align: center;vertical-align: middle;">Nama Produk</th>
                         <th style="text-align: center;vertical-align: middle;">Keterangan Produk</th>
@@ -54,6 +55,7 @@
                     ?>
                         <tr>
                             <td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
+                            <td style="text-align: center;vertical-align: middle;"><?= $x->kode_produk;?></td>
                             <td style="text-align: center;vertical-align: middle;"><?= $x->nama_jenis_produk;?></td>
                             <td style="text-align: center;vertical-align: middle;"><?= $x->nama_produk; ?></td>
                             <td style="text-align: center;vertical-align: middle;">
@@ -150,7 +152,6 @@
                 
                 <div class="panel-body">
                     <h4><b>Data Produk</b></h4>
-                    <!--
                     <div class="form-group mt-lg">
                         <label class="col-sm-5 control-label">Kode Produk</label>
                         <div class="col-sm-7">
@@ -158,7 +159,6 @@
                             class="form-control" onchange="cek_kode_produk_input()">
                         </div>
                     </div>
-                    -->
                     <div class="form-group mt-lg">
                         <label class="col-sm-5 control-label">Jenis Produk</label>
                         <div class="col-sm-7">
@@ -195,28 +195,16 @@
                             </select>
                         </div>
                     </div>
-                    <div id="tab_ketprod3" style="display:none">
-                        <div class="form-group mt-lg">
-                            <label class="col-sm-5 control-label">Kode Produk</label>
-                            <div class="col-sm-7">
-                                <input type="text"  name="kode_produk" id="kode_produk" onchange="cek_kode_produk_input()"
-                                class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    
                     <div id="isi_ketprod"></div>
 
                     <div id="table_ketprod"></div>
                     <input type="hidden" id="jm_ketpod" value="0">
                     <br>
-                    
                     <div id="tab_ketprod0" style="display:none">
                         <table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">
                             <thead>
                                 <tr>
                                     <th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>
-                                    <th class="col-md-5" style="text-align: center;vertical-align: middle;">Kode Produk</th>
                                     <th class="col-md-5" style="text-align: center;vertical-align: middle;">Ukuran Produk</th>
                                     <th class="col-md-3" style="text-align: center;vertical-align: middle;">Warna Produk</th>
                                 </tr>
@@ -229,7 +217,6 @@
                             <thead>
                                 <tr>
                                     <th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>
-                                    <th class="col-md-5" style="text-align: center;vertical-align: middle;">Kode Produk</th>
                                     <th class="col-md-5" style="text-align: center;vertical-align: middle;">Ukuran Produk</th>
                                 </tr>
                             </thead>
@@ -241,7 +228,6 @@
                             <thead>
                                 <tr>
                                     <th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>
-                                    <th class="col-md-5" style="text-align: center;vertical-align: middle;">Kode Produk</th>
                                     <th class="col-md-3" style="text-align: center;vertical-align: middle;">Warna Produk</th>
                                 </tr>
                             </thead>
@@ -675,7 +661,7 @@
     }
 </script>
 
-<!-- cek kode produk ketika (+produk) jika statusnya 3 -->
+<!-- cek kode produk ketika (+produk) -->
 <script>
     function cek_kode_produk_input(){
         var kode_produk = $("#kode_produk").val();
@@ -758,7 +744,6 @@
                     $("#tab_ketprod0").show();
                     $("#tab_ketprod1").hide();
                     $("#tab_ketprod2").hide();
-                    $("#tab_ketprod3").hide();
                 }
                 else if(ketprod == 1){
                     $isi_ukuran = "";
@@ -790,7 +775,6 @@
                     $("#tab_ketprod1").show();
                     $("#tab_ketprod0").hide();
                     $("#tab_ketprod2").hide();
-                    $("#tab_ketprod3").hide();
                 }
                 else if(ketprod == 2){
                     $isi_warna = "";
@@ -822,21 +806,12 @@
                     $("#tab_ketprod2").show();
                     $("#tab_ketprod1").hide();
                     $("#tab_ketprod0").hide();
-                    $("#tab_ketprod3").hide();
-                }
-                else if(ketprod == 3){
-                    $("#isi_ketprod").html("");
-                    $("#tab_ketprod0").hide();
-                    $("#tab_ketprod1").hide();
-                    $("#tab_ketprod2").hide();
-                    $("#tab_ketprod3").show();
                 }
                 else{
                     $("#isi_ketprod").html("");
                     $("#tab_ketprod0").hide();
                     $("#tab_ketprod1").hide();
                     $("#tab_ketprod2").hide();
-                    $("#tab_ketprod3").hide();
                 }
 
 
@@ -937,9 +912,6 @@
                                         '<input type="hidden" id="0ket'+$jumlah_saat_ini+'" value="0">'+
                                     '</td>'+
                                     '<td style="text-align: center;vertical-align: middle;">'+
-                                        '<input type="text" class="form-control" id="0kp'+$jumlah_saat_ini+'" name="0kp'+$jumlah_saat_ini+'">'+
-                                    '</td>'+
-                                    '<td style="text-align: center;vertical-align: middle;">'+
                                         '<input type="hidden" name="0id_ukuran'+$jumlah_saat_ini+'" id="0id_ukuran'+$jumlah_saat_ini+'" value="'+$ukuran+'">'+
                                         '<input type="hidden" name="0nama_ukuran'+$jumlah_saat_ini+'" id="0nama_ukuran'+$jumlah_saat_ini+'" value="'+$nama_ukuran+'">'+
                                         $nama_ukuran+
@@ -977,7 +949,6 @@
                                     $id_warna_sem  = $("#0id_warna"+$l).val();
                                     $nama_ukuran_sem = $("#0nama_ukuran"+$l).val();
                                     $nama_warna_sem  = $("#0nama_warna"+$l).val();
-                                    $kode_produk     = $("#0kp"+$l).val();
 
                                     $lama = $lama +
                                     '<div id="divuw'+$l+'">'+
@@ -985,9 +956,6 @@
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $l+
                                                 '<input type="hidden" id="0ket'+$l+'" value="0">'+
-                                            '</td>'+
-                                            '<td style="text-align: center;vertical-align: middle;">'+
-                                                '<input type="text" class="form-control" id="0kp'+$l+'" name="0kp'+$l+'" value="'+$kode_produk+'">'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="0id_ukuran'+$l+'" id="0id_ukuran'+$l+'" value="'+$id_ukuran_sem+'">'+
@@ -1008,9 +976,6 @@
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $jumlah_saat_ini+
                                                 '<input type="hidden" id="0ket'+$jumlah_saat_ini+'" value="0">'+
-                                            '</td>'+
-                                            '<td style="text-align: center;vertical-align: middle;">'+
-                                                '<input type="text" class="form-control" id="0kp'+$jumlah_saat_ini+'" name="0kp'+$jumlah_saat_ini+'" >'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="0id_ukuran'+$jumlah_saat_ini+'" id="0id_ukuran'+$jumlah_saat_ini+'" value="'+$ukuran+'">'+
@@ -1036,7 +1001,6 @@
                                     $id_warna_sem  = $("#0id_warna"+$l).val();
                                     $nama_ukuran_sem = $("#0nama_ukuran"+$l).val();
                                     $nama_warna_sem  = $("#0nama_warna"+$l).val();
-                                    $kode_produk     = $("#0kp"+$l).val();
 
                                     $lama = $lama +
                                     '<div id="divuw'+$l+'">'+
@@ -1044,9 +1008,6 @@
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $l+
                                                 '<input type="hidden" id="0ket'+$l+'" value="0">'+
-                                            '</td>'+
-                                            '<td style="text-align: center;vertical-align: middle;">'+
-                                                '<input type="text" class="form-control" id="0kp'+$l+'" name="0kp'+$l+'" value="'+$kode_produk+'">'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="0id_ukuran'+$l+'" id="0id_ukuran'+$l+'" value="'+$id_ukuran_sem+'">'+
@@ -1071,8 +1032,7 @@
                             '<thead>'+
                                 '<tr>'+
                                     '<th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>'+
-                                    '<th class="col-md-3" style="text-align: center;vertical-align: middle;">Kode Produk</th>'+
-                                    '<th class="col-md-3" style="text-align: center;vertical-align: middle;">Ukuran Produk</th>'+
+                                    '<th class="col-md-5" style="text-align: center;vertical-align: middle;">Ukuran Produk</th>'+
                                     '<th class="col-md-3" style="text-align: center;vertical-align: middle;">Warna Produk</th>'+
                                 '</tr>'+
                             '</thead>'+
@@ -1125,9 +1085,6 @@
                                         '<input type="hidden" id="1ket'+$jumlah_saat_ini+'" value="0">'+
                                     '</td>'+
                                     '<td style="text-align: center;vertical-align: middle;">'+
-                                        '<input type="text" class="form-control" id="1kp'+$jumlah_saat_ini+'" name="1kp'+$jumlah_saat_ini+'" >'+
-                                    '</td>'+
-                                    '<td style="text-align: center;vertical-align: middle;">'+
                                         '<input type="hidden" name="1id_ukuran'+$jumlah_saat_ini+'" id="1id_ukuran'+$jumlah_saat_ini+'" value="'+$ukuran+'">'+
                                         '<input type="hidden" name="1nama_ukuran'+$jumlah_saat_ini+'" id="1nama_ukuran'+$jumlah_saat_ini+'" value="'+$nama_ukuran+'">'+
                                         $nama_ukuran+
@@ -1157,7 +1114,6 @@
                                 for($l=1;$l<=$jumlah_uw_l;$l++){
                                     $id_ukuran_sem = $("#1id_ukuran"+$l).val();
                                     $nama_ukuran_sem = $("#1nama_ukuran"+$l).val();
-                                    $kode_produk     = $("#1kp"+$l).val();
 
                                     $lama = $lama +
                                     '<div id="divuw'+$l+'">'+
@@ -1165,9 +1121,6 @@
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $l+
                                                 '<input type="hidden" id="1ket'+$l+'" value="0">'+
-                                            '</td>'+
-                                            '<td style="text-align: center;vertical-align: middle;">'+
-                                                '<input type="text" class="form-control" id="1kp'+$l+'" name="1kp'+$l+'" value="'+$kode_produk+'">'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="1id_ukuran'+$l+'" id="1id_ukuran'+$l+'" value="'+$id_ukuran_sem+'">'+
@@ -1182,10 +1135,7 @@
                                         '<tr>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $jumlah_saat_ini+
-                                                '<input type="hidden" id="1ket'+$jumlah_saat_ini+'" name="1ket'+$jumlah_saat_ini+'" value="0">'+
-                                            '</td>'+
-                                            '<td style="text-align: center;vertical-align: middle;">'+
-                                                '<input type="text" class="form-control" id="1kp'+$jumlah_saat_ini+'">'+
+                                                '<input type="hidden" id="1ket'+$jumlah_saat_ini+'" value="0">'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="1id_ukuran'+$jumlah_saat_ini+'" id="1id_ukuran'+$jumlah_saat_ini+'" value="'+$ukuran+'">'+
@@ -1204,17 +1154,13 @@
                                 for($l=1;$l<=$jumlah_uw_l;$l++){
                                     $id_ukuran_sem = $("#1id_ukuran"+$l).val();
                                     $nama_ukuran_sem = $("#1nama_ukuran"+$l).val();
-                                    $kode_produk     = $("#1kp"+$l).val();
 
                                     $lama = $lama +
                                     '<div id="divuw'+$l+'">'+
                                         '<tr>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $l+
-                                                '<input type="hidden" id="1ket'+$l+'" name="1ket'+$l+'" value="0">'+
-                                            '</td>'+
-                                            '<td style="text-align: center;vertical-align: middle;">'+
-                                                '<input type="text" class="form-control" id="1kp'+$l+'" value="'+$kode_produk+'">'+
+                                                '<input type="hidden" id="1ket'+$l+'" value="0">'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="1id_ukuran'+$l+'" id="1id_ukuran'+$l+'" value="'+$id_ukuran_sem+'">'+
@@ -1235,7 +1181,6 @@
                             '<thead>'+
                                 '<tr>'+
                                     '<th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>'+
-                                    '<th class="col-md-5" style="text-align: center;vertical-align: middle;">Kode Produk</th>'+
                                     '<th class="col-md-5" style="text-align: center;vertical-align: middle;">Ukuran Produk</th>'+
                                 '</tr>'+
                             '</thead>'+
@@ -1286,9 +1231,6 @@
                                         '<input type="hidden" id="2ket'+$jumlah_saat_ini+'" value="0">'+
                                     '</td>'+
                                     '<td style="text-align: center;vertical-align: middle;">'+
-                                        '<input type="text" class="form-control" id="2kp'+$jumlah_saat_ini+'" name="2kp'+$jumlah_saat_ini+'" >'+
-                                    '</td>'+
-                                    '<td style="text-align: center;vertical-align: middle;">'+
                                         '<input type="hidden" name="2id_warna'+$jumlah_saat_ini+'"  id="2id_warna'+$jumlah_saat_ini+'" value="'+$warna+'">'+
                                         '<input type="hidden" name="2nama_warna'+$jumlah_saat_ini+'"  id="2nama_warna'+$jumlah_saat_ini+'" value="'+$nama_warna+'">'+
                                         $nama_warna+
@@ -1321,7 +1263,6 @@
                                     $id_warna_sem  = $("#2id_warna"+$l).val();
                                     $nama_ukuran_sem = $("#2nama_ukuran"+$l).val();
                                     $nama_warna_sem  = $("#2nama_warna"+$l).val();
-                                    $kode_produk     = $("#2kp"+$l).val();
 
                                     $lama = $lama +
                                     '<div id="divuw'+$l+'">'+
@@ -1329,9 +1270,6 @@
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $l+
                                                 '<input type="hidden" id="2ket'+$l+'" value="0">'+
-                                            '</td>'+
-                                            '<td style="text-align: center;vertical-align: middle;">'+
-                                                '<input type="text" class="form-control" id="2kp'+$l+'" name="2kp'+$l+'" value="'+$kode_produk+'">'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="2id_warna'+$l+'"  id="2id_warna'+$l+'" value="'+$id_warna_sem+'">'+
@@ -1347,9 +1285,6 @@
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $jumlah_saat_ini+
                                                 '<input type="hidden" id="2ket'+$jumlah_saat_ini+'" value="0">'+
-                                            '</td>'+
-                                            '<td style="text-align: center;vertical-align: middle;">'+
-                                                '<input type="text" class="form-control" id="2kp'+$jumlah_saat_ini+'" name="2kp'+$jumlah_saat_ini+'" >'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="2id_warna'+$jumlah_saat_ini+'"  id="2id_warna'+$jumlah_saat_ini+'" value="'+$warna+'">'+
@@ -1370,7 +1305,6 @@
                                     $id_warna_sem  = $("#2id_warna"+$l).val();
                                     $nama_ukuran_sem = $("#2nama_ukuran"+$l).val();
                                     $nama_warna_sem  = $("#2nama_warna"+$l).val();
-                                    $kode_produk     = $("#2kp"+$l).val();
 
                                     $lama = $lama +
                                     '<div id="divuw'+$l+'">'+
@@ -1378,9 +1312,6 @@
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $l+
                                                 '<input type="hidden" id="2ket'+$l+'" value="0">'+
-                                            '</td>'+
-                                            '<td style="text-align: center;vertical-align: middle;">'+
-                                                '<input type="text" class="form-control" id="2kp'+$l+'" name="2kp'+$l+'" value="'+$kode_produk+'">'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="2id_warna'+$l+'"  id="2id_warna'+$l+'" value="'+$id_warna_sem+'">'+
@@ -1400,7 +1331,6 @@
                             '<thead>'+
                                 '<tr>'+
                                     '<th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>'+
-                                    '<th class="col-md-3" style="text-align: center;vertical-align: middle;">Kode Produk</th>'+
                                     '<th class="col-md-3" style="text-align: center;vertical-align: middle;">Warna Produk</th>'+
                                 '</tr>'+
                             '</thead>'+
@@ -1418,6 +1348,7 @@
             }
         }
     }
+
 </script>
 
 <!-- ganti jenis material (+produk) -->
@@ -1688,7 +1619,7 @@
         $("#fp_cek_line3").val(0);
         $("#fp_cek_line4").val(0);
 
-        if($("#nama_produk_input").val() != "" && $("#harga_produk").val() != "" ){
+        if($("#kode_produk").val() != "" && $("#nama_produk_input").val() != "" && $("#harga_produk").val() != "" ){
             if($("#keterangan_produk").val() == 0 || $("#keterangan_produk").val() == 1 || $("#keterangan_produk").val() == 2){
                 if($("#jm_ketpod").val() > 0){
                     //jika purchase cover

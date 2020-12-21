@@ -322,35 +322,36 @@ class Produk extends CI_Controller {
         }
     
         //ADD KONSUMSI MATERIAL
-        $jumlah_km = $this->input->post('jumlah_km');
+            $jumlah_km = $this->input->post('jumlah_km');
 
-        for($i=1;$i<=$jumlah_km;$i++){
-            //kalo misalnya jumlah_material nda null baru boleh se tambah.
-            $jumlah_material = $this->input->post('jmmat'.$i);
+            for($i=1;$i<=$jumlah_km;$i++){
+                //kalo misalnya jumlah_material nda null baru boleh se tambah.
+                $jumlah_material = $this->input->post('jmmat'.$i);
 
-            if($jumlah_material > 0){
-                $id_material = $this->input->post('idmat'.$i);
-                $id_line     = $this->input->post('idline'.$i);
-                $status_km   = $this->input->post('stat_km'.$i);
+                if($jumlah_material > 0){
+                    $id_material = $this->input->post('idmat'.$i);
+                    $id_line     = $this->input->post('idline'.$i);
+                    $status_km   = $this->input->post('stat_km'.$i);
 
-                $total_km  = $this->M_Produk->select_all_km()->num_rows();
-                $id_kms    = $total_km +1;
-                $id_km     = "KONMAT-".$id_kms;
+                    $total_km  = $this->M_Produk->select_all_km()->num_rows();
+                    $id_kms    = $total_km +1;
+                    $id_km     = "KONMAT-".$id_kms;
 
-                $data_km = array(
-                    'id_konsumsi_material' => $id_km,
-                    'id_produk'            => $id_produk,
-                    'id_sub_jenis_material'=> $id_material,
-                    'id_line'              => $id_line,
-                    'jumlah_konsumsi'      => $jumlah_material,
-                    'status_konsumsi'      => $status_km,
-                    'user_add'             => $_SESSION['id_user'],
-                    'waktu_add'            => $now,
-                    'status_delete'        => 0
-                );
-                $this->M_Produk->insert('konsumsi_material',$data_km);
+                    $data_km = array(
+                        'id_konsumsi_material' => $id_km,
+                        'id_produk'            => $id_produk,
+                        'id_sub_jenis_material'=> $id_material,
+                        'id_line'              => $id_line,
+                        'jumlah_konsumsi'      => $jumlah_material,
+                        'status_konsumsi'      => $status_km,
+                        'user_add'             => $_SESSION['id_user'],
+                        'waktu_add'            => $now,
+                        'status_delete'        => 0
+                    );
+                    $this->M_Produk->insert('konsumsi_material',$data_km);
+                }
             }
-        }
+        //km
 
 
         //ADD DETAILLL PRODUKKK
@@ -368,57 +369,60 @@ class Produk extends CI_Controller {
                 $id_detail_produk     = "DETPRO-".$id_number;
 
                 if($keterangan_produk == 0){
-                    $id_ukuran = $this->input->post('0id_ukuran'.$i);
-                    $id_warna  = $this->input->post('0id_warna'.$i);
+                    $id_ukuran   = $this->input->post('0id_ukuran'.$i);
+                    $id_warna    = $this->input->post('0id_warna'.$i);
+                    $kode_produk = $this->input->post('0kp'.$i);
 
-                    $data_detail_produk = array (
+                    $data_detail_produk = array(
                         'id_detail_produk' => $id_detail_produk,
                         'id_produk'        => $id_produk,
                         'id_ukuran_produk' => $id_ukuran,
                         'id_warna'         => $id_warna,
+                        'kode_produk'      => $kode_produk,
                         'keterangan'       => $keterangan_produk,
                         'user_add'         => $_SESSION['id_user'],
                         'waktu_add'        => $now
                     );
-
                     $this->M_Produk->insert('detail_produk',$data_detail_produk);
-
-                    //echo $id_ukuran."-".$id_warna."<br>";
                 }
                 else if($keterangan_produk == 1){
                     $id_ukuran = $this->input->post('1id_ukuran'.$i);
+                    $kode_produk = $this->input->post('1kp'.$i);
 
                     $data_detail_produk = array (
                         'id_detail_produk' => $id_detail_produk,
                         'id_produk'        => $id_produk,
                         'id_ukuran_produk' => $id_ukuran,
+                        'kode_produk'      => $kode_produk,
                         'keterangan'       => $keterangan_produk,
                         'user_add'         => $_SESSION['id_user'],
                         'waktu_add'        => $now
                     );
 
                     $this->M_Produk->insert('detail_produk',$data_detail_produk);
-                    //echo $id_ukuran."<br>";
                 }
                 else{
                     $id_warna  = $this->input->post('2id_warna'.$i);
+                    $kode_produk = $this->input->post('2kp'.$i);
 
                     $data_detail_produk = array (
                         'id_detail_produk' => $id_detail_produk,
                         'id_produk'        => $id_produk,
                         'id_warna'         => $id_warna,
+                        'kode_produk'      => $kode_produk,
                         'keterangan'       => $keterangan_produk,
                         'user_add'         => $_SESSION['id_user'],
                         'waktu_add'        => $now
                     );
 
                     $this->M_Produk->insert('detail_produk',$data_detail_produk);
-                    //echo $id_warna."<br>";
                 }
             }
         }
         //kalau produk tidak memiliki ukuran & warna
         else{
+            $kode_produk = $this->input->post('kode_produk');
+
             $jumlah_detail_produk = $this->M_Produk->select_all_detail_produk()->num_rows();
             $id_number            = $jumlah_detail_produk + 1;
     
@@ -427,6 +431,7 @@ class Produk extends CI_Controller {
             $data_detail_produk = array (
                 'id_detail_produk' => $id_detail_produk,
                 'id_produk'        => $id_produk,
+                'kode_produk'      => $kode_produk,
                 'keterangan'       => $keterangan_produk,
                 'user_add'         => $_SESSION['id_user'],
                 'waktu_add'        => $now
@@ -441,7 +446,6 @@ class Produk extends CI_Controller {
             'id_jenis_produk'   => $id_jenis_produk,
             'nama_produk'       => $nama_produk,
             'harga_produk'      => $harga_produk,
-            'kode_produk'       => $kode_produk,
             'keterangan_produksi'=> $keterangan,
             'user_add'          => $_SESSION['id_user'],
             'waktu_add'         => $now
