@@ -122,6 +122,11 @@ class M_PurchaseOrderCustomer extends CI_Model {
 
     //********************************* LAIN LAIN ******************************** */
     //**************************************************************************** */
+    function selectNoPO($id){
+        return $this->db->query("SELECT kode_purchase_order_customer FROM purchase_order_customer
+        WHERE status_delete=0 AND kode_purchase_order_customer='$id'");
+    }
+    
     function selectHargaProduk($id){
         return $this->db->query("SELECT harga_produk FROM produk a
         JOIN detail_produk b ON a.id_produk = b.id_produk

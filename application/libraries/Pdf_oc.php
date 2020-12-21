@@ -12,7 +12,7 @@ class Pdf_oc extends TCPDF
     public function Header() {
         // Logo
         $image_file = base_url().'assets/images/logombp.png';
-        $this->Image($image_file, 5, 8, 15, '', 'PNG', '', 'T', false, 200, '', false, false, 0, false, false, false);
+        $this->Image($image_file, 4, 7, 15, '', 'PNG', '', 'T', false, 200, '', false, false, 0, false, false, false);
         //($image_file, margin kiri, margin atas, ukuran gbr, ..., jenis file, ..., ..., ..., resolusi, ..., ..., ..., ..., ..., ..., ...)
 
         //$this->Image('@' . $image_file, 10, 8, 45, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
