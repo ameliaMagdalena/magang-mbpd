@@ -248,7 +248,22 @@
             success: function(respond){
 
                 $("#nomor_det1").val(respond['bpbj'][0]['no_bpbj']);
-                $("#tanggal_det1").val(respond['bpbj'][0]['tanggal']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['bpbj'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['bpbj'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['bpbj'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['bpbj'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_det1").val($tanggalnya);
 
                 if(respond['bpbj'][0]['status_bpbj'] == 0){
                     $("#status_det1").val("Belum Diproses");
@@ -322,11 +337,11 @@
                     for($g=0;$g<respond['jm_selected_po'];$g++){
                         if(respond['det_bpbj'][$i]['id_detail_bpbj'] == respond['selected_po'][$g]['id_detail_bpbj']){
                             if($hit == 0){
-                                $selected_po = respond['selected_po'][$g]['id_purchase_order_customer'];
+                                $selected_po = respond['selected_po'][$g]['kode_purchase_order_customer'];
                                 $hit++;
                             }
                             else{
-                                $selected_po = $selected_po + ", "+respond['selected_po'][$g]['id_purchase_order_customer'];
+                                $selected_po = $selected_po + ", "+respond['selected_po'][$g]['kode_purchase_order_customer'];
                                 $hit++;
                             }
                         }
@@ -659,7 +674,7 @@
                                     '<center>'+respond['datanya'][$j]['id_surat_jalan']+'</center>'+
                                 '</td>'+
                                 '<td>'+
-                                    '<center>'+respond['datanya'][$j]['id_purchase_order_customer']+'</center>'+
+                                    '<center>'+respond['datanya'][$j]['kode_purchase_order_customer']+'</center>'+
                                 '</td>'+
                                 '<td>'+
                                     '<center>'+respond['datanya'][$j]['jumlah_produk']+'</center>'+
@@ -698,6 +713,5 @@
 
     });
 </script>
-
 
     

@@ -29,8 +29,8 @@ class M_Jabatan extends CI_Model {
     }
 
     function select_user_add($id){
-        return $this->db->query("SELECT user_add, waktu_add FROM jabatan 
-        WHERE id_jabatan='$id'");
+        return $this->db->query("SELECT jabatan.waktu_add, karyawan.nama_karyawan FROM jabatan, user, karyawan
+        WHERE jabatan.id_jabatan = '$id' AND jabatan.user_add = user.id_user AND user.id_karyawan = karyawan.id_karyawan");
     }
 
     function cari_user($id){
@@ -39,8 +39,7 @@ class M_Jabatan extends CI_Model {
     }
 
     function select_log($id){
-        return $this->db->query("SELECT * FROM jabatan_logs WHERE id_jabatan='$id' 
-        ORDER BY id_jabatan_logs DESC");
+        return $this->db->query("SELECT * FROM jabatan_logs WHERE id_jabatan='$id' ORDER BY id_jabatan_logs DESC");
     }
 
 }

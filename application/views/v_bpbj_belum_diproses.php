@@ -373,11 +373,11 @@
                     for($g=0;$g<respond['jm_selected_po'];$g++){
                         if(respond['det_bpbj'][$i]['id_detail_bpbj'] == respond['selected_po'][$g]['id_detail_bpbj']){
                             if($hit == 0){
-                                $selected_po = respond['selected_po'][$g]['id_purchase_order_customer'];
+                                $selected_po = respond['selected_po'][$g]['kode_purchase_order_customer'];
                                 $hit++;
                             }
                             else{
-                                $selected_po = $selected_po + ", "+respond['selected_po'][$g]['id_purchase_order_customer'];
+                                $selected_po = $selected_po + ", "+respond['selected_po'][$g]['kode_purchase_order_customer'];
                                 $hit++;
                             }
                         }
@@ -725,7 +725,7 @@
                                     '<center>'+respond['datanya'][$j]['id_surat_jalan']+'</center>'+
                                 '</td>'+
                                 '<td>'+
-                                    '<center>'+respond['datanya'][$j]['id_purchase_order_customer']+'</center>'+
+                                    '<center>'+respond['datanya'][$j]['kode_purchase_order_customer']+'</center>'+
                                 '</td>'+
                                 '<td>'+
                                     '<center>'+respond['datanya'][$j]['jumlah_produk']+'</center>'+

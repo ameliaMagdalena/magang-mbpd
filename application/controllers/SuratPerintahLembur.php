@@ -12,8 +12,6 @@ class SuratPerintahLembur extends CI_Controller {
         $this->load->model('M_Tetapan');
         $this->load->model('M_Dashboard');
 
-        $this->load->library('pdf');
-
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');
         }
@@ -1801,102 +1799,6 @@ class SuratPerintahLembur extends CI_Controller {
         redirect('suratPerintahLembur/terkonfirmasi');
     }
 
-    public function print(){
-        $id      = $this->input->post('id');
-
-        $spl     = $this->M_SuratPerintahLembur->get_spl($id)->result_array();
-        $dspl    = $this->M_SuratPerintahLembur->get_dspl($id)->result_array();
-        $jm_dspl = $this->M_SuratPerintahLembur->get_dspl($id)->num_rows();
-
-        if($spl[0]['status_spl'] > 2){
-            $pdf = new FPDF('p','mm','A4');
-            //buat halaman baru
-            $pdf->AddPage();
-
-            //logo
-            $pdf->Image(base_url('assets/images/logombp.png'),7,7,-300);
-
-            //setting font
-            $pdf->SetFont('Arial','B','12');
-            //cetak string
-            $pdf->Cell(15); //move
-            $pdf->Cell(190,7,'PT MAJU BERSAMA PERSADA DAYAMU',0,1,'L');
-            
-            $pdf->SetFont('Arial','B',12);
-            $pdf->Cell(15);
-            $pdf->Cell(190,7,'SURAT PERINTAH LEMBUR '.$spl[0]['nama_line'],0,1,'L');
-            
-            //$pdf->Cell(15);
-            $pdf->SetFont('Arial','B','11');
-            $pdf->Cell(10,2,' ',0,1,'C');
-            $pdf->Cell(190,5,'Hari & Tanggal: ' .$spl[0]['tanggal'],0,1,'R');
-            $pdf->Cell(190,5,'Waktu: ' .$spl[0]['waktu_lembur'],0,1,'R');
-
-
-
-            $pdf->SetFont('Arial','B',10);
-            $pdf->Cell(10,5,' ',0,1,'C');
-            $pdf->Cell(10,12,'NO',1,0,'C');
-            $pdf->Cell(50,12,'NAMA KARYAWAN',1,0,'C');
-            $pdf->Cell(40,12,'PLANNING LEMBUR',1,0,'C');
-            $pdf->Cell(30,6,'JAM LEMBUR',1,0,'C');
-            $pdf->Cell(60,12,'KET',1,0,'C');
-            $pdf->Cell(0,6,'',0,1);
-
-            $pdf->Cell(100,0,'',0,0);
-            $pdf->Cell(15,6,'IN',1,0,'C');
-            $pdf->Cell(15,6,'OUT',1,1,'C');
-
-                
-            $pdf->SetFont('Arial','',10);
-
-            for($i=0;$i<$jm_dspl;$i++){
-                $pdf->Cell(10,6,$i+1,1,0,'C');
-                $pdf->Cell(50,6,$dspl[$i]['nama_karyawan'],1,0,'C');
-                $pdf->Cell(40,6,$dspl[$i]['planning_lembur'],1,0,'C');
-                $pdf->Cell(15,6,$dspl[$i]['waktu_in_plan'],1,0,'C');
-                $pdf->Cell(15,6,$dspl[$i]['waktu_out_plan'],1,0,'C');
-                $pdf->Cell(60,6,$dspl[$i]['keterangan_plan'],1,1,'C');
-            }
-            
-            
-
-            //keterangan
-            $pdf->Cell(2,7,'',0,1);
-            $pdf->Cell(2,7,'Keterangan:',0,1);
-            $pdf->Cell(190,12,$spl[0]['keterangan_perintah'],1,0,'L');
-
-            //tanda tangan
-
-            $pdf->SetFont('Arial','B',10);
-
-            $pdf->Cell(10,20,'',0,1);
-            $pdf->Cell(100);
-            $pdf->Cell(30,6,'Diajukan',1,0,'C');
-            $pdf->Cell(30,6,'Disetujui',1,0,'C');
-            $pdf->Cell(30,6,'Mengetahui',1,0,'C');
-
-
-            $pdf->Cell(0,6,'',0,1);
-            $pdf->Cell(100);
-            $pdf->Cell(30,15,'',1,0,'C');
-            $pdf->Cell(30,15,'',1,0,'C');
-            $pdf->Cell(30,15,'',1,0,'C');
-            
-            $pdf->Cell(0,15,'',0,1);
-            $pdf->Cell(100);
-            $pdf->Cell(30,6,'',1,0,'C');
-            $pdf->Cell(30,6,'',1,0,'C');
-            $pdf->Cell(30,6,'',1,0,'C');
-
-            $pdf->Output();
-        }
-        else{
-            echo "Mohon maaf fungsi ini tidak tersedia";
-        }
-        
-    }
-
     public function edit_pic(){
         $id_spl = $this->input->post('ed_id_spl');
         $jumlah_karyawan = $this->input->post('ed_jumkar');
@@ -2004,5 +1906,144 @@ class SuratPerintahLembur extends CI_Controller {
         
     }
 
+    public function print(){
+        $id      = $this->input->post('id');
 
+        $data['spl']     = $this->M_SuratPerintahLembur->get_spl($id)->result_array();
+        $data['dspl']    = $this->M_SuratPerintahLembur->get_dspl($id)->result_array();
+        $data['jm_dspl'] = $this->M_SuratPerintahLembur->get_dspl($id)->num_rows();
+
+        $waktu = $data['spl'][0]['tanggal'];
+
+        $hari_array = array(
+            'Minggu',
+            'Senin',
+            'Selasa',
+            'Rabu',
+            'Kamis',
+            'Jumat',
+            'Sabtu'
+        );
+        $hr = date('w', strtotime($waktu));
+        $hari = $hari_array[$hr];
+        $tanggal = date('j', strtotime($waktu));
+        $bulan_array = array(
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        );
+        $bl = date('n', strtotime($waktu));
+        $bulan = $bulan_array[$bl];
+        $tahun = date('Y', strtotime($waktu));
+        
+        $data['tanggal'] = "$hari, $tanggal $bulan $tahun";
+
+        $this->load->view('v_print_spl',$data);
+        
+    }
+
+    public function printx(){
+        $id      = $this->input->post('id');
+
+        $spl     = $this->M_SuratPerintahLembur->get_spl($id)->result_array();
+        $dspl    = $this->M_SuratPerintahLembur->get_dspl($id)->result_array();
+        $jm_dspl = $this->M_SuratPerintahLembur->get_dspl($id)->num_rows();
+
+        if($spl[0]['status_spl'] > 2){
+            $pdf = new FPDF('p','mm','A4');
+            //buat halaman baru
+            $pdf->AddPage();
+
+            //logo
+            $pdf->Image(base_url('assets/images/logombp.png'),7,7,-300);
+
+            //setting font
+            $pdf->SetFont('Arial','B','12');
+            //cetak string
+            $pdf->Cell(15); //move
+            $pdf->Cell(190,7,'PT MAJU BERSAMA PERSADA DAYAMU',0,1,'L');
+            
+            $pdf->SetFont('Arial','B',12);
+            $pdf->Cell(15);
+            $pdf->Cell(190,7,'SURAT PERINTAH LEMBUR '.$spl[0]['nama_line'],0,1,'L');
+            
+            //$pdf->Cell(15);
+            $pdf->SetFont('Arial','B','11');
+            $pdf->Cell(10,2,' ',0,1,'C');
+            $pdf->Cell(190,5,'Hari & Tanggal: ' .$spl[0]['tanggal'],0,1,'R');
+            $pdf->Cell(190,5,'Waktu: ' .$spl[0]['waktu_lembur'],0,1,'R');
+
+
+
+            $pdf->SetFont('Arial','B',10);
+            $pdf->Cell(10,5,' ',0,1,'C');
+            $pdf->Cell(10,12,'NO',1,0,'C');
+            $pdf->Cell(50,12,'NAMA KARYAWAN',1,0,'C');
+            $pdf->Cell(40,12,'PLANNING LEMBUR',1,0,'C');
+            $pdf->Cell(30,6,'JAM LEMBUR',1,0,'C');
+            $pdf->Cell(60,12,'KET',1,0,'C');
+            $pdf->Cell(0,6,'',0,1);
+
+            $pdf->Cell(100,0,'',0,0);
+            $pdf->Cell(15,6,'IN',1,0,'C');
+            $pdf->Cell(15,6,'OUT',1,1,'C');
+
+                
+            $pdf->SetFont('Arial','',10);
+
+            for($i=0;$i<$jm_dspl;$i++){
+                $pdf->Cell(10,6,$i+1,1,0,'C');
+                $pdf->Cell(50,6,$dspl[$i]['nama_karyawan'],1,0,'C');
+                $pdf->Cell(40,6,$dspl[$i]['planning_lembur'],1,0,'C');
+                $pdf->Cell(15,6,$dspl[$i]['waktu_in_plan'],1,0,'C');
+                $pdf->Cell(15,6,$dspl[$i]['waktu_out_plan'],1,0,'C');
+                $pdf->Cell(60,6,$dspl[$i]['keterangan_plan'],1,1,'C');
+            }
+            
+            
+
+            //keterangan
+            $pdf->Cell(2,7,'',0,1);
+            $pdf->Cell(2,7,'Keterangan:',0,1);
+            $pdf->Cell(190,12,$spl[0]['keterangan_perintah'],1,0,'L');
+
+            //tanda tangan
+
+            $pdf->SetFont('Arial','B',10);
+
+            $pdf->Cell(10,20,'',0,1);
+            $pdf->Cell(100);
+            $pdf->Cell(30,6,'Diajukan',1,0,'C');
+            $pdf->Cell(30,6,'Disetujui',1,0,'C');
+            $pdf->Cell(30,6,'Mengetahui',1,0,'C');
+
+
+            $pdf->Cell(0,6,'',0,1);
+            $pdf->Cell(100);
+            $pdf->Cell(30,15,'',1,0,'C');
+            $pdf->Cell(30,15,'',1,0,'C');
+            $pdf->Cell(30,15,'',1,0,'C');
+            
+            $pdf->Cell(0,15,'',0,1);
+            $pdf->Cell(100);
+            $pdf->Cell(30,6,'',1,0,'C');
+            $pdf->Cell(30,6,'',1,0,'C');
+            $pdf->Cell(30,6,'',1,0,'C');
+
+            $pdf->Output();
+        }
+        else{
+            echo "Mohon maaf fungsi ini tidak tersedia";
+        }
+        
+    }
 }

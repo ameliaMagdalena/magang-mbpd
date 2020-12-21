@@ -200,14 +200,209 @@ class Dashboard extends CI_Controller {
         //tutup notif permohonan akses
     //tutup
 
-
-
-    
     //isi dashboard produksi
           if($_SESSION['nama_departemen'] == "Management" && $_SESSION['nama_jabatan'] == "Direktur"){
         // DIREKTUR
+            //PURCHASING
+                //surat jalan
+                $data['surat_jalan'] = $this->M_Dashboard->surat_jalan($now)->result_array();
+                //tutup surat jalan
+
+                //invoice
+                    $data['invoice'] = $this->M_Dashboard->invoice($now)->result_array();
+                //tutup invoice
+            //TUTUP PURCHASING
+
+            //RISDEV
+                $data['jumlah_produk']       = $this->M_Dashboard->jumlah_produk()->result_array();
+                $data['jumlah_jenis_produk'] = $this->M_Dashboard->jumlah_jenis_produk()->result_array();
+                $data['jumlah_warna']        = $this->M_Dashboard->jumlah_warna()->result_array();
+                $data['jumlah_ukuran_produk']= $this->M_Dashboard->jumlah_ukuran_produk()->result_array();
+            //TUTUP RISDEV
+
+            //FINISH GOOD
+                //bpbd
+                $data['bpbd'] = $this->M_Dashboard->bpbd($now)->result_array();
+                //tutup bpbd
+    
+                //laporan hasil produksi assy
+                    $data['hasil_produksi']    = $this->M_Dashboard->status_hasil_produksi($now,"Line Assy")->result_array();
+                    $data['jm_hasil_produksi'] = $this->M_Dashboard->status_hasil_produksi($now,"Line Assy")->num_rows();
+                //tutup laporan hasil produksi assy
+    
+                //bpbj
+                    $data['produk']        = $this->M_Bpbj->select_produk($now)->result();
+                    $data['pros_prod']     = $this->M_Bpbj->last_proses_produk()->result();
+                    $data['line']          = $this->M_Line->select_all_aktif()->result();
+                
+                    $data['warna']            = $this->M_Warna->select_all_aktif()->result();
+                    $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
+                
+                    $data['bpbj_sebelum'] = $this->M_Bpbj->select_all_detail_bpbj_aktif($now)->result();    
+                    $data['jmbpbj_sebelum'] = $this->M_Bpbj->select_all_detail_bpbj_aktif($now)->num_rows();   
+                //tutup bpbj
+            //TUTUP RISDEV
+
+            //PPIC
+                //po yang belum diproses
+                $data['po'] = $this->M_Dashboard->po_cust()->result_array();
+                //tutup po
+
+                //perencanaan produksi 
+                    $data['now']    = date('Y-m-d');
+                    $data['monday'] = $this->M_Dashboard->select_all_monday()->result();
+                //tutup perencanaan produksi
+
+                //target efisiensi hari ini
+                    $data['target_efisiensi']    = $this->M_Dashboard->target_efisiensi($now)->result();
+                    $data['jm_target_efisiensi'] = $this->M_Dashboard->target_efisiensi($now)->num_rows();
+                //tutup target efisiensi hari ini
+
+                //perencanaan produksi hari ini
+                    $data['perencanaan_hari_ini']    = $this->M_Dashboard->perencanaan_hari_ini_semua_line($now)->result();
+                    $data['jm_perencanaan_hari_ini'] = $this->M_Dashboard->perencanaan_hari_ini_semua_line($now)->num_rows();
+                    $data['warna']                   = $this->M_Warna->select_all_aktif()->result();
+                    $data['ukuran']                  = $this->M_UkuranProduk->select_all_aktif()->result();
+                //tutup perencanaan
+
+                //laporan hasil produksi
+                    //line cutting
+                    $data['hp_cutting']    = $this->M_Dashboard->status_hasil_produksi($now,"Line Cutting")->result_array();
+                    $data['jm_hp_cutting'] = $this->M_Dashboard->status_hasil_produksi($now,"Line Cutting")->num_rows();
+
+                    //line bonding
+                    $data['hp_bonding']    = $this->M_Dashboard->status_hasil_produksi($now,"Line Bonding")->result_array();
+                    $data['jm_hp_bonding'] = $this->M_Dashboard->status_hasil_produksi($now,"Line Bonding")->num_rows();
+
+                    //line sewing
+                    $data['hp_sewing']    = $this->M_Dashboard->status_hasil_produksi($now,"Line Sewing")->result_array();
+                    $data['jm_hp_sewing'] = $this->M_Dashboard->status_hasil_produksi($now,"Line Sewing")->num_rows();
+
+                    //line assy
+                    $data['hp_assy']    = $this->M_Dashboard->status_hasil_produksi($now,"Line Assy")->result_array();
+                    $data['jm_hp_assy'] = $this->M_Dashboard->status_hasil_produksi($now,"Line Assy")->num_rows();
+
+                //tutup laporan hasil produksi
+
+                //perencanaan cutting kain
+                    $data['cutkain']    = $this->M_Dashboard->perencanaan_cutting_kain($now)->result();
+                    $data['jm_cutkain'] = $this->M_Dashboard->perencanaan_cutting_kain($now)->num_rows();
+
+                    $data['warna']            = $this->M_Warna->select_all_aktif()->result();
+                    $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
+                //tutup perencanaan cutting kain
+
+                //produksi tertunda
+                    $data['produksi_tertunda']    = $this->M_Dashboard->produksi_tertunda()->result();
+                    $data['jm_produksi_tertunda'] = $this->M_Dashboard->produksi_tertunda()->num_rows();
+                //tutup produksi tertunda
+
+                //laporan perencanaan cutting
+                    $data['laporan_percut'] = $this->M_Dashboard->laporan_perencanaan_cutting_kain($now)->result_array();
+                //tutup laporan perencanaan cutting
+            //TUTUP PPIC
+        //tutup direktur
           } else if($_SESSION['nama_departemen'] == "Management" && $_SESSION['nama_jabatan'] == "Manager"){
         //MANAGER
+            //PURCHASING
+                //surat jalan
+                $data['surat_jalan'] = $this->M_Dashboard->surat_jalan($now)->result_array();
+                //tutup surat jalan
+
+                //invoice
+                    $data['invoice'] = $this->M_Dashboard->invoice($now)->result_array();
+                //tutup invoice
+            //TUTUP PURCHASING
+
+            //RISDEV
+                $data['jumlah_produk']       = $this->M_Dashboard->jumlah_produk()->result_array();
+                $data['jumlah_jenis_produk'] = $this->M_Dashboard->jumlah_jenis_produk()->result_array();
+                $data['jumlah_warna']        = $this->M_Dashboard->jumlah_warna()->result_array();
+                $data['jumlah_ukuran_produk']= $this->M_Dashboard->jumlah_ukuran_produk()->result_array();
+            //TUTUP RISDEV
+
+            //FINISH GOOD
+                //bpbd
+                $data['bpbd'] = $this->M_Dashboard->bpbd($now)->result_array();
+                //tutup bpbd
+    
+                //laporan hasil produksi assy
+                    $data['hasil_produksi']    = $this->M_Dashboard->status_hasil_produksi($now,"Line Assy")->result_array();
+                    $data['jm_hasil_produksi'] = $this->M_Dashboard->status_hasil_produksi($now,"Line Assy")->num_rows();
+                //tutup laporan hasil produksi assy
+    
+                //bpbj
+                    $data['produk']        = $this->M_Bpbj->select_produk($now)->result();
+                    $data['pros_prod']     = $this->M_Bpbj->last_proses_produk()->result();
+                    $data['line']          = $this->M_Line->select_all_aktif()->result();
+                
+                    $data['warna']            = $this->M_Warna->select_all_aktif()->result();
+                    $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
+                
+                    $data['bpbj_sebelum'] = $this->M_Bpbj->select_all_detail_bpbj_aktif($now)->result();    
+                    $data['jmbpbj_sebelum'] = $this->M_Bpbj->select_all_detail_bpbj_aktif($now)->num_rows();   
+                //tutup bpbj
+            //TUTUP RISDEV
+
+            //PPIC
+                //po yang belum diproses
+                $data['po'] = $this->M_Dashboard->po_cust()->result_array();
+                //tutup po
+
+                //perencanaan produksi 
+                    $data['now']    = date('Y-m-d');
+                    $data['monday'] = $this->M_Dashboard->select_all_monday()->result();
+                //tutup perencanaan produksi
+
+                //target efisiensi hari ini
+                    $data['target_efisiensi']    = $this->M_Dashboard->target_efisiensi($now)->result();
+                    $data['jm_target_efisiensi'] = $this->M_Dashboard->target_efisiensi($now)->num_rows();
+                //tutup target efisiensi hari ini
+
+                //perencanaan produksi hari ini
+                    $data['perencanaan_hari_ini']    = $this->M_Dashboard->perencanaan_hari_ini_semua_line($now)->result();
+                    $data['jm_perencanaan_hari_ini'] = $this->M_Dashboard->perencanaan_hari_ini_semua_line($now)->num_rows();
+                    $data['warna']                   = $this->M_Warna->select_all_aktif()->result();
+                    $data['ukuran']                  = $this->M_UkuranProduk->select_all_aktif()->result();
+                //tutup perencanaan
+
+                //laporan hasil produksi
+                    //line cutting
+                    $data['hp_cutting']    = $this->M_Dashboard->status_hasil_produksi($now,"Line Cutting")->result_array();
+                    $data['jm_hp_cutting'] = $this->M_Dashboard->status_hasil_produksi($now,"Line Cutting")->num_rows();
+
+                    //line bonding
+                    $data['hp_bonding']    = $this->M_Dashboard->status_hasil_produksi($now,"Line Bonding")->result_array();
+                    $data['jm_hp_bonding'] = $this->M_Dashboard->status_hasil_produksi($now,"Line Bonding")->num_rows();
+
+                    //line sewing
+                    $data['hp_sewing']    = $this->M_Dashboard->status_hasil_produksi($now,"Line Sewing")->result_array();
+                    $data['jm_hp_sewing'] = $this->M_Dashboard->status_hasil_produksi($now,"Line Sewing")->num_rows();
+
+                    //line assy
+                    $data['hp_assy']    = $this->M_Dashboard->status_hasil_produksi($now,"Line Assy")->result_array();
+                    $data['jm_hp_assy'] = $this->M_Dashboard->status_hasil_produksi($now,"Line Assy")->num_rows();
+
+                //tutup laporan hasil produksi
+
+                //perencanaan cutting kain
+                    $data['cutkain']    = $this->M_Dashboard->perencanaan_cutting_kain($now)->result();
+                    $data['jm_cutkain'] = $this->M_Dashboard->perencanaan_cutting_kain($now)->num_rows();
+
+                    $data['warna']            = $this->M_Warna->select_all_aktif()->result();
+                    $data['ukuran']           = $this->M_UkuranProduk->select_all_aktif()->result();
+                //tutup perencanaan cutting kain
+
+                //produksi tertunda
+                    $data['produksi_tertunda']    = $this->M_Dashboard->produksi_tertunda()->result();
+                    $data['jm_produksi_tertunda'] = $this->M_Dashboard->produksi_tertunda()->num_rows();
+                //tutup produksi tertunda
+
+                //laporan perencanaan cutting
+                    $data['laporan_percut'] = $this->M_Dashboard->laporan_perencanaan_cutting_kain($now)->result_array();
+                //tutup laporan perencanaan cutting
+            //TUTUP PPIC
+        //tutup manager
           } else if($_SESSION['nama_departemen'] == "Purchasing" && $_SESSION['nama_jabatan'] == "Admin"){
         //ADMIN PURCHASING
             //surat jalan
@@ -230,24 +425,23 @@ class Dashboard extends CI_Controller {
             //po yang belum diproses
               $data['po'] = $this->M_Dashboard->po_cust()->result_array();
             //tutup po
-            
-            /*
-            //perencanaan produksi minggu ini
-                $data['bulan_now'] = date('m');
 
-                $tahun = date('Y'); //Mengambil tahun saat ini
-                $bulan = date('m'); //Mengambil bulan saat ini
-                $data['jumlah_tanggal'] = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
-                
-                $tgl = $tahun."-".$bulan."-1";
-                $data['first_day'] = date('l', strtotime($tgl));
-            //tutup perencanaan produksi minggu ini
-            */
+            //perencanaan produksi 
+                $data['now']    = date('Y-m-d');
+                $data['monday'] = $this->M_Dashboard->select_all_monday()->result();
+            //tutup perencanaan produksi
 
             //target efisiensi hari ini
                 $data['target_efisiensi']    = $this->M_Dashboard->target_efisiensi($now)->result();
                 $data['jm_target_efisiensi'] = $this->M_Dashboard->target_efisiensi($now)->num_rows();
             //tutup target efisiensi hari ini
+
+            //perencanaan produksi hari ini
+                $data['perencanaan_hari_ini']    = $this->M_Dashboard->perencanaan_hari_ini_semua_line($now)->result();
+                $data['jm_perencanaan_hari_ini'] = $this->M_Dashboard->perencanaan_hari_ini_semua_line($now)->num_rows();
+                $data['warna']                   = $this->M_Warna->select_all_aktif()->result();
+                $data['ukuran']                  = $this->M_UkuranProduk->select_all_aktif()->result();
+            //tutup perencanaan
 
             //laporan hasil produksi
                 //line cutting
@@ -358,21 +552,6 @@ class Dashboard extends CI_Controller {
         //tutup admin finish good
           } else if($_SESSION['nama_departemen'] == "Produksi" && $_SESSION['nama_jabatan'] == "Admin"){
         //ADMIN PRODUKSI
-            //laporan hasil produksi
-                //line cutting
-                  $data['hp_cutting']    = $this->M_Dashboard->status_hasil_produksi($now,"Line Cutting")->result_array();
-                  $data['jm_hp_cutting'] = $this->M_Dashboard->status_hasil_produksi($now,"Line Cutting")->num_rows();
-
-                //line bonding
-                  $data['hp_bonding']    = $this->M_Dashboard->status_hasil_produksi($now,"Line Bonding")->result_array();
-                  $data['jm_hp_bonding'] = $this->M_Dashboard->status_hasil_produksi($now,"Line Bonding")->num_rows();
-
-                //line sewing
-                  $data['hp_sewing']    = $this->M_Dashboard->status_hasil_produksi($now,"Line Sewing")->result_array();
-                  $data['jm_hp_sewing'] = $this->M_Dashboard->status_hasil_produksi($now,"Line Sewing")->num_rows();
-
-            //tutup laporan hasil produksi
-
             //perencanaan cutting kain
                 $data['cutkain']    = $this->M_Dashboard->perencanaan_cutting_kain($now)->result();
                 $data['jm_cutkain'] = $this->M_Dashboard->perencanaan_cutting_kain($now)->num_rows();
@@ -384,12 +563,31 @@ class Dashboard extends CI_Controller {
             //laporan perencanaan cutting
                 $data['laporan_percut'] = $this->M_Dashboard->laporan_perencanaan_cutting_kain($now)->result_array();
             //tutup laporan perencanaan cutting
+
+            //laporan hasil produksi
+                //line cutting
+                $data['hp_cutting']    = $this->M_Dashboard->status_hasil_produksi($now,"Line Cutting")->result_array();
+                $data['jm_hp_cutting'] = $this->M_Dashboard->status_hasil_produksi($now,"Line Cutting")->num_rows();
+
+                //line bonding
+                $data['hp_bonding']    = $this->M_Dashboard->status_hasil_produksi($now,"Line Bonding")->result_array();
+                $data['jm_hp_bonding'] = $this->M_Dashboard->status_hasil_produksi($now,"Line Bonding")->num_rows();
+
+                //line sewing
+                $data['hp_sewing']    = $this->M_Dashboard->status_hasil_produksi($now,"Line Sewing")->result_array();
+                $data['jm_hp_sewing'] = $this->M_Dashboard->status_hasil_produksi($now,"Line Sewing")->num_rows();
+
+                //line assy
+                $data['hp_assy']    = $this->M_Dashboard->status_hasil_produksi($now,"Line Assy")->result_array();
+                $data['jm_hp_assy'] = $this->M_Dashboard->status_hasil_produksi($now,"Line Assy")->num_rows();
+
+            //tutup laporan hasil produksi
         //tutup admin produksi
           }
     //isi dashboard produksi
     
-    //$this->load->view('v_dashboard',$data);
-    $this->load->view('v_dashboards',$data);
+    $this->load->view('v_dashboard',$data);
+    //$this->load->view('v_dashboards',$data);
   }
 
     

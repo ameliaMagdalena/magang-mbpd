@@ -50,12 +50,34 @@
                             <td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
                             <td style="text-align: center;vertical-align: middle;"><?= $x->nama_departemen; ?></td>
                             <td  class="col-lg-3">
+                                <?php
+                                    $count = 0;
+
+                                    if($x->nama_departemen == "Management"){
+                                        $count++;
+                                    } else if($x->nama_departemen == "Produksi"){
+                                        $count++;
+                                    } else if($x->nama_departemen == "Material"){
+                                        $count++;
+                                    } else if($x->nama_departemen == "Purchasing"){
+                                        $count++;
+                                    } else if($x->nama_departemen == "Finish Good"){
+                                        $count++;
+                                    } else if($x->nama_departemen == "Research & Development"){
+                                        $count++;
+                                    } else if($x->nama_departemen == "x"){
+                                        $count++;
+                                    } 
+
+                                    if($count == 0){
+                                ?>
                                 <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                    title="Edit" href="#modaledit<?= $x->id_departemen;?>"></a>
+                                    title="Edit" href="#modaledit<?= $x->id_departemen;?>" style="margin-right:5px;margin-bottom:5px"></a>
                                 <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                title="Delete" href="#modalhapus<?= $x->id_departemen;?>"></a>
+                                title="Delete" href="#modalhapus<?= $x->id_departemen;?>" style="margin-right:5px;margin-bottom:5px"></a>
+                                <?php } ?>
                                 <button type="button" class="blog_klik col-lg-3 btn btn-info fa fa-file" 
-                                id="blog<?php echo $x->id_departemen?>" value="<?php echo $x->id_departemen;?>"></button>
+                                id="blog<?php echo $x->id_departemen?>" value="<?php echo $x->id_departemen;?>" style="margin-right:5px;margin-bottom:5px"></button>
                             </td>
                         </tr>
 
@@ -136,13 +158,130 @@
                 <header class="panel-heading">
                     <h2 class="panel-title">Tambah Departemen</h2>
                 </header>
-
+                
                 <div class="panel-body">
                     <div class="form-group mt-lg">
                         <label class="col-sm-5 control-label">Nama Departemen</label>
                         <div class="col-sm-7">
-                            <input type="text" name="nama_departemen_input" id="nama_departemen_input" 
-                            onchange="cek_nama_departemen_input()" required class="form-control">
+
+                            <?php 
+                                $count = 0;
+                                foreach($departemen as $x){
+                                    if($x->nama_departemen == "Management"){
+                                        $count++;
+                                    } else if($x->nama_departemen == "Produksi"){
+                                        $count++;
+                                    } else if($x->nama_departemen == "Material"){
+                                        $count++;
+                                    } else if($x->nama_departemen == "Purchasing"){
+                                        $count++;
+                                    } else if($x->nama_departemen == "Finish Good"){
+                                        $count++;
+                                    } else if($x->nama_departemen == "Research & Development"){
+                                        $count++;
+                                    } 
+                                }
+                                    if($count < 6){
+                            ?>
+                                        <select class="form-control" name="nama_departemen_wajib" required>
+                                            <!-- 1. Management -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($departemen as $y){
+                                                        if($y->nama_departemen == "Management"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="Management">Management</option>
+                                                <?php } ?>
+                                            <!-- -->
+
+                                            <!-- 2. Produksi -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($departemen as $y){
+                                                        if($y->nama_departemen == "Produksi"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="Produksi">Produksi</option>
+                                                <?php } ?>
+                                            <!-- -->
+
+                                            <!-- 3. Material -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($departemen as $y){
+                                                        if($y->nama_departemen == "Material"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="Material">Material</option>
+                                                <?php } ?>
+                                            <!-- -->
+
+                                            <!-- 4. Purchasing -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($departemen as $y){
+                                                        if($y->nama_departemen == "Purchasing"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="Purchasing">Purchasing</option>
+                                                <?php } ?>
+                                            <!-- -->
+
+                                            <!-- 5. Finish Good -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($departemen as $y){
+                                                        if($y->nama_departemen == "Finish Good"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="Finish Good">Finish Good</option>
+                                                <?php } ?>
+                                            <!-- -->
+
+                                            <!-- 6. Research & Development -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($departemen as $y){
+                                                        if($y->nama_departemen == "Research & Development"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="Research & Development">Research & Development</option>
+                                                <?php } ?>
+                                            <!-- -->
+                                        </select>
+                            <?php
+                                    } else{
+                                
+                            ?>
+                                    <input type="text" name="nama_departemen_input" id="nama_departemen_input" 
+                                    onchange="cek_nama_departemen_input()" required class="form-control">
+                            <?php } ?>
+                            <input type="hidden" name="jumlah_departemen" value="<?= $count ?>">
                         </div>
                     </div>
                 </div>
@@ -197,8 +336,6 @@
 <?php include('_js.php'); ?>
 <!--*****************************-->
 <!--*****************************-->
-
-
 <script>
     function reload() {
         location.reload();
@@ -245,7 +382,6 @@
     }
 </script>
 
-
 <script>
     $('.blog_klik').click(function(){
         var id = $(('#blog')+$(this).attr('value')).val();
@@ -277,7 +413,26 @@
                             }
                         } 
 
-                        $tanggal = respond['log'][$i]['waktu_add'];
+                        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                        var tanggal = new Date(respond['log'][$i]['waktu_add']).getDate();
+                        var xhari = new Date(respond['log'][$i]['waktu_add']).getDay();
+                        var xbulan = new Date(respond['log'][$i]['waktu_add']).getMonth();
+                        var xtahun = new Date(respond['log'][$i]['waktu_add']).getYear();
+                        
+                        var jam     = new Date(respond['log'][$i]['waktu_add']).getHours();
+                        var menit   = new Date(respond['log'][$i]['waktu_add']).getMinutes();
+                        var detik   = new Date(respond['log'][$i]['waktu_add']).getSeconds();
+                        
+                        var hari = hari[xhari];
+                        var bulan = bulan[xbulan];
+                        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                        $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun +' '+jam+':'+menit+':'+detik;
+
+                        $tanggal = $tanggalnya;
+
                         $user = $nama_user;
                         $data = "Nama Departemen (" + respond['log'][$i]['nama_departemen'] + ") ";
 
@@ -307,9 +462,27 @@
                             $data = "Nama Departemen (" + respond['log'][$i]['nama_departemen'] + ")";
                         }
 
+                        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                        var tanggal = new Date(respond['log'][$i]['waktu_edit']).getDate();
+                        var xhari = new Date(respond['log'][$i]['waktu_edit']).getDay();
+                        var xbulan = new Date(respond['log'][$i]['waktu_edit']).getMonth();
+                        var xtahun = new Date(respond['log'][$i]['waktu_edit']).getYear();
+                        
+                        var jam     = new Date(respond['log'][$i]['waktu_edit']).getHours();
+                        var menit   = new Date(respond['log'][$i]['waktu_edit']).getMinutes();
+                        var detik   = new Date(respond['log'][$i]['waktu_edit']).getSeconds();
+                        
+                        var hari = hari[xhari];
+                        var bulan = bulan[xbulan];
+                        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                        $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun +' '+jam+':'+menit+':'+detik;
+
                         $tampung_isi = $tampung_isi + 
                         '<tr>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+ respond['log'][$i]['waktu_edit'] +'</td>' +
+                        '<td style="text-align: center;vertical-align: middle;">'+ $tanggalnya +'</td>' +
                         '<td style="text-align: center;vertical-align: middle;">'+ $user +'</td>' +
                         '<td style="text-align: center;vertical-align: middle;">'+ respond['log'][$i]['keterangan_log'] +'</td>' +
                         '<td style="vertical-align: middle;">'+ $data +'</td>' +

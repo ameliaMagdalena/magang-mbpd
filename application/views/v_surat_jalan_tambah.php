@@ -150,9 +150,9 @@
                             </td>
                             <td class="col-lg-3">
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                    value="<?= $no;?>" title="Detail"></button>
+                                    value="<?= $no;?>" title="Detail" style="margin-bottom:5px;margin-right:5px"></button>
                                 <button type="button" class="badd_klik col-lg-3 btn btn-success fa fa-plus-square-o" 
-                                    value="<?= $no;?>" title="Buat Surat Jalan"></button>
+                                    value="<?= $no;?>" title="Buat Surat Jalan" style="margin-bottom:5px;margin-right:5px"></button>
                             </td>
                         </tr>
                     <?php $no++; }}?>

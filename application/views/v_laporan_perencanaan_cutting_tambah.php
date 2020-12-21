@@ -261,6 +261,20 @@
                         }
                     //tutup nama produk
 
+                    
+                    var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                    var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                    var tanggal = new Date(respond['percut'][$i]['tanggal_produksi']).getDate();
+                    var xhari = new Date(respond['percut'][$i]['tanggal_produksi']).getDay();
+                    var xbulan = new Date(respond['percut'][$i]['tanggal_produksi']).getMonth();
+                    var xtahun = new Date(respond['percut'][$i]['tanggal_produksi']).getYear();
+                    
+                    var hari = hari[xhari];
+                    var bulan = bulan[xbulan];
+                    var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                    $tanggal_prod = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
 
                     $isi = $isi + 
                     '<tr>'+
@@ -271,7 +285,7 @@
                             $namanya+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['percut'][$i]['tanggal_produksi']+
+                            $tanggal_prod+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['percut'][$i]['jumlah_percut']+
@@ -407,6 +421,20 @@
                         }
                     //tutup nama produk
 
+                    var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                    var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                    var tanggal = new Date(respond['percut'][$i]['tanggal_produksi']).getDate();
+                    var xhari = new Date(respond['percut'][$i]['tanggal_produksi']).getDay();
+                    var xbulan = new Date(respond['percut'][$i]['tanggal_produksi']).getMonth();
+                    var xtahun = new Date(respond['percut'][$i]['tanggal_produksi']).getYear();
+                    
+                    var hari = hari[xhari];
+                    var bulan = bulan[xbulan];
+                    var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                    $tanggal_prod = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
                     $isi = $isi + 
                     '<tr>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
@@ -417,13 +445,13 @@
                             '<input type="hidden" name="id_percut'+$i+'" value="'+respond['percut'][$i]['id_perencanaan_cutting']+'">'+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['percut'][$i]['tanggal_produksi']+
+                            $tanggal_prod+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['percut'][$i]['jumlah_percut']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            '<center><input type="number" min="0" name="jm_aktual'+$i+'" class="form-control" style="width:80px;height:25px" required></center>'+
+                            '<center><input type="number" min="0" max="'+respond['percut'][$i]['jumlah_percut']+'" name="jm_aktual'+$i+'" class="form-control" style="width:80px;height:25px" required></center>'+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             '<textarea type="text" class="form-control" name="ket'+$i+'"></textarea>'+

@@ -214,7 +214,18 @@ class Karyawan extends CI_Controller {
         echo json_encode($data);
     }
 
-    //get nama material based on jenis materialnya
+    public function cek_nik_input(){
+        $nik = $this->input->post('nik_input');
+
+        $hasil_cari_nik = $this->M_Karyawan->cari_nik($nik)->num_rows();
+
+        if($hasil_cari_nik > 0){
+            $data['res'] = 1;
+        }
+
+        echo json_encode($data);
+    }
+
     public function get_spesifikasi_jabatan(){
         $id_departemen = $this->input->post('id_departemen');
 
@@ -238,6 +249,7 @@ class Karyawan extends CI_Controller {
 
     public function tambah_karyawan(){
         $nama_karyawan = $this->input->post('nama_karyawan_input');
+        $nik           = $this->input->post('nik_input');
         $keterangan    = $this->input->post('keterangan');
         $jumlah_sj_    = $this->input->post('jumlah_sj');
         $jumlah_sj     = strlen($jumlah_sj_); 
@@ -254,6 +266,7 @@ class Karyawan extends CI_Controller {
     
         $data_kar = array (
             'id_karyawan'   => $id_karyawan,
+            'nik'           => $nik,
             'nama_karyawan' => $nama_karyawan,
             'keterangan'    => $keterangan,
             'user_add'      => $user,
@@ -297,12 +310,12 @@ class Karyawan extends CI_Controller {
 
             $id_user = "USER-".$id_num_user;
 
-            
             $data_user = array (
                 'id_user'       => $id_user,
                 'id_karyawan'   => $id_karyawan,
                 'email_user'    => $email,
                 'password_user' => md5($password),
+                'status_user'   => 0,
                 'user_add'      => $user,
                 'waktu_add'     => $now,
                 'status_delete' => 0
@@ -314,128 +327,191 @@ class Karyawan extends CI_Controller {
         redirect('karyawan');
 
     }
-/*
 
+    public function detail_karyawan(){
+        $id          = $this->input->post('id');
 
-    public function cek_nama_departemen_edit(){
-        $nama_departemen = $this->input->post('nama_departemen_edit');
-
-        $hasil_cari_departemen = $this->M_Departemen->cari_departemen($nama_departemen)->num_rows();
-
-        if($hasil_cari_departemen > 0){
-            $data['res'] = 1;
-        }
+        $data['kar']   = $this->M_Karyawan->get_one_karyawan($id)->result_array();
+        $data['jab']   = $this->M_Karyawan->get_one_jabatan_karyawan($id)->result_array();
+        $data['jmjab'] = $this->M_Karyawan->get_one_jabatan_karyawan($id)->num_rows();
 
         echo json_encode($data);
-    }
+    }   
 
-    public function tambah_departemen(){
-        $nama_departemen = $this->input->post('nama_departemen_input');
+    public function edit_karyawan(){
+        $id                 = $this->input->post('id_edit');
+        $nik                = $this->input->post('nik_edit');
+        $nama               = $this->input->post('nama_karyawan_edit');
+        //jika keterangan = 0 (tidak memiliki akses), jika keterangan = 1 (memiliki akses)
+        $keterangan_sebelum = $this->input->post('keterangan_edit_sebelum');
+        $keterangan_sesudah = $this->input->post('keterangan_edit_sesudah');
+        $jumlah_spekjab     = $this->input->post('ejumlah_sj');
 
-        $now = date('Y-m-d H:i:s');
-        $jumlah_departemen   = $this->M_Departemen->select_all()->num_rows();
-        $id_number      = $jumlah_departemen + 1;
+        //karyawan
+            $data_kar = array(
+                'nik'           => $nik,
+                'nama_karyawan' => $nama,
+                'keterangan'    => $keterangan_sesudah,
+                'user_edit'     => $_SESSION['id_user'],
+                'waktu_edit'    => date('Y-m-d H:i:s')
+            );
 
-        $id_departemen     = "DEPT-".$id_number;
+            $where_kar = array(
+                'id_karyawan'   => $id
+            );
 
-        $departemen        = $this->M_Departemen->select_all_aktif()->result_array();
-        $jumlah_departemen = $this->M_Departemen->select_all_aktif()->num_rows();
-        $hitung = 0;
+            $this->M_Karyawan->edit('karyawan',$data_kar,$where_kar);
+        //tutup karyawan
         
-        for($i=0;$i<$jumlah_departemen;$i++){
-            if($departemen[$i]['id_departemen'] == $id_departemen){
-                continue;
-            }
-            else{
-                if($departemen[$i]['nama_departemen'] == $nama_departemen){
-                    $hitung++;
+        //jabatan karyawan
+            $jumlahnya = strlen($jumlah_spekjab);
+
+            for($i=1;$i<=$jumlahnya;$i++){
+                $stat = $this->input->post('stat'.$i);
+                $del  = $this->input->post('del'.$i);
+
+                //jika sebelumnya ada, jadi tidak ada
+                if($stat == 0 && $del == "on"){
+                    $id_jabkar = $this->input->post('idjabkar'.$i);
+                    //hapus jabatan karyawan
+                    
+                    $data_jabkar = array(
+                        'status_delete' => 1,
+                        'user_delete'   => $_SESSION['id_user'],
+                        'waktu_delete'  => date('Y-m-d H:i:s')
+                    );
+
+                    $where_jabkar = array(
+                        'id_jabatan_karyawan' => $id_jabkar
+                    );
+                    $this->M_Karyawan->edit('jabatan_karyawan',$data_jabkar,$where_jabkar);
+                    
+                }
+                //jika sebelumnya tidak ada, jadi ada ada
+                else if($stat == 1 && $del != "on"){
+                    //add jabatan karyawan
+                    $id_spesifikasi_jabatan = $this->input->post('eidjb'.$i);
+
+                    $jum_jab_kar    =  $this->M_Karyawan->select_all_jabatan_karyawan()->num_rows();
+                    $id_num_jab_kar = $jum_jab_kar + 1;
+
+                    $id_jab_kar = "JBTKAR-".$id_num_jab_kar;
+
+                    $data_jab_kar = array(
+                        'id_jabatan_karyawan'   => $id_jab_kar,
+                        'id_karyawan'           => $id,
+                        'id_spesifikasi_jabatan'=> $id_spesifikasi_jabatan,
+                        'user_add'              => $_SESSION['id_user'],
+                        'waktu_add'             => date('Y-m-d H:i:s'),
+                        'status_delete'         => 0
+                    );
+
+                    $this->M_Karyawan->insert('jabatan_karyawan',$data_jab_kar);
                 }
             }
-        }
-
-        if($hitung == 0){
-            $data = array (
-                'id_departemen'      => $id_departemen,
-                'nama_departemen'    => $nama_departemen,
-                'user_add'      => $_SESSION['id_user'],
-                'waktu_add'     => $now,
-                'status_delete' => 0
-            );
-            $this->M_Departemen->insert('departemen',$data);
-        }
-        Redirect('departemen');
-    }
-
-    public function edit_departemen(){
-        $id_departemen   = $this->input->post('id_departemen');
-        $nama_departemen = $this->input->post('nama_departemen_edit');
-
-        $now = date('Y-m-d H:i:s');
-
-        $departemen        = $this->M_Departemen->select_all_aktif()->result_array();
-        $jumlah_departemen = $this->M_Departemen->select_all_aktif()->num_rows();
-
-        $hitung = 0;
+        //tutup jabatan karyawan
         
-        for($i=0;$i<$jumlah_departemen;$i++){
-            if($departemen[$i]['id_departemen'] == $id_departemen){
-                continue;
-            }
-            else{
-                if($departemen[$i]['nama_departemen'] == $nama_departemen){
-                    $hitung++;
+        //user
+            //jika sebelumnya ada, jadi tidak ada
+                if($keterangan_sebelum == 1 && $keterangan_sesudah == 0){
+                    echo "ada, jadi tidak ada";
                 }
-            }
-        }
+            //jika sebelumnya tidak ada, jadi ada 
+                else if($keterangan_sebelum == 0 && $keterangan_sesudah == 1){
+                    $email = $this->input->post('email_user_edit');
+                    $pass  = $this->input->post('password_user_edit');
 
-        if($hitung == 0){
-            $data = array(
-                'nama_departemen'   =>$nama_departemen,
-                'user_edit'         =>$_SESSION['id_user'],
-                'waktu_edit'        =>$now
-            );
-    
-            $where = array (
-                'id_departemen'      =>$id_departemen
-            );
-    
-            $this->M_Departemen->edit('departemen',$data,$where);
-        }
+                    $jum_user = $this->M_User->selectAllUser()->num_rows();
+                    $id_num_user = $jum_user+1;
         
-        Redirect('departemen');
+                    $id_user = "USER-".$id_num_user;
+
+                    $data_user = array(
+                        'id_user'       => $id_user,
+                        'id_karyawan'   => $id,
+                        'email_user'    => $email,
+                        'password_user' => md5($pass),
+                        'status_user'   => 0,
+                        'user_add'      => $_SESSION['id_user'],
+                        'waktu_add'     => date('Y-m-d H:i:s'),
+                        'status_delete' => 0
+                    );
+
+                    $this->M_Karyawan->insert('user',$data_user);
+                }
+        //tutup user
+
+        redirect('karyawan');
     }
 
-    public function delete_departemen(){
-        $id_departemen = $this->input->post('id_departemen');
-        $now      = date('Y-m-d H:i:s');
+    public function delete_karyawan(){
+        $id   = $this->input->post('id_karyawan');
+        $ket  = $this->input->post('keterangan');
 
-        $data = array (
+        $data_kar = array(
+            'status_delete' => 1,
             'user_delete'   => $_SESSION['id_user'],
-            'waktu_delete'  => $now,
-            'status_delete' => 1
+            'waktu_delete'  => date('Y-m-d H:i:s')
         );
 
-        $where = array (
-            'id_departemen' => $id_departemen
+        $where_kar = array(
+            'id_karyawan' => $id
         );
 
-        $this->M_Departemen->edit('departemen',$data,$where);
-        redirect('departemen');
+        $this->M_Karyawan->edit('karyawan',$data_kar,$where_kar);
+
+        //jabkar
+        $jab   = $this->M_Karyawan->get_one_jabatan_karyawan($id)->result_array();
+        $jmjab = $this->M_Karyawan->get_one_jabatan_karyawan($id)->num_rows();
+
+        for($i=0;$i<$jmjab;$i++){
+            $id_jabkar = $jab[$i]['id_jabatan_karyawan'];
+
+            $data_jabkar = array(
+                'status_delete' => 1,
+                'user_delete'   => $_SESSION['id_user'],
+                'waktu_delete'  => date('Y-m-d H:i:s')
+            );
+    
+            $where_jabkar = array(
+                'id_jabatan_karyawan' => $id_jabkar
+            );
+    
+            $this->M_Karyawan->edit('jabatan_karyawan',$data_jabkar,$where_jabkar);
+        }
+
+        //user
+        if($ket == 1){
+            $us = $this->M_Karyawan->get_one_user($id)->result_array();
+
+            $data_user = array(
+                'status_delete' => 1,
+                'user_delete'   => $_SESSION['id_user'],
+                'waktu_delete'  => date('Y-m-d H:i:s')
+            );
+    
+            $where_user = array(
+                'id_user' => $us[0]['id_user']
+            );
+    
+            $this->M_Karyawan->edit('user',$data_user,$where_user);
+        }
+
+        redirect('karyawan');
     }
 
     public function ambil_data_log(){
         $id = $this->input->post('id');
-        $data['id'] = $id;
+        
+        $data_inputnya     = $this->M_Karyawan->select_user_add($id)->result_array();
+        
+        $user              = $this->M_Karyawan->cari_user($data_inputnya[0]['user_add'])->result_array();
 
-        $data_input['user']       = $this->M_Departemen->select_user_add($id)->result_array();
-        $id_user                  = $data_input['user'][0]['user_add'];
-        $data_input['cari_user']  = $this->M_Departemen->cari_user($id_user)->result_array();
- 
-        $nama_user          = $data_input['cari_user'][0]['nama_karyawan'];
+        $nama_user         = $user[0]['nama_karyawan'];
 
         $data['input_user'] = $nama_user;
-        $data['input_date'] = " ".$data_input['user'][0]['waktu_add'];
-        $day = date('D', strtotime($data_input['user'][0]['waktu_add']));
+
+        $day = date('D', strtotime($data_inputnya[0]['waktu_add']));
 
         if($day == "Sun"){
             $hari = "Minggu";
@@ -459,18 +535,17 @@ class Karyawan extends CI_Controller {
             $hari = "Sabtu";
         }
 
-        $tanggal = date('d-m-Y', strtotime($data_input['user'][0]['waktu_add']));
-        $jam     = date('H:i:s', strtotime($data_input['user'][0]['waktu_add']));
-
+        $tanggal = date('d-m-Y', strtotime($data_inputnya[0]['waktu_add']));
+        $jam     = date('H:i:s', strtotime($data_inputnya[0]['waktu_add']));
+        
         $data['input_date'] = " ".$hari.",  ".$tanggal." | ". $jam ;
 
-        $data['log']        = $this->M_Departemen->select_log($id)->result_array();
-        $data['jumlah_log'] = $this->M_Departemen->select_log($id)->num_rows();
+        $data['log']        = $this->M_Karyawan->select_log($id)->result_array();
+        $data['jumlah_log'] = $this->M_Karyawan->select_log($id)->num_rows();
 
         $data['user']       = $this->M_User->select_all_userjabatandepartemen()->result_array();
         $data['jumlah_user'] = $this->M_User->select_all_userjabatandepartemen()->num_rows();
-    
+
         echo json_encode($data);
     }
-*/
 }

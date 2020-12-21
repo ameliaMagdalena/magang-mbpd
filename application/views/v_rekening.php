@@ -64,20 +64,19 @@
                             </td>
                             <td  class="col-lg-3">
                                 <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                    title="Detail" href="#modaldetail<?= $rk->id_rekening;?>"></a>
+                                    title="Detail" href="#modaldetail<?= $rk->id_rekening;?>" style="margin-right:5px;margin-bottom:5px"></a>
                                 
                                 <?php if(($_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management")){?>
                                     <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                        title="Edit" href="#modaledit<?= $rk->id_rekening;?>"></a>
+                                        title="Edit" href="#modaledit<?= $rk->id_rekening;?>" style="margin-right:5px;margin-bottom:5px"></a>
                                     <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                    title="Hapus" href="#modalhapus<?= $rk->id_rekening;?>"></a>
+                                    title="Hapus" href="#modalhapus<?= $rk->id_rekening;?>" style="margin-right:5px;margin-bottom:5px"></a>
                                     <button type="button" class="blog_klik col-lg-3 btn btn-info fa fa-file" 
-                                    id="blog<?= $rk->id_rekening;?>" value="<?= $rk->id_rekening;?>"></button>
+                                    id="blog<?= $rk->id_rekening;?>" value="<?= $rk->id_rekening;?>" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php } ?>
                             </td>
                         </tr>
-
-                            
+                   
                         <div id='modaldetail<?= $rk->id_rekening;?>' class="modal-block modal-block-primary mfp-hide">
                             <section class="panel">
                                 <header class="panel-heading">
@@ -409,7 +408,26 @@
                         }
 
 
-                        $tanggal = respond['log'][$i]['waktu_add'];
+                        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                        var tanggal = new Date(respond['log'][$i]['waktu_add']).getDate();
+                        var xhari = new Date(respond['log'][$i]['waktu_add']).getDay();
+                        var xbulan = new Date(respond['log'][$i]['waktu_add']).getMonth();
+                        var xtahun = new Date(respond['log'][$i]['waktu_add']).getYear();
+                        
+                        var jam     = new Date(respond['log'][$i]['waktu_add']).getHours();
+                        var menit   = new Date(respond['log'][$i]['waktu_add']).getMinutes();
+                        var detik   = new Date(respond['log'][$i]['waktu_add']).getSeconds();
+                        
+                        var hari = hari[xhari];
+                        var bulan = bulan[xbulan];
+                        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                        $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun +' '+jam+':'+menit+':'+detik;
+
+                        $tanggal = $tanggalnya;
+
                         $user = $nama_user;
                         $data = "Nama Bank (" + $nama_bank + ")," +
                         " Nomor Rekening (" + respond['log'][$i]['nomor_rekening'] + "),"+
@@ -496,10 +514,28 @@
                             $count++;
                         }
 
+                        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                        var tanggal = new Date(respond['log'][$i]['waktu_edit']).getDate();
+                        var xhari = new Date(respond['log'][$i]['waktu_edit']).getDay();
+                        var xbulan = new Date(respond['log'][$i]['waktu_edit']).getMonth();
+                        var xtahun = new Date(respond['log'][$i]['waktu_edit']).getYear();
+                        
+                        var jam     = new Date(respond['log'][$i]['waktu_edit']).getHours();
+                        var menit   = new Date(respond['log'][$i]['waktu_edit']).getMinutes();
+                        var detik   = new Date(respond['log'][$i]['waktu_edit']).getSeconds();
+                        
+                        var hari = hari[xhari];
+                        var bulan = bulan[xbulan];
+                        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                        $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun +' '+jam+':'+menit+':'+detik;
+
 
                         $tampung_isi = $tampung_isi + 
                         '<tr>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+ respond['log'][$i]['waktu_edit'] +'</td>' +
+                        '<td style="text-align: center;vertical-align: middle;">'+ $tanggalnya +'</td>' +
                         '<td style="text-align: center;vertical-align: middle;">'+ $user +'</td>' +
                         '<td style="text-align: center;vertical-align: middle;">'+ respond['log'][$i]['keterangan_log'] +'</td>' +
                         '<td style="vertical-align: middle;">'+ $data +'</td>' +

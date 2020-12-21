@@ -26,7 +26,7 @@ class M_Akses extends CI_Model {
 
     function jabatan_karyawan($id_karyawan){
         return $this->db->query("SELECT * FROM karyawan,jabatan_karyawan,spesifikasi_jabatan,jabatan,departemen
-        WHERE karyawan.id_karyawan ='$id_karyawan' AND spesifikasi_jabatan.status_delete='0'AND 
+        WHERE karyawan.id_karyawan ='$id_karyawan' AND jabatan_karyawan.status_delete='0'AND 
         karyawan.id_karyawan = jabatan_karyawan.id_karyawan AND
         spesifikasi_jabatan.id_spesifikasi_jabatan = jabatan_karyawan.id_spesifikasi_jabatan
         AND jabatan.id_jabatan = spesifikasi_jabatan.id_jabatan 

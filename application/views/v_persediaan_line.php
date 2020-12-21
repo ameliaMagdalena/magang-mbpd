@@ -24,6 +24,16 @@
 <!--*****************************-->
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
+        <?php if($_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi" || 
+            $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" ||
+            $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management" ){?>
+                <a class="modal-with-form col-lg-2  btn btn-primary" id="button_tambah" 
+                href="#modaltambah" style="margin-right:5px;margin-bottom:5px">+ Masuk</a>
+                <a class="modal-with-form col-lg-2  btn btn-success" id="button_tambah" 
+                href="#modalkeluar" style="margin-right:5px;margin-bottom:5px">+ Keluar</a>
+                <br><br>
+        <?php }?>
+
         <header class="panel-heading">
             <h2 class="panel-title">Data Persediaan Line</h2>
         </header>
@@ -35,10 +45,9 @@
                         <th style="text-align: center;vertical-align: middle;">No</th>
                         <th style="text-align: center;vertical-align: middle;">Nama Material</th>
                         <th style="text-align: center;vertical-align: middle;">Total Material</th>
-                        <?php if($_SESSION['nama_jabatan'] != "PIC Line Cutting" && $_SESSION['nama_departemen'] != "Produksi" || 
-                            $_SESSION['nama_jabatan'] != "PIC Line Bonding" && $_SESSION['nama_departemen'] != "Produksi" ||
-                            $_SESSION['nama_jabatan'] != "PIC Line Sewing" && $_SESSION['nama_departemen'] != "Produksi" ||
-                            $_SESSION['nama_jabatan'] != "PIC Line Assy" && $_SESSION['nama_departemen'] != "Produksi"){?>
+                        <?php if($_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi" || 
+                            $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] != "Management" ||
+                            $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] != "Management"){?>
                             <th style="text-align: center;vertical-align: middle;">Nama Line</th>
                         <?php }?>
                         <th style="text-align: center;vertical-align: middle;">Aksi</th>
@@ -56,18 +65,17 @@
                                 <?= $x->nama_sub_jenis_material; ?>
                             </td>
                             <td style="text-align: center;vertical-align: middle;"><?= $x->total_material; ?></td>
-                            <?php if($_SESSION['nama_jabatan'] != "PIC Line Cutting" && $_SESSION['nama_departemen'] != "Produksi" || 
-                            $_SESSION['nama_jabatan'] != "PIC Line Bonding" && $_SESSION['nama_departemen'] != "Produksi" ||
-                            $_SESSION['nama_jabatan'] != "PIC Line Sewing" && $_SESSION['nama_departemen'] != "Produksi" ||
-                            $_SESSION['nama_jabatan'] != "PIC Line Assy" && $_SESSION['nama_departemen'] != "Produksi"){?>
+                            <?php if($_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi" || 
+                            $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] != "Management" ||
+                            $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] != "Management"){?>
                                 <td style="text-align: center;vertical-align: middle;"><?= $x->nama_line; ?></td>
                             <?php }?>
                             <td  class="col-lg-3">
                                 <a class="bmasuk_klik modal-with-form col-lg-3 btn btn-primary fa  fa-level-down"
-                                title="Persediaan Masuk" href="#modalmasuk<?= $x->id_persediaan_line;?>" value="<?= $no;?>"></a>
+                                title="Persediaan Masuk" href="#modalmasuk<?= $x->id_persediaan_line;?>" value="<?= $no;?>" style="margin-right:5px;margin-bottom:5px"></a>
 
                                 <a class="bkeluar_klik modal-with-form col-lg-3 btn btn-success fa   fa-level-up"
-                                title="Persediaan Keluar" href="#modalkeluar<?= $x->id_persediaan_line;?>" value="<?= $no;?>"></a>
+                                title="Persediaan Keluar" href="#modalkeluar<?= $x->id_persediaan_line;?>" value="<?= $no;?>" style="margin-right:5px;margin-bottom:5px"></a>
                             </td>
                         </tr>
 
@@ -164,25 +172,52 @@
     </div>
 
     <div id='modaltambah' class="modal-block modal-block-primary mfp-hide">
-        <form method="POST" action="<?= base_url()?>warna/tambah_warna"> 
+        <form method="POST" action="<?= base_url()?>inventoryLine/tambah"> 
             <section class="panel">
                 <header class="panel-heading">
-                    <h2 class="panel-title">Tambah Warna</h2>
+                    <h2 class="panel-title">Tambah Persediaan Masuk</h2>
                 </header>
 
                 <div class="panel-body">
                     <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Nama Warna</label>
+                        <label class="col-sm-5 control-label">Nama Line</label>
                         <div class="col-sm-7">
-                            <input type="text" name="nama_warna_input" id="nama_warna_input" 
-                            onchange="cek_nama_warna_input()" required class="form-control">
+                            <select class="form-control populate" name="line" id="line" onchange="ubah()">
+                                <option value="-" >Pilih Line</option>
+                                <?php foreach($line as $l){?>
+                                    <option value="<?= $l->id_line ?>"><?= $l->nama_line ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group mt-lg">
+                        <label class="col-sm-5 control-label">Nama Material</label>
+                        <div class="col-sm-7">
+                            <select class="form-control" name="material" id="material" onchange="material_change()">
+                                <option value="-" >Pilih Material</option>
+                                <?php foreach($sub_jm as $sjm){?>
+                                    <option value="<?= $sjm->id_sub_jenis_material ?>"><?= $sjm->nama_sub_jenis_material ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group mt-lg">
+                        <label class="col-sm-5 control-label">Total Material</label>
+                        <div class="col-sm-7">
+                            <input class="form-control" type="number" min="0.01" step=".01"  id="jumlah_material" name="jumlah_material" onchange="ubah()">
+                        </div>
+                    </div>
+                    <div class="form-group mt-lg">
+                        <label class="col-sm-5 control-label">Satuan Masuk</label>
+                        <div class="col-sm-7">
+                            <input class="form-control" type="text"  id="satuan" disabled>
                         </div>
                     </div>
                 </div>
                 <footer class="panel-footer">
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <input type="submit" class="btn btn-primary" value="Simpan">
+                            <input type="submit" class="btn btn-primary" value="Simpan" id="simpan" disabled>
                             <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
                         </div>
                     </div>
@@ -191,39 +226,54 @@
         </form>
     </div>
 
-    <div class="modal" id="modallog" role="dialog">
-        <div class="modal-dialog modal-xl" style="width:80%">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Log Warna</h4>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="id_terpilih">
+    <div id='modalkeluar' class="modal-block modal-block-primary mfp-hide">
+        <form method="POST" action="<?= base_url()?>inventoryLine/keluarkan"> 
+            <section class="panel">
+                <header class="panel-heading">
+                    <h2 class="panel-title">Tambah Persediaan Keluar</h2>
+                </header>
 
-                    <table>
-                        <tr>
-                            <td class="col-md-6">
-                                <center>
-                                    <b>Input Date:</b><span id="input_date"></span>
-                                </center>
-                            </td>
-                            <td class="col-md-6">
-                                <center>
-                                    <b>User Input:</b><span id="input_user"></span>
-                                </center>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <div id="isi_log">
-
+                <div class="panel-body">
+                    <div class="form-group mt-lg">
+                        <label class="col-sm-5 control-label">Nama Material</label>
+                        <div class="col-sm-7">
+                            <select class="form-control populate" name="nama_persediaan" id="nama_persediaan" onchange="persediaan_ubah()">
+                                <option value="-" >Pilih Material</option>
+                                <?php foreach($persediaan as $p){?>
+                                    <option value="<?= $p->id_persediaan_line ?>"><?= $p->nama_sub_jenis_material ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group mt-lg">
+                        <label class="col-sm-5 control-label">Total Material</label>
+                        <div class="col-sm-7">
+                            <input class="form-control" type="number"  id="total_persediaan" name="total_persediaan" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group mt-lg" id="div_keluar">
+                        <label class="col-sm-5 control-label">Jumlah Keluar</label>
+                        <div class="col-sm-7">
+                            <input class="form-control" type="number" min="0.01" step=".01"  id="jumlah_keluar" name="jumlah_keluar" onchange="cek_pengeluaran()">
+                        </div>
+                    </div>
+                    <div class="form-group mt-lg">
+                        <label class="col-sm-5 control-label">Satuan Keluar</label>
+                        <div class="col-sm-7">
+                            <input class="form-control" type="text"  id="satuan_keluar" disabled>
+                        </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
-                </div>
-            </div>
-        </div>
+                <footer class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <input type="submit" class="btn btn-primary" value="Simpan" id="simpan_keluar" disabled>
+                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        </form>
     </div>
 <!--*****************************-->
 <?php include('_endtitle.php'); ?>
@@ -253,19 +303,42 @@
                 $status = "";
 
                 for($i=0;$i<respond['jm_det_inline'];$i++){
+                    var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                    var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                    var tanggal = new Date(respond['det_inline'][$i]['tanggal']).getDate();
+                    var xhari = new Date(respond['det_inline'][$i]['tanggal']).getDay();
+                    var xbulan = new Date(respond['det_inline'][$i]['tanggal']).getMonth();
+                    var xtahun = new Date(respond['det_inline'][$i]['tanggal']).getYear();
+                    
+                    var hari = hari[xhari];
+                    var bulan = bulan[xbulan];
+                    var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                    $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                    if(respond['det_inline'][$i]['status'] == 0){
+                        $status = "Produksi";
+                    } else{
+                        $status = "Lainnya";
+                    }
+                
                     $isi = $isi +
                     '<tr>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             ($i+1)+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['det_inline'][$i]['tanggal']+
+                            $tanggalnya+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['det_inline'][$i]['jumlah_material']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['det_inline'][$i]['satuan_keluar']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            $status+
                         '</td>'+
                     '</tr>';
 
@@ -286,6 +359,9 @@
                                     '</th>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'Satuan'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Status Masuk'+
                                     '</th>'+
                                 '</tr>'+
                             '</thead>'+
@@ -317,19 +393,42 @@
                 $status = "";
 
                 for($i=0;$i<respond['jm_det_inline'];$i++){
+                    var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                    var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                    var tanggal = new Date(respond['det_inline'][$i]['tanggal']).getDate();
+                    var xhari = new Date(respond['det_inline'][$i]['tanggal']).getDay();
+                    var xbulan = new Date(respond['det_inline'][$i]['tanggal']).getMonth();
+                    var xtahun = new Date(respond['det_inline'][$i]['tanggal']).getYear();
+                    
+                    var hari = hari[xhari];
+                    var bulan = bulan[xbulan];
+                    var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                    $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                    if(respond['det_inline'][$i]['status'] == 0){
+                        $status = "Produksi";
+                    } else{
+                        $status = "Lainnya";
+                    }
+
                     $isi = $isi +
                     '<tr>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             ($i+1)+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['det_inline'][$i]['tanggal']+
+                            $tanggalnya+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['det_inline'][$i]['jumlah_material']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['det_inline'][$i]['satuan_keluar']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            $status+
                         '</td>'+
                     '</tr>';
 
@@ -351,6 +450,9 @@
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'Satuan'+
                                     '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Status'+
+                                    '</th>'+
                                 '</tr>'+
                             '</thead>'+
                             '<tbody>'+
@@ -364,4 +466,72 @@
     });
 </script>
 
+<!-- ubah -->
+<script>
+    function ubah(){
+        if($("#line").val() != "-" && $("#material").val() != "-" && $("#jumlah_material").val() != ""){
+            $("#simpan").prop('disabled',false);
+        } else{
+            $("#simpan").prop('disabled',true);
+        }
+    }
+</script>
+
+<!-- material change -->
+<script>
+    function material_change(){
+        var id = $("#material").val();
+
+        $.ajax({
+            type:"post",    
+            url:"<?php echo base_url() ?>inventoryLine/satuan_masuk",
+            dataType: "JSON",
+            data: {id:id},
+
+            success: function(respond){
+                $("#satuan").val(respond['satuan'][0]['satuan_keluar']);
+                ubah();
+            }
+        });
+    }
+</script>
+
+<!-- persediaan ubah -->
+<script>
+    function persediaan_ubah(){
+        var id = $("#nama_persediaan").val();
+
+        $.ajax({
+            type:"post",    
+            url:"<?php echo base_url() ?>inventoryLine/get_one_persediaan_line",
+            dataType: "JSON",
+            data: {id:id},
+
+            success: function(respond){
+                $("#total_persediaan").val(respond['seli'][0]['total_material']);
+                $("#satuan_keluar").val(respond['seli'][0]['satuan_keluar']);
+
+                $isi = 
+                    '<label class="col-sm-5 control-label">Jumlah Keluar</label>'+
+                    '<div class="col-sm-7">'+
+                        '<input class="form-control" type="number" min="0.01" step=".01" max="'+respond['seli'][0]['total_material']
+                        +'" id="jumlah_keluar" name="jumlah_keluar" onchange="cek_pengeluaran()">'+
+                    '</div>';
+
+                $("#div_keluar").html($isi);
+            }
+        });
+    }
+</script>
+
+<!-- cek pengeluaran -->
+<script>
+    function cek_pengeluaran(){
+        if($("#nama_persediaan").val() != "-" && $("#jumlah_keluar").val() > 0){
+            $("#simpan_keluar").prop('disabled',false);
+        } else{
+            $("#simpan_keluar").prop('disabled',true);
+        }
+    }
+</script>
     

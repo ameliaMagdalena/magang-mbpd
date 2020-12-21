@@ -50,7 +50,41 @@
                         <tr>
                             <td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
                             <td style="text-align: center;vertical-align: middle;"><?= $x->kode_purchase_order_customer ?></td>
-                            <td style="text-align: center;vertical-align: middle;"><?= $x->tanggal ?></td>
+                            <td style="text-align: center;vertical-align: middle;"><?php 
+                                    $waktu = $x->tanggal;
+
+                                    $hari_array = array(
+                                        'Minggu',
+                                        'Senin',
+                                        'Selasa',
+                                        'Rabu',
+                                        'Kamis',
+                                        'Jumat',
+                                        'Sabtu'
+                                    );
+                                    $hr = date('w', strtotime($waktu));
+                                    $hari = $hari_array[$hr];
+                                    $tanggal = date('j', strtotime($waktu));
+                                    $bulan_array = array(
+                                        1 => 'Januari',
+                                        2 => 'Februari',
+                                        3 => 'Maret',
+                                        4 => 'April',
+                                        5 => 'Mei',
+                                        6 => 'Juni',
+                                        7 => 'Juli',
+                                        8 => 'Agustus',
+                                        9 => 'September',
+                                        10 => 'Oktober',
+                                        11 => 'November',
+                                        12 => 'Desember',
+                                    );
+                                    $bl = date('n', strtotime($waktu));
+                                    $bulan = $bulan_array[$bl];
+                                    $tahun = date('Y', strtotime($waktu));
+                                    
+                                    echo "$hari, $tanggal $bulan $tahun";
+                                ?></td>
                             <td style="text-align: center;vertical-align: middle;">
                                 <center>
                                     <!-- memiliki ukuran & warna -->
@@ -229,7 +263,23 @@
             success: function(respond){
                 $("#id").val(respond['prodtun'][0]['id_produksi_tertunda']);
                 $("#kode_po").val(respond['prodtun'][0]['kode_purchase_order_customer']);
-                $("#tanggal").val(respond['prodtun'][0]['tanggal']);
+
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['prodtun'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['prodtun'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['prodtun'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['prodtun'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal").val($tanggalnya);
                 $("#nama_line").val(respond['prodtun'][0]['nama_line']);
                 $("#jumlah_tertunda").val(respond['prodtun'][0]['jumlah_tertunda']);
 
@@ -308,13 +358,27 @@
                 $isi = "";
                 
                 for($i=0;$i<respond['jm_detprodtun'];$i++){
+                    var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                    var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                    var tanggal = new Date(respond['detprodtun'][$i]['tanggal']).getDate();
+                    var xhari = new Date(respond['detprodtun'][$i]['tanggal']).getDay();
+                    var xbulan = new Date(respond['detprodtun'][$i]['tanggal']).getMonth();
+                    var xtahun = new Date(respond['detprodtun'][$i]['tanggal']).getYear();
+                    
+                    var hari = hari[xhari];
+                    var bulan = bulan[xbulan];
+                    var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                    $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
                     $isi = $isi +
                     '<tr>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             ($i+1)+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['detprodtun'][$i]['tanggal']+
+                            $tanggalnya+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['detprodtun'][$i]['jumlah_perencanaan']+

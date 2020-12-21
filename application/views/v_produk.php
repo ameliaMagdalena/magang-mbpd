@@ -40,7 +40,6 @@
                 <thead>
                     <tr>
                         <th style="text-align: center;vertical-align: middle;">No</th>
-                        <th style="text-align: center;vertical-align: middle;">Kode Produk</th>
                         <th style="text-align: center;vertical-align: middle;">Jenis Produk</th>
                         <th style="text-align: center;vertical-align: middle;">Nama Produk</th>
                         <th style="text-align: center;vertical-align: middle;">Keterangan Produk</th>
@@ -55,7 +54,6 @@
                     ?>
                         <tr>
                             <td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
-                            <td style="text-align: center;vertical-align: middle;"><?= $x->kode_produk;?></td>
                             <td style="text-align: center;vertical-align: middle;"><?= $x->nama_jenis_produk;?></td>
                             <td style="text-align: center;vertical-align: middle;"><?= $x->nama_produk; ?></td>
                             <td style="text-align: center;vertical-align: middle;">
@@ -89,17 +87,17 @@
                                 ?>
                             </td>   
                             <td>
-                                <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
+                                <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" style="margin-right:5px;margin-bottom:5px"
                                     id="bdet<?php echo $x->id_produk;?>" value="<?php echo $x->id_produk;?>" title="Detail"></button>
 
                                 <?php if(($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Research & Development") 
                                 || ($_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management")
                                 || ($_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management" )){?>
-                                    <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
+                                    <button type="button" class="bedit_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" style="margin-right:5px;margin-bottom:5px"
                                         id="bedit<?php echo $x->id_produk;?>" value="<?php echo $x->id_produk;?>" title="Edit"></button>
-                                    <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
+                                    <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o" style="margin-right:5px;margin-bottom:5px"
                                         title="Delete" href="#modalhapus<?= $x->id_produk;?>"></a>
-                                    <a class="modal-with-form col-lg-3 btn btn-info fa fa-file"
+                                    <a class="modal-with-form col-lg-3 btn btn-info fa fa-file" style="margin-right:5px;margin-bottom:5px"
                                         title="Log" href=""></a>
                                 <?php } ?>
                             </td>
@@ -143,7 +141,7 @@
         </div>
     </div>
     
-    <div id='modaltambah' class="modal-block modal-block-lg mfp-hide" style="width:60%">
+    <div id='modaltambah' class="modal-block modal-block-lg mfp-hide" style="width:70%">
         <form method="POST" action="<?= base_url()?>produk/tambah_produk"> 
             <section class="panel">
                 <header class="panel-heading">
@@ -152,6 +150,7 @@
                 
                 <div class="panel-body">
                     <h4><b>Data Produk</b></h4>
+                    <!--
                     <div class="form-group mt-lg">
                         <label class="col-sm-5 control-label">Kode Produk</label>
                         <div class="col-sm-7">
@@ -159,6 +158,7 @@
                             class="form-control" onchange="cek_kode_produk_input()">
                         </div>
                     </div>
+                    -->
                     <div class="form-group mt-lg">
                         <label class="col-sm-5 control-label">Jenis Produk</label>
                         <div class="col-sm-7">
@@ -195,16 +195,28 @@
                             </select>
                         </div>
                     </div>
+                    <div id="tab_ketprod3" style="display:none">
+                        <div class="form-group mt-lg">
+                            <label class="col-sm-5 control-label">Kode Produk</label>
+                            <div class="col-sm-7">
+                                <input type="text"  name="kode_produk" id="kode_produk" onchange="cek_kode_produk_input()"
+                                class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div id="isi_ketprod"></div>
 
                     <div id="table_ketprod"></div>
                     <input type="hidden" id="jm_ketpod" value="0">
                     <br>
+                    
                     <div id="tab_ketprod0" style="display:none">
                         <table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">
                             <thead>
                                 <tr>
                                     <th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>
+                                    <th class="col-md-5" style="text-align: center;vertical-align: middle;">Kode Produk</th>
                                     <th class="col-md-5" style="text-align: center;vertical-align: middle;">Ukuran Produk</th>
                                     <th class="col-md-3" style="text-align: center;vertical-align: middle;">Warna Produk</th>
                                 </tr>
@@ -217,6 +229,7 @@
                             <thead>
                                 <tr>
                                     <th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>
+                                    <th class="col-md-5" style="text-align: center;vertical-align: middle;">Kode Produk</th>
                                     <th class="col-md-5" style="text-align: center;vertical-align: middle;">Ukuran Produk</th>
                                 </tr>
                             </thead>
@@ -228,6 +241,7 @@
                             <thead>
                                 <tr>
                                     <th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>
+                                    <th class="col-md-5" style="text-align: center;vertical-align: middle;">Kode Produk</th>
                                     <th class="col-md-3" style="text-align: center;vertical-align: middle;">Warna Produk</th>
                                 </tr>
                             </thead>
@@ -259,7 +273,7 @@
                                 <label class="col-sm-5 control-label">Cycle Time <?= $x->nama_line;?> (s)</label>
                                 <div class="col-sm-7">
                                     <input type="hidden" name="lnpc_<?= $no; ?>" id="pc_ln<?= $no;?>" value="<?= $x->id_line;?>" class="form-control">
-                                    <input type="number" name="ctpc_<?= $no; ?>" id="pc_ct<?= $no;?>" class="form-control" onchange="cek_terisi()">
+                                    <input type="number" min="1" name="ctpc_<?= $no; ?>" id="pc_ct<?= $no;?>" class="form-control" onchange="cek_terisi()">
                                 </div>
                             </div>
                         <?php $no++;} }?>
@@ -273,7 +287,7 @@
                                 <label class="col-sm-5 control-label">Cycle Time <?= $x->nama_line;?> (s)</label>
                                 <div class="col-sm-7">
                                     <input type="hidden" name="lnfull_<?= $no; ?>" id="fp_ln<?= $no;?>" value="<?= $x->id_line;?>" class="form-control">
-                                    <input type="number" name="ctfull_<?= $no; ?>" id="fp_ct<?= $no; ?>" class="form-control" onchange="cek_terisi()">
+                                    <input type="number" min="1" name="ctfull_<?= $no; ?>" id="fp_ct<?= $no; ?>" class="form-control" onchange="cek_terisi()">
                                 </div>
                             </div>
                         <?php $no++; }?>
@@ -440,37 +454,81 @@
 
     <div class="modal" id="modaledit" role="dialog">
         <form method="POST" action="<?= base_url()?>produk/edit_produk">
-            <div class="modal-dialog modal-xl" style="width:50%">
+            <div class="modal-dialog modal-xl" style="width:70%">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title"><b>Edit Produk</b></h4>
                     </div>
                     <div class="modal-body">
-                    <h5><b>Data Produk</b></h5>
+                            <h5><b>Data Produk</b></h5>
                             <div class="form-group mt-lg">
                                 <label class="col-sm-5 control-label">Kode Produk</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" 
-                                    id="ekode_produk" name="ekode_produk">
+                                    <input type="text" name="kode_produk_edit" id="kode_produk_edit"  
+                                    class="form-control" onchange="cek_kode_produk_edit()">
+                                    <input type="hidden" name="id_produk_edit" id="id_produk_edit">
                                 </div>
                             </div>
-                            <div id="ediv_jp">
-                            
-                            </div>
+                            <div id="ediv_jenprod"></div>
                             <div class="form-group mt-lg">
                                 <label class="col-sm-5 control-label">Nama Produk</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control"
-                                    id="enama_produk" name="enama_produk">
+                                    <input type="text"  name="nama_produk_edit" id="nama_produk_edit" 
+                                    onchange="cek_nama_produk_edit()"  class="form-control">
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
                                 <label class="col-sm-5 control-label">Harga Produk (Rp)</label>
                                 <div class="col-sm-7">
-                                    <input type="number" class="form-control"
-                                    id="eharga_produk" name="eharga_produk">
+                                    <input type="number"  name="harga_produk_edit" id="harga_produk_edit" 
+                                    class="form-control" onchange="cek_terisi()">
                                 </div>
                             </div>
+                            <div id="ediv_ketwar"></div>
+                            <br>
+                            <div id="ediv_pilih_ukwar"></div>
+                            
+                            <input type="hidden" id="ejm_ketpod" value="0">
+                            <br>
+                            <div id="etab_ketprod0" style="display:none">
+                                <table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>
+                                            <th class="col-md-5" style="text-align: center;vertical-align: middle;">Ukuran Produk</th>
+                                            <th class="col-md-3" style="text-align: center;vertical-align: middle;">Warna Produk</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+                            <div id="etab_ketprod1" style="display:none">
+                                <table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>
+                                            <th class="col-md-5" style="text-align: center;vertical-align: middle;">Ukuran Produk</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+                            <div id="etab_ketprod2" style="display:none">
+                                <table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>
+                                            <th class="col-md-3" style="text-align: center;vertical-align: middle;">Warna Produk</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+                            <input type="text" name="ejumlah_uw0" id="ejumlah_uw0">
+                            <input type="text" name="ejumlah_uw1" id="ejumlah_uw1">
+                            <input type="text" name="ejumlah_uw2" id="ejumlah_uw2">
+
+                        <!--
                             <div id="ediv_ketwar">
 
                             </div>
@@ -496,6 +554,7 @@
                             <h5><b>Data Konsumsi Material</b></h5>
 
                             <div id="etable_km"></div>
+                        -->
                     </div>
                     <div class="modal-footer">
                         <input type="submit" id="tambah" class="btn btn-primary" value="Simpan">
@@ -510,7 +569,6 @@
 <?php include('_js.php'); ?>
 <!--*****************************-->
 <!--*****************************-->
-
 <script>
     function reload() {
         location.reload();
@@ -594,7 +652,7 @@
     });
 </script>
 
-<!-- cek nama produk ketika + produk -->
+<!-- cek nama produk ketika (+produk) -->
 <script>
     function cek_nama_produk_input(){
         var nama_produk_input = $("#nama_produk_input").val();
@@ -617,7 +675,7 @@
     }
 </script>
 
-<!-- cek kode produk ketika + produk -->
+<!-- cek kode produk ketika (+produk) jika statusnya 3 -->
 <script>
     function cek_kode_produk_input(){
         var kode_produk = $("#kode_produk").val();
@@ -640,7 +698,7 @@
     }
 </script>
 
-<!-- ganti keterangan produk -->
+<!-- ganti keterangan produk (+produk) -->
 <script>
     function ketprod(){
         var ketprod = $("#keterangan_produk").val();
@@ -700,6 +758,7 @@
                     $("#tab_ketprod0").show();
                     $("#tab_ketprod1").hide();
                     $("#tab_ketprod2").hide();
+                    $("#tab_ketprod3").hide();
                 }
                 else if(ketprod == 1){
                     $isi_ukuran = "";
@@ -731,6 +790,7 @@
                     $("#tab_ketprod1").show();
                     $("#tab_ketprod0").hide();
                     $("#tab_ketprod2").hide();
+                    $("#tab_ketprod3").hide();
                 }
                 else if(ketprod == 2){
                     $isi_warna = "";
@@ -762,12 +822,21 @@
                     $("#tab_ketprod2").show();
                     $("#tab_ketprod1").hide();
                     $("#tab_ketprod0").hide();
+                    $("#tab_ketprod3").hide();
+                }
+                else if(ketprod == 3){
+                    $("#isi_ketprod").html("");
+                    $("#tab_ketprod0").hide();
+                    $("#tab_ketprod1").hide();
+                    $("#tab_ketprod2").hide();
+                    $("#tab_ketprod3").show();
                 }
                 else{
                     $("#isi_ketprod").html("");
                     $("#tab_ketprod0").hide();
                     $("#tab_ketprod1").hide();
                     $("#tab_ketprod2").hide();
+                    $("#tab_ketprod3").hide();
                 }
 
 
@@ -820,7 +889,7 @@
     }
 </script>
 
-<!-- add ukuran & warna -->
+<!-- add ukuran & warna (+produk) -->
 <script>
     function add_ukwar(){
         //0,1,2 or 3
@@ -868,6 +937,9 @@
                                         '<input type="hidden" id="0ket'+$jumlah_saat_ini+'" value="0">'+
                                     '</td>'+
                                     '<td style="text-align: center;vertical-align: middle;">'+
+                                        '<input type="text" class="form-control" id="0kp'+$jumlah_saat_ini+'" name="0kp'+$jumlah_saat_ini+'">'+
+                                    '</td>'+
+                                    '<td style="text-align: center;vertical-align: middle;">'+
                                         '<input type="hidden" name="0id_ukuran'+$jumlah_saat_ini+'" id="0id_ukuran'+$jumlah_saat_ini+'" value="'+$ukuran+'">'+
                                         '<input type="hidden" name="0nama_ukuran'+$jumlah_saat_ini+'" id="0nama_ukuran'+$jumlah_saat_ini+'" value="'+$nama_ukuran+'">'+
                                         $nama_ukuran+
@@ -905,6 +977,7 @@
                                     $id_warna_sem  = $("#0id_warna"+$l).val();
                                     $nama_ukuran_sem = $("#0nama_ukuran"+$l).val();
                                     $nama_warna_sem  = $("#0nama_warna"+$l).val();
+                                    $kode_produk     = $("#0kp"+$l).val();
 
                                     $lama = $lama +
                                     '<div id="divuw'+$l+'">'+
@@ -912,6 +985,9 @@
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $l+
                                                 '<input type="hidden" id="0ket'+$l+'" value="0">'+
+                                            '</td>'+
+                                            '<td style="text-align: center;vertical-align: middle;">'+
+                                                '<input type="text" class="form-control" id="0kp'+$l+'" name="0kp'+$l+'" value="'+$kode_produk+'">'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="0id_ukuran'+$l+'" id="0id_ukuran'+$l+'" value="'+$id_ukuran_sem+'">'+
@@ -932,6 +1008,9 @@
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $jumlah_saat_ini+
                                                 '<input type="hidden" id="0ket'+$jumlah_saat_ini+'" value="0">'+
+                                            '</td>'+
+                                            '<td style="text-align: center;vertical-align: middle;">'+
+                                                '<input type="text" class="form-control" id="0kp'+$jumlah_saat_ini+'" name="0kp'+$jumlah_saat_ini+'" >'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="0id_ukuran'+$jumlah_saat_ini+'" id="0id_ukuran'+$jumlah_saat_ini+'" value="'+$ukuran+'">'+
@@ -957,6 +1036,7 @@
                                     $id_warna_sem  = $("#0id_warna"+$l).val();
                                     $nama_ukuran_sem = $("#0nama_ukuran"+$l).val();
                                     $nama_warna_sem  = $("#0nama_warna"+$l).val();
+                                    $kode_produk     = $("#0kp"+$l).val();
 
                                     $lama = $lama +
                                     '<div id="divuw'+$l+'">'+
@@ -964,6 +1044,9 @@
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $l+
                                                 '<input type="hidden" id="0ket'+$l+'" value="0">'+
+                                            '</td>'+
+                                            '<td style="text-align: center;vertical-align: middle;">'+
+                                                '<input type="text" class="form-control" id="0kp'+$l+'" name="0kp'+$l+'" value="'+$kode_produk+'">'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="0id_ukuran'+$l+'" id="0id_ukuran'+$l+'" value="'+$id_ukuran_sem+'">'+
@@ -988,7 +1071,8 @@
                             '<thead>'+
                                 '<tr>'+
                                     '<th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>'+
-                                    '<th class="col-md-5" style="text-align: center;vertical-align: middle;">Ukuran Produk</th>'+
+                                    '<th class="col-md-3" style="text-align: center;vertical-align: middle;">Kode Produk</th>'+
+                                    '<th class="col-md-3" style="text-align: center;vertical-align: middle;">Ukuran Produk</th>'+
                                     '<th class="col-md-3" style="text-align: center;vertical-align: middle;">Warna Produk</th>'+
                                 '</tr>'+
                             '</thead>'+
@@ -1041,6 +1125,9 @@
                                         '<input type="hidden" id="1ket'+$jumlah_saat_ini+'" value="0">'+
                                     '</td>'+
                                     '<td style="text-align: center;vertical-align: middle;">'+
+                                        '<input type="text" class="form-control" id="1kp'+$jumlah_saat_ini+'" name="1kp'+$jumlah_saat_ini+'" >'+
+                                    '</td>'+
+                                    '<td style="text-align: center;vertical-align: middle;">'+
                                         '<input type="hidden" name="1id_ukuran'+$jumlah_saat_ini+'" id="1id_ukuran'+$jumlah_saat_ini+'" value="'+$ukuran+'">'+
                                         '<input type="hidden" name="1nama_ukuran'+$jumlah_saat_ini+'" id="1nama_ukuran'+$jumlah_saat_ini+'" value="'+$nama_ukuran+'">'+
                                         $nama_ukuran+
@@ -1070,6 +1157,7 @@
                                 for($l=1;$l<=$jumlah_uw_l;$l++){
                                     $id_ukuran_sem = $("#1id_ukuran"+$l).val();
                                     $nama_ukuran_sem = $("#1nama_ukuran"+$l).val();
+                                    $kode_produk     = $("#1kp"+$l).val();
 
                                     $lama = $lama +
                                     '<div id="divuw'+$l+'">'+
@@ -1077,6 +1165,9 @@
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $l+
                                                 '<input type="hidden" id="1ket'+$l+'" value="0">'+
+                                            '</td>'+
+                                            '<td style="text-align: center;vertical-align: middle;">'+
+                                                '<input type="text" class="form-control" id="1kp'+$l+'" name="1kp'+$l+'" value="'+$kode_produk+'">'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="1id_ukuran'+$l+'" id="1id_ukuran'+$l+'" value="'+$id_ukuran_sem+'">'+
@@ -1091,7 +1182,10 @@
                                         '<tr>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $jumlah_saat_ini+
-                                                '<input type="hidden" id="1ket'+$jumlah_saat_ini+'" value="0">'+
+                                                '<input type="hidden" id="1ket'+$jumlah_saat_ini+'" name="1ket'+$jumlah_saat_ini+'" value="0">'+
+                                            '</td>'+
+                                            '<td style="text-align: center;vertical-align: middle;">'+
+                                                '<input type="text" class="form-control" id="1kp'+$jumlah_saat_ini+'">'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="1id_ukuran'+$jumlah_saat_ini+'" id="1id_ukuran'+$jumlah_saat_ini+'" value="'+$ukuran+'">'+
@@ -1110,13 +1204,17 @@
                                 for($l=1;$l<=$jumlah_uw_l;$l++){
                                     $id_ukuran_sem = $("#1id_ukuran"+$l).val();
                                     $nama_ukuran_sem = $("#1nama_ukuran"+$l).val();
+                                    $kode_produk     = $("#1kp"+$l).val();
 
                                     $lama = $lama +
                                     '<div id="divuw'+$l+'">'+
                                         '<tr>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $l+
-                                                '<input type="hidden" id="1ket'+$l+'" value="0">'+
+                                                '<input type="hidden" id="1ket'+$l+'" name="1ket'+$l+'" value="0">'+
+                                            '</td>'+
+                                            '<td style="text-align: center;vertical-align: middle;">'+
+                                                '<input type="text" class="form-control" id="1kp'+$l+'" value="'+$kode_produk+'">'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="1id_ukuran'+$l+'" id="1id_ukuran'+$l+'" value="'+$id_ukuran_sem+'">'+
@@ -1137,6 +1235,7 @@
                             '<thead>'+
                                 '<tr>'+
                                     '<th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>'+
+                                    '<th class="col-md-5" style="text-align: center;vertical-align: middle;">Kode Produk</th>'+
                                     '<th class="col-md-5" style="text-align: center;vertical-align: middle;">Ukuran Produk</th>'+
                                 '</tr>'+
                             '</thead>'+
@@ -1187,6 +1286,9 @@
                                         '<input type="hidden" id="2ket'+$jumlah_saat_ini+'" value="0">'+
                                     '</td>'+
                                     '<td style="text-align: center;vertical-align: middle;">'+
+                                        '<input type="text" class="form-control" id="2kp'+$jumlah_saat_ini+'" name="2kp'+$jumlah_saat_ini+'" >'+
+                                    '</td>'+
+                                    '<td style="text-align: center;vertical-align: middle;">'+
                                         '<input type="hidden" name="2id_warna'+$jumlah_saat_ini+'"  id="2id_warna'+$jumlah_saat_ini+'" value="'+$warna+'">'+
                                         '<input type="hidden" name="2nama_warna'+$jumlah_saat_ini+'"  id="2nama_warna'+$jumlah_saat_ini+'" value="'+$nama_warna+'">'+
                                         $nama_warna+
@@ -1219,6 +1321,7 @@
                                     $id_warna_sem  = $("#2id_warna"+$l).val();
                                     $nama_ukuran_sem = $("#2nama_ukuran"+$l).val();
                                     $nama_warna_sem  = $("#2nama_warna"+$l).val();
+                                    $kode_produk     = $("#2kp"+$l).val();
 
                                     $lama = $lama +
                                     '<div id="divuw'+$l+'">'+
@@ -1226,6 +1329,9 @@
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $l+
                                                 '<input type="hidden" id="2ket'+$l+'" value="0">'+
+                                            '</td>'+
+                                            '<td style="text-align: center;vertical-align: middle;">'+
+                                                '<input type="text" class="form-control" id="2kp'+$l+'" name="2kp'+$l+'" value="'+$kode_produk+'">'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="2id_warna'+$l+'"  id="2id_warna'+$l+'" value="'+$id_warna_sem+'">'+
@@ -1241,6 +1347,9 @@
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $jumlah_saat_ini+
                                                 '<input type="hidden" id="2ket'+$jumlah_saat_ini+'" value="0">'+
+                                            '</td>'+
+                                            '<td style="text-align: center;vertical-align: middle;">'+
+                                                '<input type="text" class="form-control" id="2kp'+$jumlah_saat_ini+'" name="2kp'+$jumlah_saat_ini+'" >'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="2id_warna'+$jumlah_saat_ini+'"  id="2id_warna'+$jumlah_saat_ini+'" value="'+$warna+'">'+
@@ -1261,6 +1370,7 @@
                                     $id_warna_sem  = $("#2id_warna"+$l).val();
                                     $nama_ukuran_sem = $("#2nama_ukuran"+$l).val();
                                     $nama_warna_sem  = $("#2nama_warna"+$l).val();
+                                    $kode_produk     = $("#2kp"+$l).val();
 
                                     $lama = $lama +
                                     '<div id="divuw'+$l+'">'+
@@ -1268,6 +1378,9 @@
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 $l+
                                                 '<input type="hidden" id="2ket'+$l+'" value="0">'+
+                                            '</td>'+
+                                            '<td style="text-align: center;vertical-align: middle;">'+
+                                                '<input type="text" class="form-control" id="2kp'+$l+'" name="2kp'+$l+'" value="'+$kode_produk+'">'+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
                                                 '<input type="hidden" name="2id_warna'+$l+'"  id="2id_warna'+$l+'" value="'+$id_warna_sem+'">'+
@@ -1287,6 +1400,7 @@
                             '<thead>'+
                                 '<tr>'+
                                     '<th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>'+
+                                    '<th class="col-md-3" style="text-align: center;vertical-align: middle;">Kode Produk</th>'+
                                     '<th class="col-md-3" style="text-align: center;vertical-align: middle;">Warna Produk</th>'+
                                 '</tr>'+
                             '</thead>'+
@@ -1304,10 +1418,9 @@
             }
         }
     }
-
 </script>
 
-<!-- ganti jenis material -->
+<!-- ganti jenis material (+produk) -->
 <script>
     function ganti_jm(){
         var id_jenis_material = $("#jenis_material").val();
@@ -1355,7 +1468,7 @@
     }
 </script>
 
-<!-- add material -->
+<!-- add material (+produk) -->
 <script>
     function add_material(){
         $jenis_material = $("#jenis_material").val();
@@ -1564,7 +1677,7 @@
     }
 </script>
 
-<!-- cek terisi (add produk) -->
+<!-- cek terisi (add produk) (+produk)-->
 <script>
     function cek_terisi(){
         $("#pc_cek_line1").val(0);
@@ -1575,7 +1688,7 @@
         $("#fp_cek_line3").val(0);
         $("#fp_cek_line4").val(0);
 
-        if($("#kode_produk").val() != "" && $("#nama_produk_input").val() != "" && $("#harga_produk").val() != "" ){
+        if($("#nama_produk_input").val() != "" && $("#harga_produk").val() != "" ){
             if($("#keterangan_produk").val() == 0 || $("#keterangan_produk").val() == 1 || $("#keterangan_produk").val() == 2){
                 if($("#jm_ketpod").val() > 0){
                     //jika purchase cover
@@ -1721,7 +1834,7 @@
     }
 </script>
 
-<!-- ganti status konsumsi material untuk line sewing -->
+<!-- ganti status konsumsi material untuk line sewing  (+produk)-->
 <script>
     function ganti_stat_km_sewing(obj){
         var id = obj.id;
@@ -1763,9 +1876,12 @@
                 $kode_produk         = respond['produk'][0]['kode_produk'];
                 $jenis_produk        = respond['produk'][0]['nama_jenis_produk'];
                 $nama_produk         = respond['produk'][0]['nama_produk'];
-                $harga_produk        = respond['produk'][0]['harga_produk'];
+
+                var num = "Rp "+  new Number(respond['produk'][0]['harga_produk']).toLocaleString("id-ID") + ",00";
+
+                $harga_produk        = num;
                 $keterangan_warna    = respond['produk'][0]['keterangan_warna'];
-                $keterangan_produksi = respond['produk'][0]['keterangan'];
+                $keterangan_produksi = respond['produk'][0]['keterangan_produksi'];
 
                 if($keterangan_produksi == 0){
                     $ketprod = "Full Produksi";
@@ -2017,5 +2133,507 @@
         });
 
      });
+</script>
+
+<!-- edit produk -->
+<script>
+    $('.bedit_klik').click(function(){
+        var id = $(('#bedit')+$(this).attr('value')).val();
+       
+        $.ajax({
+            type:"post",
+            url:"<?php echo base_url() ?>produk/detail_produk",
+            dataType: "JSON",
+            data: {id:id},
+
+            success: function(respond){
+                $("#id_produk_edit").val(respond['produk'][0]['id_produk']);
+                $("#kode_produk_edit").val(respond['produk'][0]['kode_produk']);
+                //jenis produk
+                    $isi_jenprod = "";
+                    for($k=0;$k<respond['jm_jenprod'];$k++){
+                        if(respond['jenprod'][$k]['id_jenis_produk'] ==  respond['produk'][0]['id_jenis_produk']){
+                            $isi_jenprod = $isi_jenprod + '<option value="'+respond['jenprod'][$k]['id_jenis_produk']+'" selected>'+respond['jenprod'][$k]['nama_jenis_produk']+'</option>';
+                        } else{
+                            $isi_jenprod = $isi_jenprod + '<option value="'+respond['jenprod'][$k]['id_jenis_produk']+'">'+respond['jenprod'][$k]['nama_jenis_produk']+'</option>';
+                        }
+                        
+                    }
+
+
+                    $jenprodnya = '<div class="form-group mt-lg">'+
+                                    '<label class="col-sm-5 control-label">Jenis Produk</label>'+
+                                    '<div class="col-sm-7">'+
+                                        '<select class="form-control" name="jenis_produk_edit" id="jenis_produk_edit"  onchange="jenprod_edit()">'+
+                                            $isi_jenprod+
+                                        '</select>'+
+                                    '</div>'+
+                                '</div>';
+                    $("#ediv_jenprod").html($jenprodnya);
+                //
+                $("#nama_produk_edit").val(respond['produk'][0]['nama_produk']);
+                $("#harga_produk_edit").val(respond['produk'][0]['harga_produk']);
+                //keterangan produk
+                    if(respond['detail_produk'][0]['keterangan'] == 0){
+                        $ketwarnya = '<option value="0" selected>Memiliki ukuran & warna</option>'+
+                                    '<option value="1">Memiliki ukuran</option>'+
+                                    '<option value="2">Memiliki warna</option>'+
+                                    '<option value="3">Tidak memiliki ukuran & warna</option>';
+                    } else if(respond['detail_produk'][0]['keterangan'] == 1){
+                        $ketwarnya = '<option value="0">Memiliki ukuran & warna</option>'+
+                                    '<option value="1" selected>Memiliki ukuran</option>'+
+                                    '<option value="2">Memiliki warna</option>'+
+                                    '<option value="3">Tidak memiliki ukuran & warna</option>';
+                    } else if(respond['detail_produk'][0]['keterangan'] == 2){
+                        $ketwarnya = '<option value="0">Memiliki ukuran & warna</option>'+
+                                    '<option value="1" >Memiliki ukuran</option>'+
+                                    '<option value="2" selected>Memiliki warna</option>'+
+                                    '<option value="3">Tidak memiliki ukuran & warna</option>';
+                    } else if(respond['detail_produk'][0]['keterangan'] == 3){
+                        $ketwarnya = '<option value="0">Memiliki ukuran & warna</option>'+
+                                    '<option value="1" >Memiliki ukuran</option>'+
+                                    '<option value="2" >Memiliki warna</option>'+
+                                    '<option value="3" selected>Tidak memiliki ukuran & warna</option>';
+                    }
+
+                    $isi_ketwar ='<div class="form-group mt-lg">'+
+                                    '<label class="col-sm-5 control-label">Keterangan Produk</label>'+
+                                    '<div class="col-sm-7">'+
+                                        '<select class="form-control" name="keterangan_produk_edit" id="keterangan_produk_edit"  onchange="ketprod_edit()">'+
+                                            $ketwarnya+
+                                        '</select>'+
+                                    '</div>'+
+                                '</div>';
+                    
+                    $("#ediv_ketwar").html($isi_ketwar);
+                //
+                
+                //ukuran warna
+                    $pilih_ukwarnya = "";
+
+                    if(respond['detail_produk'][0]['keterangan'] == 0){
+                        $isi_ukuran = "";
+                        for($i=0;$i<respond['jm_ukprod'];$i++){
+                            $isi_ukuran = $isi_ukuran + 
+                            '<option value="'+respond['ukprod'][$i]['id_ukuran_produk']+'">'+
+                                respond['ukprod'][$i]['ukuran_produk']+ respond['ukprod'][$i]['satuan_ukuran']+
+                            '</option>';
+                        }
+                        $ukuran = 
+                        '<div class="col-md-5 form-group">'+
+                            '<select class="form-control" name="select_ukuran" id="select_ukuran"'+
+                            '>'+
+                                '<option value="">Ukuran Produk</option>'+
+                                $isi_ukuran+
+                            '</select>'+
+                        '</div>';
+
+                        $isi_warna = "";
+                        for($i=0;$i<respond['jm_warna'];$i++){
+                            $isi_warna = $isi_warna + 
+                            '<option value="'+respond['warna'][$i]['id_warna']+'">'+
+                                respond['warna'][$i]['nama_warna']+
+                            '</option>';
+                        }
+                        $warna = 
+                        '<div class="col-md-5 form-group">'+
+                            '<select class="form-control" name="select_warna" id="select_warna"'+
+                            '>'+
+                                '<option value="">Warna Produk</option>'+
+                                $isi_warna+
+                            '</select>'+
+                        '</div>';
+
+                        $isi = 
+                        '<div class="row" style="font-size:10px;background-color:#e1e2e3;padding-top:17px;margin: 0px 5px 0px 5px;border-radius:5px">'+
+                            $ukuran+
+                            $warna+
+                            '<div class="col-md-2 form-group">'+
+                                '<button type="button" class="btn btn-success fa fa-plus-square-o" style="color:white"'+
+                                'title="Add"  onclick="add_ukwar()"></button>'+
+                            '</div>'+
+                        '</div>';
+
+                        $("#ediv_pilih_ukwar").html($isi);
+                        $("#etab_ketprod0").show();
+                        $("#etab_ketprod1").hide();
+                        $("#etab_ketprod2").hide();
+                    } else if(respond['detail_produk'][0]['keterangan'] == 1){
+                        $isi_ukuran = "";
+                        for($i=0;$i<respond['jm_ukprod'];$i++){
+                            $isi_ukuran = $isi_ukuran + 
+                            '<option value="'+respond['ukprod'][$i]['id_ukuran_produk']+'">'+
+                                respond['ukprod'][$i]['ukuran_produk']+ respond['ukprod'][$i]['satuan_ukuran']+
+                            '</option>';
+                        }
+                        $ukuran = 
+                        '<div class="col-md-3 form-group">'+
+                            '<select class="form-control" name="select_ukuran" id="select_ukuran"'+
+                            '>'+
+                                '<option value="">Ukuran Produk</option>'+
+                                $isi_ukuran+
+                            '</select>'+
+                        '</div>';
+
+                        $isi = 
+                        '<div class="row" style="font-size:10px;background-color:#e1e2e3;padding-top:17px;margin: 0px 5px 0px 5px;border-radius:5px">'+
+                            $ukuran+
+                            '<div class="col-md-1 form-group">'+
+                                '<button type="button" class="btn btn-success fa fa-plus-square-o" style="color:white"'+
+                                'title="Add"  onclick="add_ukwar()"></button>'+
+                            '</div>'+
+                        '</div>';
+
+                        $("#ediv_pilih_ukwar").html($isi);
+                        $("#etab_ketprod1").show();
+                        $("#etab_ketprod0").hide();
+                        $("#etab_ketprod2").hide();
+                    } else if(respond['detail_produk'][0]['keterangan'] == 2){
+                        $isi_warna = "";
+                        for($i=0;$i<respond['jm_warna'];$i++){
+                            $isi_warna = $isi_warna + 
+                            '<option value="'+respond['warna'][$i]['id_warna']+'">'+
+                                respond['warna'][$i]['nama_warna']+
+                            '</option>';
+                        }
+                        $warna = 
+                        '<div class="col-md-3 form-group">'+
+                            '<select class="form-control" name="select_warna" id="select_warna"'+
+                            '>'+
+                                '<option value="">Warna Produk</option>'+
+                                $isi_warna+
+                            '</select>'+
+                        '</div>';
+
+                        $isi = 
+                        '<div class="row" style="font-size:10px;background-color:#e1e2e3;padding-top:17px;margin: 0px 5px 0px 5px;border-radius:5px">'+
+                            $warna+
+                            '<div class="col-md-1 form-group">'+
+                            '<button type="button" class="btn btn-success fa fa-plus-square-o" style="color:white"'+
+                            'title="Add"  onclick="add_ukwar()"></button>'+
+                        '</div>'+
+                        '</div>';
+
+                        $("#ediv_pilih_ukwar").html($isi);
+                        $("#etab_ketprod2").show();
+                        $("#etab_ketprod1").hide();
+                        $("#etab_ketprod0").hide();
+                    } else{
+                        $("#eisi_ketprod").html("");
+                        $("#etab_ketprod0").hide();
+                        $("#etab_ketprod1").hide();
+                        $("#etab_ketprod2").hide();
+                    }
+                    
+                //
+                
+            /*
+                $kode_produk         = respond['produk'][0]['kode_produk'];
+                $jenis_produk        = respond['produk'][0]['nama_jenis_produk'];
+                $nama_produk         = respond['produk'][0]['nama_produk'];
+
+                var num = "Rp "+  new Number(respond['produk'][0]['harga_produk']).toLocaleString("id-ID") + ",00";
+
+                $harga_produk        = num;
+                $keterangan_warna    = respond['produk'][0]['keterangan_warna'];
+                $keterangan_produksi = respond['produk'][0]['keterangan_produksi'];
+
+                if($keterangan_produksi == 0){
+                    $ketprod = "Full Produksi";
+                }
+                else{
+                    $ketprod = "Purchase Cover";
+                }
+
+                if(respond['detail_produk'][0]['keterangan'] == 0){
+                    $ukwar = "Memiliki Warna & Ukuran";
+                } else if(respond['detail_produk'][0]['keterangan'] == 1){
+                    $ukwar = "Memiliki Ukuran";
+                } else if(respond['detail_produk'][0]['keterangan'] == 2){
+                    $ukwar = "Memiliki Warna";
+                } else{
+                    $ukwar = "Tidak Memiliki Warna & Ukuran";
+                }
+
+                $("#dkode_produk").val($kode_produk);
+                $("#djenis_produk").val($jenis_produk);
+                $("#dnama_produk").val($nama_produk);
+                $("#dharga_produk").val($harga_produk);
+                $("#dketerangan_produksi").val($ketprod);
+                $("#ddetail_produk").val($ukwar);
+
+                $isi_ukwar = "";
+
+                if(respond['detail_produk'][0]['keterangan'] == 0){
+                    for($i=0;$i<respond['jm_detail_produk'];$i++){
+
+                        $id_ukuran = respond['detail_produk'][$i]['id_ukuran'];
+                        $id_warna  = respond['detail_produk'][$i]['id_warna'];
+
+                        for($l=0;$l<respond['jmukuran'];$l++){
+                            if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
+                                $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
+                                $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
+
+                                $ukurannya = $nama_ukuran +" "+ $satuan_ukuran;
+                            }
+                        }
+
+                        for($k=0;$k<respond['jmwarna'];$k++){
+                            if(respond['warna'][$k]['id_warna'] == $id_warna){
+                                $warnanya = respond['warna'][$k]['nama_warna'];
+                            }
+                        }
+
+                        $isi_ukwar = $isi_ukwar + 
+                        '<tr>'+
+                            '<td style="text-align: center;vertical-align: middle;">'+
+                                ($i+1)+
+                            '</td>'+
+                            '<td style="text-align: center;vertical-align: middle;">'+
+                                $ukurannya+
+                            '</td>'+
+                            '<td style="text-align: center;vertical-align: middle;">'+
+                                $warnanya+
+                            '</td>'+
+                        '</tr>';
+                    }
+                    
+
+                    $table_ukwar = 
+                    '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
+                        '<thead>'+
+                            '<tr>'+
+                                '<th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>'+
+                                '<th class="col-md-5" style="text-align: center;vertical-align: middle;">Ukuran Produk</th>'+
+                                '<th class="col-md-3" style="text-align: center;vertical-align: middle;">Warna Produk</th>'+
+                            '</tr>'+
+                        '</thead>'+
+                        '<tbody>'+
+                            $isi_ukwar+
+                        '</tbody>'+
+                    '</table>';
+
+                    
+                    $("#dtable_detprod").html($table_ukwar);
+                } else if(respond['detail_produk'][0]['keterangan'] == 1){
+                    for($i=0;$i<respond['jm_detail_produk'];$i++){
+
+                        $id_ukuran = respond['detail_produk'][$i]['id_ukuran'];
+
+                        for($l=0;$l<respond['jmukuran'];$l++){
+                            if(respond['ukuran'][$l]['id_ukuran'] == $id_ukuran){
+                                $nama_ukuran   = respond['ukuran'][$l]['ukuran_produk'];
+                                $satuan_ukuran = respond['ukuran'][$l]['satuan_ukuran'];
+
+                                $ukurannya = $nama_ukuran +" "+ $satuan_ukuran;
+                            }
+                        }
+
+
+                        $isi_ukwar = $isi_ukwar + 
+                        '<tr>'+
+                            '<td style="text-align: center;vertical-align: middle;">'+
+                                ($i+1)+
+                            '</td>'+
+                            '<td style="text-align: center;vertical-align: middle;">'+
+                                $ukurannya+
+                            '</td>'+
+                        '</tr>';
+                    }
+
+                    $table_ukwar = 
+                    '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
+                        '<thead>'+
+                            '<tr>'+
+                                '<th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>'+
+                                '<th class="col-md-5" style="text-align: center;vertical-align: middle;">Ukuran Produk</th>'+
+                            '</tr>'+
+                        '</thead>'+
+                        '<tbody>'+
+                            $isi_ukwar+
+                        '</tbody>'+
+                    '</table>';
+
+                    
+                    $("#dtable_detprod").html($table_ukwar);
+                } else if(respond['detail_produk'][0]['keterangan'] == 2){
+                    for($i=0;$i<respond['jm_detail_produk'];$i++){
+                        $id_warna  = respond['detail_produk'][$i]['id_warna'];
+
+                        for($k=0;$k<respond['jmwarna'];$k++){
+                            if(respond['warna'][$k]['id_warna'] == $id_warna){
+                                $warnanya = respond['warna'][$k]['nama_warna'];
+                            }
+                        }
+
+                        $isi_ukwar = $isi_ukwar + 
+                        '<tr>'+
+                            '<td style="text-align: center;vertical-align: middle;">'+
+                                ($i+1)+
+                            '</td>'+
+                            '<td style="text-align: center;vertical-align: middle;">'+
+                                $warnanya+
+                            '</td>'+
+                        '</tr>';
+                    }
+
+                    $table_ukwar = 
+                    '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
+                        '<thead>'+
+                            '<tr>'+
+                                '<th class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>'+
+                                '<th class="col-md-5" style="text-align: center;vertical-align: middle;">Warna Produk</th>'+
+                            '</tr>'+
+                        '</thead>'+
+                        '<tbody>'+
+                            $isi_ukwar+
+                        '</tbody>'+
+                    '</table>';
+
+                    $("#dtable_detprod").html($table_ukwar);
+                } else{
+                    $("#dtable_detprod").html("");
+                }
+
+                //.........................................
+                $isi_ct = "";
+                $jumlah_ct = respond['jumlah_ct'];
+
+                for($i=1;$i<=$jumlah_ct;$i++){
+                    $isi_ct = $isi_ct +
+                    '<tr>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            $i+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['cycle_time'][$i-1]['nama_line']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['cycle_time'][$i-1]['cycle_time']+
+                        '</td>'+
+                    '</tr>';
+                }
+
+                $ct =
+                '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
+                    '<thead>'+
+                        '<tr>'+
+                            '<th style="text-align: center;vertical-align: middle;">No</th>'+
+                            '<th style="text-align: center;vertical-align: middle;">Nama Line</th>'+
+                            '<th style="text-align: center;vertical-align: middle;">Cycle Time (s)</th>'+
+                        '</tr>'+
+                    '</thead>'+
+                    '<tbody>'+
+                    $isi_ct+
+                    '</tbody>'+
+                '</table>';
+
+                $("#dtable_ct").html($ct);
+
+                //.........................................
+                $isi_km = "";
+                $jumlah_km = respond['jumlah_km'];
+
+                for($i=1;$i<=$jumlah_km;$i++){
+                    if(respond['konsumsi_material'][$i-1]['status_konsumsi'] == 0){
+                        $status_km = "Cutting Kain";
+                    }else{
+                        $status_km = "Lainnya";
+                    }
+
+                    $isi_km = $isi_km +
+                    '<tr>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            $i+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['konsumsi_material'][$i-1]['nama_sub_jenis_material']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['konsumsi_material'][$i-1]['nama_line']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['konsumsi_material'][$i-1]['jumlah_konsumsi']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['konsumsi_material'][$i-1]['satuan_keluar']+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            $status_km+
+                        '</td>'+
+                    '</tr>';
+                }
+
+                $km = 
+                '<table class="table table-bordered table-striped mb-none" id="datatable-default" style="font-size:12px">'+
+                    '<thead>'+
+                        '<tr>'+
+                            '<th  class="col-md-1" style="text-align: center;vertical-align: middle;">No</th>'+
+                            '<th  class="col-md-5" style="text-align: center;vertical-align: middle;">Nama Material</th>'+
+                            '<th  class="col-md-3" style="text-align: center;vertical-align: middle;">Nama Line</th>'+
+                            '<th  class="col-md-3" style="text-align: center;vertical-align: middle;">Jumlah Material</th>'+
+                            '<th  class="col-md-3" style="text-align: center;vertical-align: middle;">Satuan Konsumsi</th>'+
+                            '<th  class="col-md-3" style="text-align: center;vertical-align: middle;">Status Konsumsi</th>'+
+                        '</tr>'+
+                    '</thead>'+
+                    '<tbody>'+
+                    $isi_km+
+                    '</tbody>'+
+                '</table>';
+
+                $("#dtable_km").html($km);
+            */
+                $("#modaledit").modal();
+            }
+        });
+
+     });
+</script>
+
+<!-- cek kode produk ketika edit produk-->
+<script>
+    function cek_kode_produk_edit(){
+        var kode_produk = $("#kode_produk_edit").val();
+        
+        $.ajax({
+            type:"post",
+            url:"<?php echo base_url() ?>produk/cek_kode_produk_input",
+            dataType: "JSON",
+            data: {kode_produk:kode_produk},
+
+            success: function(respond){
+                if(respond['res'] == 1){
+                    alert("Mohon maaf, kode produk tersebut tidak dapat didaftarkan lagi karena sudah terdaftar");
+                }
+                reload();
+            }
+        });
+
+        cek_terisi();
+    }
+</script>
+
+<!-- cek nama produk ketika edit produk -->
+<script>
+    function cek_nama_produk_edit(){
+        var nama_produk_input = $("#nama_produk_edit").val();
+
+        $.ajax({
+            type:"post",
+            url:"<?php echo base_url() ?>produk/cek_nama_produk_input",
+            dataType: "JSON",
+            data: {nama_produk_input:nama_produk_input},
+
+            success: function(respond){
+                if(respond['res'] == 1){
+                    alert("Mohon maaf, produk dengan nama tersebut tidak dapat didaftarkan lagi karena sudah terdaftar");
+                }
+                reload();
+            }
+        });
+
+        cek_terisi();
+    }
 </script>
 

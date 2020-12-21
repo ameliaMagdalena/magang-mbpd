@@ -37,7 +37,7 @@
                         <th style="text-align: center;vertical-align: middle;">Nomor PO</th>
                         <th style="text-align: center;vertical-align: middle;">Nama Customer</th>
                         <th style="text-align: center;vertical-align: middle;">Surat Jalan</th>
-                        <th style="text-align: center;vertical-align: middle;">Aksiss</th>
+                        <th style="text-align: center;vertical-align: middle;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -126,7 +126,7 @@
                                 <form method="POST" action="<?= base_url()?>invoice/tambah_invoice">
                                     <input type="hidden" name="id_PO" value="<?= $po->id_purchase_order_customer?>">
                                     <input type="hidden" name="kode_PO" value="<?= $po->kode_purchase_order_customer?>">
-                                    <button type="submit" class="col-lg-3 btn btn-success fa fa-plus-square-o" title="Buat Laporan Hasil Produksi" style="margin-right:5px;margin-bottom:5px"></button>
+                                    <button type="submit" class="col-lg-3 btn btn-success fa fa-plus-square-o" title="Buat Invoice" style="margin-right:5px;margin-bottom:5px"></button>
                                 </form> 
                             </td>
                         </tr>

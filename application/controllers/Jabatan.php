@@ -223,7 +223,13 @@ class Jabatan extends CI_Controller {
     }
 
     public function tambah_jabatan(){
-        $nama_jabatan = $this->input->post('nama_jabatan_input');
+        $jumlah_jabatan = $this->input->post('jumlah_jabatan');
+
+        if($jumlah_jabatan == 13){
+            $nama_jabatan = $this->input->post('nama_jabatan_input');
+        } else{
+            $nama_jabatan = $this->input->post('nama_jabatan_wajib');
+        }
 
         $now = date('Y-m-d H:i:s');
         $jumlah_jabatan   = $this->M_Jabatan->select_all()->num_rows();
@@ -321,19 +327,15 @@ class Jabatan extends CI_Controller {
 
     public function ambil_data_log(){
         $id = $this->input->post('id');
-        $data['id'] = $id;
-    
-        $data_input['user']  = $this->M_Jabatan->select_user_add($id)->result_array();
-        $id_user             = $data_input['user'][0]['user_add'];
-        
-        $data_input['cari_user']  = $this->M_Jabatan->cari_user($id_user)->result_array();
- 
-        $nama_user          = $data_input['cari_user'][0]['nama_karyawan'];
-        
+
+        $data_input['user'] = $this->M_Jabatan->select_user_add($id)->result_array();
+
+        $nama_user          = $data_input['user'][0]['nama_karyawan'];
+
         $data['input_user'] = $nama_user;
-        $data['input_date'] = " ".$data_input['user'][0]['waktu_add'];
+        //$data['input_date'] = " ".$data_input['user'][0]['waktu_add'];
         $day = date('D', strtotime($data_input['user'][0]['waktu_add']));
-        
+
         if($day == "Sun"){
             $hari = "Minggu";
         }
@@ -366,7 +368,7 @@ class Jabatan extends CI_Controller {
 
         $data['user']       = $this->M_User->select_all_userjabatandepartemen()->result_array();
         $data['jumlah_user'] = $this->M_User->select_all_userjabatandepartemen()->num_rows();
-    
+
         echo json_encode($data);
     }
 

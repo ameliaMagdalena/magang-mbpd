@@ -64,9 +64,9 @@
                             <td style="text-align: center;vertical-align: middle;"><?= $x->jumlah_pekerja_per_team;?></td>
                             <td class="col-lg-3">
                                 <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                title="Edit" href="#modaledit<?= $x->id_line;?>"></a>
+                                title="Edit" href="#modaledit<?= $x->id_line;?>" style="margin-right:5px;margin-bottom:5px"></a>
                                 <button type="button" class="blog_klik col-lg-3 btn btn-info fa fa-file" 
-                                title="Log" id="blog<?php echo $x->id_line?>" value="<?php echo $x->id_line;?>"></button>
+                                title="Log" id="blog<?php echo $x->id_line?>" value="<?php echo $x->id_line;?>" style="margin-right:5px;margin-bottom:5px"></button>
                             </td>
                         </tr>
                     <?php 
@@ -94,7 +94,7 @@
                             <div class="form-group mt-lg">
                                 <label class="col-sm-5 control-label">Urutan Line</label>
                                 <div class="col-sm-7">
-                                    <input type="text" name="urutan_line" id="urutan_line" required class="form-control"
+                                    <input type="text" name="urutan_line" id="urutan_line" required class="form-control" readonly
                                     value="<?= $x->urutan_line ?>">
                                 </div>
                             </div>
@@ -355,8 +355,6 @@
 <?php include('_js.php'); ?>
 <!--*****************************-->
 <!--*****************************-->
-
-
 <script>
     function reload() {
         location.reload();
@@ -421,7 +419,26 @@
                             }
                         } 
 
-                        $tanggal = respond['log'][$i]['waktu_add'];
+                        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                        var tanggal = new Date(respond['log'][$i]['waktu_add']).getDate();
+                        var xhari = new Date(respond['log'][$i]['waktu_add']).getDay();
+                        var xbulan = new Date(respond['log'][$i]['waktu_add']).getMonth();
+                        var xtahun = new Date(respond['log'][$i]['waktu_add']).getYear();
+                        
+                        var jam     = new Date(respond['log'][$i]['waktu_add']).getHours();
+                        var menit   = new Date(respond['log'][$i]['waktu_add']).getMinutes();
+                        var detik   = new Date(respond['log'][$i]['waktu_add']).getSeconds();
+                        
+                        var hari = hari[xhari];
+                        var bulan = bulan[xbulan];
+                        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                        $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun +' '+jam+':'+menit+':'+detik;
+
+                        $tanggal = $tanggalnya;
+                        
                         $user = $nama_user;
                         $data = "Nama Line (" + respond['log'][$i]['nama_line'] +
                         ") , Urutan Line (" + respond['log'][$i]['urutan_line'] + 
@@ -452,6 +469,7 @@
                         //compare dengan sebelumnya
                         $data = " ";
                         $ct = 0;
+                        $count = 0;
 
                         if(respond['log'][$i]['urutan_line'] == respond['log'][$i+1]['urutan_line']){
                            $data = $data;
@@ -512,10 +530,27 @@
                             $count++;
                         }
                         
+                        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                        var tanggal = new Date(respond['log'][$i]['waktu_edit']).getDate();
+                        var xhari = new Date(respond['log'][$i]['waktu_edit']).getDay();
+                        var xbulan = new Date(respond['log'][$i]['waktu_edit']).getMonth();
+                        var xtahun = new Date(respond['log'][$i]['waktu_edit']).getYear();
+                        
+                        var jam     = new Date(respond['log'][$i]['waktu_edit']).getHours();
+                        var menit   = new Date(respond['log'][$i]['waktu_edit']).getMinutes();
+                        var detik   = new Date(respond['log'][$i]['waktu_edit']).getSeconds();
+                        
+                        var hari = hari[xhari];
+                        var bulan = bulan[xbulan];
+                        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                        $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun +' '+jam+':'+menit+':'+detik;
 
                         $tampung_isi = $tampung_isi + 
                         '<tr>'+
-                        '<td  style="text-align: center;vertical-align: middle;">'+ respond['log'][$i]['waktu_edit'] +'</td>' +
+                        '<td  style="text-align: center;vertical-align: middle;">'+ $tanggalnya +'</td>' +
                         '<td  style="text-align: center;vertical-align: middle;">'+ $user +'</td>' +
                         '<td  style="text-align: center;vertical-align: middle;">'+ respond['log'][$i]['keterangan_log'] +'</td>' +
                         '<td  style="vertical-align: middle;">'+ $data +'</td>' +

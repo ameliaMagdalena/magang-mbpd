@@ -18,15 +18,16 @@ class Akses extends CI_Controller {
         $password = $this->input->post('password');
 
         $where = array(
-            'email_user'=>$email,
-            'password_user'=>$password,
-            'status_delete'=>"0"
+            'email_user'   => $email,
+            'password_user'=> md5($password),
+            'status_delete'=> "0",
+            'status_user'  => "0"
         );
 
         $cek = $this->M_Akses->cek_login('user',$where)->num_rows();
 
         if($cek==1){
-            $user         = $this->M_Akses->data_user($email,$password)->result_array();
+            $user         = $this->M_Akses->data_user($email,md5($password))->result_array();
             $jum_jabatan  = $this->M_Akses->jabatan_karyawan($user[0]['id_karyawan'])->num_rows();
             $jabatan_user = $this->M_Akses->jabatan_karyawan($user[0]['id_karyawan'])->result_array();
 

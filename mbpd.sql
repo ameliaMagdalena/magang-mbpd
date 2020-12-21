@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2020 at 05:00 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.3.13
+-- Generation Time: Dec 21, 2020 at 02:01 PM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -46,7 +46,7 @@ CREATE TABLE `bank` (
 
 INSERT INTO `bank` (`id_bank`, `nama_bank`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
 ('BANK-1', 'BCA', 'USER-1', '2020-08-30 18:07:08', 'USER-1', '2020-08-30 18:07:16', 'USER-1', '2020-08-30 18:11:39', 1),
-('BANK-2', 'BCA', 'USER-1', '2020-08-30 18:11:42', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('BANK-2', 'BCAa', 'USER-1', '2020-08-30 18:11:42', 'USER-1', '2020-12-21 12:00:02', '', '0000-00-00 00:00:00', 0),
 ('BANK-3', 'OCBC NISP', 'USER-1', '2020-08-30 22:08:53', 'USER-1', '2020-08-30 22:09:12', '', '0000-00-00 00:00:00', 0),
 ('BANK-4', 'Mandiri', 'USER-1', '2020-09-08 23:36:51', 'USER-1', '2020-09-08 23:36:57', 'USER-1', '2020-09-08 23:37:01', 1),
 ('BANK-5', 'BNI', 'USER-1', '2020-09-24 22:59:36', 'USER-1', '2020-09-24 22:59:44', 'USER-1', '2020-09-24 22:59:48', 1);
@@ -102,7 +102,8 @@ INSERT INTO `bank_logs` (`id_bank_logs`, `keterangan_log`, `id_bank`, `nama_bank
 (12, 'Insert Data', 'BANK-5', 'BNI', 'USER-1', '2020-09-24 22:59:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 (13, 'Edit Data', 'BANK-5', 'BNIa', 'USER-1', '2020-09-24 22:59:36', 'USER-1', '2020-09-24 22:59:41', '', '0000-00-00 00:00:00', 0),
 (14, 'Edit Data', 'BANK-5', 'BNI', 'USER-1', '2020-09-24 22:59:36', 'USER-1', '2020-09-24 22:59:44', '', '0000-00-00 00:00:00', 0),
-(15, 'Edit Data', 'BANK-5', 'BNI', 'USER-1', '2020-09-24 22:59:36', 'USER-1', '2020-09-24 22:59:44', 'USER-1', '2020-09-24 22:59:48', 1);
+(15, 'Edit Data', 'BANK-5', 'BNI', 'USER-1', '2020-09-24 22:59:36', 'USER-1', '2020-09-24 22:59:44', 'USER-1', '2020-09-24 22:59:48', 1),
+(16, 'Edit Data', 'BANK-2', 'BCAa', 'USER-1', '2020-08-30 18:11:42', 'USER-1', '2020-12-21 12:00:02', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -148,13 +149,6 @@ CREATE TABLE `bpbj` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `bpbj`
---
-
-INSERT INTO `bpbj` (`id_bpbj`, `no_bpbj`, `tanggal`, `keterangan`, `status_bpbj`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('BPBJ20.0001', 'BPBJ-0001', '2020-11-28', '', 0, 'USER-1', '2020-11-28 19:20:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -209,84 +203,24 @@ CREATE TABLE `cycle_time` (
 --
 
 INSERT INTO `cycle_time` (`id_cycle_time`, `id_line`, `id_produk`, `cycle_time`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('CT-1', 'LINE-1', 'PRODUK-1', 100, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-10', 'LINE-3', 'PRODUK-3', 100, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-11', 'LINE-4', 'PRODUK-3', 100, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-12', 'LINE-1', 'PRODUK-4', 100, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-13', 'LINE-2', 'PRODUK-4', 100, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-14', 'LINE-3', 'PRODUK-4', 100, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-15', 'LINE-4', 'PRODUK-4', 100, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-16', 'LINE-1', 'PRODUK-5', 100, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-17', 'LINE-2', 'PRODUK-5', 100, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-18', 'LINE-3', 'PRODUK-5', 100, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-19', 'LINE-4', 'PRODUK-5', 100, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-2', 'LINE-2', 'PRODUK-1', 100, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-3', 'LINE-3', 'PRODUK-1', 100, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-4', 'LINE-4', 'PRODUK-1', 100, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-5', 'LINE-1', 'PRODUK-2', 100, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-6', 'LINE-2', 'PRODUK-2', 100, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-7', 'LINE-4', 'PRODUK-2', 100, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-8', 'LINE-1', 'PRODUK-3', 100, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('CT-9', 'LINE-2', 'PRODUK-3', 100, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
-
---
--- Triggers `cycle_time`
---
-DELIMITER $$
-CREATE TRIGGER `edit_cycle_time` AFTER UPDATE ON `cycle_time` FOR EACH ROW INSERT INTO `cycle_time_logs`(`id_cycle_time_logs`, `keterangan_log`, `id_cycle_time`, `id_line`, `id_produk`, `cycle_time`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES (null,'Edit Data',NEW.id_cycle_time,NEW.id_line,NEW.id_produk,NEW.cycle_time,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `insert_cycle_time` AFTER INSERT ON `cycle_time` FOR EACH ROW INSERT INTO `cycle_time_logs`(`id_cycle_time_logs`, `keterangan_log`, `id_cycle_time`, `id_line`, `id_produk`, `cycle_time`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES (null,'Insert Data',NEW.id_cycle_time,NEW.id_line,NEW.id_produk,NEW.cycle_time,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cycle_time_logs`
---
-
-CREATE TABLE `cycle_time_logs` (
-  `id_cycle_time_logs` int(11) NOT NULL,
-  `keterangan_log` varchar(15) NOT NULL,
-  `id_cycle_time` varchar(10) NOT NULL,
-  `id_line` varchar(10) NOT NULL,
-  `id_produk` varchar(10) NOT NULL,
-  `cycle_time` int(11) NOT NULL,
-  `user_add` varchar(10) NOT NULL,
-  `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
-  `status_delete` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `cycle_time_logs`
---
-
-INSERT INTO `cycle_time_logs` (`id_cycle_time_logs`, `keterangan_log`, `id_cycle_time`, `id_line`, `id_produk`, `cycle_time`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(88, 'Insert Data', 'CT-1', 'LINE-1', 'PRODUK-1', 100, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(89, 'Insert Data', 'CT-2', 'LINE-2', 'PRODUK-1', 100, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(90, 'Insert Data', 'CT-3', 'LINE-3', 'PRODUK-1', 100, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(91, 'Insert Data', 'CT-4', 'LINE-4', 'PRODUK-1', 100, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(92, 'Insert Data', 'CT-5', 'LINE-1', 'PRODUK-2', 100, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(93, 'Insert Data', 'CT-6', 'LINE-2', 'PRODUK-2', 100, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(94, 'Insert Data', 'CT-7', 'LINE-4', 'PRODUK-2', 100, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(95, 'Insert Data', 'CT-8', 'LINE-1', 'PRODUK-3', 100, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(96, 'Insert Data', 'CT-9', 'LINE-2', 'PRODUK-3', 100, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(97, 'Insert Data', 'CT-10', 'LINE-3', 'PRODUK-3', 100, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(98, 'Insert Data', 'CT-11', 'LINE-4', 'PRODUK-3', 100, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(99, 'Insert Data', 'CT-12', 'LINE-1', 'PRODUK-4', 100, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(100, 'Insert Data', 'CT-13', 'LINE-2', 'PRODUK-4', 100, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(101, 'Insert Data', 'CT-14', 'LINE-3', 'PRODUK-4', 100, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(102, 'Insert Data', 'CT-15', 'LINE-4', 'PRODUK-4', 100, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(103, 'Insert Data', 'CT-16', 'LINE-1', 'PRODUK-5', 100, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(104, 'Insert Data', 'CT-17', 'LINE-2', 'PRODUK-5', 100, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(105, 'Insert Data', 'CT-18', 'LINE-3', 'PRODUK-5', 100, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(106, 'Insert Data', 'CT-19', 'LINE-4', 'PRODUK-5', 100, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+('CT-1', 'LINE-1', 'PRDK-1', 300, 'USER-2', '2020-12-21 18:20:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-10', 'LINE-2', 'PRDK-3', 420, 'USER-2', '2020-12-21 19:42:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-11', 'LINE-4', 'PRDK-3', 360, 'USER-2', '2020-12-21 19:42:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-12', 'LINE-1', 'PRDK-4', 300, 'USER-2', '2020-12-21 19:47:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-13', 'LINE-2', 'PRDK-4', 300, 'USER-2', '2020-12-21 19:47:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-14', 'LINE-4', 'PRDK-4', 300, 'USER-2', '2020-12-21 19:47:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-15', 'LINE-1', 'PRDK-5', 180, 'USER-2', '2020-12-21 19:53:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-16', 'LINE-2', 'PRDK-5', 300, 'USER-2', '2020-12-21 19:53:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-17', 'LINE-3', 'PRDK-5', 300, 'USER-2', '2020-12-21 19:53:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-18', 'LINE-4', 'PRDK-5', 300, 'USER-2', '2020-12-21 19:53:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-2', 'LINE-2', 'PRDK-1', 300, 'USER-2', '2020-12-21 18:20:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-3', 'LINE-3', 'PRDK-1', 300, 'USER-2', '2020-12-21 18:20:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-4', 'LINE-4', 'PRDK-1', 300, 'USER-2', '2020-12-21 18:20:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-5', 'LINE-1', 'PRDK-2', 300, 'USER-2', '2020-12-21 19:24:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-6', 'LINE-2', 'PRDK-2', 300, 'USER-2', '2020-12-21 19:24:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-7', 'LINE-3', 'PRDK-2', 300, 'USER-2', '2020-12-21 19:24:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-8', 'LINE-4', 'PRDK-2', 300, 'USER-2', '2020-12-21 19:24:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-9', 'LINE-1', 'PRDK-3', 360, 'USER-2', '2020-12-21 19:42:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -333,15 +267,13 @@ CREATE TABLE `departemen` (
 --
 
 INSERT INTO `departemen` (`id_departemen`, `nama_departemen`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('DEPT-1', 'Management', 'USER-1', '2020-08-29 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DEPT-2', 'Material', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DEPT-3', 'Produksi', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DEPT-4', 'Purchasing', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DEPT-5', 'Research & Development', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DEPT-6', 'Finish Good', 'USER-1', '2020-08-30 00:00:00', 'USER-1', '2020-09-08 00:11:13', '', '0000-00-00 00:00:00', 0),
-('DEPT-7', 'xy', 'USER-1', '2020-09-08 09:15:56', 'USER-1', '2020-09-08 09:27:01', 'USER-1', '2020-09-08 23:30:23', 1),
-('DEPT-8', 'xyza', 'USER-1', '2020-09-08 23:46:56', 'USER-1', '2020-09-08 23:47:02', '', '0000-00-00 00:00:00', 0),
-('DEPT-9', 'aaa', 'USER-1', '2020-09-24 22:47:20', 'USER-1', '2020-09-24 22:47:23', 'USER-1', '2020-09-24 22:47:27', 1);
+('DEPT-1', 'x', 'USER-1', '2020-12-21 12:53:12', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DEPT-2', 'Management', 'USER-1', '2020-12-21 13:09:02', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DEPT-3', 'Produksi', 'USER-1', '2020-12-21 13:27:02', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DEPT-4', 'Purchasing', 'USER-1', '2020-12-21 13:27:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DEPT-5', 'Finish Good', 'USER-1', '2020-12-21 13:27:32', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DEPT-6', 'Research & Development', 'USER-1', '2020-12-21 13:27:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DEPT-7', 'Material', 'USER-1', '2020-12-21 13:27:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 --
 -- Triggers `departemen`
@@ -380,16 +312,12 @@ CREATE TABLE `departemen_logs` (
 --
 
 INSERT INTO `departemen_logs` (`id_departemen_logs`, `keterangan_log`, `id_departemen`, `nama_departemen`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(1, 'Edit Data', 'DEPT-6', 'Finish Goods', 'USER-1', '2020-08-30 00:00:00', 'USER-1', '2020-09-08 00:11:10', '', '0000-00-00 00:00:00', 0),
-(2, 'Edit Data', 'DEPT-6', 'Finish Good', 'USER-1', '2020-08-30 00:00:00', 'USER-1', '2020-09-08 00:11:13', '', '0000-00-00 00:00:00', 0),
-(3, 'Insert Data', 'DEPT-7', 'x', 'USER-1', '2020-09-08 09:15:56', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(4, 'Edit Data', 'DEPT-7', 'xy', 'USER-1', '2020-09-08 09:15:56', 'USER-1', '2020-09-08 09:27:01', '', '0000-00-00 00:00:00', 0),
-(5, 'Edit Data', 'DEPT-7', 'xy', 'USER-1', '2020-09-08 09:15:56', 'USER-1', '2020-09-08 09:27:01', 'USER-1', '2020-09-08 23:30:23', 1),
-(6, 'Insert Data', 'DEPT-8', 'xyz', 'USER-1', '2020-09-08 23:46:56', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(7, 'Edit Data', 'DEPT-8', 'xyza', 'USER-1', '2020-09-08 23:46:56', 'USER-1', '2020-09-08 23:47:02', '', '0000-00-00 00:00:00', 0),
-(8, 'Insert Data', 'DEPT-9', 'a', 'USER-1', '2020-09-24 22:47:20', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(9, 'Edit Data', 'DEPT-9', 'aaa', 'USER-1', '2020-09-24 22:47:20', 'USER-1', '2020-09-24 22:47:23', '', '0000-00-00 00:00:00', 0),
-(10, 'Edit Data', 'DEPT-9', 'aaa', 'USER-1', '2020-09-24 22:47:20', 'USER-1', '2020-09-24 22:47:23', 'USER-1', '2020-09-24 22:47:27', 1);
+(13, 'Insert Data', 'DEPT-2', 'Management', 'USER-1', '2020-12-21 13:09:02', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(14, 'Insert Data', 'DEPT-3', 'Produksi', 'USER-1', '2020-12-21 13:27:02', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(15, 'Insert Data', 'DEPT-4', 'Purchasing', 'USER-1', '2020-12-21 13:27:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(16, 'Insert Data', 'DEPT-5', 'Finish Good', 'USER-1', '2020-12-21 13:27:32', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(17, 'Insert Data', 'DEPT-6', 'Research & Development', 'USER-1', '2020-12-21 13:27:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(18, 'Insert Data', 'DEPT-7', 'Material', 'USER-1', '2020-12-21 13:27:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -412,13 +340,6 @@ CREATE TABLE `detail_bpbj` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `detail_bpbj`
---
-
-INSERT INTO `detail_bpbj` (`id_detail_bpbj`, `id_bpbj`, `id_detail_produk`, `jumlah_produk`, `jumlah_terkirim`, `status_detail_bpbj`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 13, 0, 0, 'USER-1', '2020-11-28 19:20:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -506,24 +427,6 @@ CREATE TABLE `detail_permintaan_material` (
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `detail_permintaan_material`
---
-
-INSERT INTO `detail_permintaan_material` (`id_detail_permintaan_material`, `id_permintaan_material`, `id_konsumsi_material`, `needs`, `ketersediaan_supplier`, `status_detail_permintaan_material`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('DETPERMAT2012.000001', 'PERMAT2012.00001', 'KONMAT-1', '5.00', 0, 0, 'USER-1', '2020-12-01 20:15:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2012.000002', 'PERMAT2012.00002', 'KONMAT-1', '2.00', 0, 0, 'USER-1', '2020-12-01 20:15:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2012.000003', 'PERMAT2012.00003', 'KONMAT-2', '300.00', 0, 0, 'USER-1', '2020-12-01 20:15:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2012.000004', 'PERMAT2012.00003', 'KONMAT-3', '3.00', 0, 0, 'USER-1', '2020-12-01 20:15:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2012.000005', 'PERMAT2012.00004', 'KONMAT-2', '2000.00', 0, 0, 'USER-1', '2020-12-01 20:15:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2012.000006', 'PERMAT2012.00004', 'KONMAT-3', '20.00', 0, 0, 'USER-1', '2020-12-01 20:15:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2012.000007', 'PERMAT2012.00005', 'KONMAT-4', '10.00', 0, 0, 'USER-1', '2020-12-01 20:15:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2012.000008', 'PERMAT2012.00005', 'KONMAT-5', '20.00', 0, 0, 'USER-1', '2020-12-01 20:15:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2012.000009', 'PERMAT2012.00006', 'KONMAT-6', '4.00', 0, 0, 'USER-1', '2020-12-01 20:15:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2012.000010', 'PERMAT2012.00006', 'KONMAT-7', '5.00', 0, 0, 'USER-1', '2020-12-01 20:15:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2012.000011', 'PERMAT2012.00007', 'KONMAT-6', '168.00', 0, 0, 'USER-1', '2020-12-01 20:15:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPERMAT2012.000012', 'PERMAT2012.00007', 'KONMAT-7', '210.00', 0, 0, 'USER-1', '2020-12-01 20:15:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -535,6 +438,7 @@ CREATE TABLE `detail_produk` (
   `id_produk` varchar(10) NOT NULL,
   `id_ukuran_produk` varchar(10) NOT NULL,
   `id_warna` varchar(10) NOT NULL,
+  `kode_produk` varchar(50) NOT NULL,
   `keterangan` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
@@ -549,28 +453,14 @@ CREATE TABLE `detail_produk` (
 -- Dumping data for table `detail_produk`
 --
 
-INSERT INTO `detail_produk` (`id_detail_produk`, `id_produk`, `id_ukuran_produk`, `id_warna`, `keterangan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('DETPRO-1', 'PRODUK-1', 'UKPROD-1', '', 1, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPRO-2', 'PRODUK-1', 'UKPROD-2', '', 1, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPRO-3', 'PRODUK-2', '', 'WARNA-3', 2, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPRO-4', 'PRODUK-2', '', 'WARNA-6', 2, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPRO-5', 'PRODUK-3', '', '', 3, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPRO-6', 'PRODUK-4', 'UKPROD-7', 'WARNA-5', 0, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPRO-7', 'PRODUK-4', 'UKPROD-7', 'WARNA-4', 0, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPRO-8', 'PRODUK-5', '', 'WARNA-2', 2, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPRO-9', 'PRODUK-5', '', 'WARNA-3', 2, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
-
---
--- Triggers `detail_produk`
---
-DELIMITER $$
-CREATE TRIGGER `edit_detail_produk` AFTER UPDATE ON `detail_produk` FOR EACH ROW INSERT INTO `detail_produk_logs`(`id_detail_produk_logs`, `keterangan_log`, `id_detail_produk`,`id_produk`, `id_ukuran_produk`,`id_warna`,`keterangan`,`user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES (null,'Edit Data',NEW.id_detail_produk,NEW.id_produk,NEW.id_ukuran_produk,NEW.id_warna,NEW.keterangan,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `insert_detail_produk` AFTER INSERT ON `detail_produk` FOR EACH ROW INSERT INTO `detail_produk_logs`(`id_detail_produk_logs`, `keterangan_log`, `id_detail_produk`,`id_produk`, `id_ukuran_produk`,`id_warna`,`keterangan`,`user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES (null,'Insert Data',NEW.id_detail_produk,NEW.id_produk,NEW.id_ukuran_produk,NEW.id_warna,NEW.keterangan,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
+INSERT INTO `detail_produk` (`id_detail_produk`, `id_produk`, `id_ukuran_produk`, `id_warna`, `kode_produk`, `keterangan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('DETPRO-1', 'PRDK-1', '', '', 'N-AFN00-Z010.0L', 3, 'USER-2', '2020-12-21 18:20:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPRO-2', 'PRDK-2', '', '', 'N-AFN00-Z009.0L', 3, 'USER-2', '2020-12-21 19:24:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPRO-3', 'PRDK-3', '', 'WARNA-1', 'N-BAG02-Z008.0LR', 2, 'USER-2', '2020-12-21 19:42:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPRO-4', 'PRDK-4', 'UKPROD-5', 'WARNA-1', 'N-BOA00-Z005.0L', 0, 'USER-2', '2020-12-21 19:47:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPRO-5', 'PRDK-4', 'UKPROD-5', 'WARNA-2', 'N-BOA00-Z001.0L', 0, 'USER-2', '2020-12-21 19:47:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPRO-6', 'PRDK-4', 'UKPROD-5', 'WARNA-3', 'N-BOA00-Z004.0L', 0, 'USER-2', '2020-12-21 19:47:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPRO-7', 'PRDK-5', 'UKPROD-7', '', 'N-COM00-Z001.0J', 1, 'USER-2', '2020-12-21 19:53:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -598,40 +488,6 @@ CREATE TABLE `detail_produksi_line` (
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `detail_produksi_line`
---
-
-INSERT INTO `detail_produksi_line` (`id_detail_produksi_line`, `id_detail_purchase_order`, `id_produksi_line`, `jumlah_item_perencanaan`, `jumlah_item_aktual`, `waktu_proses_perencanaan`, `waktu_proses_aktual`, `keterangan_aktual`, `status_perencanaan`, `status_aktual`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('DPL2011.00000001', 'DPOC-1', 'PL2011.000001', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000002', 'DPOC-1', 'PL2011.000002', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000003', 'DPOC-1', 'PL2011.000003', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2011.00000004', 'DPOC-1', 'PL2011.000004', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000001', 'DPOC-1', 'PL2012.000001', 5, 0, 500, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000002', 'DPOC-1', 'PL2012.000005', 15, 0, 1500, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000003', 'DPOC-1', 'PL2012.000009', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000004', 'DPOC-1', 'PL2012.000013', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000005', 'DPOC-1', 'PL2012.000017', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000006', 'DPOC-1', 'PL2012.000021', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000007', 'DPOC-1', 'PL2012.000002', 3, 0, 300, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000008', 'DPOC-1', 'PL2012.000006', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000009', 'DPOC-1', 'PL2012.000010', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000010', 'DPOC-1', 'PL2012.000014', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000011', 'DPOC-1', 'PL2012.000018', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000012', 'DPOC-1', 'PL2012.000022', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000013', 'DPOC-1', 'PL2012.000003', 4, 0, 400, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000014', 'DPOC-1', 'PL2012.000007', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000015', 'DPOC-1', 'PL2012.000011', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000016', 'DPOC-1', 'PL2012.000015', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000017', 'DPOC-1', 'PL2012.000019', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000018', 'DPOC-1', 'PL2012.000023', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000019', 'DPOC-1', 'PL2012.000004', 1, 0, 100, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000020', 'DPOC-1', 'PL2012.000008', 50, 0, 5000, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000021', 'DPOC-1', 'PL2012.000012', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000022', 'DPOC-1', 'PL2012.000016', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000023', 'DPOC-1', 'PL2012.000020', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('DPL2012.00000024', 'DPOC-1', 'PL2012.000024', 0, 0, 0, 0, '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -643,29 +499,6 @@ CREATE TABLE `detail_produksi_tertunda` (
   `id_produksi_tertunda` varchar(20) NOT NULL,
   `id_detail_produksi_line` varchar(17) NOT NULL,
   `jumlah_perencanaan` int(11) NOT NULL,
-  `user_add` varchar(10) NOT NULL,
-  `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
-  `status_delete` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `detail_produk_logs`
---
-
-CREATE TABLE `detail_produk_logs` (
-  `id_detail_produk_logs` int(11) NOT NULL,
-  `keterangan_log` varchar(15) NOT NULL,
-  `id_detail_produk` varchar(10) NOT NULL,
-  `id_produk` varchar(10) NOT NULL,
-  `id_ukuran_produk` varchar(10) NOT NULL,
-  `id_warna` varchar(10) NOT NULL,
-  `keterangan` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
   `user_edit` varchar(10) NOT NULL,
@@ -703,9 +536,10 @@ CREATE TABLE `detail_purchase_order_customer` (
 --
 
 INSERT INTO `detail_purchase_order_customer` (`id_detail_purchase_order_customer`, `id_purchase_order_customer`, `id_detail_produk`, `jumlah_produk`, `harga_satuan`, `total_harga`, `tanggal_penerimaan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('DPOC-1', 'POC-1', 'DETPRO-1', 200, 300000, 60000000, '2020-11-11', 'USER-1', '2020-11-11 21:13:41', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('DPOC-2', 'POC-1', 'DETPRO-3', 200, 300000, 60000000, '2020-11-11', 'USER-1', '2020-11-11 21:13:41', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('DPOC-3', 'POC-2', 'DETPRO-3', 300, 300000, 90000000, '2020-11-19', 'USER-1', '2020-11-11 21:14:49', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
+('DPOC-1', 'POC-1', 'DETPRO-1', 500, 116536, 58268000, '2020-12-15', 'USER-1', '2020-12-15 10:11:48', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('DPOC-2', 'POC-1', 'DETPRO-2', 500, 116555, 58277500, '2020-12-22', 'USER-1', '2020-12-15 10:11:48', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('DPOC-3', 'POC-1', 'DETPRO-3', 500, 2090508, 1045254000, '2020-12-22', 'USER-1', '2020-12-15 10:11:48', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('DPOC-4', 'POC-2', 'DETPRO-1', 1000, 116536, 116536000, '2020-12-22', 'USER-1', '2020-12-15 10:12:39', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -911,23 +745,21 @@ CREATE TABLE `jabatan` (
 --
 
 INSERT INTO `jabatan` (`id_jabatan`, `nama_jabatan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('JBT-1', 'Direktur', 'USER-1', '2020-08-29 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBT-10', 'Staff Line Assy', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBT-11', 'PIC Line Bonding', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBT-12', 'PIC Line Sewing', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBT-13', 'PIC Line Assy', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBT-14', 'ab', 'USER-1', '2020-09-08 09:30:03', 'USER-1', '2020-09-08 09:34:26', 'USER-1', '2020-09-24 22:48:24', 1),
-('JBT-15', 'cd', 'USER-1', '2020-09-08 09:36:15', 'USER-1', '2020-09-08 09:42:44', 'USER-1', '2020-09-24 22:48:27', 1),
-('JBT-16', 'aa', 'USER-1', '2020-09-09 00:39:19', '', '0000-00-00 00:00:00', 'USER-1', '2020-09-24 22:48:22', 1),
-('JBT-17', 'aaa', 'USER-1', '2020-09-24 22:48:08', 'USER-1', '2020-09-24 22:48:12', 'USER-1', '2020-09-24 22:48:20', 1),
-('JBT-2', 'Manager', 'USER-1', '2020-08-29 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBT-3', 'Admin', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBT-4', 'PPIC', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBT-5', 'Operator Gudang', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBT-6', 'PIC Line Cutting', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBT-7', 'Staff Line Cutting', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBT-8', 'Staff Line Bonding', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBT-9', 'Staff Line Sewing', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+('JBT-1', 'x', 'USER-1', '2020-12-21 12:53:36', 'USER-1', '2020-12-21 13:08:23', '', '0000-00-00 00:00:00', 0),
+('JBT-10', 'PPIC', 'USER-1', '2020-12-21 13:53:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBT-11', 'Staff Line Cutting', 'USER-1', '2020-12-21 13:53:29', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBT-12', 'Staff Line Bonding', 'USER-1', '2020-12-21 13:53:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBT-13', 'Staff Line Sewing', 'USER-1', '2020-12-21 13:53:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBT-14', 'Staff Line Assy', 'USER-1', '2020-12-21 13:53:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBT-15', 'Engineering', 'USER-1', '2020-12-21 13:53:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBT-2', 'Direktur', 'USER-1', '2020-12-21 13:48:02', 'USER-1', '2020-12-21 13:51:03', '', '0000-00-00 00:00:00', 0),
+('JBT-3', 'Manager', 'USER-1', '2020-12-21 13:49:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBT-4', 'Admin', 'USER-1', '2020-12-21 13:50:51', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBT-5', 'Operator Gudang', 'USER-1', '2020-12-21 13:51:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBT-6', 'PIC Line Cutting', 'USER-1', '2020-12-21 13:51:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBT-7', 'PIC Line Bonding', 'USER-1', '2020-12-21 13:51:12', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBT-8', 'PIC Line Sewing', 'USER-1', '2020-12-21 13:53:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBT-9', 'PIC Line Assy', 'USER-1', '2020-12-21 13:53:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 --
 -- Triggers `jabatan`
@@ -937,7 +769,7 @@ CREATE TRIGGER `edit_jabatan` AFTER UPDATE ON `jabatan` FOR EACH ROW INSERT INTO
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `insert_jabatan` AFTER INSERT ON `jabatan` FOR EACH ROW INSERT INTO `jabatan_logs`(`id_jabatan_logs`, `keterangan_log`, `id_jabatan`, `nama_jabatan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES (null,'Insert\r\nData',NEW.id_jabatan,NEW.nama_jabatan,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
+CREATE TRIGGER `insert_jabatan` AFTER INSERT ON `jabatan` FOR EACH ROW INSERT INTO `jabatan_logs`(`id_jabatan_logs`, `keterangan_log`, `id_jabatan`, `nama_jabatan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES (null,'Insert Data',NEW.id_jabatan,NEW.nama_jabatan,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
 $$
 DELIMITER ;
 
@@ -965,36 +797,51 @@ CREATE TABLE `jabatan_karyawan` (
 --
 
 INSERT INTO `jabatan_karyawan` (`id_jabatan_karyawan`, `id_karyawan`, `id_spesifikasi_jabatan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('JBTKAR-1', 'KAR-1', 'SJBT-1', 'USER-1', '2020-08-29 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-10', 'KAR-9', 'SJBT-10', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-11', 'KAR-9', 'SJBT-11', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-12', 'KAR-10', 'SJBT-12', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-13', 'KAR-11', 'SJBT-13', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-14', 'KAR-12', 'SJBT-6', 'USER-1', '2020-09-08 21:12:17', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-15', 'KAR-12', 'SJBT-8', 'USER-1', '2020-09-08 21:12:17', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-16', 'KAR-13', 'SJBT-15', 'USER-1', '2020-09-08 21:23:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-17', 'KAR-13', 'SJBT-17', 'USER-1', '2020-09-08 21:23:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-18', 'KAR-14', 'SJBT-6', 'USER-1', '2020-09-08 22:27:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-19', 'KAR-15', 'SJBT-18', 'USER-1', '2020-09-09 01:15:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-2', 'KAR-2', 'SJBT-2', 'USER-1', '2020-08-29 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-20', 'KAR-16', 'SJBT-18', 'USER-1', '2020-09-09 01:16:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-21', 'KAR-17', 'SJBT-15', 'USER-1', '2020-09-09 01:17:18', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-22', 'KAR-18', 'SJBT-15', 'USER-1', '2020-09-09 01:17:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-23', 'KAR-19', 'SJBT-16', 'USER-1', '2020-09-09 01:19:46', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-24', 'KAR-20', 'SJBT-16', 'USER-1', '2020-09-09 01:20:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-25', 'KAR-21', 'SJBT-17', 'USER-1', '2020-09-09 01:21:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-26', 'KAR-22', 'SJBT-17', 'USER-1', '2020-09-09 01:21:28', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-27', 'KAR-23', 'SJBT-18', 'USER-1', '2020-09-09 23:10:47', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-28', 'KAR-24', 'SJBT-18', 'USER-1', '2020-09-09 23:12:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-29', 'KAR-25', 'SJBT-18', 'USER-1', '2020-09-11 15:10:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-3', 'KAR-4', 'SJBT-3', 'USER-1', '2020-08-29 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-30', 'KAR-26', 'SJBT-18', 'USER-1', '2020-09-24 22:57:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-4', 'KAR-3', 'SJBT-4', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-5', 'KAR-5', 'SJBT-5', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-6', 'KAR-6', 'SJBT-6', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-7', 'KAR-2', 'SJBT-7', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-8', 'KAR-7', 'SJBT-8', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBTKAR-9', 'KAR-8', 'SJBT-9', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+('JBTKAR-1', 'KAR-1', 'SJBT-1', 'USER-1', '2020-12-21 12:54:50', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-10', 'KAR-9', 'SJBT-7', 'USER-1', '2020-12-21 14:26:43', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-11', 'KAR-10', 'SJBT-11', 'USER-1', '2020-12-21 14:28:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-12', 'KAR-10', 'SJBT-12', 'USER-1', '2020-12-21 14:28:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-13', 'KAR-11', 'SJBT-13', 'USER-1', '2020-12-21 14:28:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-14', 'KAR-12', 'SJBT-14', 'USER-1', '2020-12-21 14:29:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-15', 'KAR-13', 'SJBT-15', 'USER-1', '2020-12-21 14:40:04', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-16', 'KAR-14', 'SJBT-15', 'USER-1', '2020-12-21 14:40:28', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-17', 'KAR-15', 'SJBT-16', 'USER-1', '2020-12-21 14:41:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-18', 'KAR-16', 'SJBT-16', 'USER-1', '2020-12-21 14:41:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-19', 'KAR-17', 'SJBT-16', 'USER-1', '2020-12-21 14:42:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-2', 'KAR-2', 'SJBT-2', 'USER-1', '2020-12-21 14:16:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-20', 'KAR-18', 'SJBT-16', 'USER-1', '2020-12-21 14:43:04', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-21', 'KAR-19', 'SJBT-17', 'USER-1', '2020-12-21 14:44:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-22', 'KAR-20', 'SJBT-17', 'USER-1', '2020-12-21 14:45:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-23', 'KAR-21', 'SJBT-17', 'USER-1', '2020-12-21 14:45:22', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-24', 'KAR-22', 'SJBT-17', 'USER-1', '2020-12-21 14:45:48', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-25', 'KAR-23', 'SJBT-17', 'USER-1', '2020-12-21 14:46:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-26', 'KAR-24', 'SJBT-17', 'USER-1', '2020-12-21 14:46:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-27', 'KAR-25', 'SJBT-17', 'USER-1', '2020-12-21 14:47:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-28', 'KAR-26', 'SJBT-17', 'USER-1', '2020-12-21 14:47:43', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-29', 'KAR-27', 'SJBT-17', 'USER-1', '2020-12-21 14:48:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-3', 'KAR-3', 'SJBT-3', 'USER-1', '2020-12-21 14:18:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-30', 'KAR-28', 'SJBT-17', 'USER-1', '2020-12-21 14:48:29', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-31', 'KAR-29', 'SJBT-17', 'USER-1', '2020-12-21 14:48:51', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-32', 'KAR-30', 'SJBT-17', 'USER-1', '2020-12-21 14:49:54', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-33', 'KAR-31', 'SJBT-17', 'USER-1', '2020-12-21 14:50:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-34', 'KAR-32', 'SJBT-17', 'USER-1', '2020-12-21 14:50:50', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-35', 'KAR-33', 'SJBT-17', 'USER-1', '2020-12-21 14:51:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-36', 'KAR-34', 'SJBT-17', 'USER-1', '2020-12-21 14:51:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-37', 'KAR-35', 'SJBT-17', 'USER-1', '2020-12-21 14:52:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-38', 'KAR-36', 'SJBT-18', 'USER-1', '2020-12-21 14:52:37', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-39', 'KAR-37', 'SJBT-18', 'USER-1', '2020-12-21 14:53:02', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-4', 'KAR-4', 'SJBT-9', 'USER-1', '2020-12-21 14:19:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-40', 'KAR-38', 'SJBT-18', 'USER-1', '2020-12-21 14:53:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-41', 'KAR-39', 'SJBT-18', 'USER-1', '2020-12-21 14:53:47', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-42', 'KAR-40', 'SJBT-18', 'USER-1', '2020-12-21 14:54:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-43', 'KAR-41', 'SJBT-18', 'USER-1', '2020-12-21 14:54:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-44', 'KAR-42', 'SJBT-18', 'USER-1', '2020-12-21 14:54:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-45', 'KAR-43', 'SJBT-18', 'USER-1', '2020-12-21 14:55:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-5', 'KAR-5', 'SJBT-5', 'USER-1', '2020-12-21 14:21:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-6', 'KAR-6', 'SJBT-10', 'USER-1', '2020-12-21 14:22:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-7', 'KAR-7', 'SJBT-8', 'USER-1', '2020-12-21 14:23:21', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-8', 'KAR-3', 'SJBT-6', 'USER-1', '2020-12-21 14:24:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-9', 'KAR-8', 'SJBT-4', 'USER-1', '2020-12-21 14:25:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 --
 -- Triggers `jabatan_karyawan`
@@ -1034,23 +881,50 @@ CREATE TABLE `jabatan_karyawan_logs` (
 --
 
 INSERT INTO `jabatan_karyawan_logs` (`id_jabatan_karyawan_logs`, `keterangan_log`, `id_jabatan_karyawan`, `id_karyawan`, `id_spesifikasi_jabatan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(1, 'Insert Data', 'JBTKAR-14', 'KAR-12', 'SJBT-6', 'USER-1', '2020-09-08 21:12:17', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(2, 'Insert Data', 'JBTKAR-15', 'KAR-12', 'SJBT-8', 'USER-1', '2020-09-08 21:12:17', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(3, 'Insert Data', 'JBTKAR-16', 'KAR-13', 'SJBT-15', 'USER-1', '2020-09-08 21:23:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(4, 'Insert Data', 'JBTKAR-17', 'KAR-13', 'SJBT-17', 'USER-1', '2020-09-08 21:23:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(5, 'Insert Data', 'JBTKAR-18', 'KAR-14', 'SJBT-6', 'USER-1', '2020-09-08 22:27:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(6, 'Insert Data', 'JBTKAR-19', 'KAR-15', 'SJBT-18', 'USER-1', '2020-09-09 01:15:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(7, 'Insert Data', 'JBTKAR-20', 'KAR-16', 'SJBT-18', 'USER-1', '2020-09-09 01:16:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(8, 'Insert Data', 'JBTKAR-21', 'KAR-17', 'SJBT-15', 'USER-1', '2020-09-09 01:17:18', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(9, 'Insert Data', 'JBTKAR-22', 'KAR-18', 'SJBT-15', 'USER-1', '2020-09-09 01:17:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(10, 'Insert Data', 'JBTKAR-23', 'KAR-19', 'SJBT-16', 'USER-1', '2020-09-09 01:19:46', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(11, 'Insert Data', 'JBTKAR-24', 'KAR-20', 'SJBT-16', 'USER-1', '2020-09-09 01:20:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(12, 'Insert Data', 'JBTKAR-25', 'KAR-21', 'SJBT-17', 'USER-1', '2020-09-09 01:21:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(13, 'Insert Data', 'JBTKAR-26', 'KAR-22', 'SJBT-17', 'USER-1', '2020-09-09 01:21:28', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(14, 'Insert Data', 'JBTKAR-27', 'KAR-23', 'SJBT-18', 'USER-1', '2020-09-09 23:10:47', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(15, 'Insert Data', 'JBTKAR-28', 'KAR-24', 'SJBT-18', 'USER-1', '2020-09-09 23:12:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(16, 'Insert Data', 'JBTKAR-29', 'KAR-25', 'SJBT-18', 'USER-1', '2020-09-11 15:10:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(17, 'Insert Data', 'JBTKAR-30', 'KAR-26', 'SJBT-18', 'USER-1', '2020-09-24 22:57:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0');
+(33, 'Insert Data', 'JBTKAR-2', 'KAR-2', 'SJBT-2', 'USER-1', '2020-12-21 14:16:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(34, 'Insert Data', 'JBTKAR-3', 'KAR-3', 'SJBT-3', 'USER-1', '2020-12-21 14:18:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(35, 'Insert Data', 'JBTKAR-4', 'KAR-4', 'SJBT-9', 'USER-1', '2020-12-21 14:19:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(36, 'Insert Data', 'JBTKAR-5', 'KAR-5', 'SJBT-5', 'USER-1', '2020-12-21 14:21:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(37, 'Insert Data', 'JBTKAR-6', 'KAR-6', 'SJBT-10', 'USER-1', '2020-12-21 14:22:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(38, 'Insert Data', 'JBTKAR-7', 'KAR-7', 'SJBT-8', 'USER-1', '2020-12-21 14:23:21', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(39, 'Insert Data', 'JBTKAR-8', 'KAR-3', 'SJBT-6', 'USER-1', '2020-12-21 14:24:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(40, 'Insert Data', 'JBTKAR-9', 'KAR-8', 'SJBT-4', 'USER-1', '2020-12-21 14:25:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(41, 'Insert Data', 'JBTKAR-10', 'KAR-9', 'SJBT-7', 'USER-1', '2020-12-21 14:26:43', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(42, 'Insert Data', 'JBTKAR-11', 'KAR-10', 'SJBT-11', 'USER-1', '2020-12-21 14:28:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(43, 'Insert Data', 'JBTKAR-12', 'KAR-10', 'SJBT-12', 'USER-1', '2020-12-21 14:28:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(44, 'Insert Data', 'JBTKAR-13', 'KAR-11', 'SJBT-13', 'USER-1', '2020-12-21 14:28:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(45, 'Insert Data', 'JBTKAR-14', 'KAR-12', 'SJBT-14', 'USER-1', '2020-12-21 14:29:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(46, 'Insert Data', 'JBTKAR-15', 'KAR-13', 'SJBT-15', 'USER-1', '2020-12-21 14:40:04', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(47, 'Insert Data', 'JBTKAR-16', 'KAR-14', 'SJBT-15', 'USER-1', '2020-12-21 14:40:28', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(48, 'Insert Data', 'JBTKAR-17', 'KAR-15', 'SJBT-16', 'USER-1', '2020-12-21 14:41:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(49, 'Insert Data', 'JBTKAR-18', 'KAR-16', 'SJBT-16', 'USER-1', '2020-12-21 14:41:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(50, 'Insert Data', 'JBTKAR-19', 'KAR-17', 'SJBT-16', 'USER-1', '2020-12-21 14:42:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(51, 'Insert Data', 'JBTKAR-20', 'KAR-18', 'SJBT-16', 'USER-1', '2020-12-21 14:43:04', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(52, 'Insert Data', 'JBTKAR-21', 'KAR-19', 'SJBT-17', 'USER-1', '2020-12-21 14:44:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(53, 'Insert Data', 'JBTKAR-22', 'KAR-20', 'SJBT-17', 'USER-1', '2020-12-21 14:45:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(54, 'Insert Data', 'JBTKAR-23', 'KAR-21', 'SJBT-17', 'USER-1', '2020-12-21 14:45:22', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(55, 'Insert Data', 'JBTKAR-24', 'KAR-22', 'SJBT-17', 'USER-1', '2020-12-21 14:45:48', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(56, 'Insert Data', 'JBTKAR-25', 'KAR-23', 'SJBT-17', 'USER-1', '2020-12-21 14:46:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(57, 'Insert Data', 'JBTKAR-26', 'KAR-24', 'SJBT-17', 'USER-1', '2020-12-21 14:46:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(58, 'Insert Data', 'JBTKAR-27', 'KAR-25', 'SJBT-17', 'USER-1', '2020-12-21 14:47:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(59, 'Insert Data', 'JBTKAR-28', 'KAR-26', 'SJBT-17', 'USER-1', '2020-12-21 14:47:43', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(60, 'Insert Data', 'JBTKAR-29', 'KAR-27', 'SJBT-17', 'USER-1', '2020-12-21 14:48:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(61, 'Insert Data', 'JBTKAR-30', 'KAR-28', 'SJBT-17', 'USER-1', '2020-12-21 14:48:29', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(62, 'Insert Data', 'JBTKAR-31', 'KAR-29', 'SJBT-17', 'USER-1', '2020-12-21 14:48:51', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(63, 'Insert Data', 'JBTKAR-32', 'KAR-30', 'SJBT-17', 'USER-1', '2020-12-21 14:49:54', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(64, 'Insert Data', 'JBTKAR-33', 'KAR-31', 'SJBT-17', 'USER-1', '2020-12-21 14:50:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(65, 'Insert Data', 'JBTKAR-34', 'KAR-32', 'SJBT-17', 'USER-1', '2020-12-21 14:50:50', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(66, 'Insert Data', 'JBTKAR-35', 'KAR-33', 'SJBT-17', 'USER-1', '2020-12-21 14:51:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(67, 'Insert Data', 'JBTKAR-36', 'KAR-34', 'SJBT-17', 'USER-1', '2020-12-21 14:51:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(68, 'Insert Data', 'JBTKAR-37', 'KAR-35', 'SJBT-17', 'USER-1', '2020-12-21 14:52:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(69, 'Insert Data', 'JBTKAR-38', 'KAR-36', 'SJBT-18', 'USER-1', '2020-12-21 14:52:37', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(70, 'Insert Data', 'JBTKAR-39', 'KAR-37', 'SJBT-18', 'USER-1', '2020-12-21 14:53:02', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(71, 'Insert Data', 'JBTKAR-40', 'KAR-38', 'SJBT-18', 'USER-1', '2020-12-21 14:53:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(72, 'Insert Data', 'JBTKAR-41', 'KAR-39', 'SJBT-18', 'USER-1', '2020-12-21 14:53:47', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(73, 'Insert Data', 'JBTKAR-42', 'KAR-40', 'SJBT-18', 'USER-1', '2020-12-21 14:54:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(74, 'Insert Data', 'JBTKAR-43', 'KAR-41', 'SJBT-18', 'USER-1', '2020-12-21 14:54:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(75, 'Insert Data', 'JBTKAR-44', 'KAR-42', 'SJBT-18', 'USER-1', '2020-12-21 14:54:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
+(76, 'Insert Data', 'JBTKAR-45', 'KAR-43', 'SJBT-18', 'USER-1', '2020-12-21 14:55:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0');
 
 -- --------------------------------------------------------
 
@@ -1077,17 +951,23 @@ CREATE TABLE `jabatan_logs` (
 --
 
 INSERT INTO `jabatan_logs` (`id_jabatan_logs`, `keterangan_log`, `id_jabatan`, `nama_jabatan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(1, 'Insert\r\nData', 'JBT-14', 'a', 'USER-1', '2020-09-08 09:30:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(2, 'Edit Data', 'JBT-14', 'ab', 'USER-1', '2020-09-08 09:30:03', 'USER-1', '2020-09-08 09:34:26', '', '0000-00-00 00:00:00', 0),
-(3, 'Insert\r\nData', 'JBT-15', 'c', 'USER-1', '2020-09-08 09:36:15', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(4, 'Edit Data', 'JBT-15', 'cd', 'USER-1', '2020-09-08 09:36:15', 'USER-1', '2020-09-08 09:42:44', '', '0000-00-00 00:00:00', 0),
-(5, 'Insert\r\nData', 'JBT-16', 'aa', 'USER-1', '2020-09-09 00:39:19', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(6, 'Insert\r\nData', 'JBT-17', 'a', 'USER-1', '2020-09-24 22:48:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(7, 'Edit Data', 'JBT-17', 'aaa', 'USER-1', '2020-09-24 22:48:08', 'USER-1', '2020-09-24 22:48:12', '', '0000-00-00 00:00:00', 0),
-(8, 'Edit Data', 'JBT-17', 'aaa', 'USER-1', '2020-09-24 22:48:08', 'USER-1', '2020-09-24 22:48:12', 'USER-1', '2020-09-24 22:48:20', 1),
-(9, 'Edit Data', 'JBT-16', 'aa', 'USER-1', '2020-09-09 00:39:19', '', '0000-00-00 00:00:00', 'USER-1', '2020-09-24 22:48:22', 1),
-(10, 'Edit Data', 'JBT-14', 'ab', 'USER-1', '2020-09-08 09:30:03', 'USER-1', '2020-09-08 09:34:26', 'USER-1', '2020-09-24 22:48:24', 1),
-(11, 'Edit Data', 'JBT-15', 'cd', 'USER-1', '2020-09-08 09:36:15', 'USER-1', '2020-09-08 09:42:44', 'USER-1', '2020-09-24 22:48:27', 1);
+(23, 'Edit Data', 'JBT-1', 'x', 'USER-1', '2020-12-21 12:53:36', 'USER-1', '2020-12-21 13:08:23', '', '0000-00-00 00:00:00', 0),
+(24, 'Insert Data', 'JBT-2', 'Direktur', 'USER-1', '2020-12-21 13:48:02', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(25, 'Insert Data', 'JBT-3', 'Manager', 'USER-1', '2020-12-21 13:49:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(26, 'Insert Data', 'JBT-4', 'Admin', 'USER-1', '2020-12-21 13:50:51', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(27, 'Edit Data', 'JBT-2', 'Direkturr', 'USER-1', '2020-12-21 13:48:02', 'USER-1', '2020-12-21 13:50:58', '', '0000-00-00 00:00:00', 0),
+(28, 'Edit Data', 'JBT-2', 'Direktur', 'USER-1', '2020-12-21 13:48:02', 'USER-1', '2020-12-21 13:51:03', '', '0000-00-00 00:00:00', 0),
+(29, 'Insert Data', 'JBT-5', 'Operator Gudang', 'USER-1', '2020-12-21 13:51:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(30, 'Insert Data', 'JBT-6', 'PIC Line Cutting', 'USER-1', '2020-12-21 13:51:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(31, 'Insert Data', 'JBT-7', 'PIC Line Bonding', 'USER-1', '2020-12-21 13:51:12', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(32, 'Insert Data', 'JBT-8', 'PIC Line Sewing', 'USER-1', '2020-12-21 13:53:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(33, 'Insert Data', 'JBT-9', 'PIC Line Assy', 'USER-1', '2020-12-21 13:53:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(34, 'Insert Data', 'JBT-10', 'PPIC', 'USER-1', '2020-12-21 13:53:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(35, 'Insert Data', 'JBT-11', 'Staff Line Cutting', 'USER-1', '2020-12-21 13:53:29', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(36, 'Insert Data', 'JBT-12', 'Staff Line Bonding', 'USER-1', '2020-12-21 13:53:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(37, 'Insert Data', 'JBT-13', 'Staff Line Sewing', 'USER-1', '2020-12-21 13:53:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(38, 'Insert Data', 'JBT-14', 'Staff Line Assy', 'USER-1', '2020-12-21 13:53:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(39, 'Insert Data', 'JBT-15', 'Engineering', 'USER-1', '2020-12-21 13:53:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1167,14 +1047,11 @@ CREATE TABLE `jenis_produk` (
 --
 
 INSERT INTO `jenis_produk` (`id_jenis_produk`, `nama_jenis_produk`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('JENPROD-1', 'Mattress', 'USER-1', '2020-08-30 22:46:04', 'USER-1', '2020-08-30 22:46:12', 'USER-1', '2020-08-30 22:46:14', 1),
-('JENPROD-2', 'Mattress', 'USER-1', '2020-08-30 22:46:17', 'USER-1', '2020-08-30 22:46:21', '', '0000-00-00 00:00:00', 0),
-('JENPROD-3', 'Sofa', 'USER-1', '2020-08-31 14:09:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JENPROD-4', 'Bantal', 'USER-1', '2020-08-31 14:09:34', '', '0000-00-00 00:00:00', 'USER-1', '2020-09-08 23:41:48', 1),
-('JENPROD-5', 'Karpet', 'USER-1', '2020-08-31 14:09:38', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JENPROD-6', 'Floor Chair', 'USER-1', '2020-09-07 17:23:24', 'USER-1', '2020-09-07 17:23:40', '', '0000-00-00 00:00:00', 0),
-('JENPROD-7', 'Bantal', 'USER-1', '2020-09-08 23:41:52', 'USER-1', '2020-09-08 23:41:59', '', '0000-00-00 00:00:00', 0),
-('JENPROD-8', 'Kasur Lipat', 'USER-1', '2020-11-01 00:11:23', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+('JENPROD-1', 'Pillow', 'USER-1', '2020-12-14 23:22:42', 'USER-2', '2020-12-21 18:17:08', '', '0000-00-00 00:00:00', 0),
+('JENPROD-2', 'Mattress', 'USER-1', '2020-12-14 23:32:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JENPROD-3', 'Sofa', 'USER-1', '2020-12-19 11:54:50', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JENPROD-4', 'Cover Matt', 'USER-1', '2020-12-19 12:23:16', 'USER-1', '2020-12-19 12:23:33', '', '0000-00-00 00:00:00', 0),
+('JENPROD-5', 'Floor Mattress', 'USER-1', '2020-12-19 12:36:04', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 --
 -- Triggers `jenis_produk`
@@ -1213,23 +1090,15 @@ CREATE TABLE `jenis_produk_logs` (
 --
 
 INSERT INTO `jenis_produk_logs` (`id_jenis_produk_logs`, `keterangan_log`, `id_jenis_produk`, `nama_jenis_produk`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(1, 'Insert Data', 'JENPROD-1', 'Mattress', 'USER-1', '2020-08-30 22:46:04', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(2, 'Edit Data', 'JENPROD-1', 'Mattressa', 'USER-1', '2020-08-30 22:46:04', 'USER-1', '2020-08-30 22:46:09', '', '0000-00-00 00:00:00', 0),
-(3, 'Edit Data', 'JENPROD-1', 'Mattress', 'USER-1', '2020-08-30 22:46:04', 'USER-1', '2020-08-30 22:46:12', '', '0000-00-00 00:00:00', 0),
-(4, 'Edit Data', 'JENPROD-1', 'Mattress', 'USER-1', '2020-08-30 22:46:04', 'USER-1', '2020-08-30 22:46:12', 'USER-1', '2020-08-30 22:46:14', 1),
-(5, 'Insert Data', 'JENPROD-2', 'Mattress', 'USER-1', '2020-08-30 22:46:17', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(6, 'Edit Data', 'JENPROD-2', 'Mattressa', 'USER-1', '2020-08-30 22:46:17', 'USER-1', '2020-08-30 22:46:19', '', '0000-00-00 00:00:00', 0),
-(7, 'Edit Data', 'JENPROD-2', 'Mattress', 'USER-1', '2020-08-30 22:46:17', 'USER-1', '2020-08-30 22:46:21', '', '0000-00-00 00:00:00', 0),
-(8, 'Insert Data', 'JENPROD-3', 'Sofa', 'USER-1', '2020-08-31 14:09:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(9, 'Insert Data', 'JENPROD-4', 'Bantal', 'USER-1', '2020-08-31 14:09:34', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(10, 'Insert Data', 'JENPROD-5', 'Karpet', 'USER-1', '2020-08-31 14:09:38', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(11, 'Insert Data', 'JENPROD-6', 'Kursi', 'USER-1', '2020-09-07 17:23:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(12, 'Edit Data', 'JENPROD-6', 'Floor Chair', 'USER-1', '2020-09-07 17:23:24', 'USER-1', '2020-09-07 17:23:40', '', '0000-00-00 00:00:00', 0),
-(13, 'Edit Data', 'JENPROD-4', 'Bantal', 'USER-1', '2020-08-31 14:09:34', '', '0000-00-00 00:00:00', 'USER-1', '2020-09-08 23:41:48', 1),
-(14, 'Insert Data', 'JENPROD-7', 'Bantal', 'USER-1', '2020-09-08 23:41:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(15, 'Edit Data', 'JENPROD-7', 'Bantala', 'USER-1', '2020-09-08 23:41:52', 'USER-1', '2020-09-08 23:41:56', '', '0000-00-00 00:00:00', 0),
-(16, 'Edit Data', 'JENPROD-7', 'Bantal', 'USER-1', '2020-09-08 23:41:52', 'USER-1', '2020-09-08 23:41:59', '', '0000-00-00 00:00:00', 0),
-(17, 'Insert Data', 'JENPROD-8', 'Kasur Lipat', 'USER-1', '2020-11-01 00:11:23', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+(18, 'Insert Data', 'JENPROD-1', 'Pillow', 'USER-1', '2020-12-14 23:22:42', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(19, 'Insert Data', 'JENPROD-2', 'Mattress', 'USER-1', '2020-12-14 23:32:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(20, 'Insert Data', 'JENPROD-3', 'Sofa', 'USER-1', '2020-12-19 11:54:50', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(21, 'Insert Data', 'JENPROD-4', 'Cover', 'USER-1', '2020-12-19 12:23:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(22, 'Edit Data', 'JENPROD-4', 'Cover Mat', 'USER-1', '2020-12-19 12:23:16', 'USER-1', '2020-12-19 12:23:24', '', '0000-00-00 00:00:00', 0),
+(23, 'Edit Data', 'JENPROD-4', 'Cover Matt', 'USER-1', '2020-12-19 12:23:16', 'USER-1', '2020-12-19 12:23:33', '', '0000-00-00 00:00:00', 0),
+(24, 'Insert Data', 'JENPROD-5', 'Floor Mattress', 'USER-1', '2020-12-19 12:36:04', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(25, 'Edit Data', 'JENPROD-1', 'Pillows', 'USER-1', '2020-12-14 23:22:42', 'USER-1', '2020-12-21 12:15:44', '', '0000-00-00 00:00:00', 0),
+(26, 'Edit Data', 'JENPROD-1', 'Pillow', 'USER-1', '2020-12-14 23:22:42', 'USER-2', '2020-12-21 18:17:08', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1239,6 +1108,7 @@ INSERT INTO `jenis_produk_logs` (`id_jenis_produk_logs`, `keterangan_log`, `id_j
 
 CREATE TABLE `karyawan` (
   `id_karyawan` varchar(10) NOT NULL,
+  `nik` varchar(15) NOT NULL,
   `nama_karyawan` varchar(50) NOT NULL,
   `keterangan` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
@@ -1254,43 +1124,60 @@ CREATE TABLE `karyawan` (
 -- Dumping data for table `karyawan`
 --
 
-INSERT INTO `karyawan` (`id_karyawan`, `nama_karyawan`, `keterangan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('KAR-1', 'Andryan Dedy', 0, 'USER-1', '2020-08-29 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-10', 'pic2', 0, 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-11', 'pic3', 0, 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-12', 'xxx', 1, 'USER-1', '2020-09-08 21:12:17', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-13', 'yyy', 0, 'USER-1', '2020-09-08 21:23:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-14', 'zzz', 1, 'USER-1', '2020-09-08 22:27:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-15', 'Dwi', 0, 'USER-1', '2020-09-09 01:15:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-16', 'Maryadi', 0, 'USER-1', '2020-09-09 01:16:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-17', 'Sarodi', 0, 'USER-1', '2020-09-09 01:17:18', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-18', 'Andi', 0, 'USER-1', '2020-09-09 01:17:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-19', 'Firman', 0, 'USER-1', '2020-09-09 01:19:46', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-2', 'Julius', 0, 'USER-1', '2020-08-29 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-20', 'Iwan', 0, 'USER-1', '2020-09-09 01:20:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-21', 'Ahdi', 0, 'USER-1', '2020-09-09 01:21:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-22', 'Salim', 0, 'USER-1', '2020-09-09 01:21:28', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-23', 'Ibnul', 0, 'USER-1', '2020-09-09 23:10:47', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-24', 'Durojak', 0, 'USER-1', '2020-09-09 23:12:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-25', 'Komarudin', 0, 'USER-1', '2020-09-11 15:10:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-26', 'Dwia', 0, 'USER-1', '2020-09-24 22:57:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-3', 'Ita', 0, 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-4', 'Admin Produksi', 0, 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-5', 'Admin Risdev', 0, 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-6', 'Admin Finish Good', 0, 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-7', 'Yudi', 0, 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-8', 'Operator Gudang', 0, 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KAR-9', 'pic1', 0, 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+INSERT INTO `karyawan` (`id_karyawan`, `nik`, `nama_karyawan`, `keterangan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('KAR-1', '000', 'x', 1, 'USER-1', '2020-12-21 12:54:50', 'USER-1', '2020-12-21 14:58:40', '', '0000-00-00 00:00:00', 0),
+('KAR-10', '119.020.114', 'Sakidi', 1, 'USER-1', '2020-12-21 14:28:03', 'USER-1', '2020-12-21 14:35:27', '', '0000-00-00 00:00:00', 0),
+('KAR-11', '119.020.116', 'Dalimin', 1, 'USER-1', '2020-12-21 14:28:39', 'USER-1', '2020-12-21 14:36:26', '', '0000-00-00 00:00:00', 0),
+('KAR-12', '119.020.113', 'Ngatimin', 1, 'USER-1', '2020-12-21 14:29:08', 'USER-1', '2020-12-21 14:36:57', '', '0000-00-00 00:00:00', 0),
+('KAR-13', '119.020.122', 'Achmad Nushi', 0, 'USER-1', '2020-12-21 14:40:04', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-14', '120.020.132', 'Durojak', 0, 'USER-1', '2020-12-21 14:40:28', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-15', '117.020.090', 'Sarodi', 0, 'USER-1', '2020-12-21 14:41:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-16', '119.020.120', 'Ibnu F', 0, 'USER-1', '2020-12-21 14:41:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-17', '119.020.118', 'Firman Am', 0, 'USER-1', '2020-12-21 14:42:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-18', '120.020.134', 'Komarudin', 0, 'USER-1', '2020-12-21 14:43:04', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-19', '115.020.026', 'Ahdi', 0, 'USER-1', '2020-12-21 14:44:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-2', '00', 'Andryan Dedy', 1, 'USER-1', '2020-12-21 14:16:06', 'USER-1', '2020-12-21 14:37:21', '', '0000-00-00 00:00:00', 0),
+('KAR-20', '115.020.027', 'Sidik', 0, 'USER-1', '2020-12-21 14:45:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-21', '115.020.028', 'Salim', 0, 'USER-1', '2020-12-21 14:45:22', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-22', '115.020.030', 'Ade Mulyana', 0, 'USER-1', '2020-12-21 14:45:48', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-23', '116.020.052', 'M.Syaidin', 0, 'USER-1', '2020-12-21 14:46:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-24', '116.020.053', 'Suhendi', 0, 'USER-1', '2020-12-21 14:46:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-25', '117.020.082', 'Sutendar', 0, 'USER-1', '2020-12-21 14:47:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-26', '117.020.094', 'Siti Munawaroh', 0, 'USER-1', '2020-12-21 14:47:43', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-27', '119.020.109', 'Siti Jainah', 0, 'USER-1', '2020-12-21 14:48:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-28', '119.020.125', 'Irpan Kurniawan', 0, 'USER-1', '2020-12-21 14:48:29', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-29', '119.020.126', 'Suhardi IPI', 0, 'USER-1', '2020-12-21 14:48:51', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-3', '114.020.005', 'Julius Julianto', 1, 'USER-1', '2020-12-21 14:18:05', 'USER-1', '2020-12-21 14:24:45', '', '0000-00-00 00:00:00', 0),
+('KAR-30', '114.020.010', 'Siti Masitoh', 0, 'USER-1', '2020-12-21 14:49:54', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-31', '118.020.101', 'Mulyadi H', 0, 'USER-1', '2020-12-21 14:50:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-32', '119.020.124', 'Memed Hermawan', 0, 'USER-1', '2020-12-21 14:50:50', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-33', '119.020.129', 'Ahmad Yusup', 0, 'USER-1', '2020-12-21 14:51:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-34', '120.020.130', 'Sandi', 0, 'USER-1', '2020-12-21 14:51:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-35', '114.020.015', 'Junaedi', 0, 'USER-1', '2020-12-21 14:52:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-36', '114.020.016', 'Yuni', 0, 'USER-1', '2020-12-21 14:52:37', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-37', '116.020.033', 'A. Muhatob', 0, 'USER-1', '2020-12-21 14:53:02', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-38', '117.020.075', 'Toni S', 0, 'USER-1', '2020-12-21 14:53:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-39', '117.020.086', 'Yudi Yardi', 0, 'USER-1', '2020-12-21 14:53:47', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-4', '114.020.006', 'Ita Purnamasari', 1, 'USER-1', '2020-12-21 14:19:03', 'USER-1', '2020-12-21 14:23:48', '', '0000-00-00 00:00:00', 0),
+('KAR-40', '117.020.091', 'Yogi', 0, 'USER-1', '2020-12-21 14:54:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-41', '119.020.110', 'Firman Arif', 0, 'USER-1', '2020-12-21 14:54:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-42', '119.020.117', 'Dimas S', 0, 'USER-1', '2020-12-21 14:54:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-43', '119.020.121', 'Iwan', 0, 'USER-1', '2020-12-21 14:55:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-5', '0', 'Admin Produksi', 1, 'USER-1', '2020-12-21 14:21:08', 'USER-1', '2020-12-21 14:37:37', '', '0000-00-00 00:00:00', 0),
+('KAR-6', '0000', 'Admin Risdev', 1, 'USER-1', '2020-12-21 14:22:08', 'USER-1', '2020-12-21 14:37:57', '', '0000-00-00 00:00:00', 0),
+('KAR-7', '119.020.108', 'Anggi S', 1, 'USER-1', '2020-12-21 14:23:21', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-8', '114.020.001', 'Yudi Rusdian', 1, 'USER-1', '2020-12-21 14:25:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-9', '114.020.009', 'Nazarudin Aziz', 1, 'USER-1', '2020-12-21 14:26:43', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 --
 -- Triggers `karyawan`
 --
 DELIMITER $$
-CREATE TRIGGER `edit_karyawan` AFTER UPDATE ON `karyawan` FOR EACH ROW INSERT INTO `karyawan_logs`(`id_karyawan_logs`,`keterangan_log`,`id_karyawan`,`nama_karyawan`,`keterangan`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES (null,'Edit Data',NEW.id_karyawan,NEW.nama_karyawan,NEW.keterangan,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
+CREATE TRIGGER `edit_karyawan` AFTER UPDATE ON `karyawan` FOR EACH ROW INSERT INTO `karyawan_logs`(`id_karyawan_logs`,`keterangan_log`,`id_karyawan`,`nik`,`nama_karyawan`,`keterangan`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES (null,'Edit Data',NEW.id_karyawan,NEW.nik,NEW.nama_karyawan,NEW.keterangan,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `insert_karyawan` AFTER INSERT ON `karyawan` FOR EACH ROW INSERT INTO `karyawan_logs`(`id_karyawan_logs`,`keterangan_log`,`id_karyawan`,`nama_karyawan`,`keterangan`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES (null,'Insert Data',NEW.id_karyawan,NEW.nama_karyawan,NEW.keterangan,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
+CREATE TRIGGER `insert_karyawan` AFTER INSERT ON `karyawan` FOR EACH ROW INSERT INTO `karyawan_logs`(`id_karyawan_logs`,`keterangan_log`,`id_karyawan`,`nik`,`nama_karyawan`,`keterangan`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES (null,'Insert Data',NEW.id_karyawan,NEW.nik,NEW.nama_karyawan,NEW.keterangan,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
 $$
 DELIMITER ;
 
@@ -1304,6 +1191,7 @@ CREATE TABLE `karyawan_logs` (
   `id_karyawan_logs` int(11) NOT NULL,
   `keterangan_log` varchar(15) NOT NULL,
   `id_karyawan` varchar(10) NOT NULL,
+  `nik` varchar(15) NOT NULL,
   `nama_karyawan` varchar(50) NOT NULL,
   `keterangan` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
@@ -1319,22 +1207,68 @@ CREATE TABLE `karyawan_logs` (
 -- Dumping data for table `karyawan_logs`
 --
 
-INSERT INTO `karyawan_logs` (`id_karyawan_logs`, `keterangan_log`, `id_karyawan`, `nama_karyawan`, `keterangan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(2, 'Insert Data', 'KAR-12', 'xxx', 1, 'USER-1', '2020-09-08 21:12:17', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(3, 'Insert Data', 'KAR-13', 'yyy', 0, 'USER-1', '2020-09-08 21:23:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(4, 'Insert Data', 'KAR-14', 'zzz', 1, 'USER-1', '2020-09-08 22:27:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(5, 'Insert Data', 'KAR-15', 'Dwi', 0, 'USER-1', '2020-09-09 01:15:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(6, 'Insert Data', 'KAR-16', 'Maryadi', 0, 'USER-1', '2020-09-09 01:16:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(7, 'Insert Data', 'KAR-17', 'Sarodi', 0, 'USER-1', '2020-09-09 01:17:18', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(8, 'Insert Data', 'KAR-18', 'Andi', 0, 'USER-1', '2020-09-09 01:17:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(9, 'Insert Data', 'KAR-19', 'Firman', 0, 'USER-1', '2020-09-09 01:19:46', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(10, 'Insert Data', 'KAR-20', 'Iwan', 0, 'USER-1', '2020-09-09 01:20:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(11, 'Insert Data', 'KAR-21', 'Ahdi', 0, 'USER-1', '2020-09-09 01:21:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(12, 'Insert Data', 'KAR-22', 'Salim', 0, 'USER-1', '2020-09-09 01:21:28', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(13, 'Insert Data', 'KAR-23', 'Ibnul', 0, 'USER-1', '2020-09-09 23:10:47', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(14, 'Insert Data', 'KAR-24', 'Durojak', 0, 'USER-1', '2020-09-09 23:12:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(15, 'Insert Data', 'KAR-25', 'Komarudin', 0, 'USER-1', '2020-09-11 15:10:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(16, 'Insert Data', 'KAR-26', 'Dwia', 0, 'USER-1', '2020-09-24 22:57:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+INSERT INTO `karyawan_logs` (`id_karyawan_logs`, `keterangan_log`, `id_karyawan`, `nik`, `nama_karyawan`, `keterangan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+(75, 'Insert Data', 'KAR-2', '000000001', 'Andryan Dedy', 1, 'USER-1', '2020-12-21 14:16:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(76, 'Insert Data', 'KAR-3', '114020005', 'Julius Julianto', 1, 'USER-1', '2020-12-21 14:18:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(77, 'Insert Data', 'KAR-4', '114020006', 'Ita Purnamasari', 1, 'USER-1', '2020-12-21 14:19:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(78, 'Insert Data', 'KAR-5', '001', 'Admin Produksi', 1, 'USER-1', '2020-12-21 14:21:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(79, 'Insert Data', 'KAR-6', '002', 'Admin Risdev', 1, 'USER-1', '2020-12-21 14:22:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(80, 'Insert Data', 'KAR-7', '119.020.108', 'Anggi S', 1, 'USER-1', '2020-12-21 14:23:21', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(81, 'Edit Data', 'KAR-2', '000.000.001', 'Andryan Dedy', 1, 'USER-1', '2020-12-21 14:16:06', 'USER-1', '2020-12-21 14:23:32', '', '0000-00-00 00:00:00', 0),
+(82, 'Edit Data', 'KAR-3', '114.020.005', 'Julius Julianto', 1, 'USER-1', '2020-12-21 14:18:05', 'USER-1', '2020-12-21 14:23:40', '', '0000-00-00 00:00:00', 0),
+(83, 'Edit Data', 'KAR-4', '114.020.006', 'Ita Purnamasari', 1, 'USER-1', '2020-12-21 14:19:03', 'USER-1', '2020-12-21 14:23:48', '', '0000-00-00 00:00:00', 0),
+(84, 'Edit Data', 'KAR-5', '000.000.0002', 'Admin Produksi', 1, 'USER-1', '2020-12-21 14:21:08', 'USER-1', '2020-12-21 14:24:01', '', '0000-00-00 00:00:00', 0),
+(85, 'Edit Data', 'KAR-6', '000.000.0003', 'Admin Risdev', 1, 'USER-1', '2020-12-21 14:22:08', 'USER-1', '2020-12-21 14:24:10', '', '0000-00-00 00:00:00', 0),
+(86, 'Edit Data', 'KAR-3', '114.020.005', 'Julius Julianto', 1, 'USER-1', '2020-12-21 14:18:05', 'USER-1', '2020-12-21 14:24:45', '', '0000-00-00 00:00:00', 0),
+(87, 'Insert Data', 'KAR-8', '114.020.001', 'Yudi Rusdian', 1, 'USER-1', '2020-12-21 14:25:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(88, 'Insert Data', 'KAR-9', '114.020.009', 'Nazarudin Aziz', 1, 'USER-1', '2020-12-21 14:26:43', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(89, 'Insert Data', 'KAR-10', '000.000.0004', 'pic1', 1, 'USER-1', '2020-12-21 14:28:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(90, 'Insert Data', 'KAR-11', '000.000.005', 'PIC2', 1, 'USER-1', '2020-12-21 14:28:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(91, 'Insert Data', 'KAR-12', '000.000.006', 'pic3', 1, 'USER-1', '2020-12-21 14:29:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(92, 'Edit Data', 'KAR-5', '000.000.002', 'Admin Produksi', 1, 'USER-1', '2020-12-21 14:21:08', 'USER-1', '2020-12-21 14:29:14', '', '0000-00-00 00:00:00', 0),
+(93, 'Edit Data', 'KAR-10', '000.000.004', 'pic1', 1, 'USER-1', '2020-12-21 14:28:03', 'USER-1', '2020-12-21 14:29:18', '', '0000-00-00 00:00:00', 0),
+(94, 'Edit Data', 'KAR-6', '000.000.003', 'Admin Risdev', 1, 'USER-1', '2020-12-21 14:22:08', 'USER-1', '2020-12-21 14:29:24', '', '0000-00-00 00:00:00', 0),
+(95, 'Edit Data', 'KAR-10', '119.020.114', 'Sakidi', 1, 'USER-1', '2020-12-21 14:28:03', 'USER-1', '2020-12-21 14:35:27', '', '0000-00-00 00:00:00', 0),
+(96, 'Edit Data', 'KAR-11', '119.020.116', 'Dalimin', 1, 'USER-1', '2020-12-21 14:28:39', 'USER-1', '2020-12-21 14:36:26', '', '0000-00-00 00:00:00', 0),
+(97, 'Edit Data', 'KAR-12', '119.020.113', 'Ngatimin', 1, 'USER-1', '2020-12-21 14:29:08', 'USER-1', '2020-12-21 14:36:57', '', '0000-00-00 00:00:00', 0),
+(98, 'Edit Data', 'KAR-2', '0000', 'Andryan Dedy', 1, 'USER-1', '2020-12-21 14:16:06', 'USER-1', '2020-12-21 14:37:09', '', '0000-00-00 00:00:00', 0),
+(99, 'Edit Data', 'KAR-2', '00', 'Andryan Dedy', 1, 'USER-1', '2020-12-21 14:16:06', 'USER-1', '2020-12-21 14:37:21', '', '0000-00-00 00:00:00', 0),
+(100, 'Edit Data', 'KAR-5', '0', 'Admin Produksi', 1, 'USER-1', '2020-12-21 14:21:08', 'USER-1', '2020-12-21 14:37:37', '', '0000-00-00 00:00:00', 0),
+(101, 'Edit Data', 'KAR-6', '000', 'Admin Risdev', 1, 'USER-1', '2020-12-21 14:22:08', 'USER-1', '2020-12-21 14:37:45', '', '0000-00-00 00:00:00', 0),
+(102, 'Edit Data', 'KAR-6', '0000', 'Admin Risdev', 1, 'USER-1', '2020-12-21 14:22:08', 'USER-1', '2020-12-21 14:37:57', '', '0000-00-00 00:00:00', 0),
+(103, 'Insert Data', 'KAR-13', '119.020.122', 'Achmad Nushi', 0, 'USER-1', '2020-12-21 14:40:04', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(104, 'Insert Data', 'KAR-14', '120.020.132', 'Durojak', 0, 'USER-1', '2020-12-21 14:40:28', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(105, 'Insert Data', 'KAR-15', '117.020.090', 'Sarodi', 0, 'USER-1', '2020-12-21 14:41:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(106, 'Insert Data', 'KAR-16', '119.020.120', 'Ibnu F', 0, 'USER-1', '2020-12-21 14:41:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(107, 'Insert Data', 'KAR-17', '119.020.118', 'Firman Am', 0, 'USER-1', '2020-12-21 14:42:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(108, 'Insert Data', 'KAR-18', '120.020.134', 'Komarudin', 0, 'USER-1', '2020-12-21 14:43:04', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(109, 'Insert Data', 'KAR-19', '115.020.026', 'Ahdi', 0, 'USER-1', '2020-12-21 14:44:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(110, 'Insert Data', 'KAR-20', '115.020.027', 'Sidik', 0, 'USER-1', '2020-12-21 14:45:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(111, 'Insert Data', 'KAR-21', '115.020.028', 'Salim', 0, 'USER-1', '2020-12-21 14:45:22', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(112, 'Insert Data', 'KAR-22', '115.020.030', 'Ade Mulyana', 0, 'USER-1', '2020-12-21 14:45:48', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(113, 'Insert Data', 'KAR-23', '116.020.052', 'M.Syaidin', 0, 'USER-1', '2020-12-21 14:46:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(114, 'Insert Data', 'KAR-24', '116.020.053', 'Suhendi', 0, 'USER-1', '2020-12-21 14:46:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(115, 'Insert Data', 'KAR-25', '117.020.082', 'Sutendar', 0, 'USER-1', '2020-12-21 14:47:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(116, 'Insert Data', 'KAR-26', '117.020.094', 'Siti Munawaroh', 0, 'USER-1', '2020-12-21 14:47:43', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(117, 'Insert Data', 'KAR-27', '119.020.109', 'Siti Jainah', 0, 'USER-1', '2020-12-21 14:48:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(118, 'Insert Data', 'KAR-28', '119.020.125', 'Irpan Kurniawan', 0, 'USER-1', '2020-12-21 14:48:29', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(119, 'Insert Data', 'KAR-29', '119.020.126', 'Suhardi IPI', 0, 'USER-1', '2020-12-21 14:48:51', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(120, 'Insert Data', 'KAR-30', '114.020.010', 'Siti Masitoh', 0, 'USER-1', '2020-12-21 14:49:54', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(121, 'Insert Data', 'KAR-31', '118.020.101', 'Mulyadi H', 0, 'USER-1', '2020-12-21 14:50:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(122, 'Insert Data', 'KAR-32', '119.020.124', 'Memed Hermawan', 0, 'USER-1', '2020-12-21 14:50:50', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(123, 'Insert Data', 'KAR-33', '119.020.129', 'Ahmad Yusup', 0, 'USER-1', '2020-12-21 14:51:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(124, 'Insert Data', 'KAR-34', '120.020.130', 'Sandi', 0, 'USER-1', '2020-12-21 14:51:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(125, 'Insert Data', 'KAR-35', '114.020.015', 'Junaedi', 0, 'USER-1', '2020-12-21 14:52:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(126, 'Insert Data', 'KAR-36', '114.020.016', 'Yuni', 0, 'USER-1', '2020-12-21 14:52:37', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(127, 'Insert Data', 'KAR-37', '116.020.033', 'A. Muhatob', 0, 'USER-1', '2020-12-21 14:53:02', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(128, 'Insert Data', 'KAR-38', '117.020.075', 'Toni S', 0, 'USER-1', '2020-12-21 14:53:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(129, 'Insert Data', 'KAR-39', '117.020.086', 'Yudi Yardi', 0, 'USER-1', '2020-12-21 14:53:47', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(130, 'Insert Data', 'KAR-40', '117.020.091', 'Yogi', 0, 'USER-1', '2020-12-21 14:54:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(131, 'Insert Data', 'KAR-41', '119.020.110', 'Firman Arif', 0, 'USER-1', '2020-12-21 14:54:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(132, 'Insert Data', 'KAR-42', '119.020.117', 'Dimas S', 0, 'USER-1', '2020-12-21 14:54:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(133, 'Insert Data', 'KAR-43', '119.020.121', 'Iwan', 0, 'USER-1', '2020-12-21 14:55:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(134, 'Edit Data', 'KAR-1', '000', 'Amel', 1, 'USER-1', '2020-12-21 12:54:50', 'USER-1', '2020-12-21 14:57:00', '', '0000-00-00 00:00:00', 0),
+(135, 'Edit Data', 'KAR-1', '000', 'x', 1, 'USER-1', '2020-12-21 12:54:50', 'USER-1', '2020-12-21 14:58:40', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1363,138 +1297,27 @@ CREATE TABLE `konsumsi_material` (
 --
 
 INSERT INTO `konsumsi_material` (`id_konsumsi_material`, `id_produk`, `id_sub_jenis_material`, `id_line`, `jumlah_konsumsi`, `status_konsumsi`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('KONMAT-1', 'PRODUK-1', 'SUBJM-1', 'LINE-1', '1.00', 1, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-10', 'PRODUK-2', 'SUBJM-7', 'LINE-2', '1.00', 1, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-11', 'PRODUK-2', 'SUBJM-12', 'LINE-4', '2.00', 1, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-12', 'PRODUK-2', 'SUBJM-14', 'LINE-4', '5.00', 1, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-13', 'PRODUK-3', 'SUBJM-1', 'LINE-1', '1.00', 1, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-14', 'PRODUK-3', 'SUBJM-3', 'LINE-2', '50.00', 1, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-15', 'PRODUK-3', 'SUBJM-8', 'LINE-3', '1.00', 1, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-16', 'PRODUK-3', 'SUBJM-5', 'LINE-3', '3.00', 0, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-17', 'PRODUK-3', 'SUBJM-14', 'LINE-4', '1.00', 1, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-18', 'PRODUK-4', 'SUBJM-1', 'LINE-1', '1.00', 1, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-19', 'PRODUK-4', 'SUBJM-3', 'LINE-2', '50.00', 1, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-2', 'PRODUK-1', 'SUBJM-3', 'LINE-2', '100.00', 1, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-20', 'PRODUK-4', 'SUBJM-9', 'LINE-3', '5.00', 1, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-21', 'PRODUK-4', 'SUBJM-10', 'LINE-3', '2.00', 1, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-22', 'PRODUK-4', 'SUBJM-4', 'LINE-3', '3.00', 0, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-23', 'PRODUK-4', 'SUBJM-14', 'LINE-4', '1.00', 1, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-24', 'PRODUK-5', 'SUBJM-1', 'LINE-1', '1.00', 1, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-25', 'PRODUK-5', 'SUBJM-3', 'LINE-2', '1.00', 1, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-26', 'PRODUK-5', 'SUBJM-4', 'LINE-3', '5.00', 0, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-27', 'PRODUK-5', 'SUBJM-6', 'LINE-2', '1.00', 1, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-28', 'PRODUK-5', 'SUBJM-8', 'LINE-3', '5.00', 1, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-29', 'PRODUK-5', 'SUBJM-10', 'LINE-3', '5.00', 1, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-3', 'PRODUK-1', 'SUBJM-6', 'LINE-2', '1.00', 1, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-30', 'PRODUK-5', 'SUBJM-12', 'LINE-4', '1.00', 1, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-31', 'PRODUK-5', 'SUBJM-14', 'LINE-4', '5.00', 1, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-4', 'PRODUK-1', 'SUBJM-4', 'LINE-3', '2.50', 0, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-5', 'PRODUK-1', 'SUBJM-8', 'LINE-3', '5.00', 1, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-6', 'PRODUK-1', 'SUBJM-12', 'LINE-4', '4.00', 1, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-7', 'PRODUK-1', 'SUBJM-15', 'LINE-4', '5.00', 1, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-8', 'PRODUK-2', 'SUBJM-2', 'LINE-1', '1.00', 1, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('KONMAT-9', 'PRODUK-2', 'SUBJM-3', 'LINE-2', '100.00', 1, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
-
---
--- Triggers `konsumsi_material`
---
-DELIMITER $$
-CREATE TRIGGER `edit_konsumsi_material` AFTER UPDATE ON `konsumsi_material` FOR EACH ROW INSERT INTO `konsumsi_material_logs`(`id_konsumsi_material_logs`,`keterangan_log`, `id_konsumsi_material`,`id_produk`, `id_sub_jenis_material`, `id_line`, `jumlah_konsumsi`,`status_konsumsi`,`user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES (null,'Edit Data',NEW.id_konsumsi_material,NEW.id_produk,NEW.id_sub_jenis_material,NEW.id_line,NEW.jumlah_konsumsi,NEW.status_konsumsi,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `insert_konsumsi_material` AFTER INSERT ON `konsumsi_material` FOR EACH ROW INSERT INTO `konsumsi_material_logs`(`id_konsumsi_material_logs`,`keterangan_log`, `id_konsumsi_material`,`id_produk`, `id_sub_jenis_material`, `id_line`, `jumlah_konsumsi`,`status_konsumsi`,`user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES (null,'Insert Data',NEW.id_konsumsi_material,NEW.id_produk,NEW.id_sub_jenis_material,NEW.id_line,NEW.jumlah_konsumsi,NEW.status_konsumsi,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `konsumsi_material_logs`
---
-
-CREATE TABLE `konsumsi_material_logs` (
-  `id_konsumsi_material_logs` int(11) NOT NULL,
-  `keterangan_log` varchar(15) NOT NULL,
-  `id_konsumsi_material` varchar(15) NOT NULL,
-  `id_produk` varchar(10) NOT NULL,
-  `id_sub_jenis_material` varchar(10) NOT NULL,
-  `id_line` varchar(10) NOT NULL,
-  `jumlah_konsumsi` int(11) NOT NULL,
-  `status_konsumsi` int(1) NOT NULL,
-  `user_add` varchar(10) NOT NULL,
-  `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
-  `status_delete` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `konsumsi_material_logs`
---
-
-INSERT INTO `konsumsi_material_logs` (`id_konsumsi_material_logs`, `keterangan_log`, `id_konsumsi_material`, `id_produk`, `id_sub_jenis_material`, `id_line`, `jumlah_konsumsi`, `status_konsumsi`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(94, 'Insert Data', 'KONMAT-1', 'PRODUK-1', 'SUBJM-1', 'LINE-1', 1, 0, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(95, 'Insert Data', 'KONMAT-2', 'PRODUK-1', 'SUBJM-3', 'LINE-2', 100, 0, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(96, 'Insert Data', 'KONMAT-3', 'PRODUK-1', 'SUBJM-6', 'LINE-2', 1, 0, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(97, 'Insert Data', 'KONMAT-4', 'PRODUK-1', 'SUBJM-4', 'LINE-3', 3, 0, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(98, 'Insert Data', 'KONMAT-5', 'PRODUK-1', 'SUBJM-8', 'LINE-3', 5, 0, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(99, 'Insert Data', 'KONMAT-6', 'PRODUK-1', 'SUBJM-12', 'LINE-4', 4, 0, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(100, 'Insert Data', 'KONMAT-7', 'PRODUK-1', 'SUBJM-15', 'LINE-4', 5, 0, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(101, 'Insert Data', 'KONMAT-8', 'PRODUK-2', 'SUBJM-2', 'LINE-1', 1, 0, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(102, 'Insert Data', 'KONMAT-9', 'PRODUK-2', 'SUBJM-3', 'LINE-2', 100, 0, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(103, 'Insert Data', 'KONMAT-10', 'PRODUK-2', 'SUBJM-7', 'LINE-2', 1, 0, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(104, 'Insert Data', 'KONMAT-11', 'PRODUK-2', 'SUBJM-12', 'LINE-4', 2, 0, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(105, 'Insert Data', 'KONMAT-12', 'PRODUK-2', 'SUBJM-14', 'LINE-4', 5, 0, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(106, 'Insert Data', 'KONMAT-13', 'PRODUK-3', 'SUBJM-1', 'LINE-1', 1, 0, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(107, 'Insert Data', 'KONMAT-14', 'PRODUK-3', 'SUBJM-3', 'LINE-2', 50, 0, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(108, 'Insert Data', 'KONMAT-15', 'PRODUK-3', 'SUBJM-8', 'LINE-3', 1, 0, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(109, 'Insert Data', 'KONMAT-16', 'PRODUK-3', 'SUBJM-5', 'LINE-3', 3, 0, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(110, 'Insert Data', 'KONMAT-17', 'PRODUK-3', 'SUBJM-14', 'LINE-4', 1, 0, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(111, 'Insert Data', 'KONMAT-18', 'PRODUK-4', 'SUBJM-1', 'LINE-1', 1, 0, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(112, 'Insert Data', 'KONMAT-19', 'PRODUK-4', 'SUBJM-3', 'LINE-2', 50, 0, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(113, 'Insert Data', 'KONMAT-20', 'PRODUK-4', 'SUBJM-9', 'LINE-3', 5, 0, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(114, 'Insert Data', 'KONMAT-21', 'PRODUK-4', 'SUBJM-10', 'LINE-3', 2, 0, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(115, 'Insert Data', 'KONMAT-22', 'PRODUK-4', 'SUBJM-4', 'LINE-3', 3, 0, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(116, 'Insert Data', 'KONMAT-23', 'PRODUK-4', 'SUBJM-14', 'LINE-4', 1, 0, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(117, 'Edit Data', 'KONMAT-22', 'PRODUK-4', 'SUBJM-4', 'LINE-3', 3, 1, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(118, 'Edit Data', 'KONMAT-4', 'PRODUK-1', 'SUBJM-4', 'LINE-3', 3, 1, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(119, 'Edit Data', 'KONMAT-16', 'PRODUK-3', 'SUBJM-5', 'LINE-3', 3, 1, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(120, 'Insert Data', 'KONMAT-24', 'PRODUK-5', 'SUBJM-1', 'LINE-1', 1, 1, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(121, 'Insert Data', 'KONMAT-25', 'PRODUK-5', 'SUBJM-3', 'LINE-2', 1, 1, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(122, 'Insert Data', 'KONMAT-26', 'PRODUK-5', 'SUBJM-4', 'LINE-3', 5, 0, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(123, 'Insert Data', 'KONMAT-27', 'PRODUK-5', 'SUBJM-6', 'LINE-2', 1, 1, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(124, 'Insert Data', 'KONMAT-28', 'PRODUK-5', 'SUBJM-8', 'LINE-3', 5, 1, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(125, 'Insert Data', 'KONMAT-29', 'PRODUK-5', 'SUBJM-10', 'LINE-3', 5, 1, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(126, 'Insert Data', 'KONMAT-30', 'PRODUK-5', 'SUBJM-12', 'LINE-4', 1, 1, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(127, 'Insert Data', 'KONMAT-31', 'PRODUK-5', 'SUBJM-14', 'LINE-4', 5, 1, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(128, 'Edit Data', 'KONMAT-1', 'PRODUK-1', 'SUBJM-1', 'LINE-1', 1, 1, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(129, 'Edit Data', 'KONMAT-10', 'PRODUK-2', 'SUBJM-7', 'LINE-2', 1, 1, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(130, 'Edit Data', 'KONMAT-11', 'PRODUK-2', 'SUBJM-12', 'LINE-4', 2, 1, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(131, 'Edit Data', 'KONMAT-12', 'PRODUK-2', 'SUBJM-14', 'LINE-4', 5, 1, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(132, 'Edit Data', 'KONMAT-13', 'PRODUK-3', 'SUBJM-1', 'LINE-1', 1, 1, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(133, 'Edit Data', 'KONMAT-14', 'PRODUK-3', 'SUBJM-3', 'LINE-2', 50, 1, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(134, 'Edit Data', 'KONMAT-15', 'PRODUK-3', 'SUBJM-8', 'LINE-3', 1, 1, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(135, 'Edit Data', 'KONMAT-17', 'PRODUK-3', 'SUBJM-14', 'LINE-4', 1, 1, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(136, 'Edit Data', 'KONMAT-18', 'PRODUK-4', 'SUBJM-1', 'LINE-1', 1, 1, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(137, 'Edit Data', 'KONMAT-19', 'PRODUK-4', 'SUBJM-3', 'LINE-2', 50, 1, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(138, 'Edit Data', 'KONMAT-2', 'PRODUK-1', 'SUBJM-3', 'LINE-2', 100, 1, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(139, 'Edit Data', 'KONMAT-20', 'PRODUK-4', 'SUBJM-9', 'LINE-3', 5, 1, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(140, 'Edit Data', 'KONMAT-21', 'PRODUK-4', 'SUBJM-10', 'LINE-3', 2, 1, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(141, 'Edit Data', 'KONMAT-23', 'PRODUK-4', 'SUBJM-14', 'LINE-4', 1, 1, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(142, 'Edit Data', 'KONMAT-26', 'PRODUK-5', 'SUBJM-4', 'LINE-3', 5, 1, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(143, 'Edit Data', 'KONMAT-3', 'PRODUK-1', 'SUBJM-6', 'LINE-2', 1, 1, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(144, 'Edit Data', 'KONMAT-5', 'PRODUK-1', 'SUBJM-8', 'LINE-3', 5, 1, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(145, 'Edit Data', 'KONMAT-6', 'PRODUK-1', 'SUBJM-12', 'LINE-4', 4, 1, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(146, 'Edit Data', 'KONMAT-7', 'PRODUK-1', 'SUBJM-15', 'LINE-4', 5, 1, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(147, 'Edit Data', 'KONMAT-8', 'PRODUK-2', 'SUBJM-2', 'LINE-1', 1, 1, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(148, 'Edit Data', 'KONMAT-9', 'PRODUK-2', 'SUBJM-3', 'LINE-2', 100, 1, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(149, 'Edit Data', 'KONMAT-22', 'PRODUK-4', 'SUBJM-4', 'LINE-3', 3, 0, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(150, 'Edit Data', 'KONMAT-26', 'PRODUK-5', 'SUBJM-4', 'LINE-3', 5, 0, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(151, 'Edit Data', 'KONMAT-4', 'PRODUK-1', 'SUBJM-4', 'LINE-3', 3, 0, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(152, 'Edit Data', 'KONMAT-16', 'PRODUK-3', 'SUBJM-5', 'LINE-3', 3, 0, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+('KONMAT-1', 'PRDK-1', 'SUBJM-1', 'LINE-1', '1.00', 1, 'USER-2', '2020-12-21 18:20:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-10', 'PRDK-2', 'SUBJM-12', 'LINE-4', '5.00', 1, 'USER-2', '2020-12-21 19:24:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-11', 'PRDK-3', 'SUBJM-2', 'LINE-1', '1.00', 1, 'USER-2', '2020-12-21 19:42:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-12', 'PRDK-3', 'SUBJM-3', 'LINE-2', '10.00', 1, 'USER-2', '2020-12-21 19:42:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-13', 'PRDK-3', 'SUBJM-12', 'LINE-4', '3.00', 1, 'USER-2', '2020-12-21 19:42:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-14', 'PRDK-4', 'SUBJM-1', 'LINE-1', '1.00', 1, 'USER-2', '2020-12-21 19:47:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-15', 'PRDK-4', 'SUBJM-3', 'LINE-2', '5.00', 1, 'USER-2', '2020-12-21 19:47:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-16', 'PRDK-4', 'SUBJM-14', 'LINE-4', '2.00', 1, 'USER-2', '2020-12-21 19:47:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-17', 'PRDK-5', 'SUBJM-1', 'LINE-1', '1.00', 1, 'USER-2', '2020-12-21 19:53:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-18', 'PRDK-5', 'SUBJM-3', 'LINE-2', '10.00', 1, 'USER-2', '2020-12-21 19:53:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-19', 'PRDK-5', 'SUBJM-4', 'LINE-3', '5.00', 0, 'USER-2', '2020-12-21 19:53:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-2', 'PRDK-1', 'SUBJM-3', 'LINE-2', '50.00', 1, 'USER-2', '2020-12-21 18:20:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-20', 'PRDK-5', 'SUBJM-8', 'LINE-3', '5.00', 1, 'USER-2', '2020-12-21 19:53:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-21', 'PRDK-5', 'SUBJM-12', 'LINE-4', '1.00', 1, 'USER-2', '2020-12-21 19:53:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-3', 'PRDK-1', 'SUBJM-4', 'LINE-3', '5.00', 0, 'USER-2', '2020-12-21 18:20:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-4', 'PRDK-1', 'SUBJM-8', 'LINE-3', '5.00', 1, 'USER-2', '2020-12-21 18:20:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-5', 'PRDK-1', 'SUBJM-12', 'LINE-4', '4.00', 1, 'USER-2', '2020-12-21 18:20:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-6', 'PRDK-2', 'SUBJM-1', 'LINE-1', '1.00', 1, 'USER-2', '2020-12-21 19:24:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-7', 'PRDK-2', 'SUBJM-3', 'LINE-2', '10.00', 1, 'USER-2', '2020-12-21 19:24:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-8', 'PRDK-2', 'SUBJM-4', 'LINE-3', '5.00', 0, 'USER-2', '2020-12-21 19:24:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KONMAT-9', 'PRDK-2', 'SUBJM-8', 'LINE-3', '5.00', 1, 'USER-2', '2020-12-21 19:24:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1524,7 +1347,7 @@ CREATE TABLE `line` (
 --
 
 INSERT INTO `line` (`id_line`, `nama_line`, `urutan_line`, `jumlah_team`, `jumlah_pekerja_per_team`, `total_processing_time`, `satuan_biaya`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('LINE-1', 'Line Cutting', 1, 1, 3, 9, 1000, 'USER-1', '2020-09-07 17:29:04', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('LINE-1', 'Line Cutting', 1, 1, 3, 9, 2000, 'USER-1', '2020-09-07 17:29:04', 'USER-1', '2020-12-21 12:12:11', '', '0000-00-00 00:00:00', 0),
 ('LINE-2', 'Line Bonding', 2, 1, 5, 9, 1000, 'USER-1', '2020-09-07 17:29:29', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('LINE-3', 'Line Sewing', 3, 10, 1, 90, 1000, 'USER-1', '2020-09-07 17:29:43', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('LINE-4', 'Line Assy', 4, 3, 5, 27, 1000, 'USER-1', '2020-09-07 17:29:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
@@ -1574,7 +1397,8 @@ INSERT INTO `line_logs` (`id_line_logs`, `keterangan_log`, `id_line`, `nama_line
 (7, 'Insert Data', 'LINE-1', 'Line Cutting', 1, 1, 3, 9, 1000, 'USER-1', '2020-09-07 17:29:04', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 (8, 'Insert Data', 'LINE-2', 'Line Bonding', 2, 1, 5, 9, 1000, 'USER-1', '2020-09-07 17:29:29', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 (9, 'Insert Data', 'LINE-3', 'Line Sewing', 3, 10, 1, 90, 1000, 'USER-1', '2020-09-07 17:29:43', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(10, 'Insert Data', 'LINE-4', 'Line Assy', 4, 3, 5, 27, 1000, 'USER-1', '2020-09-07 17:29:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+(10, 'Insert Data', 'LINE-4', 'Line Assy', 4, 3, 5, 27, 1000, 'USER-1', '2020-09-07 17:29:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(11, 'Edit Data', 'LINE-1', 'Line Cutting', 1, 1, 3, 9, 2000, 'USER-1', '2020-09-07 17:29:04', 'USER-1', '2020-12-21 12:12:11', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1704,15 +1528,6 @@ CREATE TABLE `pengambilan_material` (
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `pengambilan_material`
---
-
-INSERT INTO `pengambilan_material` (`id_pengambilan_material`, `id_karyawan`, `id_detail_permintaan_material`, `id_pengeluaran_material`, `tanggal_ambil`, `stok_wip`, `jumlah_ambil`, `keterangan`, `status_pengambilan`, `status_keluar`, `status_permintaan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('MBP/AMBIL/12/20/001', 'KAR-9', 'DETPERMAT2012.000001', '', '2020-12-01', '0.00', '3.00', '', 1, 0, 0, 'USER-9', '2020-12-01 20:44:15', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('MBP/AMBIL/12/20/002', 'KAR-9', 'DETPERMAT2012.000001', '', '2020-12-01', '0.00', '2.00', '', 1, 0, 0, 'USER-9', '2020-12-01 20:45:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('MBP/AMBIL/12/20/003', 'KAR-9', 'DETPERMAT2012.000001', '', '2020-12-01', '0.00', '10.00', '', 1, 0, 1, 'USER-9', '2020-12-01 20:48:02', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -1734,6 +1549,17 @@ CREATE TABLE `pengeluaran_material` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pengeluaran_material`
+--
+
+INSERT INTO `pengeluaran_material` (`id_pengeluaran_material`, `id_sub_jenis_material`, `tanggal_keluar`, `jumlah_keluar`, `keterangan_keluar`, `catatan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('KELUAR-1', 'REB70', '2020-12-09', '45.00', 0, '', 'USER-1', '2020-12-09 18:01:20', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('KELUAR-2', 'SUBJM-5', '2020-12-18', '1.00', 0, '', 'USER-1', '2020-12-18 16:22:52', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('KELUAR-3', 'SUBJM-5', '2020-12-18', '1.00', 0, '', 'USER-1', '2020-12-18 16:22:55', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('KELUAR-4', 'SUBJM-5', '2020-12-18', '1.00', 0, '', 'USER-1', '2020-12-18 16:23:01', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('KELUAR-5', 'SUBJM-5', '2020-12-18', '1.00', 0, '', 'USER-1', '2020-12-18 16:23:04', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1781,19 +1607,6 @@ CREATE TABLE `permintaan_material` (
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `permintaan_material`
---
-
-INSERT INTO `permintaan_material` (`id_permintaan_material`, `id_detail_purchase_order_customer`, `id_line`, `jumlah_minta`, `tanggal_permintaan`, `tanggal_produksi`, `status_permintaan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('PERMAT2012.00001', 'DPOC-1', 'LINE-1', 5, '2020-12-01', '2020-12-01', 1, 'USER-1', '2020-12-01 20:15:45', 'USER-1', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PERMAT2012.00002', 'DPOC-1', 'LINE-1', 15, '2020-12-01', '2020-12-02', 1, 'USER-1', '2020-12-01 20:37:43', 'USER-1', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PERMAT2012.00003', 'DPOC-1', 'LINE-2', 3, '2020-12-01', '2020-12-01', 0, 'USER-1', '2020-12-01 20:15:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PERMAT2012.00004', 'DPOC-1', 'LINE-2', 20, '2020-12-01', '2020-12-02', 1, 'USER-1', '2020-12-01 20:24:01', 'USER-1', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PERMAT2012.00005', 'DPOC-1', 'LINE-3', 4, '2020-12-01', '2020-12-01', 4, 'USER-1', '2020-12-01 20:16:27', 'USER-1', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PERMAT2012.00006', 'DPOC-1', 'LINE-4', 1, '2020-12-01', '2020-12-01', 0, 'USER-1', '2020-12-01 20:15:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PERMAT2012.00007', 'DPOC-1', 'LINE-4', 42, '2020-12-01', '2020-12-02', 4, 'USER-1', '2020-12-01 20:17:51', 'USER-1', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -1829,7 +1642,7 @@ CREATE TABLE `permintaan_tambahan` (
   `id_permintaan_tambahan` varchar(15) NOT NULL,
   `id_detail_permintaan_material` varchar(20) NOT NULL,
   `id_pengambilan_material` varchar(20) NOT NULL,
-  `jumlah_tambah` int(11) NOT NULL,
+  `jumlah_tambah` decimal(11,2) NOT NULL,
   `keterangan` varchar(50) NOT NULL,
   `status` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
@@ -1840,13 +1653,6 @@ CREATE TABLE `permintaan_tambahan` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `permintaan_tambahan`
---
-
-INSERT INTO `permintaan_tambahan` (`id_permintaan_tambahan`, `id_detail_permintaan_material`, `id_pengambilan_material`, `jumlah_tambah`, `keterangan`, `status`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('PERTAM2012.001', 'DETPERMAT2012.000001', 'MBP/AMBIL/12/20/003', 10, '', 3, 'USER-9', '2020-12-01 20:46:06', 'USER-9', '2020-12-01 20:48:02', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1903,6 +1709,7 @@ CREATE TABLE `persediaan_line_keluar` (
   `id_pengambilan_material` varchar(20) NOT NULL,
   `tanggal` date NOT NULL,
   `jumlah_material` decimal(11,2) NOT NULL,
+  `status` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
   `user_edit` varchar(10) NOT NULL,
@@ -1978,16 +1785,6 @@ CREATE TABLE `perubahan_permintaan` (
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `perubahan_permintaan`
---
-
-INSERT INTO `perubahan_permintaan` (`id_perubahan_permintaan`, `id_permintaan_material`, `jumlah_minta_lama`, `jumlah_minta_baru`, `status`, `status_sebelum`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('UBMIN2012.001', 'PERMAT2012.00002', 2, 10, 3, 0, 'USER-1', '2020-12-01 20:19:09', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('UBMIN2012.002', 'PERMAT2012.00007', 42, 50, 0, 0, 'USER-1', '2020-12-01 20:19:09', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('UBMIN2012.003', 'PERMAT2012.00002', 2, 15, 1, 0, 'USER-1', '2020-12-01 20:37:43', 'USER-1', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('UBMIN2012.004', 'PERMAT2012.00004', 20, 0, 0, 0, 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -2021,7 +1818,6 @@ CREATE TABLE `produk` (
   `id_jenis_produk` varchar(10) NOT NULL,
   `nama_produk` varchar(100) NOT NULL,
   `harga_produk` int(11) NOT NULL,
-  `kode_produk` varchar(50) NOT NULL,
   `keterangan_produksi` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
@@ -2036,12 +1832,24 @@ CREATE TABLE `produk` (
 -- Dumping data for table `produk`
 --
 
-INSERT INTO `produk` (`id_produk`, `id_jenis_produk`, `nama_produk`, `harga_produk`, `kode_produk`, `keterangan_produksi`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('PRODUK-1', 'JENPROD-2', 'Mattress Reguller', 300000, 'MATTRESS1', 0, 'USER-1', '2020-10-31 23:59:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PRODUK-2', 'JENPROD-2', 'Floor Chair Midili', 300000, 'FC001', 1, 'USER-1', '2020-11-01 00:07:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PRODUK-3', 'JENPROD-7', 'GULING MADHANI', 150000, 'B001', 0, 'USER-1', '2020-11-01 00:09:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PRODUK-4', 'JENPROD-8', 'FOLDY STAR KUSABANA', 250000, 'K001', 0, 'USER-1', '2020-11-01 00:14:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PRODUK-5', 'JENPROD-7', 'Bantal Dackron Ligna', 150000, 'B002', 0, 'USER-1', '2020-11-01 16:39:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+INSERT INTO `produk` (`id_produk`, `id_jenis_produk`, `nama_produk`, `harga_produk`, `keterangan_produksi`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('PRDK-1', 'JENPROD-1', 'A/F BODY PILLOW HARD', 116536, 0, 'USER-2', '2020-12-21 18:20:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PRDK-2', 'JENPROD-1', 'A/F BODY PILLOW SOFT', 116555, 0, 'USER-2', '2020-12-21 19:24:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PRDK-3', 'JENPROD-3', 'Atease Baguette Sofa Havana ', 1283922, 1, 'USER-2', '2020-12-21 19:42:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PRDK-4', 'JENPROD-5', 'Boa Rug Floor Mat145', 315933, 1, 'USER-2', '2020-12-21 19:47:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PRDK-5', 'JENPROD-2', 'Commpact Matress Aoki', 318686, 0, 'USER-2', '2020-12-21 19:53:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+
+--
+-- Triggers `produk`
+--
+DELIMITER $$
+CREATE TRIGGER `edit_produk` AFTER UPDATE ON `produk` FOR EACH ROW INSERT INTO `produk_logs`(`id_produk_logs`,`keterangan_log`,`id_produk`,`id_jenis_produk`,`nama_produk`,`harga_produk`,`keterangan_produksi`,`user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES(null,'Edit Data',NEW.id_produk,NEW.id_jenis_produk,NEW.nama_produk,NEW.harga_produk,NEW.keterangan_produksi,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `insert_produk` AFTER INSERT ON `produk` FOR EACH ROW INSERT INTO `produk_logs`(`id_produk_logs`,`keterangan_log`,`id_produk`,`id_jenis_produk`,`nama_produk`,`harga_produk`,`keterangan_produksi`,`user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES(null,'Insert Data',NEW.id_produk,NEW.id_jenis_produk,NEW.nama_produk,NEW.harga_produk,NEW.keterangan_produksi,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -2062,19 +1870,6 @@ CREATE TABLE `produksi` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `produksi`
---
-
-INSERT INTO `produksi` (`id_produksi`, `tanggal`, `status_perencanaan`, `status_laporan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('P2011.0001', '2020-11-30', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('P2012.0001', '2020-12-01', 1, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('P2012.0002', '2020-12-02', 1, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('P2012.0003', '2020-12-03', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('P2012.0004', '2020-12-04', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('P2012.0005', '2020-12-05', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('P2012.0006', '2020-12-06', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2102,40 +1897,6 @@ CREATE TABLE `produksi_line` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `produksi_line`
---
-
-INSERT INTO `produksi_line` (`id_produksi_line`, `id_line`, `id_produksi`, `total_processing_time`, `total_waktu_perencanaan`, `total_waktu_aktual`, `efisiensi_perencanaan`, `efisiensi_aktual`, `keterangan_laporan`, `status_perencanaan`, `status_laporan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('PL2011.000001', 'LINE-1', 'P2011.0001', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2011.000002', 'LINE-2', 'P2011.0001', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2011.000003', 'LINE-3', 'P2011.0001', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2011.000004', 'LINE-4', 'P2011.0001', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000001', 'LINE-1', 'P2012.0001', 9, 500, 0, '1.54', '0.00', '', 1, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000002', 'LINE-2', 'P2012.0001', 9, 300, 0, '0.93', '0.00', '', 1, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000003', 'LINE-3', 'P2012.0001', 90, 400, 0, '0.12', '0.00', '', 1, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000004', 'LINE-4', 'P2012.0001', 27, 100, 0, '0.10', '0.00', '', 1, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000005', 'LINE-1', 'P2012.0002', 9, 1500, 0, '4.63', '0.00', '', 1, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000006', 'LINE-2', 'P2012.0002', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000007', 'LINE-3', 'P2012.0002', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000008', 'LINE-4', 'P2012.0002', 27, 5000, 0, '5.14', '0.00', '', 1, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000009', 'LINE-1', 'P2012.0003', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000010', 'LINE-2', 'P2012.0003', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000011', 'LINE-3', 'P2012.0003', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000012', 'LINE-4', 'P2012.0003', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000013', 'LINE-1', 'P2012.0004', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000014', 'LINE-2', 'P2012.0004', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000015', 'LINE-3', 'P2012.0004', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000016', 'LINE-4', 'P2012.0004', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000017', 'LINE-1', 'P2012.0005', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000018', 'LINE-2', 'P2012.0005', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000019', 'LINE-3', 'P2012.0005', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000020', 'LINE-4', 'P2012.0005', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000021', 'LINE-1', 'P2012.0006', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000022', 'LINE-2', 'P2012.0006', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000023', 'LINE-3', 'P2012.0006', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0),
-('PL2012.000024', 'LINE-4', 'P2012.0006', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-1', '2020-12-01 20:15:16', 'USER-1', '2020-12-01 20:27:55', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2179,13 +1940,6 @@ CREATE TABLE `produksi_tertunda` (
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `produksi_tertunda`
---
-
-INSERT INTO `produksi_tertunda` (`id_produksi_tertunda`, `id_detail_produksi_line`, `jumlah_tertunda`, `jumlah_terencana`, `status_penjadwalan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('PRODTUN2011.00000001', 'DPL2011.00000006', 9, 0, 0, 'USER-4', '2020-11-28 18:40:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -2199,7 +1953,6 @@ CREATE TABLE `produk_logs` (
   `id_jenis_produk` varchar(10) NOT NULL,
   `nama_produk` varchar(100) NOT NULL,
   `harga_produk` int(11) NOT NULL,
-  `kode_produk` varchar(50) NOT NULL,
   `keterangan_produksi` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
@@ -2214,11 +1967,12 @@ CREATE TABLE `produk_logs` (
 -- Dumping data for table `produk_logs`
 --
 
-INSERT INTO `produk_logs` (`id_produk_logs`, `keterangan_log`, `id_produk`, `id_jenis_produk`, `nama_produk`, `harga_produk`, `kode_produk`, `keterangan_produksi`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(3, 'Insert Data', 'PRODUK-1', 'JENPROD-6', 'Floor Chair Midili', 200000, '001', 0, 'USER-1', '2020-09-07 17:41:23', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(4, 'Insert Data', 'PRODUK-2', 'JENPROD-2', 'Mattress Reguller', 200000, '002', 1, 'USER-1', '2020-09-07 17:58:18', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(5, 'Insert Data', 'PRODUK-3', 'JENPROD-2', 'RUMA EOV- H YL ', 500000, '003', 0, 'USER-1', '2020-09-07 18:07:38', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(6, 'Insert Data', 'PRODUK-4', 'JENPROD-5', 'Karpet Polos', 100000, '004', 0, 'USER-1', '2020-09-07 18:20:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+INSERT INTO `produk_logs` (`id_produk_logs`, `keterangan_log`, `id_produk`, `id_jenis_produk`, `nama_produk`, `harga_produk`, `keterangan_produksi`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+(1, 'Insert Data', 'PRDK-1', 'JENPROD-1', 'A/F BODY PILLOW HARD', 116536, 0, 'USER-2', '2020-12-21 18:20:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(2, 'Insert Data', 'PRDK-2', 'JENPROD-1', 'A/F BODY PILLOW SOFT', 116555, 0, 'USER-2', '2020-12-21 19:24:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(3, 'Insert Data', 'PRDK-3', 'JENPROD-3', 'Atease Baguette Sofa Havana ', 1283922, 1, 'USER-2', '2020-12-21 19:42:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(4, 'Insert Data', 'PRDK-4', 'JENPROD-5', 'Boa Rug Floor Mat145', 315933, 1, 'USER-2', '2020-12-21 19:47:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(5, 'Insert Data', 'PRDK-5', 'JENPROD-2', 'Commpact Matress Aoki', 318686, 0, 'USER-2', '2020-12-21 19:53:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2251,8 +2005,8 @@ CREATE TABLE `purchase_order_customer` (
 --
 
 INSERT INTO `purchase_order_customer` (`id_purchase_order_customer`, `kode_purchase_order_customer`, `id_customer`, `tanggal_po`, `harga_sebelum_pajak`, `ppn`, `total_harga_akhir`, `keterangan`, `status_po`, `tanggal_selesai`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('POC-1', 'L2001231', 'CUST-1', '2020-11-11', 120000000, 12000000, 132000000, '', 2, '0000-00-00', 'USER-1', '2020-11-11 21:15:00', 'USER-1', '2020-12-01 20:15:16', '0', '0000-00-00 00:00:00', 0),
-('POC-2', 'L2001232', 'CUST-1', '2020-11-11', 90000000, 9000000, 99000000, '', 2, '0000-00-00', 'USER-1', '2020-11-11 21:15:10', 'USER-7', '2020-11-19 00:29:08', '0', '0000-00-00 00:00:00', 0);
+('POC-1', 'L2001231', 'CUST-1', '2020-12-15', 1161799500, 116179950, 1277979450, '', 1, '0000-00-00', 'USER-1', '2020-12-15 10:11:48', 'USER-7', '2020-12-19 14:35:17', '0', '0000-00-00 00:00:00', 0),
+('POC-2', 'L2001232', 'CUST-1', '2020-12-15', 116536000, 11653600, 128189600, '', 1, '0000-00-00', 'USER-1', '2020-12-15 10:12:39', 'USER-1', '2020-12-18 20:35:53', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2313,9 +2067,9 @@ CREATE TABLE `rekening` (
 --
 
 INSERT INTO `rekening` (`id_rekening`, `id_bank`, `nomor_rekening`, `atas_nama`, `kantor_cabang`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('REK-1', 'BANK-2', '010101', 'PT. Maju Bersama Persada Dayamu', 'Alam Sutera', 'USER-1', '2020-08-30 22:12:25', 'USER-1', '2020-08-30 22:17:53', '', '0000-00-00 00:00:00', 0),
+('REK-1', 'BANK-2', '8350060899', 'PT. MAJU BERSAMA PERSADA DAYAMU', 'Daan Mogot', 'USER-1', '2020-08-30 22:12:25', 'USER-1', '2020-12-17 10:21:37', '', '0000-00-00 00:00:00', 0),
 ('REK-2', 'BANK-2', '020202', 'PT. Maju Bersama Persada Dayamu', 'Alam Sutera', 'USER-1', '2020-09-08 23:37:34', 'USER-1', '2020-09-08 23:39:26', '', '0000-00-00 00:00:00', 1),
-('REK-3', 'BANK-3', '0010001', 'PT. Maju Bersama Persada Dayamu', 'Alam Sutera', 'USER-1', '2020-09-24 23:01:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+('REK-3', 'BANK-3', '566800007270', 'PT. MAJU BERSAMA PERSADA DAYAMU', 'Alam Sutera', 'USER-1', '2020-09-24 23:01:00', 'USER-1', '2020-12-17 10:20:56', '', '0000-00-00 00:00:00', 0);
 
 --
 -- Triggers `rekening`
@@ -2367,7 +2121,9 @@ INSERT INTO `rekening_logs` (`id_rekening_logs`, `keterangan_log`, `id_rekening`
 (6, 'Edit Data', 'REK-2', 'BANK-2', '0202021', 'PT. Maju Bersama Persada Dayamu', 'Alam Sutera', 'USER-1', '2020-09-08 23:37:34', 'USER-1', '2020-09-08 23:37:37', '', '0000-00-00 00:00:00', 0),
 (7, 'Edit Data', 'REK-2', 'BANK-2', '020202', 'PT. Maju Bersama Persada Dayamu', 'Alam Sutera', 'USER-1', '2020-09-08 23:37:34', 'USER-1', '2020-09-08 23:37:40', '', '0000-00-00 00:00:00', 0),
 (8, 'Edit Data', 'REK-2', 'BANK-2', '020202', 'PT. Maju Bersama Persada Dayamu', 'Alam Sutera', 'USER-1', '2020-09-08 23:37:34', 'USER-1', '2020-09-08 23:39:26', '', '0000-00-00 00:00:00', 1),
-(9, 'Insert Data', 'REK-3', 'BANK-3', '0010001', 'PT. Maju Bersama Persada Dayamu', 'Alam Sutera', 'USER-1', '2020-09-24 23:01:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+(9, 'Insert Data', 'REK-3', 'BANK-3', '0010001', 'PT. Maju Bersama Persada Dayamu', 'Alam Sutera', 'USER-1', '2020-09-24 23:01:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(10, 'Edit Data', 'REK-3', 'BANK-3', '566800007270', 'PT. MAJU BERSAMA PERSADA DAYAMU', 'Alam Sutera', 'USER-1', '2020-09-24 23:01:00', 'USER-1', '2020-12-17 10:20:56', '', '0000-00-00 00:00:00', 0),
+(11, 'Edit Data', 'REK-1', 'BANK-2', '8350060899', 'PT. MAJU BERSAMA PERSADA DAYAMU', 'Daan Mogot', 'USER-1', '2020-08-30 22:12:25', 'USER-1', '2020-12-17 10:21:37', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2398,7 +2154,8 @@ CREATE TABLE `sales_order` (
 --
 
 INSERT INTO `sales_order` (`id_sales_order`, `tanggal_so`, `tanggal_pengantaran`, `dibuat_oleh`, `tanggal_dibuat`, `diterima_oleh`, `tanggal_diterima`, `id_purchase_order_customer`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('SO-1', '2020-11-17', '2020-11-30', 'USER-1', '2020-11-09', '', '0000-00-00', 'POC-1', 'USER-1', '2020-11-09 02:07:24', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
+('SO-1', '2020-12-15', '2020-12-22', 'USER-1', '2020-12-15', '', '0000-00-00', 'POC-1', 'USER-1', '2020-12-15 10:11:48', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SO-2', '2020-12-15', '2020-12-22', 'USER-1', '2020-12-15', '', '0000-00-00', 'POC-2', 'USER-1', '2020-12-15 10:12:39', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2424,27 +2181,82 @@ CREATE TABLE `spesifikasi_jabatan` (
 --
 
 INSERT INTO `spesifikasi_jabatan` (`id_spesifikasi_jabatan`, `id_jabatan`, `id_departemen`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('SJBT-1', 'JBT-1', 'DEPT-1', 'USER-1', '2020-08-29 00:00:00', 'USER-1', '2020-09-09 01:23:49', '', '0000-00-00 00:00:00', 0),
-('SJBT-10', 'JBT-6', 'DEPT-3', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SJBT-11', 'JBT-11', 'DEPT-3', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SJBT-12', 'JBT-12', 'DEPT-3', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SJBT-13', 'JBT-13', 'DEPT-3', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SJBT-14', 'JBT-7', 'DEPT-3', 'USER-1', '2020-09-08 00:13:23', '', '0000-00-00 00:00:00', 'USER-1', '2020-09-08 00:36:09', 1),
-('SJBT-15', 'JBT-8', 'DEPT-3', 'USER-1', '2020-09-08 00:14:20', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SJBT-16', 'JBT-9', 'DEPT-3', 'USER-1', '2020-09-08 00:14:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SJBT-17', 'JBT-10', 'DEPT-3', 'USER-1', '2020-09-08 00:14:34', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SJBT-18', 'JBT-7', 'DEPT-3', 'USER-1', '2020-09-08 00:36:18', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SJBT-19', 'JBT-16', 'DEPT-8', 'USER-1', '2020-09-09 01:25:01', '', '0000-00-00 00:00:00', 'USER-1', '2020-09-09 01:25:04', 1),
-('SJBT-2', 'JBT-2', 'DEPT-1', 'USER-1', '2020-08-29 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SJBT-20', 'JBT-16', 'DEPT-8', 'USER-1', '2020-09-09 01:34:23', '', '0000-00-00 00:00:00', 'USER-1', '2020-09-24 22:49:22', 1),
-('SJBT-21', 'JBT-4', 'DEPT-1', 'USER-1', '2020-09-24 22:50:52', 'USER-1', '2020-09-24 22:51:02', 'USER-1', '2020-09-24 22:51:10', 1),
-('SJBT-3', 'JBT-3', 'DEPT-3', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SJBT-4', 'JBT-3', 'DEPT-4', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SJBT-5', 'JBT-3', 'DEPT-5', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SJBT-6', 'JBT-3', 'DEPT-6', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SJBT-7', 'JBT-4', 'DEPT-2', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SJBT-8', 'JBT-4', 'DEPT-3', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('SJBT-9', 'JBT-5', 'DEPT-2', 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+('SJBT-1', 'JBT-1', 'DEPT-1', 'USER-1', '2020-12-21 12:53:47', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-10', 'JBT-4', 'DEPT-6', 'USER-1', '2020-12-21 14:08:48', 'USER-1', '2020-12-21 14:13:21', '', '0000-00-00 00:00:00', 0),
+('SJBT-11', 'JBT-6', 'DEPT-3', 'USER-1', '2020-12-21 14:10:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-12', 'JBT-7', 'DEPT-3', 'USER-1', '2020-12-21 14:10:12', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-13', 'JBT-8', 'DEPT-3', 'USER-1', '2020-12-21 14:10:17', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-14', 'JBT-9', 'DEPT-3', 'USER-1', '2020-12-21 14:10:22', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-15', 'JBT-11', 'DEPT-3', 'USER-1', '2020-12-21 14:10:28', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-16', 'JBT-12', 'DEPT-3', 'USER-1', '2020-12-21 14:10:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-17', 'JBT-13', 'DEPT-3', 'USER-1', '2020-12-21 14:10:41', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-18', 'JBT-14', 'DEPT-3', 'USER-1', '2020-12-21 14:10:46', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-2', 'JBT-2', 'DEPT-2', 'USER-1', '2020-12-21 14:03:57', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-3', 'JBT-3', 'DEPT-2', 'USER-1', '2020-12-21 14:07:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-4', 'JBT-10', 'DEPT-3', 'USER-1', '2020-12-21 14:07:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-5', 'JBT-4', 'DEPT-3', 'USER-1', '2020-12-21 14:07:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-6', 'JBT-10', 'DEPT-7', 'USER-1', '2020-12-21 14:07:57', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-7', 'JBT-5', 'DEPT-7', 'USER-1', '2020-12-21 14:08:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-8', 'JBT-4', 'DEPT-5', 'USER-1', '2020-12-21 14:08:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-9', 'JBT-4', 'DEPT-4', 'USER-1', '2020-12-21 14:08:42', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+
+--
+-- Triggers `spesifikasi_jabatan`
+--
+DELIMITER $$
+CREATE TRIGGER `edit_spesifikasi_jabatan` AFTER UPDATE ON `spesifikasi_jabatan` FOR EACH ROW INSERT INTO `spesifikasi_jabatan_logs`(`id_spesifikasi_jabatan_logs`, `keterangan_log`, `id_spesifikasi_jabatan`, `id_jabatan`,`id_departemen`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES (null,'Edit Data',NEW.id_spesifikasi_jabatan,NEW.id_jabatan,NEW.id_departemen,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `insert_spesifikasi_jabatan` AFTER INSERT ON `spesifikasi_jabatan` FOR EACH ROW INSERT INTO `spesifikasi_jabatan_logs`(`id_spesifikasi_jabatan_logs`, `keterangan_log`, `id_spesifikasi_jabatan`, `id_jabatan`,`id_departemen`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES (null,'Insert Data',NEW.id_spesifikasi_jabatan,NEW.id_jabatan,NEW.id_departemen,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `spesifikasi_jabatan_logs`
+--
+
+CREATE TABLE `spesifikasi_jabatan_logs` (
+  `id_spesifikasi_jabatan_logs` int(11) NOT NULL,
+  `keterangan_log` varchar(15) NOT NULL,
+  `id_spesifikasi_jabatan` varchar(10) NOT NULL,
+  `id_jabatan` varchar(10) NOT NULL,
+  `id_departemen` varchar(10) NOT NULL,
+  `user_add` varchar(10) NOT NULL,
+  `waktu_add` datetime NOT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
+  `status_delete` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `spesifikasi_jabatan_logs`
+--
+
+INSERT INTO `spesifikasi_jabatan_logs` (`id_spesifikasi_jabatan_logs`, `keterangan_log`, `id_spesifikasi_jabatan`, `id_jabatan`, `id_departemen`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+(1, 'Insert Data', 'SJBT-2', 'JBT-2', 'DEPT-2', 'USER-1', '2020-12-21 14:03:57', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(2, 'Insert Data', 'SJBT-3', 'JBT-3', 'DEPT-2', 'USER-1', '2020-12-21 14:07:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(3, 'Insert Data', 'SJBT-4', 'JBT-10', 'DEPT-3', 'USER-1', '2020-12-21 14:07:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(4, 'Insert Data', 'SJBT-5', 'JBT-4', 'DEPT-3', 'USER-1', '2020-12-21 14:07:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(5, 'Insert Data', 'SJBT-6', 'JBT-10', 'DEPT-7', 'USER-1', '2020-12-21 14:07:57', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(6, 'Insert Data', 'SJBT-7', 'JBT-5', 'DEPT-7', 'USER-1', '2020-12-21 14:08:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(7, 'Insert Data', 'SJBT-8', 'JBT-4', 'DEPT-5', 'USER-1', '2020-12-21 14:08:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(8, 'Insert Data', 'SJBT-9', 'JBT-4', 'DEPT-4', 'USER-1', '2020-12-21 14:08:42', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(9, 'Insert Data', 'SJBT-10', 'JBT-4', 'DEPT-6', 'USER-1', '2020-12-21 14:08:48', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(10, 'Insert Data', 'SJBT-11', 'JBT-6', 'DEPT-3', 'USER-1', '2020-12-21 14:10:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(11, 'Insert Data', 'SJBT-12', 'JBT-7', 'DEPT-3', 'USER-1', '2020-12-21 14:10:12', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(12, 'Insert Data', 'SJBT-13', 'JBT-8', 'DEPT-3', 'USER-1', '2020-12-21 14:10:17', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(13, 'Insert Data', 'SJBT-14', 'JBT-9', 'DEPT-3', 'USER-1', '2020-12-21 14:10:22', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(14, 'Insert Data', 'SJBT-15', 'JBT-11', 'DEPT-3', 'USER-1', '2020-12-21 14:10:28', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(15, 'Insert Data', 'SJBT-16', 'JBT-12', 'DEPT-3', 'USER-1', '2020-12-21 14:10:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(16, 'Insert Data', 'SJBT-17', 'JBT-13', 'DEPT-3', 'USER-1', '2020-12-21 14:10:41', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(17, 'Insert Data', 'SJBT-18', 'JBT-14', 'DEPT-3', 'USER-1', '2020-12-21 14:10:46', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(18, 'Edit Data', 'SJBT-10', 'JBT-15', 'DEPT-6', 'USER-1', '2020-12-21 14:08:48', 'USER-1', '2020-12-21 14:13:10', '', '0000-00-00 00:00:00', 0),
+(19, 'Edit Data', 'SJBT-10', 'JBT-4', 'DEPT-6', 'USER-1', '2020-12-21 14:08:48', 'USER-1', '2020-12-21 14:13:21', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2514,8 +2326,8 @@ INSERT INTO `sub_jenis_material` (`id_sub_jenis_material`, `kode_sub_jenis_mater
 ('SUBJM-15', 'L002', 'Lakban Double Tape Joyko/Kenko', 'JM-8', 0, 'roll', 'mtr', 60, 5, 10, 'USER-1', '2020-10-31 23:46:00', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
 ('SUBJM-2', 'F002', 'REB70', 'JM-1', 0, 'pcs', 'pcs', 1, 5, 10, 'USER-1', '2020-10-31 21:38:29', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
 ('SUBJM-3', 'L001', 'Lem Spray ISAMU 320', 'JM-2', 0, 'blek', 'ml', 100, 2, 5, 'USER-1', '2020-10-31 21:41:40', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-4', 'K001', 'Kain Floral Rose Red', 'JM-3', 0, 'mtr', 'mtr', 60, 5, 5, 'USER-1', '2020-10-31 21:46:05', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUBJM-5', 'K002', 'Kain Pandora Grey', 'JM-3', 0, 'mtr', 'mtr', 60, 5, 5, 'USER-1', '2020-10-31 21:47:03', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-4', 'K001', 'Kain Floral Rose Red', 'JM-3', 0, 'roll', 'mtr', 60, 5, 5, 'USER-1', '2020-10-31 21:46:05', 'USER-1', '2020-12-12 14:22:18', '0', '0000-00-00 00:00:00', 0),
+('SUBJM-5', 'K002', 'Kain Pandora Grey', 'JM-3', 0, 'roll', 'mtr', 60, 5, 5, 'USER-1', '2020-10-31 21:47:03', 'USER-1', '2020-12-15 11:33:54', '0', '0000-00-00 00:00:00', 0),
 ('SUBJM-6', 'F001', 'Frame Armrest Paramont', 'JM-4', 0, 'pcs', 'pcs', 1, 5, 10, 'USER-1', '2020-10-31 21:52:58', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
 ('SUBJM-7', 'F002', 'Frame Floor Chair', 'JM-4', 0, 'pcs', 'pcs', 1, 5, 10, 'USER-1', '2020-10-31 21:53:26', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
 ('SUBJM-8', 'B001', 'Benang 20/3 Point Color 145 Me', 'JM-5', 0, 'roll', 'mtr', 60, 10, 10, 'USER-1', '2020-10-31 21:54:28', 'USER-1', '2020-10-31 23:51:31', '0', '0000-00-00 00:00:00', 0),
@@ -2574,18 +2386,6 @@ CREATE TABLE `surat_jalan` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Triggers `surat_jalan`
---
-DELIMITER $$
-CREATE TRIGGER `edit_surat_jalan` AFTER UPDATE ON `surat_jalan` FOR EACH ROW INSERT INTO surat_jalan_logs (`id_surat_jalan_logs`,`keterangan_log`,`id_surat_jalan`,`id_purchase_order_customer`,`id_invoice`,`tanggal`,`kendaraan`,`nama_pengirim`,`keterangan_pengiriman`,`keterangan`,`status_surat_jalan`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES(null,'Edit Data',NEW.id_surat_jalan,NEW.id_purchase_order_customer,NEW.id_invoice,NEW.tanggal,NEW.kendaraan,NEW.nama_pengirim,NEW.keterangan_pengiriman,NEW.keterangan,NEW.status_surat_jalan,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `insert_surat_jalan` AFTER INSERT ON `surat_jalan` FOR EACH ROW INSERT INTO surat_jalan_logs (`id_surat_jalan_logs`,`keterangan_log`,`id_surat_jalan`,`id_purchase_order_customer`,`id_invoice`,`tanggal`,`kendaraan`,`nama_pengirim`,`keterangan_pengiriman`,`keterangan`,`status_surat_jalan`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES(null,'Insert Data',NEW.id_surat_jalan,NEW.id_purchase_order_customer,NEW.id_invoice,NEW.tanggal,NEW.kendaraan,NEW.nama_pengirim,NEW.keterangan_pengiriman,NEW.keterangan,NEW.status_surat_jalan,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -2738,13 +2538,13 @@ CREATE TABLE `ukuran_produk` (
 --
 
 INSERT INTO `ukuran_produk` (`id_ukuran_produk`, `id_jenis_produk`, `ukuran_produk`, `satuan_ukuran`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('UKPROD-1', 'JENPROD-2', '200x180x20', 'cm3', 'USER-1', '2020-09-03 02:19:25', 'USER-1', '2020-09-03 10:30:44', '', '0000-00-00 00:00:00', 0),
-('UKPROD-2', 'JENPROD-2', '200x160x20', 'cm3', 'USER-1', '2020-09-03 09:38:33', 'USER-1', '2020-09-03 10:14:19', '', '0000-00-00 00:00:00', 0),
-('UKPROD-3', 'JENPROD-5', '150x100x2', 'cm3', 'USER-1', '2020-09-03 09:40:54', 'USER-1', '2020-09-03 10:13:45', 'USER-1', '2020-09-03 10:19:17', 1),
-('UKPROD-4', 'JENPROD-5', '150x100x2', 'cm3', 'USER-1', '2020-09-03 10:19:29', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('UKPROD-5', 'JENPROD-2', '200x150x20', 'cm3', 'USER-1', '2020-09-03 10:37:00', 'USER-1', '2020-09-03 10:39:16', '', '0000-00-00 00:00:00', 0),
-('UKPROD-6', 'JENPROD-2', '200x120x20', 'cm2', 'USER-1', '2020-09-03 22:17:42', 'USER-1', '2020-09-03 22:18:36', '', '0000-00-00 00:00:00', 0),
-('UKPROD-7', 'JENPROD-8', '180x80x3', 'cm3', 'USER-1', '2020-11-01 00:11:49', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+('UKPROD-1', 'JENPROD-4', '120', 'cm', 'USER-1', '2020-12-19 12:24:02', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('UKPROD-2', 'JENPROD-4', '160', 'cm', 'USER-1', '2020-12-19 12:24:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('UKPROD-3', 'JENPROD-4', '180', 'cm', 'USER-1', '2020-12-19 12:24:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('UKPROD-4', 'JENPROD-2', '1800x800x100', 'mm3', 'USER-1', '2020-12-19 12:31:35', 'USER-2', '2020-12-21 19:50:02', '', '0000-00-00 00:00:00', 0),
+('UKPROD-5', 'JENPROD-5', '2000x1450', 'mm2', 'USER-1', '2020-12-19 12:36:36', 'USER-2', '2020-12-21 19:50:14', '', '0000-00-00 00:00:00', 0),
+('UKPROD-6', 'JENPROD-2', '2000x900x80', 'mm3', 'USER-2', '2020-12-21 19:04:48', 'USER-2', '2020-12-21 19:50:05', '', '0000-00-00 00:00:00', 0),
+('UKPROD-7', 'JENPROD-2', '1000x1900x60', 'mm3', 'USER-2', '2020-12-21 19:49:39', 'USER-2', '2020-12-21 19:50:09', '', '0000-00-00 00:00:00', 0);
 
 --
 -- Triggers `ukuran_produk`
@@ -2785,36 +2585,20 @@ CREATE TABLE `ukuran_produk_logs` (
 --
 
 INSERT INTO `ukuran_produk_logs` (`id_ukuran_produk_logs`, `keterangan_log`, `id_ukuran_produk`, `id_jenis_produk`, `ukuran_produk`, `satuan_ukuran`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(1, 'Insert Data', 'UKPROD-1', 'JENPROD-2', '180x200', 'm3', 'USER-1', '2020-09-03 02:19:25', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(2, 'Insert Data', 'UKPROD-2', 'JENPROD-2', '160x200', 'm2', 'USER-1', '2020-09-03 09:38:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(3, 'Insert Data', 'UKPROD-3', 'JENPROD-5', '180x200', 'm2', 'USER-1', '2020-09-03 09:40:54', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(4, 'Edit Data', 'UKPROD-1', 'JENPROD-2', '180x2000', 'm3', 'USER-1', '2020-09-03 02:19:25', 'USER-1', '2020-09-03 10:11:37', '', '0000-00-00 00:00:00', 0),
-(5, 'Edit Data', 'UKPROD-1', 'JENPROD-2', '180x200', 'm3', 'USER-1', '2020-09-03 02:19:25', 'USER-1', '2020-09-03 10:11:42', '', '0000-00-00 00:00:00', 0),
-(6, 'Edit Data', 'UKPROD-1', 'JENPROD-2', '180x200', 'm2', 'USER-1', '2020-09-03 02:19:25', 'USER-1', '2020-09-03 10:11:46', '', '0000-00-00 00:00:00', 0),
-(7, 'Edit Data', 'UKPROD-1', 'JENPROD-2', '200x180x20', 'm3', 'USER-1', '2020-09-03 02:19:25', 'USER-1', '2020-09-03 10:12:30', '', '0000-00-00 00:00:00', 0),
-(8, 'Edit Data', 'UKPROD-2', 'JENPROD-2', '200x160x20', 'm2', 'USER-1', '2020-09-03 09:38:33', 'USER-1', '2020-09-03 10:12:43', '', '0000-00-00 00:00:00', 0),
-(9, 'Edit Data', 'UKPROD-2', 'JENPROD-2', '200x160x20', 'm3', 'USER-1', '2020-09-03 09:38:33', 'USER-1', '2020-09-03 10:12:47', '', '0000-00-00 00:00:00', 0),
-(10, 'Edit Data', 'UKPROD-3', 'JENPROD-5', '150x100x2', 'cm2', 'USER-1', '2020-09-03 09:40:54', 'USER-1', '2020-09-03 10:13:30', '', '0000-00-00 00:00:00', 0),
-(11, 'Edit Data', 'UKPROD-3', 'JENPROD-5', '150x100x2', 'cm3', 'USER-1', '2020-09-03 09:40:54', 'USER-1', '2020-09-03 10:13:34', '', '0000-00-00 00:00:00', 0),
-(12, 'Edit Data', 'UKPROD-3', 'JENPROD-5', '150x100x2', 'cm3', 'USER-1', '2020-09-03 09:40:54', 'USER-1', '2020-09-03 10:13:45', '', '0000-00-00 00:00:00', 0),
-(13, 'Edit Data', 'UKPROD-1', 'JENPROD-2', '200x180x20', 'cm3', 'USER-1', '2020-09-03 02:19:25', 'USER-1', '2020-09-03 10:14:16', '', '0000-00-00 00:00:00', 0),
-(14, 'Edit Data', 'UKPROD-2', 'JENPROD-2', '200x160x20', 'cm3', 'USER-1', '2020-09-03 09:38:33', 'USER-1', '2020-09-03 10:14:19', '', '0000-00-00 00:00:00', 0),
-(15, 'Edit Data', 'UKPROD-3', 'JENPROD-5', '150x100x2', 'cm3', 'USER-1', '2020-09-03 09:40:54', 'USER-1', '2020-09-03 10:13:45', 'USER-1', '2020-09-03 10:19:17', 1),
-(16, 'Insert Data', 'UKPROD-4', 'JENPROD-5', '150x100x2', 'cm3', 'USER-1', '2020-09-03 10:19:29', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(17, 'Edit Data', 'UKPROD-1', 'JENPROD-3', '200x180x20', 'cm3', 'USER-1', '2020-09-03 02:19:25', 'USER-1', '2020-09-03 10:30:36', '', '0000-00-00 00:00:00', 0),
-(18, 'Edit Data', 'UKPROD-1', 'JENPROD-2', '200x180x20', 'cm3', 'USER-1', '2020-09-03 02:19:25', 'USER-1', '2020-09-03 10:30:44', '', '0000-00-00 00:00:00', 0),
-(19, 'Insert Data', 'UKPROD-5', 'JENPROD-2', '200x150x20', 'cm3', 'USER-1', '2020-09-03 10:37:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(20, 'Edit Data', 'UKPROD-5', 'JENPROD-2', '200x160x20', 'cm3', 'USER-1', '2020-09-03 10:37:00', 'USER-1', '2020-09-03 10:37:08', '', '0000-00-00 00:00:00', 0),
-(21, 'Edit Data', 'UKPROD-5', 'JENPROD-2', '200x150x20', 'cm3', 'USER-1', '2020-09-03 10:37:00', 'USER-1', '2020-09-03 10:37:52', '', '0000-00-00 00:00:00', 0),
-(22, 'Edit Data', 'UKPROD-5', 'JENPROD-2', '200x160x20', 'cm3', 'USER-1', '2020-09-03 10:37:00', 'USER-1', '2020-09-03 10:37:57', '', '0000-00-00 00:00:00', 0),
-(23, 'Edit Data', 'UKPROD-5', 'JENPROD-2', '200x150x20', 'cm3', 'USER-1', '2020-09-03 10:37:00', 'USER-1', '2020-09-03 10:38:50', '', '0000-00-00 00:00:00', 0),
-(24, 'Edit Data', 'UKPROD-5', 'JENPROD-2', '200x160x20', 'cm3', 'USER-1', '2020-09-03 10:37:00', 'USER-1', '2020-09-03 10:38:55', '', '0000-00-00 00:00:00', 0),
-(25, 'Edit Data', 'UKPROD-5', 'JENPROD-2', '200x150x20', 'cm3', 'USER-1', '2020-09-03 10:37:00', 'USER-1', '2020-09-03 10:39:02', '', '0000-00-00 00:00:00', 0),
-(26, 'Edit Data', 'UKPROD-5', 'JENPROD-2', '200x160x20', 'cm3', 'USER-1', '2020-09-03 10:37:00', 'USER-1', '2020-09-03 10:39:11', '', '0000-00-00 00:00:00', 0),
-(27, 'Edit Data', 'UKPROD-5', 'JENPROD-2', '200x150x20', 'cm3', 'USER-1', '2020-09-03 10:37:00', 'USER-1', '2020-09-03 10:39:16', '', '0000-00-00 00:00:00', 0),
-(28, 'Insert Data', 'UKPROD-6', 'JENPROD-2', '200x120x20', 'cm3', 'USER-1', '2020-09-03 22:17:42', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(29, 'Edit Data', 'UKPROD-6', 'JENPROD-2', '200x120x20', 'cm2', 'USER-1', '2020-09-03 22:17:42', 'USER-1', '2020-09-03 22:18:36', '', '0000-00-00 00:00:00', 0),
-(30, 'Insert Data', 'UKPROD-7', 'JENPROD-8', '180x80x3', 'cm3', 'USER-1', '2020-11-01 00:11:49', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+(1, 'Insert Data', 'UKPROD-1', 'JENPROD-4', '120', 'cm', 'USER-1', '2020-12-19 12:24:02', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(2, 'Insert Data', 'UKPROD-2', 'JENPROD-4', '160', 'cm', 'USER-1', '2020-12-19 12:24:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(3, 'Insert Data', 'UKPROD-3', 'JENPROD-4', '180', 'cm', 'USER-1', '2020-12-19 12:24:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(4, 'Insert Data', 'UKPROD-4', 'JENPROD-2', '1800x800x100', 'cm3', 'USER-1', '2020-12-19 12:31:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(5, 'Insert Data', 'UKPROD-5', 'JENPROD-5', '2000x1450', 'cm2', 'USER-1', '2020-12-19 12:36:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(6, 'Edit Data', 'UKPROD-4', 'JENPROD-2', '1800x800x100', 'cm31', 'USER-1', '2020-12-19 12:31:35', 'USER-1', '2020-12-21 12:17:18', '', '0000-00-00 00:00:00', 0),
+(7, 'Edit Data', 'UKPROD-4', 'JENPROD-2', '1800x800x100', 'cm3', 'USER-1', '2020-12-19 12:31:35', 'USER-1', '2020-12-21 12:17:22', '', '0000-00-00 00:00:00', 0),
+(8, 'Insert Data', 'UKPROD-6', 'JENPROD-2', '2000x900x80', 'cm3', 'USER-2', '2020-12-21 19:04:48', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(9, 'Insert Data', 'UKPROD-7', 'JENPROD-2', '1000x1900x60', 'mm3', 'USER-2', '2020-12-21 19:49:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(10, 'Edit Data', 'UKPROD-7', 'JENPROD-2', '1000x1900x60', 'cm3', 'USER-2', '2020-12-21 19:49:39', 'USER-2', '2020-12-21 19:49:54', '', '0000-00-00 00:00:00', 0),
+(11, 'Edit Data', 'UKPROD-4', 'JENPROD-2', '1800x800x100', 'mm3', 'USER-1', '2020-12-19 12:31:35', 'USER-2', '2020-12-21 19:50:02', '', '0000-00-00 00:00:00', 0),
+(12, 'Edit Data', 'UKPROD-6', 'JENPROD-2', '2000x900x80', 'mm3', 'USER-2', '2020-12-21 19:04:48', 'USER-2', '2020-12-21 19:50:05', '', '0000-00-00 00:00:00', 0),
+(13, 'Edit Data', 'UKPROD-7', 'JENPROD-2', '1000x1900x60', 'mm3', 'USER-2', '2020-12-21 19:49:39', 'USER-2', '2020-12-21 19:50:09', '', '0000-00-00 00:00:00', 0),
+(14, 'Edit Data', 'UKPROD-5', 'JENPROD-5', '2000x1450', 'mm2', 'USER-1', '2020-12-19 12:36:36', 'USER-2', '2020-12-21 19:50:14', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2827,7 +2611,7 @@ CREATE TABLE `user` (
   `id_karyawan` varchar(10) NOT NULL,
   `email_user` varchar(50) NOT NULL,
   `password_user` varchar(50) NOT NULL,
-  `status_user` int(11) NOT NULL,
+  `status_user` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
   `user_edit` varchar(10) NOT NULL,
@@ -2842,19 +2626,18 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `id_karyawan`, `email_user`, `password_user`, `status_user`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('USER-1', 'KAR-1', 'direktur@gmail.com', '12345678', 0, 'USER-1', '2020-08-29 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('USER-10', 'KAR-10', 'pic2@gmail.com', '12345678', 0, 'USER-1', '2020-08-30 00:00:00', 'USER-1', '2020-09-08 23:24:02', '', '0000-00-00 00:00:00', 0),
-('USER-11', 'KAR-11', 'pic3@gmail.com', '12345678', 0, 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('USER-12', 'KAR-12', 'xxx@gmail.com', '123456781', 0, 'USER-1', '2020-09-08 21:12:17', 'USER-1', '2020-09-24 22:45:00', '', '0000-00-00 00:00:00', 0),
-('USER-13', 'KAR-14', 'zzz@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-09-08 22:27:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('USER-2', 'KAR-2', 'julius@gmail.com', '12345678', 0, 'USER-1', '2020-08-29 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('USER-3', 'KAR-3', 'ita@gmail.com', '12345678', 0, 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('USER-4', 'KAR-4', 'produksi@gmail.com', '12345678', 0, 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('USER-5', 'KAR-5', 'risdev@gmail.com', '12345678', 0, 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('USER-6', 'KAR-6', 'finishgood@gmail.com', '12345678', 0, 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('USER-7', 'KAR-7', 'ppic@gmail.com', '12345678', 0, 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('USER-8', 'KAR-8', 'operator@gmail.com', '12345678', 0, 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('USER-9', 'KAR-9', 'pic1@gmail.com', '12345678', 0, 'USER-1', '2020-08-30 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+('USER-1', 'KAR-1', 'amkaheja@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 12:54:50', 'USER-1', '2020-12-21 14:59:13', '', '0000-00-00 00:00:00', 0),
+('USER-10', 'KAR-10', 'pic1@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:28:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('USER-11', 'KAR-11', 'pic2@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:28:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('USER-12', 'KAR-12', 'pic3@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:29:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('USER-2', 'KAR-2', 'direktur@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:16:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('USER-3', 'KAR-3', 'juliusjulianto91@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:18:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('USER-4', 'KAR-4', 'finance@mbpindo.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:19:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('USER-5', 'KAR-5', 'produksi@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:21:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('USER-6', 'KAR-6', 'risdev@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:22:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('USER-7', 'KAR-7', 'w.hfinishgoodmbp@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:23:21', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('USER-8', 'KAR-8', 'ppicmbp@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:25:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('USER-9', 'KAR-9', 'w.hmaterialmbp@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:26:43', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 --
 -- Triggers `user`
@@ -2895,15 +2678,18 @@ CREATE TABLE `user_logs` (
 --
 
 INSERT INTO `user_logs` (`id_user_logs`, `keterangan_log`, `id_user`, `id_karyawan`, `email_user`, `password_user`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(1, 'Insert Data', 'USER-12', 'KAR-12', 'xxx@gmail.com', '12345678', 'USER-1', '2020-09-08 21:12:17', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(2, 'Insert Data', 'USER-13', 'KAR-14', 'zzz@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-09-08 22:27:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(3, 'Edit Data', 'USER-10', 'KAR-10', 'pic21@gmail.com', '12345678', 'USER-1', '2020-08-30 00:00:00', 'USER-1', '2020-09-08 23:23:56', '', '0000-00-00 00:00:00', 0),
-(4, 'Edit Data', 'USER-10', 'KAR-10', 'pic2@gmail.com', '12345678', 'USER-1', '2020-08-30 00:00:00', 'USER-1', '2020-09-08 23:24:02', '', '0000-00-00 00:00:00', 0),
-(5, 'Edit Data', 'USER-12', 'KAR-12', 'xxx1@gmail.com', '12345678', 'USER-1', '2020-09-08 21:12:17', 'USER-1', '2020-09-09 00:03:19', '', '0000-00-00 00:00:00', 0),
-(6, 'Edit Data', 'USER-12', 'KAR-12', 'xxx@gmail.com', '12345678', 'USER-1', '2020-09-08 21:12:17', 'USER-1', '2020-09-09 00:03:26', '', '0000-00-00 00:00:00', 0),
-(7, 'Edit Data', 'USER-12', 'KAR-12', 'xxx@gmail.com', '1234567819', 'USER-1', '2020-09-08 21:12:17', 'USER-1', '2020-09-09 00:27:12', '', '0000-00-00 00:00:00', 0),
-(8, 'Edit Data', 'USER-12', 'KAR-12', 'xxx@gmail.com', '12345678', 'USER-1', '2020-09-08 21:12:17', 'USER-1', '2020-09-09 00:28:15', '', '0000-00-00 00:00:00', 0),
-(9, 'Edit Data', 'USER-12', 'KAR-12', 'xxx@gmail.com', '123456781', 'USER-1', '2020-09-08 21:12:17', 'USER-1', '2020-09-24 22:45:00', '', '0000-00-00 00:00:00', 0);
+(24, 'Insert Data', 'USER-2', 'KAR-2', 'direktur@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:16:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(25, 'Insert Data', 'USER-3', 'KAR-3', 'juliusjulianto91@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:18:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(26, 'Insert Data', 'USER-4', 'KAR-4', 'finance@mbpindo.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:19:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(27, 'Insert Data', 'USER-5', 'KAR-5', 'produksi@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:21:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(28, 'Insert Data', 'USER-6', 'KAR-6', 'risdev@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:22:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(29, 'Insert Data', 'USER-7', 'KAR-7', 'w.hfinishgoodmbp@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:23:21', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(30, 'Insert Data', 'USER-8', 'KAR-8', 'ppicmbp@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:25:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(31, 'Insert Data', 'USER-9', 'KAR-9', 'w.hmaterialmbp@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:26:43', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(32, 'Insert Data', 'USER-10', 'KAR-10', 'pic1@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:28:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(33, 'Insert Data', 'USER-11', 'KAR-11', 'pic2@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:28:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(34, 'Insert Data', 'USER-12', 'KAR-12', 'pic3@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:29:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(35, 'Edit Data', 'USER-1', 'KAR-1', 'amkaheja@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 12:54:50', 'USER-1', '2020-12-21 14:59:13', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2928,12 +2714,12 @@ CREATE TABLE `warna` (
 --
 
 INSERT INTO `warna` (`id_warna`, `nama_warna`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('WARNA-1', 'Hitam', 'USER-1', '2020-08-30 22:43:28', 'USER-1', '2020-08-30 22:43:35', 'USER-1', '2020-08-30 22:45:47', 1),
-('WARNA-2', 'Black', 'USER-1', '2020-08-30 22:45:51', 'USER-1', '2020-09-07 17:24:26', '', '0000-00-00 00:00:00', 0),
-('WARNA-3', 'Brown', 'USER-1', '2020-08-30 22:45:54', 'USER-1', '2020-09-07 17:24:20', '', '0000-00-00 00:00:00', 0),
-('WARNA-4', 'Red', 'USER-1', '2020-09-04 18:14:15', 'USER-1', '2020-09-07 17:24:30', '', '0000-00-00 00:00:00', 0),
-('WARNA-5', 'White', 'USER-1', '2020-09-04 18:14:20', 'USER-1', '2020-09-07 17:24:38', '', '0000-00-00 00:00:00', 0),
-('WARNA-6', 'Cream', 'USER-1', '2020-09-04 18:14:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+('WARNA-1', 'BLACK', 'USER-1', '2020-12-19 11:55:26', 'USER-2', '2020-12-21 19:50:28', '', '0000-00-00 00:00:00', 0),
+('WARNA-2', 'BROWN', 'USER-1', '2020-12-19 11:55:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('WARNA-3', 'GREY', 'USER-1', '2020-12-19 11:55:42', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('WARNA-4', 'LIME GREEN', 'USER-1', '2020-12-19 11:55:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('WARNA-5', 'RED', 'USER-1', '2020-12-19 11:56:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('WARNA-6', 'TOSCA', 'USER-1', '2020-12-19 11:56:09', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 --
 -- Triggers `warna`
@@ -2972,19 +2758,14 @@ CREATE TABLE `warna_logs` (
 --
 
 INSERT INTO `warna_logs` (`id_warna_logs`, `keterangan_log`, `id_warna`, `nama_warna`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(1, 'Insert Data', 'WARNA-1', 'Hitam', 'USER-1', '2020-08-30 22:43:28', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(2, 'Edit Data', 'WARNA-1', 'Hitama', 'USER-1', '2020-08-30 22:43:28', 'USER-1', '2020-08-30 22:43:32', '', '0000-00-00 00:00:00', 0),
-(3, 'Edit Data', 'WARNA-1', 'Hitam', 'USER-1', '2020-08-30 22:43:28', 'USER-1', '2020-08-30 22:43:35', '', '0000-00-00 00:00:00', 0),
-(4, 'Edit Data', 'WARNA-1', 'Hitam', 'USER-1', '2020-08-30 22:43:28', 'USER-1', '2020-08-30 22:43:35', 'USER-1', '2020-08-30 22:45:47', 1),
-(5, 'Insert Data', 'WARNA-2', 'Hitam', 'USER-1', '2020-08-30 22:45:51', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(6, 'Insert Data', 'WARNA-3', 'Coklat', 'USER-1', '2020-08-30 22:45:54', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(7, 'Insert Data', 'WARNA-4', 'Merah', 'USER-1', '2020-09-04 18:14:15', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(8, 'Insert Data', 'WARNA-5', 'Putih', 'USER-1', '2020-09-04 18:14:20', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(9, 'Insert Data', 'WARNA-6', 'Cream', 'USER-1', '2020-09-04 18:14:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(10, 'Edit Data', 'WARNA-3', 'Brown', 'USER-1', '2020-08-30 22:45:54', 'USER-1', '2020-09-07 17:24:20', '', '0000-00-00 00:00:00', 0),
-(11, 'Edit Data', 'WARNA-2', 'Black', 'USER-1', '2020-08-30 22:45:51', 'USER-1', '2020-09-07 17:24:26', '', '0000-00-00 00:00:00', 0),
-(12, 'Edit Data', 'WARNA-4', 'Red', 'USER-1', '2020-09-04 18:14:15', 'USER-1', '2020-09-07 17:24:30', '', '0000-00-00 00:00:00', 0),
-(13, 'Edit Data', 'WARNA-5', 'White', 'USER-1', '2020-09-04 18:14:20', 'USER-1', '2020-09-07 17:24:38', '', '0000-00-00 00:00:00', 0);
+(1, 'Insert Data', 'WARNA-1', 'BLACK', 'USER-1', '2020-12-19 11:55:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(2, 'Insert Data', 'WARNA-2', 'BROWN', 'USER-1', '2020-12-19 11:55:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(3, 'Insert Data', 'WARNA-3', 'GREY', 'USER-1', '2020-12-19 11:55:42', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(4, 'Insert Data', 'WARNA-4', 'LIME GREEN', 'USER-1', '2020-12-19 11:55:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(5, 'Insert Data', 'WARNA-5', 'RED', 'USER-1', '2020-12-19 11:56:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(6, 'Insert Data', 'WARNA-6', 'TOSCA', 'USER-1', '2020-12-19 11:56:09', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(7, 'Edit Data', 'WARNA-1', 'BLACKa', 'USER-1', '2020-12-19 11:55:26', 'USER-1', '2020-12-21 12:19:28', '', '0000-00-00 00:00:00', 0),
+(8, 'Edit Data', 'WARNA-1', 'BLACK', 'USER-1', '2020-12-19 11:55:26', 'USER-2', '2020-12-21 19:50:28', '', '0000-00-00 00:00:00', 0);
 
 --
 -- Indexes for dumped tables
@@ -3025,12 +2806,6 @@ ALTER TABLE `customer`
 --
 ALTER TABLE `cycle_time`
   ADD PRIMARY KEY (`id_cycle_time`);
-
---
--- Indexes for table `cycle_time_logs`
---
-ALTER TABLE `cycle_time_logs`
-  ADD PRIMARY KEY (`id_cycle_time_logs`);
 
 --
 -- Indexes for table `delivery_note`
@@ -3097,12 +2872,6 @@ ALTER TABLE `detail_produksi_line`
 --
 ALTER TABLE `detail_produksi_tertunda`
   ADD PRIMARY KEY (`id_detail_produksi_tertunda`);
-
---
--- Indexes for table `detail_produk_logs`
---
-ALTER TABLE `detail_produk_logs`
-  ADD PRIMARY KEY (`id_detail_produk_logs`);
 
 --
 -- Indexes for table `detail_purchase_order_customer`
@@ -3217,12 +2986,6 @@ ALTER TABLE `karyawan_logs`
 --
 ALTER TABLE `konsumsi_material`
   ADD PRIMARY KEY (`id_konsumsi_material`);
-
---
--- Indexes for table `konsumsi_material_logs`
---
-ALTER TABLE `konsumsi_material_logs`
-  ADD PRIMARY KEY (`id_konsumsi_material_logs`);
 
 --
 -- Indexes for table `line`
@@ -3417,6 +3180,12 @@ ALTER TABLE `spesifikasi_jabatan`
   ADD PRIMARY KEY (`id_spesifikasi_jabatan`);
 
 --
+-- Indexes for table `spesifikasi_jabatan_logs`
+--
+ALTER TABLE `spesifikasi_jabatan_logs`
+  ADD PRIMARY KEY (`id_spesifikasi_jabatan_logs`);
+
+--
 -- Indexes for table `sub_customer`
 --
 ALTER TABLE `sub_customer`
@@ -3502,61 +3271,43 @@ ALTER TABLE `warna_logs`
 -- AUTO_INCREMENT for table `bank_logs`
 --
 ALTER TABLE `bank_logs`
-  MODIFY `id_bank_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- AUTO_INCREMENT for table `cycle_time_logs`
---
-ALTER TABLE `cycle_time_logs`
-  MODIFY `id_cycle_time_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `id_bank_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `departemen_logs`
 --
 ALTER TABLE `departemen_logs`
-  MODIFY `id_departemen_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `detail_produk_logs`
---
-ALTER TABLE `detail_produk_logs`
-  MODIFY `id_detail_produk_logs` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_departemen_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `jabatan_karyawan_logs`
 --
 ALTER TABLE `jabatan_karyawan_logs`
-  MODIFY `id_jabatan_karyawan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_jabatan_karyawan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `jabatan_logs`
 --
 ALTER TABLE `jabatan_logs`
-  MODIFY `id_jabatan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_jabatan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `jenis_produk_logs`
 --
 ALTER TABLE `jenis_produk_logs`
-  MODIFY `id_jenis_produk_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_jenis_produk_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `karyawan_logs`
 --
 ALTER TABLE `karyawan_logs`
-  MODIFY `id_karyawan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT for table `konsumsi_material_logs`
---
-ALTER TABLE `konsumsi_material_logs`
-  MODIFY `id_konsumsi_material_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
+  MODIFY `id_karyawan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
 
 --
 -- AUTO_INCREMENT for table `line_logs`
 --
 ALTER TABLE `line_logs`
-  MODIFY `id_line_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_line_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `produksi_logs`
@@ -3568,13 +3319,19 @@ ALTER TABLE `produksi_logs`
 -- AUTO_INCREMENT for table `produk_logs`
 --
 ALTER TABLE `produk_logs`
-  MODIFY `id_produk_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_produk_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `rekening_logs`
 --
 ALTER TABLE `rekening_logs`
-  MODIFY `id_rekening_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_rekening_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `spesifikasi_jabatan_logs`
+--
+ALTER TABLE `spesifikasi_jabatan_logs`
+  MODIFY `id_spesifikasi_jabatan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `tetapan_logs`
@@ -3586,19 +3343,19 @@ ALTER TABLE `tetapan_logs`
 -- AUTO_INCREMENT for table `ukuran_produk_logs`
 --
 ALTER TABLE `ukuran_produk_logs`
-  MODIFY `id_ukuran_produk_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id_ukuran_produk_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `user_logs`
 --
 ALTER TABLE `user_logs`
-  MODIFY `id_user_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_user_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `warna_logs`
 --
 ALTER TABLE `warna_logs`
-  MODIFY `id_warna_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_warna_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -16,7 +16,6 @@ class Bpbd extends CI_Controller {
         $this->load->model('M_Tetapan');
         $this->load->model('M_Dashboard');
 
-        $this->load->library('pdf');
     }
 
 	public function tambah_bpbd(){
@@ -1045,20 +1044,34 @@ class Bpbd extends CI_Controller {
   }
 
   public function edit_bpbd(){
-    $id_po   = $this->input->post('id_po_ed');
-    $id_bpbd = $this->input->post('id_bpbd_ed');
-    $plat_no = $this->input->post('plat_no_ed');
-    $driver  = $this->input->post('driver_ed');
-    $ket     = $this->input->post('ket_ed');
+    $id_po         = $this->input->post('id_po_ed');
+    $id_bpbd       = $this->input->post('id_bpbd_ed');
+    $plat_no       = $this->input->post('plat_no_ed');
+    $driver        = $this->input->post('driver_ed');
+    $ket           = $this->input->post('ket_ed');
     $jumlah_detail = $this->input->post('jumlah_detail');
-
+    
     $user = $_SESSION['id_user'];
     $now  = date('Y-m-d H:i:s');
     $year_now  = substr(date('Y'),2,2);
 
+    $data_bpbd = array(
+      'plat_no'    => $plat_no,
+      'driver'     => $driver,
+      'keterangan' => $ket,
+      'user_edit'  => $user,
+      'waktu_edit' => $now,
+    );
+
+    $where_bpbd = array(
+      'id_bpbd' => $id_bpbd
+    );
+
+    $this->M_Bpbd->edit('bpbd',$data_bpbd,$where_bpbd);
+
     for($i=0;$i<$jumlah_detail;$i++){
       $status = $this->input->post("status".$i);
-
+      
       //jika sebelumnya tidak ada
       if($status == 0){
         $id_detail_produk = $this->input->post('id_detail_produk'.$i);
@@ -1227,7 +1240,6 @@ class Bpbd extends CI_Controller {
 
                 $this->M_Bpbd->insert('detail_item_bpbd',$data_detail_item_bpbd);
                 $this->M_Bpbd->edit('item_surat_jalan',$data_item_sj,$where_item_sj);
-                
               }
             }
           //tutup detail item bpbd
@@ -1380,6 +1392,8 @@ class Bpbd extends CI_Controller {
                 $jumlah_di_detail_item = $detail_item_bpbds[$u]['jumlah_produk'];
                 $sisa_target           = $target - $capaian;
 
+                $one_item_bpbds = $this->M_Bpbd->get_one_item_bpbds($detail_item_bpbds[$u]['id_detail_item_bpbd'])->result_array();
+
                 if($sisa_target >= $jumlah_di_detail_item){
                   $max     = $jumlah_di_detail_item;
                   $capaian = $capaian + $max;
@@ -1396,10 +1410,11 @@ class Bpbd extends CI_Controller {
 
                   $this->M_Bpbd->edit('detail_item_bpbd',$data_detail_item_bpbd,$where_detail_item_bpbd);
 
-                  $jumlah_keluar_baru = $detail_item_bpbds[$u]['jumlah_keluar'] - $max;
+                  $jumlah_keluar_baru = $one_item_bpbds[0]['jumlah_keluar'] - $max;
 
                   $data_item_surat_jalan = array(
                     'jumlah_keluar' => $jumlah_keluar_baru,
+                    'status_keluar' => 0,
                     'user_edit'     => $user,
                     'waktu_edit'    => $now
                   );
@@ -1428,10 +1443,11 @@ class Bpbd extends CI_Controller {
 
                   $this->M_Bpbd->edit('detail_item_bpbd',$data_detail_item_bpbd,$where_detail_item_bpbd);
 
-                  $jumlah_keluar_baru = $detail_item_bpbds[$u]['jumlah_keluar'] - $max;
+                  $jumlah_keluar_baru = $one_item_bpbds[0]['jumlah_keluar'] - $max;
 
                   $data_item_surat_jalan = array(
                     'jumlah_keluar' => $jumlah_keluar_baru,
+                    'status_keluar' => 0,
                     'user_edit'     => $user,
                     'waktu_edit'    => $now
                   );
@@ -1442,6 +1458,7 @@ class Bpbd extends CI_Controller {
 
                   $this->M_Bpbd->edit('item_surat_jalan',$data_item_surat_jalan,$where_item_surat_jalan);
                 }
+                
               }
             }
           }
@@ -1511,7 +1528,7 @@ class Bpbd extends CI_Controller {
 
     $user = $_SESSION['id_user'];
     $now  = date('Y-m-d H:i:s');
-
+    
     //BPBD
       $data_bpbd = array(
         'status_delete' => 1,
@@ -1526,8 +1543,8 @@ class Bpbd extends CI_Controller {
       $this->M_Bpbd->edit('bpbd',$data_bpbd,$where_bpbd);
     //tutup BPBD
 
-      $item_bpbds    = $this->M_Bpbd->get_one_item_bpbd($id_bpbd)->result_array();
-      $jm_item_bpbds = $this->M_Bpbd->get_one_item_bpbd($id_bpbd)->num_rows();
+      $item_bpbds    = $this->M_Bpbd->get_one_item_bpbd_fr_bpbd($id_bpbd)->result_array();
+      $jm_item_bpbds = $this->M_Bpbd->get_one_item_bpbd_fr_bpbd($id_bpbd)->num_rows();
 
       for($i=0;$i<$jm_item_bpbds;$i++){
         $id_item_bpbd = $item_bpbds[$i]['id_item_bpbd'];
@@ -1587,7 +1604,7 @@ class Bpbd extends CI_Controller {
           }
         //tutup detail item bpbd
       }
-      redirect('bpbd/semua_bpbd');
+      redirect('bpbd/semua_bpbd');  
   }
 
   public function konfirmasi(){
@@ -1610,6 +1627,58 @@ class Bpbd extends CI_Controller {
   }
 
   public function print(){
+    $id = $this->input->post('id_bpbd');
+
+    $data['nama_perusahaan']    = $this->M_Tetapan->cari_tetapan("Nama Perusahaan")->result_array();
+
+    $data['bpbd']       = $this->M_Bpbd->get_one_bpbd($id)->result_array();
+    $data['det_bpbd']   = $this->M_Bpbd->get_one_item_bpbd($id)->result_array();
+    $data['jmdet_bpbd'] = $this->M_Bpbd->get_one_item_bpbd($id)->num_rows();
+
+    $data['warna']      = $this->M_Warna->select_all_aktif()->result_array();
+    $data['jmwarna']    = $this->M_Warna->select_all_aktif()->num_rows();
+    $data['ukuran']     = $this->M_UkuranProduk->select_all_aktif()->result_array();
+    $data['jmukuran']   = $this->M_UkuranProduk->select_all_aktif()->num_rows();
+
+    $waktu = $data['bpbd'][0]['tanggal'];
+
+        $hari_array = array(
+            'Minggu',
+            'Senin',
+            'Selasa',
+            'Rabu',
+            'Kamis',
+            'Jumat',
+            'Sabtu'
+        );
+        $hr = date('w', strtotime($waktu));
+        $hari = $hari_array[$hr];
+        $tanggal = date('j', strtotime($waktu));
+        $bulan_array = array(
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        );
+        $bl = date('n', strtotime($waktu));
+        $bulan = $bulan_array[$bl];
+        $tahun = date('Y', strtotime($waktu));
+        
+        $data['tanggal'] = "$hari, $tanggal $bulan $tahun";
+        
+
+    $this->load->view('v_print_bpbd',$data);
+  }
+
+  public function printx(){
     $id = $this->input->post('id_bpbd');
 
     $nama_perusahaan    = $this->M_Tetapan->cari_tetapan("Nama Perusahaan")->result_array();

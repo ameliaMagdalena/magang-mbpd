@@ -13,8 +13,6 @@ class SuratJalan extends CI_Controller {
         $this->load->model('M_Tetapan');
         $this->load->model('M_Dashboard');
 
-        $this->load->library('pdf');
-
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');
         }
@@ -807,7 +805,7 @@ class SuratJalan extends CI_Controller {
         $data['jmukuran']   = $this->M_UkuranProduk->select_all_aktif()->num_rows();
     
         echo json_encode($data);
-      }
+    }
 
     public function edit(){
         $id_sj                 = $this->input->post('nomor_sj_edit');
@@ -2307,6 +2305,61 @@ class SuratJalan extends CI_Controller {
     }
 
     public function print(){
+        $id_sj = $this->input->post('id_sj');
+
+        $data['sj']     = $this->M_SuratJalan->get_sj_by_id_sj($id_sj)->result_array();
+        $data['isj']    = $this->M_SuratJalan->get_isj_by_id_sj($id_sj)->result_array();
+        $data['jm_isj'] = $this->M_SuratJalan->get_isj_by_id_sj($id_sj)->num_rows();
+        $data['po']     = $this->M_SuratJalan->get_po_by_id_sj($id_sj)->result_array();
+
+        $data['warna']    = $this->M_Warna->select_all_aktif()->result_array();
+        $data['jmwarna']  = $this->M_Warna->select_all_aktif()->num_rows();
+        $data['jmwarna']   = $this->M_UkuranProduk->select_all_aktif()->result_array();
+        $data['jmukuran'] = $this->M_UkuranProduk->select_all_aktif()->num_rows();
+
+        $data['nama_perusahaan'] = $this->M_Tetapan->cari_tetapan("Nama Perusahaan")->result_array();
+        $data['alamat']          = $this->M_Tetapan->cari_tetapan("Alamat Perusahaan")->result_array();
+        $data['kota']            = $this->M_Tetapan->cari_tetapan("Kota Perusahaan")->result_array();
+
+        $waktu = $data['sj'][0]['tanggal'];
+
+        $hari_array = array(
+            'Minggu',
+            'Senin',
+            'Selasa',
+            'Rabu',
+            'Kamis',
+            'Jumat',
+            'Sabtu'
+        );
+        $hr = date('w', strtotime($waktu));
+        $hari = $hari_array[$hr];
+        $tanggal = date('j', strtotime($waktu));
+        $bulan_array = array(
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        );
+        $bl = date('n', strtotime($waktu));
+        $bulan = $bulan_array[$bl];
+        $tahun = date('Y', strtotime($waktu));
+        
+        $data['tanggal'] = "$tanggal $bulan $tahun";
+        
+
+        $this->load->view('v_print_surat_jalan',$data);
+    }
+
+    public function printx(){
         $id_sj = $this->input->post('id_sj');
 
         $sj     = $this->M_SuratJalan->get_sj_by_id_sj($id_sj)->result_array();

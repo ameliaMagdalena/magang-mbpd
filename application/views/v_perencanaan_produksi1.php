@@ -38,7 +38,7 @@
                     onchange="tanggal_mulai_change()" required> 
                     -->
                     <div class="col-sm-9">
-                        <input class="form-control col-md-5" type="date" id="tanggal_mulai" name="tanggal_mulai"
+                        <input class="date form-control col-md-5" type="date" id="tanggal_mulai" name="tanggal_mulai" 
                         min="<?php echo $min_date;?>" step="7" onchange="tanggal_mulai_change()" required> 
                     </div>
                 </div>
@@ -103,6 +103,18 @@
     }
 </script>
 
+<!--
+<script>
+    $().ready(function () {
+        $( ".date" ).datepicker({
+            dateFormat:'d-m-yy',    
+            changeMonth: true,
+            showOn: "both",
+            buttonImage: "resources/images/calendar_empty2.png"
+        });
+    })
+</script>
+-->
 
 
 

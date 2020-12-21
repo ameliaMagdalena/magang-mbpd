@@ -45,7 +45,7 @@
                     <?php 
                         $no = 1;
                         foreach($surat_perintah_lembur as $spl){
-                            if($spl->status_spl >= 3){
+                            if($spl->status_spl >= 3 && $spl->status_spl != 6){
                     ?>
                         <tr>
                             <td style="text-align: center;vertical-align: middle;"><?= $no;?></td>
@@ -122,16 +122,16 @@
                                 <!--- STATUS 0 -->
                                 <?php if($spl->status_spl == 0){?>
                                         <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                        title="Detail" href="#modaldetail1<?= $spl->id_surat_perintah_lembur ?>"></a>
+                                        title="Detail" href="#modaldetail1<?= $spl->id_surat_perintah_lembur ?>" style="margin-bottom:5px;margin-right:5px"></a>
                                     <?php if($spl->keterangan_spl == 1){?>
                                         <?php if($_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi" ||
                                                 $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
                                                 $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
                                             <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                                title="Edit" href="#modaledit1<?= $spl->id_surat_perintah_lembur ?>"></a>
+                                                title="Edit" href="#modaledit1<?= $spl->id_surat_perintah_lembur ?>" style="margin-bottom:5px;margin-right:5px"></a>
                                             <?php if($spl->keterangan_spl == 1 || $spl->keterangan_spl == 0 || $spl->keterangan_spl == 2){?>
                                                 <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                                title="Hapus" href="#modalhapus1<?= $spl->id_surat_perintah_lembur ?>"></a>
+                                                title="Hapus" href="#modalhapus1<?= $spl->id_surat_perintah_lembur ?>" style="margin-bottom:5px;margin-right:5px"></a>
                                             <?php } ?>
                                         <?php } ?>
                                     <?php } ?>
@@ -142,17 +142,17 @@
                                             $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
                                             $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
                                                 <button type="button" class="bpros_klik col-lg-3 btn btn-success fa fa-gear" 
-                                                id="bpros<?= $spl->id_surat_perintah_lembur?>" value="<?= $spl->id_surat_perintah_lembur?>" title="Proses"></button>
+                                                id="bpros<?= $spl->id_surat_perintah_lembur?>" value="<?= $spl->id_surat_perintah_lembur?>" title="Proses" style="margin-bottom:5px;margin-right:5px"></button>
                                     <?php }?>
                                 <!--- STATUS 1 -->
                                 <?php }  else if($spl->status_spl == 1){?>
                                         <button type="button" class="bdet1_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                        id="bdet1<?= $spl->id_surat_perintah_lembur?>" value="<?= $spl->id_surat_perintah_lembur?>" title="Detail"></button>
+                                        id="bdet1<?= $spl->id_surat_perintah_lembur?>" value="<?= $spl->id_surat_perintah_lembur?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
                                     <?php if($_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi" ||
                                             $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
                                             $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
                                         <a class="modal-with-form col-lg-3 btn btn-success fa fa-check-square"
-                                            title="Konfirmasi" href="#modalsetuju<?= $spl->id_surat_perintah_lembur ?>"></a>
+                                            title="Konfirmasi" href="#modalsetuju<?= $spl->id_surat_perintah_lembur ?>" style="margin-bottom:5px;margin-right:5px"></a>
                                     <?php } ?>
                                     <?php if($_SESSION['nama_jabatan'] == "PIC Line Cutting" && $_SESSION['nama_departemen'] == "Produksi" || 
                                         $_SESSION['nama_jabatan'] == "PIC Line Bonding" && $_SESSION['nama_departemen'] == "Produksi" ||
@@ -161,31 +161,31 @@
                                         $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
                                         $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
                                             <button type="button" class="bedit1_klik col-lg-3 btn btn-warning fa fa-pencil-square-o" 
-                                                id="bedit1<?= $spl->id_surat_perintah_lembur?>" value="<?= $spl->id_surat_perintah_lembur?>" title="Edit"></button>
+                                                id="bedit1<?= $spl->id_surat_perintah_lembur?>" value="<?= $spl->id_surat_perintah_lembur?>" title="Edit" style="margin-bottom:5px;margin-right:5px"></button>
                                     <?php }?>
                                 <!--- STATUS 2 -->
                                 <?php } else if($spl->status_spl == 2){?>
                                     <button type="button" class="bdet1_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                        id="bdet1<?= $spl->id_surat_perintah_lembur?>" value="<?= $spl->id_surat_perintah_lembur?>" title="Detail"></button>
+                                        id="bdet1<?= $spl->id_surat_perintah_lembur?>" value="<?= $spl->id_surat_perintah_lembur?>" title="Detail"  style="margin-bottom:5px;margin-right:5px"></button>
                                     <?php if($_SESSION['nama_jabatan'] == "PPIC" && $_SESSION['nama_departemen'] == "Produksi" ||
                                             $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
                                             $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
                                                 <a class="modal-with-form col-lg-3 btn btn-danger fa  fa-times-circle"
-                                                title="Belum Dikonfirmasi" href="#modalunsetuju<?= $spl->id_surat_perintah_lembur?>"></a>
+                                                title="Belum Dikonfirmasi" href="#modalunsetuju<?= $spl->id_surat_perintah_lembur?>" style="margin-bottom:5px;margin-right:5px"></a>
                                     <?php } ?>
                                     <?php if($_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management" ||
                                             $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" ){?>
                                         <a class="modal-with-form col-lg-3 btn btn-success fa fa-check-square"
-                                        title="Konfirmasi" href="#modalkonfirmasi<?= $spl->id_surat_perintah_lembur?>"></a>
+                                        title="Konfirmasi" href="#modalkonfirmasi<?= $spl->id_surat_perintah_lembur?>" style="margin-bottom:5px;margin-right:5px"></a>
                                     <?php } ?>
                                 <!--- STATUS 3 - 5 -->
                                 <?php } else if($spl->status_spl >= 3){?>
                                         <button type="button" class="bdet1_klik col-lg-3 btn btn-primary fa fa-info-circle" 
-                                        id="bdet1<?= $spl->id_surat_perintah_lembur?>" value="<?= $spl->id_surat_perintah_lembur?>" title="Detail"></button>
+                                        id="bdet1<?= $spl->id_surat_perintah_lembur?>" value="<?= $spl->id_surat_perintah_lembur?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
                                         <form method="POST" action="<?= base_url()?>suratPerintahLembur/print">
                                             <input type="hidden" name="id" value="<?= $spl->id_surat_perintah_lembur?>">
                                             <button type="submit" class="col-lg-3 btn fa fa-print" style="background-color:#E56B1F;color:white;"
-                                            title="Print"></button>
+                                            title="Print" style="margin-bottom:5px;margin-right:5px"></button>
                                         </form> 
                                 <?php } ?>
                             </td>
@@ -357,7 +357,41 @@
                                             <div class="modal-wrapper">
                                                 <div class="modal-text">
                                                     <input type="hidden" name="id_spl" value="<?= $spl->id_surat_perintah_lembur?>"> 
-                                                    <p>Apakah anda yakin akan mengkonfirmasi surat printah lembur untuk <?= $spl->nama_line ?> pada tanggal <?= $spl->tanggal?>?</p>
+                                                    <p>Apakah anda yakin akan mengkonfirmasi surat printah lembur untuk <?= $spl->nama_line ?> pada tanggal <?php 
+                                                        $waktu = $spl->tanggal;
+
+                                                        $hari_array = array(
+                                                            'Minggu',
+                                                            'Senin',
+                                                            'Selasa',
+                                                            'Rabu',
+                                                            'Kamis',
+                                                            'Jumat',
+                                                            'Sabtu'
+                                                        );
+                                                        $hr = date('w', strtotime($waktu));
+                                                        $hari = $hari_array[$hr];
+                                                        $tanggal = date('j', strtotime($waktu));
+                                                        $bulan_array = array(
+                                                            1 => 'Januari',
+                                                            2 => 'Februari',
+                                                            3 => 'Maret',
+                                                            4 => 'April',
+                                                            5 => 'Mei',
+                                                            6 => 'Juni',
+                                                            7 => 'Juli',
+                                                            8 => 'Agustus',
+                                                            9 => 'September',
+                                                            10 => 'Oktober',
+                                                            11 => 'November',
+                                                            12 => 'Desember',
+                                                        );
+                                                        $bl = date('n', strtotime($waktu));
+                                                        $bulan = $bulan_array[$bl];
+                                                        $tahun = date('Y', strtotime($waktu));
+                                                        
+                                                        echo "$hari, $tanggal $bulan $tahun";
+                                                    ?>?</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -386,7 +420,41 @@
                                                 <div class="modal-text">
                                                     <input type="hidden" name="id_spl" value="<?= $spl->id_surat_perintah_lembur?>"> 
                                                     <p>Apakah anda yakin akan membatalkan konfirmasi terhadap surat printah lembur untuk 
-                                                    <?= $spl->nama_line?> pada tanggal <?=  $spl->tanggal?>?</p>
+                                                    <?= $spl->nama_line?> pada tanggal <?php 
+                                                        $waktu = $spl->tanggal;
+
+                                                        $hari_array = array(
+                                                            'Minggu',
+                                                            'Senin',
+                                                            'Selasa',
+                                                            'Rabu',
+                                                            'Kamis',
+                                                            'Jumat',
+                                                            'Sabtu'
+                                                        );
+                                                        $hr = date('w', strtotime($waktu));
+                                                        $hari = $hari_array[$hr];
+                                                        $tanggal = date('j', strtotime($waktu));
+                                                        $bulan_array = array(
+                                                            1 => 'Januari',
+                                                            2 => 'Februari',
+                                                            3 => 'Maret',
+                                                            4 => 'April',
+                                                            5 => 'Mei',
+                                                            6 => 'Juni',
+                                                            7 => 'Juli',
+                                                            8 => 'Agustus',
+                                                            9 => 'September',
+                                                            10 => 'Oktober',
+                                                            11 => 'November',
+                                                            12 => 'Desember',
+                                                        );
+                                                        $bl = date('n', strtotime($waktu));
+                                                        $bulan = $bulan_array[$bl];
+                                                        $tahun = date('Y', strtotime($waktu));
+                                                        
+                                                        echo "$hari, $tanggal $bulan $tahun";
+                                                    ?>?</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -414,7 +482,41 @@
                                             <div class="modal-wrapper">
                                                 <div class="modal-text">
                                                     <input type="hidden" name="id_spl" value="<?= $spl->id_surat_perintah_lembur?>"> 
-                                                    <p>Apakah anda yakin akan mengkonfirmasi surat printah lembur untuk <?= $spl->nama_line ?> pada tanggal <?= $spl->tanggal?>?</p>
+                                                    <p>Apakah anda yakin akan mengkonfirmasi surat printah lembur untuk <?= $spl->nama_line ?> pada tanggal <?php 
+                                                            $waktu = $spl->tanggal;
+
+                                                            $hari_array = array(
+                                                                'Minggu',
+                                                                'Senin',
+                                                                'Selasa',
+                                                                'Rabu',
+                                                                'Kamis',
+                                                                'Jumat',
+                                                                'Sabtu'
+                                                            );
+                                                            $hr = date('w', strtotime($waktu));
+                                                            $hari = $hari_array[$hr];
+                                                            $tanggal = date('j', strtotime($waktu));
+                                                            $bulan_array = array(
+                                                                1 => 'Januari',
+                                                                2 => 'Februari',
+                                                                3 => 'Maret',
+                                                                4 => 'April',
+                                                                5 => 'Mei',
+                                                                6 => 'Juni',
+                                                                7 => 'Juli',
+                                                                8 => 'Agustus',
+                                                                9 => 'September',
+                                                                10 => 'Oktober',
+                                                                11 => 'November',
+                                                                12 => 'Desember',
+                                                            );
+                                                            $bl = date('n', strtotime($waktu));
+                                                            $bulan = $bulan_array[$bl];
+                                                            $tahun = date('Y', strtotime($waktu));
+                                                            
+                                                            echo "$hari, $tanggal $bulan $tahun";
+                                                        ?></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -429,6 +531,7 @@
                                 </section>
                             </form>
                         </div>
+
 
                     <?php $no++; }} ?>
 
@@ -450,7 +553,7 @@
                         <div class="form-group mt-lg">
                             <label class="col-sm-3 control-label">Tanggal</label>
                             <div class="col-sm-9">
-                                <input class="form-control col-md-5" type="date" id="tanggal_pros"
+                                <input class="form-control col-md-5" type="text" id="tanggal_pros"
                                 value="20-07-2020" readonly> 
                             </div>
                         </div>
@@ -526,7 +629,7 @@
                     <div class="form-group mt-lg">
                         <label class="col-sm-3 control-label">Tanggal</label>
                         <div class="col-sm-9">
-                            <input class="form-control col-md-5" type="date" id="det2_tanggal"
+                            <input class="form-control col-md-5" type="text" id="det2_tanggal"
                             readonly> 
                         </div>
                     </div>
@@ -574,7 +677,7 @@
                         <div class="form-group mt-lg">
                             <label class="col-sm-3 control-label">Tanggal</label>
                             <div class="col-sm-9">
-                                <input class="form-control col-md-5" type="date" readonly
+                                <input class="form-control col-md-5" type="text" readonly
                                 name="ed_tanggal" id="ed_tanggal"> 
                             </div>
                         </div>
@@ -603,16 +706,18 @@
                         <br>
 
                         <div class="row" style="font-size:10px;background-color:#e1e2e3;padding-top:17px;margin: 0px 5px 0px 5px;border-radius:5px">
-                            <div class="col-md-5 form-group" id="ganti_kar">
-                                <select class="form-control" name="ed_select_karyawan" id="ed_select_karyawan">
-                                    <option value="">Nama Karyawan</option>
-                                    <?php foreach ($karyawan as $kr){?>
-                                        <option value="<?= $kr->id_karyawan ?>"><?= $kr->nama_karyawan ?></option>
+                            <div class="col-md-5 form-group" id="ganti_kar_ed">
+                                <!--
+                                    <select class="form-control" name="ed_select_karyawan" id="ed_select_karyawan">
+                                        <option value="">Nama Karyawan</option>
+                                        <?php foreach ($karyawan as $kr){?>
+                                            <option value="<?= $kr->id_karyawan ?>"><?= $kr->nama_karyawan ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <?php foreach($karyawan as $k){?>
+                                        <input type="hidden" id="ed_kar<?= $k->id_karyawan?>" value="<?= $k->nama_karyawan ?>">
                                     <?php } ?>
-                                </select>
-                                <?php foreach($karyawan as $k){?>
-                                    <input type="hidden" id="ed_kar<?= $k->id_karyawan?>" value="<?= $k->nama_karyawan ?>">
-                                <?php } ?>
+                                -->
                             </div>
                             <div class="col-md-1 form-group">
                                 <button type="button" class="btn btn-success fa fa-plus-square-o" style="color:white"
@@ -632,6 +737,7 @@
             </form>
         </div>
     </div>
+
 
 
 <!--*****************************-->
@@ -929,7 +1035,22 @@
             data: {id:id},
 
             success: function(respond){
-                $("#det2_tanggal").val(respond['spl'][0]['tanggal']);
+                
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['spl'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['spl'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['spl'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['spl'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#det2_tanggal").val( $tanggalnya );
                 $("#det2_line").val(respond['spl'][0]['nama_line']);
                 $("#det2_waktu").val(respond['spl'][0]['waktu_lembur']);
                 $("#det2_keterangan").val(respond['spl'][0]['keterangan_perintah']);
@@ -1005,11 +1126,45 @@
             success: function(respond){
                 $("#ed_id_spl").val(id);
 
-                $("#ed_tanggal").val(respond['spl'][0]['tanggal']);
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['spl'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['spl'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['spl'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['spl'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#ed_tanggal").val($tanggalnya);
                 $("#ed_line").val(respond['spl'][0]['nama_line']);
                 $("#ed_waktu").val(respond['spl'][0]['waktu_lembur']);
                 $("#ed_keterangan").val(respond['spl'][0]['keterangan_perintah']);
 
+                $kar = "";
+                $isi_kar = "";
+                $id_kar = "";
+                for($y=0;$y<respond['jm_karyawan'];$y++){
+                    $isi_kar = $isi_kar +
+                    '<option value="'+respond['karyawan'][$y]['id_karyawan']+'">'+respond['karyawan'][$y]['nama_karyawan']+'</option>';
+
+                    $id_kar = $id_kar +
+                    '<input type="hidden" id="ed_kar'+respond['karyawan'][$y]['id_karyawan']+'" value="'+respond['karyawan'][$y]['nama_karyawan']+'">';
+                }   
+
+                $kar = 
+                '<select class="form-control" name="ed_select_karyawan" id="ed_select_karyawan">'+
+                    '<option value="">Nama Karyawan</option>'+
+                    $isi_kar+
+                '</select>'+
+                $id_kar;
+
+
+                $("#ganti_kar_ed").html($kar);
 
                 $isi = "";
 
@@ -1313,7 +1468,6 @@
         }
     }
 </script>
-
 
 
 

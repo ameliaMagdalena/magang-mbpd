@@ -53,11 +53,11 @@
                             <td style="text-align: center;vertical-align: middle;"><?= $x->nama_jabatan; ?></td>
                             <td  class="col-lg-3">
                                 <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                    title="Edit" href="#modaledit<?= $x->id_spesifikasi_jabatan;?>"></a>
+                                    title="Edit" href="#modaledit<?= $x->id_spesifikasi_jabatan;?>" style="margin-right:5px;margin-bottom:5px"></a>
                                 <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                title="Delete" href="#modalhapus<?= $x->id_spesifikasi_jabatan;?>"></a>
+                                title="Delete" href="#modalhapus<?= $x->id_spesifikasi_jabatan;?>" style="margin-right:5px;margin-bottom:5px"></a>
                                 <button type="button" class="blog_klik col-lg-3 btn btn-info fa fa-file" 
-                                id="blog<?php echo $x->id_spesifikasi_jabatan?>" value="<?php echo $x->id_spesifikasi_jabatan;?>"></button>
+                                id="blog<?php echo $x->id_spesifikasi_jabatan?>" value="<?php echo $x->id_spesifikasi_jabatan;?>" style="margin-right:5px;margin-bottom:5px"></button>
                             </td>
                         </tr>
     

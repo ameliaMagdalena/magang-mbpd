@@ -267,17 +267,17 @@ class M_Dashboard extends CI_Model {
 
         //notif percut
             function get_jm_percut(){
-                return $this->db->query("SELECT COUNT(id_perencanaan_cutting) AS jumlah_percut FROM perencanaan_cutting 
+                return $this->db->query("SELECT tanggal,COUNT(id_perencanaan_cutting) AS jumlah_percut FROM perencanaan_cutting 
                 WHERE perencanaan_cutting.status_delete=0 AND (perencanaan_cutting.status_laporan BETWEEN 0 AND 1) ");
             }
 
             function get_jm_percut_0(){
-                return $this->db->query("SELECT COUNT(id_perencanaan_cutting) AS jumlah_percut FROM perencanaan_cutting 
+                return $this->db->query("SELECT tanggal,COUNT(id_perencanaan_cutting) AS jumlah_percut FROM perencanaan_cutting 
                 WHERE perencanaan_cutting.status_delete=0 AND (perencanaan_cutting.status_laporan ='0') ");
             }
 
             function get_jm_percut_1(){
-                return $this->db->query("SELECT COUNT(id_perencanaan_cutting) AS jumlah_percut FROM perencanaan_cutting 
+                return $this->db->query("SELECT tanggal,COUNT(id_perencanaan_cutting) AS jumlah_percut FROM perencanaan_cutting 
                 WHERE perencanaan_cutting.status_delete=0 AND (perencanaan_cutting.status_laporan ='1') ");
             }
         //tutup
@@ -295,6 +295,16 @@ class M_Dashboard extends CI_Model {
 
 
     //dashboard produksi
+        //PPIC
+            function select_all_monday(){
+                return $this->db->query("SELECT tanggal AS tanggal_mulai, tanggal AS start, 
+                (tanggal + INTERVAL 6 DAY) AS tanggal_selesai, (tanggal + INTERVAL 6 DAY) AS end,
+                id_produksi
+                FROM produksi 
+                WHERE weekday(tanggal) = 0 AND status_delete='0' ORDER BY tanggal ASC");
+            }
+        //tutup PPIC
+
         //admin risdev
             function jumlah_produk(){
                 return $this->db->query("SELECT COUNT(id_produk) as jumlah_produk FROM produk WHERE status_delete='0' ");
@@ -333,6 +343,19 @@ class M_Dashboard extends CI_Model {
                 AND detail_produk.id_produk=produk.id_produk ");
             }
 
+            function perencanaan_hari_ini_semua_line($now){
+                return $this->db->query("SELECT line.nama_line,detail_produksi_line.jumlah_item_perencanaan, produk.nama_produk, detail_produk.id_ukuran_produk,
+                detail_produk.id_warna,detail_produk.keterangan 
+                FROM produksi,produksi_line,detail_produksi_line,line,detail_purchase_order_customer,detail_produk,produk
+                WHERE produksi.tanggal='$now' AND detail_produksi_line.status_delete='0'
+                AND detail_produksi_line.jumlah_item_perencanaan != 0
+                AND produksi.id_produksi = produksi_line.id_produksi AND produksi_line.id_line=line.id_line 
+                AND produksi_line.id_produksi_line=detail_produksi_line.id_produksi_line
+                AND detail_produksi_line.id_detail_purchase_order=detail_purchase_order_customer.id_detail_purchase_order_customer
+                AND detail_purchase_order_customer.id_detail_produk=detail_produk.id_detail_produk 
+                AND detail_produk.id_produk=produk.id_produk");
+            }
+
             function status_hasil_produksi($now,$line){
                 return $this->db->query("SELECT produksi_line.status_laporan FROM produksi,produksi_line,line
                 WHERE produksi.tanggal='$now' AND line.nama_line='$line' AND produksi_line.status_delete='0'
@@ -342,9 +365,8 @@ class M_Dashboard extends CI_Model {
 
             function pengambilan_material($now,$line){
                 return $this->db->query("SELECT pengambilan_material.id_pengambilan_material 
-                FROM pengambilan_material,pengeluaran_material,detail_permintaan_material,permintaan_material,line 
-                WHERE pengeluaran_material.tanggal_keluar='$now' AND line.nama_line='$line'
-                AND pengambilan_material.id_pengeluaran_material=pengeluaran_material.id_pengeluaran_material
+                FROM pengambilan_material,detail_permintaan_material,permintaan_material,line 
+                WHERE pengambilan_material.tanggal_ambil='$now' AND line.nama_line='$line'
                 AND pengambilan_material.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material
                 AND permintaan_material.id_permintaan_material=detail_permintaan_material.id_permintaan_material
                 AND permintaan_material.id_line=line.id_line
@@ -366,7 +388,7 @@ class M_Dashboard extends CI_Model {
 
         //finish good
             function bpbd($now){
-                return $this->db->query("SELECT COUNT(id_bpbd) as jumlah_bpbd FROM bpbd WHERE tanggal='$now' AND status_delete='0' AND status_bpbd='1' ");
+                return $this->db->query("SELECT COUNT(id_bpbd) as jumlah_bpbd FROM bpbd WHERE tanggal='$now' AND status_delete='0' AND status_bpbd='0' ");
             }
         //tutup finish good
 
@@ -393,12 +415,12 @@ class M_Dashboard extends CI_Model {
         //admin purchasing
             function surat_jalan($now){
                 return $this->db->query("SELECT COUNT(id_surat_jalan) as jumlah_sj FROM surat_jalan 
-                WHERE surat_jalan.tanggal='$now' AND surat_jalan.status_delete='0' ");
+                WHERE surat_jalan.tanggal='$now' AND surat_jalan.status_delete='0' AND (surat_jalan.status_surat_jalan BETWEEN 0 AND 1) ");
             }
 
             function invoice($now){
                 return $this->db->query("SELECT COUNT(id_invoice) as jumlah_invoice FROM invoice 
-                WHERE invoice.tanggal='$now' AND invoice.status_delete='0'");
+                WHERE invoice.tanggal='$now' AND invoice.status_delete='0' AND invoice.status_invoice='0' ");
             }
         //tutup admin purchasing
 

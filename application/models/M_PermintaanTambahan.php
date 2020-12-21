@@ -21,15 +21,17 @@ class M_PermintaanTambahan extends CI_Model {
         WHERE id_permintaan_tambahan LIKE '$id_code%' ORDER BY id_permintaan_tambahan DESC LIMIT 1");
     }
 
-    function select_all_aktif(){
+    function select_all_aktif($nmline){
         return $this->db->query("SELECT permintaan_tambahan.id_permintaan_tambahan,permintaan_tambahan.id_permintaan_tambahan,permintaan_tambahan.jumlah_tambah,
         permintaan_tambahan.status,sub_jenis_material.nama_sub_jenis_material,
         sub_jenis_material.satuan_keluar,permintaan_tambahan.waktu_add
-        FROM permintaan_tambahan,detail_permintaan_material,konsumsi_material,sub_jenis_material
-        WHERE permintaan_tambahan.status_delete='0' AND 
+        FROM permintaan_tambahan,detail_permintaan_material,permintaan_material,konsumsi_material,sub_jenis_material,line
+        WHERE permintaan_tambahan.status_delete='0' AND line.nama_line='$nmline' AND 
         permintaan_tambahan.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material AND
         detail_permintaan_material.id_konsumsi_material=konsumsi_material.id_konsumsi_material AND
-        konsumsi_material.id_sub_jenis_material=sub_jenis_material.id_sub_jenis_material ");
+        konsumsi_material.id_sub_jenis_material=sub_jenis_material.id_sub_jenis_material AND 
+        permintaan_material.id_line=line.id_line AND 
+        permintaan_material.id_permintaan_material=detail_permintaan_material.id_permintaan_material");
     }
 
     function get_one_permat($id){

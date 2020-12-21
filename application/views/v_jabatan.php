@@ -50,12 +50,46 @@
                             <td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
                             <td style="text-align: center;vertical-align: middle;"><?= $x->nama_jabatan; ?></td>
                             <td  class="col-lg-3">
-                                <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                    title="Edit" href="#modaledit<?= $x->id_jabatan;?>"></a>
-                                <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                title="Delete" href="#modalhapus<?= $x->id_jabatan;?>"></a>
+                                <?php 
+                                    $count = 0;
+
+                                    if($x->nama_jabatan == "Direktur"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "Manager"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "Admin"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "Operator Gudang"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "PIC Line Assy"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "PIC Line Bonding"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "PIC Line Cutting"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "PIC Line Sewing"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "PPIC"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "Staff Line Assy"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "Staff Line Bonding"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "Staff Line Cutting"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "Staff Line Sewing"){
+                                        $count++;
+                                    }
+                                
+                                    if($count == 0){
+                                ?>
+                                    <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
+                                        title="Edit" href="#modaledit<?= $x->id_jabatan;?>" style="margin-right:5px;margin-bottom:5px"></a>
+                                    <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
+                                    title="Delete" href="#modalhapus<?= $x->id_jabatan;?>" style="margin-right:5px;margin-bottom:5px"></a>
+                                <?php } ?>
                                 <button type="button" class="blog_klik col-lg-3 btn btn-info fa fa-file" 
-                                id="blog<?php echo $x->id_jabatan?>" value="<?php echo $x->id_jabatan;?>"></button>
+                                id="blog<?php echo $x->id_jabatan?>" value="<?php echo $x->id_jabatan;?>" style="margin-right:5px;margin-bottom:5px"></button>
                             </td>
                         </tr>
     
@@ -119,8 +153,6 @@
 
     </div>
 
-
-
                     <?php
                     $no++;
                     } 
@@ -141,8 +173,243 @@
                     <div class="form-group mt-lg">
                         <label class="col-sm-5 control-label">Nama Jabatan</label>
                         <div class="col-sm-7">
-                            <input type="text" name="nama_jabatan_input" id="nama_jabatan_input" 
-                            onchange="cek_nama_jabatan_input()" required class="form-control">
+                        <?php 
+                                $count = 0;
+                                foreach($jabatan as $x){
+                                    if($x->nama_jabatan == "Direktur"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "Manager"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "Admin"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "Operator Gudang"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "PIC Line Assy"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "PIC Line Bonding"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "PIC Line Cutting"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "PIC Line Sewing"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "PPIC"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "Staff Line Assy"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "Staff Line Bonding"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "Staff Line Cutting"){
+                                        $count++;
+                                    } else if($x->nama_jabatan == "Staff Line Sewing"){
+                                        $count++;
+                                    }
+                                }
+                                    if($count < 13){
+                            ?>
+                                        <select class="form-control" name="nama_jabatan_wajib" required>
+                                            <!-- 1. Direktur -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($jabatan as $y){
+                                                        if($y->nama_jabatan == "Direktur"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="Direktur">Direktur</option>
+                                                <?php } ?>
+                                            <!-- -->
+
+                                            <!-- 2. Manager -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($jabatan as $y){
+                                                        if($y->nama_jabatan == "Manager"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="Manager">Manager</option>
+                                                <?php } ?>
+                                            <!-- -->
+
+                                            <!-- 3. Admin -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($jabatan as $y){
+                                                        if($y->nama_jabatan == "Admin"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="Admin">Admin</option>
+                                                <?php } ?>
+                                            <!-- -->
+
+                                            <!-- 4. Operator Gudang -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($jabatan as $y){
+                                                        if($y->nama_jabatan == "Operator Gudang"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="Operator Gudang">Operator Gudang</option>
+                                                <?php } ?>
+                                            <!-- -->
+
+                                            <!-- 7. PIC Line Cutting -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($jabatan as $y){
+                                                        if($y->nama_jabatan == "PIC Line Cutting"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="PIC Line Cutting">PIC Line Cutting</option>
+                                                <?php } ?>
+                                            <!-- -->
+
+                                            <!-- 6. PIC Line Bonding -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($jabatan as $y){
+                                                        if($y->nama_jabatan == "PIC Line Bonding"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="PIC Line Bonding">PIC Line Bonding</option>
+                                                <?php } ?>
+                                            <!-- -->
+
+                                            <!-- 8. PIC Line Sewing -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($jabatan as $y){
+                                                        if($y->nama_jabatan == "PIC Line Sewing"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="PIC Line Sewing">PIC Line Sewing</option>
+                                                <?php } ?>
+                                            <!-- -->
+
+                                            <!-- 5. PIC Line Assy -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($jabatan as $y){
+                                                        if($y->nama_jabatan == "PIC Line Assy"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="PIC Line Assy">PIC Line Assy</option>
+                                                <?php } ?>
+                                            <!-- -->
+
+                                            <!-- 9. PPIC -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($jabatan as $y){
+                                                        if($y->nama_jabatan == "PPIC"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="PPIC">PPIC</option>
+                                                <?php } ?>
+                                            <!-- -->
+
+                                            <!-- 10. Staff Line Cutting -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($jabatan as $y){
+                                                        if($y->nama_jabatan == "Staff Line Cutting"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="Staff Line Cutting">Staff Line Cutting</option>
+                                                <?php } ?>
+                                            <!-- -->
+
+                                            <!-- 11. Staff Line Bonding -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($jabatan as $y){
+                                                        if($y->nama_jabatan == "Staff Line Bonding"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="Staff Line Bonding">Staff Line Bonding</option>
+                                                <?php } ?>
+                                            <!-- -->
+
+                                            <!-- 12. Staff Line Sewing -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($jabatan as $y){
+                                                        if($y->nama_jabatan == "Staff Line Sewing"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="Staff Line Sewing">Staff Line Sewing</option>
+                                                <?php } ?>
+                                            <!-- -->
+
+                                            <!-- 13. Staff Line Assy -->
+                                                <?php 
+                                                    $count1 = 0;
+                                                    foreach($jabatan as $y){
+                                                        if($y->nama_jabatan == "Staff Line Assy"){
+                                                            $count1++;
+                                                        }
+                                                    }
+
+                                                    if($count1 == 0){
+                                                ?>
+                                                        <option value="Staff Line Assy">Staff Line Assy</option>
+                                                <?php } ?>
+                                            <!-- -->
+                                        </select>
+                            <?php
+                                    } else{
+                                
+                            ?>
+                                <input type="text" name="nama_jabatan_input" id="nama_jabatan_input" 
+                                onchange="cek_nama_jabatan_input()" required class="form-control">
+                            <?php } ?>
+                                <input type="hidden" name="jumlah_jabatan" value="<?= $count ?>">
                         </div>
                     </div>
                 </div>
@@ -197,8 +464,6 @@
 <?php include('_js.php'); ?>
 <!--*****************************-->
 <!--*****************************-->
-
-
 <script>
     function reload() {
         location.reload();
@@ -249,7 +514,7 @@
     $('.blog_klik').click(function(){
         var id = $(('#blog')+$(this).attr('value')).val();
         $('#id_terpilih').val(id);
-
+        
         $.ajax({
             type:"post",
             url:"<?php echo base_url() ?>jabatan/ambil_data_log",
@@ -260,12 +525,11 @@
                 $("#input_date").html(respond['input_date']);
                 $("#input_user").html(respond['input_user']);
 
-          
                 $jumlah_log  = respond['jumlah_log'];
                 $jumlah_user = respond['jumlah_user'];
 
                 $tampung_isi =" ";
- 
+                
                 for($i=0;$i<$jumlah_log;$i++){
                     if(respond['log'][$i]['keterangan_log'] == "Insert Data"){
                         
@@ -275,9 +539,28 @@
                             }
                         } 
 
-                        $tanggal = respond['log'][$i]['waktu_add'];
+                        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                        var tanggal = new Date(respond['log'][$i]['waktu_add']).getDate();
+                        var xhari = new Date(respond['log'][$i]['waktu_add']).getDay();
+                        var xbulan = new Date(respond['log'][$i]['waktu_add']).getMonth();
+                        var xtahun = new Date(respond['log'][$i]['waktu_add']).getYear();
+                        
+                        var jam     = new Date(respond['log'][$i]['waktu_add']).getHours();
+                        var menit   = new Date(respond['log'][$i]['waktu_add']).getMinutes();
+                        var detik   = new Date(respond['log'][$i]['waktu_add']).getSeconds();
+                        
+                        var hari = hari[xhari];
+                        var bulan = bulan[xbulan];
+                        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                        $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun +' '+jam+':'+menit+':'+detik;
+
+                        $tanggal = $tanggalnya;
+                        
                         $user = $nama_user;
-                        $data = "Nama Jabatan (" + respond['log'][$i]['id_jabatan'] + ") ";
+                        $data = "Nama Jabatan (" + respond['log'][$i]['nama_jabatan'] + ") ";
 
                         $tampung_isi = $tampung_isi + 
                         '<tr>'+
@@ -287,7 +570,6 @@
                         '<td style="vertical-align: middle;">'+ $data +'</td>' +
                         '</tr>';
                     }
-        /*
                     else{
                         for($j=0;$j<$jumlah_user;$j++){
                             if(respond['log'][$i]['user_edit'] == respond['user'][$j]['id_user']){
@@ -302,20 +584,37 @@
                            $data =" ";
                         }
                         else{
-                            $data = "Nama Jabatan (" + respond['log'][$i]['id_jabatan'] + ")";
+                            $data = "Nama jabatan (" + respond['log'][$i]['nama_jabatan'] + ")";
                         }
+
+                        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                        var tanggal = new Date(respond['log'][$i]['waktu_edit']).getDate();
+                        var xhari = new Date(respond['log'][$i]['waktu_edit']).getDay();
+                        var xbulan = new Date(respond['log'][$i]['waktu_edit']).getMonth();
+                        var xtahun = new Date(respond['log'][$i]['waktu_edit']).getYear();
+                        
+                        var jam     = new Date(respond['log'][$i]['waktu_edit']).getHours();
+                        var menit   = new Date(respond['log'][$i]['waktu_edit']).getMinutes();
+                        var detik   = new Date(respond['log'][$i]['waktu_edit']).getSeconds();
+                        
+                        var hari = hari[xhari];
+                        var bulan = bulan[xbulan];
+                        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                        $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun +' '+jam+':'+menit+':'+detik;
 
                         $tampung_isi = $tampung_isi + 
                         '<tr>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+ respond['log'][$i]['waktu_edit'] +'</td>' +
+                        '<td style="text-align: center;vertical-align: middle;">'+ $tanggalnya +'</td>' +
                         '<td style="text-align: center;vertical-align: middle;">'+ $user +'</td>' +
                         '<td style="text-align: center;vertical-align: middle;">'+ respond['log'][$i]['keterangan_log'] +'</td>' +
                         '<td style="vertical-align: middle;">'+ $data +'</td>' +
-                        '</tr>';
+                        '</tr>'
+
                     }
-        */
                 }
-            
 
                 $isi = '<br><br>'+
                 '<table class="table table-bordered table-striped mb-none" ' +
@@ -334,13 +633,11 @@
                 '</table>';
 
                 $("#isi_log").html($isi);
-             
-                $("#modallog").modal();
-            
                 
+                $("#modallog").modal();
             }
         });
-
+        
     });
 </script>
 

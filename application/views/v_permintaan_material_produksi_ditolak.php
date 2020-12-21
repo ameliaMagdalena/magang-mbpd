@@ -502,8 +502,38 @@
                 $("#no_permat").val(respond['permat'][0]['id_permintaan_material']);
                 $("#kode_po").val(respond['permat'][0]['kode_purchase_order_customer']);
                 $("#nama_line").val(respond['permat'][0]['nama_line']);
-                $("#tanggal_permintaan").val(respond['permat'][0]['tanggal_permintaan']);
-                $("#tanggal_produksi").val(respond['permat'][0]['tanggal_produksi']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['permat'][0]['tanggal_permintaan']).getDate();
+                var xhari = new Date(respond['permat'][0]['tanggal_permintaan']).getDay();
+                var xbulan = new Date(respond['permat'][0]['tanggal_permintaan']).getMonth();
+                var xtahun = new Date(respond['permat'][0]['tanggal_permintaan']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggal_permintaan = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_permintaan").val($tanggal_permintaan);
+
+                var tanggal = new Date(respond['permat'][0]['tanggal_produksi']).getDate();
+                var xhari  = new Date(respond['permat'][0]['tanggal_produksi']).getDay();
+                var xbulan = new Date(respond['permat'][0]['tanggal_produksi']).getMonth();
+                var xtahun = new Date(respond['permat'][0]['tanggal_produksi']).getYear();
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggal_produksi = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_produksi").val($tanggal_produksi);
                 $("#jumlah_minta").val(respond['permat'][0]['jumlah_minta']);
 
                 $isi = "";
@@ -512,6 +542,9 @@
                     '<tr>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             ($i+1)+
+                        '</td>'+
+                        '<td style="text-align: center;vertical-align: middle;">'+
+                            respond['detpermat'][$i]['id_detail_permintaan_material']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
                             respond['detpermat'][$i]['nama_sub_jenis_material']+
@@ -523,7 +556,7 @@
                             respond['detpermat'][$i]['needs']+
                         '</td>'+
                         '<td style="text-align: center;vertical-align: middle;">'+
-                            respond['detpermat'][$i]['satuan_ukuran']+
+                            respond['detpermat'][$i]['satuan_keluar']+
                         '</td>'+
                     '</tr>';
                 }
@@ -534,6 +567,9 @@
                                 '<tr>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'No'+
+                                    '</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">'+
+                                        'Kode Detail Permintaan Material'+
                                     '</th>'+
                                     '<th style="text-align: center;vertical-align: middle;">'+
                                         'Nama Material'+
