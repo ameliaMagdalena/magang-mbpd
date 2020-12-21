@@ -210,15 +210,20 @@
 									</li>
 								</ul>
 							</li>
-							<!-- <li class="nav-parent">
+							<li class="nav-parent">
 								<a>
 									<i class="fa fa-shopping-cart" aria-hidden="true"></i>
-									<span>Pembelian Material</span>
+									<span>Permintaan Pembelian</span>
 								</a>
 								<ul class="nav nav-children">
 									<li>
 										<a href="<?php echo base_url() . 'PembelianMaterial/baru'?>">
-											Beli Baru
+											+ Request Baru
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PembelianMaterial/index/0'?>">
+											Belum Ditindaklanjuti
 										</a>
 									</li>
 									<li>
@@ -242,7 +247,7 @@
 										</a>
 									</li>
 								</ul>
-							</li> -->
+							</li>
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-file-text" aria-hidden="true"></i>

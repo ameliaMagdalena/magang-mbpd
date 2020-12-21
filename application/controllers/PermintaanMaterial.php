@@ -23,6 +23,7 @@ class PermintaanMaterial extends CI_Controller {
         $data['status'] = $status;
         $data['permintaan_material'] = $this->M_PerencanaanMaterial->selectPermintaanMaterialAktif()->result_array();
         $data['detail'] = $this->M_PerencanaanMaterial->selectDetailPermintaanMaterialAktif()->result_array();
+        $data['material'] = $this->M_PerencanaanMaterial->selectKetersediaanMaterial()->result_array();
 
         $data['warna'] = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran'] = $this->M_UkuranProduk->select_all_aktif()->result();
@@ -214,6 +215,13 @@ class PermintaanMaterial extends CI_Controller {
         echo json_encode($data);
     }
 
+    public function ajax_detail(){
+        $id             = $this->input->post('id');
+        $data['dett'] = $this->M_PerencanaanMaterial->selectSatuDetailPermintaan2($id)->result_array();
+
+        echo json_encode($data);
+    }
+
     public function detail($id){
         /* $idnya = array(
             "id_permintaan_material" => $id
@@ -221,6 +229,7 @@ class PermintaanMaterial extends CI_Controller {
         $data['id_permintaan'] = $id;
         $data['permintaan_material'] = $this->M_PerencanaanMaterial->selectSatuPermintaanMaterial($id)->result_array();
         $data['detail'] = $this->M_PerencanaanMaterial->selectSatuDetailPermintaanMaterial($id)->result_array();
+        $data['material'] = $this->M_PerencanaanMaterial->selectKetersediaanMaterial()->result_array();
 
         //notif produksi
             //notif permintaan material produksi
@@ -818,6 +827,8 @@ class PermintaanMaterial extends CI_Controller {
         $data['id_permintaan'] = $id;
         $data['permintaan_material'] = $this->M_PerencanaanMaterial->selectSatuPermintaanMaterial($id)->result_array();
         $data['detail'] = $this->M_PerencanaanMaterial->selectSatuDetailPermintaanMaterial($id)->result_array();
+        $data['material'] = $this->M_PerencanaanMaterial->selectKetersediaanMaterial()->result_array();
+
 
         $data['pengambilan'] = $this->M_PerencanaanMaterial->selectPengambilanMaterial($id)->result_array();
         $data['pengeluaran'] = $this->M_PerencanaanMaterial->selectPengeluaranMaterial($id)->result_array();

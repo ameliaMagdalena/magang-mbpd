@@ -69,8 +69,8 @@
                                 <td border="1">'. $no .'</td>
                                 <td border="1">' . $detail_po_cust[$y]['nama_produk'] . '</td>
                                 <td border="1">' . $detail_po_cust[$y]['jumlah_produk'] . '</td>
-                                <td border="1">' . $detail_po_cust[$y]['satuan_ukuran'] . '</td>
-                                <td border="1">' . $detail_po_cust[$y]['keterangan'] . '</td>
+                                <td border="1"> Pcs </td>
+                                <td border="1">' . $detail_po_cust[$y]['remark'] . '</td>
                             </tr>';
                         }
                         $no++;
@@ -89,6 +89,19 @@
                     <tr><td colspan="2"></td></tr>
                     <tr><td colspan="2"></td></tr>
                     <tr><td colspan="2"></td></tr>
+                    <tr>
+                        <td style="text-align: center">'. $so[0]['nama_karyawan'] .'</td>
+                        <td style="text-align: center">';
+
+                            if($so[0]['diterima_oleh'] != 0){
+                                $terima = $so[0]['nama_customer'];
+                            } else {
+                                $terima = "";
+                            }
+                    
+                        $content = $content . $terima .'   
+                        </td>
+                    </tr>
                     <tr>
                         <td> <hr> <br> Date : </td>
                         <td> <hr> <br> Date : </td>

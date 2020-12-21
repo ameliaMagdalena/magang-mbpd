@@ -148,7 +148,20 @@
                             
                             <?php if ($permintaan_material[0]['status_permintaan'] == '0' || $permintaan_material[0]['status_permintaan'] == '1'){?>
                             <td id="ketersediaan<?php echo $y ?>">
-                                <button type="button" class="col-lg-7 btn btn-default"  id="sedia" onclick=cekKetersediaan(<?= $y ?>)>Lihat</button>
+                                <?php $ketersediaan = 0;
+                                    for($mat=0; $mat<count($material); $mat++){
+                                        if($detail[$y]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
+                                            $ketersediaan = $ketersediaan+1;
+                                        }
+                                    }
+                                    if($ketersediaan<$needs){
+                                        echo "Tidak Tersedia <br> <small>Jumlah di gudang: ". $ketersediaan ." </small>";
+                                    }
+                                    else{
+                                        echo "Tersedia";
+                                    }
+                                ?>
+                                <!-- <button type="button" class="col-lg-7 btn btn-default"  id="sedia" onclick=cekKetersediaan(<?= $y ?>)>Lihat</button> -->
                             </td>
                             <?php } ?>
                             

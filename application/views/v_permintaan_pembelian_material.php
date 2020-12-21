@@ -24,7 +24,10 @@
 <!--*****************************-->
 <!--KODINGAN ISI HALAMAN-->
 
-<h1>Permintaan Pembelian Material</h1>
+
+<!-- ------------------------------------------ BELUM DITINJAU --------------------------------------- -->
+<?php if($status == '0'){ ?>
+<h1>Permintaan Pembelian Material - Belum Ditinjau</h1>
 <hr>
 
 <section class="panel">
@@ -43,18 +46,36 @@
                     <th>No.</th>
                     <th>Material</th>
                     <th>Jumlah</th>
-                    <th>Tanggal Penerimaan</th>
+                    <th>Tanggal Permintaan</th>
                     <th>Status</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
+            
+            <?php $no=1;
+                    for($x=0 ; $x<count($permintaan_pembelian) ; $x++){
+                        if ($status == 0 || $status == 4){ 
+                            if($permintaan_pembelian[$x]['status_pembelian'] == 0){
+                ?>
                 <tr>
-                    <td class="col-1"> 1 </td>
-                    <td class="col-lg-2"> Foam </td>
-                    <td class="col-lg-1"> 10 </td>
-                    <td class="col-lg-2"> 10 Juni 2020 </td>
-                    <td class="col-lg-2"> Belum diproses </td>
+                    <td class="col-1"> <?php echo $no ?> </td>
+                    <td class="col-lg-2"> <?php echo $permintaan_pembelian[$x]['nama_sub_jenis_material'] ?> </td>
+                    <td class="col-lg-1"> <?php echo $permintaan_pembelian[$x]['jumlah_material'] ?> </td>
+                    <td class="col-lg-2"> <?php echo $permintaan_pembelian[$x]['tanggal_permintaan'] ?> </td>
+                    <td class="col-lg-2">
+                        <?php if($permintaan_pembelian[$x]['status_pembelian'] == 0){
+                            echo "Requested / Belum Ditindaklanjuti";
+                        } else if($permintaan_pembelian[$x]['status_pembelian'] == 1){
+                            echo "Proses Pembelian";
+                        } else if($permintaan_pembelian[$x]['status_pembelian'] == 2){
+                            echo "Selesai";
+                        } else if($permintaan_pembelian[$x]['status_pembelian'] == 3){
+                            echo "Batal";
+                        } else{
+                            echo "Ditolak";
+                        } ?>
+                    </td>
                     <td class="col-lg-4">
                         <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="#modaldetail"></a>
@@ -64,43 +85,8 @@
                             title="Tolak" href="#modalbeli"></a>
                     </td>
                 </tr>
-                <tr>
-                    <td class="col-1"> 2 </td>
-                    <td class="col-lg-2"> Foam </td>
-                    <td class="col-lg-1"> 12 </td>
-                    <td class="col-lg-2"> 21 Juni 2020 </td>
-                    <td class="col-lg-2"> Sedang proses </td>
-                    <td class="col-lg-4">
-                        <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                            title="Detail" href="#modaldetail"></a>
-                        <a class="modal-with-form col-lg-3 btn btn-success fa fa-check"
-                            title="Selesaikan" href="#modalbeli"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-1"> 3 </td>
-                    <td class="col-lg-2"> Foam </td>
-                    <td class="col-lg-1"> 3 </td>
-                    <td class="col-lg-2"> 3 Juni 2020 </td>
-                    <td class="col-lg-2"> Selesai </td>
-                    <td class="col-lg-4">
-                        <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                            title="Detail" href="#modaldetail"></a>
-                        <!-- tambah log -->
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-1"> 4 </td>
-                    <td class="col-lg-2"> Foam </td>
-                    <td class="col-lg-1"> 8 </td>
-                    <td class="col-lg-2"> 1 Juni 2020 </td>
-                    <td class="col-lg-2"> Ditolak </td>
-                    <td class="col-lg-4">
-                        <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                            title="Detail" href="#modaldetail"></a>
-                        <!-- tambah log -->
-                    </td>
-                </tr>
+                
+                <?php $no=$no+1;} } } ?>
             </tbody>
         </table>
     </div>
@@ -188,9 +174,6 @@
     <!-- ************************************************************************** -->
 
 
-
-
-
     <!-- ******************************* MODAL BELI ******************************* -->
     <!-- ************************************************************************** -->
     <div id='modalbeli' class="modal-block modal-block-md mfp-hide">
@@ -260,6 +243,7 @@
     <!-- **************************** END MODAL DETAIL **************************** -->
     <!-- ************************************************************************** -->
 </section>
+<?php } ?>
 
 
 </section>

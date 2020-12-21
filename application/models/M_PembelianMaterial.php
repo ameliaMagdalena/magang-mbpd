@@ -8,13 +8,27 @@ class M_PembelianMaterial extends CI_Model {
         date_default_timezone_set('Asia/Jakarta');
     }
 
-    function selectPembelianMaterial(){
-        return $this->db->query("SELECT * FROM pembelian_material
-        WHERE status_delete = 0");
+    function selectAllPermintaanMaterial(){
+        return $this->db->query("SELECT * FROM permintaan_pembelian");
     }
 
-    function selectAllPembelianMaterial(){
-        return $this->db->query("SELECT * FROM pembelian_material");
+    function selectPermintaanPembelianAktif(){
+        return $this->db->query("SELECT * FROM permintaan_pembelian a
+        JOIN sub_jenis_material b ON a.id_sub_jenis_material = b.id_sub_jenis_material
+        WHERE a.status_delete = 0");
     }
+
+    function insertPermintaanPembelian($data){
+        $this->db->insert('permintaan_pembelian', $data);
+    }
+
+    function editPermintaanPembelian($data,$where){
+        $this->db->update('permintaan_pembelian', $data, $where);
+    }
+
+    function hapusPermintaanPembelian($data,$where){
+        $this->db->update('permintaan_pembelian', $data, $where);
+    }
+
 
 }

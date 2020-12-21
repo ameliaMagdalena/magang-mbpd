@@ -162,7 +162,7 @@
 <?php //include('_rightbar.php');?>
 
 <script>
-    $(document).ready(function(){
+    /* $(document).ready(function(){
         $("#button_tambah").attr("disabled", true);
 
         //cek semua
@@ -184,7 +184,7 @@
             $("#button_tambah").attr("disabled", true);
         }
         
-    });
+    }); */
 </script>
 
 <script>
@@ -237,7 +237,7 @@
         var counter = $(".new_row").length;
         var row_sebelum = counter-1;
         
-        if (counter == 0){
+        //if (counter == 0){
             html =
             '<tr class = "new_row">'+
                 '<td class="col-lg-3">'+
@@ -266,8 +266,8 @@
             '</tr>';
             $("#print_new_row").append(html);
 
-        }
-        else{
+        //}
+        /* else{
             var aaa = $('#jumlah'+row_sebelum).val();
             var tgll = $('#tgl_terima'+row_sebelum).val();
             if(aaa.length == 0 || tgll == ""){
@@ -314,7 +314,7 @@
                     '</td>'+
                 '</tr>';
                 $("#print_new_row").append(html);
-            }
+            } */
             
             /* var id_detail_produk = $("#produk"+counter).val();
             $.ajax({
@@ -325,8 +325,8 @@
                 success:function(respond){
                     $("#harga_satuan"+counter).val(respond[0]["harga_produk"]);
                 }
-            }); */
-        }
+            });
+        } */
     }
 </script>
 

@@ -7,10 +7,16 @@ class PermintaanPembelianMaterial extends CI_Controller {
         date_default_timezone_set('Asia/Jakarta');
 
         $this->load->model('M_Dashboard');
+        $this->load->model('M_PembelianMaterial');
 
+        if($this->session->userdata('status_login') != "login"){
+            redirect('akses');
+        }
     }
 
-	public function index(){
+	public function index($status){
+        $data['status'] = $status;
+        $data['permintaan_pembelian'] = $this->M_PembelianMaterial->selectPermintaanPembelianAktif()->result_array();
 
         //notif produksi
           //notif permintaan material produksi
@@ -188,7 +194,7 @@ class PermintaanPembelianMaterial extends CI_Controller {
             //tutup notif permohonan akses
         //tutup
 
-		$this->load->view('v_permintaan_pembelian_material');
+		$this->load->view('v_permintaan_pembelian_material', $data);
     }
 
     public function baru(){
@@ -372,7 +378,29 @@ class PermintaanPembelianMaterial extends CI_Controller {
 		$this->load->view('v_permintaan_pembelian_material_baru');
     }
 
-    
+    public function insert(){
+        $iddetail = $this->input->post("iddetail");
+        
+        $ids = $this->M_PembelianMaterial->selectAllPermintaanMaterial()->num_rows()+1;
+        $id_req = "PERBEL-".$ids;
+        
+        $data = array (
+            "id_permintaan_pembelian" => $id_req,
+            "tanggal_permintaan"=>date('Y-m-d'),
+            "tanggal_penerimaan"=> $this->input->post("terimaz"),
+            "jumlah_material" => $this->input->post("jumlahz"),
+            "id_sub_jenis_material" => $this->input->post("idmaterial"),
+            "status_pembelian" => "0",
+            "keterangan" => $this->input->post("keteranganz"),
+            "user_add"=>$_SESSION['id_user'],
+            "waktu_add"=>date('Y-m-d H:i:s'),
+            "user_edit"=>"0",
+            "user_delete"=>"0"
+        );
+        $this->M_PembelianMaterial->insertPermintaanPembelian($data);
+
+        redirect('PermintaanPembelianMaterial/index/0');
+    }
 
     public function detailPermintaanPembelianSementara(){
         

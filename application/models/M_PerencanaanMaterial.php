@@ -56,6 +56,8 @@ class M_PerencanaanMaterial extends CI_Model {
     function selectDetailPermintaanMaterialAktif(){
         return $this->db->query("SELECT * FROM detail_permintaan_material a
         JOIN permintaan_material b ON a.id_permintaan_material = b.id_permintaan_material
+        JOIN konsumsi_material c ON a.id_konsumsi_material = c.id_konsumsi_material
+        JOIN sub_jenis_material d ON c.id_sub_jenis_material = d.id_sub_jenis_material
         WHERE a.status_delete = '0'");
     }
 
@@ -67,11 +69,18 @@ class M_PerencanaanMaterial extends CI_Model {
         WHERE a.status_delete = '0' AND a.id_permintaan_material='$id'");
     }
 
-    function selectKetersediaanMaterial($id){
+    function selectSatuDetailPermintaan2($id){
+        return $this->db->query("SELECT * FROM detail_permintaan_material a
+        JOIN permintaan_material b ON a.id_permintaan_material = b.id_permintaan_material
+        JOIN konsumsi_material c ON a.id_konsumsi_material = c.id_konsumsi_material
+        JOIN sub_jenis_material d ON c.id_sub_jenis_material = d.id_sub_jenis_material
+        WHERE a.status_delete = '0' AND a.id_detail_permintaan_material='$id'");
+    }
+
+    function selectKetersediaanMaterial(){
         return $this->db->query("SELECT * FROM material a
         JOIN sub_jenis_material b ON a.id_sub_jenis_material = b.id_sub_jenis_material
-        WHERE a.status_delete = '0' AND a.status_keluar='0'
-        AND a.id_sub_jenis_material='$id'");
+        WHERE a.status_delete = '0' AND a.status_keluar='0'");
     }
 
     function selectPengambilanMaterial($id){
