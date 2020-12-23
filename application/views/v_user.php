@@ -94,13 +94,15 @@
                             onchange="cek_email_edit()" value="<?= $x->email_user?>" required>
                         </div>
                     </div>
+                    <!--
                     <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Password Baru User</label>
+                        <label class="col-sm-5 control-label">Password User</label>
                         <div class="col-sm-7">
                             <input type="password" name="password_edit" id="password_edit" class="form-control"
                             value="<?= $x->password_user?>" required>
                         </div>
                     </div>
+                    -->
                 </div>
 
                 <footer class="panel-footer">

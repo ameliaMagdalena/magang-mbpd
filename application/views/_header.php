@@ -45,9 +45,6 @@
                                     <a class="modal-sizes" role="menuitem" tabindex="-1" href="#myprofile"><i class="fa fa-user"></i>  Profil Saya</a>
                                 </li>
                                 <li>
-                                    <a class="modal-sizes" role="menuitem" tabindex="-1" href="#editprofile"><i class="fa fa-pencil-square-o"></i>  Edit Profil</a>
-                                </li>
-                                <li>
                                     <a class="modal-sizes" role="menuitem" tabindex="-1" href="#changepassword"><i class="fa fa-key"></i>  Ganti Kata Sandi</a>
                                 </li>
                                 <li>
@@ -61,7 +58,6 @@
                     </div>
                 </div>
                 <!-- end: search & user box -->
-
 
                 <div id="myprofile" class="modal-block modal-block-sm mfp-hide">
                     <section class="panel">
@@ -218,7 +214,7 @@
                             </header>
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Kata Sandi Saat Ini <span class="required">*</span></label>
+                                    <label class="col-sm-5 control-label">Kata Sandi Saat Ini</label>
                                     <div class="col-sm-7">
                                         <div class="input-group  mb-md">
                                             <span class="input-group-addon">
@@ -230,7 +226,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label"> Kata Sandi Baru <span class="required">*</span></label>
+                                    <label class="col-sm-5 control-label"> Kata Sandi Baru</label>
                                     <div class="col-sm-7">
                                         <div class="input-group mb-md">
                                             <span class="input-group-addon">
@@ -242,7 +238,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Konfirmasi Kata Sandi Baru <span class="required">*</span></label>
+                                    <label class="col-sm-5 control-label">Konfirmasi Kata Sandi Baru</label>
                                     <div class="col-sm-7">
                                         <div class="input-group  mb-md">
                                             <span class="input-group-addon">
@@ -260,8 +256,8 @@
                             <footer class="panel-footer">
                                     <div class="row">
                                         <div class="col-md-12 text-right">
-                                            <input type="submit" class="btn btn-primary" id="ganti_pass" value="Save" disabled>
-                                            <button type="button" class="btn btn-default modal-dismiss" onclick="reload()">Cancel</button>
+                                            <input type="submit" class="btn btn-primary" id="ganti_pass" value="Simpan" disabled>
+                                            <button type="button" class="btn btn-default modal-dismiss" onclick="reload()">Batal</button>
                                         </div>
                                     </div>
                             </footer>
@@ -275,7 +271,7 @@
 <script>
     function cek_old(){
         var lama = $("#old").val();
-
+        
         $.ajax({
             type:"post",
             url:"<?php echo base_url() ?>profile/cek_oldpass",
@@ -283,6 +279,7 @@
             data: {lama:lama},
 
             success: function(respond){
+                
                 if(respond['res'] == 1){
                     $("#pemberitahuan1").html("");
                     cek_terisi();

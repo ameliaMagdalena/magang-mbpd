@@ -17,7 +17,6 @@ class M_Produk extends CI_Model {
         AND produk.id_jenis_produk=jenis_produk.id_jenis_produk ");
     }
 
-//material
     function select_all_jenis_material(){
         return $this->db->query("SELECT * FROM jenis_material WHERE status_delete='0' ");
     }
@@ -31,7 +30,10 @@ class M_Produk extends CI_Model {
     function select_all_km(){
         return $this->db->query("SELECT * FROM konsumsi_material WHERE status_delete='0'");
     }
-//close material
+
+    function select_all_km_aktif(){
+        return $this->db->query("SELECT * FROM konsumsi_material");
+    }
 
     function select_all_ct(){
         return $this->db->query("SELECT * FROM cycle_time WHERE status_delete='0'");
@@ -51,6 +53,10 @@ class M_Produk extends CI_Model {
         return $this->db->query("SELECT * FROM detail_produk WHERE status_delete='0'");
     }
 
+    function select_all_detail_produk_semua(){
+        return $this->db->query("SELECT * FROM detail_produk");
+    }
+
     function select_ct_line($id_produk){
         return $this->db->query("SELECT * FROM cycle_time,produk,line WHERE cycle_time.id_produk = produk.id_produk
         AND cycle_time.id_line = line.id_line AND produk.id_produk ='$id_produk'");
@@ -61,7 +67,7 @@ class M_Produk extends CI_Model {
     }
 
     function cari_produk_by_kode($kode_produk){
-        return $this->db->query("SELECT * FROM produk WHERE kode_produk='$kode_produk' AND status_delete='0'");
+        return $this->db->query("SELECT * FROM detail_produk WHERE kode_produk='$kode_produk' AND status_delete='0'");
     }
 
     function get_ukprod($id_jp){
@@ -94,7 +100,7 @@ class M_Produk extends CI_Model {
 
     function dcari_km($id_produk){
         return $this->db->query("SELECT * FROM produk,konsumsi_material,sub_jenis_material,line WHERE produk.id_produk='$id_produk'
-        AND produk.id_produk=konsumsi_material.id_produk AND 
+        AND produk.id_produk=konsumsi_material.id_produk AND konsumsi_material.status_delete='0' AND
         sub_jenis_material.id_sub_jenis_material=konsumsi_material.id_sub_jenis_material AND
         line.id_line=konsumsi_material.id_line ");
     }
@@ -109,5 +115,13 @@ class M_Produk extends CI_Model {
         $this->db->update($table,$data,$where);
     }
 
+    function select_user_add($id){
+        return $this->db->query("SELECT produk.waktu_add, karyawan.nama_karyawan FROM produk, user, karyawan
+        WHERE produk.id_produk = '$id' AND produk.user_add = user.id_user AND user.id_karyawan = karyawan.id_karyawan");
+    }
+
+    function select_log($id){
+        return $this->db->query("SELECT * FROM produk_logs WHERE id_produk='$id' ORDER BY id_produk_logs DESC");
+    }
 
 }

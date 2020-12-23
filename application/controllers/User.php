@@ -213,7 +213,7 @@ class User extends CI_Controller {
     public function edit_user(){
         $id_user  = $this->input->post('id_user');
         $email    = $this->input->post('email_edit');
-        $password = $this->input->post('password_edit');
+        //$password = $this->input->post('password_edit');
 
         $now       = date('Y-m-d H:i:s');
         $user_edit = $_SESSION['id_user'];
@@ -237,7 +237,6 @@ class User extends CI_Controller {
         if($hitung == 0){
             $data = array (
                 'email_user'    => $email,
-                'password_user' => $password,
                 'user_edit'     => $user_edit,
                 'waktu_edit'    => $now
             );

@@ -13,6 +13,7 @@ class Produk extends CI_Controller {
         $this->load->model('M_UkuranProduk');
         $this->load->model('M_JenisProduk');
         $this->load->model('M_Dashboard');
+        $this->load->model('M_User');
 
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');
@@ -27,7 +28,6 @@ class Produk extends CI_Controller {
         $data['warna']         = $this->M_Warna->select_all_aktif()->result();
         $data['jumlah_warna']  = $this->M_Warna->select_all_aktif()->num_rows();
         $data['cycle_time']    = $this->M_Produk->select_all_ct()->result();
-        $data['detail_produk'] = $this->M_Produk->select_all_detail_produk()->result();
         $data['jenis_material'] = $this->M_Produk->select_all_jenis_material()->result();
 
         //notif produksi
@@ -363,7 +363,7 @@ class Produk extends CI_Controller {
             $jumlah_ukwar = strlen($jumlah_ukwars);
             
             for($i=1;$i<=$jumlah_ukwar;$i++){
-                $jumlah_detail_produk = $this->M_Produk->select_all_detail_produk()->num_rows();
+                $jumlah_detail_produk = $this->M_Produk->select_all_detail_produk_semua()->num_rows();
                 $id_number            = $jumlah_detail_produk + 1;
         
                 $id_detail_produk     = "DETPRO-".$id_number;
@@ -423,7 +423,7 @@ class Produk extends CI_Controller {
         else{
             $kode_produk = $this->input->post('kode_produk');
 
-            $jumlah_detail_produk = $this->M_Produk->select_all_detail_produk()->num_rows();
+            $jumlah_detail_produk = $this->M_Produk->select_all_detail_produk_semua()->num_rows();
             $id_number            = $jumlah_detail_produk + 1;
     
             $id_detail_produk     = "DETPRO-".$id_number;
@@ -483,6 +483,9 @@ class Produk extends CI_Controller {
         $data['konsumsi_material'] = $this->M_Produk->dcari_km($id_produk)->result_array();
         $data['jumlah_km']         = $this->M_Produk->dcari_km($id_produk)->num_rows();
 
+        $data['line']          = $this->M_Line->select_all_aktif()->result_array();
+        $data['jm_line']       = $this->M_Line->select_all_aktif()->num_rows();
+
         echo json_encode($data);
     }
 
@@ -501,11 +504,497 @@ class Produk extends CI_Controller {
         );
 
         $this->M_Produk->edit('produk',$data,$where);
+        
+
+        //
+        $detprod    = $this->M_Produk->dcari_detail_produk($id_produk)->result_array();
+        $jm_detprod = $this->M_Produk->dcari_detail_produk($id_produk)->num_rows();
+
+        for($i=0;$i<$jm_detprod;$i++){
+            $data_detprod = array(
+                'status_delete' => 1,
+                'user_delete'   => $_SESSION['id_user'],
+                'waktu_delete'  => $now
+            );
+
+            $where_detprod = array(
+                'id_detail_produk' => $detprod[$i]['id_detail_produk']
+            );
+
+            $this->M_Produk->edit('detail_produk',$data_detprod,$where_detprod);
+        }
+
+        //
+        $ct    = $this->M_Produk->dcari_ct($id_produk)->result_array();
+        $jm_ct = $this->M_Produk->dcari_ct($id_produk)->num_rows();
+
+        for($i=0;$i<$jm_ct;$i++){
+            $data_ct = array(
+                'status_delete' => 1,
+                'user_delete'   => $_SESSION['id_user'],
+                'waktu_delete'  => $now
+            );
+
+            $where_ct = array(
+                'id_cycle_time' => $ct[$i]['id_cycle_time']
+            );
+
+            $this->M_Produk->edit('cycle_time',$data_ct,$where_ct);
+        }
+
+        //
+        $km    = $this->M_Produk->dcari_km($id_produk)->result_array();
+        $jm_km = $this->M_Produk->dcari_km($id_produk)->num_rows();
+
+        for($i=0;$i<$jm_km;$i++){
+            $data_km = array(
+                'status_delete' => 1,
+                'user_delete'   => $_SESSION['id_user'],
+                'waktu_delete'  => $now
+            );
+
+            $where_km = array(
+                'id_konsumsi_material' => $km[$i]['id_konsumsi_material']
+            );
+
+            $this->M_Produk->edit('konsumsi_material',$data_km,$where_km);
+        }
+
         redirect('produk');
     }
 
     public function edit_produk(){
+        $id_produk           = $this->input->post('id_produk_edit');
+        $nama_produk         = $this->input->post('nama_produk_edit');
+        $harga_produk        = $this->input->post('harga_produk_edit');
+        $nama_produks        = $this->input->post('nama_produk_sebelum');
+        $harga_produks       = $this->input->post('harga_produk_sebelum');
+        $keterangan_produk   = $this->input->post('keterangan_produk_edit');
+        $keterangan_produksi = $this->input->post('keterangan_produksi_edit');
+
+        $user = $_SESSION['id_user'];
+        $now  = date('Y-m-d H:i:s');
+
+        if($nama_produk != $nama_produks || $harga_produk != $harga_produks){
+            //produk 
+                $data_produk = array(
+                    'nama_produk'  => $nama_produk,
+                    'harga_produk' => $harga_produk,
+                    'user_edit'    => $user,
+                    'waktu_edit'   => $now
+                );
+
+                $where_produk = array(
+                    'id_produk' => $id_produk
+                );
+
+                $this->M_Produk->edit('produk',$data_produk,$where_produk);
+            //
+        }
+
+        //detail produk
+            $jumlah_ukprod = $this->input->post('ejumlah_ukprod');
+            
+            //memiliki ukuran & warna
+            if($keterangan_produk == 0){
+                for($i=1;$i<=$jumlah_ukprod;$i++){
+                    $ket       = $this->input->post('eket'.$i);
+                    $kp        = $this->input->post('ekp'.$i);
+                    $id_ukprod = $this->input->post('eid_ukuran'.$i);
+                    $id_warna  = $this->input->post('eid_warna'.$i);
+                    $del       = $this->input->post('del'.$i);
+
+                    //echo $ket." || ".$kp." || ".$id_ukprod." || ".$id_warna." || ".$del."<br>";
+
+                    //sebelumnya ada
+                    if($ket == 0){ 
+                        $id_detail_produk = $this->input->post('eid_detprod'.$i);  
+
+                        //tetap ada
+                        if($del != "on"){
+                            $data_detprod = array(
+                                'kode_produk' => $kp,
+                                'user_edit'   => $user,
+                                'waktu_edit'  => $now
+                            );
+
+                            $where_detprod = array(
+                                'id_detail_produk' => $id_detail_produk
+                            );
+
+                            $this->M_Produk->edit('detail_produk',$data_detprod,$where_detprod);
+                        }   
+                        //jadi tidak ada
+                        else if($del == "on"){
+                            $data_detprod = array(
+                                'status_delete'  => 1,
+                                'user_delete'  => $user,
+                                'waktu_delete' => $now
+                            );
+
+                            $where_detprod = array(
+                                'id_detail_produk' => $id_detail_produk
+                            );
+
+                            $this->M_Produk->edit('detail_produk',$data_detprod,$where_detprod);
+                        }
+                    }
+                    //sebelumnya nda ada
+                    else if($ket == 1){
+                        //jadi ada
+                        if($del != "on"){
+                            $jumlah_detail_produk = $this->M_Produk->select_all_detail_produk_semua()->num_rows();
+                            $id_number            = $jumlah_detail_produk + 1;
+                            $id_detail_produk     = "DETPRO-".$id_number;
+
+                            $data_detail_produk = array(
+                                'id_detail_produk' => $id_detail_produk,
+                                'id_produk'        => $id_produk,
+                                'id_ukuran_produk' => $id_ukprod,
+                                'id_warna'         => $id_warna,
+                                'kode_produk'      => $kp,
+                                'keterangan'       => $keterangan_produk,
+                                'user_add'         => $_SESSION['id_user'],
+                                'waktu_add'        => $now
+                            );
+                            
+                            $this->M_Produk->insert('detail_produk',$data_detail_produk);
+                        }
+                    }
+
+                }
+            }
+
+            //memiliki ukuran
+            else if($keterangan_produk == 1){
+                for($i=1;$i<=$jumlah_ukprod;$i++){
+                    $ket       = $this->input->post('eket'.$i);
+                    $kp        = $this->input->post('ekp'.$i);
+                    $id_ukprod = $this->input->post('eid_ukuran'.$i);
+                    $del       = $this->input->post('del'.$i);
+
+                    //sebelumnya ada
+                    if($ket == 0){ 
+                        $id_detail_produk = $this->input->post('eid_detprod'.$i);  
+
+                        //tetap ada
+                        if($del != "on"){
+                            $data_detprod = array(
+                                'kode_produk' => $kp,
+                                'user_edit'   => $user,
+                                'waktu_edit'  => $now
+                            );
+
+                            $where_detprod = array(
+                                'id_detail_produk' => $id_detail_produk
+                            );
+
+                            $this->M_Produk->edit('detail_produk',$data_detprod,$where_detprod);
+                        }   
+                        //jadi tidak ada
+                        else if($del == "on"){
+                            $data_detprod = array(
+                                'status_delete'  => 1,
+                                'user_delete'  => $user,
+                                'waktu_delete' => $now
+                            );
+
+                            $where_detprod = array(
+                                'id_detail_produk' => $id_detail_produk
+                            );
+
+                            $this->M_Produk->edit('detail_produk',$data_detprod,$where_detprod);
+                        }
+                    }
+                    //sebelumnya nda ada
+                    else if($ket == 1){
+                        //jadi ada
+                        if($del != "on"){
+                            $jumlah_detail_produk = $this->M_Produk->select_all_detail_produk_semua()->num_rows();
+                            $id_number            = $jumlah_detail_produk + 1;
+                            $id_detail_produk     = "DETPRO-".$id_number;
+
+                            $data_detail_produk = array(
+                                'id_detail_produk' => $id_detail_produk,
+                                'id_produk'        => $id_produk,
+                                'id_ukuran_produk' => $id_ukprod,
+                                'kode_produk'      => $kp,
+                                'keterangan'       => $keterangan_produk,
+                                'user_add'         => $_SESSION['id_user'],
+                                'waktu_add'        => $now
+                            );
+                            
+                            $this->M_Produk->insert('detail_produk',$data_detail_produk);
+                        }
+                    }
+                }
+            }
+
+            //memiliki warna
+            else if($keterangan_produk == 2){
+                for($i=1;$i<=$jumlah_ukprod;$i++){
+                    $ket       = $this->input->post('eket'.$i);
+                    $kp        = $this->input->post('ekp'.$i);
+                    $id_warna  = $this->input->post('eid_warna'.$i);
+                    $del       = $this->input->post('del'.$i);
+
+                    //sebelumnya ada
+                    if($ket == 0){ 
+                        $id_detail_produk = $this->input->post('eid_detprod'.$i);  
+
+                        //tetap ada
+                        if($del != "on"){
+                            $data_detprod = array(
+                                'kode_produk' => $kp,
+                                'user_edit'   => $user,
+                                'waktu_edit'  => $now
+                            );
+
+                            $where_detprod = array(
+                                'id_detail_produk' => $id_detail_produk
+                            );
+
+                            $this->M_Produk->edit('detail_produk',$data_detprod,$where_detprod);
+                        }   
+                        //jadi tidak ada
+                        else if($del == "on"){
+                            $data_detprod = array(
+                                'status_delete'  => 1,
+                                'user_delete'  => $user,
+                                'waktu_delete' => $now
+                            );
+
+                            $where_detprod = array(
+                                'id_detail_produk' => $id_detail_produk
+                            );
+
+                            $this->M_Produk->edit('detail_produk',$data_detprod,$where_detprod);
+                        }
+                    }
+                    //sebelumnya nda ada
+                    else if($ket == 1){
+                        //jadi ada
+                        if($del != "on"){
+                            $jumlah_detail_produk = $this->M_Produk->select_all_detail_produk_semua()->num_rows();
+                            $id_number            = $jumlah_detail_produk + 1;
+                            $id_detail_produk     = "DETPRO-".$id_number;
+
+                            $data_detail_produk = array(
+                                'id_detail_produk' => $id_detail_produk,
+                                'id_produk'        => $id_produk,
+                                'id_warna'         => $id_warna,
+                                'kode_produk'      => $kp,
+                                'keterangan'       => $keterangan_produk,
+                                'user_add'         => $_SESSION['id_user'],
+                                'waktu_add'        => $now
+                            );
+                            
+                            $this->M_Produk->insert('detail_produk',$data_detail_produk);
+                        }
+                    }
+
+                }
+            }
+
+            //tidak memiliki warna & ukuran
+            else if($keterangan_produk == 3){
+                $kode_produk      = $this->input->post('kode_produk_edit');
+                $id_detail_produk = $this->input->post('id_detail_produk3');
+                
+                $data_detprod = array(
+                    'kode_produk' => $kode_produk,
+                    'user_edit'   => $user,
+                    'waktu_edit'  => $now
+                );
+
+                $where_detprod = array(
+                    'id_detail_produk' => $id_detail_produk
+                );
+
+                $this->M_Produk->edit('detail_produk',$data_detprod,$where_detprod);
+            }
+
+        //
+
+        //cycle time
+            $jumlah_ct = 0; 
+
+            if($keterangan_produksi == 0){
+                $jumlah_ct = 4;
+            } else{
+                $jumlah_ct = 3;
+            }
+
+            for($i=1;$i<=$jumlah_ct;$i++){
+                $id_cycle_time = $this->input->post('id_ct'.$i);
+                $cycle_time    = $this->input->post('ct'.$i);
+
+                $data_ct = array(
+                    'cycle_time' => $cycle_time,
+                    'user_edit'  => $user,
+                    'waktu_edit' => $now
+                );
+
+                $where_ct = array(
+                    'id_cycle_time' => $id_cycle_time
+                );
+
+                $this->M_Produk->edit('cycle_time',$data_ct,$where_ct);
+            }
+        //
+
+        //konsumsi material
+            $jumlah_km = $this->input->post('ejumlah_km');
+
+            for($i=1;$i<=$jumlah_km;$i++){
+                $stat = $this->input->post('estat'.$i);
+                $del  = $this->input->post('del'.$i);
+                //echo $stat." || ".$del."<br>";
+                //jika sebelum ada
+                if($stat == 0){
+                    //tetap ada
+                    if($del != "on"){
+                        $id_km   = $this->input->post('eid_km'.$i);
+                        $nm_line = $this->input->post('enmline'.$i);
+                        $jm_km   = $this->input->post('ejmmat'.$i);
+
+                        if($nm_line == "Line Sewing"){
+                            $status_sewing = $this->input->post('stat_km_sewing'.$i);
+                            
+                            $data_km = array(   
+                                'jumlah_konsumsi' => $jm_km,
+                                'status_konsumsi' => $status_sewing,
+                                'user_edit'       => $user,
+                                'waktu_edit'      => $now
+                            );
+
+                            $where_km = array(
+                                'id_konsumsi_material' => $id_km
+                            );
+
+                            $this->M_Produk->edit('konsumsi_material',$data_km,$where_km);
+                        } else{
+                            $data_km = array(   
+                                'jumlah_konsumsi' => $jm_km,
+                                'user_edit'       => $user,
+                                'waktu_edit'      => $now
+                            );
+
+                            $where_km = array(
+                                'id_konsumsi_material' => $id_km
+                            );
+
+                            $this->M_Produk->edit('konsumsi_material',$data_km,$where_km);
+                        }
+                        
+                    }
+                    //jadi tidak ada
+                    if($del == "on"){
+                        $id_km   = $this->input->post('eid_km'.$i);
+
+                        $data_km = array(   
+                            'status_delete'   => 1,
+                            'user_delete'     => $user,
+                            'waktu_delete'    => $now
+                        );
+
+                        $where_km = array(
+                            'id_konsumsi_material' => $id_km
+                        );
+
+                        $this->M_Produk->edit('konsumsi_material',$data_km,$where_km);
+                    }
+                }
+                //jika sebelumnya tidak ada
+                else if($stat == 1){
+                    //tetap ada
+                    if($del != "on"){
+                        $id_material = $this->input->post('eidmat'.$i);
+                        $id_line     = $this->input->post('eidline'.$i);
+                        $jm_km       = $this->input->post('ejmmat'.$i);
+                        $nm_line     = $this->input->post('enmline'.$i);
+
+                        $total_km  = $this->M_Produk->select_all_km_aktif()->num_rows();
+                        $id_kms    = $total_km +1;
+                        $id_km     = "KONMAT-".$id_kms;
+
+                        $status_km = "";
+
+                        if($nm_line == "Line Sewing"){
+                            $status_km = $this->input->post('stat_km_sewing'.$i);
+                        } else{
+                            $status_km = 1;
+                        }
+    
+                        $data_km = array(
+                            'id_konsumsi_material' => $id_km,
+                            'id_produk'            => $id_produk,
+                            'id_sub_jenis_material'=> $id_material,
+                            'id_line'              => $id_line,
+                            'jumlah_konsumsi'      => $jm_km,
+                            'status_konsumsi'      => $status_km,
+                            'user_add'             => $user,
+                            'waktu_add'            => $now,
+                            'status_delete'        => 0
+                        );
+                        $this->M_Produk->insert('konsumsi_material',$data_km);
+                    }
+                }
+
+            }
+        //
+
         redirect('produk');
+    }
+
+    public function ambil_data_log(){
+        $id = $this->input->post('id');
+
+        $data_input['user'] = $this->M_Produk->select_user_add($id)->result_array();
+
+        $nama_user          = $data_input['user'][0]['nama_karyawan'];
+
+        $data['input_user'] = $nama_user;
+       
+        $day = date('D', strtotime($data_input['user'][0]['waktu_add']));
+
+        if($day == "Sun"){
+            $hari = "Minggu";
+        }
+        else if($day == "Mon"){
+            $hari = "Senin";
+        }
+        else if($day == "Tue"){
+            $hari = "Selasa";
+        }
+        else if($day == "Wed"){
+            $hari = "Rabu";
+        }
+        else if($day == "Thu"){
+            $hari = "Kamis";
+        }
+        else if($day == "Fri"){
+            $hari = "Jumat";
+        }
+        else{
+            $hari = "Sabtu";
+        }
+
+        $tanggal = date('d-m-Y', strtotime($data_input['user'][0]['waktu_add']));
+        $jam     = date('H:i:s', strtotime($data_input['user'][0]['waktu_add']));
+
+        $data['input_date'] = " ".$hari.",  ".$tanggal." | ". $jam ;
+        
+        $data['log']        = $this->M_Produk->select_log($id)->result_array();
+        $data['jumlah_log'] = $this->M_Produk->select_log($id)->num_rows();
+
+        $data['user']        = $this->M_User->select_all_userjabatandepartemen()->result_array();
+        $data['jumlah_user'] = $this->M_User->select_all_userjabatandepartemen()->num_rows();
+
+        $data['jenis_produk']    = $this->M_JenisProduk->select_all_aktif()->result_array();
+        $data['jm_jenis_produk'] = $this->M_JenisProduk->select_all_aktif()->num_rows();
+
+        echo json_encode($data);
     }
 
 

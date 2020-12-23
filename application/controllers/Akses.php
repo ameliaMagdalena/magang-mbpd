@@ -112,4 +112,8 @@ class Akses extends CI_Controller {
         redirect('akses');
     }
 
+    function change_password(){
+        
+    }
+
 }

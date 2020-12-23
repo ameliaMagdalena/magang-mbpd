@@ -57,7 +57,7 @@
                                 <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
                                 title="Delete" href="#modalhapus<?= $x->id_spesifikasi_jabatan;?>" style="margin-right:5px;margin-bottom:5px"></a>
                                 <button type="button" class="blog_klik col-lg-3 btn btn-info fa fa-file" 
-                                id="blog<?php echo $x->id_spesifikasi_jabatan?>" value="<?php echo $x->id_spesifikasi_jabatan;?>" style="margin-right:5px;margin-bottom:5px"></button>
+                                title="Log" id="blog<?php echo $x->id_spesifikasi_jabatan?>" value="<?php echo $x->id_spesifikasi_jabatan;?>" style="margin-right:5px;margin-bottom:5px"></button>
                             </td>
                         </tr>
     
@@ -198,7 +198,7 @@
         <div class="modal-dialog modal-xl" style="width:80%">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Log Jabatan</h4>
+                    <h4 class="modal-title">Log Spesifikasi Jabatan</h4>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="id_terpilih">
@@ -233,8 +233,6 @@
 <?php include('_js.php'); ?>
 <!--*****************************-->
 <!--*****************************-->
-
-
 <script>
     function reload() {
         location.reload();
@@ -275,7 +273,7 @@
 
             success: function(respond){
                 if(respond['res'] == 1){
-                    alert("Mohon maaf, jabatan dengan nama tersebut tidak dapat didaftarkan lagi karena sudah terdaftar");
+                    alert("Mohon maaf, spesifikasi jabatan tersebut tidak dapat didaftarkan lagi karena sudah terdaftar");
                 }
                 reload();
             }
@@ -283,6 +281,7 @@
     }
 </script>
 
+<!-- log -->
 <script>
     $('.blog_klik').click(function(){
         var id = $(('#blog')+$(this).attr('value')).val();
@@ -296,11 +295,9 @@
 
             success: function(respond){
                 //alert(respond['id_user']);
-            /*
                 $("#input_date").html(respond['input_date']);
                 $("#input_user").html(respond['input_user']);
 
-          
                 $jumlah_log  = respond['jumlah_log'];
                 $jumlah_user = respond['jumlah_user'];
 
@@ -311,15 +308,45 @@
                         
                         for($j=0;$j<$jumlah_user;$j++){
                             if(respond['log'][$i]['user_add'] == respond['user'][$j]['id_user']){
-                                $nama_user       = respond['user'][$j]['nama_user'];
-                                $jabatan_user    = respond['user'][$j]['nama_jabatan'];
-                                $departemen_user = respond['user'][$j]['nama_departemen'];
+                                $nama_user       = respond['user'][$j]['nama_karyawan'];
                             }
                         } 
 
-                        $tanggal = respond['log'][$i]['waktu_add'];
-                        $user = " "+$nama_user +" ("+ $departemen_user + "-"+ $jabatan_user+")";
-                        $data = "Nama Jabatan (" + respond['log'][$i]['nama_jabatan'] + ") ";
+                        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                        var tanggal = new Date(respond['log'][$i]['waktu_add']).getDate();
+                        var xhari = new Date(respond['log'][$i]['waktu_add']).getDay();
+                        var xbulan = new Date(respond['log'][$i]['waktu_add']).getMonth();
+                        var xtahun = new Date(respond['log'][$i]['waktu_add']).getYear();
+                        
+                        var jam     = new Date(respond['log'][$i]['waktu_add']).getHours();
+                        var menit   = new Date(respond['log'][$i]['waktu_add']).getMinutes();
+                        var detik   = new Date(respond['log'][$i]['waktu_add']).getSeconds();
+                        
+                        var hari = hari[xhari];
+                        var bulan = bulan[xbulan];
+                        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                        $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun +' '+jam+':'+menit+':'+detik;
+
+                        $tanggal = $tanggalnya;
+
+                        for($t=0;$t<respond['jm_jabatan'];$t++){
+                            if(respond['jabatan'][$t]['id_jabatan'] == respond['log'][$i]['id_jabatan']){
+                                $nama_jabatan = respond['jabatan'][$t]['nama_jabatan'];
+                            }
+                        }
+
+                        for($t=0;$t<respond['jm_departemen'];$t++){
+                            if(respond['departemen'][$t]['id_departemen'] == respond['log'][$i]['id_departemen']){
+                                $nama_departemen = respond['departemen'][$t]['nama_departemen'];
+                            }
+                        }
+
+                        $user = $nama_user;
+                        $data = "Nama Departemen (" + $nama_departemen + 
+                        ") , Nama Jabatan (" + $nama_jabatan + ") ";
 
                         $tampung_isi = $tampung_isi + 
                         '<tr>'+
@@ -333,30 +360,74 @@
                     else{
                         for($j=0;$j<$jumlah_user;$j++){
                             if(respond['log'][$i]['user_edit'] == respond['user'][$j]['id_user']){
-                                $nama_user       = respond['user'][$j]['nama_user'];
-                                $jabatan_user    = respond['user'][$j]['nama_jabatan'];
-                                $departemen_user = respond['user'][$j]['nama_departemen'];
+                                $nama_user       = respond['user'][$j]['nama_karyawan'];
                             }
                         } 
                         
-                        $user = " "+$nama_user +" ("+ $departemen_user + "-"+ $jabatan_user+")";
+                        $user = $nama_user;
             
                         //compare dengan sebelumnya
-                        if(respond['log'][$i]['nama_jabatan'] == respond['log'][$i+1]['nama_jabatan']){
-                           $data =" ";
+                        $data = " ";
+                        $count = 0;
+
+                        if(respond['log'][$i]['id_departemen'] == respond['log'][$i+1]['id_departemen']){
+                           $data = $data;
                         }
                         else{
-                            $data = "Nama Jabatan (" + respond['log'][$i]['nama_jabatan'] + ")";
+                            for($t=0;$t<respond['jm_departemen'];$t++){
+                                if(respond['departemen'][$t]['id_departemen'] == respond['log'][$i]['id_departemen']){
+                                    $nama_departemen = respond['departemen'][$t]['nama_departemen'];
+                                }
+                            }
+
+                            $data = "Nama Departemen (" + $nama_departemen + ")";
                         }
+
+                        if(respond['log'][$i]['id_jabatan'] == respond['log'][$i+1]['id_jabatan']){
+                           $data = $data;
+                        }
+                        else{
+                            for($t=0;$t<respond['jm_jabatan'];$t++){
+                                if(respond['jabatan'][$t]['id_jabatan'] == respond['log'][$i]['id_jabatan']){
+                                    $nama_jabatan = respond['jabatan'][$t]['nama_jabatan'];
+                                }
+                            }
+
+                            if($count == 0){
+                                $data = "Nama Jabatan (" + $nama_jabatan + ")";
+                            }
+                            else{
+                                $data = $data + ", "+ "Nama Jabatan (" + $nama_jabatan + ")";
+                            }
+                            $count++;
+                        }
+
+
+                        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                        var tanggal = new Date(respond['log'][$i]['waktu_edit']).getDate();
+                        var xhari = new Date(respond['log'][$i]['waktu_edit']).getDay();
+                        var xbulan = new Date(respond['log'][$i]['waktu_edit']).getMonth();
+                        var xtahun = new Date(respond['log'][$i]['waktu_edit']).getYear();
+                        
+                        var jam     = new Date(respond['log'][$i]['waktu_edit']).getHours();
+                        var menit   = new Date(respond['log'][$i]['waktu_edit']).getMinutes();
+                        var detik   = new Date(respond['log'][$i]['waktu_edit']).getSeconds();
+                        
+                        var hari = hari[xhari];
+                        var bulan = bulan[xbulan];
+                        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                        $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun +' '+jam+':'+menit+':'+detik;
 
                         $tampung_isi = $tampung_isi + 
                         '<tr>'+
-                        '<td style="text-align: center;vertical-align: middle;">'+ respond['log'][$i]['waktu_edit'] +'</td>' +
+                        '<td style="text-align: center;vertical-align: middle;">'+ $tanggalnya +'</td>' +
                         '<td style="text-align: center;vertical-align: middle;">'+ $user +'</td>' +
                         '<td style="text-align: center;vertical-align: middle;">'+ respond['log'][$i]['keterangan_log'] +'</td>' +
                         '<td style="vertical-align: middle;">'+ $data +'</td>' +
                         '</tr>';
-
                     }
                 }
 
@@ -377,15 +448,14 @@
                 '</table>';
 
                 $("#isi_log").html($isi);
-             
+                
                 $("#modallog").modal();
-            */
-                alert(respond['input_user']);
             }
         });
 
     });
 </script>
+
 
 
 

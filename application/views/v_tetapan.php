@@ -103,7 +103,7 @@
                                             </label>
                                             <div class="col-sm-7">
                                                 <?php if($x->nama_tetapan == "Processing time"){?>
-                                                    <input type="number" name="isi_tetapan_pt" class="form-control" value="<?= $x->isi_tetapan?>">
+                                                    <input type="number" name="isi_tetapan_pt" class="form-control" value="<?= $x->isi_tetapan?>" required>
                                                 <?php } else if($x->nama_tetapan == "Senin" || $x->nama_tetapan == "Selasa" || $x->nama_tetapan == "Rabu" || 
                                                 $x->nama_tetapan == "Kamis" || $x->nama_tetapan == "Jumat" || $x->nama_tetapan == "Sabtu" || 
                                                 $x->nama_tetapan == "Minggu"){?>
@@ -121,7 +121,7 @@
                                                         <?php } ?>
                                                     </select>
                                                 <?php } else{?>
-                                                    <input type="text" name="isi_tetapan_lain" class="form-control" value="<?= $x->isi_tetapan?>">
+                                                    <input type="text" name="isi_tetapan_lain" class="form-control" value="<?= $x->isi_tetapan?>" required>
                                                 <?php } ?>
                                                 
                                                 <!--

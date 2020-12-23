@@ -55,7 +55,7 @@
                                 <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
                                 title="Delete" href="#modalhapus<?= $x->id_bank;?>" style="margin-right:5px;margin-bottom:5px"></a>
                                 <button type="button" class="blog_klik col-lg-3 btn btn-info fa fa-file" 
-                                id="blog<?php echo $x->id_bank?>" value="<?php echo $x->id_bank;?>" style="margin-right:5px;margin-bottom:5px"></button>
+                                title="Log" id="blog<?php echo $x->id_bank?>" value="<?php echo $x->id_bank;?>" style="margin-right:5px;margin-bottom:5px"></button>
                             </td>
                         </tr>
     

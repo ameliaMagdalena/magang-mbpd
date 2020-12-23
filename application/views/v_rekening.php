@@ -72,7 +72,7 @@
                                     <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
                                     title="Hapus" href="#modalhapus<?= $rk->id_rekening;?>" style="margin-right:5px;margin-bottom:5px"></a>
                                     <button type="button" class="blog_klik col-lg-3 btn btn-info fa fa-file" 
-                                    id="blog<?= $rk->id_rekening;?>" value="<?= $rk->id_rekening;?>" style="margin-right:5px;margin-bottom:5px"></button>
+                                    title="Log" id="blog<?= $rk->id_rekening;?>" value="<?= $rk->id_rekening;?>" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php } ?>
                             </td>
                         </tr>

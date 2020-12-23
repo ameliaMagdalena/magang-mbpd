@@ -82,7 +82,7 @@
                                         title="Delete" href="#modalhapus<?= $x->id_karyawan;?>" style="margin-right:5px;margin-bottom:5px"></a>
                                 <?php } ?>
                                 <button type="button" class="blog_klik col-lg-3 btn btn-info fa fa-file" 
-                                id="blog<?php echo $x->id_karyawan?>" value="<?php echo $x->id_karyawan;?>" style="margin-right:5px;margin-bottom:5px"></button>
+                                title="Log" id="blog<?php echo $x->id_karyawan?>" value="<?php echo $x->id_karyawan;?>" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php } ?>
                             </td>
                         </tr>

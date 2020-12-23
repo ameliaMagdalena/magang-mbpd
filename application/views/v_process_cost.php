@@ -51,8 +51,6 @@
 <?php include('_js.php'); ?>
 <!--*****************************-->
 <!--*****************************-->
-
-
 <script>
     function reload() {
         location.reload();
@@ -75,8 +73,12 @@
                 $totalnya = 0;
 
                 for($i=0;$i<respond['jm_km'];$i++){
-                    $total    = (respond['km'][$i]['cycle_time'] * (respond['km'][$i]['satuan_biaya'] * respond['km'][$i]['jumlah_pekerja_per_team']));
-                    $totalnya = $totalnya + $total;
+                    $totals = (respond['km'][$i]['cycle_time'] * (respond['km'][$i]['satuan_biaya'] * respond['km'][$i]['jumlah_pekerja_per_team']));
+                    $totalnya = $totalnya + $totals;
+                    
+                    $satuan_biaya = "Rp "+  new Number(respond['km'][$i]['satuan_biaya']).toLocaleString("id-ID") + ",00";
+                    $man_power    = "Rp "+  new Number((respond['km'][$i]['satuan_biaya'] * respond['km'][$i]['jumlah_pekerja_per_team'])).toLocaleString("id-ID") + ",00";
+                    $total        = "Rp "+  new Number((respond['km'][$i]['cycle_time'] * (respond['km'][$i]['satuan_biaya'] * respond['km'][$i]['jumlah_pekerja_per_team']))).toLocaleString("id-ID") + ",00";
 
                     $tampung_isi = $tampung_isi + 
                     '<tr>'+
@@ -93,16 +95,18 @@
                             respond['km'][$i]['jumlah_pekerja_per_team']+
                         '</td>'+
                         '<td  style="text-align: center;vertical-align: middle;">'+
-                            respond['km'][$i]['satuan_biaya']+
+                            $satuan_biaya+
                         '</td>'+
                         '<td  style="text-align: center;vertical-align: middle;">'+
-                            (respond['km'][$i]['satuan_biaya'] * respond['km'][$i]['jumlah_pekerja_per_team'])+
+                            $man_power+
                         '</td>'+
                         '<td  style="text-align: center;vertical-align: middle;">'+
                             $total+
                         '</td>'+
                     '</tr>';
                 }
+
+                $totalnya =  "Rp "+  new Number($totalnya).toLocaleString("id-ID") + ",00";
 
                 $total = 
                 '<tr>'+

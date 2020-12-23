@@ -333,16 +333,13 @@ class SpesifikasiJabatan extends CI_Controller {
         $id = $this->input->post('id');
         $data['id'] = $id;
 
-
         $data_input['user']       = $this->M_SpesifikasiJabatan->select_user_add($id)->result_array();
         $id_user                  = $data_input['user'][0]['user_add'];
-      
         $data_input['cari_user']  = $this->M_SpesifikasiJabatan->cari_user($id_user)->result_array();
  
         $nama_user          = $data_input['cari_user'][0]['nama_karyawan'];
 
         $data['input_user'] = $nama_user;
-        
         $data['input_date'] = " ".$data_input['user'][0]['waktu_add'];
         $day = date('D', strtotime($data_input['user'][0]['waktu_add']));
 
@@ -372,12 +369,17 @@ class SpesifikasiJabatan extends CI_Controller {
         $jam     = date('H:i:s', strtotime($data_input['user'][0]['waktu_add']));
 
         $data['input_date'] = " ".$hari.",  ".$tanggal." | ". $jam ;
-  
+
         $data['log']        = $this->M_SpesifikasiJabatan->select_log($id)->result_array();
         $data['jumlah_log'] = $this->M_SpesifikasiJabatan->select_log($id)->num_rows();
 
-        $data['user']       = $this->M_User->select_all_userjabatandepartemen()->result_array();
+        $data['user']        = $this->M_User->select_all_userjabatandepartemen()->result_array();
         $data['jumlah_user'] = $this->M_User->select_all_userjabatandepartemen()->num_rows();
+
+        $data['jabatan']             = $this->M_Jabatan->select_all()->result_array();
+        $data['departemen']          = $this->M_Departemen->select_all()->result_array();
+        $data['jm_jabatan']          = $this->M_Jabatan->select_all()->num_rows();
+        $data['jm_departemen']       = $this->M_Departemen->select_all()->num_rows();
     
         echo json_encode($data);
     }

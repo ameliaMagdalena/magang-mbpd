@@ -36,7 +36,7 @@ class M_SpesifikasiJabatan extends CI_Model {
     function edit($table,$data,$where){
         $this->db->update($table,$data,$where);
     }
-
+    
     function select_user_add($id){
         return $this->db->query("SELECT user_add, waktu_add FROM spesifikasi_jabatan WHERE id_spesifikasi_jabatan='$id'");
     }
