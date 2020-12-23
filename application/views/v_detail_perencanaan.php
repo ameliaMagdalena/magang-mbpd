@@ -291,29 +291,29 @@
                                             <input type="hidden" name="iddetail" id="iddetail" class="form-control" value="" readonly>
                                             
                                             <div class="form-group mt-lg">
-                                                <label class="col-sm-4 control-label" style="text-align: right">Material</label>
+                                                <label class="col-sm-4 control-label" style="text-align: right">Material<span class="required">*</span></label>
                                                 <div class="col-sm-8">
                                                     <input type="text" name="materialz" id="materialz" class="form-control" value="" readonly>
                                                 </div>
                                             </div>
                                             <div class="form-group mt-lg">
-                                                <label class="col-sm-4 control-label" style="text-align: right">Jumlah Material</label>
+                                                <label class="col-sm-4 control-label" style="text-align: right">Jumlah Material<span class="required">*</span></label>
                                                 <div class="col-sm-8">
                                                     <input type="number" name="jumlahz" id="jumlahz" class="form-control"
-                                                    placeholder="" value="">
+                                                    placeholder="" value="" min="1" required>
                                                     <span id="spjumlah"></span>
                                                 </div>
                                             </div>
                                             <div class="form-group mt-lg">
-                                                <label class="col-sm-4 control-label" style="text-align: right">Satuan</label>
+                                                <label class="col-sm-4 control-label" style="text-align: right">Satuan<span class="required">*</span></label>
                                                 <div class="col-sm-8">
                                                     <input type="text" name="satuanz" id="satuanz" class="form-control" value="" readonly>
                                                 </div>
                                             </div>
                                             <div class="form-group mt-lg">
-                                                <label class="col-sm-4 control-label" style="text-align: right">Tanggal Penerimaan</label>
+                                                <label class="col-sm-4 control-label" style="text-align: right">Tanggal Penerimaan<span class="required">*</span></label>
                                                 <div class="col-sm-8">
-                                                    <input type="date" name="terimaz" id="terimaz" class="form-control" value="">
+                                                    <input type="date" name="terimaz" id="terimaz" class="form-control" value="" required>
                                                 </div>
                                             </div>
                                             <div class="form-group mt-lg">
@@ -327,7 +327,7 @@
                                         <footer class="panel-footer">
                                             <div class="row">
                                                 <div class="col-md-12 text-right">
-                                                    <input type="submit" id="tambah" class="btn btn-primary" value="Request" onclick="reload()">
+                                                    <input type="submit" id="tambah" class="btn btn-primary" value="Request">
                                                     <button type="button" class="btn btn-default modal-dismiss" onclick="reload()">Batal</button>
                                                 </div>
                                             </div>

@@ -239,8 +239,8 @@
 
                         <button type="button" class="batalz col-lg-3 btn btn-danger fa fa-times" 
                             value="<?php echo $x ?>" title="Batal"></button>
-                        <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
-                            value="<?php echo $x ?>" title="Hapus"></button>
+                        <!-- <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
+                            value="<?php echo $x ?>" title="Hapus"></button> -->
                     </td>
                 </tr>
 

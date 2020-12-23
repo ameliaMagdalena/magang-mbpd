@@ -8,6 +8,7 @@ class PermintaanPembelianMaterial extends CI_Controller {
 
         $this->load->model('M_Dashboard');
         $this->load->model('M_PembelianMaterial');
+        $this->load->model('M_PerencanaanMaterial');
 
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');
@@ -17,6 +18,8 @@ class PermintaanPembelianMaterial extends CI_Controller {
 	public function index($status){
         $data['status'] = $status;
         $data['permintaan_pembelian'] = $this->M_PembelianMaterial->selectPermintaanPembelianAktif()->result_array();
+        $data['detail'] = $this->M_PerencanaanMaterial->selectDetailPermintaanMaterialAktif()->result_array();
+        $data['material'] = $this->M_PerencanaanMaterial->selectKetersediaanMaterial()->result_array();
 
         //notif produksi
           //notif permintaan material produksi
@@ -401,6 +404,21 @@ class PermintaanPembelianMaterial extends CI_Controller {
 
         redirect('PermintaanPembelianMaterial/index/0');
     }
+
+    public function tolak(){
+        $where = array(
+            'id_permintaan_pembelian' => $this->input->post("idnya")
+        );
+
+        $data = array (
+            "status_pembelian" => "4",
+            "user_edit"=>$_SESSION['id_user'],
+            "waktu_add"=>date('Y-m-d H:i:s'),
+        );
+        $this->M_PembelianMaterial->editPermintaanPembelian($data, $where);
+        redirect('PermintaanPembelianMaterial/index/3');
+    }
+
 
     public function detailPermintaanPembelianSementara(){
         

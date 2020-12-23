@@ -158,10 +158,6 @@
                     Sales Order</a>
             <?php } ?>
             
-            <!-- <a class="col-lg-3 btn btn-warning"
-                title="Print" href="<?php echo base_url() . 'PurchaseOrderCustomer/print_po/' . $po_cust[0]['id_purchase_order_customer'] ?>">
-                Print PO Customer</a> -->
-            
             <?php if($po_cust[0]['status_po'] == 0 || $po_cust[0]['status_po'] == 1){ ?>
                 <a class="modal-with-form col-lg-2 btn btn-danger mr-1"
                     title="Batalkan" href="#modalbatal<?php echo $po_cust[0]['id_purchase_order_customer'] ?>">Batalkan</a>

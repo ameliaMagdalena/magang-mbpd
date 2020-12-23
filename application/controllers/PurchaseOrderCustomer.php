@@ -622,6 +622,7 @@ class PurchaseOrderCustomer extends CI_Controller {
                     "harga_satuan" => $this->input->post("harga_satuan".$x),
                     "total_harga" => $this->input->post("harga_total".$x),
                     "tanggal_penerimaan" => $this->input->post("tgl_terima".$x),
+                    "remark" => $this->input->post("remark".$x),
                     "user_add"=>$_SESSION['id_user'],
                     "waktu_add"=>date('Y-m-d H:i:s'),
                     "user_edit"=>"0",
@@ -692,7 +693,7 @@ class PurchaseOrderCustomer extends CI_Controller {
         );
         $data = array(
             "status_po" => "3",
-            "keterangan" => $this->input->post("keterangan"),
+            "keterangan_batal" => $this->input->post("keterangan"),
             "user_edit"=>$_SESSION['id_user'],
             "waktu_add"=>date('Y-m-d H:i:s'),
         );
