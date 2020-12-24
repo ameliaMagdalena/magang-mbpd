@@ -30,7 +30,7 @@
 						?>
 							<li class="nav-parent">
 								<a>
-									<i class="fa fa-copy" aria-hidden="true"></i>
+									<i class="fa fa-database" aria-hidden="true"></i>
 									<span>Master Data</span>
 								</a>
 								<ul class="nav nav-children">
@@ -97,11 +97,6 @@
 									<li>
 										<a href="<?= base_url()?>warna">
 											Warna Produk
-										</a>
-									</li>
-									<li>
-										<a href="<?= base_url()?>inventoryLine">
-											Persediaan Line
 										</a>
 									</li>
 									<li>
@@ -481,6 +476,13 @@
 
 							
 							<!-- produksi -->
+								<!-- persediaan line -->
+								<li>
+									<a href="<?= base_url()?>inventoryLine">
+										<i class="fa fa-bars" aria-hidden="true"></i>
+										<span>Persediaan Line</span>
+									</a>
+								</li>
 								<!-- prencanaan produksi -->
 								<li class="nav-parent">
 									<a title="Perencanaan Produksi">
@@ -503,14 +505,14 @@
 								<!-- perencanaan produksi line -->
 								<li>
 									<a href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line0">
-										<i class="fa fa-calendar" aria-hidden="true"></i>
+										<i class="fa fa-calendar-o" aria-hidden="true"></i>
 										<span>Perencanaan Produksi Line</span>
 									</a>
 								</li>
 								<!-- produksi tertunda -->
 								<li class="nav-parent">
 									<a title="Produksi Tertunda">
-										<i class="fa fa-calendar-o" aria-hidden="true"></i>
+										<i class="fa fa-cogs" aria-hidden="true"></i>
 										<span>Produksi Tertunda</span>
 									</a>
 									<ul class="nav nav-children">
@@ -538,7 +540,7 @@
 								<!-- permintaan material -->
 								<li class="nav-parent">
 									<a title="Permintaan Material">
-										<i class="fa fa-calendar" aria-hidden="true"></i>
+										<i class="fa  fa-files-o" aria-hidden="true"></i>
 										<?php if($jm_permat[0]['jumlah_permat'] == 0){?>
 											<span>Permintaan Material</span>
 										<?php } else{?>
@@ -707,7 +709,7 @@
 								<!-- laporan hasil produksi -->
 								<li class="nav-parent">
 									<a>
-										<i class="fa fa-th-list" aria-hidden="true"></i>
+										<i class="fa fa-paste" aria-hidden="true"></i>
 										<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
 											<span>Laporan Hasil Produksi</span>
 										<?php } else{?>
@@ -744,8 +746,12 @@
 								<!-- laporan perencanaan cutting -->
 								<li class="nav-parent">
 									<a>
-										<i class="fa fa-th-list" aria-hidden="true"></i>
-										<span>Laporan Perencanaan Cutting</span>
+										<i class="fa fa-files-o" aria-hidden="true"></i>
+										<?php if($jm_percut[0]['jumlah_percut'] == 0){?>
+											<span>Laporan Perencanaan Cutting</span>
+										<?php } else{?>
+											<span>Laporan Perencanaan Cutting <span class="badge badge-light"><?= $jm_percut[0]['jumlah_percut']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
@@ -760,12 +766,20 @@
 										</li>
 										<li>
 											<a href="<?= base_url()?>laporanPerencanaanCutting/belum_ada">
-												<span>Belum Ada Laporan </span>
+												<?php if($jm_percut_0[0]['jumlah_percut'] == 0){?>
+													<span>Belum Ada Laporan</span>
+												<?php } else{?>
+													<span>Belum Ada Laporan <span class="badge badge-light"><?= $jm_percut_0[0]['jumlah_percut']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
 											<a href="<?= base_url()?>laporanPerencanaanCutting/sudah_ada">
-												<span>Sudah Ada Laporan</span>
+												<?php if($jm_percut_1[0]['jumlah_percut'] == 0){?>
+													<span>Sudah Ada Laporan</span>
+												<?php } else{?>
+													<span>Sudah Ada Laporan <span class="badge badge-light"><?= $jm_percut_1[0]['jumlah_percut']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
@@ -817,56 +831,10 @@
 										</li>
 									</ul>
 								</li>
-								<!-- laporan perencanaan cutting -->
-								<li class="nav-parent">
-									<a>
-										<i class="fa fa-th-list" aria-hidden="true"></i>
-										<?php if($jm_percut[0]['jumlah_percut'] == 0){?>
-											<span>Laporan Perencanaan Cutting</span>
-										<?php } else{?>
-											<span>Laporan Perencanaan Cutting <span class="badge badge-light"><?= $jm_percut[0]['jumlah_percut']?></span></span>
-										<?php } ?>
-									</a>
-									<ul class="nav nav-children">
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>+ Laporan Perencanaan Cutting </span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/semua">
-												<span>Semua</span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/belum_ada">
-												<?php if($jm_percut_0[0]['jumlah_percut'] == 0){?>
-													<span>Belum Ada Laporan</span>
-												<?php } else{?>
-													<span>Belum Ada Laporan <span class="badge badge-light"><?= $jm_percut_0[0]['jumlah_percut']?></span></span>
-												<?php } ?>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/sudah_ada">
-												<?php if($jm_percut_1[0]['jumlah_percut'] == 0){?>
-													<span>Sudah Ada Laporan</span>
-												<?php } else{?>
-													<span>Sudah Ada Laporan <span class="badge badge-light"><?= $jm_percut_1[0]['jumlah_percut']?></span></span>
-												<?php } ?>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/selesai">
-												<span>Selesai </span>
-											</a>
-										</li>
-									</ul>
-								</li>
 								<!-- pengambilan material -->
 								<li class="nav-parent">
 									<a>
-										<i class="fa fa-plus-square-o" aria-hidden="true"></i>
+										<i class="fa fa-plus-square" aria-hidden="true"></i>
 										<span>Pengambilan Material</span>
 									</a>
 									<ul class="nav nav-children">
@@ -1068,7 +1036,7 @@
 								<!-- invoice -->
 								<li class="nav-parent">
 									<a>
-										<i class="fa fa-file-text-o" aria-hidden="true"></i>
+										<i class="fa fa-file-text" aria-hidden="true"></i>
 										<?php if($jm_invoice[0]['jumlah_invoice'] == 0){?>
 											<span>Invoice</span>
 										<?php } else{?>
@@ -1117,7 +1085,43 @@
 
 					<!-- Manager -->
 						<?php if(($_SESSION['nama_jabatan'] == "Manager") && ($_SESSION['nama_departemen'] == "Management")){?>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-database" aria-hidden="true"></i>
+									<span>Master Data</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?= base_url()?>produk">
+											Produk
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>jenisProduk">
+											Jenis Produk
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>ukuranProduk">
+											Ukuran Produk
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>warna">
+											Warna Produk
+										</a>
+									</li>
+								</ul>
+							</li>
+							
 							<!-- produksi -->
+								<!-- persediaan line -->
+								<li>
+									<a href="<?= base_url()?>inventoryLine">
+										<i class="fa fa-bars" aria-hidden="true"></i>
+										<span>Persediaan Line</span>
+									</a>
+								</li>
 								<!-- prencanaan produksi -->
 								<li class="nav-parent">
 									<a title="Perencanaan Produksi">
@@ -1140,14 +1144,42 @@
 								<!-- perencanaan produksi line -->
 								<li>
 									<a href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line0">
-										<i class="fa fa-calendar" aria-hidden="true"></i>
+										<i class="fa fa-calendar-o" aria-hidden="true"></i>
 										<span>Perencanaan Produksi Line</span>
 									</a>
+								</li>
+								<!-- produksi tertunda -->
+								<li class="nav-parent">
+									<a title="Produksi Tertunda">
+										<i class="fa fa-cogs" aria-hidden="true"></i>
+										<span>Produksi Tertunda</span>
+									</a>
+									<ul class="nav nav-children">
+										<li>
+											<a href="<?= base_url()?>produksiTertunda/semua">
+												Semua
+											</a>
+										<li>
+											<a href="<?= base_url()?>produksiTertunda/belum_diproses">
+												Belum Diproses
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>produksiTertunda/sedang_diproses">
+												Sedang Diproses
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>produksiTertunda/selesai">
+												Selesai
+											</a>
+										</li>
+									</ul>
 								</li>
 								<!-- permintaan material -->
 								<li class="nav-parent">
 									<a title="Permintaan Material">
-										<i class="fa fa-calendar" aria-hidden="true"></i>
+										<i class="fa  fa-files-o" aria-hidden="true"></i>
 										<?php if($jm_permat[0]['jumlah_permat'] == 0){?>
 											<span>Permintaan Material</span>
 										<?php } else{?>
@@ -1212,7 +1244,7 @@
 										</li>
 									</ul>
 								</li>
-								<!-- surat perintah lembur -->
+								<!-- surat perintah lembur  -->
 								<li class="nav-parent">
 									<a title="Surat Perintah Lembur">
 										<i class="fa  fa-file-text" aria-hidden="true"></i>
@@ -1316,7 +1348,7 @@
 								<!-- laporan hasil produksi -->
 								<li class="nav-parent">
 									<a>
-										<i class="fa fa-th-list" aria-hidden="true"></i>
+										<i class="fa fa-paste" aria-hidden="true"></i>
 										<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
 											<span>Laporan Hasil Produksi</span>
 										<?php } else{?>
@@ -1346,6 +1378,52 @@
 										<li>
 											<a href="<?= base_url()?>hasilProduksi/selesai_hasil_produksi">
 												<span>Selesai</span>
+											</a>
+										</li>
+									</ul>
+								</li>
+								<!-- laporan perencanaan cutting -->
+								<li class="nav-parent">
+									<a>
+										<i class="fa fa-files-o" aria-hidden="true"></i>
+										<?php if($jm_percut[0]['jumlah_percut'] == 0){?>
+											<span>Laporan Perencanaan Cutting</span>
+										<?php } else{?>
+											<span>Laporan Perencanaan Cutting <span class="badge badge-light"><?= $jm_percut[0]['jumlah_percut']?></span></span>
+										<?php } ?>
+									</a>
+									<ul class="nav nav-children">
+										<li>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
+												<span>+ Laporan Perencanaan Cutting </span>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/semua">
+												<span>Semua</span>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/belum_ada">
+												<?php if($jm_percut_0[0]['jumlah_percut'] == 0){?>
+													<span>Belum Ada Laporan</span>
+												<?php } else{?>
+													<span>Belum Ada Laporan <span class="badge badge-light"><?= $jm_percut_0[0]['jumlah_percut']?></span></span>
+												<?php } ?>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/sudah_ada">
+												<?php if($jm_percut_1[0]['jumlah_percut'] == 0){?>
+													<span>Sudah Ada Laporan</span>
+												<?php } else{?>
+													<span>Sudah Ada Laporan <span class="badge badge-light"><?= $jm_percut_1[0]['jumlah_percut']?></span></span>
+												<?php } ?>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>laporanPerencanaanCutting/selesai">
+												<span>Selesai </span>
 											</a>
 										</li>
 									</ul>
@@ -1392,56 +1470,10 @@
 										</li>
 									</ul>
 								</li>
-								<!-- laporan perencanaan cutting -->
-								<li class="nav-parent">
-									<a>
-										<i class="fa fa-th-list" aria-hidden="true"></i>
-										<?php if($jm_percut[0]['jumlah_percut'] == 0){?>
-											<span>Laporan Perencanaan Cutting</span>
-										<?php } else{?>
-											<span>Laporan Perencanaan Cutting <span class="badge badge-light"><?= $jm_percut[0]['jumlah_percut']?></span></span>
-										<?php } ?>
-									</a>
-									<ul class="nav nav-children">
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>+ Laporan Perencanaan Cutting </span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/semua">
-												<span>Semua</span>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/belum_ada">
-												<?php if($jm_percut_0[0]['jumlah_percut'] == 0){?>
-													<span>Belum Ada Laporan</span>
-												<?php } else{?>
-													<span>Belum Ada Laporan <span class="badge badge-light"><?= $jm_percut_0[0]['jumlah_percut']?></span></span>
-												<?php } ?>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/sudah_ada">
-												<?php if($jm_percut_1[0]['jumlah_percut'] == 0){?>
-													<span>Sudah Ada Laporan</span>
-												<?php } else{?>
-													<span>Sudah Ada Laporan <span class="badge badge-light"><?= $jm_percut_1[0]['jumlah_percut']?></span></span>
-												<?php } ?>
-											</a>
-										</li>
-										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/selesai">
-												<span>Selesai </span>
-											</a>
-										</li>
-									</ul>
-								</li>
 								<!-- pengambilan material -->
 								<li class="nav-parent">
 									<a>
-										<i class="fa fa-plus-square-o" aria-hidden="true"></i>
+										<i class="fa fa-plus-square" aria-hidden="true"></i>
 										<span>Pengambilan Material</span>
 									</a>
 									<ul class="nav nav-children">
@@ -1456,15 +1488,59 @@
 											</a>
 										</li>
 										<li>
-										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_disetujui_pengambilan_material">
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_diambil_pengambilan_material0">
 											Belum Diambil
 										</a>
 									</li>
 									<li>
-										<a href="<?= base_url()?>pengambilanMaterialProduksi/belum_diambil_pengambilan_material">
+										<a href="<?= base_url()?>pengambilanMaterialProduksi/sudah_diambil_pengambilan_material0">
 											Sudah Diambil
 										</a>
 									</li>
+									</ul>
+								</li>
+								<!-- permintaan material tambahan -->
+								<li class="nav-parent">
+									<a>
+										<i class="fa fa-plus-square-o" aria-hidden="true"></i>
+											<span>Permintaan Material Tambahan</span>
+									</a>
+									<ul class="nav nav-children">
+										<li>
+											<a href="<?= base_url()?>permintaanTambahan/tambah0">
+												+ Permintaan Material Tambahan
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>permintaanTambahan/semua0">
+												Semua 
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>permintaanTambahan/belum_diproses0">
+												<span>Belum Diproses</span>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>permintaanTambahan/diterima0">
+													<span>Diterima</span>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>permintaanTambahan/ditolak0">
+													<span>Ditolak</span>
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>permintaanTambahan/selesai0">
+												Selesai
+											</a>
+										</li>
+										<li>
+											<a href="<?= base_url()?>permintaanTambahan/batal0">
+												Batal
+											</a>
+										</li>
 									</ul>
 								</li>
 								<!-- bpbj -->
@@ -1599,7 +1675,7 @@
 								<!-- invoice -->
 								<li class="nav-parent">
 									<a>
-										<i class="fa fa-file-text-o" aria-hidden="true"></i>
+										<i class="fa fa-file-text" aria-hidden="true"></i>
 										<?php if($jm_invoice[0]['jumlah_invoice'] == 0){?>
 											<span>Invoice</span>
 										<?php } else{?>
@@ -1649,40 +1725,10 @@
 							<!-- inventory line -->
 							<li>
 								<a href="<?= base_url()?>inventoryLine">
-									<i class="fa  fa-building" aria-hidden="true"></i>
+									<i class="fa  fa-bars" aria-hidden="true"></i>
 									<span>Persediaan Line</span>
 								</a>
 							</li>
-							<!-- po 
-							<li class="nav-parent">
-								<a title="Purchase Order">
-									<i class="fa  fa-list" aria-hidden="true"></i>
-									<span>Purchase Order Customer</span>
-								</a>
-								<ul class="nav nav-children">
-									<li>
-										<a href="">
-											Semua
-										</a>
-									</li>
-									<li>
-										<a href="">
-											Belum Diproses
-										</a>
-									</li>
-									<li>
-										<a href="">
-											Sedang Diproses
-										</a>
-									</li>
-									<li>
-										<a href="">
-											Selesai
-										</a>
-									</li>
-								</ul>
-							</li>
-							-->
 							<!-- perencanaan produksi -->
 							<li class="nav-parent">
 								<a title="Perencanaan Produksi">
@@ -1705,14 +1751,14 @@
 							<!-- perencanaan produksi line -->
 							<li>
 								<a href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line0">
-									<i class="fa fa-calendar" aria-hidden="true"></i>
+									<i class="fa fa-calendar-o" aria-hidden="true"></i>
 									<span>Perencanaan Produksi Line</span>
 								</a>
 							</li>
 							<!-- produksi tertunda -->
 							<li class="nav-parent">
 								<a title="Produksi Tertunda">
-									<i class="fa fa-calendar-o" aria-hidden="true"></i>
+									<i class="fa fa-cogs" aria-hidden="true"></i>
 									<span>Produksi Tertunda</span>
 								</a>
 								<ul class="nav nav-children">
@@ -1740,7 +1786,7 @@
 							<!-- permintaan material -->
 							<li class="nav-parent">
 								<a title="Permintaan Material">
-									<i class="fa fa-calendar" aria-hidden="true"></i>
+									<i class="fa fa-files-o" aria-hidden="true"></i>
 									<?php if($jm_permat[0]['jumlah_permat'] == 0){?>
 										<span>Permintaan Material</span>
 									<?php } else{?>
@@ -1808,7 +1854,7 @@
 							<!-- laporan hasil produksi -->
 							<li class="nav-parent">
 								<a>
-									<i class="fa fa-th-list" aria-hidden="true"></i>
+									<i class="fa fa-paste" aria-hidden="true"></i>
 									<span>Laporan Hasil Produksi</span>
 								</a>
 								<ul class="nav nav-children">
@@ -1832,7 +1878,7 @@
 							<!-- laporan perencanaan cutting -->
 							<li class="nav-parent">
 								<a>
-									<i class="fa fa-th-list" aria-hidden="true"></i>
+									<i class="fa fa-files-o" aria-hidden="true"></i>
 									<span>Laporan Perencanaan Cutting</span>
 								</a>
 								<ul class="nav nav-children">
@@ -1977,21 +2023,21 @@
 							<!-- inventory line -->
 							<li>
 								<a href="<?= base_url()?>inventoryLine">
-									<i class="fa  fa-building" aria-hidden="true"></i>
+									<i class="fa  fa-bars" aria-hidden="true"></i>
 									<span>Persediaan Line</span>
 								</a>
 							</li>
 							<!-- perencanaan produksi line -->
 							<li>
 								<a href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line">
-									<i class="fa fa-calendar" aria-hidden="true"></i>
+									<i class="fa fa-calendar-o" aria-hidden="true"></i>
 									<span>Perencanaan Produksi Line</span>
 								</a>
 							</li>
 							<!-- pengambilan material -->
 							<li class="nav-parent">
 								<a>
-									<i class="fa fa-plus-square-o" aria-hidden="true"></i>
+									<i class="fa fa-plus-square" aria-hidden="true"></i>
 									<?php if($jm_pengmat[0]['jumlah_pengmat'] == 0){?>
 										<span>Pengambilan Material</span>
 									<?php } else{?>
@@ -2189,7 +2235,7 @@
 							<!-- laporan hasil produksi -->
 							<li class="nav-parent">
 								<a>
-									<i class="fa fa-th-list" aria-hidden="true"></i>
+									<i class="fa fa-paste" aria-hidden="true"></i>
 									<span>Laporan Hasil Produksi</span>
 								</a>
 								<ul class="nav nav-children">
@@ -2253,7 +2299,7 @@
 							<!-- perencanaan produksi line -->
 							<li>
 								<a href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line0">
-									<i class="fa fa-calendar" aria-hidden="true"></i>
+									<i class="fa fa-calendar-o" aria-hidden="true"></i>
 									<span>Perencanaan Produksi Line</span>
 								</a>
 							</li>
@@ -2343,7 +2389,7 @@
 							<!-- laporan hasil produksi -->
 							<li class="nav-parent">
 								<a>
-									<i class="fa fa-th-list" aria-hidden="true"></i>
+									<i class="fa fa-paste" aria-hidden="true"></i>
 									<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
 										<span>Laporan Hasil Produksi</span>
 									<?php } else{?>
@@ -2433,14 +2479,14 @@
 							<!-- perencanaan produksi line -->
 							<li>
 								<a href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line0">
-									<i class="fa fa-calendar" aria-hidden="true"></i>
+									<i class="fa fa-calendar-o" aria-hidden="true"></i>
 									<span>Perencanaan Produksi Line</span>
 								</a>
 							</li>
 							<!-- laporan hasil produksi -->
 							<li class="nav-parent">
 								<a>
-									<i class="fa fa-th-list" aria-hidden="true"></i>
+									<i class="fa fa-paste" aria-hidden="true"></i>
 									<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
 										<span>Laporan Hasil Produksi</span>
 									<?php } else{?>
@@ -2477,7 +2523,7 @@
 							<!-- laporan perencanaan cutting -->
 							<li class="nav-parent">
 								<a>
-									<i class="fa fa-th-list" aria-hidden="true"></i>
+									<i class="fa fa-files-o" aria-hidden="true"></i>
 									<?php if($jm_percut[0]['jumlah_percut'] == 0){?>
 										<span>Laporan Perencanaan Cutting</span>
 									<?php } else{?>
@@ -2574,13 +2620,14 @@
 									Rekening
 								</a>
 							</li>
-							<!-- perencanaan produksi -->
+							<!-- perencanaan produksi 
 							<li>
 								<a title="Perencanaan Produksi" href="<?= base_url()?>perencanaanProduksi/semua_perencanaan_produksi">
 									<i class="fa fa-calendar" aria-hidden="true"></i>
 									<span>Perencanaan Produksi</span>
 								</a>
 							</li>
+							-->
 							<!-- surat jalan -->
 							<li class="nav-parent">
 								<a>
@@ -2630,7 +2677,7 @@
 							<!-- invoice -->
 							<li class="nav-parent">
 								<a>
-									<i class="fa fa-file-text-o" aria-hidden="true"></i>
+									<i class="fa fa-file-text" aria-hidden="true"></i>
 									<?php if($jm_invoice[0]['jumlah_invoice'] == 0){?>
 										<span>Invoice</span>
 									<?php } else{?>
@@ -2666,11 +2713,6 @@
 							</li>
 						<?php }?>
 					<!--  -->
-
-						<li>
-							<br><br>
-							<hr>
-						</li>
 					</ul>
 				</nav>
 			</div>
