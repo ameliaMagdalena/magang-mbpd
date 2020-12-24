@@ -118,8 +118,8 @@
         </div>
 
         <div class="form-group mt-lg">
-            <a class="modal-with-form col-lg-2 btn btn-warning"
-                title="Edit" href="#modaledit<?php echo $sales_order[0]['id_sales_order'] ?>">Edit</a>
+            <!-- <a class="modal-with-form col-lg-2 btn btn-warning"
+                title="Edit" href="#modaledit<?php echo $sales_order[0]['id_sales_order'] ?>">Edit</a> -->
             <a class="col-lg-2 btn btn-info"
                 title="Print" href="<?php echo base_url() . 'PurchaseOrderCustomer/print_so/' . $sales_order[0]['id_purchase_order_customer'] ?>">
                 Print</a>

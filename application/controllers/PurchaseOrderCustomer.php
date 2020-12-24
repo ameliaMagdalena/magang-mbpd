@@ -583,6 +583,19 @@ class PurchaseOrderCustomer extends CI_Controller {
 		$this->load->view('v_po_customer_baru', $data);
     }
 
+    
+    public function cek_no_po(){
+        $no_po = $this->input->post('no_po');
+
+        $hasil_cari = $this->M_PurchaseOrderCustomer->selectNoPO($no_po)->num_rows();
+
+        if($hasil_cari > 0){
+            $data['ada'] = 1;
+        }
+
+        echo json_encode($data);        
+    }
+
     public function harga_produk(){
         $id = $this->input->post("id_detail_produk");
         $result = $this->M_PurchaseOrderCustomer->selectHargaProduk($id)->result_array();
@@ -609,6 +622,7 @@ class PurchaseOrderCustomer extends CI_Controller {
                     "harga_satuan" => $this->input->post("harga_satuan".$x),
                     "total_harga" => $this->input->post("harga_total".$x),
                     "tanggal_penerimaan" => $this->input->post("tgl_terima".$x),
+                    "remark" => $this->input->post("remark".$x),
                     "user_add"=>$_SESSION['id_user'],
                     "waktu_add"=>date('Y-m-d H:i:s'),
                     "user_edit"=>"0",
@@ -679,7 +693,7 @@ class PurchaseOrderCustomer extends CI_Controller {
         );
         $data = array(
             "status_po" => "3",
-            "keterangan" => $this->input->post("keterangan"),
+            "keterangan_batal" => $this->input->post("keterangan"),
             "user_edit"=>$_SESSION['id_user'],
             "waktu_add"=>date('Y-m-d H:i:s'),
         );

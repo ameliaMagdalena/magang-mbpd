@@ -67,13 +67,33 @@
                     <td><?= $permintaan_material[$x]['tanggal_produksi'] ?></td>
                     <td><?= $permintaan_material[$x]['nama_produk'] ?></td>
                     <td><?= $permintaan_material[$x]['nama_line'] ?></td>
-                    <td>Belum Ditinjau / Menunggu Persetujuan </td>
+                    <td>Belum Ditinjau / Menunggu Persetujuan
+                        <input type="hidden" id="ketersediaan<?= $x ?>" value="<?php $cek=0;
+                            for($det=0; $det<count($detail); $det++){
+                                if($permintaan_material[$x]['id_permintaan_material'] == $detail[$det]['id_permintaan_material']){
+                                    $produk = $detail[$det]['jumlah_minta'];
+                                    $cons = $detail[$det]['jumlah_konsumsi'];
+                                    $needs = $produk*$cons;
+
+                                    $ketersediaan = 0;
+                                    for($mat=0; $mat<count($material); $mat++){
+                                        if($detail[$det]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
+                                            $ketersediaan = $ketersediaan+1; //jumlah di gudang
+                                        }
+                                    }
+                                    if($ketersediaan<$needs){
+                                        $cek=$cek+1; //jika tidak tersedia, maka cek > 0
+                                    }
+                                }
+                            } echo $cek;
+                        ?>">
+                    </td>
                     <td>
                         <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail/' . $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
                         
                         <button type="button" class="konfirmz col-lg-3 btn btn-success fa fa-check" 
-                            value="<?php echo $x //$permintaan_material[$x]['id_permintaan_material'] ?>" title="Konfirmasi"></button>
+                            value="<?php echo $x ?>" title="Konfirmasi"></button>
                         <button type="button" class="tolakz col-lg-3 btn btn-danger fa fa-times" 
                             value="<?php echo $x ?>" title="Tolak"></button>
                         
@@ -84,6 +104,7 @@
                             title="Tolak" href="#modaltolak<?php echo $permintaan_material[$x]['id_permintaan_material'] ?>"></a> -->
                     </td>
                 </tr>
+
 
                 <!-- ****************************** MODAL SETUJU ***************************** -->
                 <!-- ************************************************************************** -->
@@ -96,7 +117,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <input type="hidden" name="idnyaa" id="idnyaa" class="form-control" value="" readonly>
-                                        <input type="hidden" name="status" class="form-control" value="1" readonly>
+                                        <input type="hidden" name="status" id="statusnyaa" class="form-control" value="" readonly>
                                         <div id="isisetuju"></div>
                                     </div>
                                     <footer class="panel-footer">
@@ -218,8 +239,8 @@
 
                         <button type="button" class="batalz col-lg-3 btn btn-danger fa fa-times" 
                             value="<?php echo $x ?>" title="Batal"></button>
-                        <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
-                            value="<?php echo $x ?>" title="Hapus"></button>
+                        <!-- <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
+                            value="<?php echo $x ?>" title="Hapus"></button> -->
                     </td>
                 </tr>
 
@@ -530,8 +551,16 @@
     $('.konfirmz').click(function(){
         var no      = $(this).attr('value');
         var id      = $("#idd"+no).val();
+        var tersedia = $("#ketersediaan"+no).val();
 
-         $.ajax({
+        if(tersedia > 0){
+            $("#statusnyaa").val("1");
+        }
+        else{
+            $("#statusnyaa").val("2");
+        }
+
+        $.ajax({
             type:"post",    
             url:"<?php echo base_url() ?>PermintaanMaterial/ajax",
             dataType: "JSON",

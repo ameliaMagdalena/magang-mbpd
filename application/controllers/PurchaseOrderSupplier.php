@@ -10,6 +10,7 @@ class PurchaseOrderSupplier extends CI_Controller {
         $this->load->model('M_Supplier');
         $this->load->model('M_Produk');
         $this->load->model('M_Dashboard');
+        $this->load->model('M_PembelianMaterial');
 
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');
@@ -388,10 +389,16 @@ class PurchaseOrderSupplier extends CI_Controller {
 		$this->load->view('v_detail_po_supplier', $data);
     }
 
+    public function pilih_baru(){
+        //pilih: Permintaan Pembelian / Tanpa Permintaan Pembelian
+	    $this->load->view('v_po_supplier_pilih_baru');
+    }
+
     public function baru(){
         $data['jumlah_po_sup'] = $this->M_PurchaseOrderSupplier->selectAllPOSupplier()->num_rows();
         $data['supplier'] = $this->M_PurchaseOrderSupplier->selectSupplierAktif()->result_array();
         $data['material'] = $this->M_PurchaseOrderSupplier->selectSubJenisMaterial()->result_array();
+        $data['beli'] = $this->M_PembelianMaterial->selectPermintaanPembelianAktif()->result_array();
 
         //notif produksi
             //notif permintaan material produksi
@@ -569,9 +576,14 @@ class PurchaseOrderSupplier extends CI_Controller {
             //tutup notif permohonan akses
         //tutup
 
-        
-	    $this->load->view('v_po_supplier_baru', $data);
+        if($this->input->post('pilihan') == 0){ //dengan permintaan pembelian
+            $this->load->view('v_po_supplier_baru2', $data);
+        }
+        else{ //tanpa permintaan pembelian
+            $this->load->view('v_po_supplier_baru', $data);
+        }
     }
+
 
     /* ------------------------------------------------------------------------------- */
     /* ------------------------------------------------------------------------------- */

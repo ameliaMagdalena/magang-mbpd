@@ -185,7 +185,7 @@
 								</a>
 								<ul class="nav nav-children">
 									<li>
-										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/Baru'?>">
+										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/pilih_baru'?>">
 											Buat Baru
 										</a>
 									</li>
@@ -211,40 +211,6 @@
 									</li>
 								</ul>
 							</li>
-							
-							<!-- <li class="nav-parent">
-								<a>
-									<i class="fa fa-shopping-cart" aria-hidden="true"></i>
-									<span>Pembelian Material</span>
-								</a>
-								<ul class="nav nav-children">
-									<li>
-										<a href="<?php echo base_url() . 'PembelianMaterial/baru'?>">
-											Beli Baru
-										</a>
-									</li>
-									<li>
-										<a href="<?php echo base_url() . 'PembelianMaterial/index/0'?>">
-											Dalam Proses
-										</a>
-									</li>
-									<li>
-										<a href="<?php echo base_url() . 'PembelianMaterial/index/1'?>">
-											Selesai
-										</a>
-									</li>
-									<li>
-										<a href="<?php echo base_url() . 'PembelianMaterial/index/2'?>">
-											Batal
-										</a>
-									</li>
-									<li>
-										<a href="<?php echo base_url() . 'PembelianMaterial'?>">
-											Semua
-										</a>
-									</li>
-								</ul>
-							</li> -->
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-file-text" aria-hidden="true"></i>
@@ -391,6 +357,44 @@
 												</a>
 											</li>
 										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+									<span>Permintaan Pembelian</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/baru'?>">
+											+ Request Baru
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/0'?>">
+											Belum Ditindaklanjuti
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/1'?>">
+											Dalam Proses
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/2'?>">
+											Selesai
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/3'?>">
+											Batal
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/4'?>">
+											Semua
+										</a>
 									</li>
 								</ul>
 							</li>
