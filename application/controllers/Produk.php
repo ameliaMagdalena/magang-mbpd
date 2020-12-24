@@ -277,7 +277,7 @@ class Produk extends CI_Controller {
                 $ct   = $this->input->post("ctpc_".$i);
     
                 if($ct != null){
-                    $jumlah_ct = $this->M_Produk->select_all_ct()->num_rows();
+                    $jumlah_ct = $this->M_Produk->select_all_ct_semua()->num_rows();
                     $id_cts     = $jumlah_ct +1;
                     $id_ct     = "CT-".$id_cts;
     
@@ -304,7 +304,7 @@ class Produk extends CI_Controller {
                 $ct   = $this->input->post("ctfull_".$i);
     
                 if($ct != null){
-                    $jumlah_ct = $this->M_Produk->select_all_ct()->num_rows();
+                    $jumlah_ct = $this->M_Produk->select_all_ct_semua()->num_rows();
                     $id_cts     = $jumlah_ct +1;
                     $id_ct     = "CT-".$id_cts;
     
@@ -333,7 +333,7 @@ class Produk extends CI_Controller {
                     $id_line     = $this->input->post('idline'.$i);
                     $status_km   = $this->input->post('stat_km'.$i);
 
-                    $total_km  = $this->M_Produk->select_all_km()->num_rows();
+                    $total_km  = $this->M_Produk->select_all_km_semua()->num_rows();
                     $id_kms    = $total_km +1;
                     $id_km     = "KONMAT-".$id_kms;
 
@@ -602,9 +602,7 @@ class Produk extends CI_Controller {
                     $kp        = $this->input->post('ekp'.$i);
                     $id_ukprod = $this->input->post('eid_ukuran'.$i);
                     $id_warna  = $this->input->post('eid_warna'.$i);
-                    $del       = $this->input->post('del'.$i);
-
-                    //echo $ket." || ".$kp." || ".$id_ukprod." || ".$id_warna." || ".$del."<br>";
+                    $del       = $this->input->post('uwdel'.$i);
 
                     //sebelumnya ada
                     if($ket == 0){ 

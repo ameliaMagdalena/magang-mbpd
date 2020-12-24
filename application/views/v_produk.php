@@ -98,7 +98,7 @@
                                     <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o" style="margin-right:5px;margin-bottom:5px"
                                         title="Delete" href="#modalhapus<?= $x->id_produk;?>"></a>
                                     <button type="button" class="blog_klik col-lg-3 btn btn-info fa fa-file" 
-                                        id="blog<?php echo $x->id_produk?>" value="<?php echo $x->id_produk;?>" style="margin-right:5px;margin-bottom:5px"></button>
+                                        title="Log" id="blog<?php echo $x->id_produk?>" value="<?php echo $x->id_produk;?>" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php } ?>
                             </td>
                         </tr>
@@ -450,7 +450,7 @@
                                 <label class="col-sm-5 control-label">Nama Produk</label>
                                 <div class="col-sm-7">
                                     <input type="text"  name="nama_produk_edit" id="nama_produk_edit" 
-                                    onchange="cek_nama_produk_edit()"  class="form-control">
+                                    onchange="cek_nama_produk_edit()"  class="form-control" required>
                                     <input type="hidden"  name="nama_produk_sebelum" id="nama_produk_sebelum" class="form-control">
                                     <input type="hidden" name="id_produk_edit" id="id_produk_edit">
                                 </div>
@@ -459,7 +459,7 @@
                                 <label class="col-sm-5 control-label">Harga Produk (Rp)</label>
                                 <div class="col-sm-7">
                                     <input type="number"  name="harga_produk_edit" id="harga_produk_edit" 
-                                    class="form-control" onchange="cek_terisi()">
+                                    class="form-control" onchange="cek_terisi()" required>
                                     <input type="hidden"  name="harga_produk_sebelum" id="harga_produk_sebelum" class="form-control">
                                 </div>
                             </div>
@@ -2378,7 +2378,7 @@
                                     $warnanya+
                                 '</td>'+
                                 '<td style="text-align: center;vertical-align: middle;">'+
-                                    '<input type="checkbox" id="del'+($i+1)+'" name="del'+($i+1)+'" onclick="hapus_ukwar()"> hapus'+
+                                    '<input type="checkbox" id="uwdel'+($i+1)+'" name="uwdel'+($i+1)+'" onclick="hapus_ukwar()"> hapus'+
                                 '</td>'+
                             '</tr>';
                         }
@@ -2428,7 +2428,7 @@
                                     $ukurannya+
                                 '</td>'+
                                 '<td style="text-align: center;vertical-align: middle;">'+
-                                    '<input type="checkbox" id="del'+($i+1)+'" name="del'+($i+1)+'" onclick="hapus_ukwar()"> hapus'+
+                                    '<input type="checkbox" id="uwdel'+($i+1)+'" name="uwdel'+($i+1)+'" onclick="hapus_ukwar()"> hapus'+
                                 '</td>'+
                             '</tr>';
                         }
@@ -2473,7 +2473,7 @@
                                     $warnanya+
                                 '</td>'+
                                 '<td style="text-align: center;vertical-align: middle;">'+
-                                    '<input type="checkbox" id="del'+($i+1)+'" name="del'+($i+1)+'" onclick="hapus_ukwar()"> hapus'+
+                                    '<input type="checkbox" id="uwdel'+($i+1)+'" name="uwdel'+($i+1)+'" onclick="hapus_ukwar()"> hapus'+
                                 '</td>'+
                             '</tr>';
                         }
@@ -2771,10 +2771,10 @@
 
                                     $ket = $("#eket"+$l).val();
 
-                                    if($("#del"+$l).prop("checked") == false){
-                                        $cb = '<input type="checkbox" id="del'+$l+'" name="del'+$l+'" onclick="hapus_ukwar()"> hapus';
+                                    if($("#uwdel"+$l).prop("checked") == false){
+                                        $cb = '<input type="checkbox" id="uwdel'+$l+'" name="uwdel'+$l+'" onclick="hapus_ukwar()"> hapus';
                                     } else{
-                                        $cb = '<input type="checkbox" id="del'+$l+'" name="del'+$l+'" onclick="hapus_ukwar()" checked> hapus';
+                                        $cb = '<input type="checkbox" id="uwdel'+$l+'" name="uwdel'+$l+'" onclick="hapus_ukwar()" checked> hapus';
                                     }
 
                                     $lama = $lama +
@@ -2823,7 +2823,7 @@
                                                 $nama_warna+
                                             '</td>'+
                                             '<td style="text-align: center;vertical-align: middle;">'+
-                                                '<input type="checkbox" id="del'+$jumlah_saat_ini+'" name="del'+$jumlah_saat_ini+'" onclick="hapus_ukwar()"> hapus'+
+                                                '<input type="checkbox" id="uwdel'+$jumlah_saat_ini+'" name="uwdel'+$jumlah_saat_ini+'" onclick="hapus_ukwar()"> hapus'+
                                             '</td>'+
                                         '</tr>'+
                                     '</div>';
@@ -2843,10 +2843,10 @@
 
                                     $ket = $("#eket"+$l).val();
 
-                                    if($("#del"+$l).prop("checked") == false){
-                                        $cb = '<input type="checkbox" id="del'+$l+'" name="del'+$l+'" onclick="hapus_ukwar()"> hapus';
+                                    if($("#uwdel"+$l).prop("checked") == false){
+                                        $cb = '<input type="checkbox" id="uwdel'+$l+'" name="uwdel'+$l+'" onclick="hapus_ukwar()"> hapus';
                                     } else{
-                                        $cb = '<input type="checkbox" id="del'+$l+'" name="del'+$l+'" onclick="hapus_ukwar()" checked> hapus';
+                                        $cb = '<input type="checkbox" id="uwdel'+$l+'" name="uwdel'+$l+'" onclick="hapus_ukwar()" checked> hapus';
                                     }
 
                                     if($ket == 0){

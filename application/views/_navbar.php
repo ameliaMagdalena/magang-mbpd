@@ -126,6 +126,7 @@
 									</li>
 								</ul>
 							</li>
+							
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-check-circle" aria-hidden="true"></i>
@@ -210,6 +211,7 @@
 									</li>
 								</ul>
 							</li>
+							
 							<!-- <li class="nav-parent">
 								<a>
 									<i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -393,6 +395,7 @@
 								</ul>
 							</li>
 							
+							
 							<!-- <li class="nav-parent">
 								<a>
 									<i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -471,6 +474,7 @@
 									</li>
 								</ul>
 							</li>
+
 							
 							<!-- produksi -->
 								<!-- prencanaan produksi -->

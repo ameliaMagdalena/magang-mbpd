@@ -31,12 +31,20 @@ class M_Produk extends CI_Model {
         return $this->db->query("SELECT * FROM konsumsi_material WHERE status_delete='0'");
     }
 
+    function select_all_km_semua(){
+        return $this->db->query("SELECT * FROM konsumsi_material");
+    }
+
     function select_all_km_aktif(){
         return $this->db->query("SELECT * FROM konsumsi_material");
     }
 
     function select_all_ct(){
         return $this->db->query("SELECT * FROM cycle_time WHERE status_delete='0'");
+    }
+
+    function select_all_ct_semua(){
+        return $this->db->query("SELECT * FROM cycle_time ");
     }
 
     function select_all_ct_lengkap(){

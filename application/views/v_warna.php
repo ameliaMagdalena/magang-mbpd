@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Master Data Warna</span></li>
+                <li><span>Master Data Warna Produk</span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -29,7 +29,7 @@
         <br><br>
 
         <header class="panel-heading">
-            <h2 class="panel-title">Data Warna</h2>
+            <h2 class="panel-title">Data Warna Produk</h2>
         </header>
 
         <div class="panel-body">
@@ -55,7 +55,7 @@
                                 <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
                                 title="Delete" href="#modalhapus<?= $x->id_warna;?>" style="margin-right:5px;margin-bottom:5px"></a>
                                 <button type="button" class="blog_klik col-lg-3 btn btn-info fa fa-file" 
-                                id="blog<?php echo $x->id_warna?>" value="<?php echo $x->id_warna;?>" style="margin-right:5px;margin-bottom:5px"></button>
+                                title="Log" id="blog<?php echo $x->id_warna?>" value="<?php echo $x->id_warna;?>" style="margin-right:5px;margin-bottom:5px"></button>
                             </td>
                         </tr>
     
