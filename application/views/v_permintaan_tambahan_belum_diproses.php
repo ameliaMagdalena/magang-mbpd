@@ -232,7 +232,7 @@
                         <div class="form-group mt-lg">
                             <label class="col-sm-5 control-label">Jumlah Permintaan</label>
                             <div class="col-sm-7">
-                                <input type="number" min="1" class="form-control" id="jumlah_ed" name="jumlah_ed">
+                                <input type="number" min="1" class="form-control" id="jumlah_ed" name="jumlah_ed" required>
                             </div>
                         </div>
                         <div class="form-group mt-lg">

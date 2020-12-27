@@ -415,12 +415,12 @@ class M_Dashboard extends CI_Model {
         //admin purchasing
             function surat_jalan($now){
                 return $this->db->query("SELECT COUNT(id_surat_jalan) as jumlah_sj FROM surat_jalan 
-                WHERE surat_jalan.tanggal='$now' AND surat_jalan.status_delete='0' AND (surat_jalan.status_surat_jalan BETWEEN 0 AND 1) ");
+                WHERE surat_jalan.status_delete='0' AND (surat_jalan.status_surat_jalan BETWEEN 0 AND 1) ");
             }
 
             function invoice($now){
                 return $this->db->query("SELECT COUNT(id_invoice) as jumlah_invoice FROM invoice 
-                WHERE invoice.tanggal='$now' AND invoice.status_delete='0' AND invoice.status_invoice='0' ");
+                WHERE invoice.status_delete='0' AND invoice.status_invoice='0' ");
             }
         //tutup admin purchasing
 

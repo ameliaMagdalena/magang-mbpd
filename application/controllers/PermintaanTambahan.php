@@ -211,6 +211,11 @@ class PermintaanTambahan extends CI_Controller {
                 //tutup notif permohonan akses
             //tutup
 
+            
+            //update permintaan tambahan 
+            $now = date('Y-m-d');
+            $this->M_PermintaanTambahan->cek_batal($now);
+
           $this->load->view('v_permintaan_tambahan_tambah1',$data);
         }
         else{
@@ -393,6 +398,11 @@ class PermintaanTambahan extends CI_Controller {
                     $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
                 //tutup notif permohonan akses
             //tutup
+
+            
+            //update permintaan tambahan 
+            $now = date('Y-m-d');
+            $this->M_PermintaanTambahan->cek_batal($now);
   
           $this->load->view('v_permintaan_tambahan_tambah2',$data);
         }
@@ -576,7 +586,12 @@ class PermintaanTambahan extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
-    
+        
+        
+        //update permintaan tambahan 
+        $now = date('Y-m-d');
+        $this->M_PermintaanTambahan->cek_batal($now);
+
   
         $this->load->view('v_permintaan_tambahan_tambah0',$data);
     }
@@ -764,6 +779,11 @@ class PermintaanTambahan extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+
+            
+        //update permintaan tambahan 
+        $now = date('Y-m-d');
+        $this->M_PermintaanTambahan->cek_batal($now);
 
         $this->load->view('v_permintaan_tambahan_tambah2',$data);
     }
@@ -1095,6 +1115,11 @@ class PermintaanTambahan extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+
+        
+        //update permintaan tambahan 
+        $now = date('Y-m-d');
+        $this->M_PermintaanTambahan->cek_batal($now);
   
       $this->load->view('v_permintaan_tambahan_semua0',$data);
     }
@@ -1290,6 +1315,11 @@ class PermintaanTambahan extends CI_Controller {
             //tutup notif permohonan akses
         //tutup
 
+        
+        //update permintaan tambahan 
+        $now = date('Y-m-d');
+        $this->M_PermintaanTambahan->cek_batal($now);
+
         $this->load->view('v_permintaan_tambahan_semua', $data);
     }
 
@@ -1471,6 +1501,11 @@ class PermintaanTambahan extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+
+        
+        //update permintaan tambahan 
+        $now = date('Y-m-d');
+        $this->M_PermintaanTambahan->cek_batal($now);
   
       $this->load->view('v_permintaan_tambahan_belum_diproses0',$data);
     }
@@ -1666,6 +1701,11 @@ class PermintaanTambahan extends CI_Controller {
             //tutup notif permohonan akses
         //tutup
 
+        
+        //update permintaan tambahan 
+        $now = date('Y-m-d');
+        $this->M_PermintaanTambahan->cek_batal($now);
+
         $this->load->view('v_permintaan_tambahan_belum_diproses', $data);
     }
 
@@ -1847,6 +1887,11 @@ class PermintaanTambahan extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+
+            
+        //update permintaan tambahan 
+        $now = date('Y-m-d');
+        $this->M_PermintaanTambahan->cek_batal($now);
   
       $this->load->view('v_permintaan_tambahan_diterima0',$data);
     }
@@ -2042,6 +2087,11 @@ class PermintaanTambahan extends CI_Controller {
             //tutup notif permohonan akses
         //tutup
 
+            
+        //update permintaan tambahan 
+        $now = date('Y-m-d');
+        $this->M_PermintaanTambahan->cek_batal($now);
+
         $this->load->view('v_permintaan_tambahan_diterima', $data);
     }
 
@@ -2223,6 +2273,11 @@ class PermintaanTambahan extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+
+        
+        //update permintaan tambahan 
+        $now = date('Y-m-d');
+        $this->M_PermintaanTambahan->cek_batal($now);
   
       $this->load->view('v_permintaan_tambahan_ditolak0',$data);
     }
@@ -2418,6 +2473,11 @@ class PermintaanTambahan extends CI_Controller {
             //tutup notif permohonan akses
         //tutup
 
+            
+        //update permintaan tambahan 
+        $now = date('Y-m-d');
+        $this->M_PermintaanTambahan->cek_batal($now);
+
         $this->load->view('v_permintaan_tambahan_ditolak', $data);
     }
 
@@ -2599,6 +2659,11 @@ class PermintaanTambahan extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+
+        
+        //update permintaan tambahan 
+        $now = date('Y-m-d');
+        $this->M_PermintaanTambahan->cek_batal($now);
   
       $this->load->view('v_permintaan_tambahan_selesai0',$data);
     }
@@ -2794,6 +2859,11 @@ class PermintaanTambahan extends CI_Controller {
             //tutup notif permohonan akses
         //tutup
 
+            
+        //update permintaan tambahan 
+        $now = date('Y-m-d');
+        $this->M_PermintaanTambahan->cek_batal($now);
+
         $this->load->view('v_permintaan_tambahan_selesai', $data);
     }
 
@@ -2975,6 +3045,11 @@ class PermintaanTambahan extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+
+            
+        //update permintaan tambahan 
+        $now = date('Y-m-d');
+        $this->M_PermintaanTambahan->cek_batal($now);
   
       $this->load->view('v_permintaan_tambahan_batal0',$data);
     }
@@ -3169,6 +3244,11 @@ class PermintaanTambahan extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+
+        
+        //update permintaan tambahan 
+        $now = date('Y-m-d');
+        $this->M_PermintaanTambahan->cek_batal($now);
 
         $this->load->view('v_permintaan_tambahan_batal', $data);
     }

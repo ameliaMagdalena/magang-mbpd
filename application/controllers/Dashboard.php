@@ -11,8 +11,11 @@ class Dashboard extends CI_Controller {
         $this->load->model('M_UkuranProduk');
         $this->load->model('M_Warna');
         $this->load->model('M_Bpbj');
-        $this->load->model('M_SuratPerintahLembur');
         $this->load->model('M_Line');
+        $this->load->model('M_SuratPerintahLembur');
+        $this->load->model('M_PengambilanMaterialProduksi');
+        $this->load->model('M_PermintaanMaterialProduksi');
+        $this->load->model('M_PermintaanTambahan');
 
         if($this->session->userdata('status_login') != "login"){
 			    redirect('akses');
@@ -23,6 +26,15 @@ class Dashboard extends CI_Controller {
     $now = date('Y-m-d');
     //update spl batal
     $this->M_SuratPerintahLembur->cek_batal($now);
+
+    //update permintaan material produksi
+    $this->M_PermintaanMaterialProduksi->cek_batal($now);
+
+    //update pengambilan material produksi
+    $this->M_PengambilanMaterialProduksi->cek_batal($now);
+
+    //update permintaan tambahan 
+    $this->M_PermintaanTambahan->cek_batal($now);
 
     //notif produksi
         //notif permintaan material produksi

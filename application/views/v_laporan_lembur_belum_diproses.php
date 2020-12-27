@@ -99,7 +99,7 @@
                                         $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
                                         $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
                                             <button type="button" class="bproses_klik col-lg-3 btn btn-success fa fa-gear" 
-                                            id="bproses<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Edit" style="margin-bottom:5px;margin-right:5px"></button>
+                                            id="bproses<?= $ll->id_surat_perintah_lembur?>" value="<?= $ll->id_surat_perintah_lembur?>" title="Proses" style="margin-bottom:5px;margin-right:5px"></button>
                                     <?php }?>
                                 <?php } else if($ll->status_spl == 4){ ?>
                                     <button type="button" class="bdet2_klik col-lg-3 btn btn-primary fa fa-info-circle" 

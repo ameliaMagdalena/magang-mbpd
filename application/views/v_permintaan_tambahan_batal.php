@@ -112,6 +112,8 @@
                                         echo "Ditolak";
                                     } else if($x->status == 3){
                                         echo "Selesai";
+                                    } else if($x->status == 4){
+                                        echo "Batal";
                                     }
                                 ?>
                             </td>
@@ -343,6 +345,8 @@
                     $("#status_det").val("Ditolak");
                 } else if(respond['permat'][0]['status'] == 3){
                     $("#status_det").val("Selesai");
+                } else if(respond['permat'][0]['status'] == 4){
+                    $("#status_det").val("Batal");
                 }
                
                 $("#modaldetail").modal();

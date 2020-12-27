@@ -196,6 +196,8 @@ class PengambilanMaterialProduksi extends CI_Controller {
           //tutup notif permohonan akses
       //tutup
   
+      $now = date('Y-m-d');
+      $this->M_PengambilanMaterialProduksi->cek_batal($now);
 
       $this->load->view('v_pengambilan_material_produksi_tambah0',$data);
     }
@@ -393,6 +395,9 @@ class PengambilanMaterialProduksi extends CI_Controller {
           //tutup notif permohonan akses
       //tutup
   
+      $now = date('Y-m-d');
+      $this->M_PengambilanMaterialProduksi->cek_batal($now);
+
 
       if($nmline == "Line Sewing"){
         $this->load->view('v_pengambilan_material_produksi_tambah1',$data);
@@ -590,6 +595,9 @@ class PengambilanMaterialProduksi extends CI_Controller {
               $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
           //tutup notif permohonan akses
       //tutup
+
+      $now = date('Y-m-d');
+      $this->M_PengambilanMaterialProduksi->cek_batal($now);
   
       $this->load->view('v_pengambilan_material_produksi_tambah2',$data);
     }
@@ -1252,6 +1260,9 @@ class PengambilanMaterialProduksi extends CI_Controller {
           //tutup notif permohonan akses
       //tutup
 
+      $now = date('Y-m-d');
+      $this->M_PengambilanMaterialProduksi->cek_batal($now);
+
       $this->load->view('v_pengambilan_material_produksi_semua0',$data);
     }
 
@@ -1452,6 +1463,9 @@ class PengambilanMaterialProduksi extends CI_Controller {
               $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
           //tutup notif permohonan akses
       //tutup
+
+      $now = date('Y-m-d');
+      $this->M_PengambilanMaterialProduksi->cek_batal($now);
   
 
       $this->load->view('v_pengambilan_material_produksi_semua',$data);
@@ -1635,6 +1649,9 @@ class PengambilanMaterialProduksi extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+
+        $now = date('Y-m-d');
+        $this->M_PengambilanMaterialProduksi->cek_batal($now);
   
         $this->load->view('v_pengambilan_material_produksi_belum_diambil0',$data);
     }
@@ -1836,7 +1853,9 @@ class PengambilanMaterialProduksi extends CI_Controller {
               $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
           //tutup notif permohonan akses
       //tutup
-
+            
+      $now = date('Y-m-d');
+      $this->M_PengambilanMaterialProduksi->cek_batal($now);
       
       $this->load->view('v_pengambilan_material_produksi_belum_diambil',$data);
     }
@@ -2019,6 +2038,9 @@ class PengambilanMaterialProduksi extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+
+        $now = date('Y-m-d');
+        $this->M_PengambilanMaterialProduksi->cek_batal($now);
   
         $this->load->view('v_pengambilan_material_produksi_sudah_diambil0',$data);
     }
@@ -2220,7 +2242,9 @@ class PengambilanMaterialProduksi extends CI_Controller {
               $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
           //tutup notif permohonan akses
       //tutup
-  
+        
+      $now = date('Y-m-d');
+      $this->M_PengambilanMaterialProduksi->cek_batal($now);
 
       $this->load->view('v_pengambilan_material_produksi_sudah_diambil',$data);
     }
@@ -2422,7 +2446,9 @@ class PengambilanMaterialProduksi extends CI_Controller {
               $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
           //tutup notif permohonan akses
       //tutup
-  
+      
+      $now = date('Y-m-d');
+      $this->M_PengambilanMaterialProduksi->cek_batal($now);
 
       $this->load->view('v_pengambilan_material_produksi_batal',$data);
     }

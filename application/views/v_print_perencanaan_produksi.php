@@ -363,6 +363,6 @@ class Pdfx extends TCPDF
             "data" => "demo"
         ));
         ob_end_clean();
-        $pdf->Output('contoh1.pdf', 'I');
+        $pdf->Output('perencanaan_produksi.pdf', 'I');
     //tutup
 ?>

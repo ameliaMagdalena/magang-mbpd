@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Tambah BPBD</h2>
+        <h2>Tambah BPDB</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Tambah BPBD</span></li>
+                <li><span>Tambah BPDB</span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -104,7 +104,7 @@
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
                                     value="<?= $no;?>" title="Detail" style="margin-right:5px;margin-bottom:5px"></button>
                                 <button type="button" class="badd_klik col-lg-3 btn btn-success fa fa-plus-square-o" 
-                                    value="<?= $no;?>" title="Buat BPBD" style="margin-right:5px;margin-bottom:5px"></button>
+                                    value="<?= $no;?>" title="Buat BPDB" style="margin-right:5px;margin-bottom:5px"></button>
                             </td>
                         </tr>
                     <?php $no++; }}?>
@@ -163,7 +163,7 @@
                 <form method="POST" action="<?= base_url()?>bpbd/buat_bpbd">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title"><b>Buat BPBD</b></h4>
+                            <h4 class="modal-title"><b>Buat BPDB</b></h4>
                         </div>
                         <div class="modal-body">
                             <div class="form-group mt-lg">

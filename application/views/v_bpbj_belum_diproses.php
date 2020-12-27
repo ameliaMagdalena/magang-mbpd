@@ -310,7 +310,7 @@
                 else if(respond['bpbj'][0]['status_bpbj'] == 2){
                     $("#status_det1").val("Selesai");
                 }
-                $("#keterangan_det1").val(respond['bpbj'][0]['keterangan_bpbj']);
+                $("#keterangan_det1").val(respond['bpbj'][0]['keterangan']);
 
                 $isi = "";
             
@@ -397,7 +397,6 @@
                             '<td>'+
                                 '<center>'+$selected_po+'</center>'+
                             '</td>'+
-                            '<td></td>'+
                         '</tr>';
                 }
 
@@ -409,7 +408,6 @@
                             '<th style="text-align: center;vertical-align: middle;">Item</th>'+
                             '<th style="text-align: center;vertical-align: middle;">Qty (pcs)</th>'+
                             '<th style="text-align: center;vertical-align: middle;">PO</th>'+
-                            '<th style="text-align: center;vertical-align: middle;">Remark</th>'+
                         '</tr>'+
                     '</thead>'+
                     '<tbody>'+

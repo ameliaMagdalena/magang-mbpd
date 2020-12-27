@@ -110,6 +110,8 @@
                                         echo "Ditolak";
                                     } else if($x->status == 3){
                                         echo "Selesai";
+                                    } else if($x->status == 4){
+                                        echo "Batal";
                                     }
                                 ?>
                             </td>
@@ -230,7 +232,7 @@
                         <div class="form-group mt-lg">
                             <label class="col-sm-5 control-label">Jumlah Permintaan</label>
                             <div class="col-sm-7">
-                                <input type="number" min="1" class="form-control" id="jumlah_ed" name="jumlah_ed">
+                                <input type="number" min="1" class="form-control" id="jumlah_ed" name="jumlah_ed" required>
                             </div>
                         </div>
                         <div class="form-group mt-lg">
@@ -341,6 +343,8 @@
                     $("#status_det").val("Ditolak");
                 } else if(respond['permat'][0]['status'] == 3){
                     $("#status_det").val("Selesai");
+                } else if(respond['permat'][0]['status'] == 4){
+                    $("#status_det").val("Batal");
                 }
                
                 $("#modaldetail").modal();

@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Master Data Persediaan Line</h2>
+        <h2>Persediaan Line</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Master Data Persediaan Line</span></li>
+                <li><span>Persediaan Line</span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -482,17 +482,23 @@
     function material_change(){
         var id = $("#material").val();
 
-        $.ajax({
-            type:"post",    
-            url:"<?php echo base_url() ?>inventoryLine/satuan_masuk",
-            dataType: "JSON",
-            data: {id:id},
+        if(id != "-"){
+            $.ajax({
+                type:"post",    
+                url:"<?php echo base_url() ?>inventoryLine/satuan_masuk",
+                dataType: "JSON",
+                data: {id:id},
 
-            success: function(respond){
-                $("#satuan").val(respond['satuan'][0]['satuan_keluar']);
-                ubah();
-            }
-        });
+                success: function(respond){
+                    $("#satuan").val(respond['satuan'][0]['satuan_keluar']);
+                    ubah();
+                }
+            });
+        } else{
+            $("#satuan").val("");
+            $("#simpan").prop('disabled',true);
+        }
+        
     }
 </script>
 
@@ -500,27 +506,32 @@
 <script>
     function persediaan_ubah(){
         var id = $("#nama_persediaan").val();
+         if(id != "-"){
+            $.ajax({
+                type:"post",    
+                url:"<?php echo base_url() ?>inventoryLine/get_one_persediaan_line",
+                dataType: "JSON",
+                data: {id:id},
 
-        $.ajax({
-            type:"post",    
-            url:"<?php echo base_url() ?>inventoryLine/get_one_persediaan_line",
-            dataType: "JSON",
-            data: {id:id},
+                success: function(respond){
+                    $("#total_persediaan").val(respond['seli'][0]['total_material']);
+                    $("#satuan_keluar").val(respond['seli'][0]['satuan_keluar']);
 
-            success: function(respond){
-                $("#total_persediaan").val(respond['seli'][0]['total_material']);
-                $("#satuan_keluar").val(respond['seli'][0]['satuan_keluar']);
+                    $isi = 
+                        '<label class="col-sm-5 control-label">Jumlah Keluar</label>'+
+                        '<div class="col-sm-7">'+
+                            '<input class="form-control" type="number" min="0.01" step=".01" max="'+respond['seli'][0]['total_material']
+                            +'" id="jumlah_keluar" name="jumlah_keluar" onchange="cek_pengeluaran()">'+
+                        '</div>';
 
-                $isi = 
-                    '<label class="col-sm-5 control-label">Jumlah Keluar</label>'+
-                    '<div class="col-sm-7">'+
-                        '<input class="form-control" type="number" min="0.01" step=".01" max="'+respond['seli'][0]['total_material']
-                        +'" id="jumlah_keluar" name="jumlah_keluar" onchange="cek_pengeluaran()">'+
-                    '</div>';
-
-                $("#div_keluar").html($isi);
-            }
-        });
+                    $("#div_keluar").html($isi);
+                    
+                }
+            });
+         } else{
+            $("#simpan_keluar").prop('disabled',true);
+         }
+        
     }
 </script>
 

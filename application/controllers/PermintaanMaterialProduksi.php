@@ -200,6 +200,10 @@ class PermintaanMaterialProduksi extends CI_Controller {
             //tutup notif permohonan akses
         //tutup
 
+        //update permintaan material produksi
+        $now = date('Y-m-d');
+        $this->M_PermintaanMaterialProduksi->cek_batal($now);
+
 		$this->load->view('v_permintaan_material_produksi_semua',$data);
     }
 
@@ -385,6 +389,10 @@ class PermintaanMaterialProduksi extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+        
+        //update permintaan material produksi
+        $now = date('Y-m-d');
+        $this->M_PermintaanMaterialProduksi->cek_batal($now);
 
 		$this->load->view('v_permintaan_material_produksi_belum_ditindaklanjuti',$data);
     }
@@ -572,6 +580,10 @@ class PermintaanMaterialProduksi extends CI_Controller {
             //tutup notif permohonan akses
         //tutup
 
+        //update permintaan material produksi
+        $now = date('Y-m-d');
+        $this->M_PermintaanMaterialProduksi->cek_batal($now);
+
 		$this->load->view('v_permintaan_material_produksi_sedang_diproses',$data);
     }
 
@@ -757,6 +769,10 @@ class PermintaanMaterialProduksi extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+        
+        //update permintaan material produksi
+        $now = date('Y-m-d');
+        $this->M_PermintaanMaterialProduksi->cek_batal($now);
 
 		$this->load->view('v_permintaan_material_produksi_material_tersedia',$data);
     }
@@ -943,6 +959,10 @@ class PermintaanMaterialProduksi extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+        
+        //update permintaan material produksi
+        $now = date('Y-m-d');
+        $this->M_PermintaanMaterialProduksi->cek_batal($now);
 
 		$this->load->view('v_permintaan_material_produksi_selesai',$data);
     }
@@ -1129,6 +1149,10 @@ class PermintaanMaterialProduksi extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+        
+        //update permintaan material produksi
+        $now = date('Y-m-d');
+        $this->M_PermintaanMaterialProduksi->cek_batal($now);
 
 		$this->load->view('v_permintaan_material_produksi_batal',$data);
     }
@@ -1315,6 +1339,10 @@ class PermintaanMaterialProduksi extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+        
+        //update permintaan material produksi
+        $now = date('Y-m-d');
+        $this->M_PermintaanMaterialProduksi->cek_batal($now);
 
 		$this->load->view('v_permintaan_material_produksi_ditolak',$data);
     }

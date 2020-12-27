@@ -196,6 +196,9 @@ class SuratPerintahLembur extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+        
+        $now = date('Y-m-d');
+        $this->M_SuratPerintahLembur->cek_batal($now);
 
 		$this->load->view('v_surat_perintah_lembur_tambah', $data);
     }
@@ -407,6 +410,9 @@ class SuratPerintahLembur extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+        
+        $now = date('Y-m-d');
+        $this->M_SuratPerintahLembur->cek_batal($now);
 
         $this->load->view('v_surat_perintah_lembur_semua',$data);
     }
@@ -623,6 +629,9 @@ class SuratPerintahLembur extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+            
+        $now = date('Y-m-d');
+        $this->M_SuratPerintahLembur->cek_batal($now);
 
         $this->load->view('v_surat_perintah_lembur_belum_diproses',$data);
     }
@@ -839,6 +848,9 @@ class SuratPerintahLembur extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+        
+        $now = date('Y-m-d');
+        $this->M_SuratPerintahLembur->cek_batal($now);
 
         $this->load->view('v_surat_perintah_lembur_belum_disetujui', $data);
     }
@@ -1055,6 +1067,9 @@ class SuratPerintahLembur extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+        
+        $now = date('Y-m-d');
+        $this->M_SuratPerintahLembur->cek_batal($now);
 
         $this->load->view('v_surat_perintah_lembur_belum_dikonfirmasi',$data);
     }
@@ -1266,6 +1281,9 @@ class SuratPerintahLembur extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
+        
+        $now = date('Y-m-d');
+        $this->M_SuratPerintahLembur->cek_batal($now);
 
         $this->load->view('v_surat_perintah_lembur_terkonfirmasi',$data);
     }
@@ -1482,7 +1500,10 @@ class SuratPerintahLembur extends CI_Controller {
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
         //tutup
-
+        
+        $now = date('Y-m-d');
+        $this->M_SuratPerintahLembur->cek_batal($now);
+        
         $this->load->view('v_surat_perintah_lembur_batal',$data);
     }
 

@@ -575,7 +575,7 @@
                         <input type="hidden" id="jumlah_karyawan" name="jumlah_karyawan" value="0">
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-primary" value="Simpan">
+                        <input type="submit" class="btn btn-primary" id="simpan" value="Simpan" disabled>
                         <input type="button" class="btn btn-default modal-dismiss" onclick="reload()" value="Batal">
                     </div>
                 </div>
@@ -994,7 +994,7 @@
             '</table>';
 
             $("#table_karyawan").html($tablenya);
-            
+            $("#simpan").prop('disabled',false);
         }
         else{
             alert("Silakan pilih karyawan terlebih dahulu");

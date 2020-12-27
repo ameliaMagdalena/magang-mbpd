@@ -1333,7 +1333,7 @@ class PerencanaanProduksi extends CI_Controller {
                 }
             }
         }
-        redirect('perencanaanProduksi/semua_perencanaan_produksi');
+       redirect('perencanaanProduksi/semua_perencanaan_produksi');
     }
 
     public function detail_produksi_tertunda(){
@@ -1778,40 +1778,33 @@ class PerencanaanProduksi extends CI_Controller {
                         }
                         $this->M_PerencanaanProduksi->edit('produksi_line',$data_ef,$where_ef);
                     
-                    //SURAT PERINTAH LEMBUR
-                        $spl    = $this->M_SuratPerintahLembur->cari_spl($tgl,$id_line)->result_array();
-                        $jm_spl = $this->M_SuratPerintahLembur->cari_spl($tgl,$id_line)->num_rows();
+                        //buat SPL
+                            if(($total_waktu_perencanaan != 0 && $keterangan_hari == "Hari Libur") || $efisiensi_perencanaan > 100){
+                                $jum_spl = $this->M_SuratPerintahLembur->select_all()->num_rows();
+                                $jumlah = $jum_spl + 1;
+                                $id_spl_baru = "SPL-".$jumlah;
+                                
+                                $cek_tanggal = $this->M_SuratPerintahLembur->cek_tanggal($tgl,$id_line)->num_rows();
 
-                        //jika sebelumnya tidak ada spl
-                        if($jm_spl == 0){
-                            //sekarang ada
-                            if($total_waktu_perencanaan != 0){
-                                //kalo efisiensi > 0 && harinya bukan merupakan hari produksi
-                                if($total_waktu_perencanaan != 0 && $keterangan_hari == "Hari Libur"){
-                                    $jum_spl     = $this->M_SuratPerintahLembur->select_all()->num_rows();
-                                    $jumlah      = $jum_spl + 1;
-                                    $id_spl_baru = "SPL-".$jumlah;
-                                    
-                                    $cek_tanggal = $this->M_SuratPerintahLembur->cek_tanggal($tgl,$id_line)->num_rows();
+                                if($cek_tanggal == 0){
+                                    $data_spl = array (
+                                        'id_surat_perintah_lembur' => $id_spl_baru,
+                                        'id_line'                  => $id_line,
+                                        'tanggal'                  => $tgl,
+                                        'waktu_lembur'             => $keterangan_hari,
+                                        'status_spl'               => 0,
+                                        'keterangan_spl'           => 0,
+                                        'user_add'                 => $user,
+                                        'waktu_add'                => $now,
+                                        'status_delete'            => 0
+                                    );
+                                    $this->M_SuratPerintahLembur->insert('surat_perintah_lembur',$data_spl);
+                                }
+                                else{
+                                    $idspl = $this->M_SuratPerintahLembur->cek_tanggal($tgl,$id_line)->result_array();
+                                    $idsplnya = $idspl[0]['id_surat_perintah_lembur'];
 
-                                    if($cek_tanggal == 0){
-                                        $data_spl = array (
-                                            'id_surat_perintah_lembur' => $id_spl_baru,
-                                            'id_line'                  => $id_line,
-                                            'tanggal'                  => $tgl,
-                                            'waktu_lembur'             => $keterangan_hari,
-                                            'status_spl'               => 0,
-                                            'keterangan_spl'           => 0,
-                                            'user_add'                 => $user,
-                                            'waktu_add'                => $now,
-                                            'status_delete'            => 0
-                                        );
-                                        $this->M_SuratPerintahLembur->insert('surat_perintah_lembur',$data_spl);
-                                    }
-                                    else{
-                                        $idspl = $this->M_SuratPerintahLembur->cek_tanggal($tgl,$id_line)->result_array();
-                                        $idsplnya = $idspl[0]['id_surat_perintah_lembur'];
-
+                                    if($idspl[0]['keterangan_spl'] == 1){
                                         $data_spl = array (
                                             'keterangan_spl' => 2,
                                             'user_edit'      => $user,
@@ -1823,94 +1816,42 @@ class PerencanaanProduksi extends CI_Controller {
                                         $this->M_SuratPerintahLembur->edit('surat_perintah_lembur',$data_spl,$where_spl);
                                     }
                                 }
-                                else if($efisiensi_perencanaan > 100){
-                                    $jum_spl = $this->M_SuratPerintahLembur->select_all()->num_rows();
-                                    $jumlah = $jum_spl + 1;
-                                    $id_spl_baru = "SPL-".$jumlah;
-                                    
-                                    $cek_tanggal = $this->M_SuratPerintahLembur->cek_tanggal($tgl,$id_line)->num_rows();
-
-                                    if($cek_tanggal == 0){
-                                        $data_spl = array (
-                                            'id_surat_perintah_lembur' => $id_spl_baru,
-                                            'id_line'                  => $id_line,
-                                            'tanggal'                  => $tgl,
-                                            'waktu_lembur'             => $keterangan_hari,
-                                            'status_spl'               => 0,
-                                            'keterangan_spl'           => 0,
-                                            'user_add'                 => $user,
-                                            'waktu_add'                => $now,
-                                            'status_delete'            => 0
-                                        );
-                                        $this->M_SuratPerintahLembur->insert('surat_perintah_lembur',$data_spl);
-                                    }
-                                    else{
-                                        $idspl = $this->M_SuratPerintahLembur->cek_tanggal($tgl,$id_line)->result_array();
-                                        $idsplnya = $idspl[0]['id_surat_perintah_lembur'];
-
-                                        $data_spl = array (
-                                            'keterangan_spl' => 2,
-                                            'user_edit'      => $user,
-                                            'waktu_edit'     => $now
-                                        );
-                                        $where_spl = array (
-                                            'id_surat_perintah_lembur' => $idsplnya
-                                        );
-                                        $this->M_SuratPerintahLembur->edit('surat_perintah_lembur',$data_spl,$where_spl);
-                                    }
-                                }
-                            //sekarang tidak ada
-                            } 
-                        //jika sebelumnya ada spl
-                        } else{
-                            //ada
-                            if($total_waktu_perencanaan != 0 && $efisiensi_perencanaan > 100 && $efisiensi_perencanaan != null){
-                                if($spl[0]['keterangan_spl'] == 1){
-                                    $data_spl = array(
-                                        'keterangan_spl' => 2,
-                                        'user_edit'      => $user,
-                                        'waktu_edit'     => $now
-                                    );
-
-                                    $where_spl = array (
-                                        'id_surat_perintah_lembur' => $spl[0]['id_surat_perintah_lembur']
-                                    );
-
-                                    $this->M_SuratPerintahLembur->edit('surat_perintah_lembur',$data_spl,$where_spl);
-                                }
-                            //tidak ada
                             } else{
-                                //jika hanya berdasarkan perencanaan produksi, status deletenya = 0
-                                if($spl[0]['keterangan_spl'] == 0){
-                                    $data_spl = array(
-                                        'user_delete'  => $user,
-                                        'waktu_delete' => $now,
-                                        'status_delete'=> 1
-                                    );
+                                $idspl    = $this->M_SuratPerintahLembur->cek_tanggal($tgl,$id_line)->result_array();
+                                $jm_idspl = $this->M_SuratPerintahLembur->cek_tanggal($tgl,$id_line)->num_rows();
+                               
 
-                                    $where_spl = array (
-                                        'id_surat_perintah_lembur' => $spl[0]['id_surat_perintah_lembur']
-                                    );
+                                if($jm_idspl > 0){
+                                    $idsplnya = $idspl[0]['id_surat_perintah_lembur'];
 
-                                    $this->M_SuratPerintahLembur->edit('surat_perintah_lembur',$data_spl,$where_spl);
+                                    if($idspl[0]['keterangan_spl'] == 0){
+                                        $data_spl = array (
+                                            'status_delete'  => 1,
+                                            'user_delete'    => $user,
+                                            'waktu_delete'   => $now
+                                        );
+
+                                        $where_spl = array (
+                                            'id_surat_perintah_lembur' => $idsplnya
+                                        );
+                                        $this->M_SuratPerintahLembur->edit('surat_perintah_lembur',$data_spl,$where_spl);
+                                    }
+                                    else if($idspl[0]['keterangan_spl'] == 2){
+                                        $data_spl = array (
+                                            'keterangan_spl' => 1,
+                                            'user_edit'      => $user,
+                                            'waktu_edit'     => $now
+                                        );
+                                        $where_spl = array (
+                                            'id_surat_perintah_lembur' => $idsplnya
+                                        );
+                                        $this->M_SuratPerintahLembur->edit('surat_perintah_lembur',$data_spl,$where_spl);
+                                    }
                                 }
-                                //jika berdasarkan perencanaan produksi & others, ubah keterangan spl menjadi 1
-                                else if($spl[0]['keterangan_spl'] == 2){
-                                    $data_spl = array(
-                                        'keterangan_spl'=> 1,
-                                        'user_edit'     => $user,
-                                        'waktu_edit'    => $now
-                                    );
-                                    
-                                    $where_spl = array (
-                                        'id_surat_perintah_lembur' => $spl[0]['id_surat_perintah_lembur']
-                                    );
-
-                                    $this->M_SuratPerintahLembur->edit('surat_perintah_lembur',$data_spl,$where_spl);
-                                }
+                                
                             }
-                        }
-                    //TUTUP SPL
+                            
+                        //tutup spl
                 }
             //tutup produksi line
             

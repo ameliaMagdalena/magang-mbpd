@@ -310,7 +310,7 @@
                                             $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
                                             $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management")){?>
                                         <button type="button" class="bse7_klik col-lg-3 btn btn-success fa fa-check-square" 
-                                            value="<?= $no;?>" title="Disetujui" style="margin-right:5px;margin-bottom:5px"></button>
+                                            value="<?= $no;?>" title="Konfirmasi" style="margin-right:5px;margin-bottom:5px"></button>
                                     <?php } ?>
                                     <?php if($p->status_laporan == 3){?>
                                         <button type="button" class="bprint_klik col-lg-3 btn fa fa-print" style="background-color:#E56B1F;color:white;"
@@ -560,12 +560,12 @@
             <form method="POST" action="<?= base_url()?>hasilProduksi/konfirmasi_ppic">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title"><b>Terima Laporan Hasil Produksi</b></h4>
+                        <h4 class="modal-title"><b>Konfirmasi Laporan Hasil Produksi</b></h4>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id_produksinya" id="id_produksinya">
                         <input type="hidden" name="tanggalnya" id="tanggalnya">
-                        <p>Apakah anda yakin akan menerima laporan hasil produksi dengan tanggal produksi <span id="tanggal_produksinya"></span>?</p>
+                        <p>Apakah anda yakin akan mengkonfirmasi laporan hasil produksi dengan tanggal produksi <span id="tanggal_produksinya"></span>?</p>
                         <br>
                         
                         <h4><b>Konsumsi Material</b></h4>
@@ -1449,6 +1449,8 @@
                 $ke = 1;
                 for($i=0;$i<respond['jm_total_dpl'];$i++){
                     $km_per_line = "";
+                    //untuk menghitung ada berapa perencanaan untuk produk ini (ada berapa line)
+                    $ceknya = 0;
                     for($k=0;$k<respond['jm_dpl'];$k++){
                         $isi_km = "";
                         if(respond['total_dpl'][$i]['id_detail_produk'] == respond['dpl'][$k]['id_detail_produk'] 
@@ -1591,9 +1593,10 @@
                                     $ambilnya = Math.ceil(parseFloat($material_gudang)/parseFloat($ukuran_satuan_keluar));
 
                                     //wipnya
-                                    $wip = parseFloat($from_inli) + ($ambilnya * $ukuran_satuan_keluar) - parseFloat($jumlah_konsumsi_seharusnya);
+                                    $wip = parseFloat($from_inli) + ($total_ambilnya * $ukuran_satuan_keluar) - parseFloat($jumlah_konsumsi_seharusnya);
                                     $wip_sem = parseFloat($wip) + parseFloat($total_ambil_tambah);
 
+                                    
                                     if($wip_sem < 0){
                                         $cek++;
                                     }
@@ -1702,6 +1705,8 @@
                                         $isi_km+
                                     '</tbody>'+
                                 '</table><br>';
+
+                                $ceknya++;
                             }
                         }
                     }
@@ -1758,11 +1763,12 @@
                             $namanya = respond['total_dpl'][$i]['nama_produk'];
                         }
                     //tutup nama produk
-
-                    $konsumsi_material = $konsumsi_material +
-                    '<hr><h5><b>'+($ke)+'. '+$namanya+'</b></h5>'+
-                    $km_per_line;
-                    $ke++;
+                    if($ceknya > 0){
+                        $konsumsi_material = $konsumsi_material +
+                        '<hr><h5><b>'+($ke)+'. '+$namanya+'</b></h5>'+
+                        $km_per_line;
+                        $ke++;
+                    }
                 }
 
                 $("#konsumsi_material").html($konsumsi_material);

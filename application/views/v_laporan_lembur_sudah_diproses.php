@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Laporan Lembur Belum Diproses</h2>
+        <h2>Laporan Lembur Sudah Diproses</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Laporan Lembur Belum Diproses</span></li>
+                <li><span>Laporan Lembur Sudah Diproses</span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -25,7 +25,7 @@
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
         <header class="panel-heading">
-            <h2 class="panel-title">Data Laporan Lembur Belum Diproses</h2>
+            <h2 class="panel-title">Data Laporan Lembur Sudah Diproses</h2>
         </header>
 
         <div class="panel-body">

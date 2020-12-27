@@ -26,7 +26,7 @@ class Pdfx extends TCPDF
                     </tr>
                     <tr>
                         <td>
-                             Bukti Pengiriman Delivery Barang (BPBD)
+                             Bukti Pengiriman Delivery Barang (BPDB)
                         </td>
                     </tr>
                 </table>';
@@ -40,7 +40,7 @@ class Pdfx extends TCPDF
         $html="
         <p>
         <hr style='width:98%;'>
-        <br><br><span style='font-size: medium'>PT Maju Bersama Persada Dayamu</span> - Bukti Pengiriman Delivery Barang (BPBD)
+        <br><br><span style='font-size: medium'>PT Maju Bersama Persada Dayamu</span> - Bukti Pengiriman Delivery Barang (BPDB)
         </p>";
         $this->SetFontSize(8);
         $this->SetTextColor(0, 0, 0); //RGB
@@ -49,7 +49,7 @@ class Pdfx extends TCPDF
 }
     //isi pdf
         $pdf = new Pdfx('l', 'mm', 'A5', true, 'UTF-8', false);
-        $pdf->SetTitle('Bukti Pengiriman Delivery Barang (BPBD)');
+        $pdf->SetTitle('Bukti Pengiriman Delivery Barang (BPDB)');
         $pdf->SetTopMargin(20);
         $pdf->setFooterMargin(20);
         $pdf->SetAutoPageBreak(true,22);
@@ -65,7 +65,7 @@ class Pdfx extends TCPDF
         $atas = '<table>
                     <tr>
                         <td width="58%"></td>
-                        <td width="15%">No BPBD</td>
+                        <td width="15%">No BPDB</td>
                         <td width="27%">: '.$bpbd[0]['no_bpbd'].'</td>
                     </tr>
                     <tr>
@@ -170,6 +170,6 @@ class Pdfx extends TCPDF
             "data" => "demo"
         ));
         ob_end_clean();
-        $pdf->Output('contoh1.pdf', 'I');
+        $pdf->Output('bpdb.pdf', 'I');
     //tutup
 ?>

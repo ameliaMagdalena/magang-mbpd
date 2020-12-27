@@ -129,7 +129,7 @@ class M_PerencanaanProduksi extends CI_Model {
         produksi_tertunda.id_produksi_tertunda,purchase_order_customer.kode_purchase_order_customer
         FROM produksi,produksi_line,detail_produksi_line,detail_produksi_tertunda,produksi_tertunda,
         detail_purchase_order_customer,detail_produk,produk,line,purchase_order_customer
-        WHERE (produksi.tanggal BETWEEN '$start' AND ('$start' + INTERVAL 6 DAY)) AND
+        WHERE (produksi.tanggal BETWEEN '$start' AND ('$start' + INTERVAL 6 DAY)) AND  detail_produksi_line.status_delete='0' AND
         produksi.id_produksi=produksi_line.id_produksi AND produksi_line.id_produksi_line=detail_produksi_line.id_produksi_line AND
         detail_produksi_line.id_detail_produksi_line=detail_produksi_tertunda.id_detail_produksi_line AND 
         detail_produksi_tertunda.id_produksi_tertunda=produksi_tertunda.id_produksi_tertunda AND 
@@ -156,7 +156,7 @@ class M_PerencanaanProduksi extends CI_Model {
     
     function get_dpl_re($start){
         return $this->db->query("SELECT * FROM produksi,produksi_line,detail_produksi_line,detail_produksi_tertunda,produksi_tertunda 
-        WHERE (produksi.tanggal BETWEEN '$start' AND ('$start' + INTERVAL 6 DAY)) AND
+        WHERE (produksi.tanggal BETWEEN '$start' AND ('$start' + INTERVAL 6 DAY)) AND detail_produksi_line.status_delete='0' AND
         produksi.id_produksi=produksi_line.id_produksi AND produksi_line.id_produksi_line=detail_produksi_line.id_produksi_line AND
         detail_produksi_line.id_detail_produksi_line=detail_produksi_tertunda.id_detail_produksi_line 
         AND detail_produksi_tertunda.id_produksi_tertunda=produksi_tertunda.id_produksi_tertunda");

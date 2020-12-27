@@ -259,17 +259,17 @@ class Bpbd extends CI_Controller {
             $count_baru = $count;
         }
 
-        $id_bpbd_baru = "BPBD".$tahun_sebelum.".".$count_baru;
-        $no_bpbd_baru = "BPBD"."-".$count_baru;
+        $id_bpbd_baru = "BPDB".$tahun_sebelum.".".$count_baru;
+        $no_bpbd_baru = "BPDB"."-".$count_baru;
       }
       else{
-        $id_bpbd_baru = "BPBD".$year_now.".0001";
-        $no_bpbd_baru = "BPBD"."-0001";
+        $id_bpbd_baru = "BPDB".$year_now.".0001";
+        $no_bpbd_baru = "BPDB"."-0001";
       }
     }
     else{
-      $id_bpbd_baru = "BPBD".$year_now.".0001";
-      $no_bpbd_baru = "BPBD"."-0001";
+      $id_bpbd_baru = "BPDB".$year_now.".0001";
+      $no_bpbd_baru = "BPDB"."-0001";
     }
 
     $data_bpbd = array(

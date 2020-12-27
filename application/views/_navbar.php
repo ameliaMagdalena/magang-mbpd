@@ -22,7 +22,6 @@
 							</a>
 						</li>
 
-
 					<!-- Direktur -->
 						<?php
 							if ($_SESSION['nama_departemen']=="Management" && $_SESSION['nama_jabatan']=="Direktur" || 
@@ -121,7 +120,7 @@
 									</li>
 								</ul>
 							</li>
-							
+
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-check-circle" aria-hidden="true"></i>
@@ -394,7 +393,6 @@
 								</ul>
 							</li>
 							
-							
 							<!-- <li class="nav-parent">
 								<a>
 									<i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -473,8 +471,8 @@
 									</li>
 								</ul>
 							</li>
-
-							
+					
+						
 							<!-- produksi -->
 								<!-- persediaan line -->
 								<li>
@@ -955,15 +953,15 @@
 									<a>
 										<i class="fa fa-file-o" aria-hidden="true"></i>
 										<?php if($jm_bpbd[0]['jumlah_bpbd'] == 0){?>
-											<span>BPBD</span>
+											<span>BPDB</span>
 										<?php } else{?>
-											<span>BPBD <span class="badge badge-light"><?= $jm_bpbd[0]['jumlah_bpbd']?></span></span>
+											<span>BPDB <span class="badge badge-light"><?= $jm_bpbd[0]['jumlah_bpbd']?></span></span>
 										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
 											<a href="<?= base_url()?>bpbd/tambah_bpbd">
-												+ BPBD
+												+ BPDB
 											</a>
 										</li>
 										<li>
@@ -1594,15 +1592,15 @@
 									<a>
 										<i class="fa fa-file-o" aria-hidden="true"></i>
 										<?php if($jm_bpbd[0]['jumlah_bpbd'] == 0){?>
-											<span>BPBD</span>
+											<span>BPDB</span>
 										<?php } else{?>
-											<span>BPBD <span class="badge badge-light"><?= $jm_bpbd[0]['jumlah_bpbd']?></span></span>
+											<span>BPDB <span class="badge badge-light"><?= $jm_bpbd[0]['jumlah_bpbd']?></span></span>
 										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
 											<a href="<?= base_url()?>bpbd/tambah_bpbd">
-												+ BPBD
+												+ BPDB
 											</a>
 										</li>
 										<li>
@@ -2354,15 +2352,15 @@
 								<a>
 									<i class="fa fa-file-o" aria-hidden="true"></i>
 									<?php if($jm_bpbd[0]['jumlah_bpbd'] == 0){?>
-										<span>BPBD</span>
+										<span>BPDB</span>
 									<?php } else{?>
-										<span>BPBD <span class="badge badge-light"><?= $jm_bpbd[0]['jumlah_bpbd']?></span></span>
+										<span>BPDB <span class="badge badge-light"><?= $jm_bpbd[0]['jumlah_bpbd']?></span></span>
 									<?php } ?>
 								</a>
 								<ul class="nav nav-children">
 									<li>
 										<a href="<?= base_url()?>bpbd/tambah_bpbd">
-											+ BPBD
+											+ BPDB
 										</a>
 									</li>
 									<li>

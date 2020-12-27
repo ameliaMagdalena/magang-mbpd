@@ -44,4 +44,8 @@ class M_PermintaanTambahan extends CI_Model {
         detail_permintaan_material.id_konsumsi_material=konsumsi_material.id_konsumsi_material AND
         konsumsi_material.id_sub_jenis_material=sub_jenis_material.id_sub_jenis_material ");
     }
+
+    function cek_batal($tanggal){
+        $this->db->query(" UPDATE permintaan_tambahan SET status='4' WHERE (status BETWEEN 0 AND 1) AND waktu_add<'$tanggal' ");
+    }
 }

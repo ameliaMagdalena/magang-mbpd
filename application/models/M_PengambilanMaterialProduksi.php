@@ -145,4 +145,8 @@ class M_PengambilanMaterialProduksi extends CI_Model {
     function get_one_persediaan_line($id_sub_jenis_material){
         return $this->db->query("SELECT * FROM persediaan_line WHERE id_sub_jenis_material='$id_sub_jenis_material' AND status_delete='0' ");
     }
+
+    function cek_batal($tanggal){
+        $this->db->query(" UPDATE pengambilan_material SET status_keluar='2' WHERE status_keluar='0' AND tanggal_ambil<'$tanggal' ");
+    }
 }

@@ -50,7 +50,7 @@ class Pdfx extends TCPDF
 }
     //isi pdf
         $pdf = new Pdfx('l', 'mm', 'A4', true, 'UTF-8', false);
-        $pdf->SetTitle('Perencanaan Produksi '. $tanggalnya);
+        $pdf->SetTitle('Perencanaan Produksi Line'. $tanggalnya);
         $pdf->SetTopMargin(15);
         $pdf->setFooterMargin(20);
         $pdf->SetAutoPageBreak(true,22);
@@ -301,6 +301,6 @@ class Pdfx extends TCPDF
             "data" => "demo"
         ));
         ob_end_clean();
-        $pdf->Output('contoh1.pdf', 'I');
+        $pdf->Output('perencanaan_produksi_line.pdf', 'I');
     //tutup
 ?>

@@ -105,7 +105,7 @@
                                         $_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management" || 
                                         $_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management"){?>
                                         <button type="button" class="bse7_klik col-lg-3 btn btn-success fa fa-check-square" 
-                                            value="<?= $no;?>" title="Disetujui" style="margin-right:5px;margin-bottom:5px"></button>
+                                            value="<?= $no;?>" title="Konfirmasi" style="margin-right:5px;margin-bottom:5px"></button>
                                     <?php } ?>
                                 <?php } ?>
                                 <?php if($x->status_laporan == 2){?>
@@ -247,11 +247,11 @@
             <form method="POST" action="<?= base_url()?>laporanPerencanaanCutting/konfirmasi_ppic">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title"><b>Terima Laporan Perencanaan Cutting</b></h4>
+                        <h4 class="modal-title"><b>Konfirmasi Laporan Perencanaan Cutting</b></h4>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="tanggalnya" id="tanggalnya">
-                        <p>Apakah anda yakin akan menerima laporan perencanaan cutting dengan tanggal perencanaan <span id="tanggal_perencanaannya"></span>?</p>
+                        <p>Apakah anda yakin akan mengkonfirmasi laporan perencanaan cutting dengan tanggal perencanaan <span id="tanggal_perencanaannya"></span>?</p>
                         <br>
                         
                         <h4><b>Konsumsi Material</b></h4>

@@ -39,4 +39,8 @@ class M_PermintaanMaterialProduksi extends CI_Model {
     function get_ubmin($id){
         return $this->db->query("SELECT * FROM perubahan_permintaan WHERE id_permintaan_material='$id' AND status_delete='0' ");
     }
+
+    function cek_batal($tanggal){
+        $this->db->query(" UPDATE permintaan_material SET status_permintaan='4' WHERE status_permintaan='0' AND tanggal_produksi<'$tanggal' ");
+    }
 }

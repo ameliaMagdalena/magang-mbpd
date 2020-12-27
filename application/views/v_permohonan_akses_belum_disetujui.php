@@ -193,7 +193,7 @@
                         <p>Apakah anda yakin akan menerima permohonan akses <b><span id="nama_karyawan_se7"></span></b> untuk <b><span id="nama_permohonan_se7"></span></b>?</p>
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" id="edit" class="btn btn-primary" value="Simpan">
+                        <input type="submit" id="edit" class="btn btn-primary" value="Ya">
                         <input type="button" class="btn btn-default modal-dismiss" value="Batal" onclick="reload()">
                     </div>
                 </div>
@@ -214,7 +214,7 @@
                         <p>Apakah anda yakin tidak akan menerima permohonan akses <b><span id="nama_karyawan_tolak"></span></b> untuk <b><span id="nama_permohonan_tolak"></span></b>?</p>
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" id="edit" class="btn btn-primary" value="Simpan">
+                        <input type="submit" id="edit" class="btn btn-primary" value="Ya">
                         <input type="button" class="btn btn-default modal-dismiss" value="Batal" onclick="reload()">
                     </div>
                 </div>

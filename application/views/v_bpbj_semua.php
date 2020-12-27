@@ -319,7 +319,7 @@
                 else if(respond['bpbj'][0]['status_bpbj'] == 2){
                     $("#status_det1").val("Selesai");
                 }
-                $("#keterangan_det1").val(respond['bpbj'][0]['keterangan_bpbj']);
+                $("#keterangan_det1").val(respond['bpbj'][0]['keterangan']);
 
                 $isi = "";
             
@@ -406,7 +406,6 @@
                             '<td>'+
                                 '<center>'+$selected_po+'</center>'+
                             '</td>'+
-                            '<td></td>'+
                         '</tr>';
                 }
 
@@ -418,7 +417,6 @@
                             '<th style="text-align: center;vertical-align: middle;">Item</th>'+
                             '<th style="text-align: center;vertical-align: middle;">Qty (pcs)</th>'+
                             '<th style="text-align: center;vertical-align: middle;">PO</th>'+
-                            '<th style="text-align: center;vertical-align: middle;">Remark</th>'+
                         '</tr>'+
                     '</thead>'+
                     '<tbody>'+
@@ -723,12 +721,13 @@
                     $tablenya     = "";
                     $isi_tablenya = "";
 
+                    $hitungan = 1;
                     for($j=0;$j<respond['jm_datanya'];$j++){
                         if(respond['datanya'][$j]['id_bpbj'] == id_bpbj && respond['datanya'][$j]['id_detail_produk'] == respond['det_bpbj'][$i]['id_detail_produk']){
                             $isi_tablenya = $isi_tablenya +
                             '<tr>'+
                                 '<td>'+
-                                    '<center>'+($j+1)+'</center>'+
+                                    '<center>'+$hitungan+'</center>'+
                                 '</td>'+
                                 '<td>'+
                                     '<center>'+respond['datanya'][$j]['id_surat_jalan']+'</center>'+
@@ -740,6 +739,8 @@
                                     '<center>'+respond['datanya'][$j]['jumlah_produk']+'</center>'+
                                 '</td>'+
                             '</tr>';
+
+                            $hitungan++;
                         }
                     }
 

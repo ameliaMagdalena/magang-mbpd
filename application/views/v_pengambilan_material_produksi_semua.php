@@ -111,8 +111,10 @@
                             <td  style="text-align: center;vertical-align: middle;">
                                 <?php if($x->status_keluar == 0){?>
                                     Belum Diambil
-                                <?php } else{?>
+                                <?php } else if($x->status_keluar == 1){?>
                                     Sudah Diambil
+                                <?php } else{?>
+                                    Batal
                                 <?php } ?>
                             </td>
                             <td class="col-lg-3"> 
@@ -389,6 +391,8 @@
                     $("#status_keluar").val("Belum Diambil");
                 } else if(respond['pengmat'][0]['status_keluar'] == 1){
                     $("#status_keluar").val("Sudah Diambil");
+                }  else if(respond['pengmat'][0]['status_keluar'] == 2){
+                    $("#status_keluar").val("Batal");
                 }
 
                 $("#modaldetail").modal();

@@ -34,7 +34,6 @@
                 <label class="col-sm-5 control-label">Line</label>
                 <div class="col-sm-7">
                     <select class="form-control mb-md" id="select_line" name="select_line">
-                        <option>Pilih Line</option>
                         <?php 
                         $no = 0;
                         foreach($line as $ln){?>
@@ -49,7 +48,7 @@
         <footer class="panel-footer">
             <div class="row">
                 <div class="col-md-12 text-right">
-                    <input type="submit" class="btn btn-primary" value="Next">
+                    <input type="submit" class="btn btn-primary" value="Selanjutnya">
                 </div>
             </div>
         </footer>

@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Pengambilan Material Belum Diambil</h2>
+        <h2>Pengambilan Material Batal</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Pengambilan Material Belum Diambil</span></span></li>
+                <li><span>Pengambilan Material Batal</span></span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -25,7 +25,7 @@
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
         <header class="panel-heading">
-            <h2 class="panel-title">Data Pengambilan Material Belum Diambil</h2>
+            <h2 class="panel-title">Data Pengambilan Material Batal</h2>
         </header>
 
         <div class="panel-body">
@@ -111,11 +111,7 @@
                                 <?php } ?>
                             </td>
                             <td  style="text-align: center;vertical-align: middle;">
-                                <?php if($x->status_keluar == 0){?>
-                                    Belum Diambil
-                                <?php } else{?>
-                                    Sudah Diambil
-                                <?php } ?>
+                                Batal
                             </td>
                             <td class="col-lg-3"> 
                                 <button type="button" class="bdet_klik col-lg-3 btn btn-primary fa fa-info-circle" 
@@ -391,6 +387,8 @@
                     $("#status_keluar").val("Belum Diambil");
                 } else if(respond['pengmat'][0]['status_keluar'] == 1){
                     $("#status_keluar").val("Sudah Diambil");
+                }  else if(respond['pengmat'][0]['status_keluar'] == 2){
+                    $("#status_keluar").val("Batal");
                 }
 
                 $("#modaldetail").modal();
@@ -398,6 +396,7 @@
         });  
     });
 </script>
+
 
 <!-- edit pengambilan material (normal case) -->
 <script>

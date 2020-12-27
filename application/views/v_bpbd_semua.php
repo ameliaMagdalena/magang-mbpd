@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Semua BPBD</h2>
+        <h2>Semua BPDB</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Semua BPBD</span></span></li>
+                <li><span>Semua BPDB</span></span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -25,7 +25,7 @@
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
         <header class="panel-heading">
-            <h2 class="panel-title">Data Semua BPBD</h2>
+            <h2 class="panel-title">Data Semua BPDB</h2>
         </header>
 
         <div class="panel-body">
@@ -33,7 +33,7 @@
                 <thead>
                     <tr>
                         <th  style="text-align: center;vertical-align: middle;">No</th>
-                        <th  style="text-align: center;vertical-align: middle;">Nomor BPBD</th>
+                        <th  style="text-align: center;vertical-align: middle;">Nomor BPDB</th>
                         <th  style="text-align: center;vertical-align: middle;">Nomor PO</th>
                         <th  style="text-align: center;vertical-align: middle;">Nama Customer</th>
                         <th  style="text-align: center;vertical-align: middle;">Tanggal</th>
@@ -132,11 +132,11 @@
         <div class="modal-dialog modal-xl" style="width:50%">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title"><b>Detail BPBD</b></h4>
+                    <h4 class="modal-title"><b>Detail BPDB</b></h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Nomor BPBD</label>
+                        <label class="col-sm-5 control-label">Nomor BPDB</label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control" id="no_bpbd_det" readonly>
                         </div>
@@ -197,11 +197,11 @@
             <div class="modal-dialog modal-xl" style="width:85%">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title"><b>Edit BPBD</b></h4>
+                        <h4 class="modal-title"><b>Edit BPDB</b></h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group mt-lg">
-                            <label class="col-sm-5 control-label">Nomor BPBD</label>
+                            <label class="col-sm-5 control-label">Nomor BPDB</label>
                             <div class="col-sm-7">
                                 <input type="text" class="form-control" id="no_bpbd_ed" readonly>
                                 <input type="hidden" class="form-control" id="id_bpbd_ed" name="id_bpbd_ed" readonly>
@@ -229,13 +229,13 @@
                         <div class="form-group mt-lg">
                             <label class="col-sm-5 control-label">Plat No</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" id="plat_no_ed" name="plat_no_ed">
+                                <input type="text" class="form-control" id="plat_no_ed" name="plat_no_ed" required>
                             </div>
                         </div>
                         <div class="form-group mt-lg">
                             <label class="col-sm-5 control-label">Driver</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" id="driver_ed" name="driver_ed">
+                                <input type="text" class="form-control" id="driver_ed" name="driver_ed" required>
                             </div>
                         </div>
                         <div class="form-group mt-lg">
@@ -267,11 +267,11 @@
             <form method="POST" action="<?= base_url()?>bpbd/delete">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title"><b>Hapus Data BPBD</b></h4>
+                        <h4 class="modal-title"><b>Hapus Data BPDB</b></h4>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id_bpbd_hapus" id="id_bpbd_hapus"> 
-                        <p>Apakah anda yakin akan menghapus data BPBD dengan nomor <span id="kode_bpbd_hapus"></span> ? </p>
+                        <p>Apakah anda yakin akan menghapus data BPDB dengan nomor <span id="kode_bpbd_hapus"></span> ? </p>
                     </div>
                     <div class="modal-footer">
                         <input type="submit" class="btn btn-primary" value="Ya">
@@ -288,12 +288,12 @@
             <form method="POST" action="<?= base_url()?>bpbd/konfirmasi">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title"><b>Konfirmasi BPBD</b></h4>
+                        <h4 class="modal-title"><b>Konfirmasi BPDB</b></h4>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id_bpbdnya" id="id_bpbdnya">
                         <p>Apakah anda yakin akan mengkonfirmasi bpbd dengan nomor <span id="no_bpbd"></span>?</p>
-                        <p><b>*</b>jika sudah dikonfirmasi, BPBD dapat diprint dan sudah tidak bisa diedit lagi</p>
+                        <p><b>*</b>jika sudah dikonfirmasi, BPDB dapat diprint dan sudah tidak bisa diedit lagi</p>
                     </div>
                     <div class="modal-footer">
                         <input type="submit" id="edit" class="btn btn-primary" value="Simpan">

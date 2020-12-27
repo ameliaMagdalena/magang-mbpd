@@ -23,7 +23,6 @@
     </header>
 <!--*****************************-->
 <!--KODINGAN ISI HALAMAN-->
-
 <!------------------------------------------------------ DASHBOARD PRODUKSI ------------------------------------------------------->
 		<?php  if($_SESSION['nama_departemen'] == "Management" && $_SESSION['nama_jabatan'] == "Direktur"){?>
 	<!-- DIREKTUR ------------------------------------------------------------------------------------------>
@@ -3014,10 +3013,10 @@
 					<!-- perencanaan cutting kain -->
 					<div class="col-md-12 col-lg-6 col-xl-6">
 						<section class="panel panel-featured-left panel-featured-danger">
-							<div class="panel-body" style="height:150px">
+							<div class="panel-body" style="height:200px">
 								<div class="widget-summary">
 									<div class="widget-summary-col">
-										<div class="summary" style="height: 100px;overflow: scroll">
+										<div class="summary" style="height:140px;overflow: scroll">
 											<h4 class="title">Perencanaan Cutting Kain</h4>
 												<?php if($jm_cutkain > 0){?>
 													<table class="table table-hover mb-none">

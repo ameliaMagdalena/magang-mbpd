@@ -135,7 +135,7 @@
                                             if($y->jumlah_det_item_bpbd > 0){
                                 ?>
                                                 <button type="button" class="bdetit_bpbd_klik col-lg-3 btn btn-success fa  fa-history" 
-                                                    value="<?= $no;?>" title="Detail Item BPBD" style="margin-right:5px;margin-bottom:5px"></button>
+                                                    value="<?= $no;?>" title="Detail Item BPDB" style="margin-right:5px;margin-bottom:5px"></button>
                                 <?php  } }  } ?>
                                     <form method="POST" action="<?= base_url()?>suratJalan/print">
                                         <input type="hidden" name="id_sj" value="<?= $sj->id_surat_jalan?>">
@@ -325,7 +325,7 @@
         <div class="modal-dialog modal-xl" style="width:50%">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title"><b>Surat Jalan Pada BPBD</b></h4>
+                    <h4 class="modal-title"><b>Surat Jalan Pada BPDB</b></h4>
                 </div>
                 <div class="modal-body">
                     <div id="table_detail_bpbd">
@@ -922,7 +922,7 @@
                             '<thead>'+
                                 '<tr>'+
                                     '<th style="text-align: center;vertical-align: middle;">No</th>'+
-                                    '<th style="text-align: center;vertical-align: middle;">Nomor BPBD</th>'+
+                                    '<th style="text-align: center;vertical-align: middle;">Nomor BPDB</th>'+
                                     '<th style="text-align: center;vertical-align: middle;">Qty (pcs)</th>'+
                                 '</tr>'+
                             '</thead>'+
