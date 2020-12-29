@@ -142,22 +142,22 @@
                                         <label class="col-sm-4 control-label">Nama Jenis Material</label>
                                         <div class="col-sm-8">
                                             <input type="text" name="nama_jenis_material" class="form-control"
-                                            value="<?php echo $jenis_material[$x]['nama_jenis_material']?>" >
+                                            value="<?php echo $jenis_material[$x]['nama_jenis_material']?>" required>
                                         </div>
                                     </div>
                                     <div class="form-group mt-lg">
                                         <label class="col-sm-4 control-label">Kode Jenis Material</label>
                                         <div class="col-sm-8">
                                             <input type="text" name="kode_jenis_material" class="form-control"
-                                            value="<?php echo $jenis_material[$x]['kode_jenis_material']?>" >
+                                            value="<?php echo $jenis_material[$x]['kode_jenis_material']?>" required>
                                         </div>
                                     </div>
                                     <div class="form-group mt-lg">
                                         <label class="col-sm-4 control-label">Sumber Jenis Material</label>
                                         <div class="col-sm-8">
                                             <select class="form-control" name="sumber" required>
-                                                <option value="0" <?php if ($jenis_material[$y]['sumber_material'] == 0){ echo "selected"; } ?>>Supplier</option>
-                                                <option value="1" <?php if ($jenis_material[$y]['sumber_material'] == 1){ echo "selected"; } ?>>Produksi</option>
+                                                <option value="0" <?php if ($jenis_material[$x]['sumber_material'] == 0){ echo "selected"; } ?>>Supplier</option>
+                                                <option value="1" <?php if ($jenis_material[$x]['sumber_material'] == 1){ echo "selected"; } ?>>Produksi</option>
                                             </select>
                                         </div>
                                     </div>

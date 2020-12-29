@@ -206,6 +206,7 @@ class JenisMaterial extends CI_Controller {
             "id_jenis_material"=>$this->input->post("id_jenis_material"),
             "nama_jenis_material"=>$this->input->post("nama_jenis_material"),
             "kode_jenis_material"=>$this->input->post("kode_jenis_material"),
+            "sumber_material"=>$this->input->post("sumber"),
             "user_add"=>$_SESSION['id_user'],
             "waktu_add"=>date('Y-m-d H:i:s'),
             "user_edit"=>"0",
@@ -417,6 +418,7 @@ class JenisMaterial extends CI_Controller {
         $data = array(
             "nama_jenis_material"=>$this->input->post("nama_jenis_material"),
             "kode_jenis_material"=>$this->input->post("kode_jenis_material"),
+            "sumber_material"=>$this->input->post("sumber"),
             "waktu_edit"=>date('Y-m-d H:i:s'),
             "user_edit"=>$_SESSION['id_user']
         );

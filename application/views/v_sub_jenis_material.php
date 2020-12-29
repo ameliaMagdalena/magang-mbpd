@@ -97,12 +97,16 @@
                                 <div class="form-group mt-lg">
                                     <label class="col-sm-4 control-label">Sumber<span class="required">*</span></label>
                                     <div class="col-sm-7">
-                                        <select class="form-control" name="sumber" required>
-                                            <option value="0">Supplier</option>
-                                            <option value="1">WIP Line Cutting</option>
-                                            <option value="2">WIP Line Bonding</option>
-                                            <option value="3">WIP Line Sewing</option>
-                                        </select>
+                                        <?php  if ($jenis_material[0]['sumber_material'] == 0){ ?>
+                                            <input type="hidden" name="sumber" value="o" class="form-control" readonly>
+                                            <input type="text" value="Supplier" class="form-control" readonly>
+                                        <?php  } else{ ?>
+                                            <select class="form-control" name="sumber" required>
+                                                <option value="1">WIP Line Cutting</option>
+                                                <option value="2">WIP Line Bonding</option>
+                                                <option value="3">WIP Line Sewing</option>
+                                            </select>
+                                        <?php } ?>
                                     </div>
                                 </div>
                                 <div class="form-group mt-lg">
@@ -123,7 +127,8 @@
                                     <label class="col-sm-4 control-label">Ukuran Satuan Keluar<span class="required">*</span></label>
                                     <div class="col-sm-7">
                                         <input type="number" name="ukuran_satuan_keluar" class="form-control"
-                                        placeholder="Contoh: 1 satuan = 12 ukuran satuan keluar" required>
+                                        placeholder="Ukuran satuan keluar untuk 1 satuan" required>
+                                        <small>Contoh: <b>1</b> satuan <b>Pcs</b> = <b>12</b> ukuran satuan keluar <b>meter</b></small>
                                     </div>
                                 </div>
                                 <div class="form-group mt-lg">
@@ -332,14 +337,14 @@
                                             <label class="col-sm-4 control-label">Nama Sub Jenis Material</label>
                                             <div class="col-sm-8">
                                                 <input type="text" name="nama_sub_jenis_material" class="form-control"
-                                                value="<?php echo $sub_jenis[$y]['nama_sub_jenis_material']?>">
+                                                value="<?php echo $sub_jenis[$y]['nama_sub_jenis_material']?>" required>
                                             </div>
                                         </div>
                                         <div class="form-group mt-lg">
                                             <label class="col-sm-4 control-label">Kode Sub Jenis Material</label>
                                             <div class="col-sm-8">
                                                 <input type="text" name="kode_sub_jenis_material" class="form-control"
-                                                value="<?php echo $sub_jenis[$y]['kode_sub_jenis_material']?>">
+                                                value="<?php echo $sub_jenis[$y]['kode_sub_jenis_material']?>" required>
                                             </div>
                                         </div>
                                         <div class="form-group mt-lg">
@@ -365,7 +370,7 @@
                                             <div class="col-sm-8">
                                                 <input type="text" name="satuan" class="form-control"
                                                 value="<?php echo $sub_jenis[$y]['satuan_ukuran'] ?>"
-                                                placeholder="Contoh: pcs, blek, rol, dll.">
+                                                placeholder="Contoh: pcs, blek, rol, dll." required>
                                             </div>
                                         </div>
                                         <div class="form-group mt-lg">
@@ -373,29 +378,32 @@
                                             <div class="col-sm-8">
                                                 <input type="text" name="satuan_keluar" class="form-control"
                                                 value="<?php echo $sub_jenis[$y]['satuan_keluar'] ?>"
-                                                placeholder="Contoh: meter, liter, dll.">
+                                                placeholder="Contoh: meter, liter, dll." required>
                                             </div>
                                         </div>
                                         <div class="form-group mt-lg">
                                             <label class="col-sm-4 control-label">Ukuran Satuan Keluar</label>
                                             <div class="col-sm-8">
                                                 <input type="number" name="ukuran_satuan_keluar" class="form-control"
-                                                value="<?php echo $sub_jenis[$y]['ukuran_satuan_keluar'] ?>"
-                                                placeholder="Contoh : 1 satuan = 12 ukuran satuan kelaur">
+                                                    value="<?php echo $sub_jenis[$y]['ukuran_satuan_keluar'] ?>"
+                                                    placeholder="Ukuran satuan keluar untuk 1 satuan" required>
+                                                <small>Contoh: <b>1</b> satuan <b>Pcs</b> = <b>12</b> ukuran satuan keluar <b>meter</b></small>
                                             </div>
                                         </div>
                                         <div class="form-group mt-lg">
                                             <label class="col-sm-4 control-label">Minimal Stok</label>
                                             <div class="col-sm-8">
                                                 <input type="number" name="min_stok" class="form-control"
-                                                value="<?php echo $sub_jenis[$y]['min_stok'] ?>">
+                                                value="<?php echo $sub_jenis[$y]['min_stok'] ?>" placeholder="Min Stok" required>
+                                                <small>Jika tidak terdapat minimal stok, masukkan angka 0.</small>
                                             </div>
                                         </div>
                                         <div class="form-group mt-lg">
                                             <label class="col-sm-4 control-label">Maksimal Stok</label>
                                             <div class="col-sm-8">
                                                 <input type="number" name="max_stok" class="form-control"
-                                                value="<?php echo $sub_jenis[$y]['max_stok'] ?>">
+                                                value="<?php echo $sub_jenis[$y]['max_stok'] ?>" placeholder="Max Stok" required>
+                                                <small>Jika tidak terdapat maksimal stok, masukkan angka 0.</small>
                                             </div>
                                         </div>
                                     </div>
