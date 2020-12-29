@@ -79,6 +79,19 @@
                 ?>" readonly>
             </div>
         </div>
+        
+        <?php 
+            if($po_cust[0]['status_po'] == 3){ ?>
+
+            <div class="form-group mt-lg">
+                <label class="col-sm-3 control-label">Keterangan Batal</label>
+                <div class="col-sm-9">
+                    <input type="text" name="keterangan" class="form-control"
+                    value="<?php echo $po_cust[0]['keterangan_batal']; ?>" readonly>
+                </div>
+            </div>
+            
+        <?php } ?>
 
         <div class="form-group mt-lg">
             <div class="col-sm-12">
