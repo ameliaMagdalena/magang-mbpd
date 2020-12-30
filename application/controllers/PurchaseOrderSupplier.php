@@ -399,6 +399,8 @@ class PurchaseOrderSupplier extends CI_Controller {
         $data['supplier'] = $this->M_PurchaseOrderSupplier->selectSupplierAktif()->result_array();
         $data['material'] = $this->M_PurchaseOrderSupplier->selectSubJenisMaterial()->result_array();
         $data['beli'] = $this->M_PembelianMaterial->selectPermintaanPembelianAktif()->result_array();
+        $data['darisupp'] = $this->M_PembelianMaterial->selectPermintaanDanSupplier()->result_array();
+        $data['kodepo'] = $this->M_PurchaseOrderSupplier->selectPOSupplierNow()->result_array();
 
         //notif produksi
             //notif permintaan material produksi
@@ -599,6 +601,12 @@ class PurchaseOrderSupplier extends CI_Controller {
         echo json_encode($result);
     }
 
+    public function jumlah_minta(){
+        $id = $this->input->post("id_permintaan_pembelian");
+        $result = $this->M_PembelianMaterial->selectPermintaanPembelianAktif($id)->result_array();
+        echo json_encode($result);
+    }
+
     public function get_material(){
         $id = $this->input->post("id_supplier");
         $result = $this->M_PurchaseOrderSupplier->selectMaterialSupplier($id)->result_array();
@@ -653,6 +661,68 @@ class PurchaseOrderSupplier extends CI_Controller {
             "user_delete"=>"0"
         );
         $this->M_PurchaseOrderSupplier->insertPOSupplier($data2);
+        redirect('PurchaseOrderSupplier/index/0');
+    }
+
+    public function insert2(){
+        $row = $this->input->post("row"); //jumlah row-1 / dimulai dari 0
+        $id_po = $this->input->post("id_po_supplier");
+        $no_po = $this->input->post("no_po_supplier");
+
+        $jumlah_detail = $this->M_PurchaseOrderSupplier->selectAllDetailPOSupplier()->num_rows()+1;
+        
+        for($x=0; $x<=$row; $x++){
+            $jumlah_material = $this->input->post("jumlah".$x);
+            if($jumlah_material != 0){
+                $id_detail = "DPOS-" . $jumlah_detail;
+
+                $data1 = array(
+                    "id_detail_purchase_order_supplier" => $id_detail,
+                    "id_purchase_order_supplier" => $id_po,
+                    "id_sub_jenis_material" => $this->input->post("material".$x),
+                    "jumlah_material" => $jumlah_material,
+                    "harga_satuan" => $this->input->post("harga_satuan".$x),
+                    "harga_total" => $this->input->post("harga_total".$x),
+                    "status_detail_po" => "0",
+                    "user_add"=>$_SESSION['id_user'],
+                    "waktu_add"=>date('Y-m-d H:i:s'),
+                    "user_edit"=>"0",
+                    "user_delete"=>"0"
+                );
+                $this->M_PurchaseOrderSupplier->insertDetailPOSupplier($data1);
+                $jumlah_detail = $jumlah_detail +1;
+
+                $where2 = array(
+                    "id_permintaan_pembelian" => $this->input->post("permintaan".$x)
+                );
+                $data2 = array(
+                    "status_pembelian" => "1",
+                    "id_detail_purchase_order_supplier" => $id_detail,
+                    "user_edit"=>$_SESSION['id_user'],
+                    "waktu_edit"=>date('Y-m-d H:i:s')
+                );
+                $this->M_PembelianMaterial->editPermintaanPembelian($data2, $where2);
+            }
+            
+
+        }
+
+        $data3 = array (
+            "id_purchase_order_supplier" => $id_po,
+            "kode_purchase_order_supplier" => $no_po,
+            "id_supplier" => $this->input->post("supplier"),
+            "tanggal_po" => $this->input->post("tgl_po"),
+            "harga_sebelum_pajak" => $this->input->post("total_sebelum_pajaknya"),
+            "ppn" => $this->input->post("ppnnya"),
+            "total_harga_akhir" => $this->input->post("total_harganya"),
+            "status_po" => "0", //otomatis aktif
+            "keterangan" => $this->input->post("keterangan"),
+            "user_add"=>$_SESSION['id_user'],
+            "waktu_add"=>date('Y-m-d H:i:s'),
+            "user_edit"=>"0",
+            "user_delete"=>"0"
+        );
+        $this->M_PurchaseOrderSupplier->insertPOSupplier($data3);
         redirect('PurchaseOrderSupplier/index/0');
     }
 

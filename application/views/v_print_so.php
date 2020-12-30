@@ -33,7 +33,7 @@
                     <tr>
                         <td width="7%" height="15px">SO No.</td>
                         <td width="3%"> : </td>
-                        <td width="42%">'. $so[0]['id_sales_order'] .'</td>
+                        <td width="42%">'. $so[0]['kode_so'] .'</td>
                         <td width="13%">Customer</td>
                         <td width="3%"> : </td>
                         <td width="32%">' . ($so[0]['nama_customer']) . '</td>
@@ -41,7 +41,7 @@
                     <tr>
                         <td width="7%" height="15px">PO No.</td>
                         <td width="3%"> : </td>
-                        <td width="42%">'. $so[0]['id_purchase_order_customer'] .'</td>
+                        <td width="42%">'. $so[0]['kode_purchase_order_customer'] .'</td>
                         <td width="13%">Schedule Delv.</td>
                         <td width="3%"> : </td>
                         <td width="32%">' . date("d M Y",strtotime($so[0]['tanggal_pengantaran'])) . '</td>

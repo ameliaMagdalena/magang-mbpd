@@ -19,6 +19,12 @@ class M_PurchaseOrderSupplier extends CI_Model {
         JOIN supplier b ON a.id_supplier = b.id_supplier
         WHERE a.status_delete=0");
     }
+    
+    function selectPOSupplierNow(){
+        return $this->db->query("SELECT * FROM purchase_order_supplier a
+        JOIN supplier b ON a.id_supplier = b.id_supplier
+        WHERE a.status_delete=0 AND MONTH(a.tanggal_po)=MONTH(CURRENT_DATE())");
+    }
 
     function selectSatuPOSupplier($id){
         return $this->db->query("SELECT * FROM purchase_order_supplier a

@@ -402,6 +402,7 @@ class PurchaseOrderCustomer extends CI_Controller {
         $data['ukuran'] = $this->M_PurchaseOrderCustomer->selectUkuranProduk()->result_array();
         $data['warna'] = $this->M_PurchaseOrderCustomer->selectWarnaProduk()->result_array();
         $data['sales_order'] = $this->M_PurchaseOrderCustomer->selectSalesOrderAktif()->result_array();
+        $data['kodeso'] = $this->M_PurchaseOrderCustomer->selectSalesOrderNow()->result_array();
 
         //notif produksi
             //notif permintaan material produksi
@@ -636,7 +637,6 @@ class PurchaseOrderCustomer extends CI_Controller {
         $data2 = array (
             "id_purchase_order_customer" => $id_po,
             "kode_purchase_order_customer" => $no_po,
-            //"kode_so" => $this->input->post("no_so_customer"),
             "id_customer" => $this->input->post("customer"),
             "tanggal_po" => $this->input->post("tgl_po"),
             "harga_sebelum_pajak" => $this->input->post("total_sebelum_pajaknya"),
@@ -654,6 +654,7 @@ class PurchaseOrderCustomer extends CI_Controller {
         $data3 = array (
             "id_purchase_order_customer" => $id_po,
             "id_sales_order" => $this->input->post("id_sales_order"),
+            "kode_so" => $this->input->post("kode_so"),
             "tanggal_so" => $this->input->post("tgl_so"),
             "tanggal_pengantaran" => $this->input->post("tgl_antar"),
             "dibuat_oleh" => $_SESSION['id_user'],
@@ -698,6 +699,16 @@ class PurchaseOrderCustomer extends CI_Controller {
             "waktu_add"=>date('Y-m-d H:i:s'),
         );
         $this->M_PurchaseOrderCustomer->editPOCustomer($data, $where);
+        
+        $where2 = array(
+            "id_sales_order" => $this->input->post("id_so"),
+        );
+        $data2 = array(
+            "status_so" => "1",
+            "user_edit"=>$_SESSION['id_user'],
+            "waktu_edit"=>date('Y-m-d H:i:s')
+        );
+        $this->M_PurchaseOrderCustomer->editSalesOrder($data2, $where2);
         redirect('PurchaseOrderCustomer/index/2');
     }
 

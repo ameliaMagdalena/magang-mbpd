@@ -171,7 +171,7 @@
                     Sales Order</a>
             <?php } ?>
             
-            <?php if($po_cust[0]['status_po'] == 0 || $po_cust[0]['status_po'] == 1){ ?>
+            <?php if($po_cust[0]['status_po'] == 0){ ?>
                 <a class="modal-with-form col-lg-2 btn btn-danger mr-1"
                     title="Batalkan" href="#modalbatal<?php echo $po_cust[0]['id_purchase_order_customer'] ?>">Batalkan</a>
             <?php } ?>
@@ -230,7 +230,10 @@
                         </header>
                         <div class="panel-body" style="color: black">
                             <input type="hidden" name="id_po_customer" class="form-control" value="<?php echo $po_cust[0]['id_purchase_order_customer'] ?>" readonly>
+                            <input type="hidden" name="id_so" class="form-control" value="<?php echo $sales_order[0]['id_sales_order'] ?>" readonly>
+                            
                             Apakah anda yakin akan membatalkan PO Customer dengan No. PO <b><?php echo $po_cust[0]['id_purchase_order_customer'] ?></b>?
+                            <br><small>Sales Order juga akan dibatalkan/dihapus</small>
 
                             <div class="form-group mt-lg">
                                 <label class="col-sm-4 control-label"> Masukkan keterangan<span class="required">*</span></label>

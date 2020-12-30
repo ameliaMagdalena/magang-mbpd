@@ -71,10 +71,9 @@
                         <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="<?php echo base_url() . 'PurchaseOrderCustomer/detail/' . $po_cust[$x]['id_purchase_order_customer'] ?>"></a>
                         <!-- <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                            title="Edit" href="#modaledit<?php echo $po_cust[$x]['id_purchase_order_customer'] ?>"></a> -->
+                            title="Edit" href="#modaledit<?php echo $po_cust[$x]['id_purchase_order_customer'] ?>"></a>
                         <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                            title="Hapus" href="#modalhapus<?php echo $po_cust[$x]['id_purchase_order_customer'] ?>"></a>
-                        <!-- tambah log -->
+                            title="Hapus" href="#modalhapus<?php echo $po_cust[$x]['id_purchase_order_customer'] ?>"></a>  -->
                     </td>
                 </tr>
                 <?php
@@ -96,9 +95,8 @@
                     <td>
                         <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="<?php echo base_url() . 'PurchaseOrderCustomer/detail/' . $po_cust[$x]['id_purchase_order_customer'] ?>"></a>
-                        <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                            title="Hapus" href="#modalhapus<?php echo $po_cust[$x]['id_purchase_order_customer'] ?>"></a>
-                        <!-- tambah log -->
+                        <!-- <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
+                            title="Hapus" href="#modalhapus<?php echo $po_cust[$x]['id_purchase_order_customer'] ?>"></a> -->
                     </td>
                 </tr>
                 <?php
@@ -120,9 +118,8 @@
                     <td>
                         <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="<?php echo base_url() . 'PurchaseOrderCustomer/detail/' . $po_cust[$x]['id_purchase_order_customer'] ?>"></a>
-                        <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                            title="Hapus" href="#modalhapus<?php echo $po_cust[$x]['id_purchase_order_customer'] ?>"></a>
-                        <!-- tambah log -->
+                        <!-- <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
+                            title="Hapus" href="#modalhapus<?php echo $po_cust[$x]['id_purchase_order_customer'] ?>"></a> -->
                     </td>
                 </tr>
                 <?php }} ?>

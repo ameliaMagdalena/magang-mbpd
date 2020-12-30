@@ -319,7 +319,7 @@
                                             <div class="form-group mt-lg">
                                                 <label class="col-sm-4 control-label" style="text-align: right">Keterangan</label>
                                                 <div class="col-sm-8">
-                                                    <input type="number" name="keteranganz" id="keteranganz" class="form-control"
+                                                    <input type="text" name="keteranganz" id="keteranganz" class="form-control"
                                                     placeholder="" value="">
                                                 </div>
                                             </div>

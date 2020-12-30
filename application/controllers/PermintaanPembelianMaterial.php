@@ -20,6 +20,7 @@ class PermintaanPembelianMaterial extends CI_Controller {
         $data['permintaan_pembelian'] = $this->M_PembelianMaterial->selectPermintaanPembelianAktif()->result_array();
         $data['detail'] = $this->M_PerencanaanMaterial->selectDetailPermintaanMaterialAktif()->result_array();
         $data['material'] = $this->M_PerencanaanMaterial->selectKetersediaanMaterial()->result_array();
+        $data['daripo'] = $this->M_PembelianMaterial->selectPermintaanDanPO()->result_array();
 
         //notif produksi
           //notif permintaan material produksi
@@ -391,7 +392,7 @@ class PermintaanPembelianMaterial extends CI_Controller {
             "id_permintaan_pembelian" => $id_req,
             "tanggal_permintaan"=>date('Y-m-d'),
             "tanggal_penerimaan"=> $this->input->post("terimaz"),
-            "jumlah_material" => $this->input->post("jumlahz"),
+            "jumlah_beli" => $this->input->post("jumlahz"),
             "id_sub_jenis_material" => $this->input->post("idmaterial"),
             "status_pembelian" => "0",
             "keterangan" => $this->input->post("keteranganz"),

@@ -27,6 +27,38 @@
 <h1>Purchase Order Customer</h1>
 <hr>
 
+<?php
+    //konversi int ke romawi
+    //from https://stackoverflow.com/questions/14994941/numbers-to-roman-numbers-with-php
+    function integerToRoman($integer){
+        $integer = intval($integer);
+        $rom = '';
+        // Create a lookup array that contains all of the Roman numerals.
+        $lookup = array('M' => 1000,
+            'CM' => 900,
+            'D' => 500,
+            'CD' => 400,
+            'C' => 100,
+            'XC' => 90,
+            'L' => 50,
+            'XL' => 40,
+            'X' => 10,
+            'IX' => 9,
+            'V' => 5,
+            'IV' => 4,
+            'I' => 1);
+        foreach($lookup as $roman => $value){
+            // Determine the number of matches
+            $matches = intval($integer/$value);
+            // Add the same number of characters to the string
+            $rom .= str_repeat($roman,$matches);
+            // Set the integer to be the remainder of the integer and the value
+            $integer = $integer % $value;
+        }
+        // The Roman numeral should be built, return it
+        return $rom;
+    }
+?>
 	<section class="panel">
 		<form class="form-horizontal mb-lg" action="<?php echo base_url()?>PurchaseOrderCustomer/insert" method="post">
 			<header class="panel-heading">
@@ -60,25 +92,39 @@
                         </select>
                     </div>
                 </div>
+
+                
+                <div class="form-group mt-lg">
+					<h4 style="text-align:center">Data Sales Order</h4>
+                </div>
+
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Nomor SO<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="text" name="id_sales_order" id="id_so" class="form-control" value="SO-<?php echo count($sales_order)+1 ?>" readonly>
+                        <input type="hidden" name="id_sales_order" id="id_so" class="form-control"
+                        value="SO-<?= count($sales_order)+1 ?>" readonly>
+                        <input type="text" name="kode_so" id="kode_so" class="form-control"
+                        value="MBP/SO/<?= integerToRoman(date('m')) ."/". date('Y') ."/"?><?= count($kodeso)+1 ?>" readonly>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Tanggal SO<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="date" name="tgl_so" id="tgl_so" class="form-control" required>
+                        <input type="date" name="tgl_so" id="tgl_so" class="form-control"
+                            value="<?php $tglso = date('Y-m-d'); echo $tglso ?>" readonly>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Tanggal Pengantaran<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="date" name="tgl_antar" id="tgl_antar" class="form-control" required>
+                        <input type="date" name="tgl_antar" id="tgl_antar" class="form-control" min="<?= $tglso ?>" required>
                     </div>
                 </div>
-                <br>
+                
+                <div class="form-group mt-lg">
+					<h4 style="text-align:center">Data Produk</h4>
+                </div>
+
                 <table class = "table table-bordered table-striped table-hover" border="1">
                     <thead>
                         <tr>
@@ -225,113 +271,113 @@
 </script>
 
 <script>
-    document.getElementById("tgl_so").onchange = function(){
-        $("#tgl_antar").val("");
-        var input = document.getElementById("tgl_antar");
-        input.setAttribute("min", this.value);
-    }
-</script>
-
-
-
-<script>
     function addNewRow(){
-        var counter = $(".new_row").length;
-        var row_sebelum = counter-1;
-        
-        //if (counter == 0){
-            html =
-            '<tr class = "new_row">'+
-                '<td style="text-align:center" class="col-lg-3">'+
-                    '<input type ="hidden" name = "row" value = '+counter+'>'+
-                    '<select data-plugin-selectTwo class="form-control" name="produk'+counter+'" id="produk'+counter+'" onchange="getHargaSatuan('+counter+')" required><?php for($b=0; $b<count($produk); $b++){ ?>'+
-                        '<option value="<?php echo $produk[$b]['id_detail_produk']?>">'+
-                            '<?php echo $produk[$b]['kode_produk'] . ' - ' . $produk[$b]['nama_produk']; if ($produk[$b]['keterangan'] == 0 || $produk[$b]['keterangan'] == 1){ for ($c=0; $c<count($ukuran); $c++){ if ($produk[$b]['id_ukuran_produk'] == $ukuran[$c]['id_ukuran_produk']){ echo ' ' . $ukuran[$c]['ukuran_produk'];}}} if($produk[$b]['keterangan'] == 0 || $produk[$b]['keterangan'] == 2){ for ($d=0; $d<count($warna); $d++){ if ($produk[$b]['id_warna'] == $warna[$d]['id_warna']){ echo ' '. $warna[$d]['nama_warna'];}}} ?>'+
-                        '</option><?php } ?>'+
-                    '</select>'+
-                '</td>'+
-                '<td style="text-align:center" class="col-lg-1">'+
-                    '<input class="form-control" type="number" name="jumlah'+counter+'" id="jumlah'+counter+'" min="0" onkeyup="countHargaTotal('+counter+'); totalHarga();" onclick="getHargaSatuan('+counter+'); countHargaTotal('+counter+'); totalHarga();" required>'+
-                '</td>'+
-                '<td style="text-align:center" class="col-lg-1">'+
-                    '<input class="form-control" type="text" name="satuan'+counter+'" id="satuan'+counter+'" value="Pcs" readonly>'+
-                '</td>'+
-                '<td style="text-align:center" class="col-lg-2">'+
-                    '<input class="form-control" type="date" name="tgl_terima'+counter+'" id="tgl_terima'+counter+'" required>'+
-                '</td>'+
-                '<td style="text-align:center" class="col-lg-2">'+
-                    '<input class="form-control" type="number" name="harga_satuan'+counter+'" id="harga_satuan'+counter+'" readonly>'+
-                '</td>'+
-                '<td style="text-align:center" class="col-lg-2">'+
-                    '<input class="form-control" type="number" name="harga_total'+counter+'" id="harga_total'+counter+'" readonly>'+
-                '</td>'+
-                '<td style="text-align:center" class="col-lg-1">'+
-                    '<input class="form-control" type="text" name="remark'+counter+'" id="remark'+counter+'">'+
-                '</td>'+
-            '</tr>';
-            $("#print_new_row").append(html);
+        /* document.getElementById("tgl_antar").onchange = function(){
+            $("#tgl_terima"+counter).val("");
+            var input = document.getElementById("tgl_terima"+counter);
+            input.setAttribute("min", this.value);
+        } */
+        var antar = $("#tgl_antar").val();
+        if (antar!=""){
+            var counter = $(".new_row").length;
+            var row_sebelum = counter-1;
 
-        //}
-        /* else{
-            var aaa = $('#jumlah'+row_sebelum).val();
-            var tgll = $('#tgl_terima'+row_sebelum).val();
-            if(aaa.length == 0 || tgll == ""){
-                $("#tambah").click(function(){
-                    //return false;
-                    //alert(aaa.length);
-                });
-            }
-
-            else {
-                $("#produk"+row_sebelum).prop("readonly", true);
-                $("#jumlah"+row_sebelum).prop("readonly", true);
-                $("#satuan"+row_sebelum).prop("readonly", true);
-                $("#tgl_terima"+row_sebelum).prop("readonly", true);
-                $("#harga_satuan"+row_sebelum).prop("readonly", true);
-                $("#harga_total"+row_sebelum).prop("readonly", true);
-
+            //if (counter == 0){
                 html =
                 '<tr class = "new_row">'+
-                    '<td class="col-lg-3">'+
+                    '<td style="text-align:center" class="col-lg-3">'+
                         '<input type ="hidden" name = "row" value = '+counter+'>'+
                         '<select data-plugin-selectTwo class="form-control" name="produk'+counter+'" id="produk'+counter+'" onchange="getHargaSatuan('+counter+')" required><?php for($b=0; $b<count($produk); $b++){ ?>'+
                             '<option value="<?php echo $produk[$b]['id_detail_produk']?>">'+
-                                '<?php for($cc=0; $cc<'+counter+'; $cc++){ if($produk[$b]['id_detail_produk'] !='+$("#produk"+cc).val()+'){ ?>'+
-                                    '<?php echo $produk[$b]['kode_produk'] . ' - ' . $produk[$b]['nama_produk']; if ($produk[$b]['keterangan'] == 0 || $produk[$b]['keterangan'] == 1){ for ($c=0; $c<count($ukuran); $c++){ if ($produk[$b]['id_ukuran_produk'] == $ukuran[$c]['id_ukuran_produk']){ echo ' ' . $ukuran[$c]['ukuran_produk'];}}} if($produk[$b]['keterangan'] == 0 || $produk[$b]['keterangan'] == 2){ for ($d=0; $d<count($warna); $d++){ if ($produk[$b]['id_warna'] == $warna[$d]['id_warna']){ echo ' '. $warna[$d]['nama_warna'];}}} ?>'+
-                                '<?php }} ?>' +
+                                '<?php echo $produk[$b]['kode_produk'] . ' - ' . $produk[$b]['nama_produk']; if ($produk[$b]['keterangan'] == 0 || $produk[$b]['keterangan'] == 1){ for ($c=0; $c<count($ukuran); $c++){ if ($produk[$b]['id_ukuran_produk'] == $ukuran[$c]['id_ukuran_produk']){ echo ' ' . $ukuran[$c]['ukuran_produk'];}}} if($produk[$b]['keterangan'] == 0 || $produk[$b]['keterangan'] == 2){ for ($d=0; $d<count($warna); $d++){ if ($produk[$b]['id_warna'] == $warna[$d]['id_warna']){ echo ' '. $warna[$d]['nama_warna'];}}} ?>'+
                             '</option><?php } ?>'+
                         '</select>'+
                     '</td>'+
-                    '<td class="col-lg-1">'+
+                    '<td style="text-align:center" class="col-lg-1">'+
                         '<input class="form-control" type="number" name="jumlah'+counter+'" id="jumlah'+counter+'" min="0" onkeyup="countHargaTotal('+counter+'); totalHarga();" onclick="getHargaSatuan('+counter+'); countHargaTotal('+counter+'); totalHarga();" required>'+
                     '</td>'+
-                    '<td class="col-lg-1">'+
+                    '<td style="text-align:center" class="col-lg-1">'+
                         '<input class="form-control" type="text" name="satuan'+counter+'" id="satuan'+counter+'" value="Pcs" readonly>'+
                     '</td>'+
-                    '<td class="col-3">'+
-                        '<input class="form-control" type="date" name="tgl_terima'+counter+'" id="tgl_terima'+counter+'" required>'+
+                    '<td style="text-align:center" class="col-lg-2">'+
+                        '<input class="form-control" type="date" name="tgl_terima'+counter+'" id="tgl_terima'+counter+'" min="'+antar+'" required>'+
                     '</td>'+
-                    '<td class="col-2">'+
+                    '<td style="text-align:center" class="col-lg-2">'+
                         '<input class="form-control" type="number" name="harga_satuan'+counter+'" id="harga_satuan'+counter+'" readonly>'+
                     '</td>'+
-                    '<td class="col-2">'+
+                    '<td style="text-align:center" class="col-lg-2">'+
                         '<input class="form-control" type="number" name="harga_total'+counter+'" id="harga_total'+counter+'" readonly>'+
+                    '</td>'+
+                    '<td style="text-align:center" class="col-lg-1">'+
+                        '<input class="form-control" type="text" name="remark'+counter+'" id="remark'+counter+'">'+
                     '</td>'+
                 '</tr>';
                 $("#print_new_row").append(html);
-            } */
-            
-            /* var id_detail_produk = $("#produk"+counter).val();
-            $.ajax({
-                url:"<?php echo base_url();?>PurchaseOrderCustomer/harga_produk",
-                type:"POST",
-                dataType:"JSON",
-                data:{id_detail_produk:id_detail_produk},
-                success:function(respond){
-                    $("#harga_satuan"+counter).val(respond[0]["harga_produk"]);
+
+            //}
+            /* else{
+                var aaa = $('#jumlah'+row_sebelum).val();
+                var tgll = $('#tgl_terima'+row_sebelum).val();
+                if(aaa.length == 0 || tgll == ""){
+                    $("#tambah").click(function(){
+                        //return false;
+                        //alert(aaa.length);
+                    });
                 }
-            });
-        } */
+
+                else {
+                    $("#produk"+row_sebelum).prop("readonly", true);
+                    $("#jumlah"+row_sebelum).prop("readonly", true);
+                    $("#satuan"+row_sebelum).prop("readonly", true);
+                    $("#tgl_terima"+row_sebelum).prop("readonly", true);
+                    $("#harga_satuan"+row_sebelum).prop("readonly", true);
+                    $("#harga_total"+row_sebelum).prop("readonly", true);
+
+                    html =
+                    '<tr class = "new_row">'+
+                        '<td class="col-lg-3">'+
+                            '<input type ="hidden" name = "row" value = '+counter+'>'+
+                            '<select data-plugin-selectTwo class="form-control" name="produk'+counter+'" id="produk'+counter+'" onchange="getHargaSatuan('+counter+')" required><?php for($b=0; $b<count($produk); $b++){ ?>'+
+                                '<option value="<?php echo $produk[$b]['id_detail_produk']?>">'+
+                                    '<?php for($cc=0; $cc<'+counter+'; $cc++){ if($produk[$b]['id_detail_produk'] !='+$("#produk"+cc).val()+'){ ?>'+
+                                        '<?php echo $produk[$b]['kode_produk'] . ' - ' . $produk[$b]['nama_produk']; if ($produk[$b]['keterangan'] == 0 || $produk[$b]['keterangan'] == 1){ for ($c=0; $c<count($ukuran); $c++){ if ($produk[$b]['id_ukuran_produk'] == $ukuran[$c]['id_ukuran_produk']){ echo ' ' . $ukuran[$c]['ukuran_produk'];}}} if($produk[$b]['keterangan'] == 0 || $produk[$b]['keterangan'] == 2){ for ($d=0; $d<count($warna); $d++){ if ($produk[$b]['id_warna'] == $warna[$d]['id_warna']){ echo ' '. $warna[$d]['nama_warna'];}}} ?>'+
+                                    '<?php }} ?>' +
+                                '</option><?php } ?>'+
+                            '</select>'+
+                        '</td>'+
+                        '<td class="col-lg-1">'+
+                            '<input class="form-control" type="number" name="jumlah'+counter+'" id="jumlah'+counter+'" min="0" onkeyup="countHargaTotal('+counter+'); totalHarga();" onclick="getHargaSatuan('+counter+'); countHargaTotal('+counter+'); totalHarga();" required>'+
+                        '</td>'+
+                        '<td class="col-lg-1">'+
+                            '<input class="form-control" type="text" name="satuan'+counter+'" id="satuan'+counter+'" value="Pcs" readonly>'+
+                        '</td>'+
+                        '<td class="col-3">'+
+                            '<input class="form-control" type="date" name="tgl_terima'+counter+'" id="tgl_terima'+counter+'" required>'+
+                        '</td>'+
+                        '<td class="col-2">'+
+                            '<input class="form-control" type="number" name="harga_satuan'+counter+'" id="harga_satuan'+counter+'" readonly>'+
+                        '</td>'+
+                        '<td class="col-2">'+
+                            '<input class="form-control" type="number" name="harga_total'+counter+'" id="harga_total'+counter+'" readonly>'+
+                        '</td>'+
+                    '</tr>';
+                    $("#print_new_row").append(html);
+                } */
+                
+                /* var id_detail_produk = $("#produk"+counter).val();
+                $.ajax({
+                    url:"<?php echo base_url();?>PurchaseOrderCustomer/harga_produk",
+                    type:"POST",
+                    dataType:"JSON",
+                    data:{id_detail_produk:id_detail_produk},
+                    success:function(respond){
+                        $("#harga_satuan"+counter).val(respond[0]["harga_produk"]);
+                    }
+                });
+            } */
+        }else{
+            alert("Masukkan Tanggal Pengantaran terlebih dahulu.")
+        }
     }
 </script>
 
@@ -418,7 +464,6 @@
         return number;
     }
 </script>
-
 
 <script>
     function reload() {

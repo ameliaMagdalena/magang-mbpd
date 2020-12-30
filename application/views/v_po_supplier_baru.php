@@ -27,6 +27,39 @@
 <h1>Purchase Order Supplier</h1>
 <hr>
 
+<?php
+    //konversi int ke romawi
+    //from https://stackoverflow.com/questions/14994941/numbers-to-roman-numbers-with-php
+    function integerToRoman($integer){
+        $integer = intval($integer);
+        $rom = '';
+        // Create a lookup array that contains all of the Roman numerals.
+        $lookup = array('M' => 1000,
+            'CM' => 900,
+            'D' => 500,
+            'CD' => 400,
+            'C' => 100,
+            'XC' => 90,
+            'L' => 50,
+            'XL' => 40,
+            'X' => 10,
+            'IX' => 9,
+            'V' => 5,
+            'IV' => 4,
+            'I' => 1);
+        foreach($lookup as $roman => $value){
+            // Determine the number of matches
+            $matches = intval($integer/$value);
+            // Add the same number of characters to the string
+            $rom .= str_repeat($roman,$matches);
+            // Set the integer to be the remainder of the integer and the value
+            $integer = $integer % $value;
+        }
+        // The Roman numeral should be built, return it
+        return $rom;
+    }
+?>
+
 	<section class="panel">
 		<form class="form-horizontal mb-lg" action="<?php echo base_url()?>PurchaseOrderSupplier/insert" method="post">
 			<header class="panel-heading">
@@ -45,7 +78,8 @@
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Nomor PO<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="text" class="form-control" name="no_po_supplier">
+                        <input type="text" name="no_po_supplier" id="no_po" class="form-control"
+                            value="MBP/PO/<?= integerToRoman(date('m')) ."/". date('Y') ."/"?><?= count($kodepo)+1 ?>" readonly>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
@@ -63,10 +97,13 @@
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Pengiriman<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="date" class="form-control" value="">
+                        <input type="date" class="form-control" value="" required>
                     </div>
                 </div>
-                <br>
+
+                <div class="form-group mt-lg">
+					<h4 style="text-align:center">Data Material</h4>
+                </div>
                 <table class = "table table-bordered table-striped table-hover" border="1" id="tabel_material">
                     <thead>
                         <tr>

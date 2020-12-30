@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2020 at 03:36 PM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.0
+-- Generation Time: Dec 29, 2020 at 05:06 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.3.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -2862,6 +2862,7 @@ INSERT INTO `rekening_logs` (`id_rekening_logs`, `keterangan_log`, `id_rekening`
 
 CREATE TABLE `sales_order` (
   `id_sales_order` varchar(10) NOT NULL,
+  `kode_so` varchar(20) NOT NULL,
   `tanggal_so` date NOT NULL,
   `tanggal_pengantaran` date NOT NULL,
   `dibuat_oleh` varchar(10) NOT NULL,
@@ -2882,10 +2883,10 @@ CREATE TABLE `sales_order` (
 -- Dumping data for table `sales_order`
 --
 
-INSERT INTO `sales_order` (`id_sales_order`, `tanggal_so`, `tanggal_pengantaran`, `dibuat_oleh`, `tanggal_dibuat`, `diterima_oleh`, `tanggal_diterima`, `id_purchase_order_customer`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('SO-1', '2020-12-24', '2020-12-31', 'USER-2', '2020-12-24', '', '0000-00-00', 'POC-1', 'USER-2', '2020-12-24 16:59:27', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SO-2', '2020-12-24', '2021-01-01', 'USER-2', '2020-12-24', '', '0000-00-00', 'POC-2', 'USER-2', '2020-12-24 17:07:48', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SO-3', '2020-12-24', '2020-12-30', 'USER-2', '2020-12-24', '', '0000-00-00', 'POC-3', 'USER-2', '2020-12-24 17:11:36', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
+INSERT INTO `sales_order` (`id_sales_order`, `kode_so`, `tanggal_so`, `tanggal_pengantaran`, `dibuat_oleh`, `tanggal_dibuat`, `diterima_oleh`, `tanggal_diterima`, `id_purchase_order_customer`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('SO-1', '', '2020-12-24', '2020-12-31', 'USER-2', '2020-12-24', '', '0000-00-00', 'POC-1', 'USER-2', '2020-12-24 16:59:27', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SO-2', '', '2020-12-24', '2021-01-01', 'USER-2', '2020-12-24', '', '0000-00-00', 'POC-2', 'USER-2', '2020-12-24 17:07:48', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SO-3', '', '2020-12-24', '2020-12-30', 'USER-2', '2020-12-24', '', '0000-00-00', 'POC-3', 'USER-2', '2020-12-24 17:11:36', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -3024,7 +3025,7 @@ INSERT INTO `sub_customer` (`id_sub_customer`, `nama_sub_customer`, `id_customer
 
 CREATE TABLE `sub_jenis_material` (
   `id_sub_jenis_material` varchar(10) NOT NULL,
-  `kode_sub_jenis_material` varchar(10) NOT NULL,
+  `kode_sub_jenis_material` varchar(20) NOT NULL,
   `nama_sub_jenis_material` varchar(30) NOT NULL,
   `id_jenis_material` varchar(10) NOT NULL,
   `sumber` int(11) NOT NULL,

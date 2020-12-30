@@ -1,0 +1,8 @@
+WEBSITE
+username: mbpdsystem
+pass: D7vWlRfvRTaVAKQ4WSeK
+
+DATABASE
+name: mbpd / id15791377_mbpd
+username: mbpd_db
+pass: ja4M4~kPejFft-hk

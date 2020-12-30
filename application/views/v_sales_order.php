@@ -45,7 +45,7 @@
             <label class="col-sm-3 control-label">Kode SO</label>
             <div class="col-sm-9">
                 <input type="text" name="no_so" class="form-control"
-                value="<?php echo $sales_order[0]['id_sales_order'] ?>" readonly>
+                value="<?php echo $sales_order[0]['kode_so'] ?>" readonly>
             </div>
         </div>
         <div class="form-group mt-lg">
@@ -76,20 +76,24 @@
                 <table class="table table-bordered table-striped mb-none">
                     <thead>
                         <tr>
-                            <th class="col-lg-1">No.</th>
-                            <th class="col-lg-2">Nama Produk</th>
-                            <th class="col-lg-1">Jumlah</th>
-                            <th class="col-lg-1">Satuan</th>
+                            <th style="text-align:center">No.</th>
+                            <th class="col-lg-3" style="text-align:center">Kode Produk</th>
+                            <th class="col-lg-3" style="text-align:center">Nama Produk</th>
+                            <th class="col-lg-1" style="text-align:center">Jumlah</th>
+                            <th class="col-lg-2" style="text-align:center">Satuan</th>
+                            <th class="col-lg-3" style="text-align:center">Remark</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php for($y=0; $y<count($detail_po_cust); $y++){
                             if($sales_order[0]['id_purchase_order_customer'] == $detail_po_cust[$y]['id_purchase_order_customer']){?>
                         <tr>
+                            <td style="text-align:center"> <?php echo $y+1 ?> </td>
                             <td> <?php echo $detail_po_cust[$y]['kode_produk'] ?> </td>
                             <td> <?php echo $detail_po_cust[$y]['nama_produk'] ?> </td>
                             <td> <?php echo $detail_po_cust[$y]['jumlah_produk'] ?> </td>
                             <td> <?php //echo $detail_po_cust[$y]['satuan'] ?> Pcs </td>
+                            <td> <?php echo $detail_po_cust[$y]['remark'] ?> </td>
                         </tr>
                         <?php }} ?>
                     </tbody>

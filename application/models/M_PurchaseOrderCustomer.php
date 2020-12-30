@@ -100,6 +100,11 @@ class M_PurchaseOrderCustomer extends CI_Model {
         JOIN purchase_order_customer b ON a.id_purchase_order_customer = b.id_purchase_order_customer
         WHERE a.status_delete=0");
     }
+    function selectSalesOrderNow(){
+        return $this->db->query("SELECT * FROM sales_order a
+        JOIN purchase_order_customer b ON a.id_purchase_order_customer = b.id_purchase_order_customer
+        WHERE a.status_delete=0 AND MONTH(a.tanggal_so)=MONTH(CURRENT_DATE())");
+    }
     function selectSatuSalesOrder($id){
         return $this->db->query("SELECT * FROM sales_order a
         JOIN purchase_order_customer b ON a.id_purchase_order_customer = b.id_purchase_order_customer

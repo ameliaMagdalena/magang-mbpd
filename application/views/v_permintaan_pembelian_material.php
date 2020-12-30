@@ -60,7 +60,7 @@
                 <tr>
                     <td> <?php echo $no ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['nama_jenis_material'] . " " . $permintaan_pembelian[$x]['nama_sub_jenis_material'] ?> </td>
-                    <td> <?php echo $permintaan_pembelian[$x]['jumlah_material'] ?> </td>
+                    <td> <?php echo $permintaan_pembelian[$x]['jumlah_beli'] ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['tanggal_permintaan'] ?> </td>
                     <td>Requested / Belum Ditinjau</td>
                     <td>
@@ -128,7 +128,7 @@
                                 <label class="col-sm-4 control-label">Jumlah Diminta</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="jumlah" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['jumlah_material'] ?>" readonly>
+                                    value="<?php echo $permintaan_pembelian[$x]['jumlah_beli'] ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
@@ -312,7 +312,7 @@
                 <tr>
                     <td> <?php echo $no ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['nama_jenis_material'] . " " . $permintaan_pembelian[$x]['nama_sub_jenis_material'] ?> </td>
-                    <td> <?php echo $permintaan_pembelian[$x]['jumlah_material'] ?> </td>
+                    <td> <?php echo $permintaan_pembelian[$x]['jumlah_beli'] ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['tanggal_permintaan'] ?> </td>
                     <td>Proses Pembelian</td>
                     <td>
@@ -378,7 +378,14 @@
                                 <label class="col-sm-4 control-label">Jumlah Diminta</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="jumlah" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['jumlah_material'] ?>" readonly>
+                                    value="<?php echo $permintaan_pembelian[$x]['jumlah_beli'] ?>" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group mt-lg">
+                                <label class="col-sm-4 control-label">Jumlah Dibeli</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="jumlah" class="form-control"
+                                    value="<?php echo $daripo[0]['jumlah_material'] ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
@@ -458,7 +465,7 @@
                 <tr>
                     <td> <?php echo $no ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['nama_jenis_material'] . " " . $permintaan_pembelian[$x]['nama_sub_jenis_material'] ?> </td>
-                    <td> <?php echo $permintaan_pembelian[$x]['jumlah_material'] ?> </td>
+                    <td> <?php echo $permintaan_pembelian[$x]['jumlah_beli'] ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['tanggal_permintaan'] ?> </td>
                     <td>Selesai</td>
                     <td>
@@ -524,7 +531,14 @@
                                 <label class="col-sm-4 control-label">Jumlah Diminta</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="jumlah" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['jumlah_material'] ?>" readonly>
+                                    value="<?php echo $permintaan_pembelian[$x]['jumlah_beli'] ?>" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group mt-lg">
+                                <label class="col-sm-4 control-label">Jumlah Dibeli</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="jumlah" class="form-control"
+                                    value="<?php echo $daripo[0]['jumlah_material'] ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
@@ -606,7 +620,7 @@
                 <tr>
                     <td> <?php echo $no ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['nama_jenis_material'] . " " . $permintaan_pembelian[$x]['nama_sub_jenis_material'] ?> </td>
-                    <td> <?php echo $permintaan_pembelian[$x]['jumlah_material'] ?> </td>
+                    <td> <?php echo $permintaan_pembelian[$x]['jumlah_beli'] ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['tanggal_permintaan'] ?> </td>
                     <td>
                         <?php if($permintaan_pembelian[$x]['status_pembelian'] == 3){
@@ -683,7 +697,7 @@
                                 <label class="col-sm-4 control-label">Jumlah Diminta</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="jumlah" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['jumlah_material'] ?>" readonly>
+                                    value="<?php echo $permintaan_pembelian[$x]['jumlah_beli'] ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
@@ -763,7 +777,7 @@
                 <tr>
                     <td> <?php echo $no ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['nama_jenis_material'] . " " . $permintaan_pembelian[$x]['nama_sub_jenis_material'] ?> </td>
-                    <td> <?php echo $permintaan_pembelian[$x]['jumlah_material'] ?> </td>
+                    <td> <?php echo $permintaan_pembelian[$x]['jumlah_beli'] ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['tanggal_permintaan'] ?> </td>
                     <td>
                         <?php if($permintaan_pembelian[$x]['status_pembelian'] == 0){
@@ -857,7 +871,14 @@
                                 <label class="col-sm-4 control-label">Jumlah Diminta</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="jumlah" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['jumlah_material'] ?>" readonly>
+                                    value="<?php echo $permintaan_pembelian[$x]['jumlah_beli'] ?>" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group mt-lg">
+                                <label class="col-sm-4 control-label">Jumlah Dibeli</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="jumlah" class="form-control"
+                                    value="<?php echo $daripo[0]['jumlah_material'] ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">

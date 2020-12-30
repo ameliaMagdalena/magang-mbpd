@@ -27,8 +27,41 @@
 <h1>Purchase Order Supplier - Permintaan Pembelian</h1>
 <hr>
 
+<?php
+    //konversi int ke romawi
+    //from https://stackoverflow.com/questions/14994941/numbers-to-roman-numbers-with-php
+    function integerToRoman($integer){
+        $integer = intval($integer);
+        $rom = '';
+        // Create a lookup array that contains all of the Roman numerals.
+        $lookup = array('M' => 1000,
+            'CM' => 900,
+            'D' => 500,
+            'CD' => 400,
+            'C' => 100,
+            'XC' => 90,
+            'L' => 50,
+            'XL' => 40,
+            'X' => 10,
+            'IX' => 9,
+            'V' => 5,
+            'IV' => 4,
+            'I' => 1);
+        foreach($lookup as $roman => $value){
+            // Determine the number of matches
+            $matches = intval($integer/$value);
+            // Add the same number of characters to the string
+            $rom .= str_repeat($roman,$matches);
+            // Set the integer to be the remainder of the integer and the value
+            $integer = $integer % $value;
+        }
+        // The Roman numeral should be built, return it
+        return $rom;
+    }
+?>
+
 	<section class="panel">
-		<form class="form-horizontal mb-lg" action="<?php echo base_url()?>PurchaseOrderSupplier/insert" method="post">
+		<form class="form-horizontal mb-lg" action="<?php echo base_url()?>PurchaseOrderSupplier/insert2" method="post">
 			<header class="panel-heading">
 				<h2 class="panel-title">Form Purchase Order Supplier</h2>
 			</header>
@@ -45,7 +78,8 @@
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Nomor PO<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="text" class="form-control" name="no_po_supplier">
+                        <input type="text" name="no_po_supplier" id="no_po" class="form-control"
+                            value="MBP/PO/<?= integerToRoman(date('m')) ."/". date('Y') ."/"?><?= count($kodepo)+1 ?>" readonly>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
@@ -63,10 +97,13 @@
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Pengiriman<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="date" class="form-control" value="">
+                        <input type="date" class="form-control" value="" required>
                     </div>
                 </div>
-                <br>
+
+                <div class="form-group mt-lg">
+					<h4 style="text-align:center">Data Material</h4>
+                </div>
                 <table class = "table table-bordered table-striped table-hover" border="1" id="tabel_material">
                     <thead>
                         <tr>
@@ -167,7 +204,7 @@
 
         html =
         '<tr class = "new_row">'+
-            '<td class="col-lg-3">'+
+            '<td class="col-lg-2">'+
             '<input type ="hidden" name = "row" value = '+counter+'>'+
                 '<select data-plugin-selectTwo class="form-control" name="permintaan'+counter+'" id="permintaan'+counter+'" onchange="getMaterial('+counter+')" required>'+
                 '</select>'+
@@ -178,14 +215,15 @@
             '</td>'+
             '<td class="col-lg-1">'+
                 '<input class="form-control" type="number" name="jumlah'+counter+'" id="jumlah'+counter+'" min="0" onkeyup="countHargaTotal('+counter+'); totalHarga();" onclick="countHargaTotal('+counter+'); totalHarga();" required>'+
+                '<small name="jlhminta'+counter+'" id="jlhminta'+counter+'"></small>'+
             '</td>'+
             '<td class="col-lg-1">'+
                 '<input class="form-control" type="text" name="satuan'+counter+'" id="satuan'+counter+'" readonly>'+
             '</td>'+
-            '<td class="col-2">'+
+            '<td class="col-lg-2">'+
                 '<input class="form-control" type="number" name="harga_satuan'+counter+'" id="harga_satuan'+counter+'" readonly>'+
             '</td>'+
-            '<td class="col-2">'+
+            '<td class="col-lg-3">'+
                 '<input class="form-control" type="number" name="harga_total'+counter+'" id="harga_total'+counter+'" readonly>'+
             '</td>'+
         '</tr>';
@@ -200,15 +238,14 @@
         var id_supplier = $("#supplier").val();
         var id_permintaan = $("#permintaan"+counter).val();
 
-        <?php for($m=0; $m<count($beli); $m++){  ?>
-            if (id_supplier == '<?php echo $material[$b]['id_supplier'] ?>' && '<?php echo $material[$b]['id_sub_jenis_material'] ?>' == '<?php echo $material[$bb]['id_sub_jenis_material'] ?>') {
+        <?php for($m=0; $m<count($darisupp); $m++){  ?>
+            if (id_supplier == '<?php echo $darisupp[$m]['id_supplier'] ?>') {
                 html =
-                '<option value="<?php echo $material[$b]['id_sub_jenis_material']?>">'+
-                    '<?php echo $material[$b]['kode_sub_jenis_material'] . ' - ' . $material[$b]['nama_jenis_material'] . ' ' . $material[$b]['nama_sub_jenis_material']; ?>'+
+                '<option value="<?php echo $darisupp[$m]['id_permintaan_pembelian']?>">'+
+                    '<?php echo $darisupp[$m]['id_permintaan_pembelian'] ?>'+
                 '</option>';
-                $("#material"+counter).append(html);
-                getHargaSatuan(counter);
-                getSatuan(counter);
+                $("#permintaan"+counter).append(html);
+                getMaterial(counter);
             }
         <?php } ?>
     }
@@ -219,9 +256,9 @@
         var id_supplier = $("#supplier").val();
         var id_permintaan = $("#permintaan"+counter).val();
 
-        <?php for($bb=0; $bb<count($beli); $bb++){
+        <?php for($bb=0; $bb<count($darisupp); $bb++){
         for($b=0; $b<count($material); $b++){  ?>
-            if (id_supplier == '<?php echo $material[$b]['id_supplier'] ?>' && '<?php echo $material[$b]['id_sub_jenis_material'] ?>' == '<?php echo $beli[$bb]['id_sub_jenis_material'] ?>') {
+            if (id_supplier == '<?php echo $material[$b]['id_supplier'] ?>' && '<?php echo $material[$b]['id_sub_jenis_material'] ?>' == '<?php echo $darisupp[$bb]['id_sub_jenis_material'] ?>') {
                 html =
                 '<option value="<?php echo $material[$b]['id_sub_jenis_material']?>">'+
                     '<?php echo $material[$b]['kode_sub_jenis_material'] . ' - ' . $material[$b]['nama_jenis_material'] . ' ' . $material[$b]['nama_sub_jenis_material']; ?>'+
@@ -229,8 +266,25 @@
                 $("#material"+counter).append(html);
                 getHargaSatuan(counter);
                 getSatuan(counter);
+                getJumlah(counter);
             }
         <?php } } ?>
+    }
+</script>
+
+<script>
+    function getJumlah(countt){
+        var id_permintaan = $("#permintaan"+countt).val();
+        $.ajax({
+            url:"<?php echo base_url();?>PurchaseOrderSupplier/jumlah_minta",
+            type:"POST",
+            dataType:"JSON",
+            data:{id_permintaan:id_permintaan},
+            success:function(respond){
+                html = 'Jumlah Diminta: '+respond[0]["jumlah_material"];
+                $("#jlhminta"+countt).append(html);
+            }
+        });
     }
 </script>
 

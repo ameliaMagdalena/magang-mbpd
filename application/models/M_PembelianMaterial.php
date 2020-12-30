@@ -31,5 +31,20 @@ class M_PembelianMaterial extends CI_Model {
         $this->db->update('permintaan_pembelian', $data, $where);
     }
 
+    function selectPermintaanDanSupplier(){
+        return $this->db->query("SELECT * FROM permintaan_pembelian a
+        JOIN sub_jenis_material b ON a.id_sub_jenis_material = b.id_sub_jenis_material
+        JOIN jenis_material c ON b.id_jenis_material = c.id_jenis_material
+        JOIN detail_supplier d ON b.id_sub_jenis_material = d.id_sub_jenis_material
+        JOIN supplier e ON d.id_supplier = e.id_supplier
+        WHERE a.status_delete = 0");
+    }
+    
+    function selectPermintaanDanPO(){
+        return $this->db->query("SELECT * FROM permintaan_pembelian a
+        JOIN detail_purchase_order_supplier b ON a.id_detail_purchase_order_supplier = b.id_detail_purchase_order_supplier
+        JOIN purchase_order_supplier c ON b.id_purchase_order_supplier = c.id_purchase_order_supplier
+        WHERE a.status_delete = 0");
+    }
 
 }
