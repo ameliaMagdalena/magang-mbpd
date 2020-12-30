@@ -126,8 +126,6 @@
                             title="Detail" href="<?php echo base_url() . 'PurchaseOrderSupplier/detail/' . $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
                         <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
                             title="Hapus" href="#modalhapus<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
-
-                        <!-- tambah log -->
                     </td>
                 </tr>
 
@@ -156,8 +154,6 @@
                             title="Edit" href="#modaledit<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
                         <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
                             title="Hapus" href="#modalhapus<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
-
-                        <!-- tambah log -->
                     </td>
                 </tr>
                 <?php } } ?>

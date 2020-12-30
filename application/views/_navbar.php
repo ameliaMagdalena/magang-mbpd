@@ -335,23 +335,6 @@
 											</li>
 										</ul>
 									</li>
-									<li class="nav-parent">
-										<a title="Pengambilan Material Supplier">
-											<span>Pengambilan Material Supplier</span>
-										</a>
-										<ul class="nav nav-children">
-											<li>
-												<a href="<?php echo base_url() . 'DeliveryNote'?>">
-													Delivery Note
-												</a>
-											</li>
-											<li>
-												<a href="<?php echo base_url() . 'PengambilanMaterial/jadwal'?>">
-													Jadwal Pengambilan
-												</a>
-											</li>
-										</ul>
-									</li>
 								</ul>
 							</li>
 							<li class="nav-parent">
@@ -393,39 +376,39 @@
 								</ul>
 							</li>
 							
-							<!-- <li class="nav-parent">
+							<li class="nav-parent">
 								<a>
-									<i class="fa fa-shopping-cart" aria-hidden="true"></i>
-									<span>Permintaan Pembelian</span>
+									<i class="fa fa-truck" aria-hidden="true"></i>
+									<span>Delivery Note</span>
 								</a>
 								<ul class="nav nav-children">
 									<li>
-										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/baru'?>">
-											Buat Baru
+										<a href="<?php echo base_url() . 'DeliveryNote/index/0'?>">
+											Dalam Proses
 										</a>
 									</li>
 									<li>
-										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/0'?>">
-											Pending
-										</a>
-									</li>
-									<li>
-										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/1'?>">
-											Proses
-										</a>
-									</li>
-									<li>
-										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/2'?>">
+										<a href="<?php echo base_url() . 'DeliveryNote/index/1'?>">
 											Selesai
 										</a>
 									</li>
 									<li>
-										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial'?>">
+										<a href="<?php echo base_url() . 'DeliveryNote/index/2'?>">
+											Batal / Ditolak
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'DeliveryNote/index/3'?>">
 											Semua
 										</a>
 									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PengambilanMaterial/jadwal'?>">
+											Jadwal Pengambilan
+										</a>
+									</li>
 								</ul>
-							</li> -->
+							</li>
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-sign-in" aria-hidden="true"></i>

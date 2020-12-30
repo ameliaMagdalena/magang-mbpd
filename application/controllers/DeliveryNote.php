@@ -16,8 +16,10 @@ class DeliveryNote extends CI_Controller {
         }
     }
 
-	public function index(){
-        $data['jumlah_dn'] = $this->M_DeliveryNote->selectDeliveryNote()->num_rows();
+	public function index($status){
+        $data['status'] = $status;
+        $data['jumlah_dn'] = $this->M_DeliveryNote->selectDeliveryNoteAktif()->num_rows();
+        $data['dn'] = $this->M_DeliveryNote->selectDeliveryNoteAktif()->result_array();
         $data['po'] = $this->M_DeliveryNote->selectPOSupplier()->result_array();
 
         //notif produksi
@@ -213,6 +215,54 @@ class DeliveryNote extends CI_Controller {
         $id = $this->input->post("id_po_supplier");
         $result = $this->M_DeliveryNote->selectMaterialPO($id)->result_array();
         echo json_encode($result);
+    }
+
+    public function jumlah_material($idpo){
+        $id = $this->input->post("id_sub_jenis_material");
+        $result = $this->M_DeliveryNote->selectMaterialnya($id, $idpo)->result_array();
+        echo json_encode($result);
+    }
+
+    public function insert(){
+        $row = $this->input->post("row"); //jumlah row-1 / dimulai dari 0
+        $id_dn = $this->input->post("id_dn");
+
+        $jumlah_detail = $this->M_DeliveryNote->selectAllDeliveryNote()->num_rows()+1;
+        
+        for($x=0; $x<=$row; $x++){
+            $jumlah_material = $this->input->post("jumlah".$x);
+            if($jumlah_material != 0){
+                $id_detail = "DDN-" . $jumlah_detail;
+
+                $data1 = array(
+                    "id_detail_delivery_note" => $id_detail,
+                    "id_detail_purchase_order_supplier" => $this->input->post("detpo".$x),
+                    "id_delivery_note" => $id_dn,
+                    "jumlah_diminta" => $jumlah_material,
+                    "user_add"=>$_SESSION['id_user'],
+                    "waktu_add"=>date('Y-m-d H:i:s'),
+                    "user_edit"=>"0",
+                    "user_delete"=>"0"
+                );
+                $this->M_DeliveryNote->insertDetailDeliveryNote($data1);
+                $jumlah_detail = $jumlah_detail +1;
+            }
+        }
+
+        $data2 = array (
+            "id_delivery_note" => $id_dn,
+            "tanggal_dn" => $this->input->post("tgl_dn"),
+            "id_supplier" => $this->input->post("supplier"),
+            "tanggal_penerimaan" => $this->input->post("tgl_pengiriman"),
+            //"total_harga" => $this->input->post("total_harga"),
+            "status_pengesahan" => "0", //proses persetujuan
+            "user_add"=>$_SESSION['id_user'],
+            "waktu_add"=>date('Y-m-d H:i:s'),
+            "user_edit"=>"0",
+            "user_delete"=>"0"
+        );
+        $this->M_DeliveryNote->insertDeliveryNote($data2);
+        redirect('DeliveryNote/index/0');
     }
 
     public function tambah_pemasukan(){

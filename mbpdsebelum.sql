@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2020 at 05:46 PM
+-- Generation Time: Dec 29, 2020 at 05:06 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.3.13
 
@@ -33,10 +33,10 @@ CREATE TABLE `bank` (
   `nama_bank` varchar(50) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -49,8 +49,7 @@ INSERT INTO `bank` (`id_bank`, `nama_bank`, `user_add`, `waktu_add`, `user_edit`
 ('BANK-2', 'BCA', 'USER-1', '2020-08-30 18:11:42', 'USER-2', '2020-12-24 16:37:26', '', '0000-00-00 00:00:00', 0),
 ('BANK-3', 'OCBC NISP', 'USER-1', '2020-08-30 22:08:53', 'USER-1', '2020-08-30 22:09:12', '', '0000-00-00 00:00:00', 0),
 ('BANK-4', 'Mandiri', 'USER-1', '2020-09-08 23:36:51', 'USER-1', '2020-09-08 23:36:57', 'USER-1', '2020-09-08 23:37:01', 1),
-('BANK-5', 'BNI', 'USER-1', '2020-09-24 22:59:36', 'USER-1', '2020-09-24 22:59:44', 'USER-1', '2020-09-24 22:59:48', 1),
-('BANK-6', 'CIMB NIAGA', 'USER-2', '2020-12-30 19:38:15', NULL, NULL, NULL, NULL, 0);
+('BANK-5', 'BNI', 'USER-1', '2020-09-24 22:59:36', 'USER-1', '2020-09-24 22:59:44', 'USER-1', '2020-09-24 22:59:48', 1);
 
 --
 -- Triggers `bank`
@@ -77,10 +76,10 @@ CREATE TABLE `bank_logs` (
   `nama_bank` varchar(50) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -105,8 +104,7 @@ INSERT INTO `bank_logs` (`id_bank_logs`, `keterangan_log`, `id_bank`, `nama_bank
 (14, 'Edit Data', 'BANK-5', 'BNI', 'USER-1', '2020-09-24 22:59:36', 'USER-1', '2020-09-24 22:59:44', '', '0000-00-00 00:00:00', 0),
 (15, 'Edit Data', 'BANK-5', 'BNI', 'USER-1', '2020-09-24 22:59:36', 'USER-1', '2020-09-24 22:59:44', 'USER-1', '2020-09-24 22:59:48', 1),
 (16, 'Edit Data', 'BANK-2', 'BCAa', 'USER-1', '2020-08-30 18:11:42', 'USER-1', '2020-12-21 12:00:02', '', '0000-00-00 00:00:00', 0),
-(17, 'Edit Data', 'BANK-2', 'BCA', 'USER-1', '2020-08-30 18:11:42', 'USER-2', '2020-12-24 16:37:26', '', '0000-00-00 00:00:00', 0),
-(18, 'Insert Data', 'BANK-6', 'CIMB NIAGA', 'USER-2', '2020-12-30 19:38:15', NULL, NULL, NULL, NULL, 0);
+(17, 'Edit Data', 'BANK-2', 'BCA', 'USER-1', '2020-08-30 18:11:42', 'USER-2', '2020-12-24 16:37:26', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -121,16 +119,24 @@ CREATE TABLE `bpbd` (
   `tanggal` date NOT NULL,
   `plat_no` varchar(30) NOT NULL,
   `driver` varchar(50) NOT NULL,
-  `keterangan` varchar(500) DEFAULT NULL,
+  `keterangan` varchar(500) NOT NULL,
   `status_bpbd` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `bpbd`
+--
+
+INSERT INTO `bpbd` (`id_bpbd`, `id_purchase_order_customer`, `no_bpbd`, `tanggal`, `plat_no`, `driver`, `keterangan`, `status_bpbd`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('BPDB20.0001', 'POC-1', 'BPDB-0001', '2020-12-27', 'B2001', 'Agus', 'BPDB pertama hari ini                   ', 1, 'USER-7', '2020-12-27 13:22:54', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('BPDB20.0002', 'POC-1', 'BPDB-0002', '2020-12-27', 'B2001', 'Udin', 'Ambil semua yang tersedia                                    ', 0, 'USER-7', '2020-12-27 13:25:51', 'USER-7', '2020-12-27 13:36:59', 'USER-7', '2020-12-27 13:38:49', 1);
 
 -- --------------------------------------------------------
 
@@ -142,16 +148,26 @@ CREATE TABLE `bpbj` (
   `id_bpbj` varchar(15) NOT NULL,
   `no_bpbj` varchar(10) NOT NULL,
   `tanggal` date NOT NULL,
-  `keterangan` varchar(500) DEFAULT NULL,
+  `keterangan` varchar(500) NOT NULL,
   `status_bpbj` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `bpbj`
+--
+
+INSERT INTO `bpbj` (`id_bpbj`, `no_bpbj`, `tanggal`, `keterangan`, `status_bpbj`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('BPBJ20.0001', 'BPBJ-0001', '2020-12-26', 'BPBJ pertama hari ini', 2, 'USER-7', '2020-12-26 22:49:23', 'USER-4', '2020-12-26 23:05:19', '', '0000-00-00 00:00:00', 0),
+('BPBJ20.0002', 'BPBJ-0002', '2020-12-26', '', 2, 'USER-7', '2020-12-26 22:49:51', 'USER-4', '2020-12-27 01:03:20', '', '0000-00-00 00:00:00', 0),
+('BPBJ20.0003', 'BPBJ-0003', '2020-12-26', 'selesai \r\n', 0, 'USER-7', '2020-12-26 22:50:07', 'USER-7', '2020-12-26 23:17:49', 'USER-7', '2020-12-26 23:25:21', 1),
+('BPBJ20.0004', 'BPBJ-0004', '2020-12-26', 'selesai ni', 1, 'USER-7', '2020-12-26 23:28:12', 'USER-4', '2020-12-27 13:54:44', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -167,10 +183,10 @@ CREATE TABLE `customer` (
   `email_customer` varchar(50) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -194,10 +210,10 @@ CREATE TABLE `cycle_time` (
   `cycle_time` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -229,18 +245,17 @@ INSERT INTO `cycle_time` (`id_cycle_time`, `id_line`, `id_produk`, `cycle_time`,
 
 CREATE TABLE `delivery_note` (
   `id_delivery_note` varchar(10) NOT NULL,
-  `kode_delivery_note` varchar(20) NOT NULL,
   `id_supplier` varchar(10) NOT NULL,
   `tanggal_dn` date NOT NULL,
   `tanggal_penerimaan` date NOT NULL,
-  `total_harga` int(11) DEFAULT NULL,
+  `total_harga` int(11) NOT NULL,
   `status_pengesahan` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -255,10 +270,10 @@ CREATE TABLE `departemen` (
   `nama_departemen` varchar(30) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -301,10 +316,10 @@ CREATE TABLE `departemen_logs` (
   `nama_departemen` varchar(30) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -336,10 +351,10 @@ CREATE TABLE `detail_bpbj` (
   `status_detail_bpbj` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -367,16 +382,16 @@ CREATE TABLE `detail_delivery_note` (
   `id_delivery_note` varchar(10) NOT NULL,
   `id_sub_jenis_material` varchar(10) NOT NULL,
   `id_detail_purchase_order_supplier` varchar(10) NOT NULL,
-  `id_invoice` varchar(10) DEFAULT NULL,
+  `id_invoice` varchar(10) NOT NULL,
   `jumlah_diminta` int(11) NOT NULL,
-  `jumlah_aktual` int(11) DEFAULT NULL,
-  `total_harga_aktual` int(11) DEFAULT NULL,
+  `jumlah_aktual` int(11) NOT NULL,
+  `total_harga_aktual` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -393,10 +408,10 @@ CREATE TABLE `detail_item_bpbd` (
   `jumlah_produk` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -422,10 +437,10 @@ CREATE TABLE `detail_item_surat_jalan` (
   `jumlah_produk` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -457,15 +472,81 @@ CREATE TABLE `detail_permintaan_material` (
   `id_permintaan_material` varchar(20) NOT NULL,
   `id_konsumsi_material` varchar(10) NOT NULL,
   `needs` decimal(11,2) NOT NULL,
+  `ketersediaan_supplier` int(11) NOT NULL,
   `status_detail_permintaan_material` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_permintaan_material`
+--
+
+INSERT INTO `detail_permintaan_material` (`id_detail_permintaan_material`, `id_permintaan_material`, `id_konsumsi_material`, `needs`, `ketersediaan_supplier`, `status_detail_permintaan_material`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('DETPERMAT2012.000001', 'PERMAT2012.00001', 'KONMAT-1', '50.00', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000002', 'PERMAT2012.00002', 'KONMAT-6', '10.00', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000003', 'PERMAT2012.00003', 'KONMAT-11', '30.00', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000004', 'PERMAT2012.00003', 'KONMAT-12', '30.00', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000005', 'PERMAT2012.00004', 'KONMAT-1', '125.00', 0, 0, 'USER-2', '2020-12-25 00:04:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000006', 'PERMAT2012.00005', 'KONMAT-2', '200.00', 0, 0, 'USER-2', '2020-12-25 00:04:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000007', 'PERMAT2012.00006', 'KONMAT-3', '30.00', 0, 0, 'USER-2', '2020-12-25 00:04:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000008', 'PERMAT2012.00006', 'KONMAT-4', '40.00', 0, 0, 'USER-2', '2020-12-25 00:04:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000009', 'PERMAT2012.00007', 'KONMAT-5', '20.00', 0, 0, 'USER-2', '2020-12-25 00:04:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000010', 'PERMAT2012.00008', 'KONMAT-11', '10.00', 0, 0, 'USER-2', '2020-12-25 00:04:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000011', 'PERMAT2012.00008', 'KONMAT-12', '10.00', 0, 0, 'USER-2', '2020-12-25 00:04:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000012', 'PERMAT2012.00009', 'KONMAT-13', '100.00', 0, 0, 'USER-2', '2020-12-25 00:04:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000013', 'PERMAT2012.00010', 'KONMAT-14', '10.00', 0, 0, 'USER-2', '2020-12-25 00:04:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000014', 'PERMAT2012.00010', 'KONMAT-15', '10.00', 0, 0, 'USER-2', '2020-12-25 00:04:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000015', 'PERMAT2012.00011', 'KONMAT-1', '30.00', 0, 0, 'USER-2', '2020-12-25 10:28:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('DETPERMAT2012.000016', 'PERMAT2012.00012', 'KONMAT-3', '45.00', 0, 0, 'USER-2', '2020-12-25 10:28:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('DETPERMAT2012.000017', 'PERMAT2012.00012', 'KONMAT-4', '60.00', 0, 0, 'USER-2', '2020-12-25 10:28:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('DETPERMAT2012.000018', 'PERMAT2012.00013', 'KONMAT-1', '30.00', 0, 0, 'USER-2', '2020-12-25 14:30:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('DETPERMAT2012.000019', 'PERMAT2012.00014', 'KONMAT-3', '45.00', 0, 0, 'USER-2', '2020-12-25 14:30:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('DETPERMAT2012.000020', 'PERMAT2012.00014', 'KONMAT-4', '60.00', 0, 0, 'USER-2', '2020-12-25 14:30:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('DETPERMAT2012.000021', 'PERMAT2012.00015', 'KONMAT-1', '30.00', 0, 0, 'USER-2', '2020-12-25 14:32:55', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('DETPERMAT2012.000022', 'PERMAT2012.00016', 'KONMAT-3', '45.00', 0, 0, 'USER-2', '2020-12-25 14:32:55', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('DETPERMAT2012.000023', 'PERMAT2012.00016', 'KONMAT-4', '60.00', 0, 0, 'USER-2', '2020-12-25 14:32:55', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('DETPERMAT2012.000024', 'PERMAT2012.00017', 'KONMAT-1', '30.00', 0, 0, 'USER-2', '2020-12-25 14:46:09', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('DETPERMAT2012.000025', 'PERMAT2012.00018', 'KONMAT-3', '45.00', 0, 0, 'USER-2', '2020-12-25 14:46:09', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('DETPERMAT2012.000026', 'PERMAT2012.00018', 'KONMAT-4', '60.00', 0, 0, 'USER-2', '2020-12-25 14:46:09', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('DETPERMAT2012.000027', 'PERMAT2012.00019', 'KONMAT-1', '30.00', 0, 0, 'USER-2', '2020-12-25 14:47:21', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000028', 'PERMAT2012.00020', 'KONMAT-3', '45.00', 0, 0, 'USER-2', '2020-12-25 14:47:21', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000029', 'PERMAT2012.00020', 'KONMAT-4', '60.00', 0, 0, 'USER-2', '2020-12-25 14:47:21', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000030', 'PERMAT2012.00021', 'KONMAT-6', '100.00', 0, 0, 'USER-2', '2020-12-25 15:00:32', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('DETPERMAT2012.000031', 'PERMAT2012.00022', 'KONMAT-6', '5.00', 0, 0, 'USER-2', '2020-12-25 15:03:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('DETPERMAT2012.000032', 'PERMAT2012.00023', 'KONMAT-6', '100.00', 0, 0, 'USER-2', '2020-12-25 15:13:21', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000033', 'PERMAT2012.00024', 'KONMAT-1', '10.00', 0, 0, 'USER-8', '2020-12-25 15:30:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000034', 'PERMAT2012.00025', 'KONMAT-1', '10.00', 0, 0, 'USER-8', '2020-12-25 15:30:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000035', 'PERMAT2012.00026', 'KONMAT-1', '10.00', 0, 0, 'USER-8', '2020-12-25 15:30:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000036', 'PERMAT2012.00027', 'KONMAT-1', '10.00', 0, 0, 'USER-8', '2020-12-25 15:30:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000037', 'PERMAT2012.00028', 'KONMAT-6', '10.00', 0, 0, 'USER-8', '2020-12-25 16:06:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000038', 'PERMAT2012.00029', 'KONMAT-5', '100.00', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000039', 'PERMAT2012.00030', 'KONMAT-14', '50.00', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000040', 'PERMAT2012.00030', 'KONMAT-15', '50.00', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000041', 'PERMAT2012.00031', 'KONMAT-5', '10.00', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000042', 'PERMAT2012.00032', 'KONMAT-10', '24.00', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000043', 'PERMAT2012.00033', 'KONMAT-1', '100.00', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000044', 'PERMAT2012.00034', 'KONMAT-2', '1000.00', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000045', 'PERMAT2012.00035', 'KONMAT-3', '150.00', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000046', 'PERMAT2012.00035', 'KONMAT-4', '200.00', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000047', 'PERMAT2012.00036', 'KONMAT-5', '100.00', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000048', 'PERMAT2012.00037', 'KONMAT-7', '100.00', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000049', 'PERMAT2012.00038', 'KONMAT-8', '15.00', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000050', 'PERMAT2012.00038', 'KONMAT-9', '20.00', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000051', 'PERMAT2012.00039', 'KONMAT-10', '12.00', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000052', 'PERMAT2012.00040', 'KONMAT-11', '60.00', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000053', 'PERMAT2012.00040', 'KONMAT-12', '60.00', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000054', 'PERMAT2012.00041', 'KONMAT-13', '600.00', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000055', 'PERMAT2012.00042', 'KONMAT-14', '60.00', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2012.000056', 'PERMAT2012.00042', 'KONMAT-15', '60.00', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2101.000001', 'PERMAT2101.00001', 'KONMAT-1', '10.00', 0, 0, 'USER-8', '2020-12-25 15:30:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2101.000002', 'PERMAT2101.00002', 'KONMAT-1', '10.00', 0, 0, 'USER-8', '2020-12-25 15:30:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPERMAT2101.000003', 'PERMAT2101.00003', 'KONMAT-1', '10.00', 0, 0, 'USER-8', '2020-12-25 15:30:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -482,10 +563,10 @@ CREATE TABLE `detail_produk` (
   `keterangan` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -520,12 +601,327 @@ CREATE TABLE `detail_produksi_line` (
   `status_aktual` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `detail_produksi_line`
+--
+
+INSERT INTO `detail_produksi_line` (`id_detail_produksi_line`, `id_detail_purchase_order`, `id_produksi_line`, `jumlah_item_perencanaan`, `jumlah_item_aktual`, `waktu_proses_perencanaan`, `waktu_proses_aktual`, `keterangan_aktual`, `status_perencanaan`, `status_aktual`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('DPL2012.00000001', 'DPOC-1', 'PL2012.000001', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000002', 'DPOC-1', 'PL2012.000005', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000003', 'DPOC-1', 'PL2012.000009', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000004', 'DPOC-1', 'PL2012.000013', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000005', 'DPOC-1', 'PL2012.000017', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000006', 'DPOC-1', 'PL2012.000021', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000007', 'DPOC-1', 'PL2012.000025', 50, 0, 6000, 0, '', 0, 3, 'USER-8', '2020-12-24 23:45:26', 'USER-2', '2020-12-24 23:53:38', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000008', 'DPOC-1', 'PL2012.000002', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000009', 'DPOC-1', 'PL2012.000006', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000010', 'DPOC-1', 'PL2012.000010', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000011', 'DPOC-1', 'PL2012.000014', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000012', 'DPOC-1', 'PL2012.000018', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000013', 'DPOC-1', 'PL2012.000022', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000014', 'DPOC-1', 'PL2012.000026', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000015', 'DPOC-1', 'PL2012.000003', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000016', 'DPOC-1', 'PL2012.000007', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000017', 'DPOC-1', 'PL2012.000011', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000018', 'DPOC-1', 'PL2012.000015', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000019', 'DPOC-1', 'PL2012.000019', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000020', 'DPOC-1', 'PL2012.000023', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000021', 'DPOC-1', 'PL2012.000027', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000022', 'DPOC-1', 'PL2012.000004', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000023', 'DPOC-1', 'PL2012.000008', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000024', 'DPOC-1', 'PL2012.000012', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000025', 'DPOC-1', 'PL2012.000016', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000026', 'DPOC-1', 'PL2012.000020', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000027', 'DPOC-1', 'PL2012.000024', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000028', 'DPOC-1', 'PL2012.000028', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000029', 'DPOC-3', 'PL2012.000001', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000030', 'DPOC-3', 'PL2012.000005', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000031', 'DPOC-3', 'PL2012.000009', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000032', 'DPOC-3', 'PL2012.000013', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000033', 'DPOC-3', 'PL2012.000017', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000034', 'DPOC-3', 'PL2012.000021', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000035', 'DPOC-3', 'PL2012.000025', 10, 0, 1200, 0, '', 0, 3, 'USER-8', '2020-12-24 23:45:26', 'USER-2', '2020-12-24 23:53:38', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000036', 'DPOC-3', 'PL2012.000002', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000037', 'DPOC-3', 'PL2012.000006', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000038', 'DPOC-3', 'PL2012.000010', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000039', 'DPOC-3', 'PL2012.000014', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000040', 'DPOC-3', 'PL2012.000018', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000041', 'DPOC-3', 'PL2012.000022', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000042', 'DPOC-3', 'PL2012.000026', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000043', 'DPOC-3', 'PL2012.000003', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000044', 'DPOC-3', 'PL2012.000007', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000045', 'DPOC-3', 'PL2012.000011', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000046', 'DPOC-3', 'PL2012.000015', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000047', 'DPOC-3', 'PL2012.000019', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000048', 'DPOC-3', 'PL2012.000023', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000049', 'DPOC-3', 'PL2012.000027', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000050', 'DPOC-3', 'PL2012.000004', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000051', 'DPOC-3', 'PL2012.000008', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000052', 'DPOC-3', 'PL2012.000012', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000053', 'DPOC-3', 'PL2012.000016', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000054', 'DPOC-3', 'PL2012.000020', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000055', 'DPOC-3', 'PL2012.000024', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000056', 'DPOC-3', 'PL2012.000028', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000057', 'DPOC-2', 'PL2012.000001', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000058', 'DPOC-2', 'PL2012.000005', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000059', 'DPOC-2', 'PL2012.000009', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000060', 'DPOC-2', 'PL2012.000013', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000061', 'DPOC-2', 'PL2012.000017', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000062', 'DPOC-2', 'PL2012.000021', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000063', 'DPOC-2', 'PL2012.000025', 30, 0, 7200, 0, '', 0, 3, 'USER-8', '2020-12-24 23:45:26', 'USER-2', '2020-12-24 23:53:38', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000064', 'DPOC-2', 'PL2012.000002', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000065', 'DPOC-2', 'PL2012.000006', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000066', 'DPOC-2', 'PL2012.000010', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000067', 'DPOC-2', 'PL2012.000014', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000068', 'DPOC-2', 'PL2012.000018', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000069', 'DPOC-2', 'PL2012.000022', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000070', 'DPOC-2', 'PL2012.000026', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000071', 'DPOC-2', 'PL2012.000004', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000072', 'DPOC-2', 'PL2012.000008', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000073', 'DPOC-2', 'PL2012.000012', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000074', 'DPOC-2', 'PL2012.000016', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000075', 'DPOC-2', 'PL2012.000020', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000076', 'DPOC-2', 'PL2012.000024', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000077', 'DPOC-2', 'PL2012.000028', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000078', 'DPOC-1', 'PL2012.000029', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000079', 'DPOC-1', 'PL2012.000033', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000080', 'DPOC-1', 'PL2012.000037', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000081', 'DPOC-1', 'PL2012.000041', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000082', 'DPOC-1', 'PL2012.000045', 100, 100, 12000, 12000, '', 0, 1, 'USER-2', '2020-12-25 00:04:00', 'USER-5', '2020-12-27 18:22:53', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000083', 'DPOC-1', 'PL2012.000049', 30, 25, 3600, 3000, 'tidak selesai', 0, 2, 'USER-2', '2020-12-25 00:04:00', 'USER-5', '2020-12-26 17:55:06', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000084', 'DPOC-1', 'PL2012.000053', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000085', 'DPOC-1', 'PL2012.000030', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000086', 'DPOC-1', 'PL2012.000034', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000087', 'DPOC-1', 'PL2012.000038', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000088', 'DPOC-1', 'PL2012.000042', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000089', 'DPOC-1', 'PL2012.000046', 20, 0, 2400, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000090', 'DPOC-1', 'PL2012.000050', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000091', 'DPOC-1', 'PL2012.000054', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000092', 'DPOC-1', 'PL2012.000031', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000093', 'DPOC-1', 'PL2012.000035', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000094', 'DPOC-1', 'PL2012.000039', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000095', 'DPOC-1', 'PL2012.000043', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000096', 'DPOC-1', 'PL2012.000047', 20, 0, 4800, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000097', 'DPOC-1', 'PL2012.000051', 30, 30, 7200, 7200, 'lengkap', 0, 1, 'USER-2', '2020-12-25 00:04:00', 'USER-5', '2020-12-26 17:18:12', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000098', 'DPOC-1', 'PL2012.000055', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000099', 'DPOC-1', 'PL2012.000032', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000100', 'DPOC-1', 'PL2012.000036', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000101', 'DPOC-1', 'PL2012.000040', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000102', 'DPOC-1', 'PL2012.000044', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000103', 'DPOC-1', 'PL2012.000048', 20, 0, 4800, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000104', 'DPOC-1', 'PL2012.000052', 100, 0, 24000, 0, '', 0, 3, 'USER-2', '2020-12-25 00:04:00', 'USER-7', '2020-12-26 17:39:39', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000105', 'DPOC-1', 'PL2012.000056', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000106', 'DPOC-2', 'PL2012.000029', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000107', 'DPOC-2', 'PL2012.000033', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000108', 'DPOC-2', 'PL2012.000037', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000109', 'DPOC-2', 'PL2012.000041', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000110', 'DPOC-2', 'PL2012.000045', 10, 10, 2400, 2400, '', 0, 1, 'USER-2', '2020-12-25 00:04:00', 'USER-5', '2020-12-27 18:22:53', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000111', 'DPOC-2', 'PL2012.000049', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000112', 'DPOC-2', 'PL2012.000053', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000113', 'DPOC-2', 'PL2012.000030', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000114', 'DPOC-2', 'PL2012.000034', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000115', 'DPOC-2', 'PL2012.000038', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000116', 'DPOC-2', 'PL2012.000042', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000117', 'DPOC-2', 'PL2012.000046', 10, 0, 3600, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000118', 'DPOC-2', 'PL2012.000050', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000119', 'DPOC-2', 'PL2012.000054', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000120', 'DPOC-2', 'PL2012.000032', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000121', 'DPOC-2', 'PL2012.000036', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000122', 'DPOC-2', 'PL2012.000040', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000123', 'DPOC-2', 'PL2012.000044', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000124', 'DPOC-2', 'PL2012.000048', 10, 0, 3000, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000125', 'DPOC-2', 'PL2012.000052', 50, 0, 15000, 0, '', 0, 3, 'USER-2', '2020-12-25 00:04:00', 'USER-7', '2020-12-26 17:39:39', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000126', 'DPOC-2', 'PL2012.000056', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000127', 'DPOC-1', 'PL2012.000029', 0, 0, 0, 0, '', 1, 0, 'USER-2', '2020-12-25 00:04:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000128', 'DPOC-1', 'PL2012.000033', 0, 0, 0, 0, '', 1, 0, 'USER-2', '2020-12-25 00:04:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000129', 'DPOC-1', 'PL2012.000037', 0, 0, 0, 0, '', 1, 0, 'USER-2', '2020-12-25 00:04:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000130', 'DPOC-1', 'PL2012.000041', 0, 0, 0, 0, '', 1, 0, 'USER-2', '2020-12-25 00:04:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000131', 'DPOC-1', 'PL2012.000045', 25, 25, 3000, 3000, '', 1, 1, 'USER-2', '2020-12-25 00:04:00', 'USER-5', '2020-12-27 18:22:53', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000132', 'DPOC-1', 'PL2012.000049', 0, 0, 0, 0, '', 1, 0, 'USER-2', '2020-12-25 00:04:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000133', 'DPOC-1', 'PL2012.000053', 0, 0, 0, 0, '', 1, 0, 'USER-2', '2020-12-25 00:04:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000134', 'DPOC-7', 'PL2012.000029', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000135', 'DPOC-7', 'PL2012.000033', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000136', 'DPOC-7', 'PL2012.000037', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000137', 'DPOC-7', 'PL2012.000041', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000138', 'DPOC-7', 'PL2012.000045', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000139', 'DPOC-7', 'PL2012.000049', 100, 0, 12000, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000140', 'DPOC-7', 'PL2012.000053', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000141', 'DPOC-7', 'PL2012.000030', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000142', 'DPOC-7', 'PL2012.000034', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000143', 'DPOC-7', 'PL2012.000038', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000144', 'DPOC-7', 'PL2012.000042', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000145', 'DPOC-7', 'PL2012.000046', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000146', 'DPOC-7', 'PL2012.000050', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000147', 'DPOC-7', 'PL2012.000054', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000148', 'DPOC-7', 'PL2012.000031', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000149', 'DPOC-7', 'PL2012.000035', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000150', 'DPOC-7', 'PL2012.000039', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000151', 'DPOC-7', 'PL2012.000043', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000152', 'DPOC-7', 'PL2012.000047', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000153', 'DPOC-7', 'PL2012.000051', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000154', 'DPOC-7', 'PL2012.000055', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000155', 'DPOC-7', 'PL2012.000032', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000156', 'DPOC-7', 'PL2012.000036', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000157', 'DPOC-7', 'PL2012.000040', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000158', 'DPOC-7', 'PL2012.000044', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000159', 'DPOC-7', 'PL2012.000048', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000160', 'DPOC-7', 'PL2012.000052', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000161', 'DPOC-7', 'PL2012.000056', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:00:32', 'USER-2', '2020-12-25 15:07:24', 'USER-2', '2020-12-25 15:11:18', 1),
+('DPL2012.00000162', 'DPOC-3', 'PL2012.000029', 0, 0, 0, 0, '', 1, 0, 'USER-2', '2020-12-25 15:03:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000163', 'DPOC-3', 'PL2012.000033', 0, 0, 0, 0, '', 1, 0, 'USER-2', '2020-12-25 15:03:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000164', 'DPOC-3', 'PL2012.000037', 0, 0, 0, 0, '', 1, 0, 'USER-2', '2020-12-25 15:03:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000165', 'DPOC-3', 'PL2012.000041', 0, 0, 0, 0, '', 1, 0, 'USER-2', '2020-12-25 15:03:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000166', 'DPOC-3', 'PL2012.000045', 0, 0, 0, 0, '', 1, 0, 'USER-2', '2020-12-25 15:03:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000167', 'DPOC-3', 'PL2012.000049', 5, 0, 600, 0, '', 1, 0, 'USER-2', '2020-12-25 15:03:30', '', '0000-00-00 00:00:00', 'USER-2', '2020-12-25 15:07:24', 1),
+('DPL2012.00000168', 'DPOC-3', 'PL2012.000053', 0, 0, 0, 0, '', 1, 0, 'USER-2', '2020-12-25 15:03:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000169', 'DPOC-7', 'PL2012.000029', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000170', 'DPOC-7', 'PL2012.000033', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000171', 'DPOC-7', 'PL2012.000037', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000172', 'DPOC-7', 'PL2012.000041', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000173', 'DPOC-7', 'PL2012.000045', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000174', 'DPOC-7', 'PL2012.000049', 100, 50, 12000, 6000, 'sisa setengah', 0, 2, 'USER-2', '2020-12-25 15:13:21', 'USER-5', '2020-12-26 17:55:06', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000175', 'DPOC-7', 'PL2012.000053', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000176', 'DPOC-7', 'PL2012.000030', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000177', 'DPOC-7', 'PL2012.000034', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000178', 'DPOC-7', 'PL2012.000038', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000179', 'DPOC-7', 'PL2012.000042', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000180', 'DPOC-7', 'PL2012.000046', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000181', 'DPOC-7', 'PL2012.000050', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000182', 'DPOC-7', 'PL2012.000054', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000183', 'DPOC-7', 'PL2012.000031', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000184', 'DPOC-7', 'PL2012.000035', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000185', 'DPOC-7', 'PL2012.000039', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000186', 'DPOC-7', 'PL2012.000043', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000187', 'DPOC-7', 'PL2012.000047', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000188', 'DPOC-7', 'PL2012.000051', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000189', 'DPOC-7', 'PL2012.000055', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000190', 'DPOC-7', 'PL2012.000032', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000191', 'DPOC-7', 'PL2012.000036', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000192', 'DPOC-7', 'PL2012.000040', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000193', 'DPOC-7', 'PL2012.000044', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000194', 'DPOC-7', 'PL2012.000048', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000195', 'DPOC-7', 'PL2012.000052', 20, 0, 4800, 0, '', 0, 3, 'USER-2', '2020-12-25 15:13:21', 'USER-7', '2020-12-26 17:39:39', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000196', 'DPOC-7', 'PL2012.000056', 0, 0, 0, 0, '', 0, 0, 'USER-2', '2020-12-25 15:13:21', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000197', 'DPOC-1', 'PL2012.000057', 100, 0, 12000, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000198', 'DPOC-1', 'PL2012.000061', 20, 0, 2400, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000199', 'DPOC-1', 'PL2012.000065', 10, 0, 1200, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000200', 'DPOC-1', 'PL2012.000069', 25, 0, 3000, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000201', 'DPOC-1', 'PL2012.000058', 100, 0, 12000, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000202', 'DPOC-1', 'PL2012.000062', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000203', 'DPOC-1', 'PL2012.000066', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000204', 'DPOC-1', 'PL2012.000070', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000205', 'DPOC-1', 'PL2012.000059', 100, 0, 24000, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000206', 'DPOC-1', 'PL2012.000063', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000207', 'DPOC-1', 'PL2012.000067', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000208', 'DPOC-1', 'PL2012.000071', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000209', 'DPOC-1', 'PL2012.000060', 100, 0, 24000, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000210', 'DPOC-1', 'PL2012.000064', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000211', 'DPOC-1', 'PL2012.000068', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000212', 'DPOC-1', 'PL2012.000072', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000213', 'DPOC-3', 'PL2012.000057', 10, 0, 1200, 0, '', 1, 0, 'USER-8', '2020-12-25 16:06:33', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000214', 'DPOC-3', 'PL2012.000061', 0, 0, 0, 0, '', 1, 0, 'USER-8', '2020-12-25 16:06:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000215', 'DPOC-3', 'PL2012.000065', 0, 0, 0, 0, '', 1, 0, 'USER-8', '2020-12-25 16:06:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000216', 'DPOC-3', 'PL2012.000069', 0, 0, 0, 0, '', 1, 0, 'USER-8', '2020-12-25 16:06:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000217', 'DPOC-4', 'PL2012.000029', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000218', 'DPOC-4', 'PL2012.000033', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000219', 'DPOC-4', 'PL2012.000037', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000220', 'DPOC-4', 'PL2012.000041', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000221', 'DPOC-4', 'PL2012.000045', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000222', 'DPOC-4', 'PL2012.000049', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000223', 'DPOC-4', 'PL2012.000053', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000224', 'DPOC-4', 'PL2012.000030', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000225', 'DPOC-4', 'PL2012.000034', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000226', 'DPOC-4', 'PL2012.000038', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000227', 'DPOC-4', 'PL2012.000042', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000228', 'DPOC-4', 'PL2012.000046', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000229', 'DPOC-4', 'PL2012.000050', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000230', 'DPOC-4', 'PL2012.000054', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000231', 'DPOC-4', 'PL2012.000031', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000232', 'DPOC-4', 'PL2012.000035', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000233', 'DPOC-4', 'PL2012.000039', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000234', 'DPOC-4', 'PL2012.000043', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000235', 'DPOC-4', 'PL2012.000047', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000236', 'DPOC-4', 'PL2012.000051', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000237', 'DPOC-4', 'PL2012.000055', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000238', 'DPOC-4', 'PL2012.000032', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000239', 'DPOC-4', 'PL2012.000036', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000240', 'DPOC-4', 'PL2012.000040', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000241', 'DPOC-4', 'PL2012.000044', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000242', 'DPOC-4', 'PL2012.000048', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000243', 'DPOC-4', 'PL2012.000052', 10, 0, 2400, 0, '', 0, 3, 'USER-8', '2020-12-25 23:58:52', 'USER-7', '2020-12-26 17:39:39', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000244', 'DPOC-4', 'PL2012.000056', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000245', 'DPOC-3', 'PL2012.000057', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000246', 'DPOC-3', 'PL2012.000061', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000247', 'DPOC-3', 'PL2012.000065', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000248', 'DPOC-3', 'PL2012.000069', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000249', 'DPOC-3', 'PL2012.000058', 10, 0, 1200, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000250', 'DPOC-3', 'PL2012.000062', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000251', 'DPOC-3', 'PL2012.000066', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000252', 'DPOC-3', 'PL2012.000070', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000253', 'DPOC-3', 'PL2012.000059', 10, 0, 2400, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000254', 'DPOC-3', 'PL2012.000063', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000255', 'DPOC-3', 'PL2012.000067', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000256', 'DPOC-3', 'PL2012.000071', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000257', 'DPOC-3', 'PL2012.000060', 10, 0, 2400, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000258', 'DPOC-3', 'PL2012.000064', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000259', 'DPOC-3', 'PL2012.000068', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000260', 'DPOC-3', 'PL2012.000072', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000261', 'DPOC-2', 'PL2012.000057', 60, 0, 14400, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000262', 'DPOC-2', 'PL2012.000061', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000263', 'DPOC-2', 'PL2012.000065', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000264', 'DPOC-2', 'PL2012.000069', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000265', 'DPOC-2', 'PL2012.000058', 60, 0, 21600, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000266', 'DPOC-2', 'PL2012.000062', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000267', 'DPOC-2', 'PL2012.000066', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000268', 'DPOC-2', 'PL2012.000070', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000269', 'DPOC-2', 'PL2012.000060', 60, 0, 18000, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000270', 'DPOC-2', 'PL2012.000064', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000271', 'DPOC-2', 'PL2012.000068', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2012.00000272', 'DPOC-2', 'PL2012.000072', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000001', 'DPOC-1', 'PL2101.000001', 10, 0, 1200, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000002', 'DPOC-1', 'PL2101.000005', 10, 0, 1200, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000003', 'DPOC-1', 'PL2101.000009', 10, 0, 1200, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000004', 'DPOC-1', 'PL2101.000002', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000005', 'DPOC-1', 'PL2101.000006', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000006', 'DPOC-1', 'PL2101.000010', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000007', 'DPOC-1', 'PL2101.000003', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000008', 'DPOC-1', 'PL2101.000007', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000009', 'DPOC-1', 'PL2101.000011', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000010', 'DPOC-1', 'PL2101.000004', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000011', 'DPOC-1', 'PL2101.000008', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000012', 'DPOC-1', 'PL2101.000012', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000013', 'DPOC-3', 'PL2101.000001', 0, 0, 0, 0, '', 1, 0, 'USER-8', '2020-12-25 16:06:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000014', 'DPOC-3', 'PL2101.000005', 0, 0, 0, 0, '', 1, 0, 'USER-8', '2020-12-25 16:06:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000015', 'DPOC-3', 'PL2101.000009', 0, 0, 0, 0, '', 1, 0, 'USER-8', '2020-12-25 16:06:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000016', 'DPOC-3', 'PL2101.000001', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000017', 'DPOC-3', 'PL2101.000005', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000018', 'DPOC-3', 'PL2101.000009', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000019', 'DPOC-3', 'PL2101.000002', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000020', 'DPOC-3', 'PL2101.000006', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000021', 'DPOC-3', 'PL2101.000010', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000022', 'DPOC-3', 'PL2101.000003', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000023', 'DPOC-3', 'PL2101.000007', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000024', 'DPOC-3', 'PL2101.000011', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000025', 'DPOC-3', 'PL2101.000004', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000026', 'DPOC-3', 'PL2101.000008', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000027', 'DPOC-3', 'PL2101.000012', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000028', 'DPOC-2', 'PL2101.000001', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000029', 'DPOC-2', 'PL2101.000005', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000030', 'DPOC-2', 'PL2101.000009', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000031', 'DPOC-2', 'PL2101.000002', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000032', 'DPOC-2', 'PL2101.000006', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+INSERT INTO `detail_produksi_line` (`id_detail_produksi_line`, `id_detail_purchase_order`, `id_produksi_line`, `jumlah_item_perencanaan`, `jumlah_item_aktual`, `waktu_proses_perencanaan`, `waktu_proses_aktual`, `keterangan_aktual`, `status_perencanaan`, `status_aktual`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('DPL2101.00000033', 'DPOC-2', 'PL2101.000010', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000034', 'DPOC-2', 'PL2101.000004', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000035', 'DPOC-2', 'PL2101.000008', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DPL2101.00000036', 'DPOC-2', 'PL2101.000012', 0, 0, 0, 0, '', 0, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -540,12 +936,21 @@ CREATE TABLE `detail_produksi_tertunda` (
   `jumlah_perencanaan` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `detail_produksi_tertunda`
+--
+
+INSERT INTO `detail_produksi_tertunda` (`id_detail_produksi_tertunda`, `id_produksi_tertunda`, `id_detail_produksi_line`, `jumlah_perencanaan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('DPRODTUN2012.00000001', 'PRODTUN2012.00000001', 'DPL2012.00000131', 25, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('DPRODTUN2012.00000002', 'PRODTUN2012.00000002', 'DPL2012.00000167', 5, 'USER-2', '2020-12-25 15:03:30', '', '0000-00-00 00:00:00', 'USER-2', '2020-12-25 15:07:24', 1),
+('DPRODTUN2012.00000003', 'PRODTUN2012.00000002', 'DPL2012.00000213', 10, 'USER-8', '2020-12-25 16:06:33', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -561,14 +966,14 @@ CREATE TABLE `detail_purchase_order_customer` (
   `harga_satuan` decimal(11,2) NOT NULL,
   `total_harga` decimal(11,2) NOT NULL,
   `tanggal_penerimaan` date NOT NULL,
-  `remark` varchar(100) DEFAULT NULL,
-  `user_add` varchar(10) DEFAULT NULL,
-  `waktu_add` datetime DEFAULT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
-  `status_delete` int(11) DEFAULT NULL
+  `remark` varchar(100) NOT NULL,
+  `user_add` varchar(10) NOT NULL,
+  `waktu_add` datetime NOT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
+  `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -576,8 +981,14 @@ CREATE TABLE `detail_purchase_order_customer` (
 --
 
 INSERT INTO `detail_purchase_order_customer` (`id_detail_purchase_order_customer`, `id_purchase_order_customer`, `id_detail_produk`, `jumlah_produk`, `harga_satuan`, `total_harga`, `tanggal_penerimaan`, `remark`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('DPOC-1', 'POC-1', 'DETPRO-2', 150, '116555.00', '17483250.00', '2021-01-09', '', 'USER-2', '2020-12-30 18:49:58', '0', NULL, '0', NULL, NULL),
-('DPOC-2', 'POC-1', 'DETPRO-6', 300, '315933.00', '94779900.00', '2021-01-07', 'tes', 'USER-2', '2020-12-30 18:49:58', '0', NULL, '0', NULL, NULL);
+('DPOC-1', 'POC-1', 'DETPRO-1', 500, '116536.00', '58268000.00', '2020-12-31', '', 'USER-2', '2020-12-24 16:59:27', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('DPOC-2', 'POC-1', 'DETPRO-3', 500, '1283922.00', '641961000.00', '2020-12-24', '', 'USER-2', '2020-12-24 16:59:27', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('DPOC-3', 'POC-1', 'DETPRO-2', 10, '116555.00', '1165550.00', '2020-12-24', '', 'USER-2', '2020-12-24 16:59:27', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('DPOC-4', 'POC-2', 'DETPRO-1', 10, '116536.00', '1165360.00', '2020-12-29', '', 'USER-2', '2020-12-24 17:07:48', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('DPOC-5', 'POC-2', 'DETPRO-2', 10, '116555.00', '1165550.00', '2020-12-29', '', 'USER-2', '2020-12-24 17:07:48', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('DPOC-6', 'POC-3', 'DETPRO-1', 100, '116536.00', '11653600.00', '2021-01-01', '', 'USER-2', '2020-12-24 17:11:36', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('DPOC-7', 'POC-3', 'DETPRO-2', 100, '116555.00', '11655500.00', '2021-01-01', '', 'USER-2', '2020-12-24 17:11:36', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('DPOC-8', 'POC-3', 'DETPRO-3', 100, '1283922.00', '128392200.00', '2021-01-01', '', 'USER-2', '2020-12-24 17:11:36', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -595,10 +1006,10 @@ CREATE TABLE `detail_purchase_order_supplier` (
   `status_detail_po` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -615,10 +1026,10 @@ CREATE TABLE `detail_supplier` (
   `harga_material` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -651,12 +1062,27 @@ CREATE TABLE `detail_surat_perintah_lembur` (
   `keterangan_aktual` varchar(200) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `detail_surat_perintah_lembur`
+--
+
+INSERT INTO `detail_surat_perintah_lembur` (`id_detail_surat_perintah_lembur`, `id_surat_perintah_lembur`, `id_karyawan`, `planning_lembur`, `waktu_in_plan`, `waktu_out_plan`, `keterangan_plan`, `aktual_lembur`, `waktu_in_aktual`, `waktu_out_aktual`, `keterangan_aktual`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('DSPL-1', 'SPL-2', 'KAR-14', 3, '16:00:00', '19:00:00', 'lembur 3 jam', 0, '00:00:00', '00:00:00', '', 'USER-10', '2020-12-26 12:50:10', 'USER-10', '2020-12-26 13:00:24', 'USER-10', '2020-12-26 13:00:28', 1),
+('DSPL-2', 'SPL-2', 'KAR-14', 3, '16:00:00', '19:00:00', 'lembur 3 jam', 0, '00:00:00', '00:00:00', '', 'USER-10', '2020-12-26 13:01:10', '', '0000-00-00 00:00:00', 'USER-10', '2020-12-26 13:02:18', 1),
+('DSPL-3', 'SPL-2', 'KAR-13', 2, '16:00:00', '18:00:00', '2 jam', 0, '00:00:00', '00:00:00', '', 'USER-10', '2020-12-26 13:05:56', '', '0000-00-00 00:00:00', 'USER-10', '2020-12-26 13:17:09', 1),
+('DSPL-4', 'SPL-2', 'KAR-14', 3, '16:00:00', '19:00:00', '3 jam lembur', 4, '16:00:00', '20:00:00', 'Jadinya lembur jam 4 dengan total waktu lembur 4 jam', 'USER-10', '2020-12-26 13:17:09', 'USER-10', '2020-12-26 15:20:46', '', '0000-00-00 00:00:00', 0),
+('DSPL-5', 'SPL-9', 'KAR-13', 2, '16:00:00', '18:00:00', '', 1, '16:00:00', '17:00:00', '', 'USER-10', '2020-12-27 22:13:28', 'USER-3', '2020-12-27 22:41:11', '', '0000-00-00 00:00:00', 0),
+('DSPL-6', 'SPL-9', 'KAR-14', 2, '16:00:00', '18:00:00', '', 1, '16:30:00', '17:30:00', '', 'USER-10', '2020-12-27 22:13:28', 'USER-3', '2020-12-27 22:41:11', '', '0000-00-00 00:00:00', 0),
+('DSPL-7', 'SPL-6', 'KAR-13', 1, '16:30:00', '17:30:00', '', 0, '00:00:00', '00:00:00', '', 'USER-10', '2020-12-27 22:14:46', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DSPL-8', 'SPL-11', 'KAR-15', 1, '16:00:00', '17:00:00', '', 0, '00:00:00', '00:00:00', '', 'USER-3', '2020-12-27 22:40:19', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DSPL-9', 'SPL-11', 'KAR-16', 1, '16:30:00', '17:30:00', '', 0, '00:00:00', '00:00:00', '', 'USER-3', '2020-12-27 22:40:19', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -680,10 +1106,10 @@ CREATE TABLE `invoice` (
   `status_invoice` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -709,10 +1135,10 @@ CREATE TABLE `item_bpbd` (
   `keterangan` varchar(50) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -740,10 +1166,10 @@ CREATE TABLE `item_invoice` (
   `total_price` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -771,10 +1197,10 @@ CREATE TABLE `item_surat_jalan` (
   `status_keluar` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -802,10 +1228,10 @@ CREATE TABLE `jabatan` (
   `nama_jabatan` varchar(30) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -854,10 +1280,10 @@ CREATE TABLE `jabatan_karyawan` (
   `id_spesifikasi_jabatan` varchar(10) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -938,10 +1364,10 @@ CREATE TABLE `jabatan_karyawan_logs` (
   `id_spesifikasi_jabatan` varchar(10) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1008,10 +1434,10 @@ CREATE TABLE `jabatan_logs` (
   `nama_jabatan` varchar(30) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1051,10 +1477,10 @@ CREATE TABLE `jenis_material` (
   `sumber_material` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1084,10 +1510,10 @@ CREATE TABLE `jenis_produk` (
   `nama_jenis_produk` varchar(50) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1127,10 +1553,10 @@ CREATE TABLE `jenis_produk_logs` (
   `nama_jenis_produk` varchar(50) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1162,10 +1588,10 @@ CREATE TABLE `karyawan` (
   `keterangan` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1245,10 +1671,10 @@ CREATE TABLE `karyawan_logs` (
   `keterangan` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1334,10 +1760,10 @@ CREATE TABLE `konsumsi_material` (
   `status_konsumsi` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1382,10 +1808,10 @@ CREATE TABLE `line` (
   `satuan_biaya` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1429,10 +1855,10 @@ CREATE TABLE `line_logs` (
   `satuan_biaya` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1459,13 +1885,13 @@ CREATE TABLE `material` (
   `tanggal_masuk` datetime NOT NULL,
   `sumber_material` int(11) NOT NULL,
   `status_keluar` int(11) NOT NULL,
-  `id_detail_permintaan_material` int(30) DEFAULT NULL,
+  `id_detail_permintaan_material` int(30) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1481,10 +1907,10 @@ CREATE TABLE `material_line` (
   `id_line` varchar(30) NOT NULL,
   `user_add` varchar(30) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(30) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(30) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(30) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(30) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1500,10 +1926,10 @@ CREATE TABLE `material_supplier` (
   `id_supplier` varchar(30) NOT NULL,
   `user_add` varchar(30) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(30) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(30) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(30) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(30) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1519,13 +1945,13 @@ CREATE TABLE `pemasukan_material` (
   `tanggal_masuk` date NOT NULL,
   `jumlah_masuk` int(11) NOT NULL,
   `keterangan_masuk` int(11) NOT NULL,
-  `keterangan_lain` varchar(500) DEFAULT NULL,
+  `catatan` varchar(500) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1542,10 +1968,10 @@ CREATE TABLE `pemasukan_material_supplier` (
   `id_material` varchar(30) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1563,18 +1989,45 @@ CREATE TABLE `pengambilan_material` (
   `tanggal_ambil` date NOT NULL,
   `stok_wip` decimal(11,2) NOT NULL,
   `jumlah_ambil` decimal(11,2) NOT NULL,
-  `keterangan` varchar(50) DEFAULT NULL,
+  `keterangan` varchar(50) NOT NULL,
   `status_pengambilan` int(1) NOT NULL,
   `status_keluar` int(1) NOT NULL,
   `status_permintaan` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pengambilan_material`
+--
+
+INSERT INTO `pengambilan_material` (`id_pengambilan_material`, `id_karyawan`, `id_detail_permintaan_material`, `id_pengeluaran_material`, `tanggal_ambil`, `stok_wip`, `jumlah_ambil`, `keterangan`, `status_pengambilan`, `status_keluar`, `status_permintaan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('MBP/AMBIL/12/20/001', 'KAR-10', 'DETPERMAT2012.000005', '', '2020-12-25', '9.00', '16.00', 'ambil 25 dulu', 1, 1, 0, 'USER-10', '2020-12-25 23:32:01', '', '0000-00-00 00:00:00', 'USER-10', '2020-12-25 23:32:42', 1),
+('MBP/AMBIL/12/20/002', 'KAR-10', 'DETPERMAT2012.000005', '', '2020-12-25', '9.00', '16.00', '25 dulu', 1, 1, 0, 'USER-10', '2020-12-25 23:33:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/003', 'KAR-10', 'DETPERMAT2012.000005', '', '2020-12-25', '0.00', '100.00', 'ambil semua', 1, 1, 0, 'USER-10', '2020-12-25 23:36:02', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/004', 'KAR-10', 'DETPERMAT2012.000005', '', '2020-12-25', '0.00', '10.00', 'ambil semuab', 1, 1, 1, 'USER-10', '2020-12-25 23:45:57', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/005', 'KAR-10', 'DETPERMAT2012.000010', '', '2020-12-25', '0.00', '5.00', 'lima dulu', 1, 2, 0, 'USER-10', '2020-12-25 23:47:52', 'USER-10', '2020-12-25 23:50:15', 'USER-10', '2020-12-25 23:51:07', 1),
+('MBP/AMBIL/12/20/006', 'KAR-10', 'DETPERMAT2012.000011', '', '2020-12-25', '0.00', '8.00', '', 1, 2, 0, 'USER-10', '2020-12-25 23:51:28', 'USER-10', '2020-12-26 00:21:02', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/007', 'KAR-10', 'DETPERMAT2012.000010', '', '2020-12-25', '0.00', '10.00', '', 1, 1, 0, 'USER-10', '2020-12-25 23:56:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/008', 'KAR-10', 'DETPERMAT2012.000006', '', '2020-12-25', '50.00', '150.00', '', 1, 2, 0, 'USER-10', '2020-12-25 23:59:38', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/009', 'KAR-10', 'DETPERMAT2012.000012', '', '2020-12-25', '0.00', '100.00', '', 1, 2, 0, 'USER-10', '2020-12-25 23:59:48', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/010', 'KAR-10', 'DETPERMAT2012.000032', '', '2020-12-26', '0.00', '100.00', '', 1, 1, 0, 'USER-10', '2020-12-26 11:29:47', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/011', 'KAR-10', 'DETPERMAT2012.000027', '', '2020-12-26', '0.00', '30.00', '', 1, 1, 0, 'USER-10', '2020-12-26 15:51:49', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/012', 'KAR-10', 'DETPERMAT2012.000032', '', '2020-12-26', '0.00', '10.00', '', 1, 1, 1, 'USER-10', '2020-12-26 15:57:29', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/013', 'KAR-10', 'DETPERMAT2012.000032', '', '2020-12-26', '0.00', '2.00', '', 1, 1, 1, 'USER-10', '2020-12-26 15:57:29', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/014', 'KAR-11', 'DETPERMAT2012.000028', '', '2020-12-26', '0.00', '45.00', '', 0, 1, 0, 'USER-11', '2020-12-26 16:31:12', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/015', 'KAR-11', 'DETPERMAT2012.000029', '', '2020-12-26', '0.00', '60.00', '', 1, 1, 0, 'USER-11', '2020-12-26 16:37:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/016', 'KAR-12', 'DETPERMAT2012.000038', '', '2020-12-26', '0.00', '100.00', '', 1, 1, 0, 'USER-12', '2020-12-26 16:38:17', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/017', 'KAR-12', 'DETPERMAT2012.000039', '', '2020-12-26', '0.00', '50.00', '', 1, 1, 0, 'USER-12', '2020-12-26 16:38:25', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/018', 'KAR-12', 'DETPERMAT2012.000040', '', '2020-12-26', '0.00', '50.00', '', 1, 1, 0, 'USER-12', '2020-12-26 16:38:25', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/019', 'KAR-12', 'DETPERMAT2012.000041', '', '2020-12-26', '0.00', '10.00', '', 1, 1, 0, 'USER-12', '2020-12-26 16:38:32', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/020', 'KAR-12', 'DETPERMAT2012.000042', '', '2020-12-26', '0.00', '24.00', '', 1, 1, 0, 'USER-12', '2020-12-26 16:38:37', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('MBP/AMBIL/12/20/021', 'KAR-2', 'DETPERMAT2012.000045', '', '2020-12-28', '10.00', '0.00', '', 0, 2, 0, 'USER-2', '2020-12-28 00:37:32', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1587,14 +2040,14 @@ CREATE TABLE `pengeluaran_material` (
   `id_sub_jenis_material` varchar(10) NOT NULL,
   `tanggal_keluar` date NOT NULL,
   `jumlah_keluar` decimal(11,2) NOT NULL,
-  `keterangan_keluar` int(11) DEFAULT NULL,
-  `keterangan_lain` varchar(500) DEFAULT NULL,
+  `keterangan_keluar` int(11) NOT NULL,
+  `catatan` varchar(500) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1614,10 +2067,10 @@ CREATE TABLE `perencanaan_cutting` (
   `keterangan` varchar(50) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` date NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1645,12 +2098,63 @@ CREATE TABLE `permintaan_material` (
   `status_permintaan` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `permintaan_material`
+--
+
+INSERT INTO `permintaan_material` (`id_permintaan_material`, `id_detail_purchase_order_customer`, `id_line`, `jumlah_minta`, `tanggal_permintaan`, `tanggal_produksi`, `status_permintaan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('PERMAT2012.00001', 'DPOC-1', 'LINE-1', 50, '2020-12-24', '2020-12-20', 4, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00002', 'DPOC-3', 'LINE-1', 10, '2020-12-24', '2020-12-20', 4, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00003', 'DPOC-2', 'LINE-1', 30, '2020-12-24', '2020-12-20', 4, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00004', 'DPOC-1', 'LINE-1', 125, '2020-12-25', '2020-12-25', 2, 'USER-2', '2020-12-25 17:07:44', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00005', 'DPOC-1', 'LINE-2', 20, '2020-12-25', '2020-12-25', 2, 'USER-2', '2020-12-25 17:07:50', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00006', 'DPOC-1', 'LINE-3', 20, '2020-12-25', '2020-12-25', 2, 'USER-2', '2020-12-25 17:07:54', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00007', 'DPOC-1', 'LINE-4', 20, '2020-12-25', '2020-12-25', 2, 'USER-2', '2020-12-25 17:08:00', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00008', 'DPOC-2', 'LINE-1', 10, '2020-12-25', '2020-12-25', 2, 'USER-2', '2020-12-25 17:08:05', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00009', 'DPOC-2', 'LINE-2', 10, '2020-12-25', '2020-12-25', 2, 'USER-2', '2020-12-25 17:08:10', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00010', 'DPOC-2', 'LINE-4', 10, '2020-12-25', '2020-12-25', 2, 'USER-2', '2020-12-25 17:08:15', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00011', 'DPOC-1', 'LINE-1', 30, '2020-12-25', '2020-12-26', 4, 'USER-2', '2020-12-25 10:28:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('PERMAT2012.00012', 'DPOC-1', 'LINE-3', 30, '2020-12-25', '2020-12-26', 4, 'USER-2', '2020-12-25 10:28:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('PERMAT2012.00013', 'DPOC-1', 'LINE-1', 30, '2020-12-25', '2020-12-26', 4, 'USER-2', '2020-12-25 14:30:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('PERMAT2012.00014', 'DPOC-1', 'LINE-3', 30, '2020-12-25', '2020-12-26', 4, 'USER-2', '2020-12-25 14:30:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('PERMAT2012.00015', 'DPOC-1', 'LINE-1', 30, '2020-12-25', '2020-12-26', 4, 'USER-2', '2020-12-25 14:32:55', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('PERMAT2012.00016', 'DPOC-1', 'LINE-3', 30, '2020-12-25', '2020-12-26', 4, 'USER-2', '2020-12-25 14:32:55', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('PERMAT2012.00017', 'DPOC-1', 'LINE-1', 30, '2020-12-25', '2020-12-26', 4, 'USER-2', '2020-12-25 14:46:09', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('PERMAT2012.00018', 'DPOC-1', 'LINE-3', 30, '2020-12-25', '2020-12-26', 4, 'USER-2', '2020-12-25 14:46:09', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('PERMAT2012.00019', 'DPOC-1', 'LINE-1', 30, '2020-12-25', '2020-12-26', 2, 'USER-2', '2020-12-26 10:56:30', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00020', 'DPOC-1', 'LINE-3', 30, '2020-12-25', '2020-12-26', 2, 'USER-2', '2020-12-26 10:56:37', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00021', 'DPOC-7', 'LINE-1', 100, '2020-12-25', '2020-12-26', 4, 'USER-2', '2020-12-25 15:00:32', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('PERMAT2012.00022', 'DPOC-3', 'LINE-1', 5, '2020-12-25', '2020-12-26', 4, 'USER-2', '2020-12-25 15:03:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('PERMAT2012.00023', 'DPOC-7', 'LINE-1', 100, '2020-12-25', '2020-12-26', 2, 'USER-2', '2020-12-26 10:56:43', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00024', 'DPOC-1', 'LINE-1', 10, '2020-12-25', '2020-12-28', 5, 'USER-8', '2020-12-25 17:11:02', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00025', 'DPOC-1', 'LINE-1', 10, '2020-12-25', '2020-12-29', 1, 'USER-8', '2020-12-25 17:09:35', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00026', 'DPOC-1', 'LINE-1', 10, '2020-12-25', '2020-12-30', 1, 'USER-8', '2020-12-25 17:10:09', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00027', 'DPOC-1', 'LINE-1', 10, '2020-12-25', '2020-12-31', 2, 'USER-8', '2020-12-25 19:36:43', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00028', 'DPOC-3', 'LINE-1', 10, '2020-12-25', '2020-12-28', 3, 'USER-8', '2020-12-25 17:11:27', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00029', 'DPOC-1', 'LINE-4', 100, '2020-12-25', '2020-12-26', 2, 'USER-8', '2020-12-26 10:56:52', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00030', 'DPOC-2', 'LINE-4', 50, '2020-12-25', '2020-12-26', 2, 'USER-8', '2020-12-26 10:57:00', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00031', 'DPOC-4', 'LINE-4', 10, '2020-12-25', '2020-12-26', 2, 'USER-8', '2020-12-26 10:57:07', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00032', 'DPOC-7', 'LINE-4', 20, '2020-12-25', '2020-12-26', 2, 'USER-8', '2020-12-26 10:57:12', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00033', 'DPOC-1', 'LINE-1', 100, '2020-12-27', '2020-12-28', 4, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00034', 'DPOC-1', 'LINE-2', 100, '2020-12-27', '2020-12-28', 4, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00035', 'DPOC-1', 'LINE-3', 100, '2020-12-27', '2020-12-28', 2, 'USER-8', '2020-12-28 00:36:35', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00036', 'DPOC-1', 'LINE-4', 100, '2020-12-27', '2020-12-28', 4, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00037', 'DPOC-3', 'LINE-2', 10, '2020-12-27', '2020-12-28', 4, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00038', 'DPOC-3', 'LINE-3', 10, '2020-12-27', '2020-12-28', 2, 'USER-8', '2020-12-28 00:37:02', 'USER-2', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00039', 'DPOC-3', 'LINE-4', 10, '2020-12-27', '2020-12-28', 4, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00040', 'DPOC-2', 'LINE-1', 60, '2020-12-27', '2020-12-28', 4, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00041', 'DPOC-2', 'LINE-2', 60, '2020-12-27', '2020-12-28', 4, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2012.00042', 'DPOC-2', 'LINE-4', 60, '2020-12-27', '2020-12-28', 4, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2101.00001', 'DPOC-1', 'LINE-1', 10, '2020-12-25', '2021-01-01', 0, 'USER-8', '2020-12-25 15:30:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2101.00002', 'DPOC-1', 'LINE-1', 10, '2020-12-25', '2021-01-02', 0, 'USER-8', '2020-12-25 15:30:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERMAT2101.00003', 'DPOC-1', 'LINE-1', 10, '2020-12-25', '2021-01-03', 0, 'USER-8', '2020-12-25 15:30:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1663,18 +2167,18 @@ CREATE TABLE `permintaan_pembelian` (
   `tanggal_permintaan` date NOT NULL,
   `tanggal_penerimaan` date NOT NULL,
   `id_sub_jenis_material` varchar(10) NOT NULL,
-  `jumlah_beli` int(11) NOT NULL,
+  `jumlah_material` int(11) NOT NULL,
   `satuan_keluar` varchar(30) NOT NULL,
   `status_pembelian` int(11) NOT NULL,
-  `keterangan` varchar(500) DEFAULT NULL,
-  `keterangan_batal` varchar(500) DEFAULT NULL,
+  `keterangan` varchar(500) NOT NULL,
+  `keterangan_batal` varchar(500) NOT NULL,
   `id_detail_purchase_order_supplier` varchar(10) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1689,16 +2193,30 @@ CREATE TABLE `permintaan_tambahan` (
   `id_detail_permintaan_material` varchar(20) NOT NULL,
   `id_pengambilan_material` varchar(20) NOT NULL,
   `jumlah_tambah` decimal(11,2) NOT NULL,
-  `keterangan` varchar(500) DEFAULT NULL,
+  `keterangan` varchar(50) NOT NULL,
   `status` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `permintaan_tambahan`
+--
+
+INSERT INTO `permintaan_tambahan` (`id_permintaan_tambahan`, `id_detail_permintaan_material`, `id_pengambilan_material`, `jumlah_tambah`, `keterangan`, `status`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('PERTAM2012.001', 'DETPERMAT2012.000005', 'MBP/AMBIL/12/20/004', '10.00', 'ambil 10', 3, 'USER-10', '2020-12-25 23:43:37', 'USER-10', '2020-12-25 23:45:57', '', '0000-00-00 00:00:00', 0),
+('PERTAM2012.002', 'DETPERMAT2012.000005', '', '15.00', 'lima belas\r\n', 4, 'USER-10', '2020-12-25 23:52:55', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERTAM2012.003', 'DETPERMAT2012.000005', '', '20.00', '20 lagi', 4, 'USER-10', '2020-12-25 23:53:40', '', '0000-00-00 00:00:00', 'USER-10', '2020-12-25 23:55:02', 1),
+('PERTAM2012.004', 'DETPERMAT2012.000005', '', '30.00', '30 ya', 4, 'USER-10', '2020-12-25 23:55:17', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERTAM2012.005', 'DETPERMAT2012.000032', '', '20.00', '20 lagi. karena salah produksi\r\n', 2, 'USER-10', '2020-12-26 11:30:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PERTAM2012.006', 'DETPERMAT2012.000032', 'MBP/AMBIL/12/20/012', '10.00', '', 3, 'USER-10', '2020-12-26 11:31:04', 'USER-10', '2020-12-26 15:57:29', '', '0000-00-00 00:00:00', 0),
+('PERTAM2012.007', 'DETPERMAT2012.000032', '', '21.00', '', 4, 'USER-10', '2020-12-26 11:31:10', 'USER-10', '2020-12-26 11:48:47', '', '0000-00-00 00:00:00', 0),
+('PERTAM2012.008', 'DETPERMAT2012.000032', 'MBP/AMBIL/12/20/013', '2.00', '', 3, 'USER-10', '2020-12-26 15:56:24', 'USER-10', '2020-12-26 15:57:29', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1712,14 +2230,14 @@ CREATE TABLE `permohonan_akses` (
   `id_user` varchar(10) NOT NULL,
   `nama_permohonan_akses` varchar(50) NOT NULL,
   `tanggal` date NOT NULL,
-  `keterangan` varchar(500) DEFAULT NULL,
+  `keterangan` varchar(500) NOT NULL,
   `status_permohonan` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1752,12 +2270,24 @@ CREATE TABLE `persediaan_line` (
   `total_material` decimal(11,2) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `persediaan_line`
+--
+
+INSERT INTO `persediaan_line` (`id_persediaan_line`, `id_line`, `id_sub_jenis_material`, `total_material`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('SELI-1', 'LINE-1', 'SUBJM-1', '5.00', 'USER-8', '2020-12-25 22:22:24', 'USER-8', '2020-12-26 18:32:45', '', '0000-00-00 00:00:00', 0),
+('SELI-2', 'LINE-2', 'SUBJM-3', '0.00', 'USER-8', '2020-12-25 22:31:00', 'USER-10', '2020-12-25 23:59:38', '', '0000-00-00 00:00:00', 0),
+('SELI-3', 'LINE-4', 'SUBJM-15', '290.00', 'USER-8', '2020-12-26 18:32:45', 'USER-8', '2020-12-26 18:32:45', '', '0000-00-00 00:00:00', 0),
+('SELI-4', 'LINE-1', 'SUBJM-2', '62.00', 'USER-8', '2020-12-26 18:32:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SELI-5', 'LINE-4', 'SUBJM-12', '50.00', 'USER-8', '2020-12-26 18:32:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SELI-6', 'LINE-3', 'SUBJM-4', '30.00', 'USER-8', '2020-12-26 19:24:45', 'USER-2', '2020-12-28 00:37:32', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1781,6 +2311,18 @@ CREATE TABLE `persediaan_line_keluar` (
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `persediaan_line_keluar`
+--
+
+INSERT INTO `persediaan_line_keluar` (`id_persediaan_line_keluar`, `id_persediaan_line`, `id_pengambilan_material`, `tanggal`, `jumlah_material`, `status`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('SELIK2012.00001', 'SELI-1', '', '2020-12-25', '2.00', 1, '', '0000-00-00 00:00:00', 'USER-8', '2020-12-25 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SELIK2012.00002', 'SELI-1', '', '2020-12-25', '1.00', 1, '', '0000-00-00 00:00:00', 'USER-8', '2020-12-25 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SELIK2012.00003', 'SELI-1', 'MBP/AMBIL/12/20/001', '2020-12-25', '9.00', 0, 'USER-10', '2020-12-25 23:32:01', '', '0000-00-00 00:00:00', 'USER-10', '2020-12-25 23:32:42', 1),
+('SELIK2012.00004', 'SELI-1', 'MBP/AMBIL/12/20/002', '2020-12-25', '9.00', 0, 'USER-10', '2020-12-25 23:33:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SELIK2012.00005', 'SELI-2', 'MBP/AMBIL/12/20/008', '2020-12-25', '50.00', 0, 'USER-10', '2020-12-25 23:59:38', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SELIK2012.00006', 'SELI-6', 'MBP/AMBIL/12/20/021', '2020-12-28', '10.00', 0, 'USER-2', '2020-12-28 00:37:32', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -1802,6 +2344,24 @@ CREATE TABLE `persediaan_line_masuk` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `persediaan_line_masuk`
+--
+
+INSERT INTO `persediaan_line_masuk` (`id_persediaan_line_masuk`, `id_persediaan_line`, `id_detail_permintaan_material`, `tanggal`, `jumlah_material`, `status`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('SELIM2012.00001', 'SELI-1', '', '2020-12-25', '10.00', 1, 'USER-8', '2020-12-25 22:22:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SELIM2012.00002', 'SELI-2', '', '2020-12-25', '50.00', 1, 'USER-8', '2020-12-25 22:31:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SELIM2012.00003', 'SELI-1', '', '2020-12-25', '2.00', 1, 'USER-8', '2020-12-25 22:31:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SELIM2012.00004', 'SELI-1', '', '2020-12-26', '5.00', 0, 'USER-8', '2020-12-26 18:32:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SELIM2012.00005', 'SELI-3', '', '2020-12-26', '120.00', 0, 'USER-8', '2020-12-26 18:32:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SELIM2012.00006', 'SELI-3', '', '2020-12-26', '60.00', 0, 'USER-8', '2020-12-26 18:32:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SELIM2012.00007', 'SELI-4', '', '2020-12-26', '62.00', 0, 'USER-8', '2020-12-26 18:32:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SELIM2012.00008', 'SELI-3', '', '2020-12-26', '60.00', 0, 'USER-8', '2020-12-26 18:32:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SELIM2012.00009', 'SELI-5', '', '2020-12-26', '50.00', 0, 'USER-8', '2020-12-26 18:32:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SELIM2012.00010', 'SELI-3', '', '2020-12-26', '50.00', 0, 'USER-8', '2020-12-26 18:32:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SELIM2012.00011', 'SELI-6', '', '2020-12-26', '22.50', 0, 'USER-8', '2020-12-26 19:24:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SELIM2012.00012', 'SELI-6', '', '2020-12-26', '17.50', 0, 'USER-8', '2020-12-26 19:29:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1846,6 +2406,37 @@ CREATE TABLE `perubahan_permintaan` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `perubahan_permintaan`
+--
+
+INSERT INTO `perubahan_permintaan` (`id_perubahan_permintaan`, `id_permintaan_material`, `jumlah_minta_lama`, `jumlah_minta_baru`, `status`, `status_sebelum`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('UBMIN2012.001', 'PERMAT2012.00025', 10, 15, 3, 0, 'USER-8', '2020-12-25 17:14:26', 'USER-8', '2020-12-25 17:15:12', '', '0000-00-00 00:00:00', 0),
+('UBMIN2012.002', 'PERMAT2012.00025', 10, 20, 0, 0, 'USER-8', '2020-12-25 17:15:12', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('UBMIN2012.003', 'PERMAT2012.00027', 10, 25, 0, 0, 'USER-8', '2020-12-25 19:37:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `planning_material`
+--
+
+CREATE TABLE `planning_material` (
+  `id_planning_material` varchar(10) NOT NULL,
+  `id_detail_permintaan_material` varchar(10) NOT NULL,
+  `tanggal_keluar` datetime NOT NULL,
+  `jumlah_keluar` int(11) NOT NULL,
+  `status_stok` int(11) NOT NULL,
+  `status_pengambilan` int(11) NOT NULL,
+  `user_add` varchar(10) NOT NULL,
+  `waktu_add` datetime NOT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
+  `status_delete` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -1910,6 +2501,33 @@ CREATE TABLE `produksi` (
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `produksi`
+--
+
+INSERT INTO `produksi` (`id_produksi`, `tanggal`, `status_perencanaan`, `status_laporan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('P2012.0001', '2020-12-14', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('P2012.0002', '2020-12-15', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('P2012.0003', '2020-12-16', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('P2012.0004', '2020-12-17', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('P2012.0005', '2020-12-18', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('P2012.0006', '2020-12-19', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('P2012.0007', '2020-12-20', 1, 3, 'USER-8', '2020-12-24 23:45:26', 'USER-2', '2020-12-24 23:53:45', '', '0000-00-00 00:00:00', 0),
+('P2012.0008', '2020-12-21', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('P2012.0009', '2020-12-22', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('P2012.0010', '2020-12-23', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('P2012.0011', '2020-12-24', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('P2012.0012', '2020-12-25', 1, 1, 'USER-2', '2020-12-25 00:04:00', 'USER-5', '2020-12-27 18:22:53', '', '0000-00-00 00:00:00', 0),
+('P2012.0013', '2020-12-26', 1, 3, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-26 18:32:45', '', '0000-00-00 00:00:00', 0),
+('P2012.0014', '2020-12-27', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('P2012.0015', '2020-12-28', 1, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('P2012.0016', '2020-12-29', 1, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('P2012.0017', '2020-12-30', 1, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('P2012.0018', '2020-12-31', 1, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('P2101.0001', '2021-01-01', 1, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('P2101.0002', '2021-01-02', 1, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('P2101.0003', '2021-01-03', 1, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -1937,6 +2555,96 @@ CREATE TABLE `produksi_line` (
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `produksi_line`
+--
+
+INSERT INTO `produksi_line` (`id_produksi_line`, `id_line`, `id_produksi`, `total_processing_time`, `total_waktu_perencanaan`, `total_waktu_aktual`, `efisiensi_perencanaan`, `efisiensi_aktual`, `keterangan_laporan`, `status_perencanaan`, `status_laporan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('PL2012.000001', 'LINE-1', 'P2012.0001', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000002', 'LINE-2', 'P2012.0001', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000003', 'LINE-3', 'P2012.0001', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000004', 'LINE-4', 'P2012.0001', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000005', 'LINE-1', 'P2012.0002', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000006', 'LINE-2', 'P2012.0002', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000007', 'LINE-3', 'P2012.0002', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000008', 'LINE-4', 'P2012.0002', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000009', 'LINE-1', 'P2012.0003', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000010', 'LINE-2', 'P2012.0003', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000011', 'LINE-3', 'P2012.0003', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000012', 'LINE-4', 'P2012.0003', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000013', 'LINE-1', 'P2012.0004', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000014', 'LINE-2', 'P2012.0004', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000015', 'LINE-3', 'P2012.0004', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000016', 'LINE-4', 'P2012.0004', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000017', 'LINE-1', 'P2012.0005', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000018', 'LINE-2', 'P2012.0005', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000019', 'LINE-3', 'P2012.0005', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000020', 'LINE-4', 'P2012.0005', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000021', 'LINE-1', 'P2012.0006', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000022', 'LINE-2', 'P2012.0006', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000023', 'LINE-3', 'P2012.0006', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000024', 'LINE-4', 'P2012.0006', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000025', 'LINE-1', 'P2012.0007', 9, 14400, 0, '44.44', '0.00', 'tidak ada produksi                                ', 1, 1, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000026', 'LINE-2', 'P2012.0007', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000027', 'LINE-3', 'P2012.0007', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000028', 'LINE-4', 'P2012.0007', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PL2012.000029', 'LINE-1', 'P2012.0008', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000030', 'LINE-2', 'P2012.0008', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000031', 'LINE-3', 'P2012.0008', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000032', 'LINE-4', 'P2012.0008', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000033', 'LINE-1', 'P2012.0009', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000034', 'LINE-2', 'P2012.0009', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000035', 'LINE-3', 'P2012.0009', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000036', 'LINE-4', 'P2012.0009', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000037', 'LINE-1', 'P2012.0010', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000038', 'LINE-2', 'P2012.0010', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000039', 'LINE-3', 'P2012.0010', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000040', 'LINE-4', 'P2012.0010', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000041', 'LINE-1', 'P2012.0011', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000042', 'LINE-2', 'P2012.0011', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000043', 'LINE-3', 'P2012.0011', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000044', 'LINE-4', 'P2012.0011', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000045', 'LINE-1', 'P2012.0012', 9, 17400, 17400, '53.70', '53.70', '                                ', 1, 1, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000046', 'LINE-2', 'P2012.0012', 9, 6000, 0, '18.52', '0.00', '', 1, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000047', 'LINE-3', 'P2012.0012', 90, 4800, 0, '1.48', '0.00', '', 1, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000048', 'LINE-4', 'P2012.0012', 27, 7800, 0, '8.02', '0.00', '', 1, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000049', 'LINE-1', 'P2012.0013', 9, 16800, 9000, '51.85', '27.78', 'tidak sesuai perencanaan', 1, 1, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000050', 'LINE-2', 'P2012.0013', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000051', 'LINE-3', 'P2012.0013', 90, 7200, 7200, '2.22', '2.22', 'Selesai semua', 1, 1, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000052', 'LINE-4', 'P2012.0013', 27, 46200, 0, '47.53', '0.00', 'tidak ada produksi            ', 1, 1, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000053', 'LINE-1', 'P2012.0014', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000054', 'LINE-2', 'P2012.0014', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000055', 'LINE-3', 'P2012.0014', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000056', 'LINE-4', 'P2012.0014', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-2', '2020-12-25 00:04:00', 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', 0),
+('PL2012.000057', 'LINE-1', 'P2012.0015', 9, 27600, 0, '85.19', '0.00', '', 1, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2012.000058', 'LINE-2', 'P2012.0015', 9, 34800, 0, '107.41', '0.00', '', 2, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2012.000059', 'LINE-3', 'P2012.0015', 90, 26400, 0, '8.15', '0.00', '', 1, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2012.000060', 'LINE-4', 'P2012.0015', 27, 44400, 0, '45.68', '0.00', '', 1, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2012.000061', 'LINE-1', 'P2012.0016', 9, 2400, 0, '7.41', '0.00', '', 1, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2012.000062', 'LINE-2', 'P2012.0016', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2012.000063', 'LINE-3', 'P2012.0016', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2012.000064', 'LINE-4', 'P2012.0016', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2012.000065', 'LINE-1', 'P2012.0017', 9, 1200, 0, '3.70', '0.00', '', 1, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2012.000066', 'LINE-2', 'P2012.0017', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2012.000067', 'LINE-3', 'P2012.0017', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2012.000068', 'LINE-4', 'P2012.0017', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2012.000069', 'LINE-1', 'P2012.0018', 9, 3000, 0, '9.26', '0.00', '', 1, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2012.000070', 'LINE-2', 'P2012.0018', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2012.000071', 'LINE-3', 'P2012.0018', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2012.000072', 'LINE-4', 'P2012.0018', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2101.000001', 'LINE-1', 'P2101.0001', 9, 1200, 0, '3.70', '0.00', '', 1, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2101.000002', 'LINE-2', 'P2101.0001', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2101.000003', 'LINE-3', 'P2101.0001', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2101.000004', 'LINE-4', 'P2101.0001', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2101.000005', 'LINE-1', 'P2101.0002', 9, 1200, 0, '3.70', '0.00', '', 1, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2101.000006', 'LINE-2', 'P2101.0002', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2101.000007', 'LINE-3', 'P2101.0002', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2101.000008', 'LINE-4', 'P2101.0002', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2101.000009', 'LINE-1', 'P2101.0003', 9, 1200, 0, '3.70', '0.00', '', 1, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2101.000010', 'LINE-2', 'P2101.0003', 9, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2101.000011', 'LINE-3', 'P2101.0003', 90, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0),
+('PL2101.000012', 'LINE-4', 'P2101.0003', 27, 0, 0, '0.00', '0.00', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -1957,6 +2665,22 @@ CREATE TABLE `produksi_tertunda` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `produksi_tertunda`
+--
+
+INSERT INTO `produksi_tertunda` (`id_produksi_tertunda`, `id_detail_produksi_line`, `jumlah_tertunda`, `jumlah_terencana`, `status_penjadwalan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('PRODTUN2012.00000001', 'DPL2012.00000007', 50, 25, 1, 'USER-2', '2020-12-24 23:53:38', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PRODTUN2012.00000002', 'DPL2012.00000035', 10, 10, 2, 'USER-2', '2020-12-24 23:53:38', 'USER-2', '2020-12-25 15:07:24', '', '0000-00-00 00:00:00', 0),
+('PRODTUN2012.00000003', 'DPL2012.00000063', 30, 0, 0, 'USER-2', '2020-12-24 23:53:38', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PRODTUN2012.00000004', 'DPL2012.00000083', 5, 0, 0, 'USER-5', '2020-12-26 17:32:37', 'USER-5', '2020-12-26 17:55:06', '', '0000-00-00 00:00:00', 0),
+('PRODTUN2012.00000005', 'DPL2012.00000174', 50, 0, 0, 'USER-5', '2020-12-26 17:32:37', 'USER-5', '2020-12-26 17:55:06', '', '0000-00-00 00:00:00', 0),
+('PRODTUN2012.00000006', 'DPL2012.00000104', 100, 0, 0, 'USER-7', '2020-12-26 17:39:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PRODTUN2012.00000007', 'DPL2012.00000125', 50, 0, 0, 'USER-7', '2020-12-26 17:39:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PRODTUN2012.00000008', 'DPL2012.00000195', 20, 0, 0, 'USER-7', '2020-12-26 17:39:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PRODTUN2012.00000009', 'DPL2012.00000243', 10, 0, 0, 'USER-7', '2020-12-26 17:39:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PRODTUN2012.00000010', 'DPL2012.00000082', 1, 0, 0, 'USER-5', '2020-12-26 20:35:23', '', '0000-00-00 00:00:00', 'USER-5', '2020-12-27 16:07:56', 1);
 
 -- --------------------------------------------------------
 
@@ -2008,17 +2732,17 @@ CREATE TABLE `purchase_order_customer` (
   `harga_sebelum_pajak` decimal(11,2) NOT NULL,
   `ppn` decimal(11,2) NOT NULL,
   `total_harga_akhir` decimal(11,2) NOT NULL,
-  `keterangan` varchar(500) DEFAULT NULL,
+  `keterangan` varchar(500) NOT NULL,
   `status_po` int(11) NOT NULL,
-  `tanggal_selesai` date DEFAULT NULL,
-  `keterangan_batal` varchar(500) DEFAULT NULL COMMENT 'khusus jika ada pembatalan',
-  `user_add` varchar(10) DEFAULT NULL,
-  `waktu_add` datetime DEFAULT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
-  `status_delete` int(11) DEFAULT NULL
+  `tanggal_selesai` date NOT NULL,
+  `keterangan_batal` varchar(500) NOT NULL COMMENT 'khusus jika ada pembatalan',
+  `user_add` varchar(10) NOT NULL,
+  `waktu_add` datetime NOT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
+  `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -2026,7 +2750,9 @@ CREATE TABLE `purchase_order_customer` (
 --
 
 INSERT INTO `purchase_order_customer` (`id_purchase_order_customer`, `kode_purchase_order_customer`, `id_customer`, `tanggal_po`, `harga_sebelum_pajak`, `ppn`, `total_harga_akhir`, `keterangan`, `status_po`, `tanggal_selesai`, `keterangan_batal`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('POC-1', 'PO/INOAC/001', 'CUST-1', '2021-01-01', '112263150.00', '11226315.00', '123489465.00', '', 0, NULL, NULL, 'USER-2', '2020-12-30 18:49:58', '0', NULL, '0', NULL, NULL);
+('POC-1', 'L2012001', 'CUST-1', '2020-12-24', '701394550.00', '70139455.00', '771534005.00', '', 1, '0000-00-00', '', 'USER-2', '2020-12-24 16:59:27', 'USER-8', '2020-12-27 23:05:58', '0', '0000-00-00 00:00:00', 0),
+('POC-2', 'L2012002', 'CUST-1', '2020-12-24', '2330910.00', '233091.00', '2564001.00', '', 1, '0000-00-00', '', 'USER-2', '2020-12-24 17:07:48', 'USER-8', '2020-12-25 23:58:52', '0', '0000-00-00 00:00:00', 0),
+('POC-3', 'L2012003', 'CUST-1', '2020-12-24', '151701300.00', '15170130.00', '166871430.00', '', 1, '0000-00-00', '', 'USER-2', '2020-12-24 17:11:36', 'USER-2', '2020-12-25 15:13:21', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2043,8 +2769,8 @@ CREATE TABLE `purchase_order_supplier` (
   `ppn` decimal(11,2) NOT NULL,
   `total_harga_akhir` decimal(11,2) NOT NULL,
   `status_po` int(11) NOT NULL,
-  `tanggal_selesai` date DEFAULT NULL,
-  `keterangan` varchar(500) DEFAULT NULL,
+  `tanggal_selesai` date NOT NULL,
+  `keterangan` varchar(500) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
   `user_edit` varchar(10) NOT NULL,
@@ -2141,25 +2867,26 @@ CREATE TABLE `sales_order` (
   `tanggal_pengantaran` date NOT NULL,
   `dibuat_oleh` varchar(10) NOT NULL,
   `tanggal_dibuat` date NOT NULL,
-  `diterima_oleh` varchar(10) DEFAULT NULL,
-  `tanggal_diterima` date DEFAULT NULL,
-  `status_so` int(11) NOT NULL,
+  `diterima_oleh` varchar(10) NOT NULL,
+  `tanggal_diterima` date NOT NULL,
   `id_purchase_order_customer` varchar(10) NOT NULL,
-  `user_add` varchar(10) DEFAULT NULL,
-  `waktu_add` datetime DEFAULT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
-  `status_delete` int(11) DEFAULT NULL
+  `user_add` varchar(10) NOT NULL,
+  `waktu_add` datetime NOT NULL,
+  `user_edit` varchar(10) NOT NULL,
+  `waktu_edit` datetime NOT NULL,
+  `user_delete` varchar(10) NOT NULL,
+  `waktu_delete` datetime NOT NULL,
+  `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `sales_order`
 --
 
-INSERT INTO `sales_order` (`id_sales_order`, `kode_so`, `tanggal_so`, `tanggal_pengantaran`, `dibuat_oleh`, `tanggal_dibuat`, `diterima_oleh`, `tanggal_diterima`, `status_so`, `id_purchase_order_customer`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('SO-1', 'MBP/SO/XII/2020/1', '2020-12-30', '2020-12-31', 'USER-2', '2020-12-30', NULL, NULL, 0, 'POC-1', 'USER-2', '2020-12-30 18:49:58', '0', NULL, '0', NULL, NULL);
+INSERT INTO `sales_order` (`id_sales_order`, `kode_so`, `tanggal_so`, `tanggal_pengantaran`, `dibuat_oleh`, `tanggal_dibuat`, `diterima_oleh`, `tanggal_diterima`, `id_purchase_order_customer`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('SO-1', '', '2020-12-24', '2020-12-31', 'USER-2', '2020-12-24', '', '0000-00-00', 'POC-1', 'USER-2', '2020-12-24 16:59:27', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SO-2', '', '2020-12-24', '2021-01-01', 'USER-2', '2020-12-24', '', '0000-00-00', 'POC-2', 'USER-2', '2020-12-24 17:07:48', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
+('SO-3', '', '2020-12-24', '2020-12-30', 'USER-2', '2020-12-24', '', '0000-00-00', 'POC-3', 'USER-2', '2020-12-24 17:11:36', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2305,8 +3032,8 @@ CREATE TABLE `sub_jenis_material` (
   `satuan_ukuran` varchar(30) NOT NULL,
   `satuan_keluar` varchar(30) NOT NULL,
   `ukuran_satuan_keluar` int(11) NOT NULL,
-  `min_stok` int(11) DEFAULT NULL,
-  `max_stok` int(11) DEFAULT NULL,
+  `min_stok` int(11) NOT NULL,
+  `max_stok` int(11) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
   `user_edit` varchar(10) NOT NULL,
@@ -2425,6 +3152,24 @@ CREATE TABLE `surat_perintah_lembur` (
   `waktu_delete` datetime NOT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `surat_perintah_lembur`
+--
+
+INSERT INTO `surat_perintah_lembur` (`id_surat_perintah_lembur`, `id_line`, `tanggal`, `waktu_lembur`, `keterangan_perintah`, `keterangan_laporan`, `status_spl`, `keterangan_spl`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('SPL-1', 'LINE-1', '2020-12-20', 'Hari Libur', '', '', 6, 0, 'USER-8', '2020-12-24 23:45:26', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SPL-10', 'LINE-1', '2020-12-28', 'Hari Produksi', '', '', 6, 1, 'USER-8', '2020-12-27 22:15:15', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SPL-11', 'LINE-2', '2020-12-27', 'Hari Libur', 'bersih2', '', 3, 1, 'USER-3', '2020-12-27 22:39:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SPL-12', 'LINE-2', '2020-12-28', 'Hari Produksi', '', '', 6, 0, 'USER-8', '2020-12-27 23:05:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SPL-2', 'LINE-1', '2020-12-26', 'Hari Libur', 'bersih2', 'Lembur melebihi target karena ada penambahan kerjaan ', 5, 2, 'USER-2', '2020-12-25 14:36:42', 'USER-8', '2020-12-26 15:26:25', '', '0000-00-00 00:00:00', 0),
+('SPL-3', 'LINE-2', '2020-12-26', 'Hari Libur', 'bersih2', '', 6, 1, 'USER-2', '2020-12-25 14:36:54', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SPL-4', 'LINE-3', '2020-12-26', 'Hari Libur', '', '', 6, 0, 'USER-2', '2020-12-25 14:46:09', '', '0000-00-00 00:00:00', 'USER-2', '2020-12-25 14:47:03', 1),
+('SPL-5', 'LINE-3', '2020-12-26', 'Hari Libur', '', '', 6, 0, 'USER-2', '2020-12-25 14:47:21', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SPL-6', 'LINE-1', '2021-01-02', 'Hari Libur', '', '', 1, 0, 'USER-8', '2020-12-25 15:30:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SPL-7', 'LINE-1', '2021-01-03', 'Hari Libur', '', '', 0, 0, 'USER-8', '2020-12-25 15:30:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SPL-8', 'LINE-4', '2020-12-26', 'Hari Libur', '', '', 6, 0, 'USER-8', '2020-12-25 23:58:52', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SPL-9', 'LINE-1', '2020-12-27', 'Hari Libur', 'Bersih2 akhir tahun', 'selesai dengan baik', 4, 1, 'USER-8', '2020-12-26 12:32:18', 'USER-3', '2020-12-27 22:41:11', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -3117,6 +3862,12 @@ ALTER TABLE `perubahan_permintaan`
   ADD PRIMARY KEY (`id_perubahan_permintaan`);
 
 --
+-- Indexes for table `planning_material`
+--
+ALTER TABLE `planning_material`
+  ADD PRIMARY KEY (`id_planning_material`);
+
+--
 -- Indexes for table `produk`
 --
 ALTER TABLE `produk`
@@ -3274,7 +4025,7 @@ ALTER TABLE `warna_logs`
 -- AUTO_INCREMENT for table `bank_logs`
 --
 ALTER TABLE `bank_logs`
-  MODIFY `id_bank_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_bank_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `departemen_logs`

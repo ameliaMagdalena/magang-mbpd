@@ -391,7 +391,8 @@ class PurchaseOrderSupplier extends CI_Controller {
 
     public function pilih_baru(){
         //pilih: Permintaan Pembelian / Tanpa Permintaan Pembelian
-	    $this->load->view('v_po_supplier_pilih_baru');
+        $data['beli'] = $this->M_PembelianMaterial->selectPermintaanPembelianAktif()->result_array();
+	    $this->load->view('v_po_supplier_pilih_baru', $data);
     }
 
     public function baru(){

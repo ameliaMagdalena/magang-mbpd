@@ -38,9 +38,23 @@
                     <label class="col-sm-5 control-label">Pilih Salah Satu<span class="required">*</span></label>
                     <div class="col-sm-7">
                         <div class="col-sm-6 radio">
-                            <input type="radio" name="pilihan" checked="" value="0">Dengan Permintaan Pembelian
+                            <input type="radio" name="pilihan" value="1" checked="">Tanpa Permintaan Pembelian
                             <br>
-                            <input type="radio" name="pilihan" value="1">Tanpa Permintaan Pembelian
+                            <input type="radio" name="pilihan" value="0" 
+                                <?php if(count($beli)==0){
+                                    echo 'disabled';
+                                }else{
+                                    $layak = 0;
+                                    for($a=0; $a<count($beli); $a++){
+                                        if($beli[$a]['status_pembelian']==0){
+                                            $layak = $layak+1;
+                                        }
+                                    }
+                                    if($layak==0){
+                                        echo 'disabled';
+                                    }
+                                }
+                                ?>>Dengan Permintaan Pembelian
                         </div>
                     </div>
                 </div>

@@ -10,7 +10,7 @@ class M_DeliveryNote extends CI_Model {
 
     //************************************* DN *********************************** */
     //**************************************************************************** */
-    function selectDeliveryNote(){
+    function selectAllDeliveryNote(){
         return $this->db->query("SELECT * FROM delivery_note");
     }
 
@@ -91,6 +91,12 @@ class M_DeliveryNote extends CI_Model {
         WHERE a.status_delete=0 AND a.id_purchase_order_supplier='$id'");
     }
 
+    function selectMaterialnya($id, $idpo){
+        return $this->db->query("SELECT * FROM detail_purchase_order_supplier a
+        JOIN sub_jenis_material b ON a.id_sub_jenis_material = b.id_sub_jenis_material
+        JOIN jenis_material c ON b.id_jenis_material = c.id_jenis_material
+        WHERE a.status_delete=0 AND a.id_purchase_order_supplier='$idpo' AND a.id_sub_jenis_material='$id'");
+    }
 
 
 

@@ -27,6 +27,41 @@
 
 <h1>Delivery Note</h1>
 <hr>
+
+<?php
+    //konversi int ke romawi
+    //from https://stackoverflow.com/questions/14994941/numbers-to-roman-numbers-with-php
+    function integerToRoman($integer){
+        $integer = intval($integer);
+        $rom = '';
+        // Create a lookup array that contains all of the Roman numerals.
+        $lookup = array('M' => 1000,
+            'CM' => 900,
+            'D' => 500,
+            'CD' => 400,
+            'C' => 100,
+            'XC' => 90,
+            'L' => 50,
+            'XL' => 40,
+            'X' => 10,
+            'IX' => 9,
+            'V' => 5,
+            'IV' => 4,
+            'I' => 1);
+        foreach($lookup as $roman => $value){
+            // Determine the number of matches
+            $matches = intval($integer/$value);
+            // Add the same number of characters to the string
+            $rom .= str_repeat($roman,$matches);
+            // Set the integer to be the remainder of the integer and the value
+            $integer = $integer % $value;
+        }
+        // The Roman numeral should be built, return it
+        return $rom;
+    }
+?>
+
+
 <a class="modal-with-form btn btn-success"
 href="<?php if(count($po)==0){
         echo '#modalkosong';
@@ -58,14 +93,13 @@ href="<?php if(count($po)==0){
             <footer class="panel-footer">
 				<div class="row">
 					<div class="col-md-12 text-right">
-						<button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Kembali</button>
+						<button type="button" class="btn btn-default modal-dismiss" onclick="reload()">Kembali</button>
 					</div>
 				</div>
 			</footer>
 		</form>
 	</section>
 </div>
-
 
 
 <!-- **************************** MODAL TAMBAH DN ***************************** -->
@@ -81,13 +115,14 @@ href="<?php if(count($po)==0){
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Nomor DN<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="text" class="form-control" name="id_dn" value="DN-<?php echo $jumlah_dn+1?>" readonly>
+                        <input type="text" name="id_dn" class="form-control"
+                            value="MBP/DN/<?= integerToRoman(date('m')) ."/". date('Y') ."/"?><?= $jumlah_dn+1 ?>" readonly>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Tanggal Delivery Note<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="date" class="form-control" name="tgl_dn">
+                        <input type="date" class="form-control" name="tgl_dn" required>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
@@ -103,7 +138,7 @@ href="<?php if(count($po)==0){
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Tanggal Pengiriman<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="date" class="form-control" name="tgl_pengiriman">
+                        <input type="date" class="form-control" name="tgl_pengiriman" min="<?php echo date('Y-m-d') ?>" required>
                     </div>
                 </div>
                 <br>
@@ -111,8 +146,8 @@ href="<?php if(count($po)==0){
                     <thead>
                         <tr>
                             <th style="text-align:center" class="col-sm-3">No. PO Supplier</th>
-                            <th style="text-align:center" class="col-sm-4">Material</th>
-                            <th style="text-align:center" class="col-sm-1">Jumlah</th>
+                            <th style="text-align:center" class="col-sm-3">Material</th>
+                            <th style="text-align:center" class="col-sm-2">Jumlah</th>
                             <th style="text-align:center" class="col-sm-1">Satuan</th>
                             <th style="text-align:center" class="col-sm-3">Keterangan</th>
                         </tr>
@@ -135,7 +170,7 @@ href="<?php if(count($po)==0){
                         <label class="col-sm-3 control-label">Dibuat Oleh </label>
                         <div class="col-sm-7">
                             <input type="text" name="dibuat" class="form-control"
-                            value="<?php //echo $user[$x]['nama_jabatan'] ?> otomatis dari user yg login" readonly>
+                            value="<?php echo $_SESSION['id_user'] ?>" readonly>
                         </div>
                     </div>
                 </div>
@@ -170,87 +205,87 @@ href="<?php if(count($po)==0){
         <table class="table table-bordered table-striped mb-none" id="datatable-default">
             <thead>
                 <tr>
-                    <th>No.</th>
-                    <th>Kode Delivery Note</th>
-                    <th>Supplier</th>
-                    <th>Tanggal Pengiriman</th>
-                    <th>Status</th>
-                    <th>Aksi</th>
+                    <th style="text-align:center">No.</th>
+                    <th style="text-align:center">Kode Delivery Note</th>
+                    <th style="text-align:center">Supplier</th>
+                    <th style="text-align:center">Tanggal Pengiriman</th>
+                    <th style="text-align:center">Status</th>
+                    <th style="text-align:center">Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                <?php //if(count($departemen)==0){?>
-                    <!-- <tr>
-                        <td colspan="5" style="text-align:center">Belum Ada Data</td>
-                    </tr> -->
-                <?php 
-                    //}else{
-                    //for($x=0 ; $x<count($departemen) ; $x++){
+                <?php
+                    for($x=0 ; $x<$jumlah_dn ; $x++){
+                        if ($status == 0 || $status == 3){ //proses persetujuan & pengiriman
+                            if($dn[$x]['status_pengesahan'] == 0 || $dn[$x]['status_pengesahan'] == 1){
                 ?>
                     <tr>
-                        <td class="col-lg-1"> <?php //echo $x+1?>1</td>
-                        <td class="col-lg-2"> <?php //echo $departemen[$x]['id_departemen']?>DN-1/100/20</td>
-                        <td class="col-lg-2"> <?php //echo $departemen[$x]['nama_departemen']?>INOAC</td>
-                        <td class="col-lg-2"> <?php //echo $departemen[$x]['nama_departemen']?>2 Juli 2020</td>
-                        <td class="col-lg-2"> <?php //echo $departemen[$x]['nama_departemen']?>Selesai</td>
-                        <td class="col-lg-3">
-                            <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                title="Detail" href="#modaldetail<?php //echo $departemen[$x]['id_departemen'] ?>"></a>
-                            <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                title="Edit" href="#modaledit<?php //echo $departemen[$x]['id_departemen'] ?>"></a>
-                            <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                title="Delete" href="#modalhapus<?php //echo $departemen[$x]['id_departemen'] ?>"></a>
-                            <a class="modal-with-form col-lg-3 btn btn-info fa fa-file"
-                                title="Log" href="#modalhapus<?php //echo $departemen[$x]['id_departemen'] ?>"></a>
+                        <td class="col-lg-1"> <?php echo $x+1?></td>
+                        <td class="col-lg-2"> <?php echo $dn[$x]['kode_delivery_note']?></td>
+                        <td class="col-lg-2"> <?php echo $dn[$x]['nama_supplier']?></td>
+                        <td class="col-lg-2"> <?php echo $dn[$x]['tanggal_penerimaan']?></td>
+                        <td class="col-lg-2">
+                            <?php if ($dn[$x]['status_pengesahan']==0){
+                                echo "Proses Persetujuan";
+                            }else if ($dn[$x]['status_pengesahan']==1){
+                                echo "Proses Pengambilan Material";
+                            }
+                            ?>
                         </td>
-                    </tr>
-                    <tr>
-                        <td class="col-1"> <?php //echo $x+1?>2</td>
-                        <td class="col-lg-2"> <?php //echo $departemen[$x]['id_departemen']?>DN-2/101/20</td>
-                        <td class="col-lg-2"> <?php //echo $departemen[$x]['nama_departemen']?>INOAC</td>
-                        <td class="col-lg-2"> <?php //echo $departemen[$x]['nama_departemen']?>5 Juli 2020</td>
-                        <td class="col-lg-2"> <?php //echo $departemen[$x]['nama_departemen']?>Proses pengiriman</td>
                         <td class="col-lg-3">
-                            <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                title="Detail" href="#modaldetail<?php //echo $departemen[$x]['id_departemen'] ?>"></a>
-                            <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                title="Edit" href="#modaledit<?php //echo $departemen[$x]['id_departemen'] ?>"></a>
+                            <a class="col-lg-3 btn btn-primary fa fa-info-circle"
+                                title="Detail" href="<?php echo base_url() . 'DeliveryNote/detail/' . $dn[$x]['id_delivery_note'] ?>"></a>
                             <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
                                 title="Delete" href="#modalhapus<?php //echo $departemen[$x]['id_departemen'] ?>"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-1"> <?php //echo $x+1?>3</td>
-                        <td class="col-lg-2"> <?php //echo $departemen[$x]['id_departemen']?>DN-3/102/20</td>
-                        <td class="col-lg-2"> <?php //echo $departemen[$x]['nama_departemen']?>INOAC</td>
-                        <td class="col-lg-2"> <?php //echo $departemen[$x]['nama_departemen']?>6 Juli 2020</td>
-                        <td class="col-lg-2"> <?php //echo $departemen[$x]['nama_departemen']?>Disetujui, belum dikirim</td>
-                        <td class="col-lg-3">
-                            <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                title="Detail" href="#modaldetail<?php //echo $departemen[$x]['id_departemen'] ?>"></a>
-                            <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                title="Edit" href="#modaledit<?php //echo $departemen[$x]['id_departemen'] ?>"></a>
-                            <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                title="Delete" href="#modalhapus<?php //echo $departemen[$x]['id_departemen'] ?>"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-1"> <?php //echo $x+1?>4</td>
-                        <td class="col-lg-2"> <?php //echo $departemen[$x]['id_departemen']?>DN-4/103/20</td>
-                        <td class="col-lg-2"> <?php //echo $departemen[$x]['nama_departemen']?>INOAC</td>
-                        <td class="col-lg-2"> <?php //echo $departemen[$x]['nama_departemen']?>13 Juli 2020</td>
-                        <td class="col-lg-2"> <?php //echo $departemen[$x]['nama_departemen']?>Belum disetujui</td>
-                        <td class="col-lg-3">
-                            <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                title="Detail" href="#modaldetail<?php //echo $departemen[$x]['id_departemen'] ?>"></a>
-                            <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                title="Edit" href="#modaledit<?php //echo $departemen[$x]['id_departemen'] ?>"></a>
-                            <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                title="Delete" href="#modalhapus<?php //echo $departemen[$x]['id_departemen'] ?>"></a>
+                            
+                            <?php if($dn[$x]['status_pengesahan'] == 0 && $_SESSION['nama_departemen']=='Management' && ($_SESSION['nama_jabatan']=='Direktur' || $_SESSION['nama_jabatan']=='Manager')){ ?>
+                                <a class="modal-with-form col-lg-3 btn btn-success fa fa-check"
+                                    title="Menyetujui" href="#modalsetuju<?php echo $dn[$x]['id_delivery_note'] ?>"></a>
+                                <a class="modal-with-form col-lg-3 btn btn-danger fa fa-times"
+                                    title="Tolak" href="#modaltolak<?php echo $dn[$x]['id_delivery_note'] ?>"></a>
+                            <?php } ?>
                         </td>
                     </tr>
                     
-                <?php //}} ?>
+                <?php }}
+                    else if($status == 1 || $status == 3){ //selesai
+                        if($dn[$x]['status_pengesahan'] == 2){
+                ?>
+                    <tr>
+                        <td class="col-lg-1"> <?php echo $x+1?></td>
+                        <td class="col-lg-2"> <?php echo $dn[$x]['kode_delivery_note']?></td>
+                        <td class="col-lg-2"> <?php echo $dn[$x]['nama_supplier']?></td>
+                        <td class="col-lg-2"> <?php echo $dn[$x]['tanggal_penerimaan']?></td>
+                        <td class="col-lg-2"> Selesai </td>
+                        <td class="col-lg-3">
+                            <a class="col-lg-3 btn btn-primary fa fa-info-circle"
+                                title="Detail" href="<?php echo base_url() . 'DeliveryNote/detail/' . $dn[$x]['id_delivery_note'] ?>"></a>
+                        </td>
+                    </tr>
+
+                <?php }}
+                    else if($status == 2 || $status == 3){ //batal / ditolak
+                        if($dn[$x]['status_pengesahan'] == 3 || $dn[$x]['status_pengesahan'] == 4){
+                ?>
+                    <tr>
+                        <td class="col-lg-1"> <?php echo $x+1?></td>
+                        <td class="col-lg-2"> <?php echo $dn[$x]['kode_delivery_note']?></td>
+                        <td class="col-lg-2"> <?php echo $dn[$x]['nama_supplier']?></td>
+                        <td class="col-lg-2"> <?php echo $dn[$x]['tanggal_penerimaan']?></td>
+                        <td class="col-lg-2">
+                            <?php if ($dn[$x]['status_pengesahan']==3){
+                                echo "Batal";
+                            }else if ($dn[$x]['status_pengesahan']==4){
+                                echo "Ditolak";
+                            }
+                            ?>
+                        </td>
+                        <td class="col-lg-3">
+                            <a class="col-lg-3 btn btn-primary fa fa-info-circle"
+                                title="Detail" href="<?php echo base_url() . 'DeliveryNote/detail/' . $dn[$x]['id_delivery_note'] ?>"></a>
+                        </td>
+                    </tr>
+                <?php }}} ?>
             </tbody>
         </table>
     </div>
@@ -549,6 +584,7 @@ href="<?php if(count($po)==0){
 <script>
     function addNewRow(){
         var counter = $(".new_row").length;
+
         html =
         '<tr class = "new_row">'+
             '<td>'+
@@ -557,10 +593,11 @@ href="<?php if(count($po)==0){
                 '</select>'+
             '</td>'+
             '<td>'+
-                '<select data-plugin-selectTwo class="form-control" name="material'+counter+'" id="material'+counter+'" onchange="getSatuan('+counter+')" required>'+
+                '<select data-plugin-selectTwo class="form-control" name="material'+counter+'" id="material'+counter+'" onchange="getSatuan('+counter+'); getJumlah('+counter+');" required>'+
             '</td>'+
             '<td>'+
-                '<input class="form-control" type="number" name="jumlah'+counter+'" id="jumlah'+counter+'" min="0" onkeyup="countHargaTotal('+counter+'); totalHarga();" onclick="countHargaTotal('+counter+'); totalHarga();" required>'+
+                '<input class="form-control" type="number" name="jumlah'+counter+'" id="jumlah'+counter+'" min="0" required>'+
+                '<input class="form-control" type="hidden" name="detpo'+counter+'" id="detpo'+counter+'" readonly>'+
             '</td>'+
             '<td>'+
                 '<input class="form-control" type="text" name="satuan'+counter+'" id="satuan'+counter+'" readonly>'+
@@ -590,7 +627,6 @@ href="<?php if(count($po)==0){
     }
 </script>
 
-
 <script>
     function getMaterial(counter){
         var matoption = document.getElementById("material"+counter);
@@ -614,7 +650,28 @@ href="<?php if(count($po)==0){
                     '</option>';
                     $("#material"+counter).append(html);
                     getSatuan(counter);
+                    getJumlah(counter);
                 }
+            }
+        });
+    }
+</script>
+
+<script>
+    function getJumlah(countt){
+        var id_po_supplier = $("#po"+countt).val();
+        var id_sub_jenis_material = $("#material"+countt).val();
+        $.ajax({
+            url:"<?php echo base_url();?>DeliveryNote/jumlah_material/"+id_po_supplier,
+            type:"POST",
+            dataType:"JSON",
+            data:{id_sub_jenis_material:id_sub_jenis_material},
+            success:function(respond){
+                var jadi =  respond[0]["jumlah_material"];
+                $("#jumlah"+countt).attr({
+                    "max" : jadi
+                });
+                $("#detpo"+countt).val(respond[0]["id_detail_purchase_order_supplier"]);
             }
         });
     }
@@ -634,6 +691,7 @@ href="<?php if(count($po)==0){
         });
     }
 </script>
+
 
 <script>
     function reload() {
