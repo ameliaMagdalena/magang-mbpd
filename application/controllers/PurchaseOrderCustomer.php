@@ -626,8 +626,7 @@ class PurchaseOrderCustomer extends CI_Controller {
                     "remark" => $this->input->post("remark".$x),
                     "user_add"=>$_SESSION['id_user'],
                     "waktu_add"=>date('Y-m-d H:i:s'),
-                    "user_edit"=>"0",
-                    "user_delete"=>"0"
+                    "status_delete"=>"0"
                 );
                 $this->M_PurchaseOrderCustomer->insertDetailPOCustomer($data1);
                 $jumlah_detail = $jumlah_detail +1;
@@ -646,8 +645,7 @@ class PurchaseOrderCustomer extends CI_Controller {
             "keterangan" => $this->input->post("keterangan"),
             "user_add"=>$_SESSION['id_user'],
             "waktu_add"=>date('Y-m-d H:i:s'),
-            "user_edit"=>"0",
-            "user_delete"=>"0"
+            "status_delete"=>"0"
         );
         $this->M_PurchaseOrderCustomer->insertPOCustomer($data2);
 
@@ -661,8 +659,7 @@ class PurchaseOrderCustomer extends CI_Controller {
             "tanggal_dibuat" => date('Y-m-d H:i:s'),
             "user_add"=>$_SESSION['id_user'],
             "waktu_add"=>date('Y-m-d H:i:s'),
-            "user_edit"=>"0",
-            "user_delete"=>"0"
+            "status_delete"=>"0"
         );
         $this->M_PurchaseOrderCustomer->insertSalesOrder($data3);
 

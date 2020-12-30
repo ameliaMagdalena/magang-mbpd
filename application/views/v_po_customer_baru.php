@@ -71,7 +71,7 @@
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Tanggal PO<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="date" name="tgl_po" id="tgl_po" class="form-control" required>
+                        <input type="date" name="tgl_po" id="tgl_po" class="form-control" onchange="ubahtrima()" required>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
@@ -267,20 +267,32 @@
 
     cek_terisi();
  }
+</script>
 
+<script>
+    function ubahtrima(){
+        var tglpo = $("#tgl_po").val();
+        var counter = $(".new_row").length;
+
+        if(counter>0){
+            for(cek=0; cek<counter; cek++){
+                //$("#tgl_terima"+counter).val("");
+                $("#tgl_terima"+cek).val('').removeAttr('min');
+                
+                $("#tgl_terima"+cek).attr({
+                    "min" : tglpo
+                });
+            }
+        }
+    }
 </script>
 
 <script>
     function addNewRow(){
-        /* document.getElementById("tgl_antar").onchange = function(){
-            $("#tgl_terima"+counter).val("");
-            var input = document.getElementById("tgl_terima"+counter);
-            input.setAttribute("min", this.value);
-        } */
-        var antar = $("#tgl_antar").val();
-        if (antar!=""){
+        var trima = $("#tgl_po").val();
+        if (trima!=""){
             var counter = $(".new_row").length;
-            var row_sebelum = counter-1;
+            //var row_sebelum = counter-1;
 
             //if (counter == 0){
                 html =
@@ -300,7 +312,7 @@
                         '<input class="form-control" type="text" name="satuan'+counter+'" id="satuan'+counter+'" value="Pcs" readonly>'+
                     '</td>'+
                     '<td style="text-align:center" class="col-lg-2">'+
-                        '<input class="form-control" type="date" name="tgl_terima'+counter+'" id="tgl_terima'+counter+'" min="'+antar+'" required>'+
+                        '<input class="form-control" type="date" name="tgl_terima'+counter+'" id="tgl_terima'+counter+'" min="'+trima+'" required>'+
                     '</td>'+
                     '<td style="text-align:center" class="col-lg-2">'+
                         '<input class="form-control" type="number" name="harga_satuan'+counter+'" id="harga_satuan'+counter+'" readonly>'+
@@ -376,7 +388,7 @@
                 });
             } */
         }else{
-            alert("Masukkan Tanggal Pengantaran terlebih dahulu.")
+            alert("Masukkan Tanggal PO terlebih dahulu.")
         }
     }
 </script>

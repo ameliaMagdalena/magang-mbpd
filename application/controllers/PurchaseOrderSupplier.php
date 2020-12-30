@@ -391,13 +391,14 @@ class PurchaseOrderSupplier extends CI_Controller {
 
     public function pilih_baru(){
         //pilih: Permintaan Pembelian / Tanpa Permintaan Pembelian
-        $data['beli'] = $this->M_PembelianMaterial->selectPermintaanPembelianAktif()->result_array();
+        $data['beli'] = $this->M_PembelianMaterial->selectPermintaanDanSupplier()->result_array();
 	    $this->load->view('v_po_supplier_pilih_baru', $data);
     }
 
     public function baru(){
         $data['jumlah_po_sup'] = $this->M_PurchaseOrderSupplier->selectAllPOSupplier()->num_rows();
         $data['supplier'] = $this->M_PurchaseOrderSupplier->selectSupplierAktif()->result_array();
+        $data['supplier2'] = $this->M_PembelianMaterial->selectSuppliernya()->result_array();
         $data['material'] = $this->M_PurchaseOrderSupplier->selectSubJenisMaterial()->result_array();
         $data['beli'] = $this->M_PembelianMaterial->selectPermintaanPembelianAktif()->result_array();
         $data['darisupp'] = $this->M_PembelianMaterial->selectPermintaanDanSupplier()->result_array();

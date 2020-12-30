@@ -20,6 +20,7 @@ class DeliveryNote extends CI_Controller {
         $data['status'] = $status;
         $data['jumlah_dn'] = $this->M_DeliveryNote->selectDeliveryNoteAktif()->num_rows();
         $data['dn'] = $this->M_DeliveryNote->selectDeliveryNoteAktif()->result_array();
+        $data['dnnow'] = $this->M_DeliveryNote->selectDeliveryNoteNow()->num_rows();
         $data['po'] = $this->M_DeliveryNote->selectPOSupplier()->result_array();
 
         //notif produksi
@@ -227,7 +228,7 @@ class DeliveryNote extends CI_Controller {
         $row = $this->input->post("row"); //jumlah row-1 / dimulai dari 0
         $id_dn = $this->input->post("id_dn");
 
-        $jumlah_detail = $this->M_DeliveryNote->selectAllDeliveryNote()->num_rows()+1;
+        $jumlah_detail = $this->M_DeliveryNote->selectAllDetailDeliveryNote()->num_rows()+1;
         
         for($x=0; $x<=$row; $x++){
             $jumlah_material = $this->input->post("jumlah".$x);
@@ -251,6 +252,7 @@ class DeliveryNote extends CI_Controller {
 
         $data2 = array (
             "id_delivery_note" => $id_dn,
+            "kode_delivery_note" => $this->input->post("kode_dn"),
             "tanggal_dn" => $this->input->post("tgl_dn"),
             "id_supplier" => $this->input->post("supplier"),
             "tanggal_penerimaan" => $this->input->post("tgl_pengiriman"),

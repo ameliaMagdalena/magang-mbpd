@@ -20,6 +20,12 @@ class M_DeliveryNote extends CI_Model {
         WHERE a.status_delete=0");
     }
 
+    function selectDeliveryNoteNow(){
+        return $this->db->query("SELECT * FROM delivery_note a
+        JOIN supplier b ON a.id_supplier = b.id_supplier
+        WHERE a.status_delete=0 AND MONTH(a.tanggal_dn)=MONTH(CURRENT_DATE())");
+    }
+    
     function selectSatuDeliveryNote($id){
         return $this->db->query("SELECT * FROM delivery_note a
         JOIN supplier b ON a.id_supplier = b.id_supplier

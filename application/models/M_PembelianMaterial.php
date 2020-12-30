@@ -47,4 +47,13 @@ class M_PembelianMaterial extends CI_Model {
         WHERE a.status_delete = 0");
     }
 
+    function selectSuppliernya(){
+        return $this->db->query("SELECT * FROM permintaan_pembelian a
+        JOIN sub_jenis_material b ON a.id_sub_jenis_material = b.id_sub_jenis_material
+        JOIN jenis_material c ON b.id_jenis_material = c.id_jenis_material
+        JOIN detail_supplier d ON b.id_sub_jenis_material = d.id_sub_jenis_material
+        JOIN supplier e ON d.id_supplier = e.id_supplier
+        WHERE a.status_delete = 0 GROUP BY nama_supplier");
+    }
+
 }

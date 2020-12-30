@@ -103,6 +103,13 @@
                                     value="Belum ditindaklanjuti" readonly>
                                 </div>
                             </div>
+                            <div class="form-group mt-lg">
+                                <label class="col-sm-4 control-label">Keterangan</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="ket" class="form-control"
+                                    value="<?php echo $permintaan_pembelian[$x]['keterangan'] ?>" readonly>
+                                </div>
+                            </div>
 
                             <div class="form-group mt-lg">
                                 <div class="col-sm-12">
@@ -353,6 +360,13 @@
                                     value="Proses Pembelian" readonly>
                                 </div>
                             </div>
+                            <div class="form-group mt-lg">
+                                <label class="col-sm-4 control-label">Keterangan</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="ket" class="form-control"
+                                    value="<?php echo $permintaan_pembelian[$x]['keterangan'] ?>" readonly>
+                                </div>
+                            </div>
 
                             <div class="form-group mt-lg">
                                 <div class="col-sm-12">
@@ -504,6 +518,13 @@
                                 <div class="col-sm-8">
                                     <input type="text" name="status" class="form-control"
                                     value="Selesai" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group mt-lg">
+                                <label class="col-sm-4 control-label">Keterangan</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="ket" class="form-control"
+                                    value="<?php echo $permintaan_pembelian[$x]['keterangan'] ?>" readonly>
                                 </div>
                             </div>
 
@@ -670,6 +691,13 @@
                                             echo "Ditolak";
                                         } ?>"
                                     readonly>
+                                </div>
+                            </div>
+                            <div class="form-group mt-lg">
+                                <label class="col-sm-4 control-label">Keterangan</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="ket" class="form-control"
+                                    value="<?php echo $permintaan_pembelian[$x]['keterangan'] ?>" readonly>
                                 </div>
                             </div>
 
@@ -844,6 +872,13 @@
                                             echo "Ditolak";
                                         } ?>"
                                     readonly>
+                                </div>
+                            </div>
+                            <div class="form-group mt-lg">
+                                <label class="col-sm-4 control-label">Keterangan</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="ket" class="form-control"
+                                    value="<?php echo $permintaan_pembelian[$x]['keterangan'] ?>" readonly>
                                 </div>
                             </div>
 

@@ -175,15 +175,6 @@
         
         <div class="form-group mt-lg">
             
-            <a class="col-lg-2 btn btn-warning"
-                title="Print" href="<?php echo base_url() . 'PermintaanMaterial/print_permintaan/' . $permintaan_material[0]['id_purchase_order_customer'] ?>">
-                Print</a>
-            
-            <!-- <?php if($permintaan_material[0]['status_permintaan'] != 2 ||$permintaan_material[0]['status_permintaan'] != 3 || $permintaan_material[0]['status_permintaan'] != 4){ ?>
-                <a class="modal-with-form col-lg-2 btn btn-danger mr-1"
-                    title="Batalkan" href="#modalbatal<?php echo $permintaan_material[0]['id_purchase_order_customer'] ?>">Batalkan</a>
-            <?php } ?> -->
-
 
             <!-- ******************************* MODAL BATAL ****************************** -->
             <!-- ************************************************************************** -->

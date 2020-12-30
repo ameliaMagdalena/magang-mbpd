@@ -139,6 +139,7 @@
 									</li>
 								</ul>
 							</li>
+
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-list" aria-hidden="true"></i>
@@ -172,6 +173,7 @@
 									</li>
 								</ul>
 							</li>
+
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-list" aria-hidden="true"></i>
@@ -205,10 +207,11 @@
 									</li>
 								</ul>
 							</li>
+
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-file-text" aria-hidden="true"></i>
-									<span>Perencanaan Material <span class="badge badge-light">3</span></span>
+									<span>Perencanaan Material</span>
 								</a>
 								<ul class="nav nav-children">
 									<li class="nav-parent">
@@ -337,6 +340,7 @@
 									</li>
 								</ul>
 							</li>
+
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -409,6 +413,7 @@
 									</li>
 								</ul>
 							</li>
+
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-sign-in" aria-hidden="true"></i>
@@ -427,6 +432,7 @@
 									</li>
 								</ul>
 							</li>
+							
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-sign-out" aria-hidden="true"></i>

@@ -72,7 +72,7 @@
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Tanggal PO<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="date" name="tgl_po" class="form-control" required>
+                        <input type="date" name="tgl_po" class="form-control" min="<?= date('Y-m-01') ?>" max="<?= date('Y-m-d')?>" required>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
@@ -86,9 +86,9 @@
 					<label class="col-sm-3 control-label">Supplier<span class="required">*</span></label>
 					<div class="col-sm-7">
                         <select class="form-control" name="supplier" id="supplier" required>
-                            <?php for($a=0; $a<count($supplier); $a++){ ?>
-                                <option value="<?php echo $supplier[$a]['id_supplier'] ?>">
-                                    <?php echo $supplier[$a]['nama_supplier'];?>
+                            <?php for($a=0; $a<count($supplier2); $a++){ ?>
+                                <option value="<?php echo $supplier2[$a]['id_supplier'] ?>">
+                                    <?php echo $supplier2[$a]['nama_supplier'];?>
                                 </option>
                             <?php } ?>
                         </select>
@@ -281,7 +281,7 @@
             dataType:"JSON",
             data:{id_permintaan:id_permintaan},
             success:function(respond){
-                html = 'Jumlah Diminta: '+respond[0]["jumlah_material"];
+                html = 'Jumlah Diminta: '+respond[0]["jumlah_beli"];
                 $("#jlhminta"+countt).append(html);
             }
         });

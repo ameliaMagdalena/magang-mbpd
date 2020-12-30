@@ -111,18 +111,21 @@ href="<?php if(count($po)==0){
 				<h2 class="panel-title">Form Delivery Note</h2>
 			</header>
 
+
+            <input type="hidden" name="id_dn" class="form-control" value="DN-<?php echo $jumlah_dn+1 ?>" readonly>
+                            
 			<div class="panel-body">
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Nomor DN<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="text" name="id_dn" class="form-control"
-                            value="MBP/DN/<?= integerToRoman(date('m')) ."/". date('Y') ."/"?><?= $jumlah_dn+1 ?>" readonly>
+                        <input type="text" name="kode_dn" class="form-control"
+                            value="MBP/DN/<?= integerToRoman(date('m')) ."/". date('Y') ."/"?><?= $dnnow+1 ?>" readonly>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Tanggal Delivery Note<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="date" class="form-control" name="tgl_dn" required>
+                        <input type="date" class="form-control" name="tgl_dn" min="<?= date('Y-m-01') ?>" max="<?= date('Y-m-d') ?>" required>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
@@ -691,7 +694,6 @@ href="<?php if(count($po)==0){
         });
     }
 </script>
-
 
 <script>
     function reload() {
