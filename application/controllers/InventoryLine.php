@@ -10,8 +10,6 @@ class InventoryLine extends CI_Controller {
         $this->load->model('M_InventoryLine');
         $this->load->model('M_Dashboard');
 
-        $this->load->library('pdf');
-
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');
         }
@@ -361,7 +359,8 @@ class InventoryLine extends CI_Controller {
                 'jumlah_material'          => $jumlah_material,
                 'status'                   => 1,
                 'user_add'                 => $user,
-                'waktu_add'                => $now
+                'waktu_add'                => $now,
+                'status_delete'            => 0
             );
 
             $this->M_InventoryLine->insert('persediaan_line_masuk',$data_persediaan_line_masuk);
@@ -463,7 +462,8 @@ class InventoryLine extends CI_Controller {
             'jumlah_material'           => $jumlah_keluar,
             'status'                    => 1,
             'user_edit'                 => $_SESSION['id_user'],
-            'waktu_edit'                => date('Y-m-d')
+            'waktu_edit'                => date('Y-m-d'),
+            'status_delete'             => 0
         );
 
         $this->M_InventoryLine->insert('persediaan_line_keluar',$data_selik);
@@ -471,3 +471,5 @@ class InventoryLine extends CI_Controller {
         redirect('inventoryLine');
     }
 }
+
+?>

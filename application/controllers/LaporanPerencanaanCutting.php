@@ -14,8 +14,6 @@ class LaporanPerencanaanCutting extends CI_Controller {
         $this->load->model('M_Warna');
         $this->load->model('M_Dashboard');
 
-        $this->load->library('pdf');
-
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');
         }

@@ -6,10 +6,8 @@ class ProcessCost extends CI_Controller {
         parent::__construct();
         date_default_timezone_set('Asia/Jakarta');
 
-        $this->load->library('pdf');
         $this->load->model('M_ProcessCost');
         $this->load->model('M_Dashboard');
-
     }
 
 	  public function index(){

@@ -15,7 +15,6 @@ class Bpbd extends CI_Controller {
         $this->load->model('M_UkuranProduk');
         $this->load->model('M_Tetapan');
         $this->load->model('M_Dashboard');
-
     }
 
 	public function tambah_bpbd(){

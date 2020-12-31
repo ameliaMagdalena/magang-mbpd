@@ -12,9 +12,6 @@ class PengambilanMaterialProduksi extends CI_Controller {
         $this->load->model('M_UkuranProduk');
         $this->load->model('M_Warna');
         $this->load->model('M_Dashboard');
-        
-        $this->load->library('pdf');
-
     }
 
     public function tambah0(){
@@ -711,6 +708,7 @@ class PengambilanMaterialProduksi extends CI_Controller {
                   'stok_wip'                      => 0,
                   'jumlah_ambil'                  => $akan_diambil,
                   'keterangan'                    => $keterangan,
+                  'status_permintaan'             => 0,
                   'status_pengambilan'            => $status_pengambilan,
                   'status_keluar'                 => 0,
                   'user_add'                      => $user,
@@ -821,6 +819,7 @@ class PengambilanMaterialProduksi extends CI_Controller {
                               'id_pengambilan_material'       => $id_ammat_baru,
                               'tanggal'                       => $tanggal,
                               'jumlah_material'               => $line_keluar,
+                              'status'                        => 0, 
                               'user_add'                      => $user,
                               'waktu_add'                     => $now,
                               'status_delete'                 => 0
@@ -842,6 +841,7 @@ class PengambilanMaterialProduksi extends CI_Controller {
                     'stok_wip'                      => $wip,
                     'jumlah_ambil'                  => $ambil_gudangnya,
                     'keterangan'                    => $keterangan,
+                    'status_permintaan'             => 0,
                     'status_pengambilan'            => $status_pengambilan,
                     'status_keluar'                 => 0,
                     'user_add'                      => $user,
@@ -859,6 +859,7 @@ class PengambilanMaterialProduksi extends CI_Controller {
                     'stok_wip'                      => $akan_diambil,
                     'jumlah_ambil'                  => 0,
                     'keterangan'                    => $keterangan,
+                    'status_permintaan'             => 0,
                     'status_pengambilan'            => $status_pengambilan,
                     'status_keluar'                 => 0,
                     'user_add'                      => $user,
@@ -1046,6 +1047,7 @@ class PengambilanMaterialProduksi extends CI_Controller {
             'stok_wip'                      => 0,
             'jumlah_ambil'                  => $jumlah_ambil,
             'keterangan'                    => $keterangan,
+            'status_permintaan'             => 0,
             'status_pengambilan'            => $status_pengambilan,
             'status_keluar'                 => 0,
             'status_permintaan'             => 1,
