@@ -640,7 +640,7 @@ class PurchaseOrderSupplier extends CI_Controller {
                     "user_add"=>$_SESSION['id_user'],
                     "waktu_add"=>date('Y-m-d H:i:s'),
                     "user_edit"=>"0",
-                    "user_delete"=>"0"
+                    "status_delete"=>"0"
                 );
                 $this->M_PurchaseOrderSupplier->insertDetailPOSupplier($data1);
                 $jumlah_detail = $jumlah_detail +1;
@@ -660,7 +660,7 @@ class PurchaseOrderSupplier extends CI_Controller {
             "user_add"=>$_SESSION['id_user'],
             "waktu_add"=>date('Y-m-d H:i:s'),
             "user_edit"=>"0",
-            "user_delete"=>"0"
+            "status_delete"=>"0"
         );
         $this->M_PurchaseOrderSupplier->insertPOSupplier($data2);
         redirect('PurchaseOrderSupplier/index/0');
