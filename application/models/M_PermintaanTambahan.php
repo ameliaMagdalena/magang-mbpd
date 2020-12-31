@@ -18,7 +18,7 @@ class M_PermintaanTambahan extends CI_Model {
 
     function get_last_id($idcode){
         return $this->db->query("SELECT id_permintaan_tambahan FROM permintaan_tambahan 
-        WHERE id_permintaan_tambahan LIKE '$id_code%' ORDER BY id_permintaan_tambahan DESC LIMIT 1");
+        WHERE id_permintaan_tambahan LIKE '$idcode%' ORDER BY id_permintaan_tambahan DESC LIMIT 1");
     }
 
     function select_all_aktif($nmline){
