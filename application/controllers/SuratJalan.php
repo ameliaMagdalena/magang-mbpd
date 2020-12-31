@@ -352,6 +352,7 @@ class SuratJalan extends CI_Controller {
                         'id_surat_jalan'      => $id_sj,
                         'id_detail_produk'    => $id_detprod,
                         'jumlah_produk'       => $jm_prod,
+                        'status_keluar'       => 0,
                         'user_add'            => $user,
                         'waktu_add'           => $now,
                         'status_delete'       => 0

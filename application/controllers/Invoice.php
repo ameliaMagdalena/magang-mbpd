@@ -491,25 +491,45 @@ class Invoice extends CI_Controller {
 
         $user = $_SESSION['id_user'];
         $now  = date('Y-m-d H:i:s');
-
-        $data_inv = array (
-            'id_invoice'                 => $id_invoice,
-            'id_purchase_order_customer' => $id_po,
-            'id_rekening'                => $id_rekening,
-            'tanggal'                    => $tanggal,
-            'ditujukan_kepada'           => $ditujukan_kepada,
-            'sub_total'                  => $subtotal,
-            'discount_rate'              => $discount_rate,
-            'discount'                   => $discount,
-            'ppn_rate'                   => $ppn_rate,
-            'ppn'                        => $ppn,
-            'total'                      => $total,
-            'keterangan'                 => $keterangan,
-            'status_invoice'             => 0,
-            'user_add'                   => $user,
-            'waktu_add'                  => $now,
-            'status_delete'              => 0
-        );
+        
+        if($discount_rate == "" || $discount_rate == 0){
+            $data_inv = array (
+                'id_invoice'                 => $id_invoice,
+                'id_purchase_order_customer' => $id_po,
+                'id_rekening'                => $id_rekening,
+                'tanggal'                    => $tanggal,
+                'ditujukan_kepada'           => $ditujukan_kepada,
+                'sub_total'                  => $subtotal,
+                'ppn_rate'                   => $ppn_rate,
+                'ppn'                        => $ppn,
+                'total'                      => $total,
+                'keterangan'                 => $keterangan,
+                'status_invoice'             => 0,
+                'user_add'                   => $user,
+                'waktu_add'                  => $now,
+                'status_delete'              => 0
+            );
+        } else{
+            $data_inv = array (
+                'id_invoice'                 => $id_invoice,
+                'id_purchase_order_customer' => $id_po,
+                'id_rekening'                => $id_rekening,
+                'tanggal'                    => $tanggal,
+                'ditujukan_kepada'           => $ditujukan_kepada,
+                'sub_total'                  => $subtotal,
+                'discount_rate'              => $discount_rate,
+                'discount'                   => $discount,
+                'ppn_rate'                   => $ppn_rate,
+                'ppn'                        => $ppn,
+                'total'                      => $total,
+                'keterangan'                 => $keterangan,
+                'status_invoice'             => 0,
+                'user_add'                   => $user,
+                'waktu_add'                  => $now,
+                'status_delete'              => 0
+            );
+        }
+        
 
         $this->M_Invoice->insert('invoice',$data_inv);
 

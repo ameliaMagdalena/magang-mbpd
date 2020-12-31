@@ -12,8 +12,8 @@ class M_PerencanaanProduksi extends CI_Model {
         function select_all_detpoxproduk(){
             return $this->db->query("SELECT * FROM purchase_order_customer,detail_purchase_order_customer,detail_produk,produk,customer 
             WHERE purchase_order_customer.id_purchase_order_customer = detail_purchase_order_customer.id_purchase_order_customer AND
-            detail_purchase_order_customer.id_detail_produk = detail_produk.id_detail_produk 
-            AND detail_produk.id_produk = produk.id_produk AND purchase_order_customer.id_customer = customer.id_customer
+            detail_purchase_order_customer.id_detail_produk = detail_produk.id_detail_produk AND detail_purchase_order_customer.status_delete=0 AND
+            detail_produk.id_produk = produk.id_produk AND purchase_order_customer.id_customer = customer.id_customer
             AND (purchase_order_customer.status_po BETWEEN 0 AND 1) ORDER BY purchase_order_customer.id_purchase_order_customer,produk.nama_produk");
         }
 
