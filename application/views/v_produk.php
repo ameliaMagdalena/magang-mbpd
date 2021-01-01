@@ -25,7 +25,8 @@
 <!--KODINGAN ISI HALAMAN-->
     <div name="isi_halaman">
         <?php if(($_SESSION['nama_jabatan'] == "Admin" && $_SESSION['nama_departemen'] == "Research and Development") 
-        || ($_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management")){?>
+        || ($_SESSION['nama_jabatan'] == "Direktur" && $_SESSION['nama_departemen'] == "Management")
+        || ($_SESSION['nama_jabatan'] == "Manager" && $_SESSION['nama_departemen'] == "Management")){?>
             <a class="modal-with-form col-lg-2  btn btn-success" id="button_tambah" 
                 href="#modaltambah">+ Produk</a>
             <br><br>

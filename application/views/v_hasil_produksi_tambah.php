@@ -1054,7 +1054,22 @@
             data: {id:id},
 
             success: function(respond){
-                $("#tanggal_edit").val(respond['pl'][0]['tanggal']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['pl'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['pl'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['pl'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['pl'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+                $("#tanggal_edit").val($tanggalnya);
                 $("#id_edit").val(id);
 
                 for($i=0;$i<respond['jm_pl'];$i++){
@@ -1246,8 +1261,22 @@
         var id      = $("#id"+no).val();
         var tgl     = $("#tgl"+no).val();
 
+        var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+        var tanggal = new Date(tgl).getDate();
+        var xhari = new Date(tgl).getDay();
+        var xbulan = new Date(tgl).getMonth();
+        var xtahun = new Date(tgl).getYear();
+        
+        var hari = hari[xhari];
+        var bulan = bulan[xbulan];
+        var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+        $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
         $("#id_peraks").val(id);
-        $("#tanggal_peraks").html(tgl);
+        $("#tanggal_peraks").html($tanggalnya);
 
         $("#modalpermintaanakses").modal();
         
