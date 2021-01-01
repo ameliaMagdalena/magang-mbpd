@@ -34,99 +34,74 @@
 			</header>
 
 			<div class="panel-body">
-				<input type="hidden" name="id_pemasukan_material" class="form-control" value="MASUK-<?php echo $jumlah_pemasukan + 1?>" readonly>
-					
+				<input type="hidden" name="pilihan" class="form-control" value="<?= $pilihan ?>" readonly>
+                <input type="hidden" name="keterangan" class="form-control" value="0" readonly>
+                <input type="hidden" name="lain" class="form-control" value="" readonly>
+
                 <div class="form-group mt-lg">
-					<label class="col-sm-3 control-label">Tanggal Masuk<span class="required">*</span></label>
+					<label class="col-sm-3 control-label">No. DN<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="date" class="form-control" name="tgl_masuk" id="tgl_masuk" required>
+                        <select class="form-control" name="id_dn" id="dnnya" onchange="getTgl(); getSupplier(); addNewRow()" required>
+                            <option value="0" class="dropdown-header"> Pilih Delivery Note </option>
+                            <?php for($a=0; $a<count($dn); $a++){ ?>
+                                <option value="<?= $dn[$a]['id_delivery_note'] ?>"> <?= $dn[$a]['kode_delivery_note'] ?> </option>
+                            <?php }?>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
-					<label class="col-sm-3 control-label">Keterangan Masuk<span class="required">*</span></label>
-					<div class="col-sm-9">
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="keterangan" id="keterangan1" value="0" checked=""> Dari Supplier
-                            </label>
-
-                            <div id="dari_supplier" class="input-group col-sm-12">
-                                <label class="col-sm-2 control-label">No. DN<span class="required">*</span></label>
-                                <div class="col-sm-5">
-                                    <select class="form-control delivery_note" name="delivery_note">
-                                        <?php for($a=0; $a<count($dn); $a++){ ?>
-                                            <option value="<?= $dn[$a]['id_delivery_note'] ?>"> <?= $dn[$a]['id_delivery_note'] ?> </option>
-                                        <?php }?>
-                                    </select>
-                                </div>
-                                <br>
-
-                            </div>
-                                
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="keterangan" id="keterangan2" value="1">
-                                Dari Produksi
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="keterangan" id="keterangan3" value="2">
-                                Lain-lain
-                            </label>
-                        </div>
+					<label class="col-sm-3 control-label">Tanggal Masuk</label>
+					<div class="col-sm-7">
+                        <input type="text" class="form-control" name="tgl_masuk" id="tgl_masuk" readonly>
                     </div>
                 </div>
-				<!-- <div class="form-group mt-lg">
-					<label class="col-sm-3 control-label">Supplier<span class="required">*</span></label>
+                <div class="form-group mt-lg">
+					<label class="col-sm-3 control-label">Supplier</label>
 					<div class="col-sm-7">
-                        <select class="form-control" name="supplier" id="supplier" onchange="jenisMaterial()" required>
-                            <?php for($x=0; $x<count($supplier); $x++){ ?>
-                                <option value="<?php echo $supplier[$x]['id_supplier'] ?>">
-                                    <?php echo $supplier[$x]['nama_supplier'] ?>
+                        <input type="text" class="form-control" name="supplier" id="supplier" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group mt-lg">
+					<h4 style="text-align:center">Data Material</h4>
+                </div>
+                <table class = "table table-bordered table-striped table-hover" border="1" id="tabel_material">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center">No.</th>
+                            <th style="text-align:center" class="col-lg-2">Kode Material</th>
+                            <th style="text-align:center" class="col-lg-4">Deskripsi</th>
+                            <th style="text-align:center" class="col-lg-1">Jumlah Diminta</th>
+                            <th style="text-align:center" class="col-lg-1">Jumlah Aktual</th>
+                            <th style="text-align:center" class="col-lg-2">Satuan</th>
+                            <th style="text-align:center" class="col-lg-2">Remark</th>
+                        </tr>
+                    </thead>
+                    <tbody id = "print_row">
+                    </tbody>
+                </table>
+
+                <br>
+
+				<div class="form-group mt-lg">
+					<label class="col-sm-3 control-label">Dicek oleh<span class="required">*</span></label>
+					<div class="col-sm-7">
+                        <select class="form-control" name="dicek" required>
+							<?php for($b=0; $b<count($kary); $b++){ ?>
+                                <option value="<?= $kary[$b]['id_user'] ?>"
+                                    <?php if($kary[$b]['id_user'] == $_SESSION['id_user']) { echo "selected"; } ?>>
+                                    <?= $kary[$b]['nama_karyawan'] ?>
                                 </option>
-                            <?php } ?>
-						</select>
-                    </div>
-                </div> -->
-				<div class="form-group mt-lg" id="line">
-					<label class="col-sm-3 control-label">Line<span class="required">*</span></label>
-					<div class="col-sm-7">
-                        <select class="form-control line" name="line">
-							<option value="">aa</option>
-							<option value="">dd</option>
+                            <?php }?>
 						</select>
                     </div>
                 </div>
-				<div class="form-group mt-lg" id="jenis">
-					<label class="col-sm-3 control-label">Jenis Material<span class="required">*</span></label>
-					<div class="col-sm-7">
-                        <select class="form-control jenis_material" name="jenis_material">
-							<option value="">aa</option>
-							<option value="">dd</option>
-						</select>
-                    </div>
-                </div>
-                <div class="form-group mt-lg" id="jumlah">
-					<label class="col-sm-3 control-label">Jumlah Material<span class="required">*</span></label>
-					<div class="col-sm-7">
-                        <input type="number" class="form-control jumlah" name="jumlah">
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <!-- ini required kalau radio button pilih lainlain -->
-					<label class="col-sm-3 control-label">Catatan</label>
-					<div class="col-sm-7">
-                        <input type="text" class="form-control catatan" name="catatan" id="catatan" >
-                    </div>
-                </div>
+                <br>
             </div>
             <footer class="panel-footer">
 				<div class="row">
 					<div class="col-md-12 text-right">
-						<input type="submit" id="tambah" class="btn btn-primary" value="Simpan">
-						<button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+						<input type="submit" id="masukkan" class="btn btn-primary" value="Simpan">
 					</div>
 				</div>
 			</footer>
@@ -146,6 +121,107 @@
 <?php //include('_rightbar.php');
 ?>
 
+<script>
+    $(document).ready(function() {
+        $(':input[type="submit"]').prop('disabled', true);
+    });
+    $('#dnnya').on('change', function() {
+        if($('#dnnya').val() == "0"){
+            $(':input[type="submit"]').prop('disabled', true);
+        }
+        else{
+            $(':input[type="submit"]').prop('disabled', false);
+        }
+    });
+</script>
+
+<script>
+    function getTgl(){
+        $("#tgl_masuk").val("");
+        var id_delivery_note = $("#dnnya").val();
+        $.ajax({
+            url:"<?php echo base_url();?>PemasukanMaterial/get_tanggal_terima",
+            type:"POST",
+            dataType:"JSON",
+            data:{id_delivery_note:id_delivery_note},
+            success:function(respond){
+                $("#tgl_masuk").val(respond[0]["tanggal_penerimaan"]);
+            }
+        });
+    }
+</script>
+
+<script>
+    function getSupplier(){
+        $("#supplier").val("");
+        var id_delivery_note = $("#dnnya").val();
+        $.ajax({
+            url:"<?php echo base_url();?>PemasukanMaterial/get_supplier",
+            type:"POST",
+            dataType:"JSON",
+            data:{id_delivery_note:id_delivery_note},
+            success:function(respond){
+                $("#supplier").val(respond[0]["nama_supplier"]);
+            }
+        });
+    }
+</script>
+
+
+<script>
+    function addNewRow(){
+        var counter = document.getElementById("print_row").rows.length;
+        var z;
+        for(z=0; z<counter; z++){
+            document.getElementById("print_row").deleteRow(0);
+        }
+        
+        var id_delivery_note = $("#dnnya").val();
+        $.ajax({
+            url:"<?php echo base_url();?>PemasukanMaterial/get_detail_dn",
+            type:"POST",
+            dataType:"JSON",
+            data:{id_delivery_note:id_delivery_note},
+            success:function(respond){
+                for (cek=0; cek<respond.length; cek++){
+                    html =
+                    '<tr class = "new_row">'+
+                        '<td style="text-align:center">'+
+                            '<input type ="text" name="detailnya'+cek+'" value="'+respond[cek]["id_detail_delivery_note"]+'" readonly>'+
+                            '<input type ="hidden" name="row" value="'+cek+'">'+
+                            (cek+1) +
+                        '</td>'+
+                        '<td class="col-lg-2">'+
+                            '<input class="form-control" type="text" name="kodemat'+cek+'" id="kodemat'+cek+'"'+
+                            'value="'+respond[cek]["kode_sub_jenis_material"]+'" readonly>'+
+                            '<input class="form-control" type="hidden" name="idmat'+cek+'" id="idmat'+cek+'"'+
+                            'value="'+respond[cek]["id_sub_jenis_material"]+'" readonly>'+
+                        '</td>'+
+                        '<td class="col-lg-4">'+
+                            '<input class="form-control" type="text" name="desc'+cek+'" id="desc'+cek+'"'+
+                            'value="'+respond[cek]["nama_jenis_material"]+' '+respond[cek]["nama_sub_jenis_material"]+'" readonly>'+
+                        '</td>'+
+                        '<td class="col-lg-1">'+
+                            '<input class="form-control" type="number" name="jlhminta'+cek+'" id="jlhminta'+cek+'"'+
+                            'value="'+respond[cek]["jumlah_diminta"]+'" readonly>'+
+                        '</td>'+
+                        '<td class="col-lg-1">'+
+                            '<input class="form-control" type="number" name="jlhakt'+cek+'" id="jlhakt'+cek+'" min="0" required>'+
+                        '</td>'+
+                        '<td class="col-lg-2">'+
+                            '<input class="form-control" type="text" name="satuan'+cek+'" id="satuan'+cek+'"'+
+                            'value="'+respond[cek]["satuan_ukuran"]+'" readonly>'+
+                        '</td>'+
+                        '<td class="col-lg-2">'+
+                            '<input class="form-control" type="text" name="remark'+cek+'" id="remark'+cek+'">'+
+                        '</td>'+
+                    '</tr>';
+                    $("#print_row").append(html);
+                }
+            }
+        });        
+    }
+</script>
 
 <script>
     function jenisMaterial(){
@@ -170,7 +246,7 @@
 
 
 <script>
-    $('#dari_supplier').show();
+    /* $('#dari_supplier').show();
     $('#jenis').hide();
     $('#jumlah').hide();
     $('#line').hide();
@@ -218,7 +294,7 @@
             $('.delivery_note').attr('required', false);
             $('.catatan').attr('required', true);
         }
-    });
+    }); */
 </script>
 
 <script>

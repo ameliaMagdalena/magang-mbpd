@@ -9,7 +9,7 @@
     $pdf->SetDisplayMode('real', 'default');
     $pdf->setPrintHeader(true);
       $pdf->setPrintFooter(true);
-    $pdf->AddPage('L','A5'); //orientasi Portrait, ukuran A4
+    $pdf->AddPage('L','A5'); //orientasi landscape, ukuran A4
     
     $fontname = TCPDF_FONTS::addTTFfont('../../../libraries/tcpdf/fonts/tahoma.ttf', 'TrueTypeUnicode', '', 96);
     $pdf->SetFont('Tahoma','', 9); //nama font, , ukuran
