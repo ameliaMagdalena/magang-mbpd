@@ -690,19 +690,29 @@
 									<a>
 										<i class="fa fa-paste" aria-hidden="true"></i>
 										<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
+											<!--
 											<span>Laporan Hasil Produksi</span>
+											-->
 										<?php } else{?>
+											<!--
 											<span>Laporan Hasil Produksi <span class="badge badge-light"><?= $jm_hasprod[0]['jumlah_hasprod']?></span></span>
+											-->
 										<?php } ?>
+										<span>Laporan Hasil Produksi</span>
 									</a>
 									<ul class="nav nav-children">
 										<li>
 											<a href="<?= base_url()?>hasilProduksi/tambah_hasil_produksi">
 												<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
+													<!--
 													<span>+ Laporan Hasil Produksi</span>
+													-->
 												<?php } else{?>
+													<!--
 													<span>+ Laporan Hasil Produksi <span class="badge badge-light"><?= $jm_hasprod[0]['jumlah_hasprod']?></span></span>
+													-->
 												<?php } ?>
+												<span>+ Laporan Hasil Produksi</span>
 											</a>
 										</li>
 										<li>
@@ -1329,19 +1339,29 @@
 									<a>
 										<i class="fa fa-paste" aria-hidden="true"></i>
 										<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
+											<!--
 											<span>Laporan Hasil Produksi</span>
+											-->
 										<?php } else{?>
+											<!--
 											<span>Laporan Hasil Produksi <span class="badge badge-light"><?= $jm_hasprod[0]['jumlah_hasprod']?></span></span>
+											-->
 										<?php } ?>
+										<span>Laporan Hasil Produksi</span>
 									</a>
 									<ul class="nav nav-children">
 										<li>
 											<a href="<?= base_url()?>hasilProduksi/tambah_hasil_produksi">
 												<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
+													<!--
 													<span>+ Laporan Hasil Produksi</span>
+													-->
 												<?php } else{?>
+													<!--
 													<span>+ Laporan Hasil Produksi <span class="badge badge-light"><?= $jm_hasprod[0]['jumlah_hasprod']?></span></span>
+													-->
 												<?php } ?>
+												<span>+ Laporan Hasil Produksi</span>
 											</a>
 										</li>
 										<li>
@@ -2370,19 +2390,29 @@
 								<a>
 									<i class="fa fa-paste" aria-hidden="true"></i>
 									<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
+										<!--
 										<span>Laporan Hasil Produksi</span>
+										-->
 									<?php } else{?>
+										<!--
 										<span>Laporan Hasil Produksi <span class="badge badge-light"><?= $jm_hasprod[0]['jumlah_hasprod']?></span></span>
+										-->
 									<?php } ?>
+									<span>Laporan Hasil Produksi</span>
 								</a>
 								<ul class="nav nav-children">
 									<li>
 										<a href="<?= base_url()?>hasilProduksi/tambah_hasil_produksi">
 											<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
+												<!--
 												<span>+ Laporan Hasil Produksi</span>
+												-->
 											<?php } else{?>
+												<!--
 												<span>+ Laporan Hasil Produksi <span class="badge badge-light"><?= $jm_hasprod[0]['jumlah_hasprod']?></span></span>
+												-->
 											<?php } ?>
+											<span>+ Laporan Hasil Produksi</span>
 										</a>
 									</li>
 									<li>
@@ -2467,19 +2497,29 @@
 								<a>
 									<i class="fa fa-paste" aria-hidden="true"></i>
 									<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
+										<!--
 										<span>Laporan Hasil Produksi</span>
+										-->
 									<?php } else{?>
+										<!--
 										<span>Laporan Hasil Produksi <span class="badge badge-light"><?= $jm_hasprod[0]['jumlah_hasprod']?></span></span>
+										-->
 									<?php } ?>
+									<span>Laporan Hasil Produksi</span>
 								</a>
 								<ul class="nav nav-children">
 									<li>
 										<a href="<?= base_url()?>hasilProduksi/tambah_hasil_produksi">
 											<?php if($jm_hasprod[0]['jumlah_hasprod'] == 0){?>
+												<!--
 												<span>+ Laporan Hasil Produksi</span>
+												-->
 											<?php } else{?>
+												<!--
 												<span>+ Laporan Hasil Produksi <span class="badge badge-light"><?= $jm_hasprod[0]['jumlah_hasprod']?></span></span>
+												-->
 											<?php } ?>
+											<span>+ Laporan Hasil Produksi</span>
 										</a>
 									</li>
 									<li>

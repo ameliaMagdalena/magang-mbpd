@@ -461,8 +461,8 @@ class InventoryLine extends CI_Controller {
             'tanggal'                   => $tanggal,
             'jumlah_material'           => $jumlah_keluar,
             'status'                    => 1,
-            'user_edit'                 => $_SESSION['id_user'],
-            'waktu_edit'                => date('Y-m-d'),
+            'user_add'                  => $_SESSION['id_user'],
+            'waktu_add'                 => date('Y-m-d'),
             'status_delete'             => 0
         );
 

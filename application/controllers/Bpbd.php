@@ -279,6 +279,7 @@ class Bpbd extends CI_Controller {
       'plat_no'                    => $plat_nomor,
       'driver'                     => $driver,
       'keterangan'                 => $keterangan,
+      'status_bpbd'                => 0,
       'user_add'                   => $user,
       'waktu_add'                  => $now,
       'status_delete'              => 0
@@ -1611,8 +1612,8 @@ class Bpbd extends CI_Controller {
 
     $data = array(
       'status_bpbd' => 1,
-      'user_edit'   => $user,
-      'waktu_edit'  => $now
+      'user_edit'   => $_SESSION['id_user'],
+      'waktu_edit'  => date('Y-m-d H:i:s')
     );
 
     $where = array(

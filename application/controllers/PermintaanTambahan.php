@@ -855,7 +855,8 @@ class PermintaanTambahan extends CI_Controller {
                     'keterangan'                    => $keterangan,
                     'status'                        => 0,
                     'user_add'                      => $_SESSION['id_user'],
-                    'waktu_add'                     => $now
+                    'waktu_add'                     => $now,
+                    'status_delete'                 => 0
                 );
 
                 $this->M_PermintaanTambahan->insert('permintaan_tambahan',$data);
