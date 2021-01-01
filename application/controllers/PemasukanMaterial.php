@@ -8,6 +8,8 @@ class PemasukanMaterial extends CI_Controller {
 
         $this->load->model('M_PemasukanMaterial');
         $this->load->model('M_Material');
+        $this->load->model('M_Line');
+        $this->load->model('M_User');
         $this->load->model('M_DeliveryNote');
         $this->load->model('M_Dashboard');
 
@@ -18,7 +20,9 @@ class PemasukanMaterial extends CI_Controller {
 
 	public function index(){
         $data['pemasukan'] = $this->M_PemasukanMaterial->selectPemasukanMaterialAktif()->result_array();
-        $data['material'] = $this->M_Material->selectMaterialAktif()->result_array();
+        $data['materialsup'] = $this->M_Material->selectMaterialSupplierAktif()->result_array();
+        $data['materialline'] = $this->M_Material->selectMaterialLineAktif()->result_array();
+        $data['material'] = $this->M_PemasukanMaterial->selectMaterialAktif()->result_array();
 
         //notif produksi
             //notif permintaan material produksi
@@ -199,12 +203,20 @@ class PemasukanMaterial extends CI_Controller {
 		$this->load->view('v_pemasukan_material', $data);
     }
 
-    public function baru(){
-        $data['pemasukan'] = $this->M_PemasukanMaterial->selectPemasukanMaterialAktif()->result_array();
-        $data['jumlah_pemasukan'] = $this->M_PemasukanMaterial->selectPemasukanMaterialAktif()->num_rows();
-
+    public function pilih_baru(){
+        //pilih: Supplier / Produksi / Lainlain
         $data['dn'] = $this->M_DeliveryNote->selectDeliveryNoteAktif()->result_array();
+	    $this->load->view('v_pemasukan_material_pilih_baru', $data);
+    }
+
+    public function baru(){
+        $data['pilihan'] = $this->input->post("pilihan");
+        $data['pemasukan'] = $this->M_PemasukanMaterial->selectPemasukanMaterialAktif()->result_array();
+
+        $data['dn'] = $this->M_PemasukanMaterial->selectPemasukanDN()->result_array();
         $data['sub_jenis_material'] = $this->M_Material->selectSubJenisMaterialAktif()->result_array();
+        $data['line'] = $this->M_Line->select_all_aktif()->result_array();
+        $data['kary'] = $this->M_User->select_all_aktif()->result_array();
 
         //notif produksi
             //notif permintaan material produksi
@@ -382,31 +394,197 @@ class PemasukanMaterial extends CI_Controller {
             //tutup notif permohonan akses
         //tutup
         
-        $this->load->view('v_pemasukan_material_baru', $data);
+        if($this->input->post('pilihan') == 0){ //dengan dn
+            $this->load->view('v_pemasukan_material_baru', $data);
+        }
+        else if($this->input->post('pilihan') == 1){ //produksi
+            $this->load->view('v_pemasukan_material_baru2', $data);
+        }
+        else{ //lainlain
+            $this->load->view('v_pemasukan_material_baru3', $data);
+        }
     }
 
-    public function tambah_pemasukan(){
-        $id = $this->input->post("id_pemasukan_material");
-        $data = array(
-            "id_pemasukan_material" => $id,
-            "id_sub_jenis_material" => $this->input->post('material'),
-            "tanggal_masuk" => $this->input->post('tgl_masuk'),
-            "jumlah_masuk" => $this->input->post('jumlah'),
-            "keterangan_masuk" => $this->input->post('keterangan'),
-            "user_add"=>$_SESSION['id_user'],
-            "waktu_add"=>date('Y-m-d H:i:s'),
-            "user_edit"=>"0",
-            "user_delete"=>"0"
-        );
-        $this->M_PemasukanMaterial->insertPemasukanMaterial($data);
-        redirect('PemasukanMaterial');
-    }
-
-    public function jenis_material(){
-        $id = $this->input->post("id_supplier");
-        $result = $this->M_PemasukanMaterial->selectHargaProduk($id)->result_array();
+    public function get_tanggal_terima(){
+        $id = $this->input->post("id_delivery_note");
+        $result = $this->M_PemasukanMaterial->selectTanggalTerima($id)->result_array();
         echo json_encode($result);
     }
 
-    
+    public function get_supplier(){
+        $id = $this->input->post("id_delivery_note");
+        $result = $this->M_PemasukanMaterial->selectSupplierDN($id)->result_array();
+        echo json_encode($result);
+    }
+
+    public function get_detail_dn(){
+        $id = array(
+            "id_delivery_note" => $this->input->post("id_delivery_note")
+        );
+        $result = $this->M_DeliveryNote->selectSatuDetailDN($id)->result_array();
+        echo json_encode($result);
+    }
+
+    public function tambah_pemasukan(){
+        $id = $this->M_PemasukanMaterial->selectAllPemasukanMaterial()->num_rows()+1;
+        $pilihan = $this->input->post("pilihan");
+        $darisup = $this->M_Material->selectAllMaterialSupplier()->num_Rows()+1;
+        $line = $this->M_Material->selectAllMaterialLine()->num_Rows()+1;
+        $material = $this->M_Material->selectAllMaterial()->num_Rows()+1;
+        
+
+        if($pilihan == 0){ //dengan dn
+            $wheree = array(
+                "id_delivery_note" => $this->input->post("id_dn")
+            );
+            $dataa = array(
+                "status_pengesahan" => "2",
+                "user_edit"=>$_SESSION['id_user'],
+                "waktu_edit"=>date('Y-m-d H:i:s')
+            );
+            $this->M_DeliveryNote->editDeliveryNote($dataa, $wheree);
+            
+            $row = $this->input->post("row"); //jumlah row-1 / dimulai dari 0
+            for($x=0; $x<=$row; $x++){
+                $aktual = $this->input->post("jlhakt".$x);
+
+                $data = array(
+                    "id_pemasukan_material" => "MASUK-".$id,
+                    "id_sub_jenis_material" => $this->input->post('idmat'.$x),
+                    "tanggal_masuk" => $this->input->post('tgl_masuk'),
+                    "jumlah_masuk" => $aktual,
+                    "keterangan_masuk" => $this->input->post('keterangan'),
+                    "keterangan_lain" => $this->input->post('lain'),
+                    "user_add"=>$_SESSION['id_user'],
+                    "waktu_add"=>date('Y-m-d H:i:s'),
+                    "status_delete"=>"0"
+                );
+                $this->M_PemasukanMaterial->insertPemasukanMaterial($data);
+
+                $where1 = array(
+                    "id_detail_delivery_note" => $this->input->post("detailnya".$x)
+                );
+                $data1 = array(
+                    "jumlah_aktual" => $aktual,
+                    "remark" => $this->input->post("remark".$x),
+                    "user_edit"=>$_SESSION['id_user'],
+                    "waktu_edit"=>date('Y-m-d H:i:s')
+                );
+                $this->M_DeliveryNote->editDetailDeliveryNote($data1, $where1);
+                
+                for($y=0; $y<$aktual; $y++){
+                    $data2 = array(
+                        "id_material" => "MAT-".$material,
+                        "status_keluar" => "0", //masih digudang
+                        "sumber_material" => $this->input->post('keterangan'),
+                        "id_pemasukan_material" => "MASUK-".$id,
+                        "user_add"=>$_SESSION['id_user'],
+                        "waktu_add"=>date('Y-m-d H:i:s'),
+                        "status_delete"=>"0"
+                    );
+                    $this->M_Material->insertMaterial($data2);
+
+                    $data3 = array(
+                        "id_material_supplier" => "MATSUP-".$darisup,
+                        "id_material" => "MAT-".$material,
+                        "id_detail_delivery_note" => $this->input->post("detailnya".$x),
+                        "user_add"=>$_SESSION['id_user'],
+                        "waktu_add"=>date('Y-m-d H:i:s'),
+                        "status_delete"=>"0"
+                    );
+                    $this->M_Material->insertMaterialSupplier($data3);
+
+                    $material = $material+1;
+                    $darisup = $darisup+1;
+                }
+                $id = $id+1;
+            }
+            redirect('PemasukanMaterial');
+        }
+        if($pilihan == 1){ //produksi
+            $row = $this->input->post("row"); //jumlah row-1 / dimulai dari 0
+            for($x=0; $x<=$row; $x++){
+                $aktual = $this->input->post("jlh".$x);
+                $data = array(
+                    "id_pemasukan_material" => "MASUK-".$id,
+                    "id_sub_jenis_material" => $this->input->post('material'.$x),
+                    "tanggal_masuk" => $this->input->post('tgl_masuk'),
+                    "jumlah_masuk" => $aktual,
+                    "keterangan_masuk" => $this->input->post('keterangan'),
+                    "keterangan_lain" => $this->input->post('lain'),
+                    "user_add"=>$_SESSION['id_user'],
+                    "waktu_add"=>date('Y-m-d H:i:s'),
+                    "status_delete"=>"0"
+                );
+                $this->M_PemasukanMaterial->insertPemasukanMaterial($data);
+
+                for($y=0; $y<$aktual; $y++){
+                    $data2 = array(
+                        "id_material" => "MAT-".$material,
+                        "status_keluar" => "0", //masih digudang
+                        "sumber_material" => $this->input->post('keterangan'),
+                        "id_pemasukan_material" => "MASUK-".$id,
+                        "user_add"=>$_SESSION['id_user'],
+                        "waktu_add"=>date('Y-m-d H:i:s'),
+                        "status_delete"=>"0"
+                    );
+                    $this->M_Material->insertMaterial($data2);
+
+                    $data3 = array(
+                        "id_material_line" => "MATLINE-".$line,
+                        "id_material" => "MAT-".$material,
+                        "id_line" => $this->input->post("line"),
+                        "user_add"=>$_SESSION['id_user'],
+                        "waktu_add"=>date('Y-m-d H:i:s'),
+                        "status_delete"=>"0"
+                    );
+                    $this->M_Material->insertMaterialLine($data3);
+                    $material = $material+1;
+                    $line = $line+1;
+                }
+                $id = $id+1;
+            }
+            redirect('PemasukanMaterial');
+        }
+        else{ //lainlain
+            for($x=0; $x<=$row; $x++){
+                $aktual = $this->input->post("jlh".$x);
+                $data = array(
+                    "id_pemasukan_material" => "MASUK-".$id,
+                    "id_sub_jenis_material" => $this->input->post('idmat'.$x),
+                    "tanggal_masuk" => $this->input->post('tgl_masuk'),
+                    "jumlah_masuk" => $aktual,
+                    "keterangan_masuk" => $this->input->post('keterangan'),
+                    "keterangan_lain" => $this->input->post('lain'),
+                    "user_add"=>$_SESSION['id_user'],
+                    "waktu_add"=>date('Y-m-d H:i:s'),
+                    "status_delete"=>"0"
+                );
+                $this->M_PemasukanMaterial->insertPemasukanMaterial($data);
+
+                for($y=0; $y<$aktual; $y++){
+                    $data2 = array(
+                        "id_material" => "MAT-".$material,
+                        "status_keluar" => "0", //masih digudang
+                        "sumber_material" => $this->input->post('keterangan'),
+                        "id_pemasukan_material" => "MASUK-".$id,
+                        "user_add"=>$_SESSION['id_user'],
+                        "waktu_add"=>date('Y-m-d H:i:s'),
+                        "status_delete"=>"0"
+                    );
+                    $this->M_Material->insertMaterial($data2);
+                    $material = $material+1;
+                }
+                $id = $id+1;
+            }
+            redirect('PemasukanMaterial');
+        }
+    }
+
+    public function satuan_ukuran(){
+        $id = $this->input->post("id_sub_jenis_material");
+        $result = $this->M_PemasukanMaterial->selectSatuanUkuran($id)->result_array();
+        echo json_encode($result);
+    }
+
 }

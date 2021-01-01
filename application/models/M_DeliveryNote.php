@@ -29,7 +29,7 @@ class M_DeliveryNote extends CI_Model {
     function selectSatuDeliveryNote($id){
         return $this->db->query("SELECT * FROM delivery_note a
         JOIN supplier b ON a.id_supplier = b.id_supplier
-        WHERE a.status_delete=0 AND a.id_purchase_order_supplier='" . $id['id_purchase_order_supplier'] . "'");
+        WHERE a.status_delete=0 AND a.id_delivery_note='" . $id['id_delivery_note'] . "'");
     }
 
     function insertDeliveryNote($data){
@@ -52,18 +52,19 @@ class M_DeliveryNote extends CI_Model {
         return $this->db->query("SELECT * FROM detail_delivery_note");
     }
 
-    function selectSatuDetailDeliveryNote($id){
+    function selectSatuDetailDN($id){
         return $this->db->query("SELECT * FROM detail_delivery_note a
-        JOIN sub_jenis_material b ON a.id_sub_jenis_material = b.id_sub_jenis_material
-        JOIN jenis_material c ON b.id_jenis_material = c.id_jenis_material
-        JOIN purchase_order_supplier d ON a.id_purchase_order_supplier = d.id_purchase_order_supplier
-        WHERE a.status_delete=0 AND a.id_purchase_order_supplier='" . $id['id_purchase_order_supplier'] . "'");
+        JOIN detail_purchase_order_supplier b ON a.id_detail_purchase_order_supplier = b.id_detail_purchase_order_supplier
+        JOIN sub_jenis_material c ON b.id_sub_jenis_material = c.id_sub_jenis_material
+        JOIN jenis_material d ON c.id_jenis_material = d.id_jenis_material
+        WHERE a.status_delete=0 AND a.id_delivery_note='" . $id['id_delivery_note'] . "'");
     }
     
     function selectDetailDeliveryNoteAktif(){
         return $this->db->query("SELECT * FROM detail_delivery_note a
-        JOIN sub_jenis_material b ON a.id_sub_jenis_material = b.id_sub_jenis_material
-        JOIN jenis_material c ON b.id_jenis_material = c.id_jenis_material
+        JOIN detail_purchase_order_supplier b ON a.id_detail_purchase_order_supplier = b.id_detail_purchase_order_supplier
+        JOIN sub_jenis_material c ON b.id_sub_jenis_material = c.id_sub_jenis_material
+        JOIN jenis_material d ON c.id_jenis_material = d.id_jenis_material
         WHERE a.status_delete=0");
     }
 

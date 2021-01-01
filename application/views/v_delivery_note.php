@@ -24,8 +24,15 @@
 <!--*****************************-->
 <!--KODINGAN ISI HALAMAN-->
 
-
-<h1>Delivery Note</h1>
+<?php if($status==0){?>
+    <h1>Delivery Note - Dalam Proses</h1>
+<?php } else if ($status==1){ ?>
+    <h1>Delivery Note - Selesai</h1>
+<?php } else if ($status==2){ ?>
+    <h1>Delivery Note - Batal / Ditolak</h1>
+<?php } else if ($status==3){ ?>
+    <h1>Delivery Note - Semua</h1>
+<?php } ?>
 <hr>
 
 <?php
@@ -152,7 +159,7 @@ href="<?php if(count($po)==0){
                             <th style="text-align:center" class="col-sm-3">Material</th>
                             <th style="text-align:center" class="col-sm-2">Jumlah</th>
                             <th style="text-align:center" class="col-sm-1">Satuan</th>
-                            <th style="text-align:center" class="col-sm-3">Keterangan</th>
+                            <th style="text-align:center" class="col-sm-3">Remark</th>
                         </tr>
                     </thead>
                     <tbody id = "print_new_row">
@@ -238,8 +245,11 @@ href="<?php if(count($po)==0){
                         <td class="col-lg-3">
                             <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                                 title="Detail" href="<?php echo base_url() . 'DeliveryNote/detail/' . $dn[$x]['id_delivery_note'] ?>"></a>
-                            <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                title="Delete" href="#modalhapus<?php //echo $departemen[$x]['id_departemen'] ?>"></a>
+                            
+                            <?php if($dn[$x]['status_pengesahan'] == 0) { ?>
+                                <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
+                                    title="Delete" href="#modalhapus<?php echo $dn[$x]['id_delivery_note'] ?>"></a>
+                            <?php } ?>
                             
                             <?php if($dn[$x]['status_pengesahan'] == 0 && $_SESSION['nama_departemen']=='Management' && ($_SESSION['nama_jabatan']=='Direktur' || $_SESSION['nama_jabatan']=='Manager')){ ?>
                                 <a class="modal-with-form col-lg-3 btn btn-success fa fa-check"
@@ -279,7 +289,7 @@ href="<?php if(count($po)==0){
                             <?php if ($dn[$x]['status_pengesahan']==3){
                                 echo "Batal";
                             }else if ($dn[$x]['status_pengesahan']==4){
-                                echo "Ditolak";
+                                echo "Persetujuan Ditolak";
                             }
                             ?>
                         </td>
@@ -288,131 +298,104 @@ href="<?php if(count($po)==0){
                                 title="Detail" href="<?php echo base_url() . 'DeliveryNote/detail/' . $dn[$x]['id_delivery_note'] ?>"></a>
                         </td>
                     </tr>
-                <?php }}} ?>
+                <?php }} ?>
+                
+                <!-- ****************************** MODAL DITOLAK ***************************** -->
+                <!-- ************************************************************************** -->
+                <div id='modaltolak<?php echo $dn[$x]['id_delivery_note'] ?>' class="modal-block modal-block-md mfp-hide">
+                    <section class="panel">
+                        <form class="form-horizontal mb-lg" action="<?php echo base_url()?>DeliveryNote/setuju_dn" method="post">
+                            
+                            <header class="panel-heading">
+                                <h2 class="panel-title">Menolak Delivery Note</h2>
+                            </header>
+
+                            <div class="panel-body">
+                                <input type="hidden" name="id_dn" class="form-control" value="<?php echo $dn[$x]['id_delivery_note'] ?>" readonly>
+                                <input type="hidden" name="statusnya" class="form-control" value="4" readonly>
+                                
+                                Apakah anda yakin akan menolak Delivery Note dengan No. DN <b><?php echo $dn[$x]['kode_delivery_note'] ?></b>?
+
+                            </div>
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <input type="submit" class="btn btn-primary" value="Simpan">
+                                        <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </form>
+                    </section>
+                </div>
+                <!-- ***************************** END MODAL DITOLAK ************************** -->
+                <!-- ************************************************************************** -->
+
+                
+
+                <!-- ****************************** MODAL SETUJU ***************************** -->
+                <!-- ************************************************************************** -->
+                <div id='modalsetuju<?php echo $dn[$x]['id_delivery_note'] ?>' class="modal-block modal-block-md mfp-hide">
+                    <section class="panel">
+                        <form class="form-horizontal mb-lg" action="<?php echo base_url()?>DeliveryNote/setuju_dn" method="post">
+                            
+                            <header class="panel-heading">
+                                <h2 class="panel-title">Menyetujui Delivery Note</h2>
+                            </header>
+
+                            <div class="panel-body">
+                                <input type="hidden" name="id_dn" class="form-control" value="<?php echo $dn[$x]['id_delivery_note'] ?>" readonly>
+                                <input type="hidden" name="statusnya" class="form-control" value="1" readonly>
+                                
+                                Anda akan menyetujui Delivery Note dengan No. DN <b><?php echo $dn[$x]['kode_delivery_note'] ?></b>.
+
+                            </div>
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <input type="submit" class="btn btn-primary" value="Simpan">
+                                        <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </form>
+                    </section>
+                </div>
+                <!-- ***************************** END MODAL SETUJU *************************** -->
+                <!-- ************************************************************************** -->
+
+                <!-- ******************************* MODAL HAPUS ****************************** -->
+                <!-- ************************************************************************** -->
+                <div id='modalhapus<?php echo $dn[$x]['id_delivery_note'] ?>' class="modal-block modal-block-primary mfp-hide">
+                    <section class="panel">
+                        <form class="form-horizontal mb-lg" action="<?php echo base_url()."DeliveryNote/hapus"?>" method="post">
+                            <header class="panel-heading">
+                                <h2 class="panel-title">Hapus Data Delivery Note</h2>
+                            </header>
+
+                            <input type="hidden" name="id_dn" class="form-control" value="<?php echo $dn[$x]['id_delivery_note'] ?>" readonly>
+                            <div class="panel-body" style="color: black">
+                                Apakah anda yakin akan menghapus data Delivery Note <?php echo $dn[$x]['kode_delivery_note']?>?
+                            </div>
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <input type="submit" id="hapus" class="btn btn-danger" value="Hapus">
+                                        <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </form>
+                    </section>
+                </div>
+                <!-- ***************************** END MODAL HAPUS **************************** -->
+                <!-- ************************************************************************** -->
+
+                <?php } ?>
             </tbody>
         </table>
     </div>
-
-
-    <!-- ****************************** MODAL DETAIL ****************************** -->
-    <!-- ************************************************************************** -->
-    <div id='modaldetail<?php //echo $departemen[$x]['id_departemen']?>' class="modal-block modal-block-lg mfp-hide">
-        <section class="panel">
-            <header class="panel-heading">
-                <h2 class="panel-title">Detail Data Delivery Note</h2>
-            </header>
-
-            <div class="panel-body">
-                <input type="hidden" name="id_dn" class="form-control" value="DN-<?php //echo $jumlah_delivery_note + 1?>" readonly>
-                
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">Nomor DN</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" value="DN-1/100/20" readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">Customer</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" name="customer" id="customer" readonly>
-                            <option value="">PT AAA</option>
-                            <option value="">INOAC</option>
-                            <option value="">dll</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">Supplier</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" name="customer" id="customer" readonly>
-                            <option value="">PT AAA</option>
-                            <option value="">INOAC</option>
-                            <option value="">dll</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">Tgl Pengiriman</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" value="2 Juli 2020" readonly>
-                    </div>
-                </div>
-                <br>
-                <table class="table table-bordered table-striped mb-none" id="datatable-default">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Nama Material</th>
-                            <th>Kode Material</th>
-                            <th>Jumlah</th>
-                            <th>Satuan</th>
-                            <th>Keterangan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>FOAM A</td>
-                            <td>MAT123</td>
-                            <td>10</td>
-                            <td>pc</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Benang</td>
-                            <td>MAT121</td>
-                            <td>100</td>
-                            <td>meter</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Kain</td>
-                            <td>MAT163</td>
-                            <td>100</td>
-                            <td>meter kuadrat</td>
-                            <td>-</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <br>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">Dibuat Oleh </label>
-                    <div class="col-sm-9">
-                        <input type="text" name="dibuat" class="form-control"
-                        value="Sara - Operator Gudang Material" readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">Disetujui Oleh </label>
-                    <div class="col-sm-9">
-                        <input type="text" name="dibuat" class="form-control"
-                        value="Amel - Manager" readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">Status</label>
-                    <div class="col-sm-9">
-                        <input type="text" name="dibuat" class="form-control"
-                        value="Selesai" readonly>
-                    </div>
-                </div>
-                <br>
-            </div>
-            <footer class="panel-footer">
-                <div class="row">
-                    <div class="col-md-12 text-right">
-                        <button type="button" class="btn btn-default modal-dismiss">OK</button>
-                    </div>
-                </div>
-            </footer>
-        </section>
-    </div>
-    <!-- **************************** END MODAL DETAIL **************************** -->
-    <!-- ************************************************************************** -->
-
+    
 
     <!-- ******************************* MODAL EDIT ******************************* -->
     <!-- ************************************************************************** -->
@@ -533,31 +516,6 @@ href="<?php if(count($po)==0){
     <!-- ************************************************************************** -->
 
 
-    <!-- ******************************* MODAL HAPUS ****************************** -->
-    <!-- ************************************************************************** -->
-    <div id='modalhapus<?php //echo $departemen[$x]['id_departemen']?>' class="modal-block modal-block-primary mfp-hide">
-        <section class="panel">
-            <form class="form-horizontal mb-lg" action="<?php //echo base_url()."departemen/hapus_departemen"?>" method="post">
-                <header class="panel-heading">
-                    <h2 class="panel-title">Hapus Data Delivery Note</h2>
-                </header>
-
-                <div class="panel-body" style="color: black">
-                    Apakah anda yakin akan menghapus data Delivery Note <?php //echo $departemen[$x]['nama_departemen']?>?
-                </div>
-                <footer class="panel-footer">
-                    <div class="row">
-                        <div class="col-md-12 text-right">
-                            <input type="submit" id="tambah" class="btn btn-danger" value="Hapus">
-                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
-                        </div>
-                    </div>
-                </footer>
-            </form>
-        </section>
-    </div>
-    <!-- ***************************** END MODAL HAPUS **************************** -->
-    <!-- ************************************************************************** -->
 
 
 </section>

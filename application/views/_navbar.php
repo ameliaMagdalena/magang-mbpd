@@ -421,7 +421,7 @@
 								</a>
 								<ul class="nav nav-children">
 									<li>
-										<a href="<?php echo base_url() . 'PemasukanMaterial/baru'?>">
+										<a href="<?php echo base_url() . 'PemasukanMaterial/pilih_baru'?>">
 											Buat Baru
 										</a>
 									</li>
@@ -442,14 +442,6 @@
 									<li>
 										<a href="<?php echo base_url() . 'PengeluaranMaterial/baru'?>">
 											Buat Baru
-										</a>
-									</li>
-									<li>
-										<a href="<?php echo base_url() . 'PengeluaranMaterial/jadwal'?>">
-											Jadwal Pengeluaran Material
-											<!-- mis. hari ini ada yg mau dikeluarkan.
-											tunggu dari produksi kirim form pengambilan
-											baru bisa edit material sudah keluar -->
 										</a>
 									</li>
 									<li>

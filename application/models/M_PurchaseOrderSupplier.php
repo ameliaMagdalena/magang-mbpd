@@ -109,6 +109,8 @@ class M_PurchaseOrderSupplier extends CI_Model {
         WHERE a.status_delete=0 AND b.status_delete=0 AND b.id_sub_jenis_material='$id'");
     }
 
+
+    
     function selectSatuanUkuran($id){
         return $this->db->query("SELECT satuan_ukuran FROM sub_jenis_material
         WHERE status_delete=0 AND id_sub_jenis_material='$id'");
