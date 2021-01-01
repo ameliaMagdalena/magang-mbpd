@@ -744,11 +744,6 @@
 									</a>
 									<ul class="nav nav-children">
 										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>+ Laporan Perencanaan Cutting </span>
-											</a>
-										</li>
-										<li>
 											<a href="<?= base_url()?>laporanPerencanaanCutting/semua">
 												<span>Semua</span>
 											</a>
@@ -1393,11 +1388,6 @@
 									</a>
 									<ul class="nav nav-children">
 										<li>
-											<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-												<span>+ Laporan Perencanaan Cutting </span>
-											</a>
-										</li>
-										<li>
 											<a href="<?= base_url()?>laporanPerencanaanCutting/semua">
 												<span>Semua</span>
 											</a>
@@ -1878,7 +1868,11 @@
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-files-o" aria-hidden="true"></i>
-									<span>Laporan Perencanaan Cutting</span>
+									<?php if($jm_percut[0]['jumlah_percut'] == 0){?>
+										<span>Laporan Perencanaan Cutting</span>
+									<?php } else{?>
+										<span>Laporan Perencanaan Cutting <span class="badge badge-light"><?= $jm_percut[0]['jumlah_percut']?></span></span>
+									<?php } ?>
 								</a>
 								<ul class="nav nav-children">
 									<li>
@@ -1888,12 +1882,20 @@
 									</li>
 									<li>
 										<a href="<?= base_url()?>laporanPerencanaanCutting/belum_ada">
-											<span>Belum Ada Laporan </span>
+											<?php if($jm_percut_0[0]['jumlah_percut'] == 0){?>
+												<span>Belum Ada Laporan</span>
+											<?php } else{?>
+												<span>Belum Ada Laporan <span class="badge badge-light"><?= $jm_percut_0[0]['jumlah_percut']?></span></span>
+											<?php } ?>
 										</a>
 									</li>
 									<li>
 										<a href="<?= base_url()?>laporanPerencanaanCutting/sudah_ada">
-											<span>Sudah Ada Laporan</span>
+											<?php if($jm_percut_1[0]['jumlah_percut'] == 0){?>
+												<span>Sudah Ada Laporan</span>
+											<?php } else{?>
+												<span>Sudah Ada Laporan <span class="badge badge-light"><?= $jm_percut_1[0]['jumlah_percut']?></span></span>
+											<?php } ?>
 										</a>
 									</li>
 									<li>
@@ -2550,11 +2552,6 @@
 									<?php } ?>
 								</a>
 								<ul class="nav nav-children">
-									<li>
-										<a href="<?= base_url()?>laporanPerencanaanCutting/index">
-											<span>+ Laporan Perencanaan Cutting </span>
-										</a>
-									</li>
 									<li>
 										<a href="<?= base_url()?>laporanPerencanaanCutting/semua">
 											<span>Semua</span>

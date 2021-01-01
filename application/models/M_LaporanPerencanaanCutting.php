@@ -66,7 +66,7 @@ class M_LaporanPerencanaanCutting extends CI_Model {
         return $this->db->query("SELECT permintaan_material.id_line,permintaan_material.id_detail_purchase_order_customer,
         detail_permintaan_material.id_konsumsi_material,SUM(pengambilan_material.jumlah_ambil) as total_keluar 
         FROM permintaan_material,detail_permintaan_material,pengambilan_material,detail_purchase_order_customer,detail_produk
-        WHERE permintaan_material.tanggal_produksi='$tanggal_produksi' AND pengambilan_material.status_delete='0'
+        WHERE permintaan_material.tanggal_produksi='$tanggal_produksi' AND pengambilan_material.status_delete='0' 
         AND pengambilan_material.status_pengambilan='0' AND pengambilan_material.status_permintaan='0' AND pengambilan_material.status_keluar='1'
         AND permintaan_material.id_permintaan_material=detail_permintaan_material.id_permintaan_material
         AND detail_permintaan_material.id_detail_permintaan_material=pengambilan_material.id_detail_permintaan_material
