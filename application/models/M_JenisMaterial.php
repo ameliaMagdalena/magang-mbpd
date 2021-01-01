@@ -66,8 +66,9 @@ class M_JenisMaterial extends CI_Model {
 
     function selectMaterial(){
         return $this->db->query("SELECT * FROM material a
-        JOIN sub_jenis_material b ON a.id_sub_jenis_material=b.id_sub_jenis_material
-        JOIN jenis_material c ON b.id_jenis_material = c.id_jenis_material
+        JOIN pemasukan_material b ON a.id_pemasukan_material = b.id_pemasukan_material
+        JOIN sub_jenis_material c ON b.id_sub_jenis_material = c.id_sub_jenis_material
+        JOIN jenis_material d ON c.id_jenis_material = d.id_jenis_material
         WHERE a.status_delete=0");
     }
 

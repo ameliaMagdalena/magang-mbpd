@@ -6,11 +6,22 @@ class PengeluaranMaterial extends CI_Controller {
         parent::__construct();
         date_default_timezone_set('Asia/Jakarta');
 
+        $this->load->model('M_PengeluaranMaterial');
+        $this->load->model('M_Material');
+        $this->load->model('M_Line');
+        $this->load->model('M_User');
+        $this->load->model('M_DeliveryNote');
         $this->load->model('M_Dashboard');
+
+        if($this->session->userdata('status_login') != "login"){
+            redirect('akses');
+        }
 
     }
 
 	public function index(){
+        $data['pemasukan'] = $this->M_PemasukanMaterial->selectPemasukanMaterialAktif()->result_array();
+        $data['material'] = $this->M_PemasukanMaterial->selectMaterialAktif()->result_array();
 
         //notif produksi
           //notif permintaan material produksi

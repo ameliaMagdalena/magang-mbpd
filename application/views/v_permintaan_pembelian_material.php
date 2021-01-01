@@ -151,7 +151,7 @@
                                     <input type="text" name="status" class="form-control"
                                         value="<?php $ketersediaan = 0;
                                             for($mat=0; $mat<count($material); $mat++){
-                                                if($detail[$y]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
+                                                if($detail[$x]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
                                                     $ketersediaan = $ketersediaan+1;
                                                 }
                                             }
@@ -415,7 +415,7 @@
                                     <input type="text" name="status" class="form-control"
                                         value="<?php $ketersediaan = 0;
                                             for($mat=0; $mat<count($material); $mat++){
-                                                if($detail[$y]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
+                                                if($detail[$x]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
                                                     $ketersediaan = $ketersediaan+1;
                                                 }
                                             }
@@ -575,7 +575,7 @@
                                     <input type="text" name="status" class="form-control"
                                         value="<?php $ketersediaan = 0;
                                             for($mat=0; $mat<count($material); $mat++){
-                                                if($detail[$y]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
+                                                if($detail[$x]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
                                                     $ketersediaan = $ketersediaan+1;
                                                 }
                                             }
@@ -741,7 +741,7 @@
                                     <input type="text" name="status" class="form-control"
                                         value="<?php $ketersediaan = 0;
                                             for($mat=0; $mat<count($material); $mat++){
-                                                if($detail[$y]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
+                                                if($detail[$x]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
                                                     $ketersediaan = $ketersediaan+1;
                                                 }
                                             }
@@ -929,7 +929,7 @@
                                     <input type="text" name="status" class="form-control"
                                         value="<?php $ketersediaan = 0;
                                             for($mat=0; $mat<count($material); $mat++){
-                                                if($detail[$y]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
+                                                if($detail[$x]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
                                                     $ketersediaan = $ketersediaan+1;
                                                 }
                                             }

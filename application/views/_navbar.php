@@ -406,11 +406,11 @@
 											Semua
 										</a>
 									</li>
-									<li>
+									<!-- <li>
 										<a href="<?php echo base_url() . 'PengambilanMaterial/jadwal'?>">
 											Jadwal Pengambilan
 										</a>
-									</li>
+									</li> -->
 								</ul>
 							</li>
 
@@ -439,11 +439,11 @@
 									<span>Pengeluaran Material</span>
 								</a>
 								<ul class="nav nav-children">
-									<li>
+									<!--<li>
 										<a href="<?php echo base_url() . 'PengeluaranMaterial/baru'?>">
 											Buat Baru
 										</a>
-									</li>
+									</li> -->
 									<li>
 										<a href="<?php echo base_url() . 'PengeluaranMaterial'?>">
 											Daftar Material Keluar

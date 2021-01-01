@@ -35,7 +35,7 @@
 
 			<div class="panel-body">
                 <input type="hidden" name="pilihan" class="form-control" value="<?= $pilihan ?>" readonly>
-                <input type="hidden" name="keterangan" class="form-control" value="0" readonly>
+                <input type="hidden" name="keterangan" class="form-control" value="1" readonly>
                 <input type="hidden" name="lain" class="form-control" value="" readonly>
 					
                 <div class="form-group mt-lg">

@@ -2,12 +2,12 @@
 <?php
     $pdf = new Pdf_oc('P', 'mm', 'A4', true, 'UTF-8', false);
     $pdf->SetTitle('Sales Order');
-    $pdf->SetTopMargin(15);
+    $pdf->SetTopMargin(7);
     $pdf->setFooterMargin(20);
-    $pdf->SetAutoPageBreak(true,22);
+    $pdf->SetAutoPageBreak(true,20);
     $pdf->SetAuthor('Author');
     $pdf->SetDisplayMode('real', 'default');
-    $pdf->setPrintHeader(true);
+    $pdf->setPrintHeader(false);
       $pdf->setPrintFooter(true);
     $pdf->AddPage('L','A5'); //orientasi landscape, ukuran A4
     
@@ -25,6 +25,11 @@
             $content = $content .'
 
                 <table width="100%">
+                    <tr>
+                        <td colspan="6">
+                            <img src="' . base_url(). 'assets/images/logombp.png" alt="mbp_logo" width="40px">
+                        </td>
+                    </tr>
                     <tr>
                         <td colspan="6" style="text-align:center; font-size:15pt;">
                             <b><u>SALES ORDER</u></b><br>

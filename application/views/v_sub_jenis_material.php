@@ -356,13 +356,17 @@
                                         </div>
                                         <div class="form-group mt-lg">
                                             <label class="col-sm-4 control-label">Sumber<span class="required">*</span></label>
-                                            <div class="col-sm-7">
-                                                <select class="form-control" name="sumber" required>
-                                                    <option value="0" <?php if ($sub_jenis[$y]['sumber'] == 0){ echo "selected"; } ?>>Supplier</option>
-                                                    <option value="1" <?php if ($sub_jenis[$y]['sumber'] == 1){ echo "selected"; } ?>>WIP Line Cutting</option>
-                                                    <option value="2" <?php if ($sub_jenis[$y]['sumber'] == 2){ echo "selected"; } ?>>WIP Line Bonding</option>
-                                                    <option value="3" <?php if ($sub_jenis[$y]['sumber'] == 3){ echo "selected"; } ?>>WIP Line Sewing</option>
-                                                </select>
+                                            <div class="col-sm-8">
+                                                <?php if($jenis_material[0]['sumber_material']==0){?>
+                                                    <input type="text" class="form-control" value="Supplier" readonly>
+                                                    <input type="hidden" name="sumber" value="0" readonly>
+                                                <?php } else{ ?>
+                                                    <select class="form-control" name="sumber" required>
+                                                        <option value="1" <?php if ($sub_jenis[$y]['sumber'] == 1){ echo "selected"; } ?>>WIP Line Cutting</option>
+                                                        <option value="2" <?php if ($sub_jenis[$y]['sumber'] == 2){ echo "selected"; } ?>>WIP Line Bonding</option>
+                                                        <option value="3" <?php if ($sub_jenis[$y]['sumber'] == 3){ echo "selected"; } ?>>WIP Line Sewing</option>
+                                                    </select>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                         <div class="form-group mt-lg">
