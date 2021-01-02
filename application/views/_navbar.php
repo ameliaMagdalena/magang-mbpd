@@ -113,18 +113,13 @@
 											Jenis Material
 										</a>
 									</li>
-									<li>
-										<a href="<?php echo base_url() . 'Material'?>">
-											Material
-										</a>
-									</li>
 								</ul>
 							</li>
 
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-check-circle" aria-hidden="true"></i>
-									<span>Persetujuan <span class="badge badge-light">10</span></span> <!-- butuh persetujuan -->
+									<span>Persetujuan</span> <!-- butuh persetujuan -->
 								</a>
 								<ul class="nav nav-children">
 									<li>
@@ -140,6 +135,13 @@
 								</ul>
 							</li>
 
+							<li>
+								<a href="<?php echo base_url() . 'Material'?>">
+									<i class="fa fa-archive" aria-hidden="true"></i>
+									<span> Material </span>
+								</a>
+							</li>
+									
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-list" aria-hidden="true"></i>
@@ -219,11 +221,6 @@
 											<span>Permintaan Material</span>
 										</a>
 										<ul class="nav nav-children">
-											<li>
-												<a href="<?php echo base_url() . 'PermintaanMaterial/baru/produk'?>">
-													+ Permintaan Material
-												</a>
-											</li>
 											<li>
 												<a href="<?php echo base_url() . 'PermintaanMaterial/index/0'?>">
 													Belum Ditinjau <span class="badge badge-light">1</span>
@@ -316,7 +313,7 @@
 											</li>
 										</ul>
 									</li>
-									<li class="nav-parent">
+									<!-- <li class="nav-parent">
 										<a title="Pengambilan Material Produksi">
 											<span>Pengambilan Material Produksi</span>
 										</a>
@@ -337,7 +334,7 @@
 												</a>
 											</li>
 										</ul>
-									</li>
+									</li> -->
 								</ul>
 							</li>
 
@@ -406,11 +403,11 @@
 											Semua
 										</a>
 									</li>
-									<li>
+									<!-- <li>
 										<a href="<?php echo base_url() . 'PengambilanMaterial/jadwal'?>">
 											Jadwal Pengambilan
 										</a>
-									</li>
+									</li> -->
 								</ul>
 							</li>
 
@@ -439,11 +436,11 @@
 									<span>Pengeluaran Material</span>
 								</a>
 								<ul class="nav nav-children">
-									<li>
+									<!--<li>
 										<a href="<?php echo base_url() . 'PengeluaranMaterial/baru'?>">
 											Buat Baru
 										</a>
-									</li>
+									</li> -->
 									<li>
 										<a href="<?php echo base_url() . 'PengeluaranMaterial'?>">
 											Daftar Material Keluar
@@ -1095,9 +1092,334 @@
 											Warna Produk
 										</a>
 									</li>
+									<li>
+										<a href="<?php echo base_url() . 'JenisMaterial'?>">
+											Jenis Material
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'Customer'?>">
+											Customer
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'Supplier'?>">
+											Supplier
+										</a>
+									</li>
 								</ul>
 							</li>
-							
+
+							<!-- material -->
+							<li>
+								<a href="<?php echo base_url() . 'Material'?>">
+									<i class="fa fa-archive" aria-hidden="true"></i>
+									<span> Material </span>
+								</a>
+							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-list" aria-hidden="true"></i>
+									<span>Purchase Order Customer</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/baru'?>">
+											Buat Baru
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/index/0'?>">
+											Dalam Proses
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/index/1'?>">
+											Selesai
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/index/2'?>">
+											Batal
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/index/3'?>">
+											Semua
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-list" aria-hidden="true"></i>
+									<span>Purchase Order Supplier</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/pilih_baru'?>">
+											Buat Baru
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/index/0'?>">
+											Dalam Proses
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/index/1'?>">
+											Selesai
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/index/2'?>">
+											Batal
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/index/3'?>">
+											Semua
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-file-text" aria-hidden="true"></i>
+									<span>Perencanaan Material</span>
+								</a>
+								<ul class="nav nav-children">
+									<li class="nav-parent">
+										<a title="Permintaan Material">
+											<span>Permintaan Material</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/0'?>">
+													Belum Ditinjau <span class="badge badge-light">1</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/1'?>">
+													Sedang Proses
+													<!-- disetujui / proses beli / belum diambil -->
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/2'?>">
+													Selesai
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/3'?>">
+													Batal
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/4'?>">
+													Semua
+												</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a title="Permintaan Material">
+											<span>Perubahan Permintaan</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/0'?>">
+													Belum Ditinjau <span class="badge badge-light">1</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/1'?>">
+													Disetujui
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/2'?>">
+													Tidak Disetujui
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/3'?>">
+													Batal
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/4'?>">
+													Semua
+												</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a title="Permintaan Material">
+											<span>Permintaan Material Tambahan</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/0'?>">
+													Belum Ditinjau <span class="badge badge-light">1</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/1'?>">
+													Disetujui
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/2'?>">
+													Tidak Disetujui
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/3'?>">
+													Batal
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/4'?>">
+													Semua
+												</a>
+											</li>
+										</ul>
+									</li>
+									<!-- <li class="nav-parent">
+										<a title="Pengambilan Material Produksi">
+											<span>Pengambilan Material Produksi</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'PerencanaanMaterial/index/1'?>">
+													Pengambilan Hari Ini <span class="badge badge-light">2</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PerencanaanMaterial/index/1'?>">
+													Semua Pengambilan <span class="badge badge-light">5</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/jadwal'?>">
+													Jadwal Pengambilan
+												</a>
+											</li>
+										</ul>
+									</li> -->
+								</ul>
+							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+									<span>Permintaan Pembelian</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/baru'?>">
+											+ Request Baru
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/0'?>">
+											Belum Ditindaklanjuti
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/1'?>">
+											Dalam Proses
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/2'?>">
+											Selesai
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/3'?>">
+											Batal
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/4'?>">
+											Semua
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-truck" aria-hidden="true"></i>
+									<span>Delivery Note</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?php echo base_url() . 'DeliveryNote/index/0'?>">
+											Dalam Proses
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'DeliveryNote/index/1'?>">
+											Selesai
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'DeliveryNote/index/2'?>">
+											Batal / Ditolak
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'DeliveryNote/index/3'?>">
+											Semua
+										</a>
+									</li>
+									<!-- <li>
+										<a href="<?php echo base_url() . 'PengambilanMaterial/jadwal'?>">
+											Jadwal Pengambilan
+										</a>
+									</li> -->
+								</ul>
+							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-sign-in" aria-hidden="true"></i>
+									<span>Pemasukan Material</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?php echo base_url() . 'PemasukanMaterial/pilih_baru'?>">
+											Buat Baru
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PemasukanMaterial'?>">
+											Daftar Material Masuk
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-sign-out" aria-hidden="true"></i>
+									<span>Pengeluaran Material</span>
+								</a>
+								<ul class="nav nav-children">
+									<!--<li>
+										<a href="<?php echo base_url() . 'PengeluaranMaterial/baru'?>">
+											Buat Baru
+										</a>
+									</li> -->
+									<li>
+										<a href="<?php echo base_url() . 'PengeluaranMaterial'?>">
+											Daftar Material Keluar
+											<!-- material yg sudah keluar -->
+										</a>
+									</li>
+								</ul>
+							</li>
+
+
 							<!-- produksi -->
 								<!-- persediaan line -->
 								<li>
@@ -2009,6 +2331,270 @@
 						<?php }?>
 					<!--  -->
 
+					<!-- PPIC Material -->
+						<?php if(($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material")){?>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-database" aria-hidden="true"></i>
+									<span>Master Data</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?php echo base_url() . 'JenisMaterial'?>">
+											Jenis Material
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'Supplier'?>">
+											Supplier
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a href="<?php echo base_url() . 'Material'?>">
+									<i class="fa fa-archive" aria-hidden="true"></i>
+									<span> Material </span>
+								</a>
+							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-file-text" aria-hidden="true"></i>
+									<span>Perencanaan Material</span>
+								</a>
+								<ul class="nav nav-children">
+									<li class="nav-parent">
+										<a title="Permintaan Material">
+											<span>Permintaan Material</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/0'?>">
+													Belum Ditinjau <span class="badge badge-light">1</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/1'?>">
+													Sedang Proses
+													<!-- disetujui / proses beli / belum diambil -->
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/2'?>">
+													Selesai
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/3'?>">
+													Batal
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/4'?>">
+													Semua
+												</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a title="Permintaan Material">
+											<span>Perubahan Permintaan</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/0'?>">
+													Belum Ditinjau <span class="badge badge-light">1</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/1'?>">
+													Disetujui
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/2'?>">
+													Tidak Disetujui
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/3'?>">
+													Batal
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/4'?>">
+													Semua
+												</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a title="Permintaan Material">
+											<span>Permintaan Material Tambahan</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/0'?>">
+													Belum Ditinjau <span class="badge badge-light">1</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/1'?>">
+													Disetujui
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/2'?>">
+													Tidak Disetujui
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/3'?>">
+													Batal
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/4'?>">
+													Semua
+												</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a title="Pengambilan Material Produksi">
+											<span>Pengambilan Material Produksi</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'PerencanaanMaterial/index/1'?>">
+													Pengambilan Hari Ini <span class="badge badge-light">2</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PerencanaanMaterial/index/1'?>">
+													Semua Pengambilan <span class="badge badge-light">5</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/jadwal'?>">
+													Jadwal Pengambilan
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+									<span>Permintaan Pembelian</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/baru'?>">
+											+ Request Baru
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/0'?>">
+											Belum Ditindaklanjuti
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/1'?>">
+											Dalam Proses
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/2'?>">
+											Selesai
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/3'?>">
+											Batal
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/4'?>">
+											Semua
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-truck" aria-hidden="true"></i>
+									<span>Delivery Note</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?php echo base_url() . 'DeliveryNote/index/0'?>">
+											Dalam Proses
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'DeliveryNote/index/1'?>">
+											Selesai
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'DeliveryNote/index/2'?>">
+											Batal / Ditolak
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'DeliveryNote/index/3'?>">
+											Semua
+										</a>
+									</li>
+									<!-- <li>
+										<a href="<?php echo base_url() . 'PengambilanMaterial/jadwal'?>">
+											Jadwal Pengambilan
+										</a>
+									</li> -->
+								</ul>
+							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-sign-in" aria-hidden="true"></i>
+									<span>Pemasukan Material</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?php echo base_url() . 'PemasukanMaterial/pilih_baru'?>">
+											Buat Baru
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PemasukanMaterial'?>">
+											Daftar Material Masuk
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-sign-out" aria-hidden="true"></i>
+									<span>Pengeluaran Material</span>
+								</a>
+								<ul class="nav nav-children">
+									<!--<li>
+										<a href="<?php echo base_url() . 'PengeluaranMaterial/baru'?>">
+											Buat Baru
+										</a>
+									</li> -->
+									<li>
+										<a href="<?php echo base_url() . 'PengeluaranMaterial'?>">
+											Daftar Material Keluar
+											<!-- material yg sudah keluar -->
+										</a>
+									</li>
+								</ul>
+							</li>
+						<?php }?>
+					<!--  -->
+
 					<!-- PIC -->
 						<?php if(($_SESSION['nama_jabatan'] == "PIC Line Cutting") && ($_SESSION['nama_departemen'] == "Produksi") || 
 								($_SESSION['nama_jabatan'] == "PIC Line Bonding") && ($_SESSION['nama_departemen'] == "Produksi") || 
@@ -2629,6 +3215,25 @@
 
 					<!-- Admin Finance -->
 						<?php if(($_SESSION['nama_jabatan'] == "Admin") && ($_SESSION['nama_departemen'] == "Purchasing") ){?>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-database" aria-hidden="true"></i>
+									<span>Master Data</span>
+								</a>
+								<ul class="nav nav-children">
+								<li>
+									<li>
+										<a href="<?php echo base_url() . 'Customer'?>">
+											Customer
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'Supplier'?>">
+											Supplier
+										</a>
+									</li>
+								</ul>
+							</li>
 							<!-- rekening -->
 							<li>
 								<a href="<?= base_url()?>rekening">
@@ -2636,6 +3241,109 @@
 									Rekening
 								</a>
 							</li>
+							<!-- PO customer -->
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-list" aria-hidden="true"></i>
+									<span>Purchase Order Customer</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/baru'?>">
+											Buat Baru
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/index/0'?>">
+											Dalam Proses
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/index/1'?>">
+											Selesai
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/index/2'?>">
+											Batal
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/index/3'?>">
+											Semua
+										</a>
+									</li>
+								</ul>
+							</li>
+							<!-- PO supplier -->
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-list" aria-hidden="true"></i>
+									<span>Purchase Order Supplier</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/pilih_baru'?>">
+											Buat Baru
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/index/0'?>">
+											Dalam Proses
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/index/1'?>">
+											Selesai
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/index/2'?>">
+											Batal
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/index/3'?>">
+											Semua
+										</a>
+									</li>
+								</ul>
+							</li>
+							<!-- permintaan pembelian -->
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+									<span>Permintaan Pembelian</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/0'?>">
+											Belum Ditindaklanjuti
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/1'?>">
+											Dalam Proses
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/2'?>">
+											Selesai
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/3'?>">
+											Batal
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/4'?>">
+											Semua
+										</a>
+									</li>
+								</ul>
+							</li>
+
 							<!-- perencanaan produksi 
 							<li>
 								<a title="Perencanaan Produksi" href="<?= base_url()?>perencanaanProduksi/semua_perencanaan_produksi">
@@ -2729,6 +3437,227 @@
 							</li>
 						<?php }?>
 					<!--  -->
+
+					<!-- Operator Gudang -->
+					<?php
+							if ($_SESSION['nama_departemen']=="Material" && $_SESSION['nama_jabatan']=="Operator Gudang"){
+						?>
+							<li>
+								<a href="<?php echo base_url() . 'JenisMaterial'?>">
+									<i class="fa fa-archive" aria-hidden="true"></i>
+									<span> Jenis Material </span>
+								</a>
+							</li>
+							<li>
+								<a href="<?php echo base_url() . 'Material'?>">
+									<i class="fa fa-archive" aria-hidden="true"></i>
+									<span> Material </span>
+								</a>
+							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-file-text" aria-hidden="true"></i>
+									<span>Perencanaan Material</span>
+								</a>
+								<ul class="nav nav-children">
+									<li class="nav-parent">
+										<a title="Permintaan Material">
+											<span>Permintaan Material</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/0'?>">
+													Belum Ditinjau <span class="badge badge-light">1</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/1'?>">
+													Sedang Proses
+													<!-- disetujui / proses beli / belum diambil -->
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/2'?>">
+													Selesai
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/3'?>">
+													Batal
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/4'?>">
+													Semua
+												</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a title="Permintaan Material">
+											<span>Perubahan Permintaan</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/0'?>">
+													Belum Ditinjau <span class="badge badge-light">1</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/1'?>">
+													Disetujui
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/2'?>">
+													Tidak Disetujui
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/3'?>">
+													Batal
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/index/4'?>">
+													Semua
+												</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a title="Permintaan Material">
+											<span>Permintaan Material Tambahan</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/0'?>">
+													Belum Ditinjau <span class="badge badge-light">1</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/1'?>">
+													Disetujui
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/2'?>">
+													Tidak Disetujui
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/3'?>">
+													Batal
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanTambahan/index/4'?>">
+													Semua
+												</a>
+											</li>
+										</ul>
+									</li>
+									<!-- <li class="nav-parent">
+										<a title="Pengambilan Material Produksi">
+											<span>Pengambilan Material Produksi</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'PerencanaanMaterial/index/1'?>">
+													Pengambilan Hari Ini <span class="badge badge-light">2</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PerencanaanMaterial/index/1'?>">
+													Semua Pengambilan <span class="badge badge-light">5</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/jadwal'?>">
+													Jadwal Pengambilan
+												</a>
+											</li>
+										</ul>
+									</li> -->
+								</ul>
+							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-truck" aria-hidden="true"></i>
+									<span>Delivery Note</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?php echo base_url() . 'DeliveryNote/index/0'?>">
+											Dalam Proses
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'DeliveryNote/index/1'?>">
+											Selesai
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'DeliveryNote/index/2'?>">
+											Batal / Ditolak
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'DeliveryNote/index/3'?>">
+											Semua
+										</a>
+									</li>
+									<!-- <li>
+										<a href="<?php echo base_url() . 'PengambilanMaterial/jadwal'?>">
+											Jadwal Pengambilan
+										</a>
+									</li> -->
+								</ul>
+							</li>
+
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-sign-in" aria-hidden="true"></i>
+									<span>Pemasukan Material</span>
+								</a>
+								<ul class="nav nav-children">
+									<li>
+										<a href="<?php echo base_url() . 'PemasukanMaterial/pilih_baru'?>">
+											Buat Baru
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PemasukanMaterial'?>">
+											Daftar Material Masuk
+										</a>
+									</li>
+								</ul>
+							</li>
+							
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-sign-out" aria-hidden="true"></i>
+									<span>Pengeluaran Material</span>
+								</a>
+								<ul class="nav nav-children">
+									<!--<li>
+										<a href="<?php echo base_url() . 'PengeluaranMaterial/baru'?>">
+											Buat Baru
+										</a>
+									</li> -->
+									<li>
+										<a href="<?php echo base_url() . 'PengeluaranMaterial'?>">
+											Daftar Material Keluar
+											<!-- material yg sudah keluar -->
+										</a>
+									</li>
+								</ul>
+							</li>
+						<?php
+							}
+						?>
+					<!-- -->
+
 					</ul>
 				</nav>
 			</div>

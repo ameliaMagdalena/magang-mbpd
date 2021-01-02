@@ -187,7 +187,7 @@
                     html =
                     '<tr class = "new_row">'+
                         '<td style="text-align:center">'+
-                            '<input type ="text" name="detailnya'+cek+'" value="'+respond[cek]["id_detail_delivery_note"]+'" readonly>'+
+                            '<input type ="hidden" name="detailnya'+cek+'" value="'+respond[cek]["id_detail_delivery_note"]+'" readonly>'+
                             '<input type ="hidden" name="row" value="'+cek+'">'+
                             (cek+1) +
                         '</td>'+

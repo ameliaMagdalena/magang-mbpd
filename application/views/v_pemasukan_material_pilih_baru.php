@@ -56,7 +56,7 @@
                                 }
                                 ?>>Supplier (Delivery Note)
                             <br>
-                            <input type="radio" name="pilihan" value="2">Lain-Lain
+                            <!-- <input type="radio" name="pilihan" value="2">Lain-Lain -->
                         </div>
                     </div>
                 </div>

@@ -46,6 +46,7 @@ class M_Material extends CI_Model {
         JOIN supplier e ON d.id_supplier=e.id_supplier
         JOIN material f ON a.id_material=f.id_material
         JOIN pemasukan_material g ON f.id_pemasukan_material=g.id_pemasukan_material
+        JOIN delivery_note h ON b.id_delivery_note=h.id_delivery_note
         WHERE a.status_delete=0");
     }
 

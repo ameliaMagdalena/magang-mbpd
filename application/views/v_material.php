@@ -42,7 +42,6 @@
             <thead>
                 <tr>
                     <th>No.</th>
-                    <th>Kode Material</th>
                     <th>Material</th>
                     <th>Tanggal Masuk</th>
                     <th>Status</th>
@@ -55,7 +54,6 @@
                 ?>
                     <tr>
                         <td class="col-1"><?php echo $x+1?> </td>
-                        <td class="col-lg-2"><?php echo $material[$x]['kode_material']?> </td>
                         <td class="col-lg-3"><?php echo $material[$x]['nama_jenis_material'] . ' ' . $material[$x]['nama_sub_jenis_material']?> </td>
                         <td class="col-lg-2"><?php echo $material[$x]['tanggal_masuk']?> </td>
                         <td class="col-lg-2">
@@ -68,8 +66,8 @@
                         <td class="col-lg-4">
                             <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
                                 title="Detail" href="#modaldetail<?php echo $material[$x]['id_material'] ?>"></a> 
-                            <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                title="Edit" href="#modaledit<?php echo $material[$x]['id_material'] ?>"></a>
+                            <!-- <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
+                                title="Edit" href="#modaledit<?php echo $material[$x]['id_material'] ?>"></a> -->
                             <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
                                 title="Delete" href="#modalhapus<?php echo $material[$x]['id_material'] ?>"></a>
                             <!-- <a class="btn col-lg-12  btn-info" href="<?php //echo base_url() ?>material/log/<?php //echo $material[$x]['id_material']?>"><i class='fa fa-file'></i> Log</a> -->
@@ -88,13 +86,6 @@
                             <div class="panel-body">
                                 <input type="hidden" name="id_material" class="form-control" value="<?php echo $material[$x]['id_material']?>" readonly>
                                 
-                                <div class="form-group mt-lg">
-                                    <label class="col-sm-3 control-label">Kode Material</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="kode" class="form-control"
-                                        value="<?php echo $material[$x]['kode_material']?>" readonly>
-                                    </div>
-                                </div>
                                 <div class="form-group mt-lg">
                                     <label class="col-sm-3 control-label">Nama Material</label>
                                     <div class="col-sm-9">
@@ -116,13 +107,28 @@
                                         value="<?php echo $material[$x]['tanggal_masuk'] ?>" readonly>
                                     </div>
                                 </div>
-                                <div class="form-group mt-lg">
-                                    <label class="col-sm-3 control-label">Supplier</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="jenis" class="form-control"
-                                        value="<?php echo $material[$x]['nama_supplier'] ?>" readonly>
-                                    </div>
-                                </div>
+                                <?php if ($material[$x]['sumber_material']==0){ 
+                                    for($sup=0; $sup<count($materialsup); $sup++){
+                                        if($material[$x]['id_material']==$materialsup[$sup]['id_material']){ ?>
+                                            <div class="form-group mt-lg">
+                                                <label class="col-sm-3 control-label">Supplier</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="jenis" class="form-control"
+                                                    value="<?php echo $materialsup[$sup]['nama_supplier'] ?>" readonly>
+                                                </div>
+                                            </div>
+                                <?php } } }
+                                    else if ($material[$x]['sumber_material']==1){
+                                        for($line=0; $line<count($materialline); $line++){
+                                            if($material[$x]['id_material']==$materialline[$line]['id_material']){ ?>
+                                                <div class="form-group mt-lg">
+                                                    <label class="col-sm-3 control-label">Supplier</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" name="jenis" class="form-control"
+                                                        value="<?php echo $materialline[$line]['nama_line'] ?>" readonly>
+                                                    </div>
+                                                </div>
+                                <?php } } } ?>
                                 <!--<div class="form-group mt-lg">
                                     <label class="col-sm-3 control-label">No. Invoice</label>
                                     <div class="col-sm-9">
@@ -169,27 +175,6 @@
                                 <div class="panel-body">
                                     <input type="hidden" name="id_material" class="form-control" value="<?php echo $material[$x]['id_material']?>" readonly>
                                     
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Kode material</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" name="kode_material" class="form-control"
-                                            value="<?php echo $material[$x]['kode_material']?>" readonly>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Jenis Material</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control" name="jenis" id="jenis" required>
-                                                <?php for($a=0; $a<count($sub_jenis_material); $a++){ ?>
-                                                    <option value="<?php echo $sub_jenis_material[$a]['id_sub_jenis_material'] ?>"
-                                                    <?php if ($material[$x]['id_sub_jenis_material'] == $sub_jenis_material[$a]['id_sub_jenis_material']){
-                                                     echo "selected"; }?>>
-                                                        <?php echo $sub_jenis_material[$a]['kode_sub_jenis_material'] . " - " . $sub_jenis_material[$a]['nama_jenis_material'] . " - " . $sub_jenis_material[$a]['nama_sub_jenis_material'] ?>
-                                                    </option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                    </div> -->
                                     <div class="form-group mt-lg">
                                         <label class="col-sm-3 control-label">Material</label>
                                         <div class="col-sm-9">

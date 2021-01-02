@@ -66,8 +66,12 @@
                     <td>
                         <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="#modaldetail<?php echo $permintaan_pembelian[$x]['id_permintaan_pembelian'] ?>"></a>
-                        <a class="modal-with-form col-lg-3 btn btn-danger fa fa-times"
-                            title="Tolak" href="#modaltolak<?php echo $permintaan_pembelian[$x]['id_permintaan_pembelian'] ?>"></a>
+                        
+                        <?php if(($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
+                            || ($_SESSION['nama_jabatan'] == "Admin") && ($_SESSION['nama_departemen'] == "Purchasing")){ ?>
+                            <a class="modal-with-form col-lg-3 btn btn-danger fa fa-times"
+                                title="Tolak" href="#modaltolak<?php echo $permintaan_pembelian[$x]['id_permintaan_pembelian'] ?>"></a>
+                        <?php } ?>
                     </td>
                 </tr>
                 
@@ -151,7 +155,7 @@
                                     <input type="text" name="status" class="form-control"
                                         value="<?php $ketersediaan = 0;
                                             for($mat=0; $mat<count($material); $mat++){
-                                                if($detail[$y]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
+                                                if($detail[$x]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
                                                     $ketersediaan = $ketersediaan+1;
                                                 }
                                             }
@@ -415,7 +419,7 @@
                                     <input type="text" name="status" class="form-control"
                                         value="<?php $ketersediaan = 0;
                                             for($mat=0; $mat<count($material); $mat++){
-                                                if($detail[$y]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
+                                                if($detail[$x]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
                                                     $ketersediaan = $ketersediaan+1;
                                                 }
                                             }
@@ -575,7 +579,7 @@
                                     <input type="text" name="status" class="form-control"
                                         value="<?php $ketersediaan = 0;
                                             for($mat=0; $mat<count($material); $mat++){
-                                                if($detail[$y]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
+                                                if($detail[$x]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
                                                     $ketersediaan = $ketersediaan+1;
                                                 }
                                             }
@@ -741,7 +745,7 @@
                                     <input type="text" name="status" class="form-control"
                                         value="<?php $ketersediaan = 0;
                                             for($mat=0; $mat<count($material); $mat++){
-                                                if($detail[$y]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
+                                                if($detail[$x]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
                                                     $ketersediaan = $ketersediaan+1;
                                                 }
                                             }
@@ -824,7 +828,8 @@
                         <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="#modaldetail<?php echo $permintaan_pembelian[$x]['id_permintaan_pembelian'] ?>"></a>
                         
-                        <?php if($permintaan_pembelian[$x]['status_pembelian'] == '0'){ ?>
+                        <?php if(($permintaan_pembelian[$x]['status_pembelian'] == '0') && (($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
+                                || ($_SESSION['nama_jabatan'] == "Admin") && ($_SESSION['nama_departemen'] == "Purchasing"))){ ?>
                             <a class="modal-with-form col-lg-3 btn btn-danger fa fa-times"
                                 title="Tolak" href="#modaltolak<?php echo $permintaan_pembelian[$x]['id_permintaan_pembelian'] ?>"></a>
                         <?php } ?>
@@ -929,7 +934,7 @@
                                     <input type="text" name="status" class="form-control"
                                         value="<?php $ketersediaan = 0;
                                             for($mat=0; $mat<count($material); $mat++){
-                                                if($detail[$y]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
+                                                if($detail[$x]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
                                                     $ketersediaan = $ketersediaan+1;
                                                 }
                                             }

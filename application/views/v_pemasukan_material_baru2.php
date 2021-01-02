@@ -35,13 +35,13 @@
 
 			<div class="panel-body">
                 <input type="hidden" name="pilihan" class="form-control" value="<?= $pilihan ?>" readonly>
-                <input type="hidden" name="keterangan" class="form-control" value="0" readonly>
+                <input type="hidden" name="keterangan" class="form-control" value="1" readonly>
                 <input type="hidden" name="lain" class="form-control" value="" readonly>
 					
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Tanggal Masuk</label>
 					<div class="col-sm-7">
-                        <input type="date" class="form-control" name="tgl_masuk" id="tgl_masuk" required>
+                        <input type="date" class="form-control" name="tgl_masuk" id="tgl_masuk"  max="<?= date('Y-m-d') ?>" required>
                     </div>
                 </div>
                 <div class="form-group mt-lg">

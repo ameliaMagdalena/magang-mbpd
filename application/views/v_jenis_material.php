@@ -26,8 +26,11 @@
 
 <h1>Jenis Material</h1>
 <hr>
-<a class="modal-with-form btn btn-success" href="#modaltambah">+ Tambah Jenis Material</a>
 
+<?php if(($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
+    || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material")){?>
+        <a class="modal-with-form btn btn-success" href="#modaltambah">+ Tambah Jenis Material</a>
+<?php } ?>
 
 
 <!-- *************************** MODAL TAMBAH JENIS *************************** -->
@@ -118,11 +121,14 @@
                         <td>
                             <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                                 title="Detail" href="<?php echo base_url() . "JenisMaterial/sub_jenis_material/" . $jenis_material[$x]['id_jenis_material'] ?>"></a>
-                            <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                title="Edit" href="#modaledit<?php echo $jenis_material[$x]['id_jenis_material'] ?>"></a>
-                           <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                title="Delete" href="#modalhapus<?php echo $jenis_material[$x]['id_jenis_material'] ?>"></a>
-                            <!-- <a class="btn col-lg-12  btn-info" href="<?php //echo base_url() ?>material/log/<?php //echo $material[$x]['id_material']?>"><i class='fa fa-file'></i> Log</a> -->
+                            
+                            <?php if(($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
+                                || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material")){?>
+                                    <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
+                                        title="Edit" href="#modaledit<?php echo $jenis_material[$x]['id_jenis_material'] ?>"></a>
+                                    <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
+                                        title="Delete" href="#modalhapus<?php echo $jenis_material[$x]['id_jenis_material'] ?>"></a>
+                            <?php } ?>
                         </td>
                     </tr>
 

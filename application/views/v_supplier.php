@@ -26,7 +26,11 @@
 
 <h1>Supplier</h1>
 <hr>
-<a class="modal-with-form btn btn-success" href="#modaltambah">+ Tambah Supplier</a>
+
+<?php if(($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
+    || ($_SESSION['nama_jabatan'] == "Admin") && ($_SESSION['nama_departemen'] == "Purchasing")){?>
+        <a class="modal-with-form btn btn-success" href="#modaltambah">+ Tambah Supplier</a>
+<?php } ?>
 
 
 
@@ -121,11 +125,14 @@
                         <td>
                             <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                                 title="Detail" href="<?php echo base_url() . 'Supplier/detail_supplier/' . $supplier[$x]['id_supplier'] ?>"></a>
-                            <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                title="Edit" href="#modaledit<?php echo $supplier[$x]['id_supplier'] ?>"></a>
+                            
+                            <?php if(($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
+                                || ($_SESSION['nama_jabatan'] == "Admin") && ($_SESSION['nama_departemen'] == "Purchasing")){?>
+                                    <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
+                                        title="Edit" href="#modaledit<?php echo $supplier[$x]['id_supplier'] ?>"></a>
                             <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
                                 title="Delete" href="#modalhapus<?php echo $supplier[$x]['id_supplier'] ?>"></a>
-                            <!-- <a class="btn col-lg-12  btn-info" href="<?php //echo base_url() ?>user/log/<?php //echo $user[$x]['id_user']?>"><i class='fa fa-file'></i> Log</a> -->
+                            <?php } ?>
                         </td>
                     </tr>
 

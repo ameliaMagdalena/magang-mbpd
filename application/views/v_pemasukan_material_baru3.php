@@ -41,7 +41,7 @@
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Tanggal Masuk</label>
 					<div class="col-sm-7">
-                        <input type="date" class="form-control" name="tgl_masuk" id="tgl_masuk" required>
+                        <input type="date" class="form-control" name="tgl_masuk" id="tgl_masuk" max="<?= date('Y-m-d') ?>" required>
                     </div>
                 </div>
 

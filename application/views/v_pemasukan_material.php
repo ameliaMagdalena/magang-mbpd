@@ -57,32 +57,13 @@
                     <td> <?php echo $pemasukan[$x]['kode_sub_jenis_material'] . " - " . $pemasukan[$x]['nama_jenis_material'] . " " . $pemasukan[$x]['nama_sub_jenis_material']?></td>
                     <td style="text-align:center"> <?php echo $pemasukan[$x]['jumlah_masuk']?></td>
                     <td style="text-align:center"> <?php echo $pemasukan[$x]['satuan_ukuran']?></td>
-                    
                     <td>
                         <?php
                             if($pemasukan[$x]['keterangan_masuk']==0){
-                                for($a=0; $a<count($material); $a++){
-                                    if($material[$a]['id_pemasukan_material']==$pemasukan[$x]['id_pemasukan_material']){
-                                        for($b=0; $b<count($materialsup); $b++){
-                                            if($material[$a]['id_material']==$materialsup[$b]['id_material']){
-                                                echo "Supplier: ". $materialsup[$b]['nama_supplier'];
-                                            }
-                                        }
-                                    }
-                                }
-                                
+                                echo "Supplier / Delivery Note";
                             } 
                             else if($pemasukan[$x]['keterangan_masuk']==1){
-                                for($a=0; $a<count($material); $a++){
-                                    if($material[$a]['id_pemasukan_material']==$pemasukan[$x]['id_pemasukan_material']){
-                                        for($b=0; $b<count($materialline); $b++){
-                                            if($material[$a]['id_material']==$materialline[$b]['id_material']){
-                                                echo "Line: ". $materialline[$b]['nama_line'];
-                                            }
-                                        }
-                                    }
-                                }
-                                
+                                echo "Line Produksi";
                             }
                         ?>
                     </td>
@@ -96,15 +77,13 @@
 
                     <!-- ****************************** MODAL DETAIL ****************************** -->
                     <!-- ************************************************************************** -->
-                    <div id='modaldetail<?php echo $pemasukan[$x]['id_pemasukan_material']?>' class="bd-example-modal-lg modal-block modal-block-lg mfp-hide">
+                    <div id='modaldetail<?php echo $pemasukan[$x]['id_pemasukan_material']?>' class="bd-example-modal-md modal-block modal-block-lg mfp-hide">
                         <section class="panel">
                             <header class="panel-heading">
                                 <h2 class="panel-title">Detail Data Material Masuk</h2>
                             </header>
 
                             <div class="panel-body">
-                                <input type="hidden" name="id_material" class="form-control" value="<?php //echo $material[$x]['id_material']?>" readonly>
-                                
                                 <div class="form-group mt-lg">
                                     <label class="col-sm-3 control-label">Tanggal Masuk</label>
                                     <div class="col-sm-9">
@@ -112,6 +91,51 @@
                                         value="<?php echo $pemasukan[$x]['tanggal_masuk']?>" readonly>
                                     </div>
                                 </div>
+                                <?php
+                                    if($pemasukan[$x]['keterangan_masuk']==0){
+                                        for($k=0; $k<count($material); $k++){
+                                            if($pemasukan[$x]['id_pemasukan_material']==$material[$k]['id_pemasukan_material']){
+                                                $mat=$material[$k]['id_material'];
+                                            }
+                                            for($l=0; $l<count($materialsup); $l++){
+                                                if($materialsup[$l]['id_material']==$mat){?>
+                                                    <div class="form-group mt-lg">
+                                                        <label class="col-sm-3 control-label">No. DN</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" name="nodn" class="form-control"
+                                                            value="<?php echo $materialsup[$l]['kode_delivery_note']?>" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group mt-lg">
+                                                        <label class="col-sm-3 control-label">Supplier</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" name="nodn" class="form-control"
+                                                            value="<?php echo $materialsup[$l]['nama_supplier']?>" readonly>
+                                                        </div>
+                                                    </div>
+                                            <?php }
+                                            }
+                                        }
+                                    }
+                                    else if($pemasukan[$x]['keterangan_masuk']==1){ 
+                                        for($k=0; $k<count($material); $k++){
+                                            if($pemasukan[$x]['id_pemasukan_material']==$material[$k]['id_pemasukan_material']){
+                                                $mat=$material[$k]['id_material'];
+                                            }
+                                            for($l=0; $l<count($materialline); $l++){
+                                                if($materialline[$l]['id_material']==$mat){ ?>
+                                                    <div class="form-group mt-lg">
+                                                        <label class="col-sm-3 control-label">Line</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" name="linenya" class="form-control"
+                                                            value="<?php echo $materialline[$l]['nama_line']?>" readonly>
+                                                        </div>
+                                                    </div>
+                                            <?php } 
+                                            }
+                                        }
+                                    }
+                                ?>
                                 <div class="form-group mt-lg">
                                     <label class="col-sm-3 control-label">Jenis Material</label>
                                     <div class="col-sm-9">

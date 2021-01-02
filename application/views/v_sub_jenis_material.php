@@ -65,8 +65,12 @@
         <div class="form-group mt-lg">
             <div class="col-sm-12">
                 <h3 style="display: inline-block">Sub Jenis Material</h3>
-                <a class="modal-with-form btn btn-success pull-right" href="#modaltambahmaterial"> + Tambah Sub Jenis Material</a>
-
+                
+                <?php if(($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
+                    || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material")){?>
+                        <a class="modal-with-form btn btn-success pull-right" href="#modaltambahmaterial"> + Tambah Sub Jenis Material</a>
+                <?php } ?>
+                
                 <!-- **************************** MODAL TAMBAH SUB **************************** -->
                 <!-- ************************************************************************** -->
                 <div id='modaltambahmaterial' class="modal-block modal-block-primary mfp-hide">
@@ -204,11 +208,14 @@
                             <td>
                                 <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
                                     title="Detail" href="#modaldetailsub<?php echo $sub_jenis[$y]['id_sub_jenis_material'] ?>"></a>
-                                <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                    title="Edit" href="#modaleditsub<?php echo $sub_jenis[$y]['id_sub_jenis_material'] ?>"></a>
-                                <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                    title="Delete" href="#modalhapussub<?php echo $sub_jenis[$y]['id_sub_jenis_material'] ?>"></a>
-                                <!-- <a class="btn col-lg-12  btn-info" href="<?php //echo base_url() ?>user/log/<?php echo $user[$x]['id_user']?>"><i class='fa fa-file'></i> Log</a> -->
+                                
+                                <?php if(($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
+                                    || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material")){?>
+                                        <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
+                                            title="Edit" href="#modaleditsub<?php echo $sub_jenis[$y]['id_sub_jenis_material'] ?>"></a>
+                                        <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
+                                            title="Delete" href="#modalhapussub<?php echo $sub_jenis[$y]['id_sub_jenis_material'] ?>"></a>
+                                <?php } ?>
                             </td>
                         </tr>
 
@@ -356,13 +363,17 @@
                                         </div>
                                         <div class="form-group mt-lg">
                                             <label class="col-sm-4 control-label">Sumber<span class="required">*</span></label>
-                                            <div class="col-sm-7">
-                                                <select class="form-control" name="sumber" required>
-                                                    <option value="0" <?php if ($sub_jenis[$y]['sumber'] == 0){ echo "selected"; } ?>>Supplier</option>
-                                                    <option value="1" <?php if ($sub_jenis[$y]['sumber'] == 1){ echo "selected"; } ?>>WIP Line Cutting</option>
-                                                    <option value="2" <?php if ($sub_jenis[$y]['sumber'] == 2){ echo "selected"; } ?>>WIP Line Bonding</option>
-                                                    <option value="3" <?php if ($sub_jenis[$y]['sumber'] == 3){ echo "selected"; } ?>>WIP Line Sewing</option>
-                                                </select>
+                                            <div class="col-sm-8">
+                                                <?php if($jenis_material[0]['sumber_material']==0){?>
+                                                    <input type="text" class="form-control" value="Supplier" readonly>
+                                                    <input type="hidden" name="sumber" value="0" readonly>
+                                                <?php } else{ ?>
+                                                    <select class="form-control" name="sumber" required>
+                                                        <option value="1" <?php if ($sub_jenis[$y]['sumber'] == 1){ echo "selected"; } ?>>WIP Line Cutting</option>
+                                                        <option value="2" <?php if ($sub_jenis[$y]['sumber'] == 2){ echo "selected"; } ?>>WIP Line Bonding</option>
+                                                        <option value="3" <?php if ($sub_jenis[$y]['sumber'] == 3){ echo "selected"; } ?>>WIP Line Sewing</option>
+                                                    </select>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                         <div class="form-group mt-lg">

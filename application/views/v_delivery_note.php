@@ -215,7 +215,6 @@ href="<?php if(count($po)==0){
         <table class="table table-bordered table-striped mb-none" id="datatable-default">
             <thead>
                 <tr>
-                    <th style="text-align:center">No.</th>
                     <th style="text-align:center">Kode Delivery Note</th>
                     <th style="text-align:center">Supplier</th>
                     <th style="text-align:center">Tanggal Pengiriman</th>
@@ -225,12 +224,11 @@ href="<?php if(count($po)==0){
             </thead>
             <tbody>
                 <?php
-                    for($x=0 ; $x<$jumlah_dn ; $x++){
+                    for($x=0 ; $x<count($dn) ; $x++){
                         if ($status == 0 || $status == 3){ //proses persetujuan & pengiriman
                             if($dn[$x]['status_pengesahan'] == 0 || $dn[$x]['status_pengesahan'] == 1){
                 ?>
                     <tr>
-                        <td class="col-lg-1"> <?php echo $x+1?></td>
                         <td class="col-lg-2"> <?php echo $dn[$x]['kode_delivery_note']?></td>
                         <td class="col-lg-2"> <?php echo $dn[$x]['nama_supplier']?></td>
                         <td class="col-lg-2"> <?php echo $dn[$x]['tanggal_penerimaan']?></td>
@@ -261,11 +259,10 @@ href="<?php if(count($po)==0){
                     </tr>
                     
                 <?php }}
-                    else if($status == 1 || $status == 3){ //selesai
+                    if($status == 1 || $status == 3){ //selesai
                         if($dn[$x]['status_pengesahan'] == 2){
                 ?>
                     <tr>
-                        <td class="col-lg-1"> <?php echo $x+1?></td>
                         <td class="col-lg-2"> <?php echo $dn[$x]['kode_delivery_note']?></td>
                         <td class="col-lg-2"> <?php echo $dn[$x]['nama_supplier']?></td>
                         <td class="col-lg-2"> <?php echo $dn[$x]['tanggal_penerimaan']?></td>
@@ -277,11 +274,10 @@ href="<?php if(count($po)==0){
                     </tr>
 
                 <?php }}
-                    else if($status == 2 || $status == 3){ //batal / ditolak
+                    if($status == 2 || $status == 3){ //batal / ditolak
                         if($dn[$x]['status_pengesahan'] == 3 || $dn[$x]['status_pengesahan'] == 4){
                 ?>
                     <tr>
-                        <td class="col-lg-1"> <?php echo $x+1?></td>
                         <td class="col-lg-2"> <?php echo $dn[$x]['kode_delivery_note']?></td>
                         <td class="col-lg-2"> <?php echo $dn[$x]['nama_supplier']?></td>
                         <td class="col-lg-2"> <?php echo $dn[$x]['tanggal_penerimaan']?></td>

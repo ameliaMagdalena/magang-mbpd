@@ -20,7 +20,7 @@ class DeliveryNote extends CI_Controller {
 
 	public function index($status){
         $data['status'] = $status;
-        $data['jumlah_dn'] = $this->M_DeliveryNote->selectDeliveryNoteAktif()->num_rows();
+        $data['jumlah_dn'] = $this->M_DeliveryNote->selectAllDeliveryNote()->num_rows();
         $data['dn'] = $this->M_DeliveryNote->selectDeliveryNoteAktif()->result_array();
         $data['dnnow'] = $this->M_DeliveryNote->selectDeliveryNoteNow()->num_rows();
         $data['po'] = $this->M_DeliveryNote->selectPOSupplier()->result_array();
@@ -449,6 +449,7 @@ class DeliveryNote extends CI_Controller {
             "tanggal_penerimaan" => $this->input->post("tgl_pengiriman"),
             //"total_harga" => $this->input->post("total_harga"),
             "status_pengesahan" => "0", //proses persetujuan
+            "dibuat_oleh"=>$_SESSION['id_user'],
             "user_add"=>$_SESSION['id_user'],
             "waktu_add"=>date('Y-m-d H:i:s'),
             "user_edit"=>"0",

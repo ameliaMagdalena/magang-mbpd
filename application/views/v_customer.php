@@ -26,7 +26,11 @@
 
 <h1>Customer</h1>
 <hr>
-<a class="modal-with-form btn btn-success" href="#modaltambah">+ Tambah Customer</a>
+
+<?php if(($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
+    || ($_SESSION['nama_jabatan'] == "Admin") && ($_SESSION['nama_departemen'] == "Purchasing")){?>
+        <a class="modal-with-form btn btn-success" href="#modaltambah">+ Tambah Customer</a>
+<?php } ?>
 
 
 
@@ -120,13 +124,14 @@
                         <td>
                             <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                                 title="Detail" href="<?php echo base_url() . "Customer/detail_customer/" . $customer[$x]['id_customer'] ?>"></a>
-                            <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                title="Edit" href="#modaledit<?php echo $customer[$x]['id_customer'] ?>"></a>
-                            <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                title="Delete" href="#modalhapus<?php echo $customer[$x]['id_customer'] ?>"></a>
-                            <!-- <a class="modal-with-form col-lg-3 btn btn-success fa fa-plus"
-                                title="Tambah Sub Customer" href="#modaltambahsub<?php echo $customer[$x]['id_customer'] ?>"></a>
-                            <a class="btn col-lg-12  btn-info" href="<?php //echo base_url() ?>user/log/<?php echo $user[$x]['id_user']?>"><i class='fa fa-file'></i> Log</a> -->
+                            
+                            <?php if(($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
+                                || ($_SESSION['nama_jabatan'] == "Admin") && ($_SESSION['nama_departemen'] == "Purchasing")){?>
+                                    <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
+                                        title="Edit" href="#modaledit<?php echo $customer[$x]['id_customer'] ?>"></a>
+                                    <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
+                                        title="Delete" href="#modalhapus<?php echo $customer[$x]['id_customer'] ?>"></a>
+                            <?php } ?>
                         </td>
                     </tr>
 
