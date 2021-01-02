@@ -434,7 +434,7 @@
                                 "Pcs"+
                             '</td>'+
                             '<td style="text-align: center;vertical-align: middle;">'+
-                                respond['item_bpbd'][$i]['keterangan']+
+                                respond['item_bpbd'][$i]['keterangan_bpbd']+
                             '</td>'+
                         '</tr>';
 

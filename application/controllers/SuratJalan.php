@@ -2315,7 +2315,7 @@ class SuratJalan extends CI_Controller {
 
         $data['warna']    = $this->M_Warna->select_all_aktif()->result_array();
         $data['jmwarna']  = $this->M_Warna->select_all_aktif()->num_rows();
-        $data['jmwarna']   = $this->M_UkuranProduk->select_all_aktif()->result_array();
+        $data['ukuran']   = $this->M_UkuranProduk->select_all_aktif()->result_array();
         $data['jmukuran'] = $this->M_UkuranProduk->select_all_aktif()->num_rows();
 
         $data['nama_perusahaan'] = $this->M_Tetapan->cari_tetapan("Nama Perusahaan")->result_array();
