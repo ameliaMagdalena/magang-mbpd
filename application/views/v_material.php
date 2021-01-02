@@ -66,8 +66,8 @@
                         <td class="col-lg-4">
                             <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
                                 title="Detail" href="#modaldetail<?php echo $material[$x]['id_material'] ?>"></a> 
-                            <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                title="Edit" href="#modaledit<?php echo $material[$x]['id_material'] ?>"></a>
+                            <!-- <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
+                                title="Edit" href="#modaledit<?php echo $material[$x]['id_material'] ?>"></a> -->
                             <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
                                 title="Delete" href="#modalhapus<?php echo $material[$x]['id_material'] ?>"></a>
                             <!-- <a class="btn col-lg-12  btn-info" href="<?php //echo base_url() ?>material/log/<?php //echo $material[$x]['id_material']?>"><i class='fa fa-file'></i> Log</a> -->
@@ -107,15 +107,28 @@
                                         value="<?php echo $material[$x]['tanggal_masuk'] ?>" readonly>
                                     </div>
                                 </div>
-                                <?php if ($material[$x]['sumber_material']==0){ ?>
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Supplier</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" name="jenis" class="form-control"
-                                            value="<?php echo $supplier[$x]['nama_supplier'] ?>" readonly>
-                                        </div>
-                                    </div>
-                                <?php } ?>
+                                <?php if ($material[$x]['sumber_material']==0){ 
+                                    for($sup=0; $sup<count($materialsup); $sup++){
+                                        if($material[$x]['id_material']==$materialsup[$sup]['id_material']){ ?>
+                                            <div class="form-group mt-lg">
+                                                <label class="col-sm-3 control-label">Supplier</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="jenis" class="form-control"
+                                                    value="<?php echo $materialsup[$sup]['nama_supplier'] ?>" readonly>
+                                                </div>
+                                            </div>
+                                <?php } } }
+                                    else if ($material[$x]['sumber_material']==1){
+                                        for($line=0; $line<count($materialline); $line++){
+                                            if($material[$x]['id_material']==$materialline[$line]['id_material']){ ?>
+                                                <div class="form-group mt-lg">
+                                                    <label class="col-sm-3 control-label">Supplier</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" name="jenis" class="form-control"
+                                                        value="<?php echo $materialline[$line]['nama_line'] ?>" readonly>
+                                                    </div>
+                                                </div>
+                                <?php } } } ?>
                                 <!--<div class="form-group mt-lg">
                                     <label class="col-sm-3 control-label">No. Invoice</label>
                                     <div class="col-sm-9">

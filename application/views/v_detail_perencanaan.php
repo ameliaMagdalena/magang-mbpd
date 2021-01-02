@@ -169,12 +169,7 @@
                             <tr>
                                 <td><?php echo $pengambilan[$z]['tanggal_ambil'] ?>
                                 </td>
-                                <td><?php /* $jlhsatu = 0;
-                                    for($a=0; $a<count($pengambilan); $a++){
-                                        if ($pengambilan[$a]['id_sub_jenis_material'] == $detail[$x]['id_sub_jenis_material']){
-                                            $jlhsatu = $jlhsatu + $pengambilan[$a]['jumlah_ambil']; //jumlah dengan satuan keluar
-                                        }
-                                    } */
+                                <td><?php
                                     $jlhsatu = $pengambilan[$z]['jumlah_ambil'];
                                     $uk=$detail[$x]['ukuran_satuan_keluar']; //ukuran satuan keluar
                                     $jlhnya=$jlhsatu/$uk; //jumlah dengan satuan ukuran
@@ -190,8 +185,6 @@
                                     } ?>
                                 </td>
                                 <td>
-                                    <!-- <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                        title="Detail" href="#modaldetail"></a> -->
                                     <?php if ($pengambilan[$z]['status_keluar'] == 0){ ?>
                                         <button type="button" class="ambilz col-lg-3 btn btn-success fa fa-check" 
                                             value="<?php echo $z ?>" title="Ambil"></button>
@@ -270,77 +263,80 @@
                     </table>
                 </div>
 
-                <div class="row">
-                    <div class="text-center">
-                        <button type="button" class="beliz btn btn-primary" value="<?php echo $x ?>">Request Pembelian</button>
+                <?php if(($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material")){?>
+                    <div class="row">
+                        <div class="text-center">
+                            <button type="button" class="beliz btn btn-primary" value="<?php echo $x ?>">Request Pembelian</button>
 
-                        <!-- ******************************** MODAL BELI ****************************** -->
-                        <!-- ************************************************************************** -->
-                        <div id='modalbeli' class="modal" role="dialog">
-                            <div class="modal-dialog modal-xl" style="width:50%">
-                            
-                                <form class="" action="<?php echo base_url()?>PermintaanPembelianMaterial/insert" method="post">
-                                        
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title"><b>Request Pembelian Material</b></h4>
-                                        </div>
-
-                                        <div class="modal-body">
-                                            <input type="hidden" name="idmaterial" id="idmaterial" class="form-control" value="<?php echo $detail[$x]['id_sub_jenis_material'] ?>" readonly>
-                                            <input type="hidden" name="iddetail" id="iddetail" class="form-control" value="" readonly>
+                            <!-- ******************************** MODAL BELI ****************************** -->
+                            <!-- ************************************************************************** -->
+                            <div id='modalbeli' class="modal" role="dialog">
+                                <div class="modal-dialog modal-xl" style="width:50%">
+                                
+                                    <form class="" action="<?php echo base_url()?>PermintaanPembelianMaterial/insert" method="post">
                                             
-                                            <div class="form-group mt-lg">
-                                                <label class="col-sm-4 control-label" style="text-align: right">Material<span class="required">*</span></label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" name="materialz" id="materialz" class="form-control" value="" readonly>
-                                                </div>
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title"><b>Request Pembelian Material</b></h4>
                                             </div>
-                                            <div class="form-group mt-lg">
-                                                <label class="col-sm-4 control-label" style="text-align: right">Jumlah Material<span class="required">*</span></label>
-                                                <div class="col-sm-8">
-                                                    <input type="number" name="jumlahz" id="jumlahz" class="form-control"
-                                                    placeholder="" value="" min="1" required>
-                                                    <span id="spjumlah"></span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group mt-lg">
-                                                <label class="col-sm-4 control-label" style="text-align: right">Satuan<span class="required">*</span></label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" name="satuanz" id="satuanz" class="form-control" value="" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="form-group mt-lg">
-                                                <label class="col-sm-4 control-label" style="text-align: right">Tanggal Penerimaan<span class="required">*</span></label>
-                                                <div class="col-sm-8">
-                                                    <input type="date" name="terimaz" id="terimaz" class="form-control" value="" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group mt-lg">
-                                                <label class="col-sm-4 control-label" style="text-align: right">Keterangan</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" name="keteranganz" id="keteranganz" class="form-control"
-                                                    placeholder="" value="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <footer class="panel-footer">
-                                            <div class="row">
-                                                <div class="col-md-12 text-right">
-                                                    <input type="submit" id="tambah" class="btn btn-primary" value="Request">
-                                                    <button type="button" class="btn btn-default modal-dismiss" onclick="reload()">Batal</button>
-                                                </div>
-                                            </div>
-                                        </footer>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- ****************************** END MODAL BELI **************************** -->
-                        <!-- ************************************************************************** -->
 
+                                            <div class="modal-body">
+                                                <input type="hidden" name="idmaterial" id="idmaterial" class="form-control" value="<?php echo $detail[$x]['id_sub_jenis_material'] ?>" readonly>
+                                                <input type="hidden" name="iddetail" id="iddetail" class="form-control" value="" readonly>
+                                                
+                                                <div class="form-group mt-lg">
+                                                    <label class="col-sm-4 control-label" style="text-align: right">Material<span class="required">*</span></label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" name="materialz" id="materialz" class="form-control" value="" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mt-lg">
+                                                    <label class="col-sm-4 control-label" style="text-align: right">Jumlah Material<span class="required">*</span></label>
+                                                    <div class="col-sm-8">
+                                                        <input type="number" name="jumlahz" id="jumlahz" class="form-control"
+                                                        placeholder="" value="" min="1" required>
+                                                        <span id="spjumlah"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mt-lg">
+                                                    <label class="col-sm-4 control-label" style="text-align: right">Satuan<span class="required">*</span></label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" name="satuanz" id="satuanz" class="form-control" value="" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mt-lg">
+                                                    <label class="col-sm-4 control-label" style="text-align: right">Tanggal Penerimaan<span class="required">*</span></label>
+                                                    <div class="col-sm-8">
+                                                        <input type="date" name="terimaz" id="terimaz" class="form-control" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mt-lg">
+                                                    <label class="col-sm-4 control-label" style="text-align: right">Keterangan</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" name="keteranganz" id="keteranganz" class="form-control"
+                                                        placeholder="" value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <footer class="panel-footer">
+                                                <div class="row">
+                                                    <div class="col-md-12 text-right">
+                                                        <input type="submit" id="tambah" class="btn btn-primary" value="Request">
+                                                        <button type="button" class="btn btn-default modal-dismiss" onclick="reload()">Batal</button>
+                                                    </div>
+                                                </div>
+                                            </footer>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- ****************************** END MODAL BELI **************************** -->
+                            <!-- ************************************************************************** -->
+
+                        </div>
                     </div>
-                </div>
+                <?php } ?>
+                
             </div>
                 
         </section>

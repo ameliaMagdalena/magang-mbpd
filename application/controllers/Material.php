@@ -17,8 +17,9 @@ class Material extends CI_Controller {
 	public function index(){
         $data['material'] = $this->M_Material->selectMaterialAktif()->result_array();
         $data['jumlah_material'] = $this->M_Material->selectAllMaterial()->num_rows();
-        $data['supplier'] = $this->M_Material->selectMaterialSupplierAktif()->result_array();
         $data['sub_jenis_material'] = $this->M_Material->selectSubJenisMaterialAktif()->result_array();
+        $data['materialsup'] = $this->M_Material->selectMaterialSupplierAktif()->result_array();
+        $data['materialline'] = $this->M_Material->selectMaterialLineAktif()->result_array();
         //$data['jumlah_sub_jenis_material'] = $this->M_Material->selectAllSubJenisMaterial()->num_rows();
 
         //notif produksi

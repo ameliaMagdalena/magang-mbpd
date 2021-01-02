@@ -66,8 +66,12 @@
                     <td>
                         <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="#modaldetail<?php echo $permintaan_pembelian[$x]['id_permintaan_pembelian'] ?>"></a>
-                        <a class="modal-with-form col-lg-3 btn btn-danger fa fa-times"
-                            title="Tolak" href="#modaltolak<?php echo $permintaan_pembelian[$x]['id_permintaan_pembelian'] ?>"></a>
+                        
+                        <?php if(($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
+                            || ($_SESSION['nama_jabatan'] == "Admin") && ($_SESSION['nama_departemen'] == "Purchasing")){ ?>
+                            <a class="modal-with-form col-lg-3 btn btn-danger fa fa-times"
+                                title="Tolak" href="#modaltolak<?php echo $permintaan_pembelian[$x]['id_permintaan_pembelian'] ?>"></a>
+                        <?php } ?>
                     </td>
                 </tr>
                 
@@ -824,7 +828,8 @@
                         <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="#modaldetail<?php echo $permintaan_pembelian[$x]['id_permintaan_pembelian'] ?>"></a>
                         
-                        <?php if($permintaan_pembelian[$x]['status_pembelian'] == '0'){ ?>
+                        <?php if(($permintaan_pembelian[$x]['status_pembelian'] == '0') && (($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
+                                || ($_SESSION['nama_jabatan'] == "Admin") && ($_SESSION['nama_departemen'] == "Purchasing"))){ ?>
                             <a class="modal-with-form col-lg-3 btn btn-danger fa fa-times"
                                 title="Tolak" href="#modaltolak<?php echo $permintaan_pembelian[$x]['id_permintaan_pembelian'] ?>"></a>
                         <?php } ?>
