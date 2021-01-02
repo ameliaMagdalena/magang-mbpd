@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class PerubahanHargaMaterial extends CI_Controller {
+class PerubahanHarga extends CI_Controller {
 	function __construct(){
         parent::__construct();
         date_default_timezone_set('Asia/Jakarta');
@@ -561,11 +561,7 @@ class PerubahanHargaMaterial extends CI_Controller {
         $this->load->view('v_perubahan_harga_material_baru', $data);
     }
 
-    public function detail(){
-        $id = $this->input->post("id");
-        $result = $this->M_PerubahanHarga->selectSatuDetailSupplier($id)->result_array();
-        echo json_encode($result);
-    }
+    
 
     public function edit(){
         $where = array(

@@ -28,51 +28,51 @@
 <hr>
 
 	<section class="panel">
-		<form class="form-horizontal mb-lg" action="<?php //echo base_url()?>" method="post">
+		<form class="form-horizontal mb-lg" action="<?php echo base_url()?>PerubahanHargaMaterial/baru" method="post">
 			<header class="panel-heading">
 				<h2 class="panel-title">Form Perubahan Harga Material</h2>
 			</header>
 
 			<div class="panel-body">
-				<input type="hidden" name="id_user" class="form-control" value="BM-<?php //echo $jumlah_user + 1?>" readonly>
+				<input type="hidden" name="id_perubahan" class="form-control" value="UBAH-<?php echo $ubah + 1?>" readonly>
 				
 				
-				<div class="form-group mt-lg">
-					<label class="col-sm-3 control-label">Material<span class="required">*</span></label>
-					<div class="col-sm-7">
-                        <select class="form-control" name="material" id="dept" required>
-							<option value="">Foam</option>
-                            <option value="">Benang</option>
-                            <option value="">Kain</option>
-						</select>
-                    </div>
-                </div>
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Supplier<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <select class="form-control" name="supplier" id="supplier" required>
-							<option value="">INOAC</option>
-                            <option value="">dll</option>
-                            <option value="">dll</option>
+                        <select class="form-control" name="supplier" id="supplier" onchange="getDetail()" required>
+                            <option class="dropdown-header" value="">Pilih Supplier</option>
+                            <?php for($x=0; $x<count($sup); $x++){ ?>
+							    <option value="<?= $sup[$x]['id_supplier'] ?>">
+                                    <?= $sup[$x]['nama_supplier'] ?>
+                                </option>
+                            <?php } ?>
 						</select>
+                    </div>
+                </div>
+				<div class="form-group mt-lg">
+					<label class="col-sm-3 control-label">Material<span class="required">*</span></label>
+					<div class="col-sm-7">
+                        <select class="form-control" name="material" id="material" required>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Harga Sebelum<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="text" class="form-control" placeholder="otomatis" readonly>
+                        <input type="text" class="form-control" name="hrg_sebelum" id="hrg_sebelum" readonly>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Harga Baru<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="number"class="form-control">
+                        <input type="number" name="hrg_sesudah" id="hrg_sesudah" class="form-control" required>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Keterangan<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="text"class="form-control">
+                        <input type="text" name="keterangan" class="form-control">
                     </div>
                 </div>
             </div>
@@ -99,6 +99,31 @@
 <!--*****************************-->
 <?php //include('_rightbar.php');
 ?>
+
+<script>
+    function getDetail(){
+        var id = $("#supplier").val();
+        $.ajax({
+            url:"<?php echo base_url(); ?>PerubahanHargaMaterial/detail",
+            type:"POST",
+            dataType:"JSON",
+            data:{id:id},
+            success:function(respond){
+                for($a=0; $a<respond.length; $a++){
+                    html =
+                    '<option value="'+ respond[$a]["id_sub_jenis_material"] +'">'+
+                        $espond[$a]["kode_sub_jenis_material"] + ' - ' +
+                        respond[$a]["nama_jenis_material"] + ' ' + respond[$a]["nama_sub_jenis_material"] +
+                    '</option>';
+                    $("#material").append(html);
+
+                    harga = respond[$a]['harga_material'];
+                    $("#hrg_sebelum").val(harga);
+                }
+            }
+        });
+    }
+</script>
 
 <script>
     function reload() {

@@ -125,7 +125,7 @@
                                 <label class="col-sm-4 control-label">Kode Material</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="kode_material" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['id_sub_jenis_material'] ?>" readonly>
+                                    value="<?php echo $permintaan_pembelian[$x]['kode_sub_jenis_material'] ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
@@ -382,7 +382,7 @@
                                 <label class="col-sm-4 control-label">Kode Material</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="kode_material" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['id_sub_jenis_material'] ?>" readonly>
+                                    value="<?php echo $permintaan_pembelian[$x]['kode_sub_jenis_material'] ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
@@ -542,7 +542,7 @@
                                 <label class="col-sm-4 control-label">Kode Material</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="kode_material" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['id_sub_jenis_material'] ?>" readonly>
+                                    value="<?php echo $permintaan_pembelian[$x]['kode_sub_jenis_material'] ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
@@ -715,7 +715,7 @@
                                 <label class="col-sm-4 control-label">Kode Material</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="kode_material" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['id_sub_jenis_material'] ?>" readonly>
+                                    value="<?php echo $permintaan_pembelian[$x]['kode_sub_jenis_material'] ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
@@ -897,7 +897,7 @@
                                 <label class="col-sm-4 control-label">Kode Material</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="kode_material" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['id_sub_jenis_material'] ?>" readonly>
+                                    value="<?php echo $permintaan_pembelian[$x]['kode_sub_jenis_material'] ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">

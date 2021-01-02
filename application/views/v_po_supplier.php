@@ -74,8 +74,8 @@
                     <td>
                         <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="<?php echo base_url() . 'PurchaseOrderSupplier/detail/' . $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
-                        <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                            title="Edit" href="#modaledit<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
+                        <!-- <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
+                            title="Edit" href="#modaledit<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a> -->
                         <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
                             title="Hapus" href="#modalhapus<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a> <br><br>
 
@@ -150,8 +150,8 @@
                     <td>
                         <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="<?php echo base_url() . 'PurchaseOrderSupplier/detail/' . $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
-                        <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                            title="Edit" href="#modaledit<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
+                        <!-- <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
+                            title="Edit" href="#modaledit<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a> -->
                         <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
                             title="Hapus" href="#modalhapus<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
                     </td>
@@ -463,75 +463,6 @@
         </table>
     </div>
 
-
-    <!-- ******************************* MODAL BELI ******************************* -->
-    <!-- ************************************************************************** -->
-    <div id='modalbeli' class="modal-block modal-block-md mfp-hide">
-        <section class="panel">
-            <header class="panel-heading">
-                <h2 class="panel-title">Pilih Material Yang Akan Dibeli</h2>
-            </header>
-
-            <div class="panel-body">
-                <input type="hidden" name="id_user" class="form-control" value="" readonly>
-
-                <div class="form-group mt-lg">
-                    <div class="col-sm-9">
-                        <table class="table table-bordered table-striped mb-none" id="datatable-default">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Kode Material</th>
-                                    <th>Nama Material</th>
-                                    <th>Jumlah</th>
-                                    <th>Satuan</th>
-                                    <th>Ketersediaan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="col-2">
-                                        <div class="checkbox-custom checkbox-default">
-                                            <input type="checkbox" id="checkboxExample2">
-                                            <label for="checkboxExample2"></label>
-                                        </div>
-                                    </td>
-                                    <td class="col-lg-3"> MAT123 </td>
-                                    <td class="col-lg-3"> Foam </td>
-                                    <td class="col-lg-2"> 15 </td>
-                                    <td class="col-lg-3"> pc </td>
-                                    <td class="col-lg-2"> Stok kurang</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-2">
-                                        <div class="checkbox-custom checkbox-default">
-                                            <input type="checkbox" id="checkboxExample2">
-                                            <label for="checkboxExample2"></label>
-                                        </div>
-                                    </td>
-                                    <td class="col-lg-3"> MAT109 </td>
-                                    <td class="col-lg-3"> Kain </td>
-                                    <td class="col-lg-2"> 10 </td>
-                                    <td class="col-lg-3"> pc </td>
-                                    <td class="col-lg-2"> Stok tersedia</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <br>
-                    </div>
-                </div>
-            </div>
-            <footer class="panel-footer">
-                <div class="row">
-                    <div class="col-md-12 text-right">
-                        <button type="button" class="btn btn-default modal-dismiss">OK</button>
-                    </div>
-                </div>
-            </footer>
-        </section>
-    </div>
-    <!-- **************************** END MODAL DETAIL **************************** -->
-    <!-- ************************************************************************** -->
 </section>
 
 

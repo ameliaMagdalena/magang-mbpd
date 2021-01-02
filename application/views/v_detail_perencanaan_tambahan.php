@@ -44,27 +44,15 @@
 
     <div class="panel-body">
         <div class="form-group mt-lg">
-            <label class="col-sm-3 control-label">ID Permintaan Material</label>
+            <label class="col-sm-3 control-label">ID Permintaan Tambahan</label>
             <div class="col-sm-7">
                 <input type="text" class="form-control" id="idpermintaan" value="<?php echo $id_permintaan ?>" readonly>
             </div>
         </div>
         <div class="form-group mt-lg">
-            <label class="col-sm-3 control-label">Produk</label>
+            <label class="col-sm-3 control-label">ID Permintaan Material</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" value="<?php echo $permintaan_material[0]['nama_produk'] ?>" readonly>
-            </div>
-        </div>
-        <div class="form-group mt-lg">
-            <label class="col-sm-3 control-label">Jumlah</label>
-            <div class="col-sm-7">
-                <input type="number" class="form-control" value="<?php echo $permintaan_material[0]['jumlah_minta'] ?>" readonly>
-            </div>
-        </div>
-        <div class="form-group mt-lg">
-            <label class="col-sm-3 control-label">Tanggal Produksi</label>
-            <div class="col-sm-7">
-                <input type="text" class="form-control" value="<?php echo $permintaan_material[0]['tanggal_produksi'] ?>" readonly>
+                <input type="text" class="form-control" value="<?php echo $tambahan[0]['id_permintaan_material'] ?>" readonly>
             </div>
         </div>
 
@@ -91,57 +79,12 @@
                 <div class="form-group mt-lg">
                     <label class="col-sm-3 control-label">Kebutuhan</label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" value="<?php $produksi=$detail[$x]['needs']; //needs dengan satuan keluar
+                        <input type="text" class="form-control" value="<?php $produksi=$tambahan[0]['jumlah_tambah']; 
                             $ukuran=$detail[$x]['ukuran_satuan_keluar']; //ukuran satuan keluar
                             $needmaterial=$produksi/$ukuran; //needs dengan satuan ukuran
                             $needs = ceil($needmaterial);
-                            echo $needs; //ceil=roundup ?>"
+                            echo $needs . " " . $detail[$x]['satuan_ukuran']; //ceil=roundup ?>"
                         readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">Satuan</label>
-                    <div class="col-sm-7">
-                        <input type="text" class="form-control" value="<?php echo $detail[$x]['satuan_ukuran'] ?>" readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">Sudah Diambil</label>
-                    <div class="col-sm-7">
-                        <input type="text" class="form-control" value="<?php $diambil=0;
-                            for($y=0; $y<count($pengambilan); $y++){
-                                if ($pengambilan[$y]['id_detail_permintaan_material'] == $detail[$x]['id_detail_permintaan_material']){
-                                    if ($pengambilan[$y]['status_keluar'] == 1){
-                                        /*$jumlahambil = $pengambilan[$y]['jumlah_keluar']; //jumlah dengan satuan ukuran
-                                        $diambil=$diambil+$jumlahambil; */
-
-                                        for ($aa=0; $aa<count($pengeluaran); $aa++){
-                                            $diambil = $diambil+$pengeluaran[$aa]['jumlah_keluar'];
-                                        } //jumlah dengan satuan ukuran
-
-                                    }
-                                }
-                            } echo $diambil ?>"
-                        readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">Belum Diambil</label>
-                    <div class="col-sm-7">
-                        <input type="text" class="form-control" value="<?php $belumambil=$needs-$diambil; 
-                            echo $belumambil?>" readonly>
-                    </div>
-                </div>
-                <div class="form-group mt-lg">
-                    <label class="col-sm-3 control-label">Stok di Gudang</label>
-                    <div class="col-sm-7">
-                        <input type="text" class="form-control" value="<?php  $ketersediaan = 0;
-                            for($mat=0; $mat<count($material); $mat++){
-                                if($detail[$y]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
-                                    $ketersediaan = $ketersediaan+1;
-                                }
-                            } echo $ketersediaan;
-                        ?>" readonly>
                     </div>
                 </div>
                 <div class="form-group mt-lg">
@@ -198,7 +141,7 @@
                             <!-- ************************************************************************** -->
                             <div id='modalambil' class="modal" role="dialog">
                                 <div class="modal-dialog modal-xl" style="width:50%">
-                                    <form class="" action="<?php echo base_url()?>PengambilanMaterial/diambil" method="post">
+                                    <form class="" action="<?php echo base_url()?>PengambilanMaterial/diambil_tambah" method="post">
                                         
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -261,81 +204,6 @@
                         </tbody>
                     </table>
                 </div>
-
-                <?php if(($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material") || 
-                    ($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")){?>
-                    <div class="row">
-                        <div class="text-center">
-                            <button type="button" class="beliz btn btn-primary" value="<?php echo $x ?>">Request Pembelian</button>
-
-                            <!-- ******************************** MODAL BELI ****************************** -->
-                            <!-- ************************************************************************** -->
-                            <div id='modalbeli' class="modal" role="dialog">
-                                <div class="modal-dialog modal-xl" style="width:50%">
-                                
-                                    <form class="" action="<?php echo base_url()?>PermintaanPembelianMaterial/insert" method="post">
-                                            
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title"><b>Request Pembelian Material</b></h4>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <input type="hidden" name="idmaterial" id="idmaterial" class="form-control" value="<?php echo $detail[$x]['id_sub_jenis_material'] ?>" readonly>
-                                                <input type="hidden" name="iddetail" id="iddetail" class="form-control" value="" readonly>
-                                                
-                                                <div class="form-group mt-lg">
-                                                    <label class="col-sm-4 control-label" style="text-align: right">Material<span class="required">*</span></label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="materialz" id="materialz" class="form-control" value="" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group mt-lg">
-                                                    <label class="col-sm-4 control-label" style="text-align: right">Jumlah Material<span class="required">*</span></label>
-                                                    <div class="col-sm-8">
-                                                        <input type="number" name="jumlahz" id="jumlahz" class="form-control"
-                                                        placeholder="" value="" min="1" required>
-                                                        <span id="spjumlah"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group mt-lg">
-                                                    <label class="col-sm-4 control-label" style="text-align: right">Satuan<span class="required">*</span></label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="satuanz" id="satuanz" class="form-control" value="" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group mt-lg">
-                                                    <label class="col-sm-4 control-label" style="text-align: right">Tanggal Penerimaan<span class="required">*</span></label>
-                                                    <div class="col-sm-8">
-                                                        <input type="date" name="terimaz" id="terimaz" class="form-control" value="" max="<?php echo $permintaan_material[0]['tanggal_produksi'] //date('Y-m-d', strtotime('-1 days', strtotime($permintaan_material[0]['tanggal_produksi'])));  ?>" required>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group mt-lg">
-                                                    <label class="col-sm-4 control-label" style="text-align: right">Keterangan</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="keteranganz" id="keteranganz" class="form-control"
-                                                        placeholder="" value="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <footer class="panel-footer">
-                                                <div class="row">
-                                                    <div class="col-md-12 text-right">
-                                                        <input type="submit" id="tambah" class="btn btn-primary" value="Request">
-                                                        <button type="button" class="btn btn-default modal-dismiss" onclick="reload()">Batal</button>
-                                                    </div>
-                                                </div>
-                                            </footer>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <!-- ****************************** END MODAL BELI **************************** -->
-                            <!-- ************************************************************************** -->
-
-                        </div>
-                    </div>
-                <?php } ?>
                 
             </div>
                 

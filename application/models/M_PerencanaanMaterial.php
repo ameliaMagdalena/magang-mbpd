@@ -113,4 +113,53 @@ class M_PerencanaanMaterial extends CI_Model {
         /* AND d.id_sub_jenis_material = e.id_sub_jenis_material */
         AND b.id_permintaan_material='$id' AND a.status_keluar=1");
     }
+
+    //----------------------------- PERMINTAAN TAMBAHAN ---------------------------------//
+    //-----------------------------------------------------------------------------------//
+    function selectPermintaanTambahanAktif(){
+        return $this->db->query("SELECT * FROM permintaan_tambahan, detail_permintaan_material,
+        permintaan_material, konsumsi_material, sub_jenis_material, line, jenis_material
+        WHERE permintaan_tambahan.status_delete='0' AND 
+        permintaan_tambahan.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material AND
+        detail_permintaan_material.id_konsumsi_material=konsumsi_material.id_konsumsi_material AND
+        konsumsi_material.id_sub_jenis_material=sub_jenis_material.id_sub_jenis_material AND 
+        permintaan_material.id_line=line.id_line AND 
+        permintaan_material.id_permintaan_material=detail_permintaan_material.id_permintaan_material
+        AND jenis_material.id_jenis_material=sub_jenis_material.id_jenis_material");
+    }
+    function selectSatuPermintaanTambahan($id){
+        return $this->db->query("SELECT * FROM permintaan_tambahan, detail_permintaan_material,
+        permintaan_material, konsumsi_material, sub_jenis_material, line, jenis_material
+        WHERE permintaan_tambahan.status_delete='0' AND 
+        permintaan_tambahan.id_detail_permintaan_material=detail_permintaan_material.id_detail_permintaan_material AND
+        detail_permintaan_material.id_konsumsi_material=konsumsi_material.id_konsumsi_material AND
+        konsumsi_material.id_sub_jenis_material=sub_jenis_material.id_sub_jenis_material AND 
+        permintaan_material.id_line=line.id_line AND 
+        permintaan_material.id_permintaan_material=detail_permintaan_material.id_permintaan_material
+        AND jenis_material.id_jenis_material=sub_jenis_material.id_jenis_material
+        AND permintaan_tambahan.id_permintaan_tambahan='$id'");
+    }
+    function selectSatuDetailPermintaanTambahan($id){
+        return $this->db->query("SELECT * FROM detail_permintaan_material a
+        JOIN permintaan_material b ON a.id_permintaan_material = b.id_permintaan_material
+        JOIN konsumsi_material c ON a.id_konsumsi_material = c.id_konsumsi_material
+        JOIN sub_jenis_material d ON c.id_sub_jenis_material = d.id_sub_jenis_material
+        JOIN permintaan_tambahan e ON e.id_detail_permintaan_material=a.id_detail_permintaan_material
+        JOIN jenis_material f ON d.id_jenis_material=f.id_jenis_material
+        WHERE a.status_delete = '0' AND e.id_permintaan_tambahan='$id'");
+    }
+
+    function insertPermintaanTambahan($data){
+        $this->db->insert('permintaan_tambahan', $data);
+    }
+
+    function editPermintaanTambahan($data,$where){
+        $this->db->update('permintaan_tambahan', $data, $where);
+    }
+
+    function hapusPermintaanTambahan($data,$where){
+        $this->db->update('permintaan_tambahan', $data, $where);
+    }
+
+
 }
