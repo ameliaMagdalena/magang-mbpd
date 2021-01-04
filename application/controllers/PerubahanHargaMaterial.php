@@ -563,7 +563,29 @@ class PerubahanHargaMaterial extends CI_Controller {
         $this->load->view('v_perubahan_harga_material_baru', $data);
     }
 
-    public function detail(){
+    public function insert(){
+        $data = array(
+            "id_perubahan_harga"=>$this->input->post("id_perubahan"),
+            "id_detail_supplier"=>$this->input->post("material"),
+            "harga_sebelum"=>$this->input->post("hrg_sebelum"),
+            "harga_sesudah"=>$this->input->post("hrg_sesudah"),
+            "status_persetujuan"=>"0",
+            "keterangan"=>$this->input->post("keterangan"),
+            "user_add"=>$_SESSION['id_user'],
+            "waktu_add"=>date('Y-m-d H:i:s'),
+            "status_delete"=>"0"
+        );
+        $this->M_PerubahanHarga->insertPerubahanHarga($data, $where);
+        redirect('PerubahanHargaMaterial/index/0');
+    }
+
+    public function get_supplier(){
+        $id = $this->input->post("id");
+        $result = $this->M_PerubahanHarga->selectSatuSuppliernya($id)->result_array();
+        echo json_encode($result);
+    }
+    
+    public function get_harga(){
         $id = $this->input->post("id");
         $result = $this->M_PerubahanHarga->selectSatuDetailSupplier($id)->result_array();
         echo json_encode($result);
