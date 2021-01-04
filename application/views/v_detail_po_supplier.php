@@ -172,9 +172,9 @@
         </div>
         <div class="form-group mt-lg">
             
-            <!-- <a class="col-lg-3 btn btn-warning"
+            <a class="col-lg-3 btn btn-warning"
                 title="Print" href="<?php echo base_url() . 'PurchaseOrderSupplier/print_po/' . $po_sup[0]['id_purchase_order_supplier'] ?>">
-                Print PO Supplier</a> -->
+                Print PO Supplier</a>
             
 
         </div>

@@ -12,6 +12,8 @@ class PurchaseOrderSupplier extends CI_Controller {
         $this->load->model('M_Dashboard');
         $this->load->model('M_PembelianMaterial');
 
+        $this->load->library('Pdf_oc');
+
         if($this->session->userdata('status_login') != "login"){
             redirect('akses');
         }
@@ -775,6 +777,9 @@ class PurchaseOrderSupplier extends CI_Controller {
     }
 
     public function persetujuan(){
+        $data['po_sup'] = $this->M_PurchaseOrderSupplier->selectPOSupplierAktif()->result_array();
+        $data['detail_po_sup'] = $this->M_PurchaseOrderSupplier->selectDetailPOSupplierAktif()->result_array();
+        $data['customer'] = $this->M_Supplier->selectSupplierAktif()->result_array();
 
         //notif produksi
             //notif permintaan material produksi
@@ -952,8 +957,20 @@ class PurchaseOrderSupplier extends CI_Controller {
             //tutup notif permohonan akses
         //tutup
 
-        $this->load->view('v_po_supplier_persetujuan');
-   }
+        $this->load->view('v_po_supplier_persetujuan', $data);
+    }
+    
+    public function print_po($id){
+        $id_po = array(
+            "id_purchase_order_supplier" => $id
+        );
+        $data['customer'] = $this->M_Supplier->selectSupplierAktif()->result_array();
+        $data['id_po'] = $id;
+        $data['po_sup'] = $this->M_PurchaseOrderSupplier->selectSatuPOSupplier($id_po)->result_array();
+        $data['detail_po_sup'] = $this->M_PurchaseOrderSupplier->selectSatuDetailPOSupplier($id_po)->result_array();
+
+        $this->load->view('v_print_po', $data);
+    }
 
 
 }

@@ -216,11 +216,11 @@
 									<span>Perubahan Harga</span>
 								</a>
 								<ul class="nav nav-children">
-									<li>
+									<!-- <li>
 										<a href="<?php echo base_url() . 'PerubahanHargaMaterial/baru'?>">
 											+ Tambah Baru
 										</a>
-									</li>
+									</li> -->
 									<li>
 										<a href="<?php echo base_url() . 'PerubahanHargaMaterial/index/0'?>">
 											Menunggu Konfirmasi

@@ -41,4 +41,33 @@ class Pdf_oc extends TCPDF
         $this->WriteHTML($html, false, true, false, true); */            
     }
 }
+
+class Pdf_po extends TCPDF
+{
+    function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function Header() {
+        $html='
+            <br><br><br>
+            <table width="100%">
+                <tr>
+                    <td width="10%">
+                        <img src="' . base_url(). 'assets/images/logombp.png" alt="mbp_logo" width="45px">
+                    </td>
+                    <td width="40%"><b>  PT. MAJU BERSAMA PERSADA DAYAMU</b><br>
+                        Taman Palem Lestari Blok A11 No. 26 <br>
+                        Cengkareng, Jakarta Barat<br>
+                        Telp/Fax : (021) 5986198, Finance@mbpindo.com
+                    </td>
+                </tr>
+            </table>';
+        $this->SetFont('Tahoma','', 8);
+        $this->SetTextColor(0, 0, 0);
+        $this->setCellHeightRatio(1.3);
+        $this->WriteHTML($html, false, true, false, true);
+    }
+}
 ?>
