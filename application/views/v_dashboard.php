@@ -3264,6 +3264,1898 @@
 
 
 
+<!------------------------------------------------------ DASHBOARD MATERIAL ------------------------------------------------------->
+<?php  if($_SESSION['nama_departemen'] == "Management" && $_SESSION['nama_jabatan'] == "Direktur"){?>
+	<!-- DIREKTUR ------------------------------------------------------------------------------------------>
+		<div class="row">
+			<div class="col-md-6 col-lg-12 col-xl-6">
+				<!-- PO Cust -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#670B0B">
+										<i class="fa  fa-th-list"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">PO Customer</h4>
+										<sub>(belum diproses)</sub>
+										<div class="info">
+											<strong class="amount"><?= $po[0]['jumlah_po'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>perencanaanProduksi">(proses)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- PO Supp -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#670B0B">
+										<i class="fa  fa-th-list"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">PO Supplier</h4>
+										<sub>(belum disetujui)</sub>
+										<div class="info">
+											<strong class="amount"><?= $po[0]['jumlah_po'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>perencanaanProduksi">(proses)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- invoice -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#670B0B">
+										<i class="fa  fa-file-text-o"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">Invoice Out</h4>
+										<sub>(belum diproses)</sub>
+										<div class="info">
+											<strong class="amount"><?= $invoice[0]['jumlah_invoice'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>invoice/belum_diproses_invoice">(lihat semua)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-12 col-xl-6">
+				<!-- sub jenis material -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#BE2525">
+										<i class="fa  fa-cube"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">Sub Jenis <br>Material</h4>
+										<sub>(total semua)</sub>
+										<div class="info">
+											<strong class="amount"><?= $jumlah_produk[0]['jumlah_produk'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>produk">(lihat semua)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- Perubahan Harga -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#670B0B">
+										<i class="fa  fa-file-text-o"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">Perubahan <br>Harga</h4>
+										<sub>(belum ditinjau)</sub>
+										<div class="info">
+											<strong class="amount"><?= $invoice[0]['jumlah_invoice'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>invoice/belum_diproses_invoice">(lihat semua)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- Pengeluaran Uang untuk Material -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#670B0B">
+										<i class="fa  fa-th-list"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">Pengeluaran <br>Bulan Ini</h4>
+										<sub>(untuk material)</sub>
+										<div class="info">
+											<strong class="amount"><?= $po[0]['jumlah_po'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>perencanaanProduksi">(proses)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-12 col-xl-6">
+				<!-- permintaan material -->
+				<div class="col-md-12 col-lg-6 col-xl-6">
+					<section class="panel">
+						<header class="panel-heading panel-heading-transparent">
+							<h2 class="panel-title">
+								<span class="va-middle">Permintaan Material</span>
+							</h2>
+						</header>
+						<div class="panel-body panel-featured-left panel-featured-danger">
+							<div class="content">
+								<div style="height:250px;overflow:scroll">
+									<table class="table-responsive table table-hover mb-none">
+										<?php 
+											$no = 1;
+											foreach($monday as $x){
+													$waktu = $x->tanggal_mulai;
+
+													$bulan_array = array(
+														1 => 'Januari',
+														2 => 'Februari',
+														3 => 'Maret',
+														4 => 'April',
+														5 => 'Mei',
+														6 => 'Juni',
+														7 => 'Juli',
+														8 => 'Agustus',
+														9 => 'September',
+														10 => 'Oktober',
+														11 => 'November',
+														12 => 'Desember',
+													);
+													$bl    = date('n', strtotime($waktu));
+													$bulan = $bulan_array[$bl];
+													$tahun = date('Y', strtotime($waktu));
+													
+													if($bulan == $bulan_now && $tahun == $tahun_now){
+											?>
+										<thead>
+											<tr>
+												<th colspan="4" style="text-align: center;vertical-align: middle;">
+														<h4><b><span class="va-middle">HARI INI</span></b></h4>
+												</th>
+											</tr>
+											<tr>
+												<th style="text-align: center;vertical-align: middle;">No</th>
+												<th style="text-align: center;vertical-align: middle;">Produk</th>
+												<th style="text-align: center;vertical-align: middle;">Line</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
+												<td style="text-align: center;vertical-align: middle;">
+													<?php 
+														$waktu = $x->tanggal_mulai;
+
+														$hari_array = array(
+															'Minggu',
+															'Senin',
+															'Selasa',
+															'Rabu',
+															'Kamis',
+															'Jumat',
+															'Sabtu'
+														);
+														$hr = date('w', strtotime($waktu));
+														$hari = $hari_array[$hr];
+														$tanggal = date('j', strtotime($waktu));
+														$bulan_array = array(
+															1 => 'Januari',
+															2 => 'Februari',
+															3 => 'Maret',
+															4 => 'April',
+															5 => 'Mei',
+															6 => 'Juni',
+															7 => 'Juli',
+															8 => 'Agustus',
+															9 => 'September',
+															10 => 'Oktober',
+															11 => 'November',
+															12 => 'Desember',
+														);
+														$bl = date('n', strtotime($waktu));
+														$bulan = $bulan_array[$bl];
+														$tahun = date('Y', strtotime($waktu));
+														
+														echo "$hari, $tanggal $bulan $tahun";
+													?>
+													<input type="hidden" id="s<?= $no;?>" value="<?php 
+															$waktu = $x->tanggal_mulai;
+
+															$hari_array = array(
+																'Minggu',
+																'Senin',
+																'Selasa',
+																'Rabu',
+																'Kamis',
+																'Jumat',
+																'Sabtu'
+															);
+															$hr = date('w', strtotime($waktu));
+															$hari = $hari_array[$hr];
+															$tanggal = date('j', strtotime($waktu));
+															$bulan_array = array(
+																1 => 'Januari',
+																2 => 'Februari',
+																3 => 'Maret',
+																4 => 'April',
+																5 => 'Mei',
+																6 => 'Juni',
+																7 => 'Juli',
+																8 => 'Agustus',
+																9 => 'September',
+																10 => 'Oktober',
+																11 => 'November',
+																12 => 'Desember',
+															);
+															$bl = date('n', strtotime($waktu));
+															$bulan = $bulan_array[$bl];
+															$tahun = date('Y', strtotime($waktu));
+															
+															echo "$hari, $tanggal $bulan $tahun";
+														?>"
+													>
+													<input type="hidden" id="id_produksi<?= $no;?>" value="<?= $x->id_produksi;?>">
+												</td>
+												</td>
+											</tr>
+										</tbody>
+										
+										<?php $no++; } else {?>
+											<p style="text-align: center;vertical-align: middle;">
+												<b style="color: red">Tidak ada permintaan material</b>
+											</p>
+										<?php }} ?>
+									</table>
+								</div>
+
+								<hr class="dotted short">
+								<div class="text-right">
+									<a class="text-uppercase text-muted" href="<?= base_url()?>perencanaanProduksi/semua_perencanaan_produksi">(Lihat Semua)</a>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- pengambilan material -->
+				<div class="col-md-12 col-lg-6 col-xl-6">
+					<section class="panel">
+						<header class="panel-heading panel-heading-transparent">
+							<h2 class="panel-title">
+								<span class="va-middle">Pengambilan Material</span>
+							</h2>
+						</header>
+						<div class="panel-body panel-featured-left panel-featured-danger">
+							<div class="content">
+								<div style="height:250px;overflow:scroll">
+									<table class="table-responsive table table-hover mb-none">
+									<?php 
+										$no = 1;
+										foreach($monday as $x){
+												$waktu = $x->tanggal_mulai;
+
+												$bulan_array = array(
+													1 => 'Januari',
+													2 => 'Februari',
+													3 => 'Maret',
+													4 => 'April',
+													5 => 'Mei',
+													6 => 'Juni',
+													7 => 'Juli',
+													8 => 'Agustus',
+													9 => 'September',
+													10 => 'Oktober',
+													11 => 'November',
+													12 => 'Desember',
+												);
+												$bl    = date('n', strtotime($waktu));
+												$bulan = $bulan_array[$bl];
+												$tahun = date('Y', strtotime($waktu));
+												
+												if($bulan == $bulan_now && $tahun == $tahun_now){
+										?>
+										<thead>
+											<tr>
+												<th colspan="4" style="text-align: center;vertical-align: middle;">
+														<h4><b><span class="va-middle">HARI INI</span></b></h4>
+												</th>
+											</tr>
+											<tr>
+												<th style="text-align: center;vertical-align: middle;">No</th>
+												<th style="text-align: center;vertical-align: middle;">Material</th>
+												<th style="text-align: center;vertical-align: middle;">Line</th>
+											</tr>
+										</thead>
+										<tbody>
+											
+												<tr>
+													<td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
+													<td style="text-align: center;vertical-align: middle;">
+														<?php 
+															$waktu = $x->tanggal_mulai;
+
+															$hari_array = array(
+																'Minggu',
+																'Senin',
+																'Selasa',
+																'Rabu',
+																'Kamis',
+																'Jumat',
+																'Sabtu'
+															);
+															$hr = date('w', strtotime($waktu));
+															$hari = $hari_array[$hr];
+															$tanggal = date('j', strtotime($waktu));
+															$bulan_array = array(
+																1 => 'Januari',
+																2 => 'Februari',
+																3 => 'Maret',
+																4 => 'April',
+																5 => 'Mei',
+																6 => 'Juni',
+																7 => 'Juli',
+																8 => 'Agustus',
+																9 => 'September',
+																10 => 'Oktober',
+																11 => 'November',
+																12 => 'Desember',
+															);
+															$bl = date('n', strtotime($waktu));
+															$bulan = $bulan_array[$bl];
+															$tahun = date('Y', strtotime($waktu));
+															
+															echo "$hari, $tanggal $bulan $tahun";
+														?>
+														<input type="hidden" id="s<?= $no;?>" value="<?php 
+																$waktu = $x->tanggal_mulai;
+
+																$hari_array = array(
+																	'Minggu',
+																	'Senin',
+																	'Selasa',
+																	'Rabu',
+																	'Kamis',
+																	'Jumat',
+																	'Sabtu'
+																);
+																$hr = date('w', strtotime($waktu));
+																$hari = $hari_array[$hr];
+																$tanggal = date('j', strtotime($waktu));
+																$bulan_array = array(
+																	1 => 'Januari',
+																	2 => 'Februari',
+																	3 => 'Maret',
+																	4 => 'April',
+																	5 => 'Mei',
+																	6 => 'Juni',
+																	7 => 'Juli',
+																	8 => 'Agustus',
+																	9 => 'September',
+																	10 => 'Oktober',
+																	11 => 'November',
+																	12 => 'Desember',
+																);
+																$bl = date('n', strtotime($waktu));
+																$bulan = $bulan_array[$bl];
+																$tahun = date('Y', strtotime($waktu));
+																
+																echo "$hari, $tanggal $bulan $tahun";
+															?>"
+														>
+														<input type="hidden" id="id_produksi<?= $no;?>" value="<?= $x->id_produksi;?>">
+													</td>
+													</td>
+												</tr>
+
+										</tbody>
+										<?php $no++; } else {?>
+											<p style="text-align: center;vertical-align: middle;">
+												<b style="color: red">Belum ada pengambilan material</b>
+											</p>
+										<?php }} ?>
+									</table>
+								</div>
+
+								<hr class="dotted short">
+								<div class="text-right">
+									<a class="text-uppercase text-muted" href="<?= base_url()?>perencanaanProduksi/semua_perencanaan_produksi">(Lihat Semua)</a>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+			<div class="col-md-12 col-lg-12 col-xl-12">
+				<!-- MATERIAL COST -->
+				<div class="col-md-12 col-lg-12 col-xl-12">
+					<section class="panel">
+						<header class="panel-heading panel-heading-transparent">
+							<h2 class="panel-title">
+								<span class="va-middle">Laporan Material Cost Hari Ini</span>
+							</h2>
+						</header>
+						<div class="panel-body panel-featured-left panel-featured-danger">
+							<div class="content">
+								<div class="table-responsive" style="height:175px;overflow: scroll">
+									<?php if($jm_perencanaan_hari_ini > 0){?>
+										<table class="table table-hover mb-none">
+											<thead>
+												<tr>
+													<th style="text-align: center;vertical-align: middle;">No.</th>
+													<th style="text-align: center;vertical-align: middle;">Nama Produk</th>
+													<th style="text-align: center;vertical-align: middle;">Material Cost</th>
+													<th style="text-align: center;vertical-align: middle;">Detail</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php 
+													$no = 1;
+													foreach($perencanaan_hari_ini as $phi){?>
+													<tr>
+														<td style="text-align: center;vertical-align: middle;">
+															<?= $no ?>
+														</td>
+														<td style="text-align: center;vertical-align: middle;">
+															<!-- memiliki ukuran & warna -->
+														</td>
+														<td style="text-align: center;vertical-align: middle;">
+														</td>
+														<td style="text-align: center;vertical-align: middle;">
+															<!-- button aksi detail -->
+														</td>
+													</tr>
+												<?php $no++; } ?>
+											</tbody>
+										</table>
+									<?php } else {?>
+										<p style="text-align: center;vertical-align: middle;">
+											<b style="color: red">Belum ada laporan</b>
+										</p>
+									<?php } ?>
+								</div>
+
+								<hr class="dotted short">
+								<div class="text-right">
+									<a class="text-uppercase text-muted" href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line">(Lihat Semua)</a>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	<!-- -->
+		<?php } else if($_SESSION['nama_departemen'] == "Management" && $_SESSION['nama_jabatan'] == "Manager"){?>
+	<!-- MANAGER ------------------------------------------------------------------------------------------>
+		<div class="row">
+			<div class="col-md-6 col-lg-12 col-xl-6">
+				<!-- PO Cust -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#670B0B">
+										<i class="fa  fa-th-list"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">PO Customer</h4>
+										<sub>(belum diproses)</sub>
+										<div class="info">
+											<strong class="amount"><?= $po[0]['jumlah_po'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>perencanaanProduksi">(proses)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- PO Supp -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#670B0B">
+										<i class="fa  fa-th-list"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">PO Supplier</h4>
+										<sub>(belum disetujui)</sub>
+										<div class="info">
+											<strong class="amount"><?= $po[0]['jumlah_po'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>perencanaanProduksi">(proses)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- delivery note -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#BE2525">
+										<i class="fa  fa-cube"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">Delivery <br>Note</h4>
+										<sub>(belum disetujui)</sub>
+										<div class="info">
+											<strong class="amount"><?= $jumlah_produk[0]['jumlah_produk'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>produk">(lihat semua)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-12 col-xl-6">
+				<!-- Pengeluaran Uang untuk Material -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#670B0B">
+										<i class="fa  fa-th-list"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">Pengeluaran <br>Bulan Ini</h4>
+										<sub>(untuk material)</sub>
+										<div class="info">
+											<strong class="amount"><?= $po[0]['jumlah_po'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>perencanaanProduksi">(proses)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- invoice -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#670B0B">
+										<i class="fa  fa-file-text-o"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">Invoice Out</h4>
+										<sub>(belum diproses)</sub>
+										<div class="info">
+											<strong class="amount"><?= $invoice[0]['jumlah_invoice'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>invoice/belum_diproses_invoice">(lihat semua)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-12 col-xl-6">
+				<!-- permintaan material -->
+				<div class="col-md-12 col-lg-6 col-xl-6">
+					<section class="panel">
+						<header class="panel-heading panel-heading-transparent">
+							<h2 class="panel-title">
+								<span class="va-middle">Permintaan Material</span>
+							</h2>
+						</header>
+						<div class="panel-body panel-featured-left panel-featured-danger">
+							<div class="content">
+								<div style="height:250px;overflow:scroll">
+									<table class="table-responsive table table-hover mb-none">
+										<?php 
+											$no = 1;
+											foreach($monday as $x){
+													$waktu = $x->tanggal_mulai;
+
+													$bulan_array = array(
+														1 => 'Januari',
+														2 => 'Februari',
+														3 => 'Maret',
+														4 => 'April',
+														5 => 'Mei',
+														6 => 'Juni',
+														7 => 'Juli',
+														8 => 'Agustus',
+														9 => 'September',
+														10 => 'Oktober',
+														11 => 'November',
+														12 => 'Desember',
+													);
+													$bl    = date('n', strtotime($waktu));
+													$bulan = $bulan_array[$bl];
+													$tahun = date('Y', strtotime($waktu));
+													
+													if($bulan == $bulan_now && $tahun == $tahun_now){
+											?>
+										<thead>
+											<tr>
+												<th colspan="4" style="text-align: center;vertical-align: middle;">
+														<h4><b><span class="va-middle">HARI INI</span></b></h4>
+												</th>
+											</tr>
+											<tr>
+												<th style="text-align: center;vertical-align: middle;">No</th>
+												<th style="text-align: center;vertical-align: middle;">Produk</th>
+												<th style="text-align: center;vertical-align: middle;">Line</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
+												<td style="text-align: center;vertical-align: middle;">
+													<?php 
+														$waktu = $x->tanggal_mulai;
+
+														$hari_array = array(
+															'Minggu',
+															'Senin',
+															'Selasa',
+															'Rabu',
+															'Kamis',
+															'Jumat',
+															'Sabtu'
+														);
+														$hr = date('w', strtotime($waktu));
+														$hari = $hari_array[$hr];
+														$tanggal = date('j', strtotime($waktu));
+														$bulan_array = array(
+															1 => 'Januari',
+															2 => 'Februari',
+															3 => 'Maret',
+															4 => 'April',
+															5 => 'Mei',
+															6 => 'Juni',
+															7 => 'Juli',
+															8 => 'Agustus',
+															9 => 'September',
+															10 => 'Oktober',
+															11 => 'November',
+															12 => 'Desember',
+														);
+														$bl = date('n', strtotime($waktu));
+														$bulan = $bulan_array[$bl];
+														$tahun = date('Y', strtotime($waktu));
+														
+														echo "$hari, $tanggal $bulan $tahun";
+													?>
+													<input type="hidden" id="s<?= $no;?>" value="<?php 
+															$waktu = $x->tanggal_mulai;
+
+															$hari_array = array(
+																'Minggu',
+																'Senin',
+																'Selasa',
+																'Rabu',
+																'Kamis',
+																'Jumat',
+																'Sabtu'
+															);
+															$hr = date('w', strtotime($waktu));
+															$hari = $hari_array[$hr];
+															$tanggal = date('j', strtotime($waktu));
+															$bulan_array = array(
+																1 => 'Januari',
+																2 => 'Februari',
+																3 => 'Maret',
+																4 => 'April',
+																5 => 'Mei',
+																6 => 'Juni',
+																7 => 'Juli',
+																8 => 'Agustus',
+																9 => 'September',
+																10 => 'Oktober',
+																11 => 'November',
+																12 => 'Desember',
+															);
+															$bl = date('n', strtotime($waktu));
+															$bulan = $bulan_array[$bl];
+															$tahun = date('Y', strtotime($waktu));
+															
+															echo "$hari, $tanggal $bulan $tahun";
+														?>"
+													>
+													<input type="hidden" id="id_produksi<?= $no;?>" value="<?= $x->id_produksi;?>">
+												</td>
+												</td>
+											</tr>
+										</tbody>
+										
+										<?php $no++; } else {?>
+											<p style="text-align: center;vertical-align: middle;">
+												<b style="color: red">Tidak ada permintaan material</b>
+											</p>
+										<?php }} ?>
+									</table>
+								</div>
+
+								<hr class="dotted short">
+								<div class="text-right">
+									<a class="text-uppercase text-muted" href="<?= base_url()?>perencanaanProduksi/semua_perencanaan_produksi">(Lihat Semua)</a>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- pengambilan material -->
+				<div class="col-md-12 col-lg-6 col-xl-6">
+					<section class="panel">
+						<header class="panel-heading panel-heading-transparent">
+							<h2 class="panel-title">
+								<span class="va-middle">Pengambilan Material</span>
+							</h2>
+						</header>
+						<div class="panel-body panel-featured-left panel-featured-danger">
+							<div class="content">
+								<div style="height:250px;overflow:scroll">
+									<table class="table-responsive table table-hover mb-none">
+									<?php 
+										$no = 1;
+										foreach($monday as $x){
+												$waktu = $x->tanggal_mulai;
+
+												$bulan_array = array(
+													1 => 'Januari',
+													2 => 'Februari',
+													3 => 'Maret',
+													4 => 'April',
+													5 => 'Mei',
+													6 => 'Juni',
+													7 => 'Juli',
+													8 => 'Agustus',
+													9 => 'September',
+													10 => 'Oktober',
+													11 => 'November',
+													12 => 'Desember',
+												);
+												$bl    = date('n', strtotime($waktu));
+												$bulan = $bulan_array[$bl];
+												$tahun = date('Y', strtotime($waktu));
+												
+												if($bulan == $bulan_now && $tahun == $tahun_now){
+										?>
+										<thead>
+											<tr>
+												<th colspan="4" style="text-align: center;vertical-align: middle;">
+														<h4><b><span class="va-middle">HARI INI</span></b></h4>
+												</th>
+											</tr>
+											<tr>
+												<th style="text-align: center;vertical-align: middle;">No</th>
+												<th style="text-align: center;vertical-align: middle;">Material</th>
+												<th style="text-align: center;vertical-align: middle;">Line</th>
+											</tr>
+										</thead>
+										<tbody>
+											
+												<tr>
+													<td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
+													<td style="text-align: center;vertical-align: middle;">
+														<?php 
+															$waktu = $x->tanggal_mulai;
+
+															$hari_array = array(
+																'Minggu',
+																'Senin',
+																'Selasa',
+																'Rabu',
+																'Kamis',
+																'Jumat',
+																'Sabtu'
+															);
+															$hr = date('w', strtotime($waktu));
+															$hari = $hari_array[$hr];
+															$tanggal = date('j', strtotime($waktu));
+															$bulan_array = array(
+																1 => 'Januari',
+																2 => 'Februari',
+																3 => 'Maret',
+																4 => 'April',
+																5 => 'Mei',
+																6 => 'Juni',
+																7 => 'Juli',
+																8 => 'Agustus',
+																9 => 'September',
+																10 => 'Oktober',
+																11 => 'November',
+																12 => 'Desember',
+															);
+															$bl = date('n', strtotime($waktu));
+															$bulan = $bulan_array[$bl];
+															$tahun = date('Y', strtotime($waktu));
+															
+															echo "$hari, $tanggal $bulan $tahun";
+														?>
+														<input type="hidden" id="s<?= $no;?>" value="<?php 
+																$waktu = $x->tanggal_mulai;
+
+																$hari_array = array(
+																	'Minggu',
+																	'Senin',
+																	'Selasa',
+																	'Rabu',
+																	'Kamis',
+																	'Jumat',
+																	'Sabtu'
+																);
+																$hr = date('w', strtotime($waktu));
+																$hari = $hari_array[$hr];
+																$tanggal = date('j', strtotime($waktu));
+																$bulan_array = array(
+																	1 => 'Januari',
+																	2 => 'Februari',
+																	3 => 'Maret',
+																	4 => 'April',
+																	5 => 'Mei',
+																	6 => 'Juni',
+																	7 => 'Juli',
+																	8 => 'Agustus',
+																	9 => 'September',
+																	10 => 'Oktober',
+																	11 => 'November',
+																	12 => 'Desember',
+																);
+																$bl = date('n', strtotime($waktu));
+																$bulan = $bulan_array[$bl];
+																$tahun = date('Y', strtotime($waktu));
+																
+																echo "$hari, $tanggal $bulan $tahun";
+															?>"
+														>
+														<input type="hidden" id="id_produksi<?= $no;?>" value="<?= $x->id_produksi;?>">
+													</td>
+													</td>
+												</tr>
+
+										</tbody>
+										<?php $no++; } else {?>
+											<p style="text-align: center;vertical-align: middle;">
+												<b style="color: red">Belum ada pengambilan material</b>
+											</p>
+										<?php }} ?>
+									</table>
+								</div>
+
+								<hr class="dotted short">
+								<div class="text-right">
+									<a class="text-uppercase text-muted" href="<?= base_url()?>perencanaanProduksi/semua_perencanaan_produksi">(Lihat Semua)</a>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+			<div class="col-md-12 col-lg-12 col-xl-12">
+				<!-- MATERIAL COST -->
+				<div class="col-md-12 col-lg-12 col-xl-12">
+					<section class="panel">
+						<header class="panel-heading panel-heading-transparent">
+							<h2 class="panel-title">
+								<span class="va-middle">Laporan Material Cost Hari Ini</span>
+							</h2>
+						</header>
+						<div class="panel-body panel-featured-left panel-featured-danger">
+							<div class="content">
+								<div class="table-responsive" style="height:175px;overflow: scroll">
+									<?php if($jm_perencanaan_hari_ini > 0){?>
+										<table class="table table-hover mb-none">
+											<thead>
+												<tr>
+													<th style="text-align: center;vertical-align: middle;">No.</th>
+													<th style="text-align: center;vertical-align: middle;">Nama Produk</th>
+													<th style="text-align: center;vertical-align: middle;">Material Cost</th>
+													<th style="text-align: center;vertical-align: middle;">Detail</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php 
+													$no = 1;
+													foreach($perencanaan_hari_ini as $phi){?>
+													<tr>
+														<td style="text-align: center;vertical-align: middle;">
+															<?= $no ?>
+														</td>
+														<td style="text-align: center;vertical-align: middle;">
+															<!-- memiliki ukuran & warna -->
+														</td>
+														<td style="text-align: center;vertical-align: middle;">
+														</td>
+														<td style="text-align: center;vertical-align: middle;">
+															<!-- button aksi detail -->
+														</td>
+													</tr>
+												<?php $no++; } ?>
+											</tbody>
+										</table>
+									<?php } else {?>
+										<p style="text-align: center;vertical-align: middle;">
+											<b style="color: red">Belum ada laporan</b>
+										</p>
+									<?php } ?>
+								</div>
+
+								<hr class="dotted short">
+								<div class="text-right">
+									<a class="text-uppercase text-muted" href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line">(Lihat Semua)</a>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	<!-- -->
+		<?php } else if($_SESSION['nama_departemen'] == "Purchasing" && $_SESSION['nama_jabatan'] == "Admin"){?>
+	<!-- ADMIN PURCHASING ------------------------------------------------------------------------------------------>
+		<div class="row">
+			<div class="col-md-6 col-lg-12 col-xl-6">
+				<!-- PO Cust -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#670B0B">
+										<i class="fa  fa-th-list"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">PO Customer</h4>
+										<sub>(belum diproses)</sub>
+										<div class="info">
+											<strong class="amount"><?= $po[0]['jumlah_po'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>perencanaanProduksi">(proses)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- PO Supp -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#670B0B">
+										<i class="fa  fa-th-list"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">PO Supplier</h4>
+										<sub>(belum disetujui)</sub>
+										<div class="info">
+											<strong class="amount"><?= $po[0]['jumlah_po'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>perencanaanProduksi">(proses)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- permintaan pembelian -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#BE2525">
+										<i class="fa  fa-cube"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">Permintaan <br>Pembelian</h4>
+										<sub>(belum ditinjau)</sub>
+										<div class="info">
+											<strong class="amount"><?= $jumlah_produk[0]['jumlah_produk'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>produk">(lihat semua)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-12 col-xl-6">
+				<!-- Pengeluaran Uang untuk Material -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#670B0B">
+										<i class="fa  fa-th-list"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">Pengeluaran <br>Bulan Ini</h4>
+										<sub>(untuk material)</sub>
+										<div class="info">
+											<strong class="amount"><?= $po[0]['jumlah_po'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>perencanaanProduksi">(proses)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- invoice -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#670B0B">
+										<i class="fa  fa-file-text-o"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">Invoice Out</h4>
+										<sub>(belum diproses)</sub>
+										<div class="info">
+											<strong class="amount"><?= $invoice[0]['jumlah_invoice'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>invoice/belum_diproses_invoice">(lihat semua)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+			<div class="col-md-12 col-lg-12 col-xl-12">
+				<!-- MATERIAL COST -->
+				<div class="col-md-12 col-lg-12 col-xl-12">
+					<section class="panel">
+						<header class="panel-heading panel-heading-transparent">
+							<h2 class="panel-title">
+								<span class="va-middle">Laporan Material Cost Hari Ini</span>
+							</h2>
+						</header>
+						<div class="panel-body panel-featured-left panel-featured-danger">
+							<div class="content">
+								<div class="table-responsive" style="height:175px;overflow: scroll">
+									<?php if($jm_perencanaan_hari_ini > 0){?>
+										<table class="table table-hover mb-none">
+											<thead>
+												<tr>
+													<th style="text-align: center;vertical-align: middle;">No.</th>
+													<th style="text-align: center;vertical-align: middle;">Nama Produk</th>
+													<th style="text-align: center;vertical-align: middle;">Material Cost</th>
+													<th style="text-align: center;vertical-align: middle;">Detail</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php 
+													$no = 1;
+													foreach($perencanaan_hari_ini as $phi){?>
+													<tr>
+														<td style="text-align: center;vertical-align: middle;">
+															<?= $no ?>
+														</td>
+														<td style="text-align: center;vertical-align: middle;">
+															<!-- memiliki ukuran & warna -->
+														</td>
+														<td style="text-align: center;vertical-align: middle;">
+														</td>
+														<td style="text-align: center;vertical-align: middle;">
+															<!-- button aksi detail -->
+														</td>
+													</tr>
+												<?php $no++; } ?>
+											</tbody>
+										</table>
+									<?php } else {?>
+										<p style="text-align: center;vertical-align: middle;">
+											<b style="color: red">Belum ada laporan</b>
+										</p>
+									<?php } ?>
+								</div>
+
+								<hr class="dotted short">
+								<div class="text-right">
+									<a class="text-uppercase text-muted" href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line">(Lihat Semua)</a>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	<!-- -->
+		<?php } else if($_SESSION['nama_departemen'] == "Material" && $_SESSION['nama_jabatan'] == "PPIC"){?>
+	<!-- PPIC Material ------------------------------------------------------------------------------------------>
+		<div class="row">
+			<div class="col-md-6 col-lg-12 col-xl-6">
+				<!-- sub jenis material -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#BE2525">
+										<i class="fa  fa-cube"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">Sub Jenis <br>Material</h4>
+										<sub>(total semua)</sub>
+										<div class="info">
+											<strong class="amount"><?= $jumlah_produk[0]['jumlah_produk'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>produk">(lihat semua)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-12 col-xl-6">
+				<!-- permintaan material -->
+				<div class="col-md-12 col-lg-6 col-xl-6">
+					<section class="panel">
+						<header class="panel-heading panel-heading-transparent">
+							<h2 class="panel-title">
+								<span class="va-middle">Permintaan Material</span>
+							</h2>
+						</header>
+						<div class="panel-body panel-featured-left panel-featured-danger">
+							<div class="content">
+								<div style="height:250px;overflow:scroll">
+									<table class="table-responsive table table-hover mb-none">
+										<?php 
+											$no = 1;
+											foreach($monday as $x){
+													$waktu = $x->tanggal_mulai;
+
+													$bulan_array = array(
+														1 => 'Januari',
+														2 => 'Februari',
+														3 => 'Maret',
+														4 => 'April',
+														5 => 'Mei',
+														6 => 'Juni',
+														7 => 'Juli',
+														8 => 'Agustus',
+														9 => 'September',
+														10 => 'Oktober',
+														11 => 'November',
+														12 => 'Desember',
+													);
+													$bl    = date('n', strtotime($waktu));
+													$bulan = $bulan_array[$bl];
+													$tahun = date('Y', strtotime($waktu));
+													
+													if($bulan == $bulan_now && $tahun == $tahun_now){
+											?>
+										<thead>
+											<tr>
+												<th colspan="4" style="text-align: center;vertical-align: middle;">
+														<h4><b><span class="va-middle">HARI INI</span></b></h4>
+												</th>
+											</tr>
+											<tr>
+												<th style="text-align: center;vertical-align: middle;">No</th>
+												<th style="text-align: center;vertical-align: middle;">Produk</th>
+												<th style="text-align: center;vertical-align: middle;">Line</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
+												<td style="text-align: center;vertical-align: middle;">
+													<?php 
+														$waktu = $x->tanggal_mulai;
+
+														$hari_array = array(
+															'Minggu',
+															'Senin',
+															'Selasa',
+															'Rabu',
+															'Kamis',
+															'Jumat',
+															'Sabtu'
+														);
+														$hr = date('w', strtotime($waktu));
+														$hari = $hari_array[$hr];
+														$tanggal = date('j', strtotime($waktu));
+														$bulan_array = array(
+															1 => 'Januari',
+															2 => 'Februari',
+															3 => 'Maret',
+															4 => 'April',
+															5 => 'Mei',
+															6 => 'Juni',
+															7 => 'Juli',
+															8 => 'Agustus',
+															9 => 'September',
+															10 => 'Oktober',
+															11 => 'November',
+															12 => 'Desember',
+														);
+														$bl = date('n', strtotime($waktu));
+														$bulan = $bulan_array[$bl];
+														$tahun = date('Y', strtotime($waktu));
+														
+														echo "$hari, $tanggal $bulan $tahun";
+													?>
+													<input type="hidden" id="s<?= $no;?>" value="<?php 
+															$waktu = $x->tanggal_mulai;
+
+															$hari_array = array(
+																'Minggu',
+																'Senin',
+																'Selasa',
+																'Rabu',
+																'Kamis',
+																'Jumat',
+																'Sabtu'
+															);
+															$hr = date('w', strtotime($waktu));
+															$hari = $hari_array[$hr];
+															$tanggal = date('j', strtotime($waktu));
+															$bulan_array = array(
+																1 => 'Januari',
+																2 => 'Februari',
+																3 => 'Maret',
+																4 => 'April',
+																5 => 'Mei',
+																6 => 'Juni',
+																7 => 'Juli',
+																8 => 'Agustus',
+																9 => 'September',
+																10 => 'Oktober',
+																11 => 'November',
+																12 => 'Desember',
+															);
+															$bl = date('n', strtotime($waktu));
+															$bulan = $bulan_array[$bl];
+															$tahun = date('Y', strtotime($waktu));
+															
+															echo "$hari, $tanggal $bulan $tahun";
+														?>"
+													>
+													<input type="hidden" id="id_produksi<?= $no;?>" value="<?= $x->id_produksi;?>">
+												</td>
+												</td>
+											</tr>
+										</tbody>
+										
+										<?php $no++; } else {?>
+											<p style="text-align: center;vertical-align: middle;">
+												<b style="color: red">Tidak ada permintaan material</b>
+											</p>
+										<?php }} ?>
+									</table>
+								</div>
+
+								<hr class="dotted short">
+								<div class="text-right">
+									<a class="text-uppercase text-muted" href="<?= base_url()?>perencanaanProduksi/semua_perencanaan_produksi">(Lihat Semua)</a>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- pengambilan material -->
+				<div class="col-md-12 col-lg-6 col-xl-6">
+					<section class="panel">
+						<header class="panel-heading panel-heading-transparent">
+							<h2 class="panel-title">
+								<span class="va-middle">Pengambilan Material</span>
+							</h2>
+						</header>
+						<div class="panel-body panel-featured-left panel-featured-danger">
+							<div class="content">
+								<div style="height:250px;overflow:scroll">
+									<table class="table-responsive table table-hover mb-none">
+									<?php 
+										$no = 1;
+										foreach($monday as $x){
+												$waktu = $x->tanggal_mulai;
+
+												$bulan_array = array(
+													1 => 'Januari',
+													2 => 'Februari',
+													3 => 'Maret',
+													4 => 'April',
+													5 => 'Mei',
+													6 => 'Juni',
+													7 => 'Juli',
+													8 => 'Agustus',
+													9 => 'September',
+													10 => 'Oktober',
+													11 => 'November',
+													12 => 'Desember',
+												);
+												$bl    = date('n', strtotime($waktu));
+												$bulan = $bulan_array[$bl];
+												$tahun = date('Y', strtotime($waktu));
+												
+												if($bulan == $bulan_now && $tahun == $tahun_now){
+										?>
+										<thead>
+											<tr>
+												<th colspan="4" style="text-align: center;vertical-align: middle;">
+														<h4><b><span class="va-middle">HARI INI</span></b></h4>
+												</th>
+											</tr>
+											<tr>
+												<th style="text-align: center;vertical-align: middle;">No</th>
+												<th style="text-align: center;vertical-align: middle;">Material</th>
+												<th style="text-align: center;vertical-align: middle;">Line</th>
+											</tr>
+										</thead>
+										<tbody>
+											
+												<tr>
+													<td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
+													<td style="text-align: center;vertical-align: middle;">
+														<?php 
+															$waktu = $x->tanggal_mulai;
+
+															$hari_array = array(
+																'Minggu',
+																'Senin',
+																'Selasa',
+																'Rabu',
+																'Kamis',
+																'Jumat',
+																'Sabtu'
+															);
+															$hr = date('w', strtotime($waktu));
+															$hari = $hari_array[$hr];
+															$tanggal = date('j', strtotime($waktu));
+															$bulan_array = array(
+																1 => 'Januari',
+																2 => 'Februari',
+																3 => 'Maret',
+																4 => 'April',
+																5 => 'Mei',
+																6 => 'Juni',
+																7 => 'Juli',
+																8 => 'Agustus',
+																9 => 'September',
+																10 => 'Oktober',
+																11 => 'November',
+																12 => 'Desember',
+															);
+															$bl = date('n', strtotime($waktu));
+															$bulan = $bulan_array[$bl];
+															$tahun = date('Y', strtotime($waktu));
+															
+															echo "$hari, $tanggal $bulan $tahun";
+														?>
+														<input type="hidden" id="s<?= $no;?>" value="<?php 
+																$waktu = $x->tanggal_mulai;
+
+																$hari_array = array(
+																	'Minggu',
+																	'Senin',
+																	'Selasa',
+																	'Rabu',
+																	'Kamis',
+																	'Jumat',
+																	'Sabtu'
+																);
+																$hr = date('w', strtotime($waktu));
+																$hari = $hari_array[$hr];
+																$tanggal = date('j', strtotime($waktu));
+																$bulan_array = array(
+																	1 => 'Januari',
+																	2 => 'Februari',
+																	3 => 'Maret',
+																	4 => 'April',
+																	5 => 'Mei',
+																	6 => 'Juni',
+																	7 => 'Juli',
+																	8 => 'Agustus',
+																	9 => 'September',
+																	10 => 'Oktober',
+																	11 => 'November',
+																	12 => 'Desember',
+																);
+																$bl = date('n', strtotime($waktu));
+																$bulan = $bulan_array[$bl];
+																$tahun = date('Y', strtotime($waktu));
+																
+																echo "$hari, $tanggal $bulan $tahun";
+															?>"
+														>
+														<input type="hidden" id="id_produksi<?= $no;?>" value="<?= $x->id_produksi;?>">
+													</td>
+													</td>
+												</tr>
+
+										</tbody>
+										<?php $no++; } else {?>
+											<p style="text-align: center;vertical-align: middle;">
+												<b style="color: red">Belum ada pengambilan material</b>
+											</p>
+										<?php }} ?>
+									</table>
+								</div>
+
+								<hr class="dotted short">
+								<div class="text-right">
+									<a class="text-uppercase text-muted" href="<?= base_url()?>perencanaanProduksi/semua_perencanaan_produksi">(Lihat Semua)</a>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	<!-- -->
+	<!-- OPERATOR GUDANG ------------------------------------------------------------------------------------------>
+		<div class="row">
+			<div class="col-md-6 col-lg-12 col-xl-6">
+				<!-- material -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#BE2525">
+										<i class="fa  fa-cube"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">Material</h4>
+										<sub>(total semua)</sub>
+										<div class="info">
+											<strong class="amount"><?= $jumlah_produk[0]['jumlah_produk'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>produk">(lihat semua)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- delivery note -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#BE2525">
+										<i class="fa  fa-cube"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">Delivery <br>Note</h4>
+										<sub>(sedang proses)</sub>
+										<div class="info">
+											<strong class="amount"><?= $jumlah_produk[0]['jumlah_produk'] ?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>produk">(lihat semua)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-12 col-xl-6">
+				<!-- pemasukan material -->
+				<div class="col-md-12 col-lg-6 col-xl-6">
+					<section class="panel">
+						<header class="panel-heading panel-heading-transparent">
+							<h2 class="panel-title">
+								<span class="va-middle">Pemasukan Material</span>
+							</h2>
+						</header>
+						<div class="panel-body panel-featured-left panel-featured-danger">
+							<div class="content">
+								<div style="height:250px;overflow:scroll">
+									<table class="table-responsive table table-hover mb-none">
+										<?php 
+											$no = 1;
+											foreach($monday as $x){
+													$waktu = $x->tanggal_mulai;
+
+													$bulan_array = array(
+														1 => 'Januari',
+														2 => 'Februari',
+														3 => 'Maret',
+														4 => 'April',
+														5 => 'Mei',
+														6 => 'Juni',
+														7 => 'Juli',
+														8 => 'Agustus',
+														9 => 'September',
+														10 => 'Oktober',
+														11 => 'November',
+														12 => 'Desember',
+													);
+													$bl    = date('n', strtotime($waktu));
+													$bulan = $bulan_array[$bl];
+													$tahun = date('Y', strtotime($waktu));
+													
+													if($bulan == $bulan_now && $tahun == $tahun_now){
+											?>
+										<thead>
+											<tr>
+												<th colspan="4" style="text-align: center;vertical-align: middle;">
+														<h4><b><span class="va-middle">HARI INI</span></b></h4>
+												</th>
+											</tr>
+											<tr>
+												<th style="text-align: center;vertical-align: middle;">No</th>
+												<th style="text-align: center;vertical-align: middle;">Material</th>
+												<th style="text-align: center;vertical-align: middle;">Jumlah</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
+												<td style="text-align: center;vertical-align: middle;">
+													<?php 
+														$waktu = $x->tanggal_mulai;
+
+														$hari_array = array(
+															'Minggu',
+															'Senin',
+															'Selasa',
+															'Rabu',
+															'Kamis',
+															'Jumat',
+															'Sabtu'
+														);
+														$hr = date('w', strtotime($waktu));
+														$hari = $hari_array[$hr];
+														$tanggal = date('j', strtotime($waktu));
+														$bulan_array = array(
+															1 => 'Januari',
+															2 => 'Februari',
+															3 => 'Maret',
+															4 => 'April',
+															5 => 'Mei',
+															6 => 'Juni',
+															7 => 'Juli',
+															8 => 'Agustus',
+															9 => 'September',
+															10 => 'Oktober',
+															11 => 'November',
+															12 => 'Desember',
+														);
+														$bl = date('n', strtotime($waktu));
+														$bulan = $bulan_array[$bl];
+														$tahun = date('Y', strtotime($waktu));
+														
+														echo "$hari, $tanggal $bulan $tahun";
+													?>
+													<input type="hidden" id="s<?= $no;?>" value="<?php 
+															$waktu = $x->tanggal_mulai;
+
+															$hari_array = array(
+																'Minggu',
+																'Senin',
+																'Selasa',
+																'Rabu',
+																'Kamis',
+																'Jumat',
+																'Sabtu'
+															);
+															$hr = date('w', strtotime($waktu));
+															$hari = $hari_array[$hr];
+															$tanggal = date('j', strtotime($waktu));
+															$bulan_array = array(
+																1 => 'Januari',
+																2 => 'Februari',
+																3 => 'Maret',
+																4 => 'April',
+																5 => 'Mei',
+																6 => 'Juni',
+																7 => 'Juli',
+																8 => 'Agustus',
+																9 => 'September',
+																10 => 'Oktober',
+																11 => 'November',
+																12 => 'Desember',
+															);
+															$bl = date('n', strtotime($waktu));
+															$bulan = $bulan_array[$bl];
+															$tahun = date('Y', strtotime($waktu));
+															
+															echo "$hari, $tanggal $bulan $tahun";
+														?>"
+													>
+													<input type="hidden" id="id_produksi<?= $no;?>" value="<?= $x->id_produksi;?>">
+												</td>
+												</td>
+											</tr>
+										</tbody>
+										
+										<?php $no++; } else {?>
+											<p style="text-align: center;vertical-align: middle;">
+												<b style="color: red">Belum ada pemasukan material</b>
+											</p>
+										<?php }} ?>
+									</table>
+								</div>
+
+								<hr class="dotted short">
+								<div class="text-right">
+									<a class="text-uppercase text-muted" href="<?= base_url()?>perencanaanProduksi/semua_perencanaan_produksi">(Lihat Semua)</a>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- pengeluaran material -->
+				<div class="col-md-12 col-lg-6 col-xl-6">
+					<section class="panel">
+						<header class="panel-heading panel-heading-transparent">
+							<h2 class="panel-title">
+								<span class="va-middle">Pengeluaran Material</span>
+							</h2>
+						</header>
+						<div class="panel-body panel-featured-left panel-featured-danger">
+							<div class="content">
+								<div style="height:250px;overflow:scroll">
+									<table class="table-responsive table table-hover mb-none">
+									<?php 
+										$no = 1;
+										foreach($monday as $x){
+												$waktu = $x->tanggal_mulai;
+
+												$bulan_array = array(
+													1 => 'Januari',
+													2 => 'Februari',
+													3 => 'Maret',
+													4 => 'April',
+													5 => 'Mei',
+													6 => 'Juni',
+													7 => 'Juli',
+													8 => 'Agustus',
+													9 => 'September',
+													10 => 'Oktober',
+													11 => 'November',
+													12 => 'Desember',
+												);
+												$bl    = date('n', strtotime($waktu));
+												$bulan = $bulan_array[$bl];
+												$tahun = date('Y', strtotime($waktu));
+												
+												if($bulan == $bulan_now && $tahun == $tahun_now){
+										?>
+										<thead>
+											<tr>
+												<th colspan="4" style="text-align: center;vertical-align: middle;">
+														<h4><b><span class="va-middle">HARI INI</span></b></h4>
+												</th>
+											</tr>
+											<tr>
+												<th style="text-align: center;vertical-align: middle;">No</th>
+												<th style="text-align: center;vertical-align: middle;">Material</th>
+												<th style="text-align: center;vertical-align: middle;">Jumlah</th>
+											</tr>
+										</thead>
+										<tbody>
+											
+												<tr>
+													<td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
+													<td style="text-align: center;vertical-align: middle;">
+														<?php 
+															$waktu = $x->tanggal_mulai;
+
+															$hari_array = array(
+																'Minggu',
+																'Senin',
+																'Selasa',
+																'Rabu',
+																'Kamis',
+																'Jumat',
+																'Sabtu'
+															);
+															$hr = date('w', strtotime($waktu));
+															$hari = $hari_array[$hr];
+															$tanggal = date('j', strtotime($waktu));
+															$bulan_array = array(
+																1 => 'Januari',
+																2 => 'Februari',
+																3 => 'Maret',
+																4 => 'April',
+																5 => 'Mei',
+																6 => 'Juni',
+																7 => 'Juli',
+																8 => 'Agustus',
+																9 => 'September',
+																10 => 'Oktober',
+																11 => 'November',
+																12 => 'Desember',
+															);
+															$bl = date('n', strtotime($waktu));
+															$bulan = $bulan_array[$bl];
+															$tahun = date('Y', strtotime($waktu));
+															
+															echo "$hari, $tanggal $bulan $tahun";
+														?>
+														<input type="hidden" id="s<?= $no;?>" value="<?php 
+																$waktu = $x->tanggal_mulai;
+
+																$hari_array = array(
+																	'Minggu',
+																	'Senin',
+																	'Selasa',
+																	'Rabu',
+																	'Kamis',
+																	'Jumat',
+																	'Sabtu'
+																);
+																$hr = date('w', strtotime($waktu));
+																$hari = $hari_array[$hr];
+																$tanggal = date('j', strtotime($waktu));
+																$bulan_array = array(
+																	1 => 'Januari',
+																	2 => 'Februari',
+																	3 => 'Maret',
+																	4 => 'April',
+																	5 => 'Mei',
+																	6 => 'Juni',
+																	7 => 'Juli',
+																	8 => 'Agustus',
+																	9 => 'September',
+																	10 => 'Oktober',
+																	11 => 'November',
+																	12 => 'Desember',
+																);
+																$bl = date('n', strtotime($waktu));
+																$bulan = $bulan_array[$bl];
+																$tahun = date('Y', strtotime($waktu));
+																
+																echo "$hari, $tanggal $bulan $tahun";
+															?>"
+														>
+														<input type="hidden" id="id_produksi<?= $no;?>" value="<?= $x->id_produksi;?>">
+													</td>
+													</td>
+												</tr>
+
+										</tbody>
+										<?php $no++; } else {?>
+											<p style="text-align: center;vertical-align: middle;">
+												<b style="color: red">Belum ada pengeluaran material</b>
+											</p>
+										<?php }} ?>
+									</table>
+								</div>
+
+								<hr class="dotted short">
+								<div class="text-right">
+									<a class="text-uppercase text-muted" href="<?= base_url()?>perencanaanProduksi/semua_perencanaan_produksi">(Lihat Semua)</a>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	<!-- -->
+		<?php } ?>
+<!------------------------------------------------------ DASHBOARD PRODUKSI ------------------------------------------------------->
+
 <!--*****************************-->
 <?php include('_endtitle.php'); ?>
 <?php include('_js.php'); ?>
