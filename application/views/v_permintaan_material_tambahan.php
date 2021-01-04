@@ -27,7 +27,7 @@
 
 <!-- ------------------------------------------ BELUM DITINJAU --------------------------------------- -->
 <?php if($status == '0'){ ?>
-<h1>Permintaan Material - Belum Ditinjau</h1>
+<h1>Permintaan Material Tambahan - Belum Ditinjau</h1>
 <hr>
 
 <section class="panel">
@@ -37,7 +37,7 @@
             <a href="#" class="fa fa-times"></a>
         </div>
 
-        <h2 class="panel-title">Permintaan Material - Belum Ditinjau</h2>
+        <h2 class="panel-title">Permintaan Material Tambahan - Belum Ditinjau</h2>
     </header>
     <div class="panel-body">
         <table class="table table-bordered table-striped mb-none" id="datatable-default">
@@ -45,9 +45,8 @@
                 <tr>
                     <th class="col-lg-1" style="text-align: center;vertical-align: middle;">No.</th>
                     <!-- <th class="col-lg-2">Kode Permintaan Material</th> -->
-                    <th class="col-lg-1" style="text-align: center;vertical-align: middle;">Tanggal Permintaan</th>
-                    <th class="col-lg-1" style="text-align: center;vertical-align: middle;">Tanggal Produksi</th>
-                    <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Produk</th>
+                    <th class="col-lg-1" style="text-align: center;vertical-align: middle;">Jumlah</th>
+                    <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Material</th>
                     <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Line</th>
                     <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Status</th>
                     <th class="col-lg-3" style="text-align: center;vertical-align: middle;">Aksi</th>
@@ -55,22 +54,21 @@
             </thead>
             <tbody>
                 <?php $no=1;
-                    for($x=0 ; $x<count($permintaan_material) ; $x++){
-                        if ($status == 0 || $status == 4){ 
-                            if($permintaan_material[$x]['status_permintaan'] == 0){
+                    for($x=0 ; $x<count($tambahan) ; $x++){
+                        if ($status == 0){ 
+                            if($tambahan[$x]['status'] == 0){
                 ?>
                 <tr>
                     <td> <?php echo $no ?>
-                    <input type="hidden" id="idd<?= $x ?>" value="<?= $permintaan_material[$x]['id_permintaan_material'] ?>"> </td>
+                    <input type="hidden" id="idd<?= $x ?>" value="<?= $tambahan[$x]['id_permintaan_tambahan'] ?>"> </td>
                     <!-- <td style="text-align: center;vertical-align: middle;"></td> -->
-                    <td><?= $permintaan_material[$x]['tanggal_permintaan'] ?></td>
-                    <td><?= $permintaan_material[$x]['tanggal_produksi'] ?></td>
-                    <td><?= $permintaan_material[$x]['nama_produk'] ?></td>
-                    <td><?= $permintaan_material[$x]['nama_line'] ?></td>
+                    <td><?= $tambahan[$x]['jumlah_tambah'] ?></td>
+                    <td><?= $tambahan[$x]['kode_sub_jenis_material'] ." - ".$tambahan[$x]['nama_jenis_material'] ." ".$tambahan[$x]['nama_sub_jenis_material'] ?></td>
+                    <td><?= $tambahan[$x]['nama_line'] ?></td>
                     <td>Belum Ditinjau / Menunggu Persetujuan
                         <input type="hidden" id="ketersediaan<?= $x ?>" value="<?php $cek=0;
                             for($det=0; $det<count($detail); $det++){
-                                if($permintaan_material[$x]['id_permintaan_material'] == $detail[$det]['id_permintaan_material']){
+                                if($tambahan[$x]['id_permintaan_material'] == $detail[$det]['id_permintaan_material']){
                                     $produk = $detail[$det]['jumlah_minta'];
                                     $cons = $detail[$det]['jumlah_konsumsi'];
                                     $needs = $produk*$cons;
@@ -90,7 +88,7 @@
                     </td>
                     <td>
                         <a class="col-lg-3 btn btn-primary fa fa-info-circle"
-                            title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail/' . $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
+                            title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail_tambah/' . $tambahan[$x]['id_permintaan_tambahan'] ?>"></a>
                             
                         <?php if ((($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
                             || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material"))){ ?>
@@ -107,10 +105,10 @@
                 <!-- ************************************************************************** -->
                     <div class="modal" id="setuju" role="dialog">
                         <div class="modal-dialog modal-xl" style="width:50%">
-                            <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PermintaanMaterial/setuju" method="post">
+                            <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PermintaanMaterial/setuju_tambah" method="post">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title"><b>Menyetujui Permintaan Material</b></h4>
+                                        <h4 class="modal-title"><b>Menyetujui Permintaan Material Tambahan</b></h4>
                                     </div>
                                     <div class="modal-body">
                                         <input type="hidden" name="idnyaa" id="idnyaa" class="form-control" value="" readonly>
@@ -136,10 +134,10 @@
                 <!-- ************************************************************************ -->
                 <div class="modal" id="tolak" role="dialog">
                         <div class="modal-dialog modal-xl" style="width:50%">
-                            <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PermintaanMaterial/setuju" method="post">
+                            <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PermintaanMaterial/setuju_tambah" method="post">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title"><b>Menolak Permintaan Material</b></h4>
+                                        <h4 class="modal-title"><b>Menolak Permintaan Material Tambahan</b></h4>
                                     </div>
                                     <div class="modal-body">
                                         <input type="hidden" name="idnyaa" id="idnya" class="form-control" value="" readonly>
@@ -181,7 +179,7 @@
             <a href="#" class="fa fa-times"></a>
         </div>
 
-        <h2 class="panel-title">Permintaan Material - Sedang Proses</h2>
+        <h2 class="panel-title">Permintaan Material Tambahan - Sedang Proses</h2>
     </header>
     <div class="panel-body">
         <table class="table table-bordered table-striped mb-none" id="datatable-default">
@@ -189,9 +187,8 @@
                 <tr>
                     <th class="col-lg-1" style="text-align: center;vertical-align: middle;">No.</th>
                     <!-- <th class="col-lg-2">Kode Permintaan Material</th> -->
-                    <th class="col-lg-1" style="text-align: center;vertical-align: middle;">Tanggal Permintaan</th>
-                    <th class="col-lg-1" style="text-align: center;vertical-align: middle;">Tanggal Produksi</th>
-                    <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Produk</th>
+                    <th class="col-lg-1" style="text-align: center;vertical-align: middle;">Jumlah</th>
+                    <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Material</th>
                     <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Line</th>
                     <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Status</th>
                     <th class="col-lg-3" style="text-align: center;vertical-align: middle;">Aksi</th>
@@ -199,140 +196,25 @@
             </thead>
             <tbody>
                 <?php $no=1;
-                    for($x=0 ; $x<count($permintaan_material) ; $x++){
+                    for($x=0 ; $x<count($tambahan) ; $x++){
                         if ($status == 1 || $status == 4){ 
-                            if($permintaan_material[$x]['status_permintaan'] == 1 || $permintaan_material[$x]['status_permintaan'] == 2){
+                            if($tambahan[$x]['status'] == 1){
                 ?>
                 <tr>
                     <td> <?php echo $no ?>
-                    <input type="hidden" id="idd<?= $x ?>" value="<?= $permintaan_material[$x]['id_permintaan_material'] ?>"> </td>
+                    <input type="hidden" id="idd<?= $x ?>" value="<?= $tambahan[$x]['id_permintaan_tambahan'] ?>"> </td>
                     <!-- <td style="text-align: center;vertical-align: middle;"></td> -->
-                    <td><?= $permintaan_material[$x]['tanggal_permintaan'] ?></td>
-                    <td><?= $permintaan_material[$x]['tanggal_produksi'] ?></td>
-                    <td><?= $permintaan_material[$x]['nama_produk'] ?></td>
-                    <td> <?= $permintaan_material[$x]['nama_line'] ?> </td>
-                    <td> <?php if ($permintaan_material[$x]['status_permintaan'] == 1){
-                        echo "Proses Pembelian";
-                    } else if ($permintaan_material[$x]['status_permintaan'] == 2){
-                        echo "Material Tersedia";
-                    } ?> </td>
+                    <td><?= $tambahan[$x]['jumlah_tambah'] ?></td>
+                    <td><?= $tambahan[$x]['kode_sub_jenis_material'] ." - ".$tambahan[$x]['nama_jenis_material'] ." ".$tambahan[$x]['nama_sub_jenis_material'] ?></td>
+                    <td><?= $tambahan[$x]['nama_line'] ?></td>
+                    <td> Diterima, Menunggu Pengambilan </td>
                     <td>
                         <a class="col-lg-3 btn btn-primary fa fa-info-circle"
-                            title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail/' . $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
+                            title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail_tambah/' . $tambahan[$x]['id_permintaan_tambahan'] ?>"></a>
                         <a class="col-lg-3 btn btn-info fa fa-file-text" title="Perencanaan"
-                            href="<?php echo base_url() . 'PermintaanMaterial/proses_perencanaan/' . $permintaan_material[$x]['id_permintaan_material']?>"></a>
-                        
-                        <?php if ($permintaan_material[$x]['status_permintaan'] == 1 &&
-                            (($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
-                            || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material"))){ ?>
-                            <button type="button" class="sediaz col-lg-3 btn btn-success fa fa-check" 
-                                value="<?php echo $x ?>" title="Tersedia"></button>
-                        <?php } ?>
-
-                        <?php if ($permintaan_material[$x]['status_permintaan'] == 2 &&
-                            (($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
-                            || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material"))){ ?>
-                            <button type="button" class="selesaiz col-lg-3 btn btn-success fa fa-check" 
-                                value="<?php echo $x ?>" title="Selesaikan"></button>
-                        <?php } ?>
-                        
-                        <?php if ((($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
-                            || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material"))){ ?>
-                            <button type="button" class="batalz col-lg-3 btn btn-danger fa fa-times" 
-                                value="<?php echo $x ?>" title="Batal"></button>
-                        <?php } ?>
-                        <!-- <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
-                            value="<?php echo $x ?>" title="Hapus"></button> -->
+                            href="<?php echo base_url() . 'PermintaanMaterial/proses_perencanaan_tambah/' . $tambahan[$x]['id_permintaan_tambahan']?>"></a>
                     </td>
                 </tr>
-
-                
-                <!-- ****************************** MODAL SEDIA ***************************** -->
-                <!-- ************************************************************************ -->
-                <div class="modal" id="sedia" role="dialog">
-                    <div class="modal-dialog modal-xl" style="width:50%">
-                        <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PermintaanMaterial/setuju" method="post">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title"><b>Persediaan Semua Material</b></h4>
-                                </div>
-                                <div class="modal-body">
-                                    <input type="hidden" name="idnyaa" id="idsedia" class="form-control" value="" readonly>
-                                    <input type="hidden" name="status" class="form-control" value="2" readonly>
-                                    <div id="isisedia"></div>
-                                </div>
-                                <footer class="panel-footer">
-                                    <div class="row">
-                                        <div class="col-md-12 text-right">
-                                            <input type="submit" class="btn btn-primary" value="Ya">
-                                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
-                                        </div>
-                                    </div>
-                                </footer>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!-- **************************** END MODAL SEDIA *************************** -->
-                <!-- ************************************************************************ -->
-
-                <!-- ****************************** MODAL SELESAI ***************************** -->
-                <!-- ************************************************************************** -->
-                <div class="modal" id="selesai" role="dialog">
-                    <div class="modal-dialog modal-xl" style="width:50%">
-                        <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PermintaanMaterial/setuju" method="post">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title"><b>Menyelesaikan Permintaan Material</b></h4>
-                                </div>
-                                <div class="modal-body">
-                                    <input type="hidden" name="idnyaa" id="idselesai" class="form-control" value="" readonly>
-                                    <input type="hidden" name="status" class="form-control" value="3" readonly>
-                                    <div id="isiselesai"></div>
-                                </div>
-                                <footer class="panel-footer">
-                                    <div class="row">
-                                        <div class="col-md-12 text-right">
-                                            <input type="submit" class="btn btn-primary" value="Ya">
-                                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
-                                        </div>
-                                    </div>
-                                </footer>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!-- **************************** END MODAL SELESAI *************************** -->
-                <!-- ************************************************************************** -->
-
-                <!-- ****************************** MODAL BATAL ***************************** -->
-                <!-- ************************************************************************ -->
-                <div class="modal" id="batal" role="dialog">
-                    <div class="modal-dialog modal-xl" style="width:50%">
-                        <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PermintaanMaterial/setuju" method="post">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title"><b>Menolak Permintaan Material</b></h4>
-                                </div>
-                                <div class="modal-body">
-                                    <input type="hidden" name="idnyaa" id="idbatal" class="form-control" value="" readonly>
-                                    <input type="hidden" name="status" class="form-control" value="3" readonly>
-                                    <div id="isibatal"></div>
-                                </div>
-                                <footer class="panel-footer">
-                                    <div class="row">
-                                        <div class="col-md-12 text-right">
-                                            <input type="submit" class="btn btn-primary" value="Ya">
-                                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
-                                        </div>
-                                    </div>
-                                </footer>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!-- ***************************** END MODAL BATAL *************************** -->
-                <!-- ************************************************************************* -->
                 <?php $no=$no+1; } } } ?>
             </tbody>
         </table>
@@ -343,7 +225,7 @@
 
 <!-- ----------------------------------------------- SELESAI ----------------------------------------- -->
 <?php }else if($status == '2'){ ?>
-<h1>Permintaan Material - Selesai</h1>
+<h1>Permintaan Material Tambahan - Selesai</h1>
 <hr>
 
 <section class="panel">
@@ -413,7 +295,7 @@
 
 <!-- ----------------------------------------------- BATAL ----------------------------------------- -->
 <?php }else if($status == '3'){ ?>
-<h1>Permintaan Material - Batal / Ditolak</h1>
+<h1>Permintaan Material Tambahan - Batal / Ditolak</h1>
 <hr>
 
 <section class="panel">
@@ -474,7 +356,7 @@
 
 <!-- ----------------------------------------------- SEMUA ----------------------------------------- -->
 <?php }else if($status == '4'){ ?>
-<h1>Permintaan Material - Semua</h1>
+<h1>Permintaan Material Tambahan - Semua</h1>
 <hr>
 
 <section class="panel">
@@ -585,12 +467,12 @@
 
         $.ajax({
             type:"post",    
-            url:"<?php echo base_url() ?>PermintaanMaterial/ajax",
+            url:"<?php echo base_url() ?>PermintaanMaterial/ajax_tambah",
             dataType: "JSON",
             data: {id:id},
 
             success: function(respond){
-                $isi = 'Anda akan menyetujui Permintaan Material dengan No. Form <b>'+respond['permat'][0]['id_permintaan_material']+'</b>?';
+                $isi = 'Anda akan menyetujui Permintaan Material Tambahan dengan No. Form <b>'+respond['permat'][0]['id_permintaan_tambahan']+'</b>?';
                 $("#isisetuju").html($isi);
                 $("#idnyaa").val(id);
                 $("#setuju").modal();
@@ -606,7 +488,7 @@
 
          $.ajax({
             type:"post",    
-            url:"<?php echo base_url() ?>PermintaanMaterial/ajax",
+            url:"<?php echo base_url() ?>PermintaanMaterial/ajax_tambah",
             dataType: "JSON",
             data: {id:id},
 
@@ -614,7 +496,7 @@
                 $isi = 
                     //'<input type="hidden" name="id_permintaan_material" class="form-control" value="'+respond['permat'][0]['id_permintaan_material']+'" readonly>'+
                     //'<input type="hidden" name="status" class="form-control" value="1" readonly>'+
-                    'Anda akan menolak Permintaan Material dengan No. Form <b>'+respond['permat'][0]['id_permintaan_material']+'</b>?';
+                    'Anda akan menolak Permintaan Material dengan No. Form <b>'+respond['permat'][0]['id_permintaan_tambahan']+'</b>?';
 
                 $("#isitolak").html($isi);
                 $("#idnya").val(id);

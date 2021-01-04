@@ -132,7 +132,7 @@ href="<?php if(count($po)==0){
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Tanggal Delivery Note<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="date" class="form-control" name="tgl_dn" min="<?= date('Y-m-01') ?>" max="<?= date('Y-m-d') ?>" required>
+                        <input type="date" class="form-control" name="tgl_dn" value="<?= date('Y-m-d') ?>" readonly>
                     </div>
                 </div>
                 <div class="form-group mt-lg">

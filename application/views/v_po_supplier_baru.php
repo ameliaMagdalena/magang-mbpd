@@ -72,7 +72,7 @@
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Tanggal PO<span class="required">*</span></label>
 					<div class="col-sm-7">
-                        <input type="date" name="tgl_po" class="form-control" min="<?= date('Y-m-01')?>" max="<?= date('Y-m-d')?>" required>
+                        <input type="date" name="tgl_po" class="form-control" value="<?= date('Y-m-d')?>" readonly>
                     </div>
                 </div>
                 <div class="form-group mt-lg">

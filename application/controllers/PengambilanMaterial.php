@@ -223,4 +223,46 @@ class PengambilanMaterial extends CI_Controller {
         redirect('PermintaanMaterial/proses_perencanaan/' . $permintaan);
     }
     
+    public function diambil_tambah(){
+        $jlh_keluar = $this->M_PengeluaranMaterial->selectAllPengeluaranMaterial()->num_rows();
+        $permintaan = $this->input->post('id_permintaan');
+        $idpengeluaran = $jlh_keluar+1;
+
+        $data2 = array (
+            "id_pengeluaran_material" => "KELUAR-".$idpengeluaran,
+            "id_sub_jenis_material"=>$this->input->post("amaterial"),
+            "tanggal_keluar"=>$this->input->post("atgl_ambil"),
+            "jumlah_keluar"=>$this->input->post("ajumlah"),
+            "keterangan_keluar"=>"0", //0=produksi
+            "user_add"=>$_SESSION['id_user'],
+            "waktu_add"=>date('Y-m-d H:i:s'),
+            "user_edit"=>"0",
+            "user_delete"=>"0"
+        );
+        $this->M_PengeluaranMaterial->insert($data2);
+
+        $where = array(
+            'id_pengambilan_material' => $this->input->post("id_pengambilan")
+        );
+        $data = array (
+            "id_pengeluaran_material" => "KELUAR-".$idpengeluaran,
+            "status_keluar" => $this->input->post("status"),
+            "user_edit"=>$_SESSION['id_user'],
+            "waktu_add"=>date('Y-m-d H:i:s'),
+        );
+        $this->M_PengambilanMaterial->editPengambilanMaterial($data, $where);
+
+        $where3 = array(
+            'id_permintaan_tambahan' => $permintaan
+        );
+        $data3 = array (
+            "status" => "3",
+            "user_edit"=>$_SESSION['id_user'],
+            "waktu_add"=>date('Y-m-d H:i:s'),
+        );
+        $this->M_PerencanaanMaterial->editPermintaanTambahan($data3, $where3);
+
+        redirect('PermintaanMaterial/proses_perencanaan_tambah/' . $permintaan);
+    }
+    
 }
