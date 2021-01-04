@@ -236,11 +236,11 @@
 											Ditolak
 										</a>
 									</li>
-									<li>
+									<!-- <li>
 										<a href="<?php echo base_url() . 'PerubahanHargaMaterial/index/3'?>">
 											Semua
 										</a>
-									</li>
+									</li> -->
 								</ul>
 							</li>
 

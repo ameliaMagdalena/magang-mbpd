@@ -46,58 +46,28 @@
                 </tr>
             </thead>
             <tbody>
-                <?php for($x=0; $x<count($ubah); $x++){ ?>
+                <?php for($x=0; $x<count($ubah); $x++){ 
+                        if ($ubah[$x]['status_persetujuan'] == 0 && $status == 0){ ?>
                     <tr>
                         <td><?php echo $ubah[$x]['kode_sub_jenis_material'] . " - " . $ubah[$x]['nama_jenis_material'] . " " . $ubah[$x]['nama_sub_jenis_material']?></td>
                         <td><?php echo $ubah[$x]['nama_supplier']?></td>
-                        <?php if ($status == 0){?>
-                            <td>Menunggu Persetujuan</td>
-                            <td>
-                                <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                    title="Detail" href="#modaldetail<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
-                                <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                    title="Edit" href="#modaledit<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
-                                <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                    title="Hapus" href="#modalhapus<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
+                        <td>Menunggu Persetujuan</td>
+                        <td>
+                            <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
+                                title="Detail" href="#modaldetail<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
+                            <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
+                                title="Edit" href="#modaledit<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
+                            <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
+                                title="Hapus" href="#modalhapus<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
 
-                                <?php if($_SESSION['nama_departemen']=='Management' && $_SESSION['nama_jabatan']=='Direktur'){ ?>
-                                    <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                        title="Setujui" href="#modalsetuju<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
-                                    <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                        title="Tolak" href="#modaltolak<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
-                                <?php } ?>
-                            </td>
-                        <?php } else  if ($status == 1){?>
-                            <td class="col-lg-2">Disetujui</td>
-                            <td class="col-lg-3">
-                                <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                    title="Detail" href="#modaldetail<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
-                            </td>
-                        <?php } else if ($status == 2){?>
-                            <td class="col-lg-2">Ditolak</td>
-                            <td class="col-lg-3">
-                                <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                    title="Detail" href="#modaldetail<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
-                            </td>
-                        <?php } else{?>
-                            <td class="col-lg-2">
-                                <?php if($ubah[$x]['status_persetujuan']==0){
-                                    echo "Menunggu Persetujuan";
-                                } else if($ubah[$x]['status_persetujuan']==1){
-                                    echo "Disetujui";
-                                } else{
-                                    echo "Ditolak";
-                                } ?>
-                            </td>
-                            <td class="col-lg-3">
-                                <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                    title="Detail" href="#modaldetail<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
-                                <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                    title="Hapus" href="#modalhapus<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
-                            </td>
-                        <?php } ?>
+                            <?php if($_SESSION['nama_departemen']=='Management' && $_SESSION['nama_jabatan']=='Direktur'){ ?>
+                                <a class="modal-with-form col-lg-3 btn btn-success fa fa-check"
+                                    title="Setujui" href="#modalsetuju<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
+                                <a class="modal-with-form col-lg-3 btn btn-danger fa fa-times"
+                                    title="Tolak" href="#modaltolak<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
+                            <?php } ?>
+                        </td>
                     </tr>
-
 
                     <!-- ****************************** MODAL DETAIL ****************************** -->
                     <!-- ************************************************************************** -->
@@ -222,7 +192,7 @@
                                         <label class="col-sm-4 control-label">Keterangan</label>
                                         <div class="col-sm-8">
                                             <input type="text" name="keterangan" class="form-control"
-                                            value="<?php echo $material[$x]['keterangan'] ?>">
+                                            value="<?php echo $ubah[$x]['keterangan'] ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -272,7 +242,7 @@
 
                     <!-- ******************************* MODAL SETUJU ***************************** -->
                     <!-- ************************************************************************** -->
-                    <div id='modalhapus<?php echo $ubah[$x]['id_perubahan_harga']?>' class="modal-block modal-block-primary mfp-hide">
+                    <div id='modalsetuju<?php echo $ubah[$x]['id_perubahan_harga']?>' class="modal-block modal-block-primary mfp-hide">
                         <section class="panel">
                             <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PerubahanHargaMaterial/setuju" method="post">
                                 <header class="panel-heading">
@@ -280,6 +250,7 @@
                                 </header>
                                 
                                 <input type="hidden" name="idnya" value="<?php echo $ubah[$x]['id_perubahan_harga']?>">
+                                <input type="hidden" name="idsup" value="<?php echo $ubah[$x]['id_detail_supplier']?>">
                                 <input type="hidden" name="status" value="1">
                                 
                                 <div class="panel-body" style="color: black">
@@ -318,7 +289,7 @@
 
                     <!-- ******************************* MODAL TOLAK ***************************** -->
                     <!-- ************************************************************************* -->
-                    <div id='modalhapus<?php echo $ubah[$x]['id_perubahan_harga']?>' class="modal-block modal-block-primary mfp-hide">
+                    <div id='modaltolak<?php echo $ubah[$x]['id_perubahan_harga']?>' class="modal-block modal-block-primary mfp-hide">
                         <section class="panel">
                             <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PerubahanHargaMaterial/setuju" method="post">
                                 <header class="panel-heading">
@@ -347,7 +318,237 @@
                     <!-- ***************************** END MODAL TOLAK **************************** -->
                     <!-- ************************************************************************** -->
 
-                <?php } ?>
+                <?php } else if($ubah[$x]['status_persetujuan'] == 1 && $status == 1){ ?>
+                    <tr>
+                        <td><?php echo $ubah[$x]['kode_sub_jenis_material'] . " - " . $ubah[$x]['nama_jenis_material'] . " " . $ubah[$x]['nama_sub_jenis_material']?></td>
+                        <td><?php echo $ubah[$x]['nama_supplier']?></td>
+                        <td>Disetujui</td>
+                        <td>
+                            <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
+                                title="Detail" href="#modaldetail<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
+                            <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
+                                title="Hapus" href="#modalhapus<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
+                        </td>
+                    </tr>
+
+                    <!-- ****************************** MODAL DETAIL ****************************** -->
+                    <!-- ************************************************************************** -->
+                    <div id='modaldetail<?php echo $ubah[$x]['id_perubahan_harga']?>' class="modal-block modal-block-primary mfp-hide">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                <h2 class="panel-title">Detail Perubahan Harga Material</h2>
+                            </header>
+
+                            <div class="panel-body">
+                                <input type="hidden" name="id_material" class="form-control" value="<?php echo $ubah[$x]['id_perubahan_harga']?>" readonly>
+                                
+                                <div class="form-group mt-lg">
+                                    <label class="col-sm-3 control-label">Jenis Material</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="jenis" class="form-control"
+                                        value="<?php echo $ubah[$x]['kode_sub_jenis_material'] . " - " . $ubah[$x]['nama_jenis_material'] . " " . $ubah[$x]['nama_sub_jenis_material'] ?>" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-lg">
+                                    <label class="col-sm-3 control-label">Supplier</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="satuan" class="form-control"
+                                        value="<?php echo $ubah[$x]['nama_supplier'] ?>" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-lg">
+                                    <label class="col-sm-3 control-label">Harga Sebelum</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="jumlah_stok" class="form-control"
+                                        value="<?php echo $ubah[$x]['harga_sebelum'] ?>" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-lg">
+                                    <label class="col-sm-3 control-label">Harga Sesudah</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="jumlah_stok" class="form-control"
+                                        value="<?php echo $ubah[$x]['harga_sesudah'] ?>" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-lg">
+                                    <label class="col-sm-3 control-label">Status</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="jumlah_stok" class="form-control"
+                                            value="<?php if($ubah[$x]['status_persetujuan']==0){
+                                                echo "Menunggu Persetujuan";
+                                            } else if($ubah[$x]['status_persetujuan']==1){
+                                                echo "Disetujui";
+                                            } else{
+                                                echo "Ditolak";
+                                            } ?>" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-lg">
+                                    <label class="col-sm-3 control-label">Keterangan</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="jumlah_stok" class="form-control"
+                                        value="<?php echo $ubah[$x]['keterangan'] ?> " readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <button type="button" class="btn btn-default modal-dismiss">OK</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </section>
+                    </div>
+                    <!-- **************************** END MODAL DETAIL **************************** -->
+                    <!-- ************************************************************************** -->
+
+                    <!-- ******************************* MODAL HAPUS ****************************** -->
+                    <!-- ************************************************************************** -->
+                    <div id='modalhapus<?php echo $ubah[$x]['id_perubahan_harga']?>' class="modal-block modal-block-primary mfp-hide">
+                        <section class="panel">
+                            <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PerubahanHargaMaterial/hapus" method="post">
+                                <header class="panel-heading">
+                                    <h2 class="panel-title">Hapus Data Perubahan Harga Material</h2>
+                                </header>
+                                
+                                <input type="hidden" name="idnya" value="<?php echo $ubah[$x]['id_perubahan_harga']?>">
+                                
+                                <div class="panel-body" style="color: black">
+                                    Apakah anda yakin akan menghapus data perubahan harga material 
+                                    <?php echo $ubah[$x]['nama_jenis_material'] . " " . $ubah[$x]['nama_sub_jenis_material']?>
+                                    oleh supplier <?php echo $ubah[$x]['nama_supplier'] ?>?
+                                </div>
+                                <footer class="panel-footer">
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <input type="submit" id="tambah" class="btn btn-danger" value="Hapus">
+                                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                        </div>
+                                    </div>
+                                </footer>
+                            </form>
+                        </section>
+                    </div>
+                    <!-- ***************************** END MODAL HAPUS ***************************** -->
+                    <!-- *************************************************************************** -->
+
+                <?php } else if($ubah[$x]['status_persetujuan'] == 2 && $status == 2){ ?>
+                    <tr>
+                        <td><?php echo $ubah[$x]['kode_sub_jenis_material'] . " - " . $ubah[$x]['nama_jenis_material'] . " " . $ubah[$x]['nama_sub_jenis_material']?></td>
+                        <td><?php echo $ubah[$x]['nama_supplier']?></td>
+                        <td>Ditolak</td>
+                        <td>
+                            <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
+                                title="Detail" href="#modaldetail<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
+                            <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
+                                title="Hapus" href="#modalhapus<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
+                        </td>
+                    </tr>
+
+
+                    <!-- ****************************** MODAL DETAIL ****************************** -->
+                    <!-- ************************************************************************** -->
+                    <div id='modaldetail<?php echo $ubah[$x]['id_perubahan_harga']?>' class="modal-block modal-block-primary mfp-hide">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                <h2 class="panel-title">Detail Perubahan Harga Material</h2>
+                            </header>
+
+                            <div class="panel-body">
+                                <input type="hidden" name="id_material" class="form-control" value="<?php echo $ubah[$x]['id_perubahan_harga']?>" readonly>
+                                
+                                <div class="form-group mt-lg">
+                                    <label class="col-sm-3 control-label">Jenis Material</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="jenis" class="form-control"
+                                        value="<?php echo $ubah[$x]['kode_sub_jenis_material'] . " - " . $ubah[$x]['nama_jenis_material'] . " " . $ubah[$x]['nama_sub_jenis_material'] ?>" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-lg">
+                                    <label class="col-sm-3 control-label">Supplier</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="satuan" class="form-control"
+                                        value="<?php echo $ubah[$x]['nama_supplier'] ?>" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-lg">
+                                    <label class="col-sm-3 control-label">Harga Sebelum</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="jumlah_stok" class="form-control"
+                                        value="<?php echo $ubah[$x]['harga_sebelum'] ?>" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-lg">
+                                    <label class="col-sm-3 control-label">Harga Sesudah</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="jumlah_stok" class="form-control"
+                                        value="<?php echo $ubah[$x]['harga_sesudah'] ?>" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-lg">
+                                    <label class="col-sm-3 control-label">Status</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="jumlah_stok" class="form-control"
+                                            value="<?php if($ubah[$x]['status_persetujuan']==0){
+                                                echo "Menunggu Persetujuan";
+                                            } else if($ubah[$x]['status_persetujuan']==1){
+                                                echo "Disetujui";
+                                            } else{
+                                                echo "Ditolak";
+                                            } ?>" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-lg">
+                                    <label class="col-sm-3 control-label">Keterangan</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="jumlah_stok" class="form-control"
+                                        value="<?php echo $ubah[$x]['keterangan'] ?> " readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <button type="button" class="btn btn-default modal-dismiss">OK</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </section>
+                    </div>
+                    <!-- **************************** END MODAL DETAIL **************************** -->
+                    <!-- ************************************************************************** -->
+
+                    <!-- ******************************* MODAL HAPUS ****************************** -->
+                    <!-- ************************************************************************** -->
+                    <div id='modalhapus<?php echo $ubah[$x]['id_perubahan_harga']?>' class="modal-block modal-block-primary mfp-hide">
+                        <section class="panel">
+                            <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PerubahanHargaMaterial/hapus" method="post">
+                                <header class="panel-heading">
+                                    <h2 class="panel-title">Hapus Data Perubahan Harga Material</h2>
+                                </header>
+                                
+                                <input type="hidden" name="idnya" value="<?php echo $ubah[$x]['id_perubahan_harga']?>">
+                                
+                                <div class="panel-body" style="color: black">
+                                    Apakah anda yakin akan menghapus data perubahan harga material 
+                                    <?php echo $ubah[$x]['nama_jenis_material'] . " " . $ubah[$x]['nama_sub_jenis_material']?>
+                                    oleh supplier <?php echo $ubah[$x]['nama_supplier'] ?>?
+                                </div>
+                                <footer class="panel-footer">
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <input type="submit" id="tambah" class="btn btn-danger" value="Hapus">
+                                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                        </div>
+                                    </div>
+                                </footer>
+                            </form>
+                        </section>
+                    </div>
+                    <!-- ***************************** END MODAL HAPUS ***************************** -->
+                    <!-- *************************************************************************** -->
+                <?php }} ?>
             </tbody>
         </table>
     </div>
