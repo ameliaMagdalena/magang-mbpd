@@ -149,7 +149,7 @@
                             <section class="panel">
                                 <form class="form-horizontal mb-lg" action="<?php echo base_url()?>Customer/edit_sub_customer" method="post">
                                     <header class="panel-heading">
-                                        <h2 class="panel-title">Edit Data Customer</h2>
+                                        <h2 class="panel-title">Edit Data Sub Customer</h2>
                                     </header>
 
                                     <div class="panel-body">
@@ -160,21 +160,21 @@
                                             <label class="col-sm-4 control-label">Nama Sub Customer</label>
                                             <div class="col-sm-8">
                                                 <input type="text" name="nama_sub_customer" class="form-control"
-                                                value="<?php echo $sub_customer[$y]['nama_sub_customer']?>">
+                                                value="<?php echo $sub_customer[$y]['nama_sub_customer']?>" required>
                                             </div>
                                         </div>
                                         <div class="form-group mt-lg">
                                             <label class="col-sm-4 control-label">Nama PIC</label>
                                             <div class="col-sm-8">
                                                 <input type="text" name="nama_pic" class="form-control"
-                                                value="<?php echo $sub_customer[$y]['nama_pic'] ?>">
+                                                value="<?php echo $sub_customer[$y]['nama_pic'] ?>" required>
                                             </div>
                                         </div>
                                         <div class="form-group mt-lg">
                                             <label class="col-sm-4 control-label">No. Telp. PIC</label>
                                             <div class="col-sm-8">
                                                 <input type="text" name="no_telp_pic" class="form-control"
-                                                value="<?php echo $sub_customer[$y]['no_telp_pic'] ?>">
+                                                value="<?php echo $sub_customer[$y]['no_telp_pic'] ?>" required>
                                             </div>
                                         </div>
                                     </div>

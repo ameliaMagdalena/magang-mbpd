@@ -48,4 +48,9 @@ class M_PermintaanTambahan extends CI_Model {
     function cek_batal($tanggal){
         $this->db->query(" UPDATE permintaan_tambahan SET status='4' WHERE (status BETWEEN 0 AND 1) AND waktu_add<'$tanggal' ");
     }
+
+    function selectPermintaanTambahanAktif(){
+        return $this->db->query("SELECT * FROM permintaan_tambahan
+        WHERE status_delete='0'");
+    }
 }

@@ -185,7 +185,7 @@
                         <section class="panel">
                             <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PerubahanHargaMaterial/setuju" method="post">
                                 <header class="panel-heading">
-                                    <h2 class="panel-title">Menyetujui Perubahan Harga Material</h2>
+                                    <h2 class="panel-title">Menolak Perubahan Harga Material</h2>
                                 </header>
                                 
                                 <input type="hidden" name="idnya" value="<?php echo $ubah[$x]['id_perubahan_harga']?>">

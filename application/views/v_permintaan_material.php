@@ -222,24 +222,48 @@
                         <a class="col-lg-3 btn btn-info fa fa-file-text" title="Perencanaan"
                             href="<?php echo base_url() . 'PermintaanMaterial/proses_perencanaan/' . $permintaan_material[$x]['id_permintaan_material']?>"></a>
                         
-                        <?php if ($permintaan_material[$x]['status_permintaan'] == 1 &&
-                            (($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
-                            || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material"))){ ?>
-                            <button type="button" class="sediaz col-lg-3 btn btn-success fa fa-check" 
-                                value="<?php echo $x ?>" title="Tersedia"></button>
-                        <?php } ?>
+
+                        <input type="hidden" id="sediaa<?= $x ?>" value="<?php $cek=0;
+                            for($det=0; $det<count($detail); $det++){
+                                if($permintaan_material[$x]['id_permintaan_material'] == $detail[$det]['id_permintaan_material']){
+                                    $produk = $detail[$det]['jumlah_minta'];
+                                    $cons = $detail[$det]['jumlah_konsumsi'];
+                                    $needs = $produk*$cons;
+
+                                    $ketersediaan = 0;
+                                    for($mat=0; $mat<count($material); $mat++){
+                                        if($detail[$det]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
+                                            $ketersediaan = $ketersediaan+1; //jumlah di gudang
+                                        }
+                                    }
+                                    
+                                    if($ketersediaan<$needs){
+                                        $cek=$cek+1; //jika tidak tersedia, maka cek > 0
+                                    }
+                                }
+                            } echo $cek;
+                        ?>">
+                        <?php if($ketersediaan>=$needs){
+                                if ($permintaan_material[$x]['status_permintaan'] == 1 &&
+                                (($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
+                                || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material"))){ ?>
+                                    <button type="button" class="sediaz col-lg-3 btn btn-success fa fa-check" 
+                                    value="<?php echo $x ?>" title="Tersedia"></button>
+                            <?php }
+                        } ?>
+
 
                         <?php if ($permintaan_material[$x]['status_permintaan'] == 2 &&
                             (($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
                             || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material"))){ ?>
-                            <button type="button" class="selesaiz col-lg-3 btn btn-success fa fa-check" 
-                                value="<?php echo $x ?>" title="Selesaikan"></button>
+                            <!-- <button type="button" class="selesaiz col-lg-3 btn btn-success fa fa-check" 
+                                value="<?php echo $x ?>" title="Selesaikan"></button> -->
                         <?php } ?>
-                        
+
                         <?php if ((($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
                             || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material"))){ ?>
-                            <button type="button" class="batalz col-lg-3 btn btn-danger fa fa-times" 
-                                value="<?php echo $x ?>" title="Batal"></button>
+                            <!-- <button type="button" class="batalz col-lg-3 btn btn-danger fa fa-times" 
+                                value="<?php echo $x ?>" title="Batal"></button> -->
                         <?php } ?>
                         <!-- <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
                             value="<?php echo $x ?>" title="Hapus"></button> -->
@@ -386,22 +410,10 @@
                     <td>
                         <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail/' . $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
-                        <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
-                            value="<?php echo $x ?>" title="Hapus"></button>
+                        <!-- <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
+                            value="<?php echo $x ?>" title="Hapus"></button> -->
                     </td>
                 </tr>
-
-                <!-- <tr>
-                    <td class="col-2"> 1 </td>
-                    <td class="col-lg-2"> Compact Mattress </td>
-                    <td class="col-lg-3"> 13 Juni 2020 </td>
-                    <td class="col-lg-4">
-                        <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                            title="Detail" href="#modaldetail"></a>
-                        <a class="modal-with-form col-lg-3 btn btn-danger fa fa-shopping-cart"
-                            title="Beli Material" href="#modalbeli"></a>
-                    </td>
-                </tr> -->
                 <?php $no=$no+1;}}} ?>
             </tbody>
         </table>
@@ -460,8 +472,8 @@
                     <td>
                         <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail/' . $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
-                        <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
-                            value="<?php echo $x ?>" title="Hapus"></button>
+                        <!-- <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
+                            value="<?php echo $x ?>" title="Hapus"></button> -->
                     </td>
                 </tr>
                 <?php $no=$no+1;}}} ?>
@@ -528,30 +540,72 @@
                         <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail/' . $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
                         
-                        <?php if ($permintaan_material[$x]['status_permintaan'] == 1 &&
-                            (($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
-                            || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material"))){ ?>
-                            <button type="button" class="sediaz col-lg-3 btn btn-success fa fa-check" 
-                                value="<?php echo $x ?>" title="Tersedia"></button>
-                        <?php } ?>
+                        
+                        <input type="hidden" id="sediaaa<?= $x ?>" value="<?php $cek=0;
+                            for($det=0; $det<count($detail); $det++){
+                                if($permintaan_material[$x]['id_permintaan_material'] == $detail[$det]['id_permintaan_material']){
+                                    $produk = $detail[$det]['jumlah_minta'];
+                                    $cons = $detail[$det]['jumlah_konsumsi'];
+                                    $needs = $produk*$cons;
 
-                        <?php if ($permintaan_material[$x]['status_permintaan'] == 2 &&
-                            (($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
-                            || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material"))){ ?>
-                            <button type="button" class="selesaiz col-lg-3 btn btn-success fa fa-check" 
-                                value="<?php echo $x ?>" title="Selesaikan"></button>
-                        <?php } ?>
-                        
-                        <?php if ((($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
-                            || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material"))){ ?>
-                            <button type="button" class="batalz col-lg-3 btn btn-danger fa fa-times" 
-                                value="<?php echo $x ?>" title="Batal"></button>
-                        <?php } ?>
-                        
-                        <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
-                            value="<?php echo $x ?>" title="Hapus"></button>
+                                    $ketersediaan = 0;
+                                    for($mat=0; $mat<count($material); $mat++){
+                                        if($detail[$det]['id_sub_jenis_material'] == $material[$mat]['id_sub_jenis_material']){
+                                            $ketersediaan = $ketersediaan+1; //jumlah di gudang
+                                        }
+                                    }
+                                    
+                                    if($ketersediaan<$needs){
+                                        $cek=$cek+1; //jika tidak tersedia, maka cek > 0
+                                    }
+                                }
+                            } echo $cek;
+                        ?>">
+                        <?php if($ketersediaan>=$needs){
+                            if ($permintaan_material[$x]['status_permintaan'] == 1 &&
+                                (($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
+                                || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material"))){ ?>
+                                    <button type="button" class="sediaz col-lg-3 btn btn-success fa fa-check" 
+                                    value="<?php echo $x ?>" title="Tersedia"></button>
+                            <?php }
+                        } ?>
+
+                        <!-- <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
+                            value="<?php echo $x ?>" title="Hapus"></button> -->
                     </td>
                 </tr>
+
+                
+                <!-- ****************************** MODAL SEDIA ***************************** -->
+                <!-- ************************************************************************ -->
+                <div class="modal" id="sedia" role="dialog">
+                    <div class="modal-dialog modal-xl" style="width:50%">
+                        <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PermintaanMaterial/setuju" method="post">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"><b>Persediaan Semua Material</b></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" name="idnyaa" id="idsedia" class="form-control" value="" readonly>
+                                    <input type="hidden" name="status" class="form-control" value="2" readonly>
+                                    <div id="isisedia"></div>
+                                </div>
+                                <footer class="panel-footer">
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <input type="submit" class="btn btn-primary" value="Ya">
+                                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                        </div>
+                                    </div>
+                                </footer>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- **************************** END MODAL SEDIA *************************** -->
+                <!-- ************************************************************************ -->
+
+
                 <?php $no=$no+1;} ?>
             </tbody>
         </table>
