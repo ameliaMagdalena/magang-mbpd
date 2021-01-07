@@ -206,7 +206,7 @@ class Pdfx extends TCPDF
                                 <td><b>'.$inv[0]['nomor_rekening'].'</b></td>
                             </tr>
                             <tr>
-                                <td><b>Atas Nama'. $inv[0]['atas_nama'].'</b></td>
+                                <td><b>Atas Nama '. $inv[0]['atas_nama'].'</b></td>
                             </tr>
                       </table>';
 

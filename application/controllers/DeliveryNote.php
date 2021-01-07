@@ -467,7 +467,7 @@ class DeliveryNote extends CI_Controller {
         $data['dn'] = $this->M_DeliveryNote->selectSatuDeliveryNote($id_dn)->result_array();
         $data['detail_dn'] = $this->M_DeliveryNote->selectSatuDetailDN($id_dn)->result_array();
         $data['kary'] = $this->M_User->select_all_aktif()->result_array();
-
+        
 		$this->load->view('v_print_dn', $data);
     }
 
