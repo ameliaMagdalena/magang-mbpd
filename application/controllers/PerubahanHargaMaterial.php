@@ -8,6 +8,7 @@ class PerubahanHargaMaterial extends CI_Controller {
 
         $this->load->model('M_PerubahanHarga');
         $this->load->model('M_JenisMaterial');
+        $this->load->model('M_Supplier');
         $this->load->model('M_Dashboard');
         
         if($this->session->userdata('status_login') != "login"){
@@ -198,6 +199,7 @@ class PerubahanHargaMaterial extends CI_Controller {
     }
 
     public function persetujuan(){
+        $data['ubah'] = $this->M_PerubahanHarga->selectPerubahanHargaAktif()->result_array();
 
       //notif produksi
           //notif permintaan material produksi
@@ -375,7 +377,7 @@ class PerubahanHargaMaterial extends CI_Controller {
             //tutup notif permohonan akses
       //tutup
 
-		  $this->load->view('v_perubahan_harga_material_persetujuan');
+		  $this->load->view('v_perubahan_harga_material_persetujuan', $data);
     }
 
     public function baru(){
@@ -561,7 +563,29 @@ class PerubahanHargaMaterial extends CI_Controller {
         $this->load->view('v_perubahan_harga_material_baru', $data);
     }
 
-    public function detail(){
+    public function insert(){
+        $data = array(
+            "id_perubahan_harga"=>$this->input->post("id_perubahan"),
+            "id_detail_supplier"=>$this->input->post("material"),
+            "harga_sebelum"=>$this->input->post("hrg_sebelum"),
+            "harga_sesudah"=>$this->input->post("hrg_sesudah"),
+            "status_persetujuan"=>"0",
+            "keterangan"=>$this->input->post("keterangan"),
+            "user_add"=>$_SESSION['id_user'],
+            "waktu_add"=>date('Y-m-d H:i:s'),
+            "status_delete"=>"0"
+        );
+        $this->M_PerubahanHarga->insertPerubahanHarga($data, $where);
+        redirect('PerubahanHargaMaterial/index/0');
+    }
+
+    public function get_supplier(){
+        $id = $this->input->post("id");
+        $result = $this->M_PerubahanHarga->selectSatuSuppliernya($id)->result_array();
+        echo json_encode($result);
+    }
+    
+    public function get_harga(){
         $id = $this->input->post("id");
         $result = $this->M_PerubahanHarga->selectSatuDetailSupplier($id)->result_array();
         echo json_encode($result);
@@ -583,7 +607,7 @@ class PerubahanHargaMaterial extends CI_Controller {
     
     public function hapus(){
         $where = array(
-            "id_perubahan_harga" => $this->input->post("id_perubahan"),
+            "id_perubahan_harga" => $this->input->post("idnya"),
         );
         $data = array(
             "status_delete"=>"1",
@@ -591,13 +615,13 @@ class PerubahanHargaMaterial extends CI_Controller {
             "waktu_delete"=>date('Y-m-d H:i:s')
         );
         $this->M_PerubahanHarga->hapusPerubahanHarga($data, $where);
-        redirect('PerubahanHargaMaterial/index/3');
+        redirect('PerubahanHargaMaterial/index/1');
     }
 
     public function setuju(){
         $status = $this->input->post("status");
         $where = array(
-            "id_perubahan_harga" => $this->input->post("id_perubahan"),
+            "id_perubahan_harga" => $this->input->post("idnya"),
         );
         
         if($status==1){
@@ -608,12 +632,15 @@ class PerubahanHargaMaterial extends CI_Controller {
             );
             $this->M_PerubahanHarga->editPerubahanHarga($data, $where);
 
+            $where2 = array(
+                "id_detail_supplier" => $this->input->post("idsup"),
+            );
             $data2 = array(
                 "harga_material" => $this->input->post("hargabaru"),
                 "waktu_edit"=>date('Y-m-d H:i:s'),
                 "user_edit"=>$_SESSION['id_user']
             );
-            $this->M_Supplier->editDetailSupplier($data, $where);
+            $this->M_Supplier->editDetailSupplier($data2, $where2);
             redirect('PerubahanHargaMaterial/index/1');
         }
         else{

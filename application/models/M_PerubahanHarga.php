@@ -21,6 +21,10 @@ class M_PerubahanHarga extends CI_Model {
         WHERE a.status_delete='0'");
     }
 
+    function insertPerubahanHarga($data){
+        $this->db->insert('perubahan_harga', $data);
+    }
+
     function editPerubahanHarga($data,$where){
         $this->db->update('perubahan_harga', $data, $where);
     }
@@ -29,11 +33,18 @@ class M_PerubahanHarga extends CI_Model {
         $this->db->update('perubahan_harga', $data, $where);
     }
 
+    function selectSatuSuppliernya($id){
+        return $this->db->query("SELECT * FROM detail_supplier a
+        JOIN sub_jenis_material b ON a.id_sub_jenis_material = b.id_sub_jenis_material
+        JOIN jenis_material c ON b.id_jenis_material = c.id_jenis_material
+        WHERE a.status_delete='0' AND a.id_supplier='$id'");
+    }
+
     function selectSatuDetailSupplier($id){
         return $this->db->query("SELECT * FROM detail_supplier a
         JOIN sub_jenis_material b ON a.id_sub_jenis_material = b.id_sub_jenis_material
         JOIN jenis_material c ON b.id_jenis_material = c.id_jenis_material
-        WHERE a.status_delete='0' AND a.id_supplier=$id");
+        WHERE a.status_delete='0' AND a.id_detail_supplier='$id'");
     }
 
     function selectDetailSupplierAktif(){

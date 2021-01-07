@@ -29,6 +29,8 @@ class M_PurchaseOrderSupplier extends CI_Model {
     function selectSatuPOSupplier($id){
         return $this->db->query("SELECT * FROM purchase_order_supplier a
         JOIN supplier b ON a.id_supplier = b.id_supplier
+        JOIN user c ON a.user_add=c.id_user
+        JOIN karyawan d ON d.id_karyawan=c.id_karyawan
         WHERE a.status_delete=0 AND a.id_purchase_order_supplier='" . $id['id_purchase_order_supplier'] . "'");
     }
 
@@ -57,6 +59,7 @@ class M_PurchaseOrderSupplier extends CI_Model {
         JOIN sub_jenis_material b ON a.id_sub_jenis_material = b.id_sub_jenis_material
         JOIN jenis_material c ON b.id_jenis_material = c.id_jenis_material
         JOIN purchase_order_supplier d ON a.id_purchase_order_supplier = d.id_purchase_order_supplier
+        JOIN supplier e ON e.id_supplier = d.id_supplier
         WHERE a.status_delete=0 AND a.id_purchase_order_supplier='" . $id['id_purchase_order_supplier'] . "'");
     }
     

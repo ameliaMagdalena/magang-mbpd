@@ -39,87 +39,87 @@
         <table class="table table-bordered table-striped mb-none" id="datatable-default">
             <thead>
                 <tr>
-                    <th>No.</th>
-                    <th>Nama Jenis Material</th>
-                    <th>Supplier</th>
-                    <th>Harga Sebelum</th>
-                    <th>Harga Sesudah</th>
-                    <th>Aksi</th>
+                    <th style="text-align:center" class="col-lg-4">Jenis Material</th>
+                    <th style="text-align:center" class="col-lg-3">Supplier</th>
+                    <th style="text-align:center" class="col-lg-2">Status</th>
+                    <th style="text-align:center" class="col-lg-3">Aksi</th>
                 </tr>
             </thead>
             <tbody>
+                <?php for($x=0; $x<count($ubah); $x++){ 
+                    if($ubah[$x]['status_persetujuan']==0){ ?>
                     <tr>
-                        <td class="col-1"><?php //echo $x+1?> 1</td>
-                        <td class="col-lg-2"><?php //echo $material[$x]['email_material']?>REB55</td>
-                        <td class="col-lg-2"><?php //echo $material[$x]['nama_departemen']?>INOAC</td>
-                        <td class="col-lg-2"><?php //echo $material[$x]['nama_departemen']?>Rp 100.000</td>
-                        <td class="col-lg-2"><?php //echo $material[$x]['nama_departemen']?>Rp 110.000</td>
-                        <td class="col-lg-3">
+                        <td><?php echo $ubah[$x]['kode_sub_jenis_material'] . " - " . $ubah[$x]['nama_jenis_material'] . " " . $ubah[$x]['nama_sub_jenis_material']?></td>
+                        <td><?php echo $ubah[$x]['nama_supplier']?></td>
+                        <td>Menunggu Persetujuan</td>
+                        <td>
                             <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                                title="Detail" href="#modaldetail<?php //echo $material[$x]['id_material'] ?>"></a>
+                                title="Detail" href="#modaldetail<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
                             <a class="modal-with-form col-lg-3 btn btn-success fa fa-check"
-                                title="Konfirmasi" href="#<?php //echo $user[$x]['id_user'] ?>"></a>
+                                title="Setujui" href="#modalsetuju<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
                             <a class="modal-with-form col-lg-3 btn btn-danger fa fa-times"
-                                title="Tolak" href="#<?php //echo $user[$x]['id_user'] ?>"></a>
-                            <!-- <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                                title="Edit" href="#modaledit<?php //echo $user[$x]['id_user'] ?>"></a>
-                            <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                                title="Delete" href="#modalhapus<?php //echo $user[$x]['id_user'] ?>"></a> -->
+                                title="Tolak" href="#modaltolak<?php echo $ubah[$x]['id_perubahan_harga'] ?>"></a>
                         </td>
                     </tr>
 
 
                     <!-- ****************************** MODAL DETAIL ****************************** -->
                     <!-- ************************************************************************** -->
-                    <div id='modaldetail<?php //echo $material[$x]['id_material']?>' class="modal-block modal-block-primary mfp-hide">
+                    <div id='modaldetail<?php echo $ubah[$x]['id_perubahan_harga']?>' class="modal-block modal-block-primary mfp-hide">
                         <section class="panel">
                             <header class="panel-heading">
                                 <h2 class="panel-title">Detail Perubahan Harga Material</h2>
                             </header>
 
                             <div class="panel-body">
-                                <input type="hidden" name="id_material" class="form-control" value="<?php //echo $material[$x]['id_material']?>" readonly>
+                                <input type="hidden" name="id_material" class="form-control" value="<?php echo $ubah[$x]['id_perubahan_harga']?>" readonly>
                                 
                                 <div class="form-group mt-lg">
                                     <label class="col-sm-3 control-label">Jenis Material</label>
                                     <div class="col-sm-9">
                                         <input type="text" name="jenis" class="form-control"
-                                        value="<?php //echo $material[$x]['email_material'] ?>REB55" readonly>
+                                        value="<?php echo $ubah[$x]['kode_sub_jenis_material'] . " - " . $ubah[$x]['nama_jenis_material'] . " " . $ubah[$x]['nama_sub_jenis_material'] ?>" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group mt-lg">
                                     <label class="col-sm-3 control-label">Supplier</label>
                                     <div class="col-sm-9">
                                         <input type="text" name="satuan" class="form-control"
-                                        value="<?php //echo $material[$x]['nama_departemen'] ?>INOAC" readonly>
+                                        value="<?php echo $ubah[$x]['nama_supplier'] ?>" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group mt-lg">
                                     <label class="col-sm-3 control-label">Harga Sebelum</label>
                                     <div class="col-sm-9">
                                         <input type="text" name="jumlah_stok" class="form-control"
-                                        value="<?php //echo $material[$x]['nama_jabatan'] ?> Rp 100.000" readonly>
+                                        value="<?php echo $ubah[$x]['harga_sebelum'] ?>" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group mt-lg">
                                     <label class="col-sm-3 control-label">Harga Sesudah</label>
                                     <div class="col-sm-9">
                                         <input type="text" name="jumlah_stok" class="form-control"
-                                        value="<?php //echo $material[$x]['nama_jabatan'] ?> Rp 110.000" readonly>
+                                        value="<?php echo $ubah[$x]['harga_sesudah'] ?>" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group mt-lg">
                                     <label class="col-sm-3 control-label">Status</label>
                                     <div class="col-sm-9">
                                         <input type="text" name="jumlah_stok" class="form-control"
-                                        value="<?php //echo $material[$x]['nama_jabatan'] ?> Menunggu persetujuan direktur" readonly>
+                                            value="<?php if($ubah[$x]['status_persetujuan']==0){
+                                                echo "Menunggu Persetujuan";
+                                            } else if($ubah[$x]['status_persetujuan']==1){
+                                                echo "Disetujui";
+                                            } else{
+                                                echo "Ditolak";
+                                            } ?>" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group mt-lg">
                                     <label class="col-sm-3 control-label">Keterangan</label>
                                     <div class="col-sm-9">
                                         <input type="text" name="jumlah_stok" class="form-control"
-                                        value="<?php //echo $material[$x]['nama_jabatan'] ?> - " readonly>
+                                        value="<?php echo $ubah[$x]['keterangan'] ?> " readonly>
                                     </div>
                                 </div>
                             </div>
@@ -132,63 +132,36 @@
                             </footer>
                         </section>
                     </div>
-                    <!-- **************************** END MODAL DETAIL **************************** -->
+                    <!-- ******************************* MODAL SETUJU ***************************** -->
                     <!-- ************************************************************************** -->
-
-
-
-                    <!-- ******************************* MODAL EDIT ******************************* -->
-                    <!-- ************************************************************************** -->
-                    <div id='modaledit<?php //echo $material[$x]['id_material']?>' class="modal-block modal-block-primary mfp-hide">
+                    <div id='modalsetuju<?php echo $ubah[$x]['id_perubahan_harga']?>' class="modal-block modal-block-primary mfp-hide">
                         <section class="panel">
-                            <form class="form-horizontal mb-lg" action="<?php //echo base_url()?>" method="post">
+                            <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PerubahanHargaMaterial/setuju" method="post">
                                 <header class="panel-heading">
-                                    <h2 class="panel-title">Edit Data Jenis Material</h2>
+                                    <h2 class="panel-title">Menyetujui Perubahan Harga Material</h2>
                                 </header>
-
-                                <div class="panel-body">
-                                    <input type="hidden" name="id_material" class="form-control" value="<?php //echo $material[$x]['id_material']?>" readonly>
-                                    
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-4 control-label">Nama Supplier</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" name="nama" class="form-control"
-                                            value="<?php //echo $material[$x]['nama_material']?>INOAC" >
-                                        </div>
-                                    </div>
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-4 control-label">Nama Jenis Material</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" name="nama" class="form-control"
-                                            value="<?php //echo $material[$x]['nama_material']?>REB55" >
-                                        </div>
-                                    </div>
+                                
+                                <input type="hidden" name="idnya" value="<?php echo $ubah[$x]['id_perubahan_harga']?>">
+                                <input type="hidden" name="idsup" value="<?php echo $ubah[$x]['id_detail_supplier']?>">
+                                <input type="hidden" name="status" value="1">
+                                
+                                <div class="panel-body" style="color: black">
+                                    Anda akan menyetujui perubahan harga material 
+                                    <?php echo $ubah[$x]['nama_jenis_material'] . " " . $ubah[$x]['nama_sub_jenis_material']?>
+                                    oleh supplier <?php echo $ubah[$x]['nama_supplier'] ?>.
+                                    <br>
                                     <div class="form-group mt-lg">
                                         <label class="col-sm-3 control-label">Harga Sebelum</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="jumlah_stok" class="form-control"
-                                            value="<?php //echo $material[$x]['nama_jabatan'] ?>100.000">
+                                            <input type="text" name="harga_sebelum" class="form-control"
+                                            value="<?php echo $ubah[$x]['harga_sebelum'] ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group mt-lg">
                                         <label class="col-sm-3 control-label">Harga Sesudah</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="jumlah_stok" class="form-control"
-                                            value="<?php //echo $material[$x]['nama_jabatan'] ?>110.000">
-                                        </div>
-                                    </div>
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Status</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" name="jumlah_stok" class="form-control"
-                                            value="<?php //echo $material[$x]['nama_jabatan'] ?> Menunggu persetujuan direktur">
-                                        </div>
-                                    </div>
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Keterangan</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" name="keterangan" class="form-control"
-                                            value="<?php //echo $material[$x]['nama_jabatan'] ?> - ">
+                                            <input type="text" name="hargabaru" class="form-control"
+                                            value="<?php echo $ubah[$x]['harga_sesudah'] ?>" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -203,89 +176,30 @@
                             </form>
                         </section>
                     </div>
-                    <!-- ***************************** END MODAL EDIT ***************************** -->
-                    <!-- ************************************************************************** -->
-
-
-                    <!-- ******************************* MODAL HAPUS ****************************** -->
-                    <!-- ************************************************************************** -->
-                    <div id='modalhapus<?php //echo $material[$x]['id_material']?>' class="modal-block modal-block-primary mfp-hide">
-                        <section class="panel">
-                            <form class="form-horizontal mb-lg" action="<?php //echo base_url()?>" method="post">
-                                <header class="panel-heading">
-                                    <h2 class="panel-title">Hapus Data Perubahan Harga Material</h2>
-                                </header>
-
-                                <div class="panel-body" style="color: black">
-                                    Apakah anda yakin akan menghapus data perubahan harga material <?php //echo $material[$x]['nama_material']?>REB55?
-                                </div>
-                                <footer class="panel-footer">
-                                    <div class="row">
-                                        <div class="col-md-12 text-right">
-                                            <input type="submit" id="tambah" class="btn btn-danger" value="Hapus">
-                                            <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
-                                        </div>
-                                    </div>
-                                </footer>
-                            </form>
-                        </section>
-                    </div>
-                    <!-- ***************************** END MODAL HAPUS ***************************** -->
+                    <!-- ***************************** END MODAL SETUJU **************************** -->
                     <!-- *************************************************************************** -->
 
-
-                    <!-- ******************************* MODAL EDIT ******************************* -->
-                    <!-- ************************************************************************** -->
-                    <div id='modaledit1<?php //echo $material[$x]['id_material']?>' class="modal-block modal-block-primary mfp-hide">
+                    <!-- ******************************* MODAL TOLAK ***************************** -->
+                    <!-- ************************************************************************* -->
+                    <div id='modaltolak<?php echo $ubah[$x]['id_perubahan_harga']?>' class="modal-block modal-block-primary mfp-hide">
                         <section class="panel">
-                            <form class="form-horizontal mb-lg" action="<?php //echo base_url()?>" method="post">
+                            <form class="form-horizontal mb-lg" action="<?php echo base_url()?>PerubahanHargaMaterial/setuju" method="post">
                                 <header class="panel-heading">
-                                    <h2 class="panel-title">Edit Data Jenis Material</h2>
+                                    <h2 class="panel-title">Menyetujui Perubahan Harga Material</h2>
                                 </header>
-
-                                <div class="panel-body">
-                                    <input type="hidden" name="id_material" class="form-control" value="<?php //echo $material[$x]['id_material']?>" readonly>
-                                    
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-4 control-label">Nama Supplier</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" name="nama" class="form-control"
-                                            value="<?php //echo $material[$x]['nama_material']?> Foam" >
-                                        </div>
-                                    </div>
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-4 control-label">Nama Jenis Material</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" name="nama" class="form-control"
-                                            value="<?php //echo $material[$x]['nama_material']?> Foam" >
-                                        </div>
-                                    </div>
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-4 control-label">Satuan Ukuran</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" name="satuan" class="form-control"
-                                            value="<?php //echo $material[$x]['nama_material']?> pc" >
-                                        </div>
-                                    </div>
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-4 control-label">Minimal Stok</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" name="min_stok" class="form-control"
-                                            value="<?php //echo $material[$x]['nama_material']?> 5" >
-                                        </div>
-                                    </div>
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-4 control-label">Maksimal Stok</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" name="max_stok" class="form-control"
-                                            value="<?php //echo $material[$x]['nama_material']?> 20" >
-                                        </div>
-                                    </div>
+                                
+                                <input type="hidden" name="idnya" value="<?php echo $ubah[$x]['id_perubahan_harga']?>">
+                                <input type="hidden" name="status" value="2">
+                                
+                                <div class="panel-body" style="color: black">
+                                    Anda akan menolak perubahan harga material 
+                                    <?php echo $ubah[$x]['nama_jenis_material'] . " " . $ubah[$x]['nama_sub_jenis_material']?>
+                                    oleh supplier <?php echo $ubah[$x]['nama_supplier'] ?>.
                                 </div>
                                 <footer class="panel-footer">
                                     <div class="row">
                                         <div class="col-md-12 text-right">
-                                            <input type="submit" id="tambah" class="btn btn-primary" value="Simpan">
+                                            <input type="submit" id="tambah" class="btn btn-danger" value="Tolak">
                                             <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
                                         </div>
                                     </div>
@@ -293,10 +207,10 @@
                             </form>
                         </section>
                     </div>
-                    <!-- ***************************** END MODAL EDIT ***************************** -->
+                    <!-- ***************************** END MODAL TOLAK **************************** -->
                     <!-- ************************************************************************** -->
 
-                <?php //}} ?>
+                <?php } }?>
             </tbody>
         </table>
     </div>
