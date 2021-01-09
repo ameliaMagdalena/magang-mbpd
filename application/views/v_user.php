@@ -390,14 +390,14 @@
                         var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
                         var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 
-                        var tanggal = new Date(respond['log'][$i]['waktu_add']).getDate();
-                        var xhari = new Date(respond['log'][$i]['waktu_add']).getDay();
-                        var xbulan = new Date(respond['log'][$i]['waktu_add']).getMonth();
-                        var xtahun = new Date(respond['log'][$i]['waktu_add']).getYear();
+                        var tanggal = new Date(respond['log'][$i]['waktu_edit']).getDate();
+                        var xhari = new Date(respond['log'][$i]['waktu_edit']).getDay();
+                        var xbulan = new Date(respond['log'][$i]['waktu_edit']).getMonth();
+                        var xtahun = new Date(respond['log'][$i]['waktu_edit']).getYear();
                         
-                        var jam     = new Date(respond['log'][$i]['waktu_add']).getHours();
-                        var menit   = new Date(respond['log'][$i]['waktu_add']).getMinutes();
-                        var detik   = new Date(respond['log'][$i]['waktu_add']).getSeconds();
+                        var jam     = new Date(respond['log'][$i]['waktu_edit']).getHours();
+                        var menit   = new Date(respond['log'][$i]['waktu_edit']).getMinutes();
+                        var detik   = new Date(respond['log'][$i]['waktu_edit']).getSeconds();
                         
                         var hari = hari[xhari];
                         var bulan = bulan[xbulan];

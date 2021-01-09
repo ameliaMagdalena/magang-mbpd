@@ -103,11 +103,13 @@
 											Customer
 										</a>
 									</li>
+									<!--
 									<li>
 										<a href="<?php echo base_url() . 'Supplier'?>">
 											Supplier
 										</a>
 									</li>
+									-->
 									<li>
 										<a href="<?php echo base_url() . 'JenisMaterial'?>">
 											Jenis Material
@@ -115,7 +117,9 @@
 									</li>
 								</ul>
 							</li>
-
+							<?php $x = 1;
+							 if($x == 1){?>
+							
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-check-circle" aria-hidden="true"></i>
@@ -483,7 +487,7 @@
 									</li>
 								</ul>
 							</li>
-					
+							<?php } ?>
 						
 							<!-- produksi -->
 								<!-- persediaan line -->

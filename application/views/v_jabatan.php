@@ -105,7 +105,7 @@
                     value="<?= $x->id_jabatan?>" required>
 
                     <div class="form-group mt-lg">
-                        <label class="col-sm-5 control-label">Nama Warna</label>
+                        <label class="col-sm-5 control-label">Nama Jabatan</label>
                     <div class="col-sm-7">
                             <input type="text" name="nama_jabatan_edit" id="nama_jabatan_edit" class="form-control"
                             onchange="cek_nama_jabatan_edit()" value="<?= $x->nama_jabatan?>" required>

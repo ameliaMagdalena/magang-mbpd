@@ -1556,7 +1556,7 @@
                 document.getElementById("track"+i).style.display = "block";  
                 $("#bedit"+i).prop('disabled',true);
 
-                /*
+                 /*
                 //undisabled inputan
                 for($k=1;$k<=$jumlah_line_dpo;$k++){
                     $id_line = $("#"+i+"id_line"+$k).val();
@@ -1566,7 +1566,7 @@
                     }
                 }
                 */
-
+               
                 //undisabled inputan
                 for($k=1;$k<=$jumlah_line_dpo;$k++){
                     $id_line = $("#"+i+"id_line"+$k).val();
@@ -1581,7 +1581,7 @@
                         }
                     }
                 }
-
+               
                 //munculin bg3
                 document.getElementById("1perc"+id).style.display = 'table-row'; 
 

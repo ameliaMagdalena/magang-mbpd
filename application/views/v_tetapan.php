@@ -176,7 +176,7 @@
                         <div class="col-sm-7">
                             <?php 
                                 $count = 0;
-                                foreach($tetapan as $y){
+                                foreach($tetapan as $x){
                                     if($x->nama_tetapan == "Nama Perusahaan"){
                                         $count++;
                                     } else if($x->nama_tetapan == "Rabu"){
@@ -213,7 +213,9 @@
                                 }
 
                                 if($count < 16){
+                                  
                             ?>
+                                
                                 <select class="form-control" name="nama_tetapan_wajib" required>
                                     <!-- 1. Nama Perusahaan -->
                                         <?php 
@@ -455,7 +457,7 @@
                                         <?php } ?>
                                     <!-- -->
                                 </select>
-                            <?php } else{?>
+                            <?php } else{ ?>
                                 <input type="text" name="nama_tetapan" id="nama_tetapan" required class="form-control" 
                                 onchange="cek_nama_tetapan()">
                             <?php } ?>
