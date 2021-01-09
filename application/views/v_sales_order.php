@@ -34,7 +34,7 @@
             <a href="#" class="fa fa-times"></a>
         </div>
 
-        <h2 class="panel-title">Sales Order <?php echo $sales_order[0]['id_sales_order'] ?></h2>
+        <h2 class="panel-title">Sales Order <?php echo $sales_order[0]['kode_so'] ?></h2>
     </header>
 
     <div class="panel-body">

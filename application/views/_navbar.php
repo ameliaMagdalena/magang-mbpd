@@ -128,12 +128,28 @@
 								<ul class="nav nav-children">
 									<li>
 										<a href="<?php echo base_url() . 'PerubahanHargaMaterial/persetujuan'?>">
-											Perubahan Harga <span class="badge badge-light">1</span>
+											Perubahan Harga
+											<span class="badge badge-light">
+												<?php $jlh=0;
+												for($a=0; $a<count($ubharga); $a++){
+													if($ubharga[$a]['status_persetujuan']==0){
+														$jlh++;
+													}
+												} echo $jlh; ?>
+											</span>
 										</a>
 									</li>
 									<li>
 										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/persetujuan'?>">
-											Purchase Order Supplier <span class="badge badge-light">4</span>
+											Purchase Order Supplier
+											<span class="badge badge-light">
+												<?php $jlh=0;
+												for($a=0; $a<count($sup); $a++){
+													if($sup[$a]['status_po']==0){
+														$jlh++;
+													}
+												} echo $jlh; ?>
+											</span>
 										</a>
 									</li>
 								</ul>
@@ -160,6 +176,14 @@
 									<li>
 										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/index/0'?>">
 											Dalam Proses
+											<span class="badge badge-light">
+												<?php $jlh=0;
+												for($a=0; $a<count($cust); $a++){
+													if($cust[$a]['status_po']==0 || $cust[$a]['status_po']==1){
+														$jlh++;
+													}
+												} echo $jlh; ?>
+											</span>
 										</a>
 									</li>
 									<li>
@@ -175,6 +199,11 @@
 									<li>
 										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/index/3'?>">
 											Semua
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/material_cost'?>">
+											Laporan Material Cost <!-- untuk PO yang sudah selesai -->
 										</a>
 									</li>
 								</ul>
@@ -194,6 +223,15 @@
 									<li>
 										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/index/0'?>">
 											Dalam Proses
+											<span class="badge badge-light">
+												<?php $jlh=0;
+												for($a=0; $a<count($sup); $a++){
+													if($sup[$a]['status_po']==0 || $sup[$a]['status_po']==1
+														 || $sup[$a]['status_po']==2 || $sup[$a]['status_po']==3){
+														$jlh++;
+													}
+												} echo $jlh; ?>
+											</span>
 										</a>
 									</li>
 									<li>
@@ -210,6 +248,34 @@
 										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/index/3'?>">
 											Semua
 										</a>
+									</li>
+									<li class="nav-parent">
+										<a title="Invoice">
+											<span>Invoice</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'PurchaseOrderSupplier/invoice_baru'?>">
+													Input Invoice
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PurchaseOrderSupplier/invoice/0'?>">
+													Belum Dibayar
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PurchaseOrderSupplier/invoice/1'?>">
+													Lunas
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PurchaseOrderSupplier/invoice/2'?>">
+													Semua Invoice In
+													<!-- UI: bikin dropdown di atas untuk pilih supp -->
+												</a>
+											</li>
+										</ul>
 									</li>
 								</ul>
 							</li>
@@ -228,6 +294,14 @@
 									<li>
 										<a href="<?php echo base_url() . 'PerubahanHargaMaterial/index/0'?>">
 											Menunggu Konfirmasi
+											<span class="badge badge-light">
+												<?php $jlh=0;
+												for($a=0; $a<count($ubharga); $a++){
+													if($ubharga[$a]['status_persetujuan']==0){
+														$jlh++;
+													}
+												} echo $jlh; ?>
+											</span>
 										</a>
 									</li>
 									<li>
@@ -240,11 +314,6 @@
 											Ditolak
 										</a>
 									</li>
-									<!-- <li>
-										<a href="<?php echo base_url() . 'PerubahanHargaMaterial/index/3'?>">
-											Semua
-										</a>
-									</li> -->
 								</ul>
 							</li>
 
@@ -261,13 +330,29 @@
 										<ul class="nav nav-children">
 											<li>
 												<a href="<?php echo base_url() . 'PermintaanMaterial/index/0'?>">
-													Belum Ditinjau <span class="badge badge-light">1</span>
+													Belum Ditinjau
+													<span class="badge badge-light">
+														<?php $jlh=0;
+														for($a=0; $a<count($permat); $a++){
+															if($permat[$a]['status_permintaan']==0){
+																$jlh++;
+															}
+														} echo $jlh; ?>
+													</span>
 												</a>
 											</li>
 											<li>
 												<a href="<?php echo base_url() . 'PermintaanMaterial/index/1'?>">
 													Sedang Proses
 													<!-- disetujui / proses beli / belum diambil -->
+													<span class="badge badge-light">
+														<?php $jlh=0;
+														for($a=0; $a<count($permat); $a++){
+															if($permat[$a]['status_permintaan']==1 || $permat[$a]['status_permintaan']==2){
+																$jlh++;
+															}
+														} echo $jlh; ?>
+													</span>
 												</a>
 											</li>
 											<li>
@@ -294,7 +379,15 @@
 										<ul class="nav nav-children">
 											<li>
 												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/0'?>">
-													Belum Ditinjau <span class="badge badge-light">1</span>
+													Belum Ditinjau
+													<span class="badge badge-light">
+														<?php $jlh=0;
+														for($a=0; $a<count($ubpermat); $a++){
+															if($ubpermat[$a]['status']==0){
+																$jlh++;
+															}
+														} echo $jlh; ?>
+													</span>
 												</a>
 											</li>
 											<li>
@@ -327,6 +420,14 @@
 											<li>
 												<a href="<?php echo base_url() . 'PermintaanMaterial/tambahan/0'?>">
 													Belum Ditinjau
+													<span class="badge badge-light">
+														<?php $jlh=0;
+														for($a=0; $a<count($tbpermat); $a++){
+															if($tbpermat[$a]['status']==0){
+																$jlh++;
+															}
+														} echo $jlh; ?>
+													</span>
 												</a>
 											</li>
 											<li>
@@ -1169,6 +1270,14 @@
 									<li>
 										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/index/0'?>">
 											Dalam Proses
+											<span class="badge badge-light">
+												<?php $jlh=0;
+												for($a=0; $a<count($cust); $a++){
+													if($cust[$a]['status_po']==0 || $cust[$a]['status_po']==1){
+														$jlh++;
+													}
+												} echo $jlh; ?>
+											</span>
 										</a>
 									</li>
 									<li>
@@ -1184,6 +1293,11 @@
 									<li>
 										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/index/3'?>">
 											Semua
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/material_cost'?>">
+											Laporan Material Cost <!-- untuk PO yang sudah selesai -->
 										</a>
 									</li>
 								</ul>
@@ -1202,6 +1316,15 @@
 									<li>
 										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/index/0'?>">
 											Dalam Proses
+											<span class="badge badge-light">
+												<?php $jlh=0;
+												for($a=0; $a<count($sup); $a++){
+													if($sup[$a]['status_po']==0 || $sup[$a]['status_po']==1
+														 || $sup[$a]['status_po']==2 || $sup[$a]['status_po']==3){
+														$jlh++;
+													}
+												} echo $jlh; ?>
+											</span>
 										</a>
 									</li>
 									<li>
@@ -1219,6 +1342,34 @@
 											Semua
 										</a>
 									</li>
+									<li class="nav-parent">
+										<a title="Invoice">
+											<span>Invoice</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'PurchaseOrderSupplier/invoice_baru'?>">
+													Input Invoice <span class="badge badge-light">1</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PurchaseOrderSupplier/invoice/0'?>">
+													Belum Dibayar
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PurchaseOrderSupplier/invoice/1'?>">
+													Lunas
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PurchaseOrderSupplier/invoice/2'?>">
+													Semua Invoice In
+													<!-- UI: bikin dropdown di atas untuk pilih supp -->
+												</a>
+											</li>
+										</ul>
+									</li>
 								</ul>
 							</li>
 							<li class="nav-parent">
@@ -1235,6 +1386,14 @@
 									<li>
 										<a href="<?php echo base_url() . 'PerubahanHargaMaterial/index/0'?>">
 											Menunggu Konfirmasi
+											<span class="badge badge-light">
+												<?php $jlh=0;
+												for($a=0; $a<count($ubharga); $a++){
+													if($ubharga[$a]['status_persetujuan']==0){
+														$jlh++;
+													}
+												} echo $jlh; ?>
+											</span>
 										</a>
 									</li>
 									<li>
@@ -1267,13 +1426,29 @@
 										<ul class="nav nav-children">
 											<li>
 												<a href="<?php echo base_url() . 'PermintaanMaterial/index/0'?>">
-													Belum Ditinjau <span class="badge badge-light">1</span>
+													Belum Ditinjau
+													<span class="badge badge-light">
+														<?php $jlh=0;
+														for($a=0; $a<count($permat); $a++){
+															if($permat[$a]['status_permintaan']==0){
+																$jlh++;
+															}
+														} echo $jlh; ?>
+													</span>
 												</a>
 											</li>
 											<li>
 												<a href="<?php echo base_url() . 'PermintaanMaterial/index/1'?>">
 													Sedang Proses
-													<!-- disetujui / proses beli / belum diambil -->
+													<span class="badge badge-light">
+														<?php $jlh=0;
+														for($a=0; $a<count($permat); $a++){
+															if($permat[$a]['status_permintaan']==1 ||
+															$permat[$a]['status_permintaan']==2){
+																$jlh++;
+															}
+														} echo $jlh; ?>
+													</span>
 												</a>
 											</li>
 											<li>
@@ -1300,7 +1475,15 @@
 										<ul class="nav nav-children">
 											<li>
 												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/0'?>">
-													Belum Ditinjau <span class="badge badge-light">1</span>
+													Belum Ditinjau
+													<span class="badge badge-light">
+														<?php $jlh=0;
+														for($a=0; $a<count($ubpermat); $a++){
+															if($ubpermat[$a]['status']==0){
+																$jlh++;
+															}
+														} echo $jlh; ?>
+													</span>
 												</a>
 											</li>
 											<li>
@@ -1332,7 +1515,15 @@
 										<ul class="nav nav-children">
 											<li>
 												<a href="<?php echo base_url() . 'PermintaanTambahan/index/0'?>">
-													Belum Ditinjau <span class="badge badge-light">1</span>
+													Belum Ditinjau
+													<span class="badge badge-light">
+														<?php $jlh=0;
+														for($a=0; $a<count($tbpermat); $a++){
+															if($tbpermat[$a]['status']==0){
+																$jlh++;
+															}
+														} echo $jlh; ?>
+													</span>
 												</a>
 											</li>
 											<li>
@@ -2441,13 +2632,30 @@
 										<ul class="nav nav-children">
 											<li>
 												<a href="<?php echo base_url() . 'PermintaanMaterial/index/0'?>">
-													Belum Ditinjau <span class="badge badge-light">1</span>
+													Belum Ditinjau 
+													<span class="badge badge-light">
+														<?php $jlh=0;
+														for($a=0; $a<count($permat); $a++){
+															if($permat[$a]['status_permintaan']==0){
+																$jlh++;
+															}
+														} echo $jlh; ?>
+													</span>
 												</a>
 											</li>
 											<li>
 												<a href="<?php echo base_url() . 'PermintaanMaterial/index/1'?>">
 													Sedang Proses
 													<!-- disetujui / proses beli / belum diambil -->
+													<span class="badge badge-light">
+														<?php $jlh=0;
+														for($a=0; $a<count($permat); $a++){
+															if($permat[$a]['status_permintaan']==1 ||
+															$permat[$a]['status_permintaan']==2){
+																$jlh++;
+															}
+														} echo $jlh; ?>
+													</span>
 												</a>
 											</li>
 											<li>
@@ -2474,7 +2682,15 @@
 										<ul class="nav nav-children">
 											<li>
 												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/0'?>">
-													Belum Ditinjau <span class="badge badge-light">1</span>
+													Belum Ditinjau
+													<span class="badge badge-light">
+														<?php $jlh=0;
+														for($a=0; $a<count($ubpermat); $a++){
+															if($ubpermat[$a]['status']==0){
+																$jlh++;
+															}
+														} echo $jlh; ?>
+													</span>
 												</a>
 											</li>
 											<li>
@@ -2506,7 +2722,15 @@
 										<ul class="nav nav-children">
 											<li>
 												<a href="<?php echo base_url() . 'PermintaanTambahan/index/0'?>">
-													Belum Ditinjau <span class="badge badge-light">1</span>
+													Belum Ditinjau
+													<span class="badge badge-light">
+														<?php $jlh=0;
+														for($a=0; $a<count($tbpermat); $a++){
+															if($tbpermat[$a]['status']==0){
+																$jlh++;
+															}
+														} echo $jlh; ?>
+													</span>
 												</a>
 											</li>
 											<li>
@@ -3327,6 +3551,14 @@
 									<li>
 										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/index/0'?>">
 											Dalam Proses
+											<span class="badge badge-light">
+												<?php $jlh=0;
+												for($a=0; $a<count($cust); $a++){
+													if($cust[$a]['status_po']==0 || $cust[$a]['status_po']==1){
+														$jlh++;
+													}
+												} echo $jlh; ?>
+											</span>
 										</a>
 									</li>
 									<li>
@@ -3342,6 +3574,11 @@
 									<li>
 										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/index/3'?>">
 											Semua
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/material_cost'?>">
+											Laporan Material Cost <!-- untuk PO yang sudah selesai -->
 										</a>
 									</li>
 								</ul>
@@ -3361,6 +3598,15 @@
 									<li>
 										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/index/0'?>">
 											Dalam Proses
+											<span class="badge badge-light">
+												<?php $jlh=0;
+												for($a=0; $a<count($sup); $a++){
+													if($sup[$a]['status_po']==0 || $sup[$a]['status_po']==1
+														 || $sup[$a]['status_po']==2 || $sup[$a]['status_po']==3){
+														$jlh++;
+													}
+												} echo $jlh; ?>
+											</span>
 										</a>
 									</li>
 									<li>
@@ -3377,6 +3623,34 @@
 										<a href="<?php echo base_url() . 'PurchaseOrderSupplier/index/3'?>">
 											Semua
 										</a>
+									</li>
+									<li class="nav-parent">
+										<a title="Invoice">
+											<span>Invoice</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="<?php echo base_url() . 'PurchaseOrderSupplier/invoice_baru'?>">
+													Input Invoice <span class="badge badge-light">1</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PurchaseOrderSupplier/invoice/0'?>">
+													Belum Dibayar
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PurchaseOrderSupplier/invoice/1'?>">
+													Lunas
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url() . 'PurchaseOrderSupplier/invoice/2'?>">
+													Semua Invoice In
+													<!-- UI: bikin dropdown di atas untuk pilih supp -->
+												</a>
+											</li>
+										</ul>
 									</li>
 								</ul>
 							</li>
@@ -3429,6 +3703,14 @@
 									<li>
 										<a href="<?php echo base_url() . 'PerubahanHargaMaterial/index/0'?>">
 											Menunggu Konfirmasi
+											<span class="badge badge-light">
+												<?php $jlh=0;
+												for($a=0; $a<count($ubharga); $a++){
+													if($ubharga[$a]['status_persetujuan']==0){
+														$jlh++;
+													}
+												} echo $jlh; ?>
+											</span>
 										</a>
 									</li>
 									<li>
@@ -3572,13 +3854,30 @@
 										<ul class="nav nav-children">
 											<li>
 												<a href="<?php echo base_url() . 'PermintaanMaterial/index/0'?>">
-													Belum Ditinjau <span class="badge badge-light">1</span>
+													Belum Ditinjau
+													<span class="badge badge-light">
+														<?php $jlh=0;
+														for($a=0; $a<count($permat); $a++){
+															if($permat[$a]['status_permintaan']==0){
+																$jlh++;
+															}
+														} echo $jlh; ?>
+													</span>
 												</a>
 											</li>
 											<li>
 												<a href="<?php echo base_url() . 'PermintaanMaterial/index/1'?>">
 													Sedang Proses
 													<!-- disetujui / proses beli / belum diambil -->
+													<span class="badge badge-light">
+														<?php $jlh=0;
+														for($a=0; $a<count($permat); $a++){
+															if($permat[$a]['status_permintaan']==1 ||
+															$permat[$a]['status_permintaan']==2){
+																$jlh++;
+															}
+														} echo $jlh; ?>
+													</span>
 												</a>
 											</li>
 											<li>
@@ -3605,7 +3904,15 @@
 										<ul class="nav nav-children">
 											<li>
 												<a href="<?php echo base_url() . 'PerubahanPermintaan/index/0'?>">
-													Belum Ditinjau <span class="badge badge-light">1</span>
+													Belum Ditinjau
+													<span class="badge badge-light">
+														<?php $jlh=0;
+														for($a=0; $a<count($ubpermat); $a++){
+															if($ubpermat[$a]['status']==0){
+																$jlh++;
+															}
+														} echo $jlh; ?>
+													</span>
 												</a>
 											</li>
 											<li>
@@ -3637,7 +3944,15 @@
 										<ul class="nav nav-children">
 											<li>
 												<a href="<?php echo base_url() . 'PermintaanTambahan/index/0'?>">
-													Belum Ditinjau <span class="badge badge-light">1</span>
+													Belum Ditinjau
+													<span class="badge badge-light">
+														<?php $jlh=0;
+														for($a=0; $a<count($tbpermat); $a++){
+															if($tbpermat[$a]['status']==0){
+																$jlh++;
+															}
+														} echo $jlh; ?>
+													</span>
 												</a>
 											</li>
 											<li>

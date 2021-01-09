@@ -162,42 +162,20 @@
                         <!-- ************************************************************************** -->
                         <div id='modaledit<?php echo $detail_sup[$y]['id_detail_supplier']?>' class="modal-block modal-block-primary mfp-hide">
                             <section class="panel">
-                                <form class="form-horizontal mb-lg" action="<?php echo base_url()?>Supplier/edit_detail_supplier" method="post">
                                     <header class="panel-heading">
-                                        <h2 class="panel-title">Edit Data Material</h2>
+                                        <h2 class="panel-title">Edit Harga Material</h2>
                                     </header>
 
                                     <div class="panel-body">
-                                        <input type="hidden" name="id_detail_sup" class="form-control" value="<?php echo $detail_sup[$y]['id_detail_supplier']?>" readonly>
-                                        <input type="hidden" name="id_supplier" class="form-control" value="<?php echo $supplier[0]['id_supplier']?>" readonly>
-                                        
-                                        <div class="form-group mt-lg">
-                                            <label class="col-sm-4 control-label">Material</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" name="sub_jenis" class="form-control"
-                                                value="<?php echo $detail_sup[$y]['nama_jenis_material'] . ' ' . $detail_sup[$y]['nama_sub_jenis_material']?>" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="form-group mt-lg">
-                                            <label class="col-sm-4 control-label">Satuan</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" name="satuan" class="form-control"
-                                                value="<?php echo $detail_sup[$y]['satuan_ukuran'] ?>" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="form-group mt-lg">
-                                            <label class="col-sm-4 control-label">Harga</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" name="harga" class="form-control"
-                                                value="<?php echo $detail_sup[$y]['harga_material'] ?>">
-                                            </div>
+                                        <div class="form-group mt-lg" style="text-align: center">
+                                            Harga Material dapat diubah pada menu <b>Perubahan Harga Material</b>
+                                            <br><br>
                                         </div>
                                     </div>
                                     <footer class="panel-footer">
                                         <div class="row">
                                             <div class="col-md-12 text-right">
-                                                <input type="submit" id="tambah" class="btn btn-primary" value="Simpan">
-                                                <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
+                                                <button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">OK</button>
                                             </div>
                                         </div>
                                     </footer>
@@ -214,7 +192,7 @@
                             <section class="panel">
                                 <form class="form-horizontal mb-lg" action="<?php echo base_url()?>Supplier/hapus_detail_supplier" method="post">
                                     <header class="panel-heading">
-                                        <h2 class="panel-title">Hapus Data Customer</h2>
+                                        <h2 class="panel-title">Hapus Data Material Supplier</h2>
                                     </header>
 
                                     <div class="panel-body" style="color: black">

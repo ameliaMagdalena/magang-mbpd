@@ -137,14 +137,16 @@
                             <td> <?php echo $detail[$y]['nama_sub_jenis_material'] ?> </td>
                             <td> <?php echo $detail[$y]['jumlah_konsumsi'] ?> </td>
                             <td> <?php 
-                                $produk = $detail[$y]['jumlah_minta'];
+                                $produk = $detail[$y]['jumlah_minta'];//jlh dalam satuan produksi
                                 $cons = $detail[$y]['jumlah_konsumsi'];
                                 $needs = $produk*$cons;
-                                echo $needs;
+                                $ukuran =$detail[$y]['ukuran_satuan_keluar'];
+                                $needs = $needs/$ukuran;
+                                echo ceil($needs);
                             ?>
                                 <input type="hidden" id="needs<?php echo $y ?>" value="<?= $needs?>">
                             </td>
-                            <td> <?php echo $detail[$y]['satuan_keluar'] ?></td>
+                            <td> <?php echo $detail[$y]['satuan_ukuran'] ?></td>
                             
                             <?php if ($permintaan_material[0]['status_permintaan'] == '0' || $permintaan_material[0]['status_permintaan'] == '1'){?>
                             <td id="ketersediaan<?php echo $y ?>">

@@ -19,6 +19,12 @@ class HasilProduksi extends CI_Controller {
         $this->load->model('M_Tetapan');
         $this->load->model('M_LaporanPerencanaanCutting');
         $this->load->model('M_Dashboard');
+        $this->load->model('M_PerencanaanMaterial');
+        $this->load->model('M_PerubahanPermintaan');
+        $this->load->model('M_PermintaanTambahan');
+        $this->load->model('M_PerubahanHarga');
+        $this->load->model('M_PurchaseOrderCustomer');
+        $this->load->model('M_PurchaseOrderSupplier');
     }
 
 	public function tambah_hasil_produksi(){
@@ -30,6 +36,15 @@ class HasilProduksi extends CI_Controller {
         $data['line']             = $this->M_Line->select_all_aktif()->result();
         $data['permohonan_akses'] = $this->M_PermohonanAkses->select_belum_selesai_by_id($id_user)->result();
 
+        //notif material
+            $data['permat'] = $this->M_PerencanaanMaterial->selectPermintaanMaterialAktif()->result_array();
+            $data['ubpermat'] = $this->M_PerubahanPermintaan->selectPerubahanPermintaanAktif()->result_array();
+            $data['tbpermat'] = $this->M_PermintaanTambahan->selectPermintaanTambahanAktif()->result_array();
+            $data['ubharga'] = $this->M_PerubahanHarga->selectPerubahanHargaAktif()->result_array();
+            $data['sup'] = $this->M_PurchaseOrderSupplier->selectPOSupplierAktif()->result_array();
+            $data['cust'] = $this->M_PurchaseOrderCustomer->selectPOCustomerAktif()->result_array();
+        //tutup
+        
         //notif produksi
             //notif permintaan material produksi
                 $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
@@ -219,6 +234,15 @@ class HasilProduksi extends CI_Controller {
     $data['line']             = $this->M_Line->select_all_aktif()->result();
     $data['permohonan_akses'] = $this->M_PermohonanAkses->select_belum_selesai_by_id($id_user)->result();
 
+        //notif material
+            $data['permat'] = $this->M_PerencanaanMaterial->selectPermintaanMaterialAktif()->result_array();
+            $data['ubpermat'] = $this->M_PerubahanPermintaan->selectPerubahanPermintaanAktif()->result_array();
+            $data['tbpermat'] = $this->M_PermintaanTambahan->selectPermintaanTambahanAktif()->result_array();
+            $data['ubharga'] = $this->M_PerubahanHarga->selectPerubahanHargaAktif()->result_array();
+            $data['sup'] = $this->M_PurchaseOrderSupplier->selectPOSupplierAktif()->result_array();
+            $data['cust'] = $this->M_PurchaseOrderCustomer->selectPOCustomerAktif()->result_array();
+        //tutup
+        
     //notif produksi
         //notif permintaan material produksi
             $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
@@ -408,6 +432,15 @@ class HasilProduksi extends CI_Controller {
     $data['line']             = $this->M_Line->select_all_aktif()->result();
     $data['permohonan_akses'] = $this->M_PermohonanAkses->select_belum_selesai_by_id($id_user)->result();
 
+        //notif material
+            $data['permat'] = $this->M_PerencanaanMaterial->selectPermintaanMaterialAktif()->result_array();
+            $data['ubpermat'] = $this->M_PerubahanPermintaan->selectPerubahanPermintaanAktif()->result_array();
+            $data['tbpermat'] = $this->M_PermintaanTambahan->selectPermintaanTambahanAktif()->result_array();
+            $data['ubharga'] = $this->M_PerubahanHarga->selectPerubahanHargaAktif()->result_array();
+            $data['sup'] = $this->M_PurchaseOrderSupplier->selectPOSupplierAktif()->result_array();
+            $data['cust'] = $this->M_PurchaseOrderCustomer->selectPOCustomerAktif()->result_array();
+        //tutup
+        
     //notif produksi
         //notif permintaan material produksi
             $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
@@ -597,6 +630,15 @@ class HasilProduksi extends CI_Controller {
     $data['line']             = $this->M_Line->select_all_aktif()->result();
     $data['permohonan_akses'] = $this->M_PermohonanAkses->select_belum_selesai_by_id($id_user)->result();
 
+        //notif material
+            $data['permat'] = $this->M_PerencanaanMaterial->selectPermintaanMaterialAktif()->result_array();
+            $data['ubpermat'] = $this->M_PerubahanPermintaan->selectPerubahanPermintaanAktif()->result_array();
+            $data['tbpermat'] = $this->M_PermintaanTambahan->selectPermintaanTambahanAktif()->result_array();
+            $data['ubharga'] = $this->M_PerubahanHarga->selectPerubahanHargaAktif()->result_array();
+            $data['sup'] = $this->M_PurchaseOrderSupplier->selectPOSupplierAktif()->result_array();
+            $data['cust'] = $this->M_PurchaseOrderCustomer->selectPOCustomerAktif()->result_array();
+        //tutup
+        
     //notif produksi
         //notif permintaan material produksi
             $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();

@@ -3335,7 +3335,7 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 class="title">Invoice Out</h4>
+										<h4 class="title">Invoice In</h4>
 										<sub>(belum diproses)</sub>
 										<div class="info">
 											<strong class="amount"><?= $invoice[0]['jumlah_invoice'] ?></strong>
@@ -3418,7 +3418,7 @@
 										<h4 class="title">Pengeluaran <br>Bulan Ini</h4>
 										<sub>(untuk material)</sub>
 										<div class="info">
-											<strong class="amount"><?= $po[0]['jumlah_po'] ?></strong>
+											<strong class="amount">300000<?php // $po[0]['jumlah_po'] ?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
@@ -3443,31 +3443,6 @@
 							<div class="content">
 								<div style="height:250px;overflow:scroll">
 									<table class="table-responsive table table-hover mb-none">
-										<?php 
-											$no = 1;
-											foreach($monday as $x){
-													$waktu = $x->tanggal_mulai;
-
-													$bulan_array = array(
-														1 => 'Januari',
-														2 => 'Februari',
-														3 => 'Maret',
-														4 => 'April',
-														5 => 'Mei',
-														6 => 'Juni',
-														7 => 'Juli',
-														8 => 'Agustus',
-														9 => 'September',
-														10 => 'Oktober',
-														11 => 'November',
-														12 => 'Desember',
-													);
-													$bl    = date('n', strtotime($waktu));
-													$bulan = $bulan_array[$bl];
-													$tahun = date('Y', strtotime($waktu));
-													
-													if($bulan == $bulan_now && $tahun == $tahun_now){
-											?>
 										<thead>
 											<tr>
 												<th colspan="4" style="text-align: center;vertical-align: middle;">
@@ -3482,90 +3457,12 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
-												<td style="text-align: center;vertical-align: middle;">
-													<?php 
-														$waktu = $x->tanggal_mulai;
-
-														$hari_array = array(
-															'Minggu',
-															'Senin',
-															'Selasa',
-															'Rabu',
-															'Kamis',
-															'Jumat',
-															'Sabtu'
-														);
-														$hr = date('w', strtotime($waktu));
-														$hari = $hari_array[$hr];
-														$tanggal = date('j', strtotime($waktu));
-														$bulan_array = array(
-															1 => 'Januari',
-															2 => 'Februari',
-															3 => 'Maret',
-															4 => 'April',
-															5 => 'Mei',
-															6 => 'Juni',
-															7 => 'Juli',
-															8 => 'Agustus',
-															9 => 'September',
-															10 => 'Oktober',
-															11 => 'November',
-															12 => 'Desember',
-														);
-														$bl = date('n', strtotime($waktu));
-														$bulan = $bulan_array[$bl];
-														$tahun = date('Y', strtotime($waktu));
-														
-														echo "$hari, $tanggal $bulan $tahun";
-													?>
-													<input type="hidden" id="s<?= $no;?>" value="<?php 
-															$waktu = $x->tanggal_mulai;
-
-															$hari_array = array(
-																'Minggu',
-																'Senin',
-																'Selasa',
-																'Rabu',
-																'Kamis',
-																'Jumat',
-																'Sabtu'
-															);
-															$hr = date('w', strtotime($waktu));
-															$hari = $hari_array[$hr];
-															$tanggal = date('j', strtotime($waktu));
-															$bulan_array = array(
-																1 => 'Januari',
-																2 => 'Februari',
-																3 => 'Maret',
-																4 => 'April',
-																5 => 'Mei',
-																6 => 'Juni',
-																7 => 'Juli',
-																8 => 'Agustus',
-																9 => 'September',
-																10 => 'Oktober',
-																11 => 'November',
-																12 => 'Desember',
-															);
-															$bl = date('n', strtotime($waktu));
-															$bulan = $bulan_array[$bl];
-															$tahun = date('Y', strtotime($waktu));
-															
-															echo "$hari, $tanggal $bulan $tahun";
-														?>"
-													>
-													<input type="hidden" id="id_produksi<?= $no;?>" value="<?= $x->id_produksi;?>">
-												</td>
-												</td>
+												<td style="text-align: center;vertical-align: middle;">1</td>
+												<td style="text-align: center;vertical-align: middle;"> Boa Rug Floor Mat145</td>
+												<td style="text-align: center;vertical-align: middle;">Cutting</td>
 											</tr>
 										</tbody>
 										
-										<?php $no++; } else {?>
-											<p style="text-align: center;vertical-align: middle;">
-												<b style="color: red">Tidak ada permintaan material</b>
-											</p>
-										<?php }} ?>
 									</table>
 								</div>
 
@@ -3589,31 +3486,6 @@
 							<div class="content">
 								<div style="height:250px;overflow:scroll">
 									<table class="table-responsive table table-hover mb-none">
-									<?php 
-										$no = 1;
-										foreach($monday as $x){
-												$waktu = $x->tanggal_mulai;
-
-												$bulan_array = array(
-													1 => 'Januari',
-													2 => 'Februari',
-													3 => 'Maret',
-													4 => 'April',
-													5 => 'Mei',
-													6 => 'Juni',
-													7 => 'Juli',
-													8 => 'Agustus',
-													9 => 'September',
-													10 => 'Oktober',
-													11 => 'November',
-													12 => 'Desember',
-												);
-												$bl    = date('n', strtotime($waktu));
-												$bulan = $bulan_array[$bl];
-												$tahun = date('Y', strtotime($waktu));
-												
-												if($bulan == $bulan_now && $tahun == $tahun_now){
-										?>
 										<thead>
 											<tr>
 												<th colspan="4" style="text-align: center;vertical-align: middle;">
@@ -3629,90 +3501,15 @@
 										<tbody>
 											
 												<tr>
-													<td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
-													<td style="text-align: center;vertical-align: middle;">
-														<?php 
-															$waktu = $x->tanggal_mulai;
-
-															$hari_array = array(
-																'Minggu',
-																'Senin',
-																'Selasa',
-																'Rabu',
-																'Kamis',
-																'Jumat',
-																'Sabtu'
-															);
-															$hr = date('w', strtotime($waktu));
-															$hari = $hari_array[$hr];
-															$tanggal = date('j', strtotime($waktu));
-															$bulan_array = array(
-																1 => 'Januari',
-																2 => 'Februari',
-																3 => 'Maret',
-																4 => 'April',
-																5 => 'Mei',
-																6 => 'Juni',
-																7 => 'Juli',
-																8 => 'Agustus',
-																9 => 'September',
-																10 => 'Oktober',
-																11 => 'November',
-																12 => 'Desember',
-															);
-															$bl = date('n', strtotime($waktu));
-															$bulan = $bulan_array[$bl];
-															$tahun = date('Y', strtotime($waktu));
-															
-															echo "$hari, $tanggal $bulan $tahun";
-														?>
-														<input type="hidden" id="s<?= $no;?>" value="<?php 
-																$waktu = $x->tanggal_mulai;
-
-																$hari_array = array(
-																	'Minggu',
-																	'Senin',
-																	'Selasa',
-																	'Rabu',
-																	'Kamis',
-																	'Jumat',
-																	'Sabtu'
-																);
-																$hr = date('w', strtotime($waktu));
-																$hari = $hari_array[$hr];
-																$tanggal = date('j', strtotime($waktu));
-																$bulan_array = array(
-																	1 => 'Januari',
-																	2 => 'Februari',
-																	3 => 'Maret',
-																	4 => 'April',
-																	5 => 'Mei',
-																	6 => 'Juni',
-																	7 => 'Juli',
-																	8 => 'Agustus',
-																	9 => 'September',
-																	10 => 'Oktober',
-																	11 => 'November',
-																	12 => 'Desember',
-																);
-																$bl = date('n', strtotime($waktu));
-																$bulan = $bulan_array[$bl];
-																$tahun = date('Y', strtotime($waktu));
-																
-																echo "$hari, $tanggal $bulan $tahun";
-															?>"
-														>
-														<input type="hidden" id="id_produksi<?= $no;?>" value="<?= $x->id_produksi;?>">
+													<td style="text-align: center;vertical-align: middle;">1</td>
+													<td style="text-align: center;vertical-align: middle;"> REB55
+														
+														<input type="hidden" id="id_produksi">Sewing
 													</td>
 													</td>
 												</tr>
 
 										</tbody>
-										<?php $no++; } else {?>
-											<p style="text-align: center;vertical-align: middle;">
-												<b style="color: red">Belum ada pengambilan material</b>
-											</p>
-										<?php }} ?>
 									</table>
 								</div>
 
@@ -3737,7 +3534,6 @@
 						<div class="panel-body panel-featured-left panel-featured-danger">
 							<div class="content">
 								<div class="table-responsive" style="height:175px;overflow: scroll">
-									<?php if($jm_perencanaan_hari_ini > 0){?>
 										<table class="table table-hover mb-none">
 											<thead>
 												<tr>
@@ -3750,28 +3546,26 @@
 											<tbody>
 												<?php 
 													$no = 1;
-													foreach($perencanaan_hari_ini as $phi){?>
+													//foreach($perencanaan_hari_ini as $phi){?>
 													<tr>
 														<td style="text-align: center;vertical-align: middle;">
 															<?= $no ?>
 														</td>
 														<td style="text-align: center;vertical-align: middle;">
-															<!-- memiliki ukuran & warna -->
+															<!-- memiliki ukuran & warna --> A/F Body Pillow Hard
 														</td>
 														<td style="text-align: center;vertical-align: middle;">
+														525000
 														</td>
 														<td style="text-align: center;vertical-align: middle;">
+														12 pcs
 															<!-- button aksi detail -->
 														</td>
 													</tr>
-												<?php $no++; } ?>
+												<?php //$no++; } ?>
 											</tbody>
 										</table>
-									<?php } else {?>
-										<p style="text-align: center;vertical-align: middle;">
-											<b style="color: red">Belum ada laporan</b>
-										</p>
-									<?php } ?>
+									
 								</div>
 
 								<hr class="dotted short">
@@ -4296,7 +4090,7 @@
 										<h4 class="title">PO Customer</h4>
 										<sub>(belum diproses)</sub>
 										<div class="info">
-											<strong class="amount"><?= $po[0]['jumlah_po'] ?></strong>
+											<strong class="amount">3</strong>
 										</div>
 									</div>
 									<div class="summary-footer">
@@ -4322,7 +4116,7 @@
 										<h4 class="title">PO Supplier</h4>
 										<sub>(belum disetujui)</sub>
 										<div class="info">
-											<strong class="amount"><?= $po[0]['jumlah_po'] ?></strong>
+											<strong class="amount">2</strong>
 										</div>
 									</div>
 									<div class="summary-footer">
@@ -4348,7 +4142,7 @@
 										<h4 class="title">Permintaan <br>Pembelian</h4>
 										<sub>(belum ditinjau)</sub>
 										<div class="info">
-											<strong class="amount"><?= $jumlah_produk[0]['jumlah_produk'] ?></strong>
+											<strong class="amount">12</strong>
 										</div>
 									</div>
 									<div class="summary-footer">
@@ -4376,7 +4170,7 @@
 										<h4 class="title">Pengeluaran <br>Bulan Ini</h4>
 										<sub>(untuk material)</sub>
 										<div class="info">
-											<strong class="amount"><?= $po[0]['jumlah_po'] ?></strong>
+											<strong class="amount">150000</strong>
 										</div>
 									</div>
 									<div class="summary-footer">
@@ -4399,10 +4193,10 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 class="title">Invoice Out</h4>
-										<sub>(belum diproses)</sub>
+										<h4 class="title">Invoice In</h4>
+										<sub>(belum lunas)</sub>
 										<div class="info">
-											<strong class="amount"><?= $invoice[0]['jumlah_invoice'] ?></strong>
+											<strong class="amount">5</strong>
 										</div>
 									</div>
 									<div class="summary-footer">
@@ -4426,7 +4220,6 @@
 						<div class="panel-body panel-featured-left panel-featured-danger">
 							<div class="content">
 								<div class="table-responsive" style="height:175px;overflow: scroll">
-									<?php if($jm_perencanaan_hari_ini > 0){?>
 										<table class="table table-hover mb-none">
 											<thead>
 												<tr>
@@ -4437,30 +4230,8 @@
 												</tr>
 											</thead>
 											<tbody>
-												<?php 
-													$no = 1;
-													foreach($perencanaan_hari_ini as $phi){?>
-													<tr>
-														<td style="text-align: center;vertical-align: middle;">
-															<?= $no ?>
-														</td>
-														<td style="text-align: center;vertical-align: middle;">
-															<!-- memiliki ukuran & warna -->
-														</td>
-														<td style="text-align: center;vertical-align: middle;">
-														</td>
-														<td style="text-align: center;vertical-align: middle;">
-															<!-- button aksi detail -->
-														</td>
-													</tr>
-												<?php $no++; } ?>
 											</tbody>
 										</table>
-									<?php } else {?>
-										<p style="text-align: center;vertical-align: middle;">
-											<b style="color: red">Belum ada laporan</b>
-										</p>
-									<?php } ?>
 								</div>
 
 								<hr class="dotted short">
@@ -4490,10 +4261,36 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 class="title">Sub Jenis <br>Material</h4>
+										<h4 class="title">Sub Jenis Material</h4>
 										<sub>(total semua)</sub>
 										<div class="info">
-											<strong class="amount"><?= $jumlah_produk[0]['jumlah_produk'] ?></strong>
+											<strong class="amount">4</strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>produk">(lihat semua)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- delivery note -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#BE2525">
+										<i class="fa  fa-cube"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">Delivery Note</h4>
+										<sub>(belum disetujui)</sub>
+										<div class="info">
+											<strong class="amount">5</strong>
 										</div>
 									</div>
 									<div class="summary-footer">
@@ -4518,31 +4315,6 @@
 							<div class="content">
 								<div style="height:250px;overflow:scroll">
 									<table class="table-responsive table table-hover mb-none">
-										<?php 
-											$no = 1;
-											foreach($monday as $x){
-													$waktu = $x->tanggal_mulai;
-
-													$bulan_array = array(
-														1 => 'Januari',
-														2 => 'Februari',
-														3 => 'Maret',
-														4 => 'April',
-														5 => 'Mei',
-														6 => 'Juni',
-														7 => 'Juli',
-														8 => 'Agustus',
-														9 => 'September',
-														10 => 'Oktober',
-														11 => 'November',
-														12 => 'Desember',
-													);
-													$bl    = date('n', strtotime($waktu));
-													$bulan = $bulan_array[$bl];
-													$tahun = date('Y', strtotime($waktu));
-													
-													if($bulan == $bulan_now && $tahun == $tahun_now){
-											?>
 										<thead>
 											<tr>
 												<th colspan="4" style="text-align: center;vertical-align: middle;">
@@ -4551,96 +4323,19 @@
 											</tr>
 											<tr>
 												<th style="text-align: center;vertical-align: middle;">No</th>
-												<th style="text-align: center;vertical-align: middle;">Produk</th>
+												<th style="text-align: center;vertical-align: middle;">Material</th>
 												<th style="text-align: center;vertical-align: middle;">Line</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
-												<td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
+												<td style="text-align: center;vertical-align: middle;"></td>
 												<td style="text-align: center;vertical-align: middle;">
-													<?php 
-														$waktu = $x->tanggal_mulai;
-
-														$hari_array = array(
-															'Minggu',
-															'Senin',
-															'Selasa',
-															'Rabu',
-															'Kamis',
-															'Jumat',
-															'Sabtu'
-														);
-														$hr = date('w', strtotime($waktu));
-														$hari = $hari_array[$hr];
-														$tanggal = date('j', strtotime($waktu));
-														$bulan_array = array(
-															1 => 'Januari',
-															2 => 'Februari',
-															3 => 'Maret',
-															4 => 'April',
-															5 => 'Mei',
-															6 => 'Juni',
-															7 => 'Juli',
-															8 => 'Agustus',
-															9 => 'September',
-															10 => 'Oktober',
-															11 => 'November',
-															12 => 'Desember',
-														);
-														$bl = date('n', strtotime($waktu));
-														$bulan = $bulan_array[$bl];
-														$tahun = date('Y', strtotime($waktu));
-														
-														echo "$hari, $tanggal $bulan $tahun";
-													?>
-													<input type="hidden" id="s<?= $no;?>" value="<?php 
-															$waktu = $x->tanggal_mulai;
-
-															$hari_array = array(
-																'Minggu',
-																'Senin',
-																'Selasa',
-																'Rabu',
-																'Kamis',
-																'Jumat',
-																'Sabtu'
-															);
-															$hr = date('w', strtotime($waktu));
-															$hari = $hari_array[$hr];
-															$tanggal = date('j', strtotime($waktu));
-															$bulan_array = array(
-																1 => 'Januari',
-																2 => 'Februari',
-																3 => 'Maret',
-																4 => 'April',
-																5 => 'Mei',
-																6 => 'Juni',
-																7 => 'Juli',
-																8 => 'Agustus',
-																9 => 'September',
-																10 => 'Oktober',
-																11 => 'November',
-																12 => 'Desember',
-															);
-															$bl = date('n', strtotime($waktu));
-															$bulan = $bulan_array[$bl];
-															$tahun = date('Y', strtotime($waktu));
-															
-															echo "$hari, $tanggal $bulan $tahun";
-														?>"
-													>
-													<input type="hidden" id="id_produksi<?= $no;?>" value="<?= $x->id_produksi;?>">
 												</td>
 												</td>
 											</tr>
 										</tbody>
 										
-										<?php $no++; } else {?>
-											<p style="text-align: center;vertical-align: middle;">
-												<b style="color: red">Tidak ada permintaan material</b>
-											</p>
-										<?php }} ?>
 									</table>
 								</div>
 
@@ -4664,31 +4359,6 @@
 							<div class="content">
 								<div style="height:250px;overflow:scroll">
 									<table class="table-responsive table table-hover mb-none">
-									<?php 
-										$no = 1;
-										foreach($monday as $x){
-												$waktu = $x->tanggal_mulai;
-
-												$bulan_array = array(
-													1 => 'Januari',
-													2 => 'Februari',
-													3 => 'Maret',
-													4 => 'April',
-													5 => 'Mei',
-													6 => 'Juni',
-													7 => 'Juli',
-													8 => 'Agustus',
-													9 => 'September',
-													10 => 'Oktober',
-													11 => 'November',
-													12 => 'Desember',
-												);
-												$bl    = date('n', strtotime($waktu));
-												$bulan = $bulan_array[$bl];
-												$tahun = date('Y', strtotime($waktu));
-												
-												if($bulan == $bulan_now && $tahun == $tahun_now){
-										?>
 										<thead>
 											<tr>
 												<th colspan="4" style="text-align: center;vertical-align: middle;">
@@ -4699,95 +4369,19 @@
 												<th style="text-align: center;vertical-align: middle;">No</th>
 												<th style="text-align: center;vertical-align: middle;">Material</th>
 												<th style="text-align: center;vertical-align: middle;">Line</th>
+												<th style="text-align: center;vertical-align: middle;">Jumlah</th>
 											</tr>
 										</thead>
 										<tbody>
 											
 												<tr>
-													<td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
+													<td style="text-align: center;vertical-align: middle;"></td>
 													<td style="text-align: center;vertical-align: middle;">
-														<?php 
-															$waktu = $x->tanggal_mulai;
-
-															$hari_array = array(
-																'Minggu',
-																'Senin',
-																'Selasa',
-																'Rabu',
-																'Kamis',
-																'Jumat',
-																'Sabtu'
-															);
-															$hr = date('w', strtotime($waktu));
-															$hari = $hari_array[$hr];
-															$tanggal = date('j', strtotime($waktu));
-															$bulan_array = array(
-																1 => 'Januari',
-																2 => 'Februari',
-																3 => 'Maret',
-																4 => 'April',
-																5 => 'Mei',
-																6 => 'Juni',
-																7 => 'Juli',
-																8 => 'Agustus',
-																9 => 'September',
-																10 => 'Oktober',
-																11 => 'November',
-																12 => 'Desember',
-															);
-															$bl = date('n', strtotime($waktu));
-															$bulan = $bulan_array[$bl];
-															$tahun = date('Y', strtotime($waktu));
-															
-															echo "$hari, $tanggal $bulan $tahun";
-														?>
-														<input type="hidden" id="s<?= $no;?>" value="<?php 
-																$waktu = $x->tanggal_mulai;
-
-																$hari_array = array(
-																	'Minggu',
-																	'Senin',
-																	'Selasa',
-																	'Rabu',
-																	'Kamis',
-																	'Jumat',
-																	'Sabtu'
-																);
-																$hr = date('w', strtotime($waktu));
-																$hari = $hari_array[$hr];
-																$tanggal = date('j', strtotime($waktu));
-																$bulan_array = array(
-																	1 => 'Januari',
-																	2 => 'Februari',
-																	3 => 'Maret',
-																	4 => 'April',
-																	5 => 'Mei',
-																	6 => 'Juni',
-																	7 => 'Juli',
-																	8 => 'Agustus',
-																	9 => 'September',
-																	10 => 'Oktober',
-																	11 => 'November',
-																	12 => 'Desember',
-																);
-																$bl = date('n', strtotime($waktu));
-																$bulan = $bulan_array[$bl];
-																$tahun = date('Y', strtotime($waktu));
-																
-																echo "$hari, $tanggal $bulan $tahun";
-															?>"
-														>
-														<input type="hidden" id="id_produksi<?= $no;?>" value="<?= $x->id_produksi;?>">
 													</td>
 													</td>
 												</tr>
 
 										</tbody>
-										<?php $no++; } else {?>
-											<p style="text-align: center;vertical-align: middle;">
-												<b style="color: red">Belum ada pengambilan material</b>
-											</p>
-										<?php }} ?>
 									</table>
 								</div>
 
@@ -4802,10 +4396,11 @@
 			</div>
 		</div>
 	<!-- -->
+		<?php } else if($_SESSION['nama_departemen'] == "Material" && $_SESSION['nama_jabatan'] == "Operator Gudang"){?>
 	<!-- OPERATOR GUDANG ------------------------------------------------------------------------------------------>
 		<div class="row">
 			<div class="col-md-6 col-lg-12 col-xl-6">
-				<!-- material -->
+				<!-- material masuk -->
 				<div class="col-md-4">
 					<section class="panel panel-featured-left panel-featured-danger">
 						<div class="panel-body">
@@ -4817,10 +4412,36 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 class="title">Material</h4>
-										<sub>(total semua)</sub>
+										<h4 class="title">Material Masuk</h4>
+										<sub>(hari ini)</sub>
 										<div class="info">
-											<strong class="amount"><?= $jumlah_produk[0]['jumlah_produk'] ?></strong>
+											<strong class="amount">0</strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?= base_url()?>produk">(lihat semua)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- material keluar -->
+				<div class="col-md-4">
+					<section class="panel panel-featured-left panel-featured-danger">
+						<div class="panel-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon" style="background-color:#BE2525">
+										<i class="fa  fa-cube"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title">Material Keluar</h4>
+										<sub>(hari ini)</sub>
+										<div class="info">
+											<strong class="amount">0</strong>
 										</div>
 									</div>
 									<div class="summary-footer">
@@ -4843,10 +4464,10 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 class="title">Delivery <br>Note</h4>
+										<h4 class="title">Delivery Note</h4>
 										<sub>(sedang proses)</sub>
 										<div class="info">
-											<strong class="amount"><?= $jumlah_produk[0]['jumlah_produk'] ?></strong>
+											<strong class="amount">7</strong>
 										</div>
 									</div>
 									<div class="summary-footer">
@@ -4871,31 +4492,6 @@
 							<div class="content">
 								<div style="height:250px;overflow:scroll">
 									<table class="table-responsive table table-hover mb-none">
-										<?php 
-											$no = 1;
-											foreach($monday as $x){
-													$waktu = $x->tanggal_mulai;
-
-													$bulan_array = array(
-														1 => 'Januari',
-														2 => 'Februari',
-														3 => 'Maret',
-														4 => 'April',
-														5 => 'Mei',
-														6 => 'Juni',
-														7 => 'Juli',
-														8 => 'Agustus',
-														9 => 'September',
-														10 => 'Oktober',
-														11 => 'November',
-														12 => 'Desember',
-													);
-													$bl    = date('n', strtotime($waktu));
-													$bulan = $bulan_array[$bl];
-													$tahun = date('Y', strtotime($waktu));
-													
-													if($bulan == $bulan_now && $tahun == $tahun_now){
-											?>
 										<thead>
 											<tr>
 												<th colspan="4" style="text-align: center;vertical-align: middle;">
@@ -4910,90 +4506,12 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
+												<td style="text-align: center;vertical-align: middle;"></td>
 												<td style="text-align: center;vertical-align: middle;">
-													<?php 
-														$waktu = $x->tanggal_mulai;
-
-														$hari_array = array(
-															'Minggu',
-															'Senin',
-															'Selasa',
-															'Rabu',
-															'Kamis',
-															'Jumat',
-															'Sabtu'
-														);
-														$hr = date('w', strtotime($waktu));
-														$hari = $hari_array[$hr];
-														$tanggal = date('j', strtotime($waktu));
-														$bulan_array = array(
-															1 => 'Januari',
-															2 => 'Februari',
-															3 => 'Maret',
-															4 => 'April',
-															5 => 'Mei',
-															6 => 'Juni',
-															7 => 'Juli',
-															8 => 'Agustus',
-															9 => 'September',
-															10 => 'Oktober',
-															11 => 'November',
-															12 => 'Desember',
-														);
-														$bl = date('n', strtotime($waktu));
-														$bulan = $bulan_array[$bl];
-														$tahun = date('Y', strtotime($waktu));
-														
-														echo "$hari, $tanggal $bulan $tahun";
-													?>
-													<input type="hidden" id="s<?= $no;?>" value="<?php 
-															$waktu = $x->tanggal_mulai;
-
-															$hari_array = array(
-																'Minggu',
-																'Senin',
-																'Selasa',
-																'Rabu',
-																'Kamis',
-																'Jumat',
-																'Sabtu'
-															);
-															$hr = date('w', strtotime($waktu));
-															$hari = $hari_array[$hr];
-															$tanggal = date('j', strtotime($waktu));
-															$bulan_array = array(
-																1 => 'Januari',
-																2 => 'Februari',
-																3 => 'Maret',
-																4 => 'April',
-																5 => 'Mei',
-																6 => 'Juni',
-																7 => 'Juli',
-																8 => 'Agustus',
-																9 => 'September',
-																10 => 'Oktober',
-																11 => 'November',
-																12 => 'Desember',
-															);
-															$bl = date('n', strtotime($waktu));
-															$bulan = $bulan_array[$bl];
-															$tahun = date('Y', strtotime($waktu));
-															
-															echo "$hari, $tanggal $bulan $tahun";
-														?>"
-													>
-													<input type="hidden" id="id_produksi<?= $no;?>" value="<?= $x->id_produksi;?>">
 												</td>
 												</td>
 											</tr>
 										</tbody>
-										
-										<?php $no++; } else {?>
-											<p style="text-align: center;vertical-align: middle;">
-												<b style="color: red">Belum ada pemasukan material</b>
-											</p>
-										<?php }} ?>
 									</table>
 								</div>
 
@@ -5017,31 +4535,6 @@
 							<div class="content">
 								<div style="height:250px;overflow:scroll">
 									<table class="table-responsive table table-hover mb-none">
-									<?php 
-										$no = 1;
-										foreach($monday as $x){
-												$waktu = $x->tanggal_mulai;
-
-												$bulan_array = array(
-													1 => 'Januari',
-													2 => 'Februari',
-													3 => 'Maret',
-													4 => 'April',
-													5 => 'Mei',
-													6 => 'Juni',
-													7 => 'Juli',
-													8 => 'Agustus',
-													9 => 'September',
-													10 => 'Oktober',
-													11 => 'November',
-													12 => 'Desember',
-												);
-												$bl    = date('n', strtotime($waktu));
-												$bulan = $bulan_array[$bl];
-												$tahun = date('Y', strtotime($waktu));
-												
-												if($bulan == $bulan_now && $tahun == $tahun_now){
-										?>
 										<thead>
 											<tr>
 												<th colspan="4" style="text-align: center;vertical-align: middle;">
@@ -5057,90 +4550,13 @@
 										<tbody>
 											
 												<tr>
-													<td style="text-align: center;vertical-align: middle;"><?= $no; ?></td>
+													<td style="text-align: center;vertical-align: middle;"></td>
 													<td style="text-align: center;vertical-align: middle;">
-														<?php 
-															$waktu = $x->tanggal_mulai;
-
-															$hari_array = array(
-																'Minggu',
-																'Senin',
-																'Selasa',
-																'Rabu',
-																'Kamis',
-																'Jumat',
-																'Sabtu'
-															);
-															$hr = date('w', strtotime($waktu));
-															$hari = $hari_array[$hr];
-															$tanggal = date('j', strtotime($waktu));
-															$bulan_array = array(
-																1 => 'Januari',
-																2 => 'Februari',
-																3 => 'Maret',
-																4 => 'April',
-																5 => 'Mei',
-																6 => 'Juni',
-																7 => 'Juli',
-																8 => 'Agustus',
-																9 => 'September',
-																10 => 'Oktober',
-																11 => 'November',
-																12 => 'Desember',
-															);
-															$bl = date('n', strtotime($waktu));
-															$bulan = $bulan_array[$bl];
-															$tahun = date('Y', strtotime($waktu));
-															
-															echo "$hari, $tanggal $bulan $tahun";
-														?>
-														<input type="hidden" id="s<?= $no;?>" value="<?php 
-																$waktu = $x->tanggal_mulai;
-
-																$hari_array = array(
-																	'Minggu',
-																	'Senin',
-																	'Selasa',
-																	'Rabu',
-																	'Kamis',
-																	'Jumat',
-																	'Sabtu'
-																);
-																$hr = date('w', strtotime($waktu));
-																$hari = $hari_array[$hr];
-																$tanggal = date('j', strtotime($waktu));
-																$bulan_array = array(
-																	1 => 'Januari',
-																	2 => 'Februari',
-																	3 => 'Maret',
-																	4 => 'April',
-																	5 => 'Mei',
-																	6 => 'Juni',
-																	7 => 'Juli',
-																	8 => 'Agustus',
-																	9 => 'September',
-																	10 => 'Oktober',
-																	11 => 'November',
-																	12 => 'Desember',
-																);
-																$bl = date('n', strtotime($waktu));
-																$bulan = $bulan_array[$bl];
-																$tahun = date('Y', strtotime($waktu));
-																
-																echo "$hari, $tanggal $bulan $tahun";
-															?>"
-														>
-														<input type="hidden" id="id_produksi<?= $no;?>" value="<?= $x->id_produksi;?>">
 													</td>
 													</td>
 												</tr>
 
 										</tbody>
-										<?php $no++; } else {?>
-											<p style="text-align: center;vertical-align: middle;">
-												<b style="color: red">Belum ada pengeluaran material</b>
-											</p>
-										<?php }} ?>
 									</table>
 								</div>
 

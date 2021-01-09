@@ -120,4 +120,27 @@ class M_PurchaseOrderSupplier extends CI_Model {
     }
 
 
+
+    //****************************** INVOICE IN ***************************** */
+    //*********************************************************************** */
+    function selectAllInvoiceIn(){
+        return $this->db->query("SELECT * FROM invoice_in");
+    }
+
+    function selectInvoiceInAktif(){
+        return $this->db->query("SELECT * FROM invoice_in WHERE status_delete=0");
+    }
+
+    function insertInvoiceIn($data){
+        $this->db->insert('invoice_in', $data);
+    }
+
+    function editInvoiceIn($data,$where){
+        $this->db->update('invoice_in', $data, $where);
+    }
+
+    function hapusInvoiceIn($data,$where){
+        $this->db->update('invoice_in', $data, $where);
+    }
+
 }

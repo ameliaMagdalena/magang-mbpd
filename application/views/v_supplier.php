@@ -153,28 +153,28 @@
                                         <label class="col-sm-3 control-label">Nama</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="nama_supplier" class="form-control"
-                                            value="<?php echo $supplier[$x]['nama_supplier']?>">
+                                            value="<?php echo $supplier[$x]['nama_supplier']?>" required>
                                         </div>
                                     </div>
                                     <div class="form-group mt-lg">
                                         <label class="col-sm-3 control-label">E-mail</label>
                                         <div class="col-sm-9">
                                             <input type="email" name="email_supplier" class="form-control"
-                                            value="<?php echo $supplier[$x]['email_supplier'] ?>">
+                                            value="<?php echo $supplier[$x]['email_supplier'] ?>" required>
                                         </div>
                                     </div>
                                     <div class="form-group mt-lg">
                                         <label class="col-sm-3 control-label">No. Telp.</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="no_telp_supplier" class="form-control"
-                                            value="<?php echo $supplier[$x]['no_telp_supplier'] ?>">
+                                            value="<?php echo $supplier[$x]['no_telp_supplier'] ?>" required>
                                         </div>
                                     </div>
                                     <div class="form-group mt-lg">
                                         <label class="col-sm-3 control-label">Alamat</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="alamat_supplier" class="form-control"
-                                            value="<?php echo $supplier[$x]['alamat_supplier'] ?>">
+                                            value="<?php echo $supplier[$x]['alamat_supplier'] ?>" required>
                                         </div>
                                     </div>
                                 </div>
