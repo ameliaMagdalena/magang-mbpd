@@ -639,7 +639,7 @@ class PurchaseOrderSupplier extends CI_Controller {
 
     public function jumlah_minta(){
         $id = $this->input->post("id_permintaan_pembelian");
-        $result = $this->M_PembelianMaterial->selectPermintaanPembelianAktif($id)->result_array();
+        $result = $this->M_PembelianMaterial->selectPermintaanPembeliannya($id)->result_array();
         echo json_encode($result);
     }
 

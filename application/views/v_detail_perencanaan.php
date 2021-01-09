@@ -132,7 +132,7 @@
                             echo $belumambil?>" readonly>
                     </div>
                 </div>
-                <div class="form-group mt-lg">
+                <!--<div class="form-group mt-lg">
                     <label class="col-sm-3 control-label">Stok di Gudang</label>
                     <div class="col-sm-7">
                         <input type="text" class="form-control" value="<?php  $ketersediaan = 0;
@@ -143,7 +143,7 @@
                             } echo $ketersediaan;
                         ?>" readonly>
                     </div>
-                </div>
+                </div>-->
                 <div class="form-group mt-lg">
                     <table class="table table-bordered table-striped table-hover" border="1">
                         <thead>

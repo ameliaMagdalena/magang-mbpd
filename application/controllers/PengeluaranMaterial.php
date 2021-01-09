@@ -26,8 +26,8 @@ class PengeluaranMaterial extends CI_Controller {
     }
 
 	public function index(){
-        $data['pemasukan'] = $this->M_PemasukanMaterial->selectPemasukanMaterialAktif()->result_array();
-        $data['material'] = $this->M_PemasukanMaterial->selectMaterialAktif()->result_array();
+        $data['keluar'] = $this->M_PengeluaranMaterial->selectPengeluaranMaterialAktif()->result_array();
+        //$data['material'] = $this->M_PengeluaranMaterial->selectMaterialAktif()->result_array();
 
         //notif material
             $data['permat'] = $this->M_PerencanaanMaterial->selectPermintaanMaterialAktif()->result_array();
@@ -214,7 +214,7 @@ class PengeluaranMaterial extends CI_Controller {
             //tutup notif permohonan akses
         //tutup
 
-		$this->load->view('v_pengeluaran_material');
+		$this->load->view('v_pengeluaran_material', $data);
     }
 
     public function baru(){

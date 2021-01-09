@@ -15,6 +15,7 @@ class M_PengeluaranMaterial extends CI_Model {
     function selectPengeluaranMaterialAktif(){
         return $this->db->query("SELECT * FROM pengeluaran_material a
         JOIN sub_jenis_material b ON a.id_sub_jenis_material = b.id_sub_jenis_material
+        JOIN jenis_material c ON b.id_jenis_material=c.id_jenis_material
         WHERE a.status_delete=0");
     }
 

@@ -19,6 +19,13 @@ class M_PembelianMaterial extends CI_Model {
         WHERE a.status_delete = 0");
     }
 
+    function selectPermintaanPembeliannya($id){
+        return $this->db->query("SELECT * FROM permintaan_pembelian a
+        JOIN sub_jenis_material b ON a.id_sub_jenis_material = b.id_sub_jenis_material
+        JOIN jenis_material c ON b.id_jenis_material = c.id_jenis_material
+        WHERE a.status_delete = 0 AND a.id_permintaan_pembelian='$id'");
+    }
+
     function insertPermintaanPembelian($data){
         $this->db->insert('permintaan_pembelian', $data);
     }

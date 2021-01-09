@@ -48,37 +48,20 @@
                 </tr>
             </thead>
             <tbody>
+                <?php for($x=0; $x<count($keluar); $x++){ ?>
                 <tr>
-                    <td class="col-2"> 1 <?php //echo $x+1?></td>
-                    <td class="col-lg-3"> 12 Juni 2020 <?php //echo $material[$x]['nama_material']?></td>
-                    <td class="col-lg-3"> Foam <?php //echo $material[$x]['email_material']?></td>
-                    <td class="col-lg-2"> 10 <?php //echo $material[$x]['nama_departemen']?></td>
+                    <td class="col-2"> <?php echo $x+1?></td>
+                    <td class="col-lg-3"> <?php echo $keluar[$x]['tanggal_keluar']?></td>
+                    <td class="col-lg-3"> <?php echo $keluar[$x]['nama_jenis_material']." ".$keluar[$x]['nama_sub_jenis_material']?></td>
+                    <td class="col-lg-2"> <?php echo $keluar[$x]['jumlah_keluar']?></td>
                     <td class="col-lg-4">
                         <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                            title="Detail" href="#modaldetail"></a>
-                        <a class="modal-with-form col-lg-3 btn btn-success fa fa-check-circle"
-                            title="Konfirmasi" href="#modaledit<?php //echo $material[$x]['id_material'] ?>"></a>
+                            title="Detail" href="#modaldetail<?php echo $keluar[$x]['id_pengeluaran_material'] ?>"></a>
                         <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                            title="Delete" href="#modalhapus<?php //echo $material[$x]['id_material'] ?>"></a>
-                        <a class="col-lg-3 btn btn-info fa fa-print" title="Print"></a>
+                            title="Delete" href="#modalhapus<?php echo $keluar[$x]['id_pengeluaran_material'] ?>"></a>
                     </td>
                 </tr>
-                <tr>
-                    <td class="col-2"> 2 <?php //echo $x+1?></td>
-                    <td class="col-lg-3"> 14 Juni 2020 <?php //echo $material[$x]['nama_material']?></td>
-                    <td class="col-lg-3"> Foam <?php //echo $material[$x]['email_material']?></td>
-                    <td class="col-lg-2"> 11 <?php //echo $material[$x]['nama_departemen']?></td>
-                    <td class="col-lg-4">
-                        <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                            title="Detail" href="#modaldetail2"></a>
-                        <a class="modal-with-form col-lg-3 btn btn-success fa fa-check-circle"
-                            title="Konfirmasi" href="#modaledit<?php //echo $material[$x]['id_material'] ?>"></a>
-                        <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                            title="Delete" href="#modalhapus<?php //echo $material[$x]['id_material'] ?>"></a>
-                        <a class="col-lg-3 btn btn-info fa fa-print" title="Print"></a>
-                    </td>
-                </tr>
-                <?php //}} ?>
+                <?php } ?>
             </tbody>
         </table>
     </div>
