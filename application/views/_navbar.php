@@ -117,8 +117,6 @@
 									</li>
 								</ul>
 							</li>
-							<?php $x = 1;
-							 if($x == 1){?>
 							
 							<li class="nav-parent">
 								<a>
@@ -588,7 +586,7 @@
 									</li>
 								</ul>
 							</li>
-							<?php } ?>
+							
 						
 							<!-- produksi -->
 								<!-- persediaan line -->
