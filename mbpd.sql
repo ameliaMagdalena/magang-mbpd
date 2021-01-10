@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2020 at 05:46 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.3.13
+-- Generation Time: Jan 10, 2021 at 04:46 AM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -50,7 +50,9 @@ INSERT INTO `bank` (`id_bank`, `nama_bank`, `user_add`, `waktu_add`, `user_edit`
 ('BANK-3', 'OCBC NISP', 'USER-1', '2020-08-30 22:08:53', 'USER-1', '2020-08-30 22:09:12', '', '0000-00-00 00:00:00', 0),
 ('BANK-4', 'Mandiri', 'USER-1', '2020-09-08 23:36:51', 'USER-1', '2020-09-08 23:36:57', 'USER-1', '2020-09-08 23:37:01', 1),
 ('BANK-5', 'BNI', 'USER-1', '2020-09-24 22:59:36', 'USER-1', '2020-09-24 22:59:44', 'USER-1', '2020-09-24 22:59:48', 1),
-('BANK-6', 'CIMB NIAGA', 'USER-2', '2020-12-30 19:38:15', NULL, NULL, NULL, NULL, 0);
+('BANK-6', 'CIMB NIAGA', 'USER-2', '2020-12-30 19:38:15', NULL, NULL, NULL, NULL, 0),
+('BANK-7', 'BNI', 'USER-2', '2020-12-31 10:18:18', NULL, NULL, NULL, NULL, 0),
+('BANK-8', 'Mandiri', 'USER-2', '2020-12-31 11:47:32', NULL, NULL, NULL, NULL, 0);
 
 --
 -- Triggers `bank`
@@ -106,7 +108,9 @@ INSERT INTO `bank_logs` (`id_bank_logs`, `keterangan_log`, `id_bank`, `nama_bank
 (15, 'Edit Data', 'BANK-5', 'BNI', 'USER-1', '2020-09-24 22:59:36', 'USER-1', '2020-09-24 22:59:44', 'USER-1', '2020-09-24 22:59:48', 1),
 (16, 'Edit Data', 'BANK-2', 'BCAa', 'USER-1', '2020-08-30 18:11:42', 'USER-1', '2020-12-21 12:00:02', '', '0000-00-00 00:00:00', 0),
 (17, 'Edit Data', 'BANK-2', 'BCA', 'USER-1', '2020-08-30 18:11:42', 'USER-2', '2020-12-24 16:37:26', '', '0000-00-00 00:00:00', 0),
-(18, 'Insert Data', 'BANK-6', 'CIMB NIAGA', 'USER-2', '2020-12-30 19:38:15', NULL, NULL, NULL, NULL, 0);
+(18, 'Insert Data', 'BANK-6', 'CIMB NIAGA', 'USER-2', '2020-12-30 19:38:15', NULL, NULL, NULL, NULL, 0),
+(19, 'Insert Data', 'BANK-7', 'BNI', 'USER-2', '2020-12-31 10:18:18', NULL, NULL, NULL, NULL, 0),
+(20, 'Insert Data', 'BANK-8', 'Mandiri', 'USER-2', '2020-12-31 11:47:32', NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -212,6 +216,9 @@ INSERT INTO `cycle_time` (`id_cycle_time`, `id_line`, `id_produk`, `cycle_time`,
 ('CT-12', 'LINE-1', 'PRDK-4', 180, 'USER-2', '2020-12-24 16:53:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('CT-13', 'LINE-2', 'PRDK-4', 240, 'USER-2', '2020-12-24 16:53:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('CT-14', 'LINE-4', 'PRDK-4', 240, 'USER-2', '2020-12-24 16:53:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('CT-15', 'LINE-1', 'PRDK-5', 300, 'USER-2', '2021-01-08 06:32:55', 'USER-2', '2021-01-08 06:35:02', NULL, NULL, 0),
+('CT-16', 'LINE-2', 'PRDK-5', 300, 'USER-2', '2021-01-08 06:32:55', 'USER-2', '2021-01-08 06:35:02', NULL, NULL, 0),
+('CT-17', 'LINE-4', 'PRDK-5', 300, 'USER-2', '2021-01-08 06:32:55', 'USER-2', '2021-01-08 06:35:02', NULL, NULL, 0),
 ('CT-2', 'LINE-2', 'PRDK-1', 120, 'USER-2', '2020-12-24 16:42:24', 'USER-2', '2020-12-26 16:29:12', '', '0000-00-00 00:00:00', 0),
 ('CT-3', 'LINE-3', 'PRDK-1', 240, 'USER-2', '2020-12-24 16:42:24', 'USER-2', '2020-12-26 16:29:12', '', '0000-00-00 00:00:00', 0),
 ('CT-4', 'LINE-4', 'PRDK-1', 240, 'USER-2', '2020-12-24 16:42:24', 'USER-2', '2020-12-26 16:29:12', '', '0000-00-00 00:00:00', 0),
@@ -235,6 +242,8 @@ CREATE TABLE `delivery_note` (
   `tanggal_penerimaan` date NOT NULL,
   `total_harga` int(11) DEFAULT NULL,
   `status_pengesahan` int(11) NOT NULL,
+  `dibuat_oleh` varchar(10) NOT NULL,
+  `disetujui_oleh` varchar(10) DEFAULT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
   `user_edit` varchar(10) DEFAULT NULL,
@@ -268,13 +277,18 @@ CREATE TABLE `departemen` (
 
 INSERT INTO `departemen` (`id_departemen`, `nama_departemen`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
 ('DEPT-1', 'x', 'USER-1', '2020-12-21 12:53:12', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DEPT-10', 'Material', 'USER-2', '2021-01-08 04:21:05', NULL, NULL, NULL, NULL, 1),
+('DEPT-11', 'Material', 'USER-2', '2021-01-08 04:22:36', NULL, NULL, NULL, NULL, 0),
+('DEPT-12', 'Qualitys', 'USER-2', '2021-01-08 04:22:48', 'USER-2', '2021-01-08 04:23:20', 'USER-2', '2021-01-08 04:23:43', 1),
+('DEPT-13', 'Quality', 'USER-2', '2021-01-08 04:32:15', NULL, NULL, NULL, NULL, 0),
 ('DEPT-2', 'Management', 'USER-1', '2020-12-21 13:09:02', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('DEPT-3', 'Produksi', 'USER-1', '2020-12-21 13:27:02', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('DEPT-4', 'Purchasing', 'USER-1', '2020-12-21 13:27:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('DEPT-5', 'Finish Good', 'USER-1', '2020-12-21 13:27:32', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('DEPT-6', 'Research & Development', 'USER-1', '2020-12-21 13:27:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DEPT-7', 'Material', 'USER-1', '2020-12-21 13:27:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DEPT-8', 'Quality', 'USER-2', '2020-12-28 15:07:38', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+('DEPT-7', 'Material', 'USER-1', '2020-12-21 13:27:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+('DEPT-8', 'Quality', 'USER-2', '2020-12-28 15:07:38', '', '0000-00-00 00:00:00', 'USER-2', '2020-12-31 11:48:12', 1),
+('DEPT-9', 'Quality', 'USER-2', '2020-12-31 11:48:17', NULL, NULL, 'USER-2', '2021-01-08 04:19:46', 1);
 
 --
 -- Triggers `departemen`
@@ -319,7 +333,18 @@ INSERT INTO `departemen_logs` (`id_departemen_logs`, `keterangan_log`, `id_depar
 (16, 'Insert Data', 'DEPT-5', 'Finish Good', 'USER-1', '2020-12-21 13:27:32', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 (17, 'Insert Data', 'DEPT-6', 'Research & Development', 'USER-1', '2020-12-21 13:27:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 (18, 'Insert Data', 'DEPT-7', 'Material', 'USER-1', '2020-12-21 13:27:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(19, 'Insert Data', 'DEPT-8', 'Quality', 'USER-2', '2020-12-28 15:07:38', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+(19, 'Insert Data', 'DEPT-8', 'Quality', 'USER-2', '2020-12-28 15:07:38', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(20, 'Edit Data', 'DEPT-8', 'Quality', 'USER-2', '2020-12-28 15:07:38', '', '0000-00-00 00:00:00', 'USER-2', '2020-12-31 11:48:12', 1),
+(21, 'Insert Data', 'DEPT-9', 'Quality', 'USER-2', '2020-12-31 11:48:17', NULL, NULL, NULL, NULL, 0),
+(22, 'Edit Data', 'DEPT-9', 'Quality', 'USER-2', '2020-12-31 11:48:17', NULL, NULL, 'USER-2', '2021-01-08 04:19:46', 1),
+(23, 'Edit Data', 'DEPT-7', 'Material', 'USER-1', '2020-12-21 13:27:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+(24, 'Insert Data', 'DEPT-10', 'Material', 'USER-2', '2021-01-08 04:21:05', NULL, NULL, NULL, NULL, 0),
+(25, 'Edit Data', 'DEPT-10', 'Material', 'USER-2', '2021-01-08 04:21:05', NULL, NULL, NULL, NULL, 1),
+(26, 'Insert Data', 'DEPT-11', 'Material', 'USER-2', '2021-01-08 04:22:36', NULL, NULL, NULL, NULL, 0),
+(27, 'Insert Data', 'DEPT-12', 'Quality', 'USER-2', '2021-01-08 04:22:48', NULL, NULL, NULL, NULL, 0),
+(28, 'Edit Data', 'DEPT-12', 'Qualitys', 'USER-2', '2021-01-08 04:22:48', 'USER-2', '2021-01-08 04:23:20', NULL, NULL, 0),
+(29, 'Edit Data', 'DEPT-12', 'Qualitys', 'USER-2', '2021-01-08 04:22:48', 'USER-2', '2021-01-08 04:23:20', 'USER-2', '2021-01-08 04:23:43', 1),
+(30, 'Insert Data', 'DEPT-13', 'Quality', 'USER-2', '2021-01-08 04:32:15', NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -332,7 +357,7 @@ CREATE TABLE `detail_bpbj` (
   `id_bpbj` varchar(15) NOT NULL,
   `id_detail_produk` varchar(10) NOT NULL,
   `jumlah_produk` int(11) NOT NULL,
-  `jumlah_terkirim` int(11) NOT NULL,
+  `jumlah_terkirim` int(11) DEFAULT NULL,
   `status_detail_bpbj` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
@@ -343,19 +368,6 @@ CREATE TABLE `detail_bpbj` (
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `detail_bpbj`
---
-
-INSERT INTO `detail_bpbj` (`id_detail_bpbj`, `id_bpbj`, `id_detail_produk`, `jumlah_produk`, `jumlah_terkirim`, `status_detail_bpbj`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('DBPBJ20.000001', 'BPBJ20.0001', 'DETPRO-1', 50, 50, 1, 'USER-7', '2020-12-26 22:49:23', 'USER-4', '2020-12-26 23:05:19', '', '0000-00-00 00:00:00', 0),
-('DBPBJ20.000002', 'BPBJ20.0001', 'DETPRO-2', 20, 15, 0, 'USER-7', '2020-12-26 22:49:23', 'USER-4', '2020-12-27 00:44:37', '', '0000-00-00 00:00:00', 0),
-('DBPBJ20.000003', 'BPBJ20.0002', 'DETPRO-1', 40, 40, 1, 'USER-7', '2020-12-26 22:49:51', 'USER-4', '2020-12-27 01:03:20', '', '0000-00-00 00:00:00', 0),
-('DBPBJ20.000004', 'BPBJ20.0003', 'DETPRO-1', 20, 0, 0, 'USER-7', '2020-12-26 22:50:07', 'USER-7', '2020-12-26 23:17:49', 'USER-7', '2020-12-26 23:25:21', 1),
-('DBPBJ20.000005', 'BPBJ20.0003', 'DETPRO-3', 50, 0, 0, 'USER-7', '2020-12-26 22:50:07', 'USER-7', '2020-12-26 23:17:49', 'USER-7', '2020-12-26 23:25:21', 1),
-('DBPBJ20.000006', 'BPBJ20.0004', 'DETPRO-1', 20, 20, 1, 'USER-7', '2020-12-26 23:28:12', 'USER-4', '2020-12-27 01:03:20', '', '0000-00-00 00:00:00', 0),
-('DBPBJ20.000007', 'BPBJ20.0004', 'DETPRO-3', 50, 30, 0, 'USER-7', '2020-12-26 23:28:12', 'USER-4', '2020-12-27 13:54:44', '', '0000-00-00 00:00:00', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -365,12 +377,12 @@ INSERT INTO `detail_bpbj` (`id_detail_bpbj`, `id_bpbj`, `id_detail_produk`, `jum
 CREATE TABLE `detail_delivery_note` (
   `id_detail_delivery_note` varchar(10) NOT NULL,
   `id_delivery_note` varchar(10) NOT NULL,
-  `id_sub_jenis_material` varchar(10) NOT NULL,
   `id_detail_purchase_order_supplier` varchar(10) NOT NULL,
   `id_invoice` varchar(10) DEFAULT NULL,
   `jumlah_diminta` int(11) NOT NULL,
   `jumlah_aktual` int(11) DEFAULT NULL,
   `total_harga_aktual` int(11) DEFAULT NULL,
+  `remark` varchar(500) DEFAULT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
   `user_edit` varchar(10) DEFAULT NULL,
@@ -400,15 +412,6 @@ CREATE TABLE `detail_item_bpbd` (
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `detail_item_bpbd`
---
-
-INSERT INTO `detail_item_bpbd` (`id_detail_item_bpbd`, `id_item_bpbd`, `id_item_surat_jalan`, `jumlah_produk`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('DIBPBD20.00000001', 'IBPBD20.000001', 'ISJ20.000001', 10, 'USER-7', '2020-12-27 13:22:54', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DIBPBD20.00000002', 'IBPBD20.000002', 'ISJ20.000001', 5, 'USER-7', '2020-12-27 13:25:51', 'USER-7', '2020-12-27 13:36:59', 'USER-7', '2020-12-27 13:38:49', 1),
-('DIBPBD20.00000003', 'IBPBD20.000003', 'ISJ20.000002', 10, 'USER-7', '2020-12-27 13:25:51', '', '0000-00-00 00:00:00', 'USER-7', '2020-12-27 13:36:59', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -429,23 +432,6 @@ CREATE TABLE `detail_item_surat_jalan` (
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `detail_item_surat_jalan`
---
-
-INSERT INTO `detail_item_surat_jalan` (`id_detail_item_surat_jalan`, `id_item_surat_jalan`, `id_detail_bpbj`, `jumlah_produk`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('DISJ20.00000001', 'ISJ20.000001', 'DBPBJ20.000001', 20, 'USER-4', '2020-12-26 23:02:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DISJ20.00000002', 'ISJ20.000002', 'DBPBJ20.000002', 10, 'USER-4', '2020-12-26 23:02:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DISJ20.00000003', 'ISJ20.000003', 'DBPBJ20.000001', 30, 'USER-4', '2020-12-26 23:05:19', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DISJ20.00000004', 'ISJ20.000003', 'DBPBJ20.000003', 5, 'USER-4', '2020-12-26 23:05:19', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DISJ20.00000005', 'ISJ20.000004', 'DBPBJ20.000002', 5, 'USER-4', '2020-12-26 23:05:19', 'USER-4', '2020-12-27 00:44:37', '', '0000-00-00 00:00:00', 0),
-('DISJ20.00000006', 'ISJ20.000005', 'DBPBJ20.000003', 25, 'USER-4', '2020-12-27 00:28:25', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DISJ20.00000007', 'ISJ20.000006', 'DBPBJ20.000007', 20, 'USER-4', '2020-12-27 00:28:25', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DISJ20.00000008', 'ISJ20.000003', 'DBPBJ20.000003', 5, 'USER-4', '2020-12-27 00:44:37', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DISJ20.00000009', 'ISJ20.000003', 'DBPBJ20.000003', 5, 'USER-4', '2020-12-27 01:03:20', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DISJ20.00000010', 'ISJ20.000003', 'DBPBJ20.000006', 20, 'USER-4', '2020-12-27 01:03:20', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DISJ20.00000011', 'ISJ20.000007', 'DBPBJ20.000007', 10, 'USER-4', '2020-12-27 13:54:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -457,14 +443,14 @@ CREATE TABLE `detail_permintaan_material` (
   `id_permintaan_material` varchar(20) NOT NULL,
   `id_konsumsi_material` varchar(10) NOT NULL,
   `needs` decimal(11,2) NOT NULL,
-  `status_detail_permintaan_material` int(11) NOT NULL,
+  `status_detail_permintaan_material` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
   `user_edit` varchar(10) DEFAULT NULL,
   `waktu_edit` datetime DEFAULT NULL,
   `user_delete` varchar(10) DEFAULT NULL,
   `waktu_delete` datetime DEFAULT NULL,
-  `status_delete` int(11) NOT NULL
+  `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -499,7 +485,10 @@ INSERT INTO `detail_produk` (`id_detail_produk`, `id_produk`, `id_ukuran_produk`
 ('DETPRO-3', 'PRDK-3', '', 'WARNA-1', 'N-BAG02-Z008.0LR', 2, 'USER-2', '2020-12-24 16:47:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('DETPRO-4', 'PRDK-4', 'UKPROD-5', 'WARNA-1', 'N-BOA00-Z005.0L', 0, 'USER-2', '2020-12-24 16:53:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('DETPRO-5', 'PRDK-4', 'UKPROD-5', 'WARNA-2', 'N-BOA00-Z001.0L', 0, 'USER-2', '2020-12-24 16:53:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('DETPRO-6', 'PRDK-4', 'UKPROD-5', 'WARNA-3', 'N-BOA00-Z004.0L', 0, 'USER-2', '2020-12-24 16:53:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+('DETPRO-6', 'PRDK-4', 'UKPROD-5', 'WARNA-3', 'N-BOA00-Z004.0L', 0, 'USER-2', '2020-12-24 16:53:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('DETPRO-7', 'PRDK-5', '', 'WARNA-1', 'N-SOF01.001', 2, 'USER-2', '2021-01-08 06:32:55', NULL, NULL, 'USER-2', '2021-01-08 06:35:02', 1),
+('DETPRO-8', 'PRDK-5', '', 'WARNA-2', 'N-SOF01.002', 2, 'USER-2', '2021-01-08 06:32:55', 'USER-2', '2021-01-08 06:35:02', NULL, NULL, 0),
+('DETPRO-9', 'PRDK-5', '', 'WARNA-5', 'N-SOF01.003', 2, 'USER-2', '2021-01-08 06:35:02', NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -512,10 +501,10 @@ CREATE TABLE `detail_produksi_line` (
   `id_detail_purchase_order` varchar(10) NOT NULL,
   `id_produksi_line` varchar(15) NOT NULL,
   `jumlah_item_perencanaan` int(11) NOT NULL,
-  `jumlah_item_aktual` int(11) NOT NULL,
+  `jumlah_item_aktual` int(11) DEFAULT NULL,
   `waktu_proses_perencanaan` int(11) NOT NULL,
-  `waktu_proses_aktual` int(11) NOT NULL,
-  `keterangan_aktual` varchar(50) NOT NULL,
+  `waktu_proses_aktual` int(11) DEFAULT NULL,
+  `keterangan_aktual` varchar(50) DEFAULT NULL,
   `status_perencanaan` int(1) NOT NULL,
   `status_aktual` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
@@ -576,8 +565,11 @@ CREATE TABLE `detail_purchase_order_customer` (
 --
 
 INSERT INTO `detail_purchase_order_customer` (`id_detail_purchase_order_customer`, `id_purchase_order_customer`, `id_detail_produk`, `jumlah_produk`, `harga_satuan`, `total_harga`, `tanggal_penerimaan`, `remark`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('DPOC-1', 'POC-1', 'DETPRO-2', 150, '116555.00', '17483250.00', '2021-01-09', '', 'USER-2', '2020-12-30 18:49:58', '0', NULL, '0', NULL, NULL),
-('DPOC-2', 'POC-1', 'DETPRO-6', 300, '315933.00', '94779900.00', '2021-01-07', 'tes', 'USER-2', '2020-12-30 18:49:58', '0', NULL, '0', NULL, NULL);
+('DPOC-1', 'POC-1', 'DETPRO-2', 150, '116555.00', '17483250.00', '2021-01-09', '', 'USER-2', '2020-12-30 18:49:58', '0', NULL, '0', NULL, 0),
+('DPOC-2', 'POC-1', 'DETPRO-6', 300, '315933.00', '94779900.00', '2021-01-07', 'tes', 'USER-2', '2020-12-30 18:49:58', '0', NULL, '0', NULL, 0),
+('DPOC-3', 'POC-2', 'DETPRO-1', 200, '116536.00', '23307200.00', '2021-01-15', '', 'USER-2', '2021-01-08 01:33:28', NULL, NULL, NULL, NULL, 0),
+('DPOC-4', 'POC-2', 'DETPRO-2', 200, '116555.00', '23311000.00', '2021-01-15', '', 'USER-2', '2021-01-08 01:33:28', NULL, NULL, NULL, NULL, 0),
+('DPOC-5', 'POC-2', 'DETPRO-3', 10, '1283922.00', '12839220.00', '2021-01-15', '', 'USER-2', '2021-01-08 01:33:28', NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -601,6 +593,13 @@ CREATE TABLE `detail_purchase_order_supplier` (
   `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_purchase_order_supplier`
+--
+
+INSERT INTO `detail_purchase_order_supplier` (`id_detail_purchase_order_supplier`, `id_purchase_order_supplier`, `id_sub_jenis_material`, `jumlah_material`, `harga_satuan`, `harga_total`, `status_detail_po`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('DPOS-1', 'POS-1', 'SUBJM-4', 15, '3000.00', '45000.00', 0, 'USER-2', '2021-01-04 21:24:22', '0', NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -644,11 +643,11 @@ CREATE TABLE `detail_surat_perintah_lembur` (
   `planning_lembur` int(2) NOT NULL,
   `waktu_in_plan` time NOT NULL,
   `waktu_out_plan` time NOT NULL,
-  `keterangan_plan` varchar(200) NOT NULL,
-  `aktual_lembur` int(2) NOT NULL,
-  `waktu_in_aktual` time NOT NULL,
-  `waktu_out_aktual` time NOT NULL,
-  `keterangan_aktual` varchar(200) NOT NULL,
+  `keterangan_plan` varchar(200) DEFAULT NULL,
+  `aktual_lembur` int(2) DEFAULT NULL,
+  `waktu_in_aktual` time DEFAULT NULL,
+  `waktu_out_aktual` time DEFAULT NULL,
+  `keterangan_aktual` varchar(200) DEFAULT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
   `user_edit` varchar(10) DEFAULT NULL,
@@ -657,6 +656,15 @@ CREATE TABLE `detail_surat_perintah_lembur` (
   `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `detail_surat_perintah_lembur`
+--
+
+INSERT INTO `detail_surat_perintah_lembur` (`id_detail_surat_perintah_lembur`, `id_surat_perintah_lembur`, `id_karyawan`, `planning_lembur`, `waktu_in_plan`, `waktu_out_plan`, `keterangan_plan`, `aktual_lembur`, `waktu_in_aktual`, `waktu_out_aktual`, `keterangan_aktual`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('DSPL-1', 'SPL-1', 'KAR-13', 1, '15:01:00', '16:01:00', '', NULL, NULL, NULL, NULL, 'USER-10', '2021-01-08 08:46:05', NULL, NULL, 'USER-10', '2021-01-08 08:46:58', 1),
+('DSPL-2', 'SPL-1', 'KAR-14', 1, '16:30:00', '17:30:00', '', 2, '16:00:00', '18:00:00', 'mulai lebih dulu', 'USER-10', '2021-01-08 08:46:05', 'USER-10', '2021-01-08 08:59:05', NULL, NULL, 0),
+('DSPL-3', 'SPL-1', 'KAR-45', 1, '16:00:00', '17:00:00', '', 2, '16:00:00', '18:00:00', 'lembur dua jam', 'USER-10', '2021-01-08 08:46:58', 'USER-10', '2021-01-08 08:59:05', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -671,12 +679,12 @@ CREATE TABLE `invoice` (
   `tanggal` date NOT NULL,
   `ditujukan_kepada` varchar(100) NOT NULL,
   `sub_total` int(11) NOT NULL,
-  `discount_rate` decimal(11,2) NOT NULL,
-  `discount` int(11) NOT NULL,
+  `discount_rate` decimal(11,2) DEFAULT NULL,
+  `discount` int(11) DEFAULT NULL,
   `ppn_rate` decimal(11,2) NOT NULL,
   `ppn` int(11) NOT NULL,
   `total` int(11) NOT NULL,
-  `keterangan` varchar(500) NOT NULL,
+  `keterangan` varchar(500) DEFAULT NULL,
   `status_invoice` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
@@ -686,14 +694,6 @@ CREATE TABLE `invoice` (
   `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `invoice`
---
-
-INSERT INTO `invoice` (`id_invoice`, `id_purchase_order_customer`, `id_rekening`, `tanggal`, `ditujukan_kepada`, `sub_total`, `discount_rate`, `discount`, `ppn_rate`, `ppn`, `total`, `keterangan`, `status_invoice`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('MI2012.001', 'POC-1', 'REK-2', '2020-12-27', 'Accounting Department', 3496270, '0.10', 3496, '10.00', 349627, 3842401, '                            ', 1, 'USER-4', '2020-12-27 15:38:50', 'USER-4', '2020-12-27 15:42:47', '', '0000-00-00 00:00:00', 0),
-('MI2012.002', 'POC-1', 'REK-1', '2020-12-27', 'Accounting Department', 12839220, '0.00', 0, '10.00', 1283922, 14123142, '                                                        ', 0, 'USER-4', '2020-12-27 15:41:40', 'USER-4', '2020-12-27 15:49:30', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -706,7 +706,7 @@ CREATE TABLE `item_bpbd` (
   `id_bpbd` varchar(15) NOT NULL,
   `id_detail_produk` varchar(10) NOT NULL,
   `jumlah_produk` int(11) NOT NULL,
-  `keterangan` varchar(50) NOT NULL,
+  `keterangan` varchar(50) DEFAULT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
   `user_edit` varchar(10) DEFAULT NULL,
@@ -715,15 +715,6 @@ CREATE TABLE `item_bpbd` (
   `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `item_bpbd`
---
-
-INSERT INTO `item_bpbd` (`id_item_bpbd`, `id_bpbd`, `id_detail_produk`, `jumlah_produk`, `keterangan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('IBPBD20.000001', 'BPDB20.0001', 'DETPRO-1', 10, '', 'USER-7', '2020-12-27 13:22:54', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('IBPBD20.000002', 'BPDB20.0002', 'DETPRO-1', 5, 'lima', 'USER-7', '2020-12-27 13:25:51', 'USER-7', '2020-12-27 13:36:59', 'USER-7', '2020-12-27 13:38:49', 1),
-('IBPBD20.000003', 'BPDB20.0002', 'DETPRO-2', 10, 'semuanya', 'USER-7', '2020-12-27 13:25:51', '', '0000-00-00 00:00:00', 'USER-7', '2020-12-27 13:36:59', 1);
 
 -- --------------------------------------------------------
 
@@ -747,15 +738,6 @@ CREATE TABLE `item_invoice` (
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `item_invoice`
---
-
-INSERT INTO `item_invoice` (`id_item_invoice`, `id_invoice`, `id_detail_produk`, `jumlah_produk`, `price`, `total_price`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('MII20.000001', 'MI2012.001', 'DETPRO-1', 20, 116536, 2330720, 'USER-4', '2020-12-27 15:38:50', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('MII20.000002', 'MI2012.001', 'DETPRO-2', 10, 116555, 1165550, 'USER-4', '2020-12-27 15:38:50', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('MII20.000003', 'MI2012.002', 'DETPRO-3', 10, 1283922, 12839220, 'USER-4', '2020-12-27 15:41:40', 'USER-4', '2020-12-27 15:49:30', '', '0000-00-00 00:00:00', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -767,7 +749,7 @@ CREATE TABLE `item_surat_jalan` (
   `id_surat_jalan` varchar(15) NOT NULL,
   `id_detail_produk` varchar(10) NOT NULL,
   `jumlah_produk` int(11) NOT NULL,
-  `jumlah_keluar` int(11) NOT NULL,
+  `jumlah_keluar` int(11) DEFAULT NULL,
   `status_keluar` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
@@ -777,19 +759,6 @@ CREATE TABLE `item_surat_jalan` (
   `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `item_surat_jalan`
---
-
-INSERT INTO `item_surat_jalan` (`id_item_surat_jalan`, `id_surat_jalan`, `id_detail_produk`, `jumlah_produk`, `jumlah_keluar`, `status_keluar`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('ISJ20.000001', 'M2012.0001', 'DETPRO-1', 20, 10, 0, 'USER-4', '2020-12-26 23:02:53', 'USER-7', '2020-12-27 13:38:49', '', '0000-00-00 00:00:00', 0),
-('ISJ20.000002', 'M2012.0001', 'DETPRO-2', 10, 0, 0, 'USER-4', '2020-12-26 23:02:53', 'USER-7', '2020-12-27 13:36:59', '', '0000-00-00 00:00:00', 0),
-('ISJ20.000003', 'M2012.0002', 'DETPRO-1', 65, 0, 0, 'USER-4', '2020-12-26 23:05:19', 'USER-4', '2020-12-27 01:03:20', '', '0000-00-00 00:00:00', 0),
-('ISJ20.000004', 'M2012.0002', 'DETPRO-2', 5, 0, 0, 'USER-4', '2020-12-26 23:05:19', 'USER-4', '2020-12-27 01:03:20', '', '0000-00-00 00:00:00', 0),
-('ISJ20.000005', 'M2012.0003', 'DETPRO-1', 25, 0, 0, 'USER-4', '2020-12-27 00:28:25', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('ISJ20.000006', 'M2012.0003', 'DETPRO-3', 20, 0, 0, 'USER-4', '2020-12-27 00:28:25', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('ISJ20.000007', 'M2012.0004', 'DETPRO-3', 10, 0, 0, 'USER-4', '2020-12-27 13:54:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -820,11 +789,17 @@ INSERT INTO `jabatan` (`id_jabatan`, `nama_jabatan`, `user_add`, `waktu_add`, `u
 ('JBT-12', 'Staff Line Bonding', 'USER-1', '2020-12-21 13:53:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('JBT-13', 'Staff Line Sewing', 'USER-1', '2020-12-21 13:53:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('JBT-14', 'Staff Line Assy', 'USER-1', '2020-12-21 13:53:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBT-15', 'Engineering', 'USER-1', '2020-12-21 13:53:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBT-15', 'Engineering', 'USER-1', '2020-12-21 13:53:58', '', '0000-00-00 00:00:00', 'USER-2', '2020-12-31 11:48:25', 1),
+('JBT-16', 'Engineering', 'USER-2', '2020-12-31 11:48:31', NULL, NULL, 'USER-2', '2021-01-08 04:26:09', 1),
+('JBT-17', 'Operator Gudang', 'USER-2', '2021-01-08 04:28:24', NULL, NULL, NULL, NULL, 1),
+('JBT-18', 'Operator Gudang', 'USER-2', '2021-01-08 04:29:58', NULL, NULL, NULL, NULL, 1),
+('JBT-19', 'Engineering', 'USER-2', '2021-01-08 04:30:48', NULL, NULL, 'USER-2', '2021-01-08 04:32:39', 1),
 ('JBT-2', 'Direktur', 'USER-1', '2020-12-21 13:48:02', 'USER-1', '2020-12-21 13:51:03', '', '0000-00-00 00:00:00', 0),
+('JBT-20', 'Operator Gudang', 'USER-2', '2021-01-08 04:33:20', NULL, NULL, NULL, NULL, 0),
+('JBT-21', 'Engineerings', 'USER-2', '2021-01-08 04:33:55', 'USER-2', '2021-01-08 04:34:17', 'USER-2', '2021-01-08 04:34:40', 1),
 ('JBT-3', 'Manager', 'USER-1', '2020-12-21 13:49:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('JBT-4', 'Admin', 'USER-1', '2020-12-21 13:50:51', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('JBT-5', 'Operator Gudang', 'USER-1', '2020-12-21 13:51:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBT-5', 'Operator Gudang', 'USER-1', '2020-12-21 13:51:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
 ('JBT-6', 'PIC Line Cutting', 'USER-1', '2020-12-21 13:51:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('JBT-7', 'PIC Line Bonding', 'USER-1', '2020-12-21 13:51:12', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('JBT-8', 'PIC Line Sewing', 'USER-1', '2020-12-21 13:53:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
@@ -906,94 +881,15 @@ INSERT INTO `jabatan_karyawan` (`id_jabatan_karyawan`, `id_karyawan`, `id_spesif
 ('JBTKAR-43', 'KAR-41', 'SJBT-18', 'USER-1', '2020-12-21 14:54:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('JBTKAR-44', 'KAR-42', 'SJBT-18', 'USER-1', '2020-12-21 14:54:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('JBTKAR-45', 'KAR-43', 'SJBT-18', 'USER-1', '2020-12-21 14:55:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('JBTKAR-46', 'KAR-44', 'SJBT-15', 'USER-2', '2020-12-31 11:49:52', NULL, NULL, NULL, NULL, 0),
+('JBTKAR-47', 'KAR-45', 'SJBT-15', 'USER-2', '2021-01-08 05:25:31', NULL, NULL, NULL, NULL, 0),
+('JBTKAR-48', 'KAR-46', 'SJBT-11', 'USER-2', '2021-01-08 05:30:53', NULL, NULL, 'USER-2', '2021-01-08 05:41:53', 1),
+('JBTKAR-49', 'KAR-46', 'SJBT-18', 'USER-2', '2021-01-08 05:41:53', NULL, NULL, 'USER-2', '2021-01-08 05:42:31', 1),
 ('JBTKAR-5', 'KAR-5', 'SJBT-5', 'USER-1', '2020-12-21 14:21:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('JBTKAR-6', 'KAR-6', 'SJBT-10', 'USER-1', '2020-12-21 14:22:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('JBTKAR-7', 'KAR-7', 'SJBT-8', 'USER-1', '2020-12-21 14:23:21', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('JBTKAR-8', 'KAR-3', 'SJBT-6', 'USER-1', '2020-12-21 14:24:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('JBTKAR-9', 'KAR-8', 'SJBT-4', 'USER-1', '2020-12-21 14:25:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
-
---
--- Triggers `jabatan_karyawan`
---
-DELIMITER $$
-CREATE TRIGGER `edit_jabatan_karyawan` AFTER UPDATE ON `jabatan_karyawan` FOR EACH ROW INSERT INTO `jabatan_karyawan_logs` (`id_jabatan_karyawan_logs`,`keterangan_log`,`id_jabatan_karyawan`,`id_karyawan`,`id_spesifikasi_jabatan`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES (null,'Edit Data',NEW.id_jabatan_karyawan,NEW.id_karyawan,NEW.id_spesifikasi_jabatan,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `insert_jabatan_karyawan` AFTER INSERT ON `jabatan_karyawan` FOR EACH ROW INSERT INTO `jabatan_karyawan_logs` (`id_jabatan_karyawan_logs`,`keterangan_log`,`id_jabatan_karyawan`,`id_karyawan`,`id_spesifikasi_jabatan`,`user_add`,`waktu_add`,`user_edit`,`waktu_edit`,`user_delete`,`waktu_delete`,`status_delete`) VALUES (null,'Insert Data',NEW.id_jabatan_karyawan,NEW.id_karyawan,NEW.id_spesifikasi_jabatan,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `jabatan_karyawan_logs`
---
-
-CREATE TABLE `jabatan_karyawan_logs` (
-  `id_jabatan_karyawan_logs` int(11) NOT NULL,
-  `keterangan_log` varchar(15) NOT NULL,
-  `id_jabatan_karyawan` varchar(10) NOT NULL,
-  `id_karyawan` varchar(10) NOT NULL,
-  `id_spesifikasi_jabatan` varchar(10) NOT NULL,
-  `user_add` varchar(10) NOT NULL,
-  `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
-  `status_delete` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `jabatan_karyawan_logs`
---
-
-INSERT INTO `jabatan_karyawan_logs` (`id_jabatan_karyawan_logs`, `keterangan_log`, `id_jabatan_karyawan`, `id_karyawan`, `id_spesifikasi_jabatan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(33, 'Insert Data', 'JBTKAR-2', 'KAR-2', 'SJBT-2', 'USER-1', '2020-12-21 14:16:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(34, 'Insert Data', 'JBTKAR-3', 'KAR-3', 'SJBT-3', 'USER-1', '2020-12-21 14:18:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(35, 'Insert Data', 'JBTKAR-4', 'KAR-4', 'SJBT-9', 'USER-1', '2020-12-21 14:19:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(36, 'Insert Data', 'JBTKAR-5', 'KAR-5', 'SJBT-5', 'USER-1', '2020-12-21 14:21:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(37, 'Insert Data', 'JBTKAR-6', 'KAR-6', 'SJBT-10', 'USER-1', '2020-12-21 14:22:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(38, 'Insert Data', 'JBTKAR-7', 'KAR-7', 'SJBT-8', 'USER-1', '2020-12-21 14:23:21', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(39, 'Insert Data', 'JBTKAR-8', 'KAR-3', 'SJBT-6', 'USER-1', '2020-12-21 14:24:45', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(40, 'Insert Data', 'JBTKAR-9', 'KAR-8', 'SJBT-4', 'USER-1', '2020-12-21 14:25:44', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(41, 'Insert Data', 'JBTKAR-10', 'KAR-9', 'SJBT-7', 'USER-1', '2020-12-21 14:26:43', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(42, 'Insert Data', 'JBTKAR-11', 'KAR-10', 'SJBT-11', 'USER-1', '2020-12-21 14:28:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(43, 'Insert Data', 'JBTKAR-12', 'KAR-10', 'SJBT-12', 'USER-1', '2020-12-21 14:28:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(44, 'Insert Data', 'JBTKAR-13', 'KAR-11', 'SJBT-13', 'USER-1', '2020-12-21 14:28:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(45, 'Insert Data', 'JBTKAR-14', 'KAR-12', 'SJBT-14', 'USER-1', '2020-12-21 14:29:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(46, 'Insert Data', 'JBTKAR-15', 'KAR-13', 'SJBT-15', 'USER-1', '2020-12-21 14:40:04', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(47, 'Insert Data', 'JBTKAR-16', 'KAR-14', 'SJBT-15', 'USER-1', '2020-12-21 14:40:28', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(48, 'Insert Data', 'JBTKAR-17', 'KAR-15', 'SJBT-16', 'USER-1', '2020-12-21 14:41:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(49, 'Insert Data', 'JBTKAR-18', 'KAR-16', 'SJBT-16', 'USER-1', '2020-12-21 14:41:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(50, 'Insert Data', 'JBTKAR-19', 'KAR-17', 'SJBT-16', 'USER-1', '2020-12-21 14:42:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(51, 'Insert Data', 'JBTKAR-20', 'KAR-18', 'SJBT-16', 'USER-1', '2020-12-21 14:43:04', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(52, 'Insert Data', 'JBTKAR-21', 'KAR-19', 'SJBT-17', 'USER-1', '2020-12-21 14:44:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(53, 'Insert Data', 'JBTKAR-22', 'KAR-20', 'SJBT-17', 'USER-1', '2020-12-21 14:45:01', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(54, 'Insert Data', 'JBTKAR-23', 'KAR-21', 'SJBT-17', 'USER-1', '2020-12-21 14:45:22', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(55, 'Insert Data', 'JBTKAR-24', 'KAR-22', 'SJBT-17', 'USER-1', '2020-12-21 14:45:48', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(56, 'Insert Data', 'JBTKAR-25', 'KAR-23', 'SJBT-17', 'USER-1', '2020-12-21 14:46:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(57, 'Insert Data', 'JBTKAR-26', 'KAR-24', 'SJBT-17', 'USER-1', '2020-12-21 14:46:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(58, 'Insert Data', 'JBTKAR-27', 'KAR-25', 'SJBT-17', 'USER-1', '2020-12-21 14:47:16', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(59, 'Insert Data', 'JBTKAR-28', 'KAR-26', 'SJBT-17', 'USER-1', '2020-12-21 14:47:43', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(60, 'Insert Data', 'JBTKAR-29', 'KAR-27', 'SJBT-17', 'USER-1', '2020-12-21 14:48:07', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(61, 'Insert Data', 'JBTKAR-30', 'KAR-28', 'SJBT-17', 'USER-1', '2020-12-21 14:48:29', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(62, 'Insert Data', 'JBTKAR-31', 'KAR-29', 'SJBT-17', 'USER-1', '2020-12-21 14:48:51', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(63, 'Insert Data', 'JBTKAR-32', 'KAR-30', 'SJBT-17', 'USER-1', '2020-12-21 14:49:54', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(64, 'Insert Data', 'JBTKAR-33', 'KAR-31', 'SJBT-17', 'USER-1', '2020-12-21 14:50:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(65, 'Insert Data', 'JBTKAR-34', 'KAR-32', 'SJBT-17', 'USER-1', '2020-12-21 14:50:50', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(66, 'Insert Data', 'JBTKAR-35', 'KAR-33', 'SJBT-17', 'USER-1', '2020-12-21 14:51:11', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(67, 'Insert Data', 'JBTKAR-36', 'KAR-34', 'SJBT-17', 'USER-1', '2020-12-21 14:51:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(68, 'Insert Data', 'JBTKAR-37', 'KAR-35', 'SJBT-17', 'USER-1', '2020-12-21 14:52:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(69, 'Insert Data', 'JBTKAR-38', 'KAR-36', 'SJBT-18', 'USER-1', '2020-12-21 14:52:37', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(70, 'Insert Data', 'JBTKAR-39', 'KAR-37', 'SJBT-18', 'USER-1', '2020-12-21 14:53:02', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(71, 'Insert Data', 'JBTKAR-40', 'KAR-38', 'SJBT-18', 'USER-1', '2020-12-21 14:53:24', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(72, 'Insert Data', 'JBTKAR-41', 'KAR-39', 'SJBT-18', 'USER-1', '2020-12-21 14:53:47', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(73, 'Insert Data', 'JBTKAR-42', 'KAR-40', 'SJBT-18', 'USER-1', '2020-12-21 14:54:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(74, 'Insert Data', 'JBTKAR-43', 'KAR-41', 'SJBT-18', 'USER-1', '2020-12-21 14:54:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(75, 'Insert Data', 'JBTKAR-44', 'KAR-42', 'SJBT-18', 'USER-1', '2020-12-21 14:54:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0'),
-(76, 'Insert Data', 'JBTKAR-45', 'KAR-43', 'SJBT-18', 'USER-1', '2020-12-21 14:55:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '0');
 
 -- --------------------------------------------------------
 
@@ -1036,7 +932,21 @@ INSERT INTO `jabatan_logs` (`id_jabatan_logs`, `keterangan_log`, `id_jabatan`, `
 (36, 'Insert Data', 'JBT-12', 'Staff Line Bonding', 'USER-1', '2020-12-21 13:53:30', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 (37, 'Insert Data', 'JBT-13', 'Staff Line Sewing', 'USER-1', '2020-12-21 13:53:31', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 (38, 'Insert Data', 'JBT-14', 'Staff Line Assy', 'USER-1', '2020-12-21 13:53:33', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(39, 'Insert Data', 'JBT-15', 'Engineering', 'USER-1', '2020-12-21 13:53:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+(39, 'Insert Data', 'JBT-15', 'Engineering', 'USER-1', '2020-12-21 13:53:58', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(40, 'Edit Data', 'JBT-15', 'Engineering', 'USER-1', '2020-12-21 13:53:58', '', '0000-00-00 00:00:00', 'USER-2', '2020-12-31 11:48:25', 1),
+(41, 'Insert Data', 'JBT-16', 'Engineering', 'USER-2', '2020-12-31 11:48:31', NULL, NULL, NULL, NULL, 0),
+(42, 'Edit Data', 'JBT-16', 'Engineering', 'USER-2', '2020-12-31 11:48:31', NULL, NULL, 'USER-2', '2021-01-08 04:26:09', 1),
+(43, 'Edit Data', 'JBT-5', 'Operator Gudang', 'USER-1', '2020-12-21 13:51:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1),
+(44, 'Insert Data', 'JBT-17', 'Operator Gudang', 'USER-2', '2021-01-08 04:28:24', NULL, NULL, NULL, NULL, 0),
+(45, 'Edit Data', 'JBT-17', 'Operator Gudang', 'USER-2', '2021-01-08 04:28:24', NULL, NULL, NULL, NULL, 1),
+(46, 'Insert Data', 'JBT-18', 'Operator Gudang', 'USER-2', '2021-01-08 04:29:58', NULL, NULL, NULL, NULL, 0),
+(47, 'Insert Data', 'JBT-19', 'Engineering', 'USER-2', '2021-01-08 04:30:48', NULL, NULL, NULL, NULL, 0),
+(48, 'Edit Data', 'JBT-19', 'Engineering', 'USER-2', '2021-01-08 04:30:48', NULL, NULL, 'USER-2', '2021-01-08 04:32:39', 1),
+(49, 'Edit Data', 'JBT-18', 'Operator Gudang', 'USER-2', '2021-01-08 04:29:58', NULL, NULL, NULL, NULL, 1),
+(50, 'Insert Data', 'JBT-20', 'Operator Gudang', 'USER-2', '2021-01-08 04:33:20', NULL, NULL, NULL, NULL, 0),
+(51, 'Insert Data', 'JBT-21', 'Engineering', 'USER-2', '2021-01-08 04:33:55', NULL, NULL, NULL, NULL, 0),
+(52, 'Edit Data', 'JBT-21', 'Engineerings', 'USER-2', '2021-01-08 04:33:55', 'USER-2', '2021-01-08 04:34:17', NULL, NULL, 0),
+(53, 'Edit Data', 'JBT-21', 'Engineerings', 'USER-2', '2021-01-08 04:33:55', 'USER-2', '2021-01-08 04:34:17', 'USER-2', '2021-01-08 04:34:40', 1);
 
 -- --------------------------------------------------------
 
@@ -1212,6 +1122,9 @@ INSERT INTO `karyawan` (`id_karyawan`, `nik`, `nama_karyawan`, `keterangan`, `us
 ('KAR-41', '119.020.110', 'Firman Arif', 0, 'USER-1', '2020-12-21 14:54:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('KAR-42', '119.020.117', 'Dimas S', 0, 'USER-1', '2020-12-21 14:54:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('KAR-43', '119.020.121', 'Iwan', 0, 'USER-1', '2020-12-21 14:55:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('KAR-44', '000.000.000', 'udin', 0, 'USER-2', '2020-12-31 11:49:52', NULL, NULL, NULL, NULL, 0),
+('KAR-45', '0010010001', 'Anto', 0, 'USER-2', '2021-01-08 05:25:31', NULL, NULL, NULL, NULL, 0),
+('KAR-46', '119.001.0022', 'Tara', 0, 'USER-2', '2021-01-08 05:30:53', 'USER-2', '2021-01-08 05:41:53', 'USER-2', '2021-01-08 05:42:31', 1),
 ('KAR-5', '0', 'Admin Produksi', 1, 'USER-1', '2020-12-21 14:21:08', 'USER-1', '2020-12-21 14:37:37', '', '0000-00-00 00:00:00', 0),
 ('KAR-6', '0000', 'Admin Risdev', 1, 'USER-1', '2020-12-21 14:22:08', 'USER-1', '2020-12-21 14:37:57', '', '0000-00-00 00:00:00', 0),
 ('KAR-7', '119.020.108', 'Anggi S', 1, 'USER-1', '2020-12-21 14:23:21', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
@@ -1317,7 +1230,12 @@ INSERT INTO `karyawan_logs` (`id_karyawan_logs`, `keterangan_log`, `id_karyawan`
 (132, 'Insert Data', 'KAR-42', '119.020.117', 'Dimas S', 0, 'USER-1', '2020-12-21 14:54:59', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 (133, 'Insert Data', 'KAR-43', '119.020.121', 'Iwan', 0, 'USER-1', '2020-12-21 14:55:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 (134, 'Edit Data', 'KAR-1', '000', 'Amel', 1, 'USER-1', '2020-12-21 12:54:50', 'USER-1', '2020-12-21 14:57:00', '', '0000-00-00 00:00:00', 0),
-(135, 'Edit Data', 'KAR-1', '000', 'x', 1, 'USER-1', '2020-12-21 12:54:50', 'USER-1', '2020-12-21 14:58:40', '', '0000-00-00 00:00:00', 0);
+(135, 'Edit Data', 'KAR-1', '000', 'x', 1, 'USER-1', '2020-12-21 12:54:50', 'USER-1', '2020-12-21 14:58:40', '', '0000-00-00 00:00:00', 0),
+(136, 'Insert Data', 'KAR-44', '000.000.000', 'udin', 0, 'USER-2', '2020-12-31 11:49:52', NULL, NULL, NULL, NULL, 0),
+(137, 'Insert Data', 'KAR-45', '0010010001', 'Anto', 0, 'USER-2', '2021-01-08 05:25:31', NULL, NULL, NULL, NULL, 0),
+(138, 'Insert Data', 'KAR-46', '119.001.0002', 'Tata', 1, 'USER-2', '2021-01-08 05:30:53', NULL, NULL, NULL, NULL, 0),
+(139, 'Edit Data', 'KAR-46', '119.001.0022', 'Tara', 0, 'USER-2', '2021-01-08 05:30:53', 'USER-2', '2021-01-08 05:41:53', NULL, NULL, 0),
+(140, 'Edit Data', 'KAR-46', '119.001.0022', 'Tara', 0, 'USER-2', '2021-01-08 05:30:53', 'USER-2', '2021-01-08 05:41:53', 'USER-2', '2021-01-08 05:42:31', 1);
 
 -- --------------------------------------------------------
 
@@ -1358,6 +1276,10 @@ INSERT INTO `konsumsi_material` (`id_konsumsi_material`, `id_produk`, `id_sub_je
 ('KONMAT-18', 'PRDK-4', 'SUBJM-12', 'LINE-4', '3.00', 1, 'USER-2', '2020-12-24 16:53:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('KONMAT-19', 'PRDK-4', 'SUBJM-14', 'LINE-4', '1.00', 1, 'USER-2', '2020-12-24 16:53:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('KONMAT-2', 'PRDK-1', 'SUBJM-3', 'LINE-2', '10.00', 1, 'USER-2', '2020-12-24 16:42:24', 'USER-2', '2020-12-26 16:29:12', '', '0000-00-00 00:00:00', 0),
+('KONMAT-20', 'PRDK-5', 'SUBJM-1', 'LINE-1', '1.00', 1, 'USER-2', '2021-01-08 06:32:55', NULL, NULL, 'USER-2', '2021-01-08 06:35:02', 1),
+('KONMAT-21', 'PRDK-5', 'SUBJM-3', 'LINE-2', '10.00', 1, 'USER-2', '2021-01-08 06:32:55', 'USER-2', '2021-01-08 06:35:02', NULL, NULL, 0),
+('KONMAT-22', 'PRDK-5', 'SUBJM-12', 'LINE-4', '2.00', 1, 'USER-2', '2021-01-08 06:32:55', 'USER-2', '2021-01-08 06:35:02', NULL, NULL, 0),
+('KONMAT-23', 'PRDK-5', 'SUBJM-14', 'LINE-4', '2.00', 1, 'USER-2', '2021-01-08 06:35:02', NULL, NULL, NULL, NULL, 0),
 ('KONMAT-3', 'PRDK-1', 'SUBJM-4', 'LINE-3', '1.50', 0, 'USER-2', '2020-12-24 16:42:24', 'USER-2', '2020-12-26 16:29:12', '', '0000-00-00 00:00:00', 0),
 ('KONMAT-4', 'PRDK-1', 'SUBJM-8', 'LINE-3', '2.00', 1, 'USER-2', '2020-12-24 16:42:24', 'USER-2', '2020-12-26 16:29:12', '', '0000-00-00 00:00:00', 0),
 ('KONMAT-5', 'PRDK-1', 'SUBJM-15', 'LINE-4', '1.00', 1, 'USER-2', '2020-12-24 16:42:24', 'USER-2', '2020-12-26 16:29:12', '', '0000-00-00 00:00:00', 0),
@@ -1455,10 +1377,9 @@ INSERT INTO `line_logs` (`id_line_logs`, `keterangan_log`, `id_line`, `nama_line
 
 CREATE TABLE `material` (
   `id_material` varchar(10) NOT NULL,
-  `id_sub_jenis_material` varchar(10) NOT NULL,
-  `tanggal_masuk` datetime NOT NULL,
   `sumber_material` int(11) NOT NULL,
   `status_keluar` int(11) NOT NULL,
+  `id_pemasukan_material` varchar(30) NOT NULL,
   `id_detail_permintaan_material` int(30) DEFAULT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
@@ -1497,7 +1418,7 @@ CREATE TABLE `material_line` (
 CREATE TABLE `material_supplier` (
   `id_material_supplier` varchar(30) NOT NULL,
   `id_material` varchar(30) NOT NULL,
-  `id_supplier` varchar(30) NOT NULL,
+  `id_detail_delivery_note` varchar(30) NOT NULL,
   `user_add` varchar(30) NOT NULL,
   `waktu_add` datetime NOT NULL,
   `user_edit` varchar(30) DEFAULT NULL,
@@ -1532,26 +1453,6 @@ CREATE TABLE `pemasukan_material` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pemasukan_material_supplier`
---
-
-CREATE TABLE `pemasukan_material_supplier` (
-  `id_pemasukan_material_supplier` varchar(10) NOT NULL,
-  `id_pemasukan_material` varchar(10) NOT NULL,
-  `id_detail_delivery_note` varchar(30) NOT NULL,
-  `id_material` varchar(30) NOT NULL,
-  `user_add` varchar(10) NOT NULL,
-  `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) DEFAULT NULL,
-  `waktu_edit` datetime DEFAULT NULL,
-  `user_delete` varchar(10) DEFAULT NULL,
-  `waktu_delete` datetime DEFAULT NULL,
-  `status_delete` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `pengambilan_material`
 --
 
@@ -1559,7 +1460,7 @@ CREATE TABLE `pengambilan_material` (
   `id_pengambilan_material` varchar(20) NOT NULL,
   `id_karyawan` varchar(10) NOT NULL,
   `id_detail_permintaan_material` varchar(20) NOT NULL,
-  `id_pengeluaran_material` varchar(20) NOT NULL,
+  `id_pengeluaran_material` varchar(20) DEFAULT NULL,
   `tanggal_ambil` date NOT NULL,
   `stok_wip` decimal(11,2) NOT NULL,
   `jumlah_ambil` decimal(11,2) NOT NULL,
@@ -1609,9 +1510,9 @@ CREATE TABLE `perencanaan_cutting` (
   `id_detail_produksi_line` varchar(17) NOT NULL,
   `tanggal` date NOT NULL,
   `jumlah_perencanaan` int(11) NOT NULL,
-  `jumlah_aktual` int(11) NOT NULL,
+  `jumlah_aktual` int(11) DEFAULT NULL,
   `status_laporan` int(1) NOT NULL,
-  `keterangan` varchar(50) NOT NULL,
+  `keterangan` varchar(50) DEFAULT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` date NOT NULL,
   `user_edit` varchar(10) DEFAULT NULL,
@@ -1620,14 +1521,6 @@ CREATE TABLE `perencanaan_cutting` (
   `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `perencanaan_cutting`
---
-
-INSERT INTO `perencanaan_cutting` (`id_perencanaan_cutting`, `id_detail_produksi_line`, `tanggal`, `jumlah_perencanaan`, `jumlah_aktual`, `status_laporan`, `keterangan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('PCUT2012.00001', 'DPL2012.00000097', '2020-12-26', 30, 25, 2, 'tidak selesai semua', 'USER-11', '2020-12-26', 'USER-5', '2020-12-26 19:14:11', '', '0000-00-00 00:00:00', 0),
-('PCUT2012.00002', 'DPL2012.00000205', '2020-12-28', 100, 0, 0, '', 'USER-2', '2020-12-28', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1687,7 +1580,7 @@ CREATE TABLE `permintaan_pembelian` (
 CREATE TABLE `permintaan_tambahan` (
   `id_permintaan_tambahan` varchar(15) NOT NULL,
   `id_detail_permintaan_material` varchar(20) NOT NULL,
-  `id_pengambilan_material` varchar(20) NOT NULL,
+  `id_pengambilan_material` varchar(20) DEFAULT NULL,
   `jumlah_tambah` decimal(11,2) NOT NULL,
   `keterangan` varchar(500) DEFAULT NULL,
   `status` int(1) NOT NULL,
@@ -1723,22 +1616,6 @@ CREATE TABLE `permohonan_akses` (
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `permohonan_akses`
---
-
-INSERT INTO `permohonan_akses` (`id_permohonan_akses`, `id_data`, `id_user`, `nama_permohonan_akses`, `tanggal`, `keterangan`, `status_permohonan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('PERAKS20.00001', 'P2012.0013', 'USER-5', 'Edit Hasil Produksi', '2020-12-26', 'Salah input jumlah', 3, 'USER-5', '2020-12-26 17:50:32', 'USER-5', '2020-12-26 17:55:06', '', '0000-00-00 00:00:00', 0),
-('PERAKS20.00002', 'P2012.0013', 'USER-5', 'Edit Hasil Produksi', '2020-12-26', 'Salah input ', 0, 'USER-5', '2020-12-26 18:07:57', 'USER-5', '2020-12-26 18:08:39', '', '0000-00-00 00:00:00', 1),
-('PERAKS20.00003', 'P2012.0012', 'USER-5', 'Edit Hasil Produksi', '2020-12-26', 'Salah input pada line cutting\r\n', 2, 'USER-5', '2020-12-26 20:18:51', 'USER-3', '2020-12-26 20:19:26', '', '0000-00-00 00:00:00', 0),
-('PERAKS20.00004', 'P2012.0012', 'USER-5', 'Edit Hasil Produksi', '2020-12-26', 'Salah lagi', 3, 'USER-5', '2020-12-26 20:19:44', 'USER-5', '2020-12-26 20:35:23', '', '0000-00-00 00:00:00', 0),
-('PERAKS20.00005', 'P2012.0012', 'USER-5', 'Edit Hasil Produksi', '2020-12-26', 'Salah input', 3, 'USER-5', '2020-12-26 20:35:32', 'USER-5', '2020-12-27 16:07:56', '', '0000-00-00 00:00:00', 0),
-('PERAKS20.00006', 'P2012.0012', 'USER-5', 'Edit Hasil Produksi', '2020-12-27', 'kesalahan input', 3, 'USER-5', '2020-12-27 16:08:04', 'USER-5', '2020-12-27 18:17:37', '', '0000-00-00 00:00:00', 0),
-('PERAKS20.00007', 'P2012.0012', 'USER-5', 'Edit Hasil Produksi', '2020-12-27', 'salah input pada hasil produksi line cutting', 2, 'USER-5', '2020-12-27 18:17:57', 'USER-3', '2020-12-27 18:18:53', '', '0000-00-00 00:00:00', 0),
-('PERAKS20.00008', 'P2012.0012', 'USER-5', 'Edit Hasil Produksi', '2020-12-27', 'salah input cutting harusnya 25', 3, 'USER-5', '2020-12-27 18:21:04', 'USER-5', '2020-12-27 18:22:53', '', '0000-00-00 00:00:00', 0),
-('PERAKS20.00009', 'P2012.0012', 'USER-5', 'Edit Hasil Produksi', '2020-12-27', 'salah ya\r\n', 2, 'USER-5', '2020-12-27 18:23:02', 'USER-3', '2020-12-27 18:23:41', '', '0000-00-00 00:00:00', 0),
-('PERAKS20.00010', 'P2012.0012', 'USER-5', 'Edit Hasil Produksi', '2020-12-27', 'Salah input jumlah hasil produksi pada line bonding. Seharusnya untuk produk floor chair 20 tapi tadi diinput 21', 1, 'USER-5', '2020-12-27 18:29:01', 'USER-3', '2020-12-27 18:29:12', '', '0000-00-00 00:00:00', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -1768,16 +1645,16 @@ CREATE TABLE `persediaan_line` (
 CREATE TABLE `persediaan_line_keluar` (
   `id_persediaan_line_keluar` varchar(15) NOT NULL,
   `id_persediaan_line` varchar(10) NOT NULL,
-  `id_pengambilan_material` varchar(20) NOT NULL,
+  `id_pengambilan_material` varchar(20) DEFAULT NULL,
   `tanggal` date NOT NULL,
   `jumlah_material` decimal(11,2) NOT NULL,
   `status` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1790,16 +1667,16 @@ CREATE TABLE `persediaan_line_keluar` (
 CREATE TABLE `persediaan_line_masuk` (
   `id_persediaan_line_masuk` varchar(15) NOT NULL,
   `id_persediaan_line` varchar(10) NOT NULL,
-  `id_detail_permintaan_material` varchar(20) NOT NULL,
+  `id_detail_permintaan_material` varchar(20) DEFAULT NULL,
   `tanggal` date NOT NULL,
   `jumlah_material` decimal(11,2) NOT NULL,
   `status` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1811,19 +1688,27 @@ CREATE TABLE `persediaan_line_masuk` (
 
 CREATE TABLE `perubahan_harga` (
   `id_perubahan_harga` varchar(10) NOT NULL,
-  `id_supplier` varchar(10) NOT NULL,
-  `id_sub_jenis_material` varchar(10) NOT NULL,
+  `id_detail_supplier` varchar(10) NOT NULL,
   `harga_sebelum` int(11) NOT NULL,
   `harga_sesudah` int(11) NOT NULL,
   `status_persetujuan` int(11) NOT NULL,
+  `keterangan` varchar(500) DEFAULT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `perubahan_harga`
+--
+
+INSERT INTO `perubahan_harga` (`id_perubahan_harga`, `id_detail_supplier`, `harga_sebelum`, `harga_sesudah`, `status_persetujuan`, `keterangan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('UBAH-1', 'DSUP-1', 60000, 75000, 0, NULL, 'USER-1', '2021-01-04 21:05:01', NULL, NULL, NULL, NULL, 0),
+('UBAH-2', 'DSUP-2', 2000, 5000, 2, NULL, 'USER-1', '2021-01-04 21:07:17', 'USER-2', '2021-01-05 19:26:28', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -1837,13 +1722,13 @@ CREATE TABLE `perubahan_permintaan` (
   `jumlah_minta_lama` int(11) NOT NULL,
   `jumlah_minta_baru` int(11) NOT NULL,
   `status` int(1) NOT NULL,
-  `status_sebelum` int(11) NOT NULL,
+  `status_sebelum` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1861,10 +1746,10 @@ CREATE TABLE `produk` (
   `keterangan_produksi` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1876,7 +1761,8 @@ INSERT INTO `produk` (`id_produk`, `id_jenis_produk`, `nama_produk`, `harga_prod
 ('PRDK-1', 'JENPROD-1', 'A/F Body Pillow Hard', 116536, 0, 'USER-2', '2020-12-24 16:42:24', 'USER-2', '2020-12-24 16:56:30', '', '0000-00-00 00:00:00', 0),
 ('PRDK-2', 'JENPROD-1', 'A/F Body Pillow Soft', 116555, 0, 'USER-2', '2020-12-24 16:44:29', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('PRDK-3', 'JENPROD-3', 'Atease Baguette Sofa Havana ', 1283922, 1, 'USER-2', '2020-12-24 16:47:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('PRDK-4', 'JENPROD-5', 'Boa Rug Floor Mat145', 315933, 1, 'USER-2', '2020-12-24 16:53:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+('PRDK-4', 'JENPROD-5', 'Boa Rug Floor Mat145', 315933, 1, 'USER-2', '2020-12-24 16:53:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('PRDK-5', 'JENPROD-3', 'Sofa Amiras', 566000, 1, 'USER-2', '2021-01-08 06:32:55', 'USER-2', '2021-01-08 06:35:02', NULL, NULL, 0);
 
 --
 -- Triggers `produk`
@@ -1903,10 +1789,10 @@ CREATE TABLE `produksi` (
   `status_laporan` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1922,18 +1808,18 @@ CREATE TABLE `produksi_line` (
   `id_produksi` varchar(15) NOT NULL,
   `total_processing_time` int(11) NOT NULL,
   `total_waktu_perencanaan` int(11) NOT NULL,
-  `total_waktu_aktual` int(11) NOT NULL,
+  `total_waktu_aktual` int(11) DEFAULT NULL,
   `efisiensi_perencanaan` decimal(11,2) NOT NULL,
-  `efisiensi_aktual` decimal(11,2) NOT NULL,
-  `keterangan_laporan` varchar(500) NOT NULL,
+  `efisiensi_aktual` decimal(11,2) DEFAULT NULL,
+  `keterangan_laporan` varchar(500) DEFAULT NULL,
   `status_perencanaan` int(1) NOT NULL,
   `status_laporan` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1947,14 +1833,14 @@ CREATE TABLE `produksi_tertunda` (
   `id_produksi_tertunda` varchar(20) NOT NULL,
   `id_detail_produksi_line` varchar(17) NOT NULL,
   `jumlah_tertunda` int(11) NOT NULL,
-  `jumlah_terencana` int(11) NOT NULL,
+  `jumlah_terencana` int(11) DEFAULT NULL,
   `status_penjadwalan` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1974,10 +1860,10 @@ CREATE TABLE `produk_logs` (
   `keterangan_produksi` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1992,7 +1878,9 @@ INSERT INTO `produk_logs` (`id_produk_logs`, `keterangan_log`, `id_produk`, `id_
 (9, 'Insert Data', 'PRDK-4', 'JENPROD-5', 'Boa Rug Floor Mat145', 315933, 1, 'USER-2', '2020-12-24 16:53:40', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 (10, 'Edit Data', 'PRDK-1', 'JENPROD-1', 'A/F Body Pillow Hards', 116536, 0, 'USER-2', '2020-12-24 16:42:24', 'USER-2', '2020-12-24 16:56:18', '', '0000-00-00 00:00:00', 0),
 (11, 'Edit Data', 'PRDK-1', 'JENPROD-1', 'A/F Body Pillow Hard', 216536, 0, 'USER-2', '2020-12-24 16:42:24', 'USER-2', '2020-12-24 16:56:26', '', '0000-00-00 00:00:00', 0),
-(12, 'Edit Data', 'PRDK-1', 'JENPROD-1', 'A/F Body Pillow Hard', 116536, 0, 'USER-2', '2020-12-24 16:42:24', 'USER-2', '2020-12-24 16:56:30', '', '0000-00-00 00:00:00', 0);
+(12, 'Edit Data', 'PRDK-1', 'JENPROD-1', 'A/F Body Pillow Hard', 116536, 0, 'USER-2', '2020-12-24 16:42:24', 'USER-2', '2020-12-24 16:56:30', '', '0000-00-00 00:00:00', 0),
+(13, 'Insert Data', 'PRDK-5', 'JENPROD-3', 'Sofa Amira', 560000, 1, 'USER-2', '2021-01-08 06:32:55', NULL, NULL, NULL, NULL, 0),
+(14, 'Edit Data', 'PRDK-5', 'JENPROD-3', 'Sofa Amiras', 566000, 1, 'USER-2', '2021-01-08 06:32:55', 'USER-2', '2021-01-08 06:35:02', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -2026,7 +1914,8 @@ CREATE TABLE `purchase_order_customer` (
 --
 
 INSERT INTO `purchase_order_customer` (`id_purchase_order_customer`, `kode_purchase_order_customer`, `id_customer`, `tanggal_po`, `harga_sebelum_pajak`, `ppn`, `total_harga_akhir`, `keterangan`, `status_po`, `tanggal_selesai`, `keterangan_batal`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('POC-1', 'PO/INOAC/001', 'CUST-1', '2021-01-01', '112263150.00', '11226315.00', '123489465.00', '', 0, NULL, NULL, 'USER-2', '2020-12-30 18:49:58', '0', NULL, '0', NULL, NULL);
+('POC-1', 'PO/INOAC/001', 'CUST-1', '2021-01-01', '112263150.00', '11226315.00', '123489465.00', '', 1, NULL, NULL, 'USER-2', '2020-12-30 18:49:58', 'USER-8', '2021-01-08 19:44:56', '0', NULL, 0),
+('POC-2', 'L2101002', 'CUST-1', '2021-01-08', '59457420.00', '5945742.00', '65403162.00', '', 1, NULL, NULL, 'USER-2', '2021-01-08 01:33:28', 'USER-2', '2021-01-08 07:35:57', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -2047,12 +1936,19 @@ CREATE TABLE `purchase_order_supplier` (
   `keterangan` varchar(500) DEFAULT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `purchase_order_supplier`
+--
+
+INSERT INTO `purchase_order_supplier` (`id_purchase_order_supplier`, `kode_purchase_order_supplier`, `id_supplier`, `tanggal_po`, `harga_sebelum_pajak`, `ppn`, `total_harga_akhir`, `status_po`, `tanggal_selesai`, `keterangan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+('POS-1', 'MBP/PO/I/2021/1', 'SUP-2', '2021-01-03', '45000.00', '4500.00', '49500.00', 0, NULL, '', 'USER-2', '2021-01-04 21:24:22', '0', NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -2068,10 +1964,10 @@ CREATE TABLE `rekening` (
   `kantor_cabang` varchar(30) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2113,10 +2009,10 @@ CREATE TABLE `rekening_logs` (
   `kantor_cabang` varchar(30) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2159,7 +2055,8 @@ CREATE TABLE `sales_order` (
 --
 
 INSERT INTO `sales_order` (`id_sales_order`, `kode_so`, `tanggal_so`, `tanggal_pengantaran`, `dibuat_oleh`, `tanggal_dibuat`, `diterima_oleh`, `tanggal_diterima`, `status_so`, `id_purchase_order_customer`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('SO-1', 'MBP/SO/XII/2020/1', '2020-12-30', '2020-12-31', 'USER-2', '2020-12-30', NULL, NULL, 0, 'POC-1', 'USER-2', '2020-12-30 18:49:58', '0', NULL, '0', NULL, NULL);
+('SO-1', 'MBP/SO/XII/2020/1', '2020-12-30', '2020-12-31', 'USER-2', '2020-12-30', NULL, NULL, 0, 'POC-1', 'USER-2', '2020-12-30 18:49:58', '0', NULL, '0', NULL, 0),
+('SO-2', 'MBP/SO/I/2021/1', '2021-01-08', '2021-01-08', 'USER-2', '2021-01-08', NULL, NULL, 0, 'POC-2', 'USER-2', '2021-01-08 01:33:28', NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -2173,10 +2070,10 @@ CREATE TABLE `spesifikasi_jabatan` (
   `id_departemen` varchar(10) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2195,7 +2092,16 @@ INSERT INTO `spesifikasi_jabatan` (`id_spesifikasi_jabatan`, `id_jabatan`, `id_d
 ('SJBT-16', 'JBT-12', 'DEPT-3', 'USER-1', '2020-12-21 14:10:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('SJBT-17', 'JBT-13', 'DEPT-3', 'USER-1', '2020-12-21 14:10:41', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('SJBT-18', 'JBT-14', 'DEPT-3', 'USER-1', '2020-12-21 14:10:46', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-19', 'JBT-9', 'DEPT-11', 'USER-2', '2021-01-08 04:39:51', 'USER-2', '2021-01-08 04:40:49', 'USER-2', '2021-01-08 04:41:26', 1),
 ('SJBT-2', 'JBT-2', 'DEPT-2', 'USER-1', '2020-12-21 14:03:57', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('SJBT-20', 'JBT-4', 'DEPT-11', 'USER-2', '2021-01-08 04:46:01', NULL, NULL, 'USER-2', '2021-01-08 04:48:04', 1),
+('SJBT-21', 'JBT-14', 'DEPT-11', 'USER-2', '2021-01-08 04:49:35', 'USER-2', '2021-01-08 04:50:28', 'USER-2', '2021-01-08 04:51:02', 1),
+('SJBT-22', 'JBT-9', 'DEPT-11', 'USER-2', '2021-01-08 04:54:43', 'USER-2', '2021-01-08 04:55:39', 'USER-2', '2021-01-08 04:56:03', 1),
+('SJBT-23', 'JBT-4', 'DEPT-11', 'USER-2', '2021-01-08 05:00:50', NULL, NULL, 'USER-2', '2021-01-08 05:02:01', 1),
+('SJBT-24', 'JBT-4', 'DEPT-11', 'USER-2', '2021-01-08 05:02:55', NULL, NULL, 'USER-2', '2021-01-08 05:04:37', 1),
+('SJBT-25', 'JBT-14', 'DEPT-11', 'USER-2', '2021-01-08 05:05:41', 'USER-2', '2021-01-08 05:06:43', 'USER-2', '2021-01-08 05:07:10', 1),
+('SJBT-26', 'JBT-9', 'DEPT-11', 'USER-2', '2021-01-08 05:09:47', 'USER-2', '2021-01-08 05:10:49', 'USER-2', '2021-01-08 05:11:20', 1),
+('SJBT-27', 'JBT-14', 'DEPT-11', 'USER-2', '2021-01-08 05:14:44', 'USER-2', '2021-01-08 05:15:34', 'USER-2', '2021-01-08 05:15:58', 1),
 ('SJBT-3', 'JBT-3', 'DEPT-2', 'USER-1', '2020-12-21 14:07:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('SJBT-4', 'JBT-10', 'DEPT-3', 'USER-1', '2020-12-21 14:07:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('SJBT-5', 'JBT-4', 'DEPT-3', 'USER-1', '2020-12-21 14:07:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
@@ -2203,64 +2109,6 @@ INSERT INTO `spesifikasi_jabatan` (`id_spesifikasi_jabatan`, `id_jabatan`, `id_d
 ('SJBT-7', 'JBT-5', 'DEPT-7', 'USER-1', '2020-12-21 14:08:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('SJBT-8', 'JBT-4', 'DEPT-5', 'USER-1', '2020-12-21 14:08:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('SJBT-9', 'JBT-4', 'DEPT-4', 'USER-1', '2020-12-21 14:08:42', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
-
---
--- Triggers `spesifikasi_jabatan`
---
-DELIMITER $$
-CREATE TRIGGER `edit_spesifikasi_jabatan` AFTER UPDATE ON `spesifikasi_jabatan` FOR EACH ROW INSERT INTO `spesifikasi_jabatan_logs`(`id_spesifikasi_jabatan_logs`, `keterangan_log`, `id_spesifikasi_jabatan`, `id_jabatan`,`id_departemen`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES (null,'Edit Data',NEW.id_spesifikasi_jabatan,NEW.id_jabatan,NEW.id_departemen,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `insert_spesifikasi_jabatan` AFTER INSERT ON `spesifikasi_jabatan` FOR EACH ROW INSERT INTO `spesifikasi_jabatan_logs`(`id_spesifikasi_jabatan_logs`, `keterangan_log`, `id_spesifikasi_jabatan`, `id_jabatan`,`id_departemen`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES (null,'Insert Data',NEW.id_spesifikasi_jabatan,NEW.id_jabatan,NEW.id_departemen,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `spesifikasi_jabatan_logs`
---
-
-CREATE TABLE `spesifikasi_jabatan_logs` (
-  `id_spesifikasi_jabatan_logs` int(11) NOT NULL,
-  `keterangan_log` varchar(15) NOT NULL,
-  `id_spesifikasi_jabatan` varchar(10) NOT NULL,
-  `id_jabatan` varchar(10) NOT NULL,
-  `id_departemen` varchar(10) NOT NULL,
-  `user_add` varchar(10) NOT NULL,
-  `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
-  `status_delete` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `spesifikasi_jabatan_logs`
---
-
-INSERT INTO `spesifikasi_jabatan_logs` (`id_spesifikasi_jabatan_logs`, `keterangan_log`, `id_spesifikasi_jabatan`, `id_jabatan`, `id_departemen`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-(1, 'Insert Data', 'SJBT-2', 'JBT-2', 'DEPT-2', 'USER-1', '2020-12-21 14:03:57', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(2, 'Insert Data', 'SJBT-3', 'JBT-3', 'DEPT-2', 'USER-1', '2020-12-21 14:07:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(3, 'Insert Data', 'SJBT-4', 'JBT-10', 'DEPT-3', 'USER-1', '2020-12-21 14:07:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(4, 'Insert Data', 'SJBT-5', 'JBT-4', 'DEPT-3', 'USER-1', '2020-12-21 14:07:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(5, 'Insert Data', 'SJBT-6', 'JBT-10', 'DEPT-7', 'USER-1', '2020-12-21 14:07:57', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(6, 'Insert Data', 'SJBT-7', 'JBT-5', 'DEPT-7', 'USER-1', '2020-12-21 14:08:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(7, 'Insert Data', 'SJBT-8', 'JBT-4', 'DEPT-5', 'USER-1', '2020-12-21 14:08:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(8, 'Insert Data', 'SJBT-9', 'JBT-4', 'DEPT-4', 'USER-1', '2020-12-21 14:08:42', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(9, 'Insert Data', 'SJBT-10', 'JBT-4', 'DEPT-6', 'USER-1', '2020-12-21 14:08:48', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(10, 'Insert Data', 'SJBT-11', 'JBT-6', 'DEPT-3', 'USER-1', '2020-12-21 14:10:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(11, 'Insert Data', 'SJBT-12', 'JBT-7', 'DEPT-3', 'USER-1', '2020-12-21 14:10:12', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(12, 'Insert Data', 'SJBT-13', 'JBT-8', 'DEPT-3', 'USER-1', '2020-12-21 14:10:17', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(13, 'Insert Data', 'SJBT-14', 'JBT-9', 'DEPT-3', 'USER-1', '2020-12-21 14:10:22', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(14, 'Insert Data', 'SJBT-15', 'JBT-11', 'DEPT-3', 'USER-1', '2020-12-21 14:10:28', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(15, 'Insert Data', 'SJBT-16', 'JBT-12', 'DEPT-3', 'USER-1', '2020-12-21 14:10:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(16, 'Insert Data', 'SJBT-17', 'JBT-13', 'DEPT-3', 'USER-1', '2020-12-21 14:10:41', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(17, 'Insert Data', 'SJBT-18', 'JBT-14', 'DEPT-3', 'USER-1', '2020-12-21 14:10:46', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(18, 'Edit Data', 'SJBT-10', 'JBT-15', 'DEPT-6', 'USER-1', '2020-12-21 14:08:48', 'USER-1', '2020-12-21 14:13:10', '', '0000-00-00 00:00:00', 0),
-(19, 'Edit Data', 'SJBT-10', 'JBT-4', 'DEPT-6', 'USER-1', '2020-12-21 14:08:48', 'USER-1', '2020-12-21 14:13:21', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2276,10 +2124,10 @@ CREATE TABLE `sub_customer` (
   `no_telp_pic` varchar(20) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -2309,10 +2157,10 @@ CREATE TABLE `sub_jenis_material` (
   `max_stok` int(11) DEFAULT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -2352,10 +2200,10 @@ CREATE TABLE `supplier` (
   `email_supplier` varchar(50) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -2365,7 +2213,9 @@ CREATE TABLE `supplier` (
 
 INSERT INTO `supplier` (`id_supplier`, `nama_supplier`, `alamat_supplier`, `no_telp_supplier`, `email_supplier`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
 ('SUP-1', 'PT. INOAC POLYTECHNO INDONESIA', 'Tangerang', '081234567890', 'inoac@gmail.com', 'USER-1', '2020-10-09 01:49:14', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0),
-('SUP-2', 'PT. MIRA USAHA BAKTI LESTARI', 'Jakarta', '087819274830', 'mirausaha@gmail.com', 'USER-1', '2020-10-09 02:04:13', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00', 0);
+('SUP-2', 'PT. MITRA USAHA BAKTI LESTARI', 'Jakarta', '087819274830', 'mirausaha@gmail.com', 'USER-1', '2020-10-09 02:04:13', 'USER-2', '2021-01-04 20:39:07', '0', '0000-00-00 00:00:00', 0),
+('SUP-3', 'coba', 'coba', '9999', 'coba@gmail.com', 'USER-2', '2021-01-04 20:47:23', '0', NULL, 'USER-2', '2021-01-04 20:47:55', 1),
+('SUP-4', 'PT SINAR CONTINENTAL', 'BANDUNG', '081288981212', 'WILSON@PT-SINAR.COM', 'USER-2', '2021-01-05 19:08:38', '0', NULL, '0', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -2376,31 +2226,21 @@ INSERT INTO `supplier` (`id_supplier`, `nama_supplier`, `alamat_supplier`, `no_t
 CREATE TABLE `surat_jalan` (
   `id_surat_jalan` varchar(15) NOT NULL,
   `id_purchase_order_customer` varchar(10) NOT NULL,
-  `id_invoice` varchar(15) NOT NULL,
+  `id_invoice` varchar(15) DEFAULT NULL,
   `tanggal` date NOT NULL,
   `kendaraan` varchar(100) NOT NULL,
   `nama_pengirim` varchar(50) NOT NULL,
-  `keterangan_pengiriman` varchar(100) NOT NULL,
-  `keterangan` varchar(500) NOT NULL,
+  `keterangan_pengiriman` varchar(100) DEFAULT NULL,
+  `keterangan` varchar(500) DEFAULT NULL,
   `status_surat_jalan` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `surat_jalan`
---
-
-INSERT INTO `surat_jalan` (`id_surat_jalan`, `id_purchase_order_customer`, `id_invoice`, `tanggal`, `kendaraan`, `nama_pengirim`, `keterangan_pengiriman`, `keterangan`, `status_surat_jalan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('M2012.0001', 'POC-1', 'MI2012.001', '2020-12-26', 'B20001', 'Agus', 'Gobox', 'Surat jalan pertama                             ', 2, 'USER-4', '2020-12-26 23:02:53', 'USER-4', '2020-12-27 15:38:50', '', '0000-00-00 00:00:00', 0),
-('M2012.0002', 'POC-3', '', '2020-12-26', 'B2001', 'M. Agus ', 'Gobox', ' Surat jalan kedua ini                                   ', 1, 'USER-4', '2020-12-26 23:05:19', 'USER-4', '2020-12-27 00:00:00', '', '0000-00-00 00:00:00', 0),
-('M2012.0003', 'POC-1', '', '2020-12-27', 'B20001', 'Agus', 'Gobox', '                                    ', 1, 'USER-4', '2020-12-27 00:28:25', 'USER-4', '2020-12-27 15:13:17', '', '0000-00-00 00:00:00', 0),
-('M2012.0004', 'POC-1', 'MI2012.002', '2020-12-27', 'B2001', 'Laurencia', 'Diambil oleh customer sendiri', '                                    ', 2, 'USER-4', '2020-12-27 13:54:44', 'USER-4', '2020-12-27 15:41:40', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2413,16 +2253,16 @@ CREATE TABLE `surat_perintah_lembur` (
   `id_line` varchar(10) NOT NULL,
   `tanggal` date NOT NULL,
   `waktu_lembur` varchar(15) NOT NULL,
-  `keterangan_perintah` varchar(500) NOT NULL,
-  `keterangan_laporan` varchar(500) NOT NULL,
+  `keterangan_perintah` varchar(500) DEFAULT NULL,
+  `keterangan_laporan` varchar(500) DEFAULT NULL,
   `status_spl` int(1) NOT NULL,
   `keterangan_spl` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2438,10 +2278,10 @@ CREATE TABLE `tetapan` (
   `isi_tetapan` varchar(300) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2450,7 +2290,7 @@ CREATE TABLE `tetapan` (
 --
 
 INSERT INTO `tetapan` (`id_tetapan`, `nama_tetapan`, `isi_tetapan`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
-('TTPN-1', 'Nama Perusahaan', 'PT. Maju Bersama Persada Dayamu', 'USER-1', '2020-08-30 14:00:40', 'USER-1', '2020-08-30 14:01:37', '', '0000-00-00 00:00:00', 0),
+('TTPN-1', 'xx', 'xx', '', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, 1),
 ('TTPN-10', 'Rabu', 'Hari Produksi', 'USER-1', '2020-09-09 01:49:31', 'USER-1', '2020-09-24 22:58:37', '', '0000-00-00 00:00:00', 0),
 ('TTPN-11', 'Kamis', 'Hari Produksi', 'USER-1', '2020-09-09 01:49:38', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('TTPN-12', 'Jumat', 'Hari Produksi', 'USER-1', '2020-09-09 01:49:46', 'USER-1', '2020-09-09 01:58:09', '', '0000-00-00 00:00:00', 0),
@@ -2458,6 +2298,9 @@ INSERT INTO `tetapan` (`id_tetapan`, `nama_tetapan`, `isi_tetapan`, `user_add`, 
 ('TTPN-14', 'Minggu', 'Hari Libur', 'USER-1', '2020-09-09 01:50:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('TTPN-15', 'Bidang Usaha', 'Furniture and Automotive Part Manufacturer', 'USER-1', '2020-09-28 01:47:47', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('TTPN-16', 'Kota Perusahaan', 'Tangerang', 'USER-1', '2020-09-28 13:15:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('TTPN-17', 'Jumlah Kantor Cabang', '3', 'USER-2', '2021-01-08 05:49:52', 'USER-2', '2021-01-08 05:50:17', NULL, NULL, 0),
+('TTPN-18', 'Nama Perusahaan', 'PT. Maju Bersama Persada Dayamu', 'USER-2', '2021-01-08 06:09:43', NULL, NULL, NULL, NULL, 0),
+('TTPN-19', 'Jam Masuk Kerja', '09:00', 'USER-2', '2021-01-08 06:10:25', 'USER-2', '2021-01-08 06:10:43', NULL, NULL, 0),
 ('TTPN-2', 'E-mail Perusahaan', 'finance@mbpindo.com', 'USER-1', '2020-08-30 14:28:53', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('TTPN-3', 'Alamat Perusahaan', 'Jl. Boulevard blok L 7 nomor 1 H Citra Raya, Cikupa, Tangerang', 'USER-1', '2020-08-30 14:29:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('TTPN-4', 'Phone/Fax', '(021) 5986198', 'USER-1', '2020-08-30 14:29:19', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
@@ -2493,10 +2336,10 @@ CREATE TABLE `tetapan_logs` (
   `isi_tetapan` varchar(300) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2526,7 +2369,15 @@ INSERT INTO `tetapan_logs` (`id_tetapan_logs`, `keterangan_log`, `id_tetapan`, `
 (19, 'Edit Data', 'TTPN-10', 'Rabu', 'Hari Libur', 'USER-1', '2020-09-09 01:49:31', 'USER-1', '2020-09-24 22:58:31', '', '0000-00-00 00:00:00', 0),
 (20, 'Edit Data', 'TTPN-10', 'Rabu', 'Hari Produksi', 'USER-1', '2020-09-09 01:49:31', 'USER-1', '2020-09-24 22:58:37', '', '0000-00-00 00:00:00', 0),
 (21, 'Insert Data', 'TTPN-15', 'Bidang Usaha', 'Furniture and Automotive Part Manufacturer', 'USER-1', '2020-09-28 01:47:47', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(22, 'Insert Data', 'TTPN-16', 'Kota Perusahaan', 'Tangerang', 'USER-1', '2020-09-28 13:15:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
+(22, 'Insert Data', 'TTPN-16', 'Kota Perusahaan', 'Tangerang', 'USER-1', '2020-09-28 13:15:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(23, 'Insert Data', 'TTPN-17', 'Jumlah Kantor Cabang', '2', 'USER-2', '2021-01-08 05:49:52', NULL, NULL, NULL, NULL, 0),
+(24, 'Edit Data', 'TTPN-17', 'Jumlah Kantor Cabang', '3', 'USER-2', '2021-01-08 05:49:52', 'USER-2', '2021-01-08 05:50:17', NULL, NULL, 0),
+(25, 'Edit Data', 'TTPN-1', 'Nama Perusahaan', 'PT. Maju Bersama Persada Dayamu', 'USER-1', '2020-08-30 14:00:40', 'USER-1', '2020-08-30 14:01:37', '', '0000-00-00 00:00:00', 1),
+(26, 'Insert Data', 'TTPN-1', 'Nama Perusahaan', 'PT. Maju Bersama Persada Dayamu', '', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, 0),
+(27, 'Insert Data', 'TTPN-1', 'xx', 'xx', '', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, 1),
+(28, 'Insert Data', 'TTPN-18', 'Nama Perusahaan', 'PT. Maju Bersama Persada Dayamu', 'USER-2', '2021-01-08 06:09:43', NULL, NULL, NULL, NULL, 0),
+(29, 'Insert Data', 'TTPN-19', 'Jam Masuk Kerja', '08:00', 'USER-2', '2021-01-08 06:10:25', NULL, NULL, NULL, NULL, 0),
+(30, 'Edit Data', 'TTPN-19', 'Jam Masuk Kerja', '09:00', 'USER-2', '2021-01-08 06:10:25', 'USER-2', '2021-01-08 06:10:43', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -2541,10 +2392,10 @@ CREATE TABLE `ukuran_produk` (
   `satuan_ukuran` varchar(30) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2588,10 +2439,10 @@ CREATE TABLE `ukuran_produk_logs` (
   `satuan_ukuran` varchar(30) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2629,10 +2480,10 @@ CREATE TABLE `user` (
   `status_user` int(1) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2642,10 +2493,11 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id_user`, `id_karyawan`, `email_user`, `password_user`, `status_user`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
 ('USER-1', 'KAR-1', 'amkaheja@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 12:54:50', 'USER-1', '2020-12-21 14:59:13', '', '0000-00-00 00:00:00', 0),
-('USER-10', 'KAR-10', 'pic1@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:28:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('USER-11', 'KAR-11', 'pic2@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:28:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('USER-10', 'KAR-10', 'pic1@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:28:03', 'USER-2', '2021-01-08 07:44:28', '', '0000-00-00 00:00:00', 0),
+('USER-11', 'KAR-11', 'pic2@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:28:39', 'USER-2', '2021-01-08 07:44:33', '', '0000-00-00 00:00:00', 0),
 ('USER-12', 'KAR-12', 'pic3@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:29:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-('USER-2', 'KAR-2', 'direktur@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:16:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+('USER-13', 'KAR-46', 'pictata@gmail.com', '25f9e794323b453885f5181f1b624d0b', 0, 'USER-2', '2021-01-08 05:30:53', NULL, NULL, NULL, NULL, 0),
+('USER-2', 'KAR-2', 'direktur@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:16:06', 'USER-2', '2021-01-08 03:58:00', '', '0000-00-00 00:00:00', 0),
 ('USER-3', 'KAR-3', 'juliusjulianto91@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:18:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('USER-4', 'KAR-4', 'finance@mbpindo.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:19:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('USER-5', 'KAR-5', 'produksi@gmail.com', '25d55ad283aa400af464c76d713c07ad', 0, 'USER-1', '2020-12-21 14:21:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
@@ -2681,10 +2533,10 @@ CREATE TABLE `user_logs` (
   `password_user` varchar(50) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2704,7 +2556,25 @@ INSERT INTO `user_logs` (`id_user_logs`, `keterangan_log`, `id_user`, `id_karyaw
 (32, 'Insert Data', 'USER-10', 'KAR-10', 'pic1@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:28:03', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 (33, 'Insert Data', 'USER-11', 'KAR-11', 'pic2@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:28:39', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 (34, 'Insert Data', 'USER-12', 'KAR-12', 'pic3@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:29:08', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
-(35, 'Edit Data', 'USER-1', 'KAR-1', 'amkaheja@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 12:54:50', 'USER-1', '2020-12-21 14:59:13', '', '0000-00-00 00:00:00', 0);
+(35, 'Edit Data', 'USER-1', 'KAR-1', 'amkaheja@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 12:54:50', 'USER-1', '2020-12-21 14:59:13', '', '0000-00-00 00:00:00', 0),
+(36, 'Edit Data', 'USER-2', 'KAR-2', 'direktur@gmail.com', '25f9e794323b453885f5181f1b624d0b', 'USER-1', '2020-12-21 14:16:06', 'USER-2', '2021-01-08 03:47:00', '', '0000-00-00 00:00:00', 0),
+(37, 'Edit Data', 'USER-2', 'KAR-2', 'direktur@gmail.com', '25f9e794323b453885f5181f1b624d0b', 'USER-1', '2020-12-21 14:16:06', 'USER-2', '2021-01-08 03:54:00', '', '0000-00-00 00:00:00', 0),
+(38, 'Edit Data', 'USER-2', 'KAR-2', 'direktur@gmail.com', 'defac44447b57f152d14f30cea7a73cb', 'USER-1', '2020-12-21 14:16:06', 'USER-2', '2021-01-08 03:56:00', '', '0000-00-00 00:00:00', 0),
+(39, 'Edit Data', 'USER-2', 'KAR-2', 'direktur@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:16:06', 'USER-2', '2021-01-08 03:58:00', '', '0000-00-00 00:00:00', 0),
+(40, 'Edit Data', 'USER-10', 'KAR-10', 'pic1@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:28:03', 'USER-2', '2021-01-08 04:08:53', '', '0000-00-00 00:00:00', 0),
+(41, 'Edit Data', 'USER-10', 'KAR-10', 'pic1@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:28:03', 'USER-2', '2021-01-08 04:09:03', '', '0000-00-00 00:00:00', 0),
+(42, 'Edit Data', 'USER-10', 'KAR-10', 'pic1@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:28:03', 'USER-2', '2021-01-08 04:10:16', '', '0000-00-00 00:00:00', 0),
+(43, 'Edit Data', 'USER-10', 'KAR-10', 'pic1@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:28:03', 'USER-2', '2021-01-08 04:10:24', '', '0000-00-00 00:00:00', 0),
+(44, 'Edit Data', 'USER-10', 'KAR-10', 'pic12@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:28:03', 'USER-2', '2021-01-08 04:10:58', '', '0000-00-00 00:00:00', 0),
+(45, 'Edit Data', 'USER-10', 'KAR-10', 'pic12@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:28:03', 'USER-2', '2021-01-08 04:12:03', '', '0000-00-00 00:00:00', 0),
+(46, 'Edit Data', 'USER-10', 'KAR-10', 'pic12@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:28:03', 'USER-2', '2021-01-08 04:12:12', '', '0000-00-00 00:00:00', 0),
+(47, 'Edit Data', 'USER-11', 'KAR-11', 'pic23@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:28:39', 'USER-2', '2021-01-08 04:12:49', '', '0000-00-00 00:00:00', 0),
+(48, 'Edit Data', 'USER-10', 'KAR-10', 'pic12@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:28:03', 'USER-2', '2021-01-08 04:16:20', '', '0000-00-00 00:00:00', 0),
+(49, 'Edit Data', 'USER-10', 'KAR-10', 'pic12@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:28:03', 'USER-2', '2021-01-08 04:16:30', '', '0000-00-00 00:00:00', 0),
+(50, 'Edit Data', 'USER-11', 'KAR-11', 'pic231@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:28:39', 'USER-2', '2021-01-08 04:16:56', '', '0000-00-00 00:00:00', 0),
+(51, 'Insert Data', 'USER-13', 'KAR-46', 'pictata@gmail.com', '25f9e794323b453885f5181f1b624d0b', 'USER-2', '2021-01-08 05:30:53', NULL, NULL, NULL, NULL, 0),
+(52, 'Edit Data', 'USER-10', 'KAR-10', 'pic1@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:28:03', 'USER-2', '2021-01-08 07:44:28', '', '0000-00-00 00:00:00', 0),
+(53, 'Edit Data', 'USER-11', 'KAR-11', 'pic2@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'USER-1', '2020-12-21 14:28:39', 'USER-2', '2021-01-08 07:44:33', '', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2717,10 +2587,10 @@ CREATE TABLE `warna` (
   `nama_warna` varchar(30) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2761,10 +2631,10 @@ CREATE TABLE `warna_logs` (
   `nama_warna` varchar(30) NOT NULL,
   `user_add` varchar(10) NOT NULL,
   `waktu_add` datetime NOT NULL,
-  `user_edit` varchar(10) NOT NULL,
-  `waktu_edit` datetime NOT NULL,
-  `user_delete` varchar(10) NOT NULL,
-  `waktu_delete` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2955,12 +2825,6 @@ ALTER TABLE `jabatan_karyawan`
   ADD PRIMARY KEY (`id_jabatan_karyawan`);
 
 --
--- Indexes for table `jabatan_karyawan_logs`
---
-ALTER TABLE `jabatan_karyawan_logs`
-  ADD PRIMARY KEY (`id_jabatan_karyawan_logs`);
-
---
 -- Indexes for table `jabatan_logs`
 --
 ALTER TABLE `jabatan_logs`
@@ -3037,12 +2901,6 @@ ALTER TABLE `material_supplier`
 --
 ALTER TABLE `pemasukan_material`
   ADD PRIMARY KEY (`id_pemasukan_material`);
-
---
--- Indexes for table `pemasukan_material_supplier`
---
-ALTER TABLE `pemasukan_material_supplier`
-  ADD PRIMARY KEY (`id_pemasukan_material_supplier`);
 
 --
 -- Indexes for table `pengambilan_material`
@@ -3183,12 +3041,6 @@ ALTER TABLE `spesifikasi_jabatan`
   ADD PRIMARY KEY (`id_spesifikasi_jabatan`);
 
 --
--- Indexes for table `spesifikasi_jabatan_logs`
---
-ALTER TABLE `spesifikasi_jabatan_logs`
-  ADD PRIMARY KEY (`id_spesifikasi_jabatan_logs`);
-
---
 -- Indexes for table `sub_customer`
 --
 ALTER TABLE `sub_customer`
@@ -3274,25 +3126,19 @@ ALTER TABLE `warna_logs`
 -- AUTO_INCREMENT for table `bank_logs`
 --
 ALTER TABLE `bank_logs`
-  MODIFY `id_bank_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_bank_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `departemen_logs`
 --
 ALTER TABLE `departemen_logs`
-  MODIFY `id_departemen_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
---
--- AUTO_INCREMENT for table `jabatan_karyawan_logs`
---
-ALTER TABLE `jabatan_karyawan_logs`
-  MODIFY `id_jabatan_karyawan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id_departemen_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `jabatan_logs`
 --
 ALTER TABLE `jabatan_logs`
-  MODIFY `id_jabatan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id_jabatan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `jenis_produk_logs`
@@ -3304,7 +3150,7 @@ ALTER TABLE `jenis_produk_logs`
 -- AUTO_INCREMENT for table `karyawan_logs`
 --
 ALTER TABLE `karyawan_logs`
-  MODIFY `id_karyawan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
+  MODIFY `id_karyawan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
 
 --
 -- AUTO_INCREMENT for table `line_logs`
@@ -3316,7 +3162,7 @@ ALTER TABLE `line_logs`
 -- AUTO_INCREMENT for table `produk_logs`
 --
 ALTER TABLE `produk_logs`
-  MODIFY `id_produk_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_produk_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `rekening_logs`
@@ -3325,16 +3171,10 @@ ALTER TABLE `rekening_logs`
   MODIFY `id_rekening_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `spesifikasi_jabatan_logs`
---
-ALTER TABLE `spesifikasi_jabatan_logs`
-  MODIFY `id_spesifikasi_jabatan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
---
 -- AUTO_INCREMENT for table `tetapan_logs`
 --
 ALTER TABLE `tetapan_logs`
-  MODIFY `id_tetapan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_tetapan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `ukuran_produk_logs`
@@ -3346,7 +3186,7 @@ ALTER TABLE `ukuran_produk_logs`
 -- AUTO_INCREMENT for table `user_logs`
 --
 ALTER TABLE `user_logs`
-  MODIFY `id_user_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id_user_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `warna_logs`
