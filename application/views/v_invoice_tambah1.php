@@ -330,7 +330,7 @@
     }
 </script>
 
-<!-- detail surat jalan -->
+<!-- detail inv -->
 <script>
     $('.bdet_klik').click(function(){
         var no      = $(this).attr('value');

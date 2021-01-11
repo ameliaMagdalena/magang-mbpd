@@ -289,7 +289,22 @@ class M_Dashboard extends CI_Model {
             }
         //tutup
 
+        //notif produksi tertunda
+            function get_jm_prodtun(){
+                return $this->db->query("SELECT COUNT(id_produksi_tertunda) AS jumlah_prodtun FROM produksi_tertunda 
+                WHERE produksi_tertunda.status_delete=0 AND (produksi_tertunda.status_penjadwalan BETWEEN 0 AND 1) ");
+            }
 
+            function get_jm_prodtun0(){
+                return $this->db->query("SELECT COUNT(id_produksi_tertunda) AS jumlah_prodtun0 FROM produksi_tertunda 
+                WHERE produksi_tertunda.status_delete=0 AND (produksi_tertunda.status_penjadwalan='0' ) ");
+            }
+
+            function get_jm_prodtun1(){
+                return $this->db->query("SELECT COUNT(id_produksi_tertunda) AS jumlah_prodtun1 FROM produksi_tertunda 
+                WHERE produksi_tertunda.status_delete=0 AND (produksi_tertunda.status_penjadwalan='1' ) ");
+            }
+        //tutup produksi tertunda
 
     //tutup notif produksi
 

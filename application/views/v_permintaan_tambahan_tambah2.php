@@ -87,7 +87,7 @@
                 <tbody>
                     <?php 
                         $no =1;
-                        foreach($permat as $x){?>
+                        foreach($permats as $x){?>
                         <tr>
                             <td style="text-align: center;vertical-align: middle;"><?= $no?></td>
                             <td style="text-align: center;vertical-align: middle;">

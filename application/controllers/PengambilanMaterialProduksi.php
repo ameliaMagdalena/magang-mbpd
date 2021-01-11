@@ -210,6 +210,12 @@ class PengambilanMaterialProduksi extends CI_Controller {
           //notif permohonan akses
               $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
           //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                    $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                    $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                    $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
       //tutup
   
       $now = date('Y-m-d');
@@ -234,7 +240,7 @@ class PengambilanMaterialProduksi extends CI_Controller {
       }
 
       $data['nmline'] = $nmline;
-
+      
         //notif material
             $data['permat'] = $this->M_PerencanaanMaterial->selectPermintaanMaterialAktif()->result_array();
             $data['ubpermat'] = $this->M_PerubahanPermintaan->selectPerubahanPermintaanAktif()->result_array();
@@ -243,7 +249,7 @@ class PengambilanMaterialProduksi extends CI_Controller {
             $data['sup'] = $this->M_PurchaseOrderSupplier->selectPOSupplierAktif()->result_array();
             $data['cust'] = $this->M_PurchaseOrderCustomer->selectPOCustomerAktif()->result_array();
         //tutup
-                
+    
       //notif produksi
           //notif permintaan material produksi
               $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
@@ -418,6 +424,12 @@ class PengambilanMaterialProduksi extends CI_Controller {
           //notif permohonan akses
               $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
           //tutup notif permohonan akses
+
+        //notif produksi tertunda
+            $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+            $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+            $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+        //tutup notif produksi tertunda
       //tutup
   
       $now = date('Y-m-d');
@@ -428,7 +440,7 @@ class PengambilanMaterialProduksi extends CI_Controller {
         $this->load->view('v_pengambilan_material_produksi_tambah1',$data);
       }
       else{
-        $data['permat']        = $this->M_PengambilanMaterialProduksi->get_one_permat_by_line($nmline,$data['min_date'])->result();
+        $data['permats']        = $this->M_PengambilanMaterialProduksi->get_one_permat_by_line($nmline,$data['min_date'])->result();
         $data['warna']         = $this->M_Warna->select_all_aktif()->result();
         $data['ukuran']        = $this->M_UkuranProduk->select_all_aktif()->result();
 
@@ -441,7 +453,7 @@ class PengambilanMaterialProduksi extends CI_Controller {
       $nmline = "Line Sewing";
       $data['nmline'] = $nmline;
       
-      $data['permat']        = $this->M_PengambilanMaterialProduksi->get_one_permat_by_line($nmline,$data['min_date'])->result();
+      $data['permats']        = $this->M_PengambilanMaterialProduksi->get_one_permat_by_line($nmline,$data['min_date'])->result();
       $data['warna']         = $this->M_Warna->select_all_aktif()->result();
       $data['ukuran']        = $this->M_UkuranProduk->select_all_aktif()->result();
 
@@ -628,6 +640,12 @@ class PengambilanMaterialProduksi extends CI_Controller {
           //notif permohonan akses
               $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
           //tutup notif permohonan akses
+
+        //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+        //tutup notif produksi tertunda
       //tutup
 
       $now = date('Y-m-d');
@@ -1306,6 +1324,12 @@ class PengambilanMaterialProduksi extends CI_Controller {
           //notif permohonan akses
               $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
           //tutup notif permohonan akses
+
+        //notif produksi tertunda
+            $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+            $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+            $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+        //tutup notif produksi tertunda
       //tutup
 
       $now = date('Y-m-d');
@@ -1519,6 +1543,12 @@ class PengambilanMaterialProduksi extends CI_Controller {
           //notif permohonan akses
               $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
           //tutup notif permohonan akses
+
+        //notif produksi tertunda
+            $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+            $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+            $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+        //tutup notif produksi tertunda
       //tutup
 
       $now = date('Y-m-d');
@@ -1714,6 +1744,12 @@ class PengambilanMaterialProduksi extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
 
         $now = date('Y-m-d');
@@ -1927,6 +1963,12 @@ class PengambilanMaterialProduksi extends CI_Controller {
           //notif permohonan akses
               $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
           //tutup notif permohonan akses
+
+        //notif produksi tertunda
+            $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+            $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+            $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+        //tutup notif produksi tertunda
       //tutup
             
       $now = date('Y-m-d');
@@ -2121,6 +2163,12 @@ class PengambilanMaterialProduksi extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
 
         $now = date('Y-m-d');
@@ -2334,6 +2382,12 @@ class PengambilanMaterialProduksi extends CI_Controller {
           //notif permohonan akses
               $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
           //tutup notif permohonan akses
+
+        //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+        //tutup notif produksi tertunda
       //tutup
         
       $now = date('Y-m-d');
@@ -2547,6 +2601,12 @@ class PengambilanMaterialProduksi extends CI_Controller {
           //notif permohonan akses
               $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
           //tutup notif permohonan akses
+
+        //notif produksi tertunda
+            $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+            $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+            $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+        //tutup notif produksi tertunda
       //tutup
       
       $now = date('Y-m-d');

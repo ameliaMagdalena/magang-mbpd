@@ -207,6 +207,12 @@ class PerubahanHarga extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
 		$this->load->view('v_perubahan_harga_material', $data);
     }
@@ -396,6 +402,12 @@ class PerubahanHarga extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
       //tutup
 
 		  $this->load->view('v_perubahan_harga_material_persetujuan');
@@ -588,6 +600,12 @@ class PerubahanHarga extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
 
         $this->load->view('v_perubahan_harga_material_baru', $data);

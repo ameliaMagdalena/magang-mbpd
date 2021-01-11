@@ -217,6 +217,12 @@ class PermintaanMaterial extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
 
 
@@ -429,6 +435,12 @@ class PermintaanMaterial extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
 
 		$this->load->view('v_detail_permintaan_material', $data);
@@ -665,6 +677,12 @@ class PermintaanMaterial extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
 
         if ($jenis == 'produk'){
@@ -860,6 +878,12 @@ class PermintaanMaterial extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
 
         $this->load->view('v_detail_perencanaan');
@@ -1059,6 +1083,12 @@ class PermintaanMaterial extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
 
         $this->load->view('v_detail_perencanaan', $data);
@@ -1449,6 +1479,12 @@ class PermintaanMaterial extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
 
 
@@ -1647,6 +1683,12 @@ class PermintaanMaterial extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
 
 		$this->load->view('v_detail_permintaan_tambahan', $data);
@@ -1876,6 +1918,12 @@ class PermintaanMaterial extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
 
         $this->load->view('v_detail_perencanaan_tambahan', $data);
