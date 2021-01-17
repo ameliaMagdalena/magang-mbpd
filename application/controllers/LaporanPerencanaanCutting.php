@@ -211,6 +211,12 @@ class LaporanPerencanaanCutting extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
     
         $this->load->view('v_laporan_perencanaan_cutting_tambah',$data);
@@ -405,6 +411,12 @@ class LaporanPerencanaanCutting extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
 
         $this->load->view('v_laporan_perencanaan_cutting_semua',$data);
@@ -599,6 +611,12 @@ class LaporanPerencanaanCutting extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
     
         $this->load->view('v_laporan_perencanaan_cutting_belum_ada',$data);
@@ -793,6 +811,12 @@ class LaporanPerencanaanCutting extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
     
         $this->load->view('v_laporan_perencanaan_cutting_sudah_ada',$data);
@@ -987,6 +1011,12 @@ class LaporanPerencanaanCutting extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
     
         $this->load->view('v_laporan_perencanaan_cutting_selesai',$data);

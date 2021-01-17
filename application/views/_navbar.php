@@ -314,7 +314,7 @@
 									</li>
 								</ul>
 							</li>
-
+						
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-file-text" aria-hidden="true"></i>
@@ -474,7 +474,7 @@
 									</li>
 								</ul>
 							</li>
-
+							
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -589,6 +589,13 @@
 							
 						
 							<!-- produksi -->
+								<!-- tracking produksi -->
+								<li>
+									<a href="<?= base_url()?>LaporanProduksi/tracking_pesanan">
+										<i class="fa  fa-search" aria-hidden="true"></i>
+										Tracking Pesanan
+									</a>
+								</li>
 								<!-- persediaan line -->
 								<li>
 									<a href="<?= base_url()?>inventoryLine">
@@ -626,7 +633,11 @@
 								<li class="nav-parent">
 									<a title="Produksi Tertunda">
 										<i class="fa fa-cogs" aria-hidden="true"></i>
-										<span>Produksi Tertunda</span>
+										<?php if($jm_prodtun[0]['jumlah_prodtun'] == 0){?>
+											<span>Produksi Tertunda</span>
+										<?php } else{?>
+											<span>Produksi Tertunda <span class="badge badge-light"><?= $jm_prodtun[0]['jumlah_prodtun']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
@@ -635,12 +646,20 @@
 											</a>
 										<li>
 											<a href="<?= base_url()?>produksiTertunda/belum_diproses">
-												Belum Diproses
+												<?php if($jm_prodtun0[0]['jumlah_prodtun0'] == 0){?>
+													<span>Belum Diproses</span>
+												<?php } else{?>
+													<span>Belum Diproses <span class="badge badge-light"><?= $jm_prodtun0[0]['jumlah_prodtun0']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
 											<a href="<?= base_url()?>produksiTertunda/sedang_diproses">
-												Sedang Diproses
+												<?php if($jm_prodtun1[0]['jumlah_prodtun1'] == 0){?>
+													<span>Sedang Diproses</span>
+												<?php } else{?>
+													<span>Sedang Diproses <span class="badge badge-light"><?= $jm_prodtun1[0]['jumlah_prodtun1']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
@@ -1681,6 +1700,13 @@
 
 
 							<!-- produksi -->
+								<!-- tracking produksi -->
+								<li>
+									<a href="<?= base_url()?>LaporanProduksi/tracking_pesanan">
+										<i class="fa  fa-search" aria-hidden="true"></i>
+										Tracking Pesanan
+									</a>
+								</li>
 								<!-- persediaan line -->
 								<li>
 									<a href="<?= base_url()?>inventoryLine">
@@ -1718,7 +1744,11 @@
 								<li class="nav-parent">
 									<a title="Produksi Tertunda">
 										<i class="fa fa-cogs" aria-hidden="true"></i>
-										<span>Produksi Tertunda</span>
+										<?php if($jm_prodtun[0]['jumlah_prodtun'] == 0){?>
+											<span>Produksi Tertunda</span>
+										<?php } else{?>
+											<span>Produksi Tertunda <span class="badge badge-light"><?= $jm_prodtun[0]['jumlah_prodtun']?></span></span>
+										<?php } ?>
 									</a>
 									<ul class="nav nav-children">
 										<li>
@@ -1727,12 +1757,20 @@
 											</a>
 										<li>
 											<a href="<?= base_url()?>produksiTertunda/belum_diproses">
-												Belum Diproses
+												<?php if($jm_prodtun0[0]['jumlah_prodtun0'] == 0){?>
+													<span>Belum Diproses</span>
+												<?php } else{?>
+													<span>Belum Diproses <span class="badge badge-light"><?= $jm_prodtun0[0]['jumlah_prodtun0']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
 											<a href="<?= base_url()?>produksiTertunda/sedang_diproses">
-												Sedang Diproses
+												<?php if($jm_prodtun1[0]['jumlah_prodtun1'] == 0){?>
+													<span>Sedang Diproses</span>
+												<?php } else{?>
+													<span>Sedang Diproses <span class="badge badge-light"><?= $jm_prodtun1[0]['jumlah_prodtun1']?></span></span>
+												<?php } ?>
 											</a>
 										</li>
 										<li>
@@ -2293,6 +2331,13 @@
 									<span>Produk</span>
 								</a>
 							</li>
+							<!-- tracking produksi -->
+							<li>
+								<a href="<?= base_url()?>LaporanProduksi/tracking_pesanan">
+									<i class="fa  fa-search" aria-hidden="true"></i>
+									Tracking Pesanan
+								</a>
+							</li>
 							<!-- inventory line -->
 							<li>
 								<a href="<?= base_url()?>inventoryLine">
@@ -2330,7 +2375,11 @@
 							<li class="nav-parent">
 								<a title="Produksi Tertunda">
 									<i class="fa fa-cogs" aria-hidden="true"></i>
-									<span>Produksi Tertunda</span>
+									<?php if($jm_prodtun[0]['jumlah_prodtun'] == 0){?>
+										<span>Produksi Tertunda</span>
+									<?php } else{?>
+										<span>Produksi Tertunda <span class="badge badge-light"><?= $jm_prodtun[0]['jumlah_prodtun']?></span></span>
+									<?php } ?>
 								</a>
 								<ul class="nav nav-children">
 									<li>
@@ -2339,12 +2388,20 @@
 										</a>
 									<li>
 										<a href="<?= base_url()?>produksiTertunda/belum_diproses">
-											Belum Diproses
+											<?php if($jm_prodtun0[0]['jumlah_prodtun0'] == 0){?>
+												<span>Belum Diproses</span>
+											<?php } else{?>
+												<span>Belum Diproses <span class="badge badge-light"><?= $jm_prodtun0[0]['jumlah_prodtun0']?></span></span>
+											<?php } ?>
 										</a>
 									</li>
 									<li>
 										<a href="<?= base_url()?>produksiTertunda/sedang_diproses">
-											Sedang Diproses
+											<?php if($jm_prodtun1[0]['jumlah_prodtun1'] == 0){?>
+												<span>Sedang Diproses</span>
+											<?php } else{?>
+												<span>Sedang Diproses <span class="badge badge-light"><?= $jm_prodtun1[0]['jumlah_prodtun1']?></span></span>
+											<?php } ?>
 										</a>
 									</li>
 									<li>
@@ -3514,7 +3571,6 @@
 									<span>Master Data</span>
 								</a>
 								<ul class="nav nav-children">
-								<li>
 									<li>
 										<a href="<?php echo base_url() . 'Customer'?>">
 											Customer
@@ -3525,13 +3581,20 @@
 											Supplier
 										</a>
 									</li>
+									<li>
+										<a href="<?= base_url()?>rekening">
+											Rekening
+										</a>
+									</li>
 								</ul>
 							</li>
 							<!-- rekening -->
+							
+							<!-- tracking produksi -->
 							<li>
-								<a href="<?= base_url()?>rekening">
-								 	<i class="fa fa-bank" aria-hidden="true"></i>
-									Rekening
+								<a href="<?= base_url()?>LaporanProduksi/tracking_pesanan">
+								 	<i class="fa  fa-search" aria-hidden="true"></i>
+									Tracking Pesanan
 								</a>
 							</li>
 							<!-- PO customer -->
