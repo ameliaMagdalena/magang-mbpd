@@ -450,7 +450,7 @@
 											</li>
 										</ul>
 									</li>
-									<!-- <li class="nav-parent">
+									<li class="nav-parent">
 										<a title="Pengambilan Material Produksi">
 											<span>Pengambilan Material Produksi</span>
 										</a>
@@ -471,7 +471,7 @@
 												</a>
 											</li>
 										</ul>
-									</li> -->
+									</li>
 								</ul>
 							</li>
 
