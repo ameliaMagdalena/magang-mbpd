@@ -417,7 +417,7 @@ class PerubahanHargaMaterial extends CI_Controller {
 
     public function baru(){
         $data['ubah'] = $this->M_PerubahanHarga->selectAllPerubahanHarga()->num_rows();
-        $data['sup'] = $this->M_PerubahanHarga->selectDetailSupplierAktif()->result_array();
+        $data['sups'] = $this->M_PerubahanHarga->selectDetailSupplierAktif()->result_array();
 
         //notif material
             $data['permat'] = $this->M_PerencanaanMaterial->selectPermintaanMaterialAktif()->result_array();

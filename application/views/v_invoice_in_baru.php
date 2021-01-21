@@ -179,7 +179,7 @@
             dataType:"JSON",
             data:{id_po:id_po},
             success:function(respond){
-                html="Tagihan seharusnya : "+respond[0]["total_harga_akhir"];
+                html="Tagihan awal: "+respond[0]["total_harga_akhir"];
                 $("#tghn").append(html);
             }
         });
@@ -227,7 +227,8 @@
                         '</td>'+
                         '<td class="col-lg-1">'+
                             '<input class="form-control" type="number" name="jlhminta'+cek+'" id="jlhminta'+cek+'"'+
-                            'value="'+respond[cek]["jumlah_material"]+'" readonly>'+
+                            'value="'+respond[cek]["jumlah_aktual"]+'" readonly>'+
+                            '<small> diminta: '+respond[cek]["jumlah_diminta"]+' </small>'+
                         '</td>'+
                         '<td class="col-lg-2">'+
                             '<input class="form-control" type="text" name="satuan'+cek+'" id="satuan'+cek+'"'+

@@ -3281,13 +3281,13 @@
 								<div class="widget-summary-col">
 									<div class="summary">
 										<h4 class="title">PO Customer</h4>
-										<sub>(belum diproses)</sub>
+										<sub>(sedang diproses)</sub>
 										<div class="info">
-											<strong class="amount"><?= $po[0]['jumlah_po'] ?></strong>
+											<strong class="amount"><?= count($pocustnya) ?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="<?= base_url()?>perencanaanProduksi">(proses)</a>
+										<a class="text-muted text-uppercase" href="<?= base_url()?>PurchaseOrderCustomer/index/0">(Lihat Semua)</a>
 									</div>
 								</div>
 							</div>
@@ -3309,11 +3309,11 @@
 										<h4 class="title">PO Supplier</h4>
 										<sub>(belum disetujui)</sub>
 										<div class="info">
-											<strong class="amount"><?= $po[0]['jumlah_po'] ?></strong>
+											<strong class="amount"><?= count($posupnya) ?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="<?= base_url()?>perencanaanProduksi">(proses)</a>
+										<a class="text-muted text-uppercase" href="<?= base_url()?>PurchaseOrderSupplier/persetujuan">(Lihat Semua)</a>
 									</div>
 								</div>
 							</div>
@@ -3333,13 +3333,13 @@
 								<div class="widget-summary-col">
 									<div class="summary">
 										<h4 class="title">Invoice In</h4>
-										<sub>(belum diproses)</sub>
+										<sub>(belum lunas)</sub>
 										<div class="info">
-											<strong class="amount"><?= $invoice[0]['jumlah_invoice'] ?></strong>
+											<strong class="amount"><?= count($invoiceinnya) ?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="<?= base_url()?>invoice/belum_diproses_invoice">(lihat semua)</a>
+										<a class="text-muted text-uppercase" href="<?= base_url()?>PurchaseOrderSupplier/invoice/0">(lihat semua)</a>
 									</div>
 								</div>
 							</div>
@@ -3363,11 +3363,11 @@
 										<h4 class="title">Sub Jenis <br>Material</h4>
 										<sub>(total semua)</sub>
 										<div class="info">
-											<strong class="amount"><?= $jumlah_produk[0]['jumlah_produk'] ?></strong>
+											<strong class="amount"><?= count($subjenisnya) ?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="<?= base_url()?>produk">(lihat semua)</a>
+										<a class="text-muted text-uppercase" href="<?= base_url()?>JenisMaterial">(lihat semua)</a>
 									</div>
 								</div>
 							</div>
@@ -3389,11 +3389,11 @@
 										<h4 class="title">Perubahan <br>Harga</h4>
 										<sub>(belum ditinjau)</sub>
 										<div class="info">
-											<strong class="amount"><?= $invoice[0]['jumlah_invoice'] ?></strong>
+											<strong class="amount"><?= count($ubahharganya) ?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="<?= base_url()?>invoice/belum_diproses_invoice">(lihat semua)</a>
+										<a class="text-muted text-uppercase" href="<?= base_url()?>PerubahanHargaMaterial/persetujuan">(lihat semua)</a>
 									</div>
 								</div>
 							</div>
@@ -3415,7 +3415,24 @@
 										<h4 class="title">Pengeluaran <br>Bulan Ini</h4>
 										<sub>(untuk material)</sub>
 										<div class="info">
-											<strong class="amount">300000<?php // $po[0]['jumlah_po'] ?></strong>
+											<strong class="amount">
+												<?php $pengeluaran = 0;
+												// HITUNG DARI DN
+													/* for($ddn=0; $ddn<count($pengeluarannya); $ddn++){
+														$jlhnya = $pengeluarannya[$ddn]['jumlah_aktual'];
+														$hargaaa = $pengeluarannya[$ddn]['harga_satuan'];
+														$total = $jlhnya*$hargaaa;
+														$pengeluaran = $pengeluaran+$total;
+													}
+													echo $pengeluaran; */
+
+												//HITUNG DARI INVOICE IN LUNAS
+													for($inn=0; $inn<count($pengeluarannya); $ddn++){
+														$pengeluaran = $pengeluaran+$pengeluarannya[$inn]['total_bayar'];
+													}
+													echo $pengeluaran;
+												?>
+											</strong>
 										</div>
 									</div>
 									<div class="summary-footer">

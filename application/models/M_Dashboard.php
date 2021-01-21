@@ -465,6 +465,44 @@ class M_Dashboard extends CI_Model {
     //tutup dashboard produksi
 
 
-    
+    //dashboard material
+        //Purchasing
+            function selectPOCustomer(){
+                return $this->db->query("SELECT * FROM purchase_order_customer
+                WHERE status_delete=0 AND status_po=1");
+            }
+            function selectPOSupplier(){
+                return $this->db->query("SELECT * FROM purchase_order_supplier
+                WHERE status_delete=0 AND status_po=0");
+            }
+            function selectInvoiceIn(){
+                return $this->db->query("SELECT * FROM invoice_in
+                WHERE status_delete=0 AND status_lunas=0");
+            }
+        //Purchasing
+        
+        //PPIC
+            function selectSubJenisMaterial(){
+                return $this->db->query("SELECT * FROM sub_jenis_material
+                WHERE status_delete=0");
+            }
+            function selectPerubahanHarga(){
+                return $this->db->query("SELECT * FROM perubahan_harga
+                WHERE status_delete=0 AND status_persetujuan=0");
+            }
+            function selectDetailDeliveryNote(){
+                return $this->db->query("SELECT * FROM detail_delivery_note a
+                JOIN detail_purchase_order_supplier b ON a.id_detail_purchase_order_supplier=b.id_detail_purchase_order_supplier
+                JOIN delivery_note c ON a.id_delivery_note=c.id_delivery_note
+                WHERE a.status_delete=0 AND c.status_pengesahan=2
+                AND MONTH(c.tanggal_penerimaan) = MONTH(NOW())");
+            }
+            function selectInvoiceInLunas(){
+                return $this->db->query("SELECT * FROM invoice_in
+                WHERE status_delete=0 AND status_lunas=1");
+            }
+        //PPIC
+
+        
 
 }

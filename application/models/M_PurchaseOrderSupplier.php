@@ -60,7 +60,10 @@ class M_PurchaseOrderSupplier extends CI_Model {
         JOIN jenis_material c ON b.id_jenis_material = c.id_jenis_material
         JOIN purchase_order_supplier d ON a.id_purchase_order_supplier = d.id_purchase_order_supplier
         JOIN supplier e ON e.id_supplier = d.id_supplier
-        WHERE a.status_delete=0 AND a.id_purchase_order_supplier='" . $id['id_purchase_order_supplier'] . "'");
+        JOIN detail_delivery_note f ON a.id_detail_purchase_order_supplier=f.id_detail_purchase_order_supplier
+        JOIN delivery_note g ON f.id_delivery_note=g.id_delivery_note
+        WHERE a.status_delete=0 AND f.jumlah_aktual!='' AND g.status_pengesahan=2
+        AND a.id_purchase_order_supplier='" . $id['id_purchase_order_supplier'] . "'");
     }
     
     function selectDetailPOSupplierAktif(){

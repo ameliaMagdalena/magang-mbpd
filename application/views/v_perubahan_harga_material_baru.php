@@ -42,9 +42,9 @@
 					<div class="col-sm-7">
                         <select class="form-control" name="supplier" id="supplier" onchange="getDetail()" onkeyup="getDetail()" required>
                             <option class="dropdown-header" value="kosong">Pilih Supplier</option>
-                            <?php for($x=0; $x<count($sup); $x++){ ?>
-							    <option value="<?= $sup[$x]['id_supplier'] ?>">
-                                    <?= $sup[$x]['nama_supplier'] ?>
+                            <?php for($x=0; $x<count($sups); $x++){ ?>
+							    <option value="<?= $sups[$x]['id_supplier'] ?>">
+                                    <?= $sups[$x]['nama_supplier'] ?>
                                 </option>
                             <?php } ?>
 						</select>

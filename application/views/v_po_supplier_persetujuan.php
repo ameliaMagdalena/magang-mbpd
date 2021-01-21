@@ -51,6 +51,7 @@
             <tbody>
                 <?php
                     for($x=0 ; $x<count($po_sup) ; $x++){
+                        if($po_sup[$x]['status_po']==0){
                 ?>
                 <tr>
                     <td> <?php echo $po_sup[$x]['kode_purchase_order_supplier'] ?> </td>
@@ -133,7 +134,7 @@
                 <!-- ************************************************************************** -->
 
 
-            <?php } ?>
+            <?php }} ?>
             </tbody>
         </table>
     </div>
