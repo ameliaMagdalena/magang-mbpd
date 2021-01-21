@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2021 at 04:46 AM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.0
+-- Generation Time: Jan 21, 2021 at 04:04 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.3.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -557,7 +557,7 @@ CREATE TABLE `detail_purchase_order_customer` (
   `waktu_edit` datetime DEFAULT NULL,
   `user_delete` varchar(10) DEFAULT NULL,
   `waktu_delete` datetime DEFAULT NULL,
-  `status_delete` int(11) DEFAULT NULL
+  `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -591,7 +591,7 @@ CREATE TABLE `detail_purchase_order_supplier` (
   `waktu_edit` datetime DEFAULT NULL,
   `user_delete` varchar(10) DEFAULT NULL,
   `waktu_delete` datetime DEFAULT NULL,
-  `status_delete` int(11) NOT NULL
+  `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -694,6 +694,34 @@ CREATE TABLE `invoice` (
   `waktu_delete` datetime DEFAULT NULL,
   `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice_in`
+--
+
+CREATE TABLE `invoice_in` (
+  `id_invoice_in` varchar(10) NOT NULL,
+  `nomor_invoice_in` varchar(30) NOT NULL,
+  `id_purchase_order_supplier` varchar(30) NOT NULL,
+  `nomor_fp` varchar(30) NOT NULL,
+  `total_harga` int(11) NOT NULL,
+  `ppn` int(11) NOT NULL,
+  `total_bayar` int(11) NOT NULL,
+  `tanggal_terima_invoice` date NOT NULL,
+  `tanggal_pelunasan` date DEFAULT NULL,
+  `status_lunas` int(1) NOT NULL,
+  `pajak` varchar(50) DEFAULT NULL,
+  `keterangan` varchar(500) DEFAULT NULL,
+  `user_add` varchar(30) NOT NULL,
+  `waktu_add` datetime NOT NULL,
+  `user_edit` varchar(30) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(30) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
+  `status_delete` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -2047,7 +2075,7 @@ CREATE TABLE `sales_order` (
   `waktu_edit` datetime DEFAULT NULL,
   `user_delete` varchar(10) DEFAULT NULL,
   `waktu_delete` datetime DEFAULT NULL,
-  `status_delete` int(11) DEFAULT NULL
+  `status_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -2793,6 +2821,12 @@ ALTER TABLE `detail_surat_perintah_lembur`
 --
 ALTER TABLE `invoice`
   ADD PRIMARY KEY (`id_invoice`);
+
+--
+-- Indexes for table `invoice_in`
+--
+ALTER TABLE `invoice_in`
+  ADD PRIMARY KEY (`id_invoice_in`);
 
 --
 -- Indexes for table `item_bpbd`
