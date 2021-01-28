@@ -163,4 +163,8 @@ class M_SuratJalan extends CI_Model {
         item_bpbd.id_bpbd=bpbd.id_bpbd ");
     }
 
+    function get_id_bpbj_pengurangan($id_dbpbj_tam){
+        return $this->db->query("SELECT id_bpbj FROM detail_bpbj WHERE id_detail_bpbj='$id_dbpbj_tam' ");
+    }
+
 }
