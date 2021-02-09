@@ -139,8 +139,8 @@ href="<?php if(count($po)==0){
 					<label class="col-sm-3 control-label">Supplier<span class="required">*</span></label>
 					<div class="col-sm-7">
                         <select class="form-control" name="supplier" id="supplier" required>
-                            <?php for($sup=0; $sup<count($po); $sup++){ ?>
-                                <option value="<?= $po[$sup]['id_supplier'] ?>"> <?= $po[$sup]['nama_supplier'] ?> </option>
+                            <?php for($sup=0; $sup<count($suppp); $sup++){ ?>
+                                <option value="<?= $suppp[$sup]['id_supplier'] ?>"> <?= $suppp[$sup]['nama_supplier'] ?> </option>
                             <?php }?>
                         </select>
                     </div>
@@ -173,23 +173,13 @@ href="<?php if(count($po)==0){
                     </tr>
                 </table>
 
-                <br>
                 
-                <div>
-                    <div class="form-group mt-lg">
-                        <label class="col-sm-3 control-label">Dibuat Oleh </label>
-                        <div class="col-sm-7">
-                            <input type="text" name="dibuat" class="form-control"
-                            value="<?php echo $_SESSION['id_user'] ?>" readonly>
-                        </div>
-                    </div>
-                </div>
                 <br>
             </div>
             <footer class="panel-footer">
 				<div class="row">
 					<div class="col-md-12 text-right">
-						<input type="submit" id="tambah" class="btn btn-primary" value="Simpan">
+						<input type="submit" id="tambahdn" class="btn btn-primary" value="Simpan">
 						<button type="button" class="btn btn-default modal-dismiss"  onclick="reload()">Batal</button>
 					</div>
 				</div>
@@ -231,7 +221,43 @@ href="<?php if(count($po)==0){
                     <tr>
                         <td class="col-lg-2"> <?php echo $dn[$x]['kode_delivery_note']?></td>
                         <td class="col-lg-2"> <?php echo $dn[$x]['nama_supplier']?></td>
-                        <td class="col-lg-2"> <?php echo $dn[$x]['tanggal_penerimaan']?></td>
+                        <td class="col-lg-2">
+                            <?php
+                                $waktu = $dn[$x]['tanggal_penerimaan'];
+
+                                $hari_array = array(
+                                    'Minggu',
+                                    'Senin',
+                                    'Selasa',
+                                    'Rabu',
+                                    'Kamis',
+                                    'Jumat',
+                                    'Sabtu'
+                                );
+                                $hr = date('w', strtotime($waktu));
+                                $hari = $hari_array[$hr];
+                                $tanggal = date('j', strtotime($waktu));
+                                $bulan_array = array(
+                                    1 => 'Januari',
+                                    2 => 'Februari',
+                                    3 => 'Maret',
+                                    4 => 'April',
+                                    5 => 'Mei',
+                                    6 => 'Juni',
+                                    7 => 'Juli',
+                                    8 => 'Agustus',
+                                    9 => 'September',
+                                    10 => 'Oktober',
+                                    11 => 'November',
+                                    12 => 'Desember',
+                                );
+                                $bl = date('n', strtotime($waktu));
+                                $bulan = $bulan_array[$bl];
+                                $tahun = date('Y', strtotime($waktu));
+                                
+                                echo "$hari, $tanggal $bulan $tahun";
+                            ?>
+                        </td>
                         <td class="col-lg-2">
                             <?php if ($dn[$x]['status_pengesahan']==0){
                                 echo "Proses Persetujuan";
@@ -265,7 +291,43 @@ href="<?php if(count($po)==0){
                     <tr>
                         <td class="col-lg-2"> <?php echo $dn[$x]['kode_delivery_note']?></td>
                         <td class="col-lg-2"> <?php echo $dn[$x]['nama_supplier']?></td>
-                        <td class="col-lg-2"> <?php echo $dn[$x]['tanggal_penerimaan']?></td>
+                        <td class="col-lg-2">
+                            <?php
+                                $waktu = $dn[$x]['tanggal_penerimaan'];
+
+                                $hari_array = array(
+                                    'Minggu',
+                                    'Senin',
+                                    'Selasa',
+                                    'Rabu',
+                                    'Kamis',
+                                    'Jumat',
+                                    'Sabtu'
+                                );
+                                $hr = date('w', strtotime($waktu));
+                                $hari = $hari_array[$hr];
+                                $tanggal = date('j', strtotime($waktu));
+                                $bulan_array = array(
+                                    1 => 'Januari',
+                                    2 => 'Februari',
+                                    3 => 'Maret',
+                                    4 => 'April',
+                                    5 => 'Mei',
+                                    6 => 'Juni',
+                                    7 => 'Juli',
+                                    8 => 'Agustus',
+                                    9 => 'September',
+                                    10 => 'Oktober',
+                                    11 => 'November',
+                                    12 => 'Desember',
+                                );
+                                $bl = date('n', strtotime($waktu));
+                                $bulan = $bulan_array[$bl];
+                                $tahun = date('Y', strtotime($waktu));
+                                
+                                echo "$hari, $tanggal $bulan $tahun";
+                            ?>
+                        </td>
                         <td class="col-lg-2"> Selesai </td>
                         <td class="col-lg-3">
                             <a class="col-lg-3 btn btn-primary fa fa-info-circle"
@@ -280,7 +342,43 @@ href="<?php if(count($po)==0){
                     <tr>
                         <td class="col-lg-2"> <?php echo $dn[$x]['kode_delivery_note']?></td>
                         <td class="col-lg-2"> <?php echo $dn[$x]['nama_supplier']?></td>
-                        <td class="col-lg-2"> <?php echo $dn[$x]['tanggal_penerimaan']?></td>
+                        <td class="col-lg-2">
+                            <?php
+                                $waktu = $dn[$x]['tanggal_penerimaan'];
+
+                                $hari_array = array(
+                                    'Minggu',
+                                    'Senin',
+                                    'Selasa',
+                                    'Rabu',
+                                    'Kamis',
+                                    'Jumat',
+                                    'Sabtu'
+                                );
+                                $hr = date('w', strtotime($waktu));
+                                $hari = $hari_array[$hr];
+                                $tanggal = date('j', strtotime($waktu));
+                                $bulan_array = array(
+                                    1 => 'Januari',
+                                    2 => 'Februari',
+                                    3 => 'Maret',
+                                    4 => 'April',
+                                    5 => 'Mei',
+                                    6 => 'Juni',
+                                    7 => 'Juli',
+                                    8 => 'Agustus',
+                                    9 => 'September',
+                                    10 => 'Oktober',
+                                    11 => 'November',
+                                    12 => 'Desember',
+                                );
+                                $bl = date('n', strtotime($waktu));
+                                $bulan = $bulan_array[$bl];
+                                $tahun = date('Y', strtotime($waktu));
+                                
+                                echo "$hari, $tanggal $bulan $tahun";
+                            ?>
+                        </td>
                         <td class="col-lg-2">
                             <?php if ($dn[$x]['status_pengesahan']==3){
                                 echo "Batal";
@@ -529,12 +627,19 @@ href="<?php if(count($po)==0){
 ?>
 
 <script>
+    $(document).ready(function(){
+        $("#tambahdn").attr("disabled", true);
+    });
+</script>
+
+<script>
     $('#supplier').change(function() {
         var length = document.getElementById("print_new_row").rows.length;
         var z;
         for(z=0; z<length; z++){
             document.getElementById("print_new_row").deleteRow(0);
         }
+        document.getElementById("tambahdn").disabled = true;
     });
 </script>
 
@@ -553,7 +658,7 @@ href="<?php if(count($po)==0){
                 '<select data-plugin-selectTwo class="form-control" name="material'+counter+'" id="material'+counter+'" onchange="getSatuan('+counter+'); getJumlah('+counter+');" required>'+
             '</td>'+
             '<td>'+
-                '<input class="form-control" type="number" name="jumlah'+counter+'" id="jumlah'+counter+'" min="0" required>'+
+                '<input class="form-control" type="number" name="jumlah'+counter+'" id="jumlah'+counter+'" min="0" readonly>'+
                 '<input class="form-control" type="hidden" name="detpo'+counter+'" id="detpo'+counter+'" readonly>'+
             '</td>'+
             '<td>'+
@@ -564,6 +669,7 @@ href="<?php if(count($po)==0){
             '</td>'+
         '</tr>';
         $("#print_new_row").append(html);
+        $("#tambahdn").attr("disabled", false);
         getPO(counter);
     }
 </script>
@@ -624,10 +730,11 @@ href="<?php if(count($po)==0){
             dataType:"JSON",
             data:{id_sub_jenis_material:id_sub_jenis_material},
             success:function(respond){
-                var jadi =  respond[0]["jumlah_material"];
+                $("#jumlah"+countt).val(respond[0]["jumlah_material"]);
+                /* var jadi =  respond[0]["jumlah_material"];
                 $("#jumlah"+countt).attr({
                     "max" : jadi
-                });
+                }); */
                 $("#detpo"+countt).val(respond[0]["id_detail_purchase_order_supplier"]);
             }
         });

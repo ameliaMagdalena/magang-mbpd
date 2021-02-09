@@ -51,7 +51,41 @@
             <label class="col-sm-3 control-label">Tanggal PO</label>
             <div class="col-sm-9">
                 <input type="text" name="tanggal_po" class="form-control"
-                value="<?php echo $po_sup[0]['tanggal_po'] ?>" readonly>
+                value="<?php
+                    $waktu = $po_sup[0]['tanggal_po'];
+
+                    $hari_array = array(
+                        'Minggu',
+                        'Senin',
+                        'Selasa',
+                        'Rabu',
+                        'Kamis',
+                        'Jumat',
+                        'Sabtu'
+                    );
+                    $hr = date('w', strtotime($waktu));
+                    $hari = $hari_array[$hr];
+                    $tanggal = date('j', strtotime($waktu));
+                    $bulan_array = array(
+                        1 => 'Januari',
+                        2 => 'Februari',
+                        3 => 'Maret',
+                        4 => 'April',
+                        5 => 'Mei',
+                        6 => 'Juni',
+                        7 => 'Juli',
+                        8 => 'Agustus',
+                        9 => 'September',
+                        10 => 'Oktober',
+                        11 => 'November',
+                        12 => 'Desember',
+                    );
+                    $bl = date('n', strtotime($waktu));
+                    $bulan = $bulan_array[$bl];
+                    $tahun = date('Y', strtotime($waktu));
+                    
+                    echo "$hari, $tanggal $bulan $tahun";
+                ?>" readonly>
             </div>
         </div>
         <div class="form-group mt-lg">
@@ -111,8 +145,8 @@
                             <td> <?php echo $detail_po_sup[$y]['nama_jenis_material'] . ' ' . $detail_po_sup[$y]['nama_sub_jenis_material'] ?> </td>
                             <td> <?php echo $detail_po_sup[$y]['jumlah_material'] ?> </td>
                             <td> <?php echo $detail_po_sup[$y]['satuan_ukuran'] ?> </td>
-                            <td> <?php echo $detail_po_sup[$y]['harga_satuan'] ?></td>
-                            <td> <?php echo $detail_po_sup[$y]['harga_total'] ?></td>
+                            <td> <?php echo "Rp " . number_format($detail_po_sup[$y]['harga_satuan'],2,',','.'); ?></td>
+                            <td> <?php echo "Rp " . number_format($detail_po_sup[$y]['harga_total'],2,',','.'); ?> </td>
                             <td>
                                 <?php
                                     if ($detail_po_sup[$y]['status_detail_po']==0){
@@ -140,21 +174,21 @@
             <label class="col-sm-3 control-label">Harga Sebelum Pajak</label>
             <div class="col-sm-9">
                 <input type="text" name="harga_sebelum_pajak" class="form-control"
-                value="<?php echo $po_sup[0]['harga_sebelum_pajak'] ?>" readonly>
+                value="<?php echo "Rp " . number_format($po_sup[0]['harga_sebelum_pajak'],2,',','.'); ?>" readonly>
             </div>
         </div>
         <div class="form-group mt-lg">
             <label class="col-sm-3 control-label">PPN</label>
             <div class="col-sm-9">
                 <input type="text" name="ppn" class="form-control"
-                value="<?php echo $po_sup[0]['ppn'] ?>" readonly>
+                value="<?php echo "Rp " . number_format($po_sup[0]['ppn'],2,',','.'); ?>" readonly>
             </div>
         </div>
         <div class="form-group mt-lg">
             <label class="col-sm-3 control-label">Total harga</label>
             <div class="col-sm-9">
                 <input type="text" name="total_harga_akhir" class="form-control"
-                value="<?php echo $po_sup[0]['total_harga_akhir'] ?>" readonly>
+                value="<?php echo "Rp " . number_format($po_sup[0]['total_harga_akhir'],2,',','.'); ?>" readonly>
             </div>
         </div>
         <div class="form-group mt-lg">

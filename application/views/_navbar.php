@@ -103,13 +103,11 @@
 											Customer
 										</a>
 									</li>
-									<!--
 									<li>
 										<a href="<?php echo base_url() . 'Supplier'?>">
 											Supplier
 										</a>
 									</li>
-									-->
 									<li>
 										<a href="<?php echo base_url() . 'JenisMaterial'?>">
 											Jenis Material
@@ -197,11 +195,6 @@
 									<li>
 										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/index/3'?>">
 											Semua
-										</a>
-									</li>
-									<li>
-										<a href="<?php echo base_url() . 'PurchaseOrderCustomer/material_cost'?>">
-											Laporan Material Cost <!-- untuk PO yang sudah selesai -->
 										</a>
 									</li>
 								</ul>
@@ -370,7 +363,7 @@
 											</li>
 										</ul>
 									</li>
-									<li class="nav-parent">
+									<!-- <li class="nav-parent">
 										<a title="Permintaan Material">
 											<span>Perubahan Permintaan</span>
 										</a>
@@ -409,7 +402,7 @@
 												</a>
 											</li>
 										</ul>
-									</li>
+									</li> -->
 									<li class="nav-parent">
 										<a title="Permintaan Material">
 											<span>Permintaan Material Tambahan</span>
@@ -434,18 +427,8 @@
 												</a>
 											</li>
 											<li>
-												<a href="<?php echo base_url() . 'PermintaanMaterial/tambahan/2'?>">
-													Tidak Disetujui
-												</a>
-											</li>
-											<li>
-												<a href="<?php echo base_url() . 'PermintaanMaterial/tambahan/3'?>">
-													Batal
-												</a>
-											</li>
-											<li>
 												<a href="<?php echo base_url() . 'PermintaanMaterial/tambahan/4'?>">
-													Semua
+													Selesai
 												</a>
 											</li>
 										</ul>
@@ -456,20 +439,20 @@
 										</a>
 										<ul class="nav nav-children">
 											<li>
-												<a href="<?php echo base_url() . 'PerencanaanMaterial/index/1'?>">
-													Pengambilan Hari Ini <span class="badge badge-light">2</span>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/ambil/0'?>">
+													Pengambilan Hari Ini
 												</a>
 											</li>
 											<li>
-												<a href="<?php echo base_url() . 'PerencanaanMaterial/index/1'?>">
-													Semua Pengambilan <span class="badge badge-light">5</span>
+												<a href="<?php echo base_url() . 'PermintaanMaterial/ambil/1'?>">
+													Semua Pengambilan
 												</a>
 											</li>
-											<li>
+											<!-- <li>
 												<a href="<?php echo base_url() . 'PermintaanMaterial/jadwal'?>">
 													Jadwal Pengambilan
 												</a>
-											</li>
+											</li> -->
 										</ul>
 									</li>
 								</ul>
@@ -481,11 +464,11 @@
 									<span>Permintaan Pembelian</span>
 								</a>
 								<ul class="nav nav-children">
-									<li>
+									<!-- <li>
 										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/baru'?>">
 											+ Request Baru
 										</a>
-									</li>
+									</li> -->
 									<li>
 										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/0'?>">
 											Belum Ditindaklanjuti
@@ -1595,11 +1578,11 @@
 									<span>Permintaan Pembelian</span>
 								</a>
 								<ul class="nav nav-children">
-									<li>
+									<!-- <li>
 										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/baru'?>">
 											+ Request Baru
 										</a>
-									</li>
+									</li> -->
 									<li>
 										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/0'?>">
 											Belum Ditindaklanjuti
@@ -2840,11 +2823,11 @@
 									<span>Permintaan Pembelian</span>
 								</a>
 								<ul class="nav nav-children">
-									<li>
+									<!-- <li>
 										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/baru'?>">
 											+ Request Baru
 										</a>
-									</li>
+									</li> -->
 									<li>
 										<a href="<?php echo base_url() . 'PermintaanPembelianMaterial/index/0'?>">
 											Belum Ditindaklanjuti

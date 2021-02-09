@@ -86,12 +86,6 @@
                         <input type="number" name="total" id="total" class="form-control" readonly>
                     </div>
                 </div>
-                <div class="form-group mt-lg">
-					<label class="col-sm-3 control-label">Pajak</label>
-					<div class="col-sm-7">
-                        <input type="text" name="pajak" id="pajak" class="form-control" readonly>
-                    </div>
-                </div>
 
                 <div class="form-group mt-lg">
 					<h4 style="text-align:center">Data Material</h4>
@@ -228,7 +222,6 @@
                         '<td class="col-lg-1">'+
                             '<input class="form-control" type="number" name="jlhminta'+cek+'" id="jlhminta'+cek+'"'+
                             'value="'+respond[cek]["jumlah_aktual"]+'" readonly>'+
-                            '<small> diminta: '+respond[cek]["jumlah_diminta"]+' </small>'+
                         '</td>'+
                         '<td class="col-lg-2">'+
                             '<input class="form-control" type="text" name="satuan'+cek+'" id="satuan'+cek+'"'+

@@ -165,7 +165,7 @@
                 <footer class="panel-footer">
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <input type="submit" id="simpan" class="btn btn-primary float-right" value="Simpan">
+                            <input type="submit" id="button_tambah" class="btn btn-primary float-right" value="Simpan">
                         </div>
                     </div>
                 </footer>
@@ -188,12 +188,22 @@
 ?>
 
 <script>
+    $(document).ready(function(){
+        $("#button_tambah").attr("disabled", true);
+    });
+</script>
+
+<script>
     $('#supplier').change(function() {
         var length = document.getElementById("print_new_row").rows.length;
         var z;
         for(z=0; z<length; z++){
             document.getElementById("print_new_row").deleteRow(0);
         }
+        document.getElementById("button_tambah").disabled = true;
+        document.getElementById("total_sebelum_pajak").value = "0";
+        document.getElementById("ppn").value = "0";
+        document.getElementById("total_harga").value = "0";
     });
 </script>
 
@@ -210,12 +220,13 @@
                 '</select>'+
             '</td>'+
             '<td class="col-lg-3">'+
-                '<select data-plugin-selectTwo class="form-control" name="material'+counter+'" id="material'+counter+'" onchange="getHargaSatuan('+counter+'); getSatuan('+counter+')" required>'+
-                '</select>'+
+                //'<select data-plugin-selectTwo class="form-control" name="material'+counter+'" id="material'+counter+'" onchange="getHargaSatuan('+counter+'); getSatuan('+counter+')" required>'+
+                //'</select>'+
+                '<input class="form-control" type="hidden" name="material'+counter+'" id="material'+counter+'">'+
+                '<input class="form-control" type="text" name="material2'+counter+'" id="material2'+counter+'" onchange="getHargaSatuan('+counter+'); getSatuan('+counter+')" readonly>'+
             '</td>'+
             '<td class="col-lg-1">'+
-                '<input class="form-control" type="number" name="jumlah'+counter+'" id="jumlah'+counter+'" min="0" onkeyup="countHargaTotal('+counter+'); totalHarga();" onclick="countHargaTotal('+counter+'); totalHarga();" required>'+
-                '<small name="jlhminta'+counter+'" id="jlhminta'+counter+'"></small>'+
+                '<input class="form-control" type="number" name="jumlah'+counter+'" id="jumlah'+counter+'" readonly>'+
             '</td>'+
             '<td class="col-lg-1">'+
                 '<input class="form-control" type="text" name="satuan'+counter+'" id="satuan'+counter+'" readonly>'+
@@ -228,6 +239,7 @@
             '</td>'+
         '</tr>';
         $("#print_new_row").append(html);
+        $("#button_tambah").attr("disabled", false);
         getBeli(counter);
         //getMaterial(counter);
     }
@@ -253,36 +265,38 @@
 
 <script>
     function getMaterial(counter){
-        var id_supplier = $("#supplier").val();
-        var id_permintaan = $("#permintaan"+counter).val();
+        var id_permintaan_pembelian = $("#permintaan"+counter).val();
 
-        <?php for($bb=0; $bb<count($darisupp); $bb++){
-        for($b=0; $b<count($material); $b++){  ?>
-            if (id_supplier == '<?php echo $material[$b]['id_supplier'] ?>' && '<?php echo $material[$b]['id_sub_jenis_material'] ?>' == '<?php echo $darisupp[$bb]['id_sub_jenis_material'] ?>') {
-                html =
-                '<option value="<?php echo $material[$b]['id_sub_jenis_material']?>">'+
-                    '<?php echo $material[$b]['kode_sub_jenis_material'] . ' - ' . $material[$b]['nama_jenis_material'] . ' ' . $material[$b]['nama_sub_jenis_material']; ?>'+
-                '</option>';
-                $("#material"+counter).append(html);
+        $.ajax({
+            url:"<?php echo base_url();?>PurchaseOrderSupplier/jumlah_minta",
+            type:"POST",
+            dataType:"JSON",
+            data:{id_permintaan_pembelian:id_permintaan_pembelian},
+            success:function(respond){
+                $("#material"+counter).val(respond[0]['id_sub_jenis_material']);
+                $("#material2"+counter).val(respond[0]['kode_sub_jenis_material'] + ' - ' + respond[0]['nama_jenis_material'] + ' ' + respond[0]['nama_sub_jenis_material']);
                 getHargaSatuan(counter);
                 getSatuan(counter);
                 getJumlah(counter);
             }
-        <?php } } ?>
+        });
+
     }
 </script>
 
 <script>
     function getJumlah(countt){
-        var id_permintaan = $("#permintaan"+countt).val();
+        var id_permintaan_pembelian = $("#permintaan"+countt).val();
         $.ajax({
             url:"<?php echo base_url();?>PurchaseOrderSupplier/jumlah_minta",
             type:"POST",
             dataType:"JSON",
-            data:{id_permintaan:id_permintaan},
+            data:{id_permintaan_pembelian:id_permintaan_pembelian},
             success:function(respond){
-                html = 'Jumlah Diminta: '+respond[0]["jumlah_beli"];
-                $("#jlhminta"+countt).append(html);
+                $("#jumlah"+countt).val(respond[0]["jumlah_beli"]);
+
+                countHargaTotal(countt);
+                totalHarga();
             }
         });
     }
@@ -337,20 +351,22 @@
         for(var y=0; y<counter; y++){
             total += parseInt($("#harga_total"+y).val());
         }
+        var totalnya = "Rp "+  new Number(total).toLocaleString("id-ID") + ",00";
         
         //$("#total_sebelum_pajak").html("Rp " + number_format(total, "", "", ".") + ",-");
-        $("#total_sebelum_pajak").val(total);
+        $("#total_sebelum_pajak").val(totalnya);
         $("#total_sebelum_pajaknya").val(total);
         
         //***** PAJAK */
         var pajak = total*10/100;
-        $("#ppn").val(pajak);
+        var pajaknya = "Rp "+  new Number(pajak).toLocaleString("id-ID") + ",00";
+        $("#ppn").val(pajaknya);
         $("#ppnnya").val(pajak);
         
         //***** SETELAH PAJAK */
         var totalll = total+pajak;
-        //$("#total_harga").html("Rp " + number_format(total, "", "", ".") + ",-");
-        $("#total_harga").val(totalll);
+        var totalllnya = "Rp "+  new Number(totalll).toLocaleString("id-ID") + ",00";
+        $("#total_harga").val(totalllnya);
         $("#total_harganya").val(totalll);
     }
 </script>

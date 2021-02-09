@@ -26,6 +26,7 @@ class PermintaanPembelianMaterial extends CI_Controller {
         $data['detail'] = $this->M_PerencanaanMaterial->selectDetailPermintaanMaterialAktif()->result_array();
         $data['material'] = $this->M_PerencanaanMaterial->selectKetersediaanMaterial()->result_array();
         $data['daripo'] = $this->M_PembelianMaterial->selectPermintaanDanPO()->result_array();
+        $data['depo'] = $this->M_PurchaseOrderSupplier->selectDetailPOSupplierAktif()->result_array();
 
         //notif material
             $data['permat'] = $this->M_PerencanaanMaterial->selectPermintaanMaterialAktif()->result_array();

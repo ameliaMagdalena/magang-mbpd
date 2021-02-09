@@ -58,14 +58,82 @@
             <label class="col-sm-3 control-label">Tanggal DN</label>
             <div class="col-sm-9">
                 <input type="text" name="tanggal_dn" class="form-control"
-                value="<?php echo $dn[0]['tanggal_dn'] ?>" readonly>
+                value="<?php
+                    $waktu = $dn[0]['tanggal_dn'];
+
+                    $hari_array = array(
+                        'Minggu',
+                        'Senin',
+                        'Selasa',
+                        'Rabu',
+                        'Kamis',
+                        'Jumat',
+                        'Sabtu'
+                    );
+                    $hr = date('w', strtotime($waktu));
+                    $hari = $hari_array[$hr];
+                    $tanggal = date('j', strtotime($waktu));
+                    $bulan_array = array(
+                        1 => 'Januari',
+                        2 => 'Februari',
+                        3 => 'Maret',
+                        4 => 'April',
+                        5 => 'Mei',
+                        6 => 'Juni',
+                        7 => 'Juli',
+                        8 => 'Agustus',
+                        9 => 'September',
+                        10 => 'Oktober',
+                        11 => 'November',
+                        12 => 'Desember',
+                    );
+                    $bl = date('n', strtotime($waktu));
+                    $bulan = $bulan_array[$bl];
+                    $tahun = date('Y', strtotime($waktu));
+                    
+                    echo "$hari, $tanggal $bulan $tahun";
+                ?>" readonly>
             </div>
         </div>
         <div class="form-group mt-lg">
             <label class="col-sm-3 control-label">Tanggal Delivery</label>
             <div class="col-sm-9">
                 <input type="text" name="tanggal_delv" class="form-control"
-                value="<?php echo $dn[0]['tanggal_penerimaan'] ?>" readonly>
+                value="<?php
+                    $waktu = $dn[0]['tanggal_penerimaan'];
+
+                    $hari_array = array(
+                        'Minggu',
+                        'Senin',
+                        'Selasa',
+                        'Rabu',
+                        'Kamis',
+                        'Jumat',
+                        'Sabtu'
+                    );
+                    $hr = date('w', strtotime($waktu));
+                    $hari = $hari_array[$hr];
+                    $tanggal = date('j', strtotime($waktu));
+                    $bulan_array = array(
+                        1 => 'Januari',
+                        2 => 'Februari',
+                        3 => 'Maret',
+                        4 => 'April',
+                        5 => 'Mei',
+                        6 => 'Juni',
+                        7 => 'Juli',
+                        8 => 'Agustus',
+                        9 => 'September',
+                        10 => 'Oktober',
+                        11 => 'November',
+                        12 => 'Desember',
+                    );
+                    $bl = date('n', strtotime($waktu));
+                    $bulan = $bulan_array[$bl];
+                    $tahun = date('Y', strtotime($waktu));
+                    
+                    echo "$hari, $tanggal $bulan $tahun";
+                ?>" readonly>
             </div>
         </div>
         <div class="form-group mt-lg">
@@ -134,21 +202,29 @@
         <div class="form-group mt-lg">
             <label class="col-sm-3 control-label">Dibuat Oleh</label>
             <div class="col-sm-9">
-                <?php if($dn[0]['dibuat_oleh'] == $kary[0]['id_user']){ ?>
-                    <input type="text" name="dibuat" class="form-control"
-                    value="<?php echo $kary[0]['nama_karyawan'] ?>" readonly>
-                <?php } ?>
+                <?php 
+                    for($a=0; $a<count($kary); $a++){
+                        if($dn[0]['dibuat_oleh'] == $kary[$a]['id_user']){ ?>
+                            <input type="text" name="dibuat" class="form-control"
+                            value="<?php echo $kary[$a]['nama_karyawan'] ?>" readonly>
+                <?php }} ?>
             </div>
         </div>
         <div class="form-group mt-lg">
             <label class="col-sm-3 control-label">Disetujui Oleh</label>
             <div class="col-sm-9">
-                <?php if($dn[0]['disetujui_oleh']!="" && $dn[0]['disetujui_oleh'] == $kary[0]['id_user']){ ?>
-                    <input type="text" name="disetujui" class="form-control"
-                    value="<?php echo $kary[0]['nama_karyawan'] ?>" readonly>
-                <?php } else if($dn[0]['disetujui_oleh'] == ""){ ?>
-                    <input type="text" name="disetujui" class="form-control"
-                    value=" - " readonly>
+                <?php $cek=0;
+                    for($b=0; $b<count($kary); $b++){
+                        if($dn[0]['disetujui_oleh']!="" && $dn[0]['disetujui_oleh'] == $kary[$b]['id_user']){ ?>
+                            <input type="text" name="disetujui" class="form-control"
+                            value="<?php echo $kary[$b]['nama_karyawan'] ?>" readonly>
+                <?php } else if($dn[0]['disetujui_oleh']==""){ 
+                            $cek=1;
+                        }
+                    }
+                    if($cek==1){ ?>
+                        <input type="text" name="disetujui" class="form-control"
+                        value=" - " readonly>
                 <?php } ?>
             </div>
         </div>

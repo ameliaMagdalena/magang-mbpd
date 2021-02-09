@@ -53,4 +53,12 @@ class M_PermintaanTambahan extends CI_Model {
         return $this->db->query("SELECT * FROM permintaan_tambahan
         WHERE status_delete='0'");
     }
+    
+    function selectSatuPermintaanTambahanAktif($id){
+        return $this->db->query("SELECT * FROM permintaan_tambahan a
+        JOIN detail_permintaan_material b ON a.id_detail_permintaan_material=b.id_detail_permintaan_material
+        JOIN konsumsi_material c ON b.id_konsumsi_material=c.id_konsumsi_material
+        JOIN sub_jenis_material d ON c.id_sub_jenis_material=d.id_sub_jenis_material
+        WHERE a.status_delete='0' AND a.id_permintaan_tambahan='$id'");
+    }
 }

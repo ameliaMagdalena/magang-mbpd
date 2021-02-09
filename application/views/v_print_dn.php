@@ -1,7 +1,7 @@
 
 <?php
     $pdf = new Pdf_oc('P', 'mm', 'A4', true, 'UTF-8', false);
-    $pdf->SetTitle('Sales Order');
+    $pdf->SetTitle('Delivery Note');
     $pdf->SetTopMargin(50);
     $pdf->setFooterMargin(20);
     $pdf->SetAutoPageBreak(true,22);
@@ -96,19 +96,29 @@
                     <tr><td colspan="3"></td></tr>
                     <tr>
                         <td style="text-align: center">';
-                            if($dn[0]['disetujui_oleh']!="" && $dn[0]['disetujui_oleh'] == $kary[0]['id_user']){
-                                $stj = $kary[0]['nama_karyawan'];
-                            }else if($dn[0]['disetujui_oleh'] == ""){
-                                $stj = "";
+                            for($b=0; $b<count($kary); $b++){
+                                if($dn[0]['disetujui_oleh']!="" && $dn[0]['disetujui_oleh'] == $kary[$b]['id_user']){
+                                    $stj = $kary[$b]['nama_karyawan'];
+                                }else if($dn[0]['disetujui_oleh'] == ""){
+                                    $stj = "";
+                                }
                             }
                             $content = $content . $stj .'   
                         </td>
                         <td style="text-align: center">';
-                            if($dn[0]['dibuat_oleh'] == $kary[0]['id_user']){
-                                $content = $content . $kary[0]['nama_karyawan'];
+                            for($a=0; $a<count($kary); $a++){
+                                if($dn[0]['dibuat_oleh'] == $kary[$a]['id_user']){
+                                    $content = $content . $kary[$a]['nama_karyawan'];
+                                }
                             }
                         $content = $content . '</td>
-                        <td></td>
+                        <td style="text-align: center">';
+                            for($a=0; $a<count($kary); $a++){
+                                if($dn[0]['dicek_oleh']!="" && $dn[0]['dicek_oleh'] == $kary[$a]['id_user']){
+                                    $content = $content . $kary[$a]['nama_karyawan'];
+                                }
+                            }
+                        $content = $content . '</td>
                     </tr>
                     <tr><td colspan="3"></td></tr>
                     <tr>

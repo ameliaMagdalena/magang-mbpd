@@ -30,6 +30,7 @@ class DeliveryNote extends CI_Controller {
         $data['dn'] = $this->M_DeliveryNote->selectDeliveryNoteAktif()->result_array();
         $data['dnnow'] = $this->M_DeliveryNote->selectDeliveryNoteNow()->num_rows();
         $data['po'] = $this->M_DeliveryNote->selectPOSupplier()->result_array();
+        $data['suppp'] = $this->M_DeliveryNote->selectPOSupplierGroupBy()->result_array();
 
         //notif material
             $data['permat'] = $this->M_PerencanaanMaterial->selectPermintaanMaterialAktif()->result_array();
@@ -473,6 +474,17 @@ class DeliveryNote extends CI_Controller {
                     "status_delete"=>"0"
                 );
                 $this->M_DeliveryNote->insertDetailDeliveryNote($data1);
+                
+                $data3 = array(
+                    "status_detail_po" => "1",
+                    "user_edit"=>$_SESSION['id_user'],
+                    "waktu_edit"=>date('Y-m-d H:i:s')
+                );
+                $where = array(
+                    "id_detail_purchase_order_supplier" => $this->input->post("detpo".$x)
+                );
+                $this->M_PurchaseOrderSupplier->editDetailPOSupplier($data3, $where);
+                
                 $jumlah_detail = $jumlah_detail +1;
             }
         }
@@ -492,6 +504,7 @@ class DeliveryNote extends CI_Controller {
             "status_delete"=>"0"
         );
         $this->M_DeliveryNote->insertDeliveryNote($data2);
+
         redirect('DeliveryNote/index/0');
     }
 
@@ -508,16 +521,43 @@ class DeliveryNote extends CI_Controller {
     }
 
     public function setuju_dn(){
+        $idnya = $this->input->post("id_dn");
         $where = array(
-            'id_delivery_note' => $this->input->post("id_dn")
+            'id_delivery_note' => $idnya
         );
 
-        $data = array (
-            "status_pengesahan" => $this->input->post("statusnya"),
-            "user_edit"=>$_SESSION['id_user'],
-            "waktu_add"=>date('Y-m-d H:i:s'),
-        );
-        $this->M_DeliveryNote->editDeliveryNote($data, $where);
+        if($this->input->post("statusnya") == "1"){
+            $data = array (
+                "status_pengesahan" => $this->input->post("statusnya"),
+                "disetujui_oleh" => $_SESSION['id_user'],
+                "user_edit"=>$_SESSION['id_user'],
+                "waktu_add"=>date('Y-m-d H:i:s'),
+            );
+            $this->M_DeliveryNote->editDeliveryNote($data, $where);
+        }
+        else{
+            $data = array (
+                "status_pengesahan" => $this->input->post("statusnya"),
+                "user_edit"=>$_SESSION['id_user'],
+                "waktu_add"=>date('Y-m-d H:i:s'),
+            );
+            $this->M_DeliveryNote->editDeliveryNote($data, $where);
+        }
+
+        //ganti status detail PO
+        $detaill = $this->M_DeliveryNote->selectDetailnyaDN($idnya)->result_array();
+        $row = count($detaill);
+        for($x=0; $x<$row; $x++){
+            $data2 = array(
+                "status_detail_po" => "2",
+                "user_edit"=>$_SESSION['id_user'],
+                "waktu_edit"=>date('Y-m-d H:i:s')
+            );
+            $where2 = array(
+                "id_detail_purchase_order_supplier" => $detaill[$x]['id_detail_purchase_order_supplier']
+            );
+            $this->M_PurchaseOrderSupplier->editDetailPOSupplier($data2, $where2);
+        }
         
         if($this->input->post("statusnya") == 1){
             redirect('DeliveryNote/index/0');

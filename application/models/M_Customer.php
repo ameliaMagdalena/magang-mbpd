@@ -22,6 +22,12 @@ class M_Customer extends CI_Model {
         return $this->db->query("SELECT * FROM customer WHERE status_delete=0 AND id_customer='" . $id['id_customer'] . "'");
     }
 
+    function selectCustomerDanSubAktif(){
+        return $this->db->query("SELECT * FROM customer a
+        JOIN sub_customer b ON a.id_customer = b.id_customer
+        WHERE a.status_delete=0 AND b.status_delete=0");
+    }
+
     function insertCustomer($data){
         $this->db->insert('customer', $data);
     }

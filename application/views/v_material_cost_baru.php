@@ -6,7 +6,7 @@
 <!--*****************************-->
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Purchase Order Supplier</h2>
+        <h2>Material Cost</h2>
 
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
@@ -15,7 +15,7 @@
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
-                <li><span>Purchase Order Supplier</span></li>
+                <li><span>Material Cost</span></li>
             </ol>
 
             <a class="sidebar-right-toggle" style="cursor:inherit !important"></a>
@@ -24,50 +24,17 @@
 <!--*****************************-->
 <!--KODINGAN ISI HALAMAN-->
 
-<h1>Purchase Order Supplier</h1>
+<h1>Material Cost</h1>
 <hr>
-
-<?php
-    //konversi int ke romawi
-    //from https://stackoverflow.com/questions/14994941/numbers-to-roman-numbers-with-php
-    function integerToRoman($integer){
-        $integer = intval($integer);
-        $rom = '';
-        // Create a lookup array that contains all of the Roman numerals.
-        $lookup = array('M' => 1000,
-            'CM' => 900,
-            'D' => 500,
-            'CD' => 400,
-            'C' => 100,
-            'XC' => 90,
-            'L' => 50,
-            'XL' => 40,
-            'X' => 10,
-            'IX' => 9,
-            'V' => 5,
-            'IV' => 4,
-            'I' => 1);
-        foreach($lookup as $roman => $value){
-            // Determine the number of matches
-            $matches = intval($integer/$value);
-            // Add the same number of characters to the string
-            $rom .= str_repeat($roman,$matches);
-            // Set the integer to be the remainder of the integer and the value
-            $integer = $integer % $value;
-        }
-        // The Roman numeral should be built, return it
-        return $rom;
-    }
-?>
 
 	<section class="panel">
 		<form class="form-horizontal mb-lg" action="<?php echo base_url()?>PurchaseOrderSupplier/insert" method="post">
 			<header class="panel-heading">
-				<h2 class="panel-title">Form Purchase Order Supplier</h2>
+				<h2 class="panel-title">Form Material Cost</h2>
 			</header>
 
 			<div class="panel-body">
-				<input type="hidden" name="id_po_supplier" class="form-control" value="POS-<?php echo $jumlah_po_sup + 1?>" readonly>
+				<input type="hidden" name="id_po_supplier" class="form-control" value="MCOST-<?php echo $jumlah_mcost + 1?>" readonly>
 					
                 <div class="form-group mt-lg">
 					<label class="col-sm-3 control-label">Tanggal PO<span class="required">*</span></label>

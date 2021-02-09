@@ -57,7 +57,43 @@
                 <tr>
                     <td> <?php echo $po_sup[$x]['kode_purchase_order_supplier'] ?> </td>
                     <td> <?php echo $po_sup[$x]['nama_supplier'] ?> </td>
-                    <td> <?php echo $po_sup[$x]['tanggal_po'] ?> </td>
+                    <td> 
+                        <?php
+                            $waktu = $po_sup[$x]['tanggal_po'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
                     <td>
                         <?php
                             if($po_sup[$x]['status_po'] == 0){
@@ -76,10 +112,10 @@
                             title="Detail" href="<?php echo base_url() . 'PurchaseOrderSupplier/detail/' . $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
                         <!-- <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
                             title="Edit" href="#modaledit<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a> -->
-                        <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                            title="Hapus" href="#modalhapus<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a> <br><br>
 
                         <?php if($po_sup[$x]['status_po'] == 0 && $_SESSION['nama_departemen']=='Management' && $_SESSION['nama_jabatan']=='Direktur'){ ?>
+                            <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
+                                title="Hapus" href="#modalhapus<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a> <br><br>
                             <a class="modal-with-form col-lg-3 btn btn-success fa fa-check"
                                 title="Menyetujui" href="#modalsetuju<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
                             <a class="modal-with-form col-lg-3 btn btn-danger fa fa-times"
@@ -95,7 +131,7 @@
                             (($_SESSION['nama_departemen']=='Purchasing' && $_SESSION['nama_jabatan']=='Admin') || 
                             ($_SESSION['nama_departemen']=='Management' && $_SESSION['nama_jabatan']=='Direktur'))){ ?>
                             <a class="modal-with-form col-lg-3 btn btn-success fa fa-check"
-                                title="Dikonfirmasi" href="#modalkonfirm<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
+                                title="Dikonfirmasi Supplier" href="#modalkonfirm<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
                         <?php }
                         else if($po_sup[$x]['status_po'] == 3 && 
                             (($_SESSION['nama_departemen']=='Management' && $_SESSION['nama_jabatan']=='Direktur') || 
@@ -105,15 +141,51 @@
                         <?php } ?>
                     </td>
                 </tr>
-                <?php 
-                    }   }
-                    if ($status == 1 || $status == 3){
-                        if($po_sup[$x]['status_po'] == 4){
-                ?>
+                    <?php 
+                        }   }
+                        if ($status == 1 || $status == 3){
+                            if($po_sup[$x]['status_po'] == 4){
+                    ?>
                 <tr>
                     <td> <?php echo $po_sup[$x]['kode_purchase_order_supplier'] ?> </td>
                     <td> <?php echo $po_sup[$x]['nama_supplier'] ?> </td>
-                    <td> <?php echo $po_sup[$x]['tanggal_po'] ?> </td>
+                    <td>
+                        <?php
+                            $waktu = $po_sup[$x]['tanggal_po'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
                     <td>
                         <?php
                             if($po_sup[$x]['status_po'] == 4){
@@ -124,8 +196,8 @@
                     <td>
                         <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="<?php echo base_url() . 'PurchaseOrderSupplier/detail/' . $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
-                        <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                            title="Hapus" href="#modalhapus<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
+                        <!-- <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
+                            title="Hapus" href="#modalhapus<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a> -->
                     </td>
                 </tr>
 
@@ -137,7 +209,43 @@
                 <tr>
                     <td> <?php echo $po_sup[$x]['kode_purchase_order_supplier'] ?> </td>
                     <td> <?php echo $po_sup[$x]['nama_supplier'] ?> </td>
-                    <td> <?php echo $po_sup[$x]['tanggal_po'] ?> </td>
+                    <td>
+                        <?php
+                            $waktu = $po_sup[$x]['tanggal_po'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
                     <td>
                         <?php
                             if($po_sup[$x]['status_po'] == 5){
@@ -151,9 +259,9 @@
                         <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="<?php echo base_url() . 'PurchaseOrderSupplier/detail/' . $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
                         <!-- <a class="modal-with-form col-lg-3 btn btn-warning fa fa-pencil-square-o"
-                            title="Edit" href="#modaledit<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a> -->
+                            title="Edit" href="#modaledit<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
                         <a class="modal-with-form col-lg-3 btn btn-danger fa fa-trash-o"
-                            title="Hapus" href="#modalhapus<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a>
+                            title="Hapus" href="#modalhapus<?php echo $po_sup[$x]['id_purchase_order_supplier'] ?>"></a> -->
                     </td>
                 </tr>
                 <?php } } ?>

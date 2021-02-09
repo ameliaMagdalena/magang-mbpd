@@ -34,6 +34,8 @@ class Customer extends CI_Controller {
             $data['ubpermat'] = $this->M_PerubahanPermintaan->selectPerubahanPermintaanAktif()->result_array();
             $data['tbpermat'] = $this->M_PermintaanTambahan->selectPermintaanTambahanAktif()->result_array();
             $data['ubharga'] = $this->M_PerubahanHarga->selectPerubahanHargaAktif()->result_array();
+            $data['sup'] = $this->M_PurchaseOrderSupplier->selectPOSupplierAktif()->result_array();
+            $data['cust'] = $this->M_PurchaseOrderCustomer->selectPOCustomerAktif()->result_array();
         //tutup
         
         //notif produksi

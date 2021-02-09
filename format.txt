@@ -1,0 +1,89 @@
+<!---- JAVASCRIPTTTTT --> 
+
+ var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['spl'][0]['tanggal']).getDate();
+                var xhari = new Date(respond['spl'][0]['tanggal']).getDay();
+                var xbulan = new Date(respond['spl'][0]['tanggal']).getMonth();
+                var xtahun = new Date(respond['spl'][0]['tanggal']).getYear();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun;
+
+
+MENIT DAN DETIK
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['permat'][0]['waktu_add']).getDate();
+                var xhari   = new Date(respond['permat'][0]['waktu_add']).getDay();
+                var xbulan  = new Date(respond['permat'][0]['waktu_add']).getMonth();
+                var xtahun  = new Date(respond['permat'][0]['waktu_add']).getYear();
+                var jam     = new Date(respond['permat'][0]['waktu_add']).getHours();
+                var menit   = new Date(respond['permat'][0]['waktu_add']).getMinutes();
+                var detik   = new Date(respond['permat'][0]['waktu_add']).getSeconds();
+                
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+
+                $tanggalnya = hari +', ' + tanggal + ' ' + bulan + ' ' + tahun +' '+jam+':'+menit+':'+detik;
+
+
+
+
+<!--- PHP ---->
+                                <?php 
+                                    $waktu = $spl->tanggal;
+
+                                    $hari_array = array(
+                                        'Minggu',
+                                        'Senin',
+                                        'Selasa',
+                                        'Rabu',
+                                        'Kamis',
+                                        'Jumat',
+                                        'Sabtu'
+                                    );
+                                    $hr = date('w', strtotime($waktu));
+                                    $hari = $hari_array[$hr];
+                                    $tanggal = date('j', strtotime($waktu));
+                                    $bulan_array = array(
+                                        1 => 'Januari',
+                                        2 => 'Februari',
+                                        3 => 'Maret',
+                                        4 => 'April',
+                                        5 => 'Mei',
+                                        6 => 'Juni',
+                                        7 => 'Juli',
+                                        8 => 'Agustus',
+                                        9 => 'September',
+                                        10 => 'Oktober',
+                                        11 => 'November',
+                                        12 => 'Desember',
+                                    );
+                                    $bl = date('n', strtotime($waktu));
+                                    $bulan = $bulan_array[$bl];
+                                    $tahun = date('Y', strtotime($waktu));
+                                    
+                                    echo "$hari, $tanggal $bulan $tahun";
+                                ?>
+
+
+
+<!-------------------------- indonesia number -->>>>>>>>
+ 
+JAVASCRIPT
+	var num = "Rp "+  new Number($total).toLocaleString("id-ID") + ",00";
+
+PHP 
+	<?php $harga =  "Rp " . number_format($dpo->harga_satuan,2,',','.'); ?>
+                                            <p id="prices<?=$no;?>"><?= $harga ?></p>
+
+BUTTON
+style="margin-right:5px;margin-bottom:5px"

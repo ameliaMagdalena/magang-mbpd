@@ -60,6 +60,14 @@ class M_DeliveryNote extends CI_Model {
         WHERE a.status_delete=0 AND a.id_delivery_note='" . $id['id_delivery_note'] . "'");
     }
     
+    function selectDetailnyaDN($id){
+        return $this->db->query("SELECT * FROM detail_delivery_note a
+        JOIN detail_purchase_order_supplier b ON a.id_detail_purchase_order_supplier = b.id_detail_purchase_order_supplier
+        JOIN sub_jenis_material c ON b.id_sub_jenis_material = c.id_sub_jenis_material
+        JOIN jenis_material d ON c.id_jenis_material = d.id_jenis_material
+        WHERE a.status_delete=0 AND a.id_delivery_note='$id'");
+    }
+
     function selectDetailDeliveryNoteAktif(){
         return $this->db->query("SELECT * FROM detail_delivery_note a
         JOIN detail_purchase_order_supplier b ON a.id_detail_purchase_order_supplier = b.id_detail_purchase_order_supplier
@@ -105,7 +113,13 @@ class M_DeliveryNote extends CI_Model {
         WHERE a.status_delete=0 AND a.id_purchase_order_supplier='$idpo' AND a.id_sub_jenis_material='$id'");
     }
 
-
+    function selectPOSupplierGroupBy(){
+        return $this->db->query("SELECT * FROM purchase_order_supplier a
+        JOIN detail_purchase_order_supplier b ON a.id_purchase_order_supplier = b.id_purchase_order_supplier
+        JOIN supplier c ON a.id_supplier = c.id_supplier
+        WHERE a.status_delete=0 AND b.status_delete=0 AND a.status_po=3
+        GROUP BY c.id_supplier");
+    }
 
 
     //****************************** DETAIL MATERIAL ***************************** */

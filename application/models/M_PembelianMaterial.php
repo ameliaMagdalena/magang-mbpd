@@ -44,7 +44,7 @@ class M_PembelianMaterial extends CI_Model {
         JOIN jenis_material c ON b.id_jenis_material = c.id_jenis_material
         JOIN detail_supplier d ON b.id_sub_jenis_material = d.id_sub_jenis_material
         JOIN supplier e ON d.id_supplier = e.id_supplier
-        WHERE a.status_delete = 0");
+        WHERE a.status_delete = 0 AND a.status_pembelian=0");
     }
     
     function selectPermintaanDanPO(){

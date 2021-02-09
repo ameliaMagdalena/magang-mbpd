@@ -51,7 +51,41 @@
             <label class="col-sm-3 control-label">Tanggal PO</label>
             <div class="col-sm-9">
                 <input type="text" name="tanggal_po" class="form-control"
-                value="<?php echo $po_cust[0]['tanggal_po'] ?>" readonly>
+                value="<?php 
+                    $waktu = $po_cust[0]['tanggal_po'];
+
+                    $hari_array = array(
+                        'Minggu',
+                        'Senin',
+                        'Selasa',
+                        'Rabu',
+                        'Kamis',
+                        'Jumat',
+                        'Sabtu'
+                    );
+                    $hr = date('w', strtotime($waktu));
+                    $hari = $hari_array[$hr];
+                    $tanggal = date('j', strtotime($waktu));
+                    $bulan_array = array(
+                        1 => 'Januari',
+                        2 => 'Februari',
+                        3 => 'Maret',
+                        4 => 'April',
+                        5 => 'Mei',
+                        6 => 'Juni',
+                        7 => 'Juli',
+                        8 => 'Agustus',
+                        9 => 'September',
+                        10 => 'Oktober',
+                        11 => 'November',
+                        12 => 'Desember',
+                    );
+                    $bl = date('n', strtotime($waktu));
+                    $bulan = $bulan_array[$bl];
+                    $tahun = date('Y', strtotime($waktu));
+                    
+                    echo "$hari, $tanggal $bulan $tahun";
+                ?>" readonly>
             </div>
         </div>
         <div class="form-group mt-lg">
@@ -116,9 +150,44 @@
                             <td> <?php echo $detail_po_cust[$y]['nama_produk'] ?> </td>
                             <td> <?php echo $detail_po_cust[$y]['jumlah_produk'] ?> </td>
                             <td> <?php //echo $detail_po_cust[$y]['satuan'] ?> Pcs </td>
-                            <td> <?php echo $detail_po_cust[$y]['harga_satuan'] ?></td>
-                            <td> <?php echo $detail_po_cust[$y]['total_harga'] ?></td>
-                            <td> <?php echo $detail_po_cust[$y]['tanggal_penerimaan'] ?></td>
+                            <td> <?php echo "Rp " . number_format($detail_po_cust[$y]['harga_satuan'],2,',','.'); ?></td>
+                            <td> <?php echo "Rp " . number_format($detail_po_cust[$y]['total_harga'],2,',','.'); ?></td>
+                            <td> <?php 
+                                    $waktu = $detail_po_cust[$y]['tanggal_penerimaan'];
+
+                                    $hari_array = array(
+                                        'Minggu',
+                                        'Senin',
+                                        'Selasa',
+                                        'Rabu',
+                                        'Kamis',
+                                        'Jumat',
+                                        'Sabtu'
+                                    );
+                                    $hr = date('w', strtotime($waktu));
+                                    $hari = $hari_array[$hr];
+                                    $tanggal = date('j', strtotime($waktu));
+                                    $bulan_array = array(
+                                        1 => 'Januari',
+                                        2 => 'Februari',
+                                        3 => 'Maret',
+                                        4 => 'April',
+                                        5 => 'Mei',
+                                        6 => 'Juni',
+                                        7 => 'Juli',
+                                        8 => 'Agustus',
+                                        9 => 'September',
+                                        10 => 'Oktober',
+                                        11 => 'November',
+                                        12 => 'Desember',
+                                    );
+                                    $bl = date('n', strtotime($waktu));
+                                    $bulan = $bulan_array[$bl];
+                                    $tahun = date('Y', strtotime($waktu));
+                                    
+                                    echo "$hari, $tanggal $bulan $tahun";
+                                ?>
+                            </td>
                         </tr>
                         <?php }} ?>
                     </tbody>
@@ -131,21 +200,21 @@
             <label class="col-sm-3 control-label">Harga Sebelum Pajak</label>
             <div class="col-sm-9">
                 <input type="text" name="harga_sebelum_pajak" class="form-control"
-                value="<?php echo $po_cust[0]['harga_sebelum_pajak'] ?>" readonly>
+                value="<?php echo "Rp " . number_format($po_cust[0]['harga_sebelum_pajak'],2,',','.'); ?>" readonly>
             </div>
         </div>
         <div class="form-group mt-lg">
             <label class="col-sm-3 control-label">PPN</label>
             <div class="col-sm-9">
                 <input type="text" name="ppn" class="form-control"
-                value="<?php echo $po_cust[0]['ppn'] ?>" readonly>
+                value="<?php echo "Rp " . number_format($po_cust[0]['ppn'],2,',','.'); ?>" readonly>
             </div>
         </div>
         <div class="form-group mt-lg">
             <label class="col-sm-3 control-label">Total harga</label>
             <div class="col-sm-9">
                 <input type="text" name="total_harga_akhir" class="form-control"
-                value="<?php echo $po_cust[0]['total_harga_akhir'] ?>" readonly>
+                value="<?php echo  "Rp " . number_format($po_cust[0]['total_harga_akhir'],2,',','.'); ?>" readonly>
             </div>
         </div>
         <div class="form-group mt-lg">
@@ -161,6 +230,57 @@
                 ?>" readonly>
             </div>
         </div>
+
+        <!--------------------------------- MATERIAL COST ---------------------------------->
+        <!---------------------------------------------------------------------------------->
+        <div class="form-group mt-lg">
+            <div class="col-sm-12">
+                <h3 style="text-align: center">Material Cost</h3>
+                <table class="table table-bordered table-striped mb-none">
+                    <thead>
+                        <tr>
+                            <th class="col-lg-2">Kode Produk</th>
+                            <th class="col-lg-2">Nama Produk</th>
+                            <th class="col-lg-1">Jumlah Terpakai</th>
+                            <th class="col-lg-2">Total Biaya</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php for($y=0; $y<count($detail_po_cust); $y++){
+                            if($po_cust[0]['id_purchase_order_customer'] == $detail_po_cust[$y]['id_purchase_order_customer']){?>
+                        <tr>
+                            <td> <?php echo $detail_po_cust[$y]['kode_produk'] ?> </td>
+                            <td> <?php echo $detail_po_cust[$y]['nama_produk'] ?> </td>
+                            <td>
+                                <?php
+                                    $jumlahambil=0;
+                                    $jumlahline=0;
+                                    $harganya=0;
+                                    for($aa=0; $aa<count($pengambilann); $aa++){
+                                        $jumlahambil = $jumlahambil+$pengambilann[$aa]['jumlah_ambil'];
+                                        for($cc=0; $cc<count($hargaa); $cc++){
+                                            if($hargaa[$cc]['id_sub_jenis_material'] == $pengambilann[$aa]['id_sub_jenis_material']){
+                                                $harganya=$harganya+$hargaa[$cc]['harga_material'];
+                                            }
+                                        }
+                                    }
+                                    for($bb=0; $bb<count($persediaann); $bb++){
+                                        $jumlahline = $jumlahline+$persediaann[$bb]['jumlah_material'];
+                                    }
+                                    $jumlahaktual = $jumlahambil+$jumlahline;
+                                    echo $jumlahaktual ?> Pcs
+                            </td>
+                            <td> <?php echo $harganya; ?></td>
+                        </tr>
+                        <?php }} ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!---------------------------------------------------------------------------------->
+        <!------------------------------- END MATERIAL COST -------------------------------->
+
         <div class="form-group mt-lg">
             <?php if (count($sales_order) == 0){ ?>
                 <a class="modal-with-form col-lg-2 btn btn-info"
@@ -270,6 +390,8 @@
 <!--*****************************-->
 <?php //include('_rightbar.php');
 ?>
+
+
 <script>
     function reload() {
     location.reload();

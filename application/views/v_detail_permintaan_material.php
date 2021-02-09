@@ -51,7 +51,41 @@
             <label class="col-sm-3 control-label">Tanggal Permintaan</label>
             <div class="col-sm-9">
                 <input type="text" name="tgl_permintaan" class="form-control"
-                value="<?php echo $permintaan_material[0]['tanggal_permintaan'] ?>" readonly>
+                value="<?php
+                    $waktu = $permintaan_material[0]['tanggal_permintaan'];
+
+                    $hari_array = array(
+                        'Minggu',
+                        'Senin',
+                        'Selasa',
+                        'Rabu',
+                        'Kamis',
+                        'Jumat',
+                        'Sabtu'
+                    );
+                    $hr = date('w', strtotime($waktu));
+                    $hari = $hari_array[$hr];
+                    $tanggal = date('j', strtotime($waktu));
+                    $bulan_array = array(
+                        1 => 'Januari',
+                        2 => 'Februari',
+                        3 => 'Maret',
+                        4 => 'April',
+                        5 => 'Mei',
+                        6 => 'Juni',
+                        7 => 'Juli',
+                        8 => 'Agustus',
+                        9 => 'September',
+                        10 => 'Oktober',
+                        11 => 'November',
+                        12 => 'Desember',
+                    );
+                    $bl = date('n', strtotime($waktu));
+                    $bulan = $bulan_array[$bl];
+                    $tahun = date('Y', strtotime($waktu));
+                    
+                    echo "$hari, $tanggal $bulan $tahun";
+                ?>" readonly>
             </div>
         </div>
         <div class="form-group mt-lg">
@@ -79,7 +113,41 @@
             <label class="col-sm-3 control-label">Tanggal Produksi</label>
             <div class="col-sm-9">
                 <input type="text" name="tgl_produksi" class="form-control"
-                value="<?php echo $permintaan_material[0]['tanggal_produksi'] ?>" readonly>
+                value="<?php
+                    $waktu = $permintaan_material[0]['tanggal_produksi'];
+
+                    $hari_array = array(
+                        'Minggu',
+                        'Senin',
+                        'Selasa',
+                        'Rabu',
+                        'Kamis',
+                        'Jumat',
+                        'Sabtu'
+                    );
+                    $hr = date('w', strtotime($waktu));
+                    $hari = $hari_array[$hr];
+                    $tanggal = date('j', strtotime($waktu));
+                    $bulan_array = array(
+                        1 => 'Januari',
+                        2 => 'Februari',
+                        3 => 'Maret',
+                        4 => 'April',
+                        5 => 'Mei',
+                        6 => 'Juni',
+                        7 => 'Juli',
+                        8 => 'Agustus',
+                        9 => 'September',
+                        10 => 'Oktober',
+                        11 => 'November',
+                        12 => 'Desember',
+                    );
+                    $bl = date('n', strtotime($waktu));
+                    $bulan = $bulan_array[$bl];
+                    $tahun = date('Y', strtotime($waktu));
+                    
+                    echo "$hari, $tanggal $bulan $tahun";
+                ?>" readonly>
             </div>
         </div>
         <div class="form-group mt-lg">

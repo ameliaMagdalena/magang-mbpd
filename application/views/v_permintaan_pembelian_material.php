@@ -61,7 +61,43 @@
                     <td> <?php echo $no ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['nama_jenis_material'] . " " . $permintaan_pembelian[$x]['nama_sub_jenis_material'] ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['jumlah_beli'] ?> </td>
-                    <td> <?php echo $permintaan_pembelian[$x]['tanggal_permintaan'] ?> </td>
+                    <td>
+                        <?php
+                            $waktu = $permintaan_pembelian[$x]['tanggal_permintaan'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
                     <td>Requested / Belum Ditinjau</td>
                     <td>
                         <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
@@ -90,14 +126,82 @@
                                 <label class="col-sm-4 control-label">Tanggal Permintaan</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="tgl_minta" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['tanggal_permintaan'] ?>" readonly>
+                                    value="<?php
+                                        $waktu = $permintaan_pembelian[$x]['tanggal_permintaan'];
+
+                                        $hari_array = array(
+                                            'Minggu',
+                                            'Senin',
+                                            'Selasa',
+                                            'Rabu',
+                                            'Kamis',
+                                            'Jumat',
+                                            'Sabtu'
+                                        );
+                                        $hr = date('w', strtotime($waktu));
+                                        $hari = $hari_array[$hr];
+                                        $tanggal = date('j', strtotime($waktu));
+                                        $bulan_array = array(
+                                            1 => 'Januari',
+                                            2 => 'Februari',
+                                            3 => 'Maret',
+                                            4 => 'April',
+                                            5 => 'Mei',
+                                            6 => 'Juni',
+                                            7 => 'Juli',
+                                            8 => 'Agustus',
+                                            9 => 'September',
+                                            10 => 'Oktober',
+                                            11 => 'November',
+                                            12 => 'Desember',
+                                        );
+                                        $bl = date('n', strtotime($waktu));
+                                        $bulan = $bulan_array[$bl];
+                                        $tahun = date('Y', strtotime($waktu));
+                                        
+                                        echo "$hari, $tanggal $bulan $tahun";
+                                    ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
                                 <label class="col-sm-4 control-label">Tanggal Penerimaan</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="tgl_terima" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['tanggal_penerimaan'] ?>" readonly>
+                                    value="<?php
+                                        $waktu = $permintaan_pembelian[$x]['tanggal_penerimaan'];
+
+                                        $hari_array = array(
+                                            'Minggu',
+                                            'Senin',
+                                            'Selasa',
+                                            'Rabu',
+                                            'Kamis',
+                                            'Jumat',
+                                            'Sabtu'
+                                        );
+                                        $hr = date('w', strtotime($waktu));
+                                        $hari = $hari_array[$hr];
+                                        $tanggal = date('j', strtotime($waktu));
+                                        $bulan_array = array(
+                                            1 => 'Januari',
+                                            2 => 'Februari',
+                                            3 => 'Maret',
+                                            4 => 'April',
+                                            5 => 'Mei',
+                                            6 => 'Juni',
+                                            7 => 'Juli',
+                                            8 => 'Agustus',
+                                            9 => 'September',
+                                            10 => 'Oktober',
+                                            11 => 'November',
+                                            12 => 'Desember',
+                                        );
+                                        $bl = date('n', strtotime($waktu));
+                                        $bulan = $bulan_array[$bl];
+                                        $tahun = date('Y', strtotime($waktu));
+                                        
+                                        echo "$hari, $tanggal $bulan $tahun";
+                                    ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
@@ -324,7 +428,43 @@
                     <td> <?php echo $no ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['nama_jenis_material'] . " " . $permintaan_pembelian[$x]['nama_sub_jenis_material'] ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['jumlah_beli'] ?> </td>
-                    <td> <?php echo $permintaan_pembelian[$x]['tanggal_permintaan'] ?> </td>
+                    <td>
+                        <?php
+                            $waktu = $permintaan_pembelian[$x]['tanggal_permintaan'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
                     <td>Proses Pembelian</td>
                     <td>
                         <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
@@ -347,16 +487,98 @@
                                 <label class="col-sm-4 control-label">Tanggal Permintaan</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="tgl_minta" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['tanggal_permintaan'] ?>" readonly>
+                                    value="<?php
+                                        $waktu = $permintaan_pembelian[$x]['tanggal_permintaan'];
+
+                                        $hari_array = array(
+                                            'Minggu',
+                                            'Senin',
+                                            'Selasa',
+                                            'Rabu',
+                                            'Kamis',
+                                            'Jumat',
+                                            'Sabtu'
+                                        );
+                                        $hr = date('w', strtotime($waktu));
+                                        $hari = $hari_array[$hr];
+                                        $tanggal = date('j', strtotime($waktu));
+                                        $bulan_array = array(
+                                            1 => 'Januari',
+                                            2 => 'Februari',
+                                            3 => 'Maret',
+                                            4 => 'April',
+                                            5 => 'Mei',
+                                            6 => 'Juni',
+                                            7 => 'Juli',
+                                            8 => 'Agustus',
+                                            9 => 'September',
+                                            10 => 'Oktober',
+                                            11 => 'November',
+                                            12 => 'Desember',
+                                        );
+                                        $bl = date('n', strtotime($waktu));
+                                        $bulan = $bulan_array[$bl];
+                                        $tahun = date('Y', strtotime($waktu));
+                                        
+                                        echo "$hari, $tanggal $bulan $tahun";
+                                    ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
                                 <label class="col-sm-4 control-label">Tanggal Penerimaan</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="tgl_terima" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['tanggal_penerimaan'] ?>" readonly>
+                                    value="<?php
+                                        $waktu = $permintaan_pembelian[$x]['tanggal_penerimaan'];
+
+                                        $hari_array = array(
+                                            'Minggu',
+                                            'Senin',
+                                            'Selasa',
+                                            'Rabu',
+                                            'Kamis',
+                                            'Jumat',
+                                            'Sabtu'
+                                        );
+                                        $hr = date('w', strtotime($waktu));
+                                        $hari = $hari_array[$hr];
+                                        $tanggal = date('j', strtotime($waktu));
+                                        $bulan_array = array(
+                                            1 => 'Januari',
+                                            2 => 'Februari',
+                                            3 => 'Maret',
+                                            4 => 'April',
+                                            5 => 'Mei',
+                                            6 => 'Juni',
+                                            7 => 'Juli',
+                                            8 => 'Agustus',
+                                            9 => 'September',
+                                            10 => 'Oktober',
+                                            11 => 'November',
+                                            12 => 'Desember',
+                                        );
+                                        $bl = date('n', strtotime($waktu));
+                                        $bulan = $bulan_array[$bl];
+                                        $tahun = date('Y', strtotime($waktu));
+                                        
+                                        echo "$hari, $tanggal $bulan $tahun";
+                                    ?>" readonly>
                                 </div>
                             </div>
+
+                            <?php 
+                                if($permintaan_pembelian[$x]['status_pembelian']==1){
+                                    for($q=0; $q<count($depo); $q++){
+                                        if($permintaan_pembelian[$x]['id_detail_purchase_order_supplier'] == $depo[$q]['id_detail_purchase_order_supplier']){ ?>
+                                            <div class="form-group mt-lg">
+                                                <label class="col-sm-4 control-label">No. PO Supplier</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" name="tgl_terima" class="form-control"
+                                                    value="<?php echo $depo[$q]['kode_purchase_order_supplier'] ?>" readonly>
+                                                </div>
+                                            </div>
+                            <?php } } } ?>
+
                             <div class="form-group mt-lg">
                                 <label class="col-sm-4 control-label">Status</label>
                                 <div class="col-sm-8">
@@ -484,7 +706,43 @@
                     <td> <?php echo $no ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['nama_jenis_material'] . " " . $permintaan_pembelian[$x]['nama_sub_jenis_material'] ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['jumlah_beli'] ?> </td>
-                    <td> <?php echo $permintaan_pembelian[$x]['tanggal_permintaan'] ?> </td>
+                    <td>
+                        <?php
+                            $waktu = $permintaan_pembelian[$x]['tanggal_permintaan'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
                     <td>Selesai</td>
                     <td>
                         <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
@@ -507,14 +765,82 @@
                                 <label class="col-sm-4 control-label">Tanggal Permintaan</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="tgl_minta" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['tanggal_permintaan'] ?>" readonly>
+                                    value="<?php
+                                        $waktu = $permintaan_pembelian[$x]['tanggal_permintaan'];
+
+                                        $hari_array = array(
+                                            'Minggu',
+                                            'Senin',
+                                            'Selasa',
+                                            'Rabu',
+                                            'Kamis',
+                                            'Jumat',
+                                            'Sabtu'
+                                        );
+                                        $hr = date('w', strtotime($waktu));
+                                        $hari = $hari_array[$hr];
+                                        $tanggal = date('j', strtotime($waktu));
+                                        $bulan_array = array(
+                                            1 => 'Januari',
+                                            2 => 'Februari',
+                                            3 => 'Maret',
+                                            4 => 'April',
+                                            5 => 'Mei',
+                                            6 => 'Juni',
+                                            7 => 'Juli',
+                                            8 => 'Agustus',
+                                            9 => 'September',
+                                            10 => 'Oktober',
+                                            11 => 'November',
+                                            12 => 'Desember',
+                                        );
+                                        $bl = date('n', strtotime($waktu));
+                                        $bulan = $bulan_array[$bl];
+                                        $tahun = date('Y', strtotime($waktu));
+                                        
+                                        echo "$hari, $tanggal $bulan $tahun";
+                                    ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
                                 <label class="col-sm-4 control-label">Tanggal Penerimaan</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="tgl_terima" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['tanggal_penerimaan'] ?>" readonly>
+                                    value="<?php
+                                        $waktu = $permintaan_pembelian[$x]['tanggal_penerimaan'];
+
+                                        $hari_array = array(
+                                            'Minggu',
+                                            'Senin',
+                                            'Selasa',
+                                            'Rabu',
+                                            'Kamis',
+                                            'Jumat',
+                                            'Sabtu'
+                                        );
+                                        $hr = date('w', strtotime($waktu));
+                                        $hari = $hari_array[$hr];
+                                        $tanggal = date('j', strtotime($waktu));
+                                        $bulan_array = array(
+                                            1 => 'Januari',
+                                            2 => 'Februari',
+                                            3 => 'Maret',
+                                            4 => 'April',
+                                            5 => 'Mei',
+                                            6 => 'Juni',
+                                            7 => 'Juli',
+                                            8 => 'Agustus',
+                                            9 => 'September',
+                                            10 => 'Oktober',
+                                            11 => 'November',
+                                            12 => 'Desember',
+                                        );
+                                        $bl = date('n', strtotime($waktu));
+                                        $bulan = $bulan_array[$bl];
+                                        $tahun = date('Y', strtotime($waktu));
+                                        
+                                        echo "$hari, $tanggal $bulan $tahun";
+                                    ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
@@ -646,7 +972,43 @@
                     <td> <?php echo $no ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['nama_jenis_material'] . " " . $permintaan_pembelian[$x]['nama_sub_jenis_material'] ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['jumlah_beli'] ?> </td>
-                    <td> <?php echo $permintaan_pembelian[$x]['tanggal_permintaan'] ?> </td>
+                    <td>
+                        <?php
+                            $waktu = $permintaan_pembelian[$x]['tanggal_permintaan'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
                     <td>
                         <?php if($permintaan_pembelian[$x]['status_pembelian'] == 3){
                             echo "Batal";
@@ -675,14 +1037,82 @@
                                 <label class="col-sm-4 control-label">Tanggal Permintaan</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="tgl_minta" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['tanggal_permintaan'] ?>" readonly>
+                                    value="<?php
+                                        $waktu = $permintaan_pembelian[$x]['tanggal_permintaan'];
+
+                                        $hari_array = array(
+                                            'Minggu',
+                                            'Senin',
+                                            'Selasa',
+                                            'Rabu',
+                                            'Kamis',
+                                            'Jumat',
+                                            'Sabtu'
+                                        );
+                                        $hr = date('w', strtotime($waktu));
+                                        $hari = $hari_array[$hr];
+                                        $tanggal = date('j', strtotime($waktu));
+                                        $bulan_array = array(
+                                            1 => 'Januari',
+                                            2 => 'Februari',
+                                            3 => 'Maret',
+                                            4 => 'April',
+                                            5 => 'Mei',
+                                            6 => 'Juni',
+                                            7 => 'Juli',
+                                            8 => 'Agustus',
+                                            9 => 'September',
+                                            10 => 'Oktober',
+                                            11 => 'November',
+                                            12 => 'Desember',
+                                        );
+                                        $bl = date('n', strtotime($waktu));
+                                        $bulan = $bulan_array[$bl];
+                                        $tahun = date('Y', strtotime($waktu));
+                                        
+                                        echo "$hari, $tanggal $bulan $tahun";
+                                    ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
                                 <label class="col-sm-4 control-label">Tanggal Penerimaan</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="tgl_terima" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['tanggal_penerimaan'] ?>" readonly>
+                                    value="<?php
+                                        $waktu = $permintaan_pembelian[$x]['tanggal_penerimaan'];
+
+                                        $hari_array = array(
+                                            'Minggu',
+                                            'Senin',
+                                            'Selasa',
+                                            'Rabu',
+                                            'Kamis',
+                                            'Jumat',
+                                            'Sabtu'
+                                        );
+                                        $hr = date('w', strtotime($waktu));
+                                        $hari = $hari_array[$hr];
+                                        $tanggal = date('j', strtotime($waktu));
+                                        $bulan_array = array(
+                                            1 => 'Januari',
+                                            2 => 'Februari',
+                                            3 => 'Maret',
+                                            4 => 'April',
+                                            5 => 'Mei',
+                                            6 => 'Juni',
+                                            7 => 'Juli',
+                                            8 => 'Agustus',
+                                            9 => 'September',
+                                            10 => 'Oktober',
+                                            11 => 'November',
+                                            12 => 'Desember',
+                                        );
+                                        $bl = date('n', strtotime($waktu));
+                                        $bulan = $bulan_array[$bl];
+                                        $tahun = date('Y', strtotime($waktu));
+                                        
+                                        echo "$hari, $tanggal $bulan $tahun";
+                                    ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
@@ -810,7 +1240,43 @@
                     <td> <?php echo $no ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['nama_jenis_material'] . " " . $permintaan_pembelian[$x]['nama_sub_jenis_material'] ?> </td>
                     <td> <?php echo $permintaan_pembelian[$x]['jumlah_beli'] ?> </td>
-                    <td> <?php echo $permintaan_pembelian[$x]['tanggal_permintaan'] ?> </td>
+                    <td>
+                        <?php
+                            $waktu = $permintaan_pembelian[$x]['tanggal_permintaan'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
                     <td>
                         <?php if($permintaan_pembelian[$x]['status_pembelian'] == 0){
                             echo "Requested / Belum Ditindaklanjuti";
@@ -851,14 +1317,82 @@
                                 <label class="col-sm-4 control-label">Tanggal Permintaan</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="tgl_minta" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['tanggal_permintaan'] ?>" readonly>
+                                    value="<?php
+                                        $waktu = $permintaan_pembelian[$x]['tanggal_permintaan'];
+
+                                        $hari_array = array(
+                                            'Minggu',
+                                            'Senin',
+                                            'Selasa',
+                                            'Rabu',
+                                            'Kamis',
+                                            'Jumat',
+                                            'Sabtu'
+                                        );
+                                        $hr = date('w', strtotime($waktu));
+                                        $hari = $hari_array[$hr];
+                                        $tanggal = date('j', strtotime($waktu));
+                                        $bulan_array = array(
+                                            1 => 'Januari',
+                                            2 => 'Februari',
+                                            3 => 'Maret',
+                                            4 => 'April',
+                                            5 => 'Mei',
+                                            6 => 'Juni',
+                                            7 => 'Juli',
+                                            8 => 'Agustus',
+                                            9 => 'September',
+                                            10 => 'Oktober',
+                                            11 => 'November',
+                                            12 => 'Desember',
+                                        );
+                                        $bl = date('n', strtotime($waktu));
+                                        $bulan = $bulan_array[$bl];
+                                        $tahun = date('Y', strtotime($waktu));
+                                        
+                                        echo "$hari, $tanggal $bulan $tahun";
+                                    ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">
                                 <label class="col-sm-4 control-label">Tanggal Penerimaan</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="tgl_terima" class="form-control"
-                                    value="<?php echo $permintaan_pembelian[$x]['tanggal_penerimaan'] ?>" readonly>
+                                    value="<?php
+                                        $waktu = $permintaan_pembelian[$x]['tanggal_penerimaan'];
+
+                                        $hari_array = array(
+                                            'Minggu',
+                                            'Senin',
+                                            'Selasa',
+                                            'Rabu',
+                                            'Kamis',
+                                            'Jumat',
+                                            'Sabtu'
+                                        );
+                                        $hr = date('w', strtotime($waktu));
+                                        $hari = $hari_array[$hr];
+                                        $tanggal = date('j', strtotime($waktu));
+                                        $bulan_array = array(
+                                            1 => 'Januari',
+                                            2 => 'Februari',
+                                            3 => 'Maret',
+                                            4 => 'April',
+                                            5 => 'Mei',
+                                            6 => 'Juni',
+                                            7 => 'Juli',
+                                            8 => 'Agustus',
+                                            9 => 'September',
+                                            10 => 'Oktober',
+                                            11 => 'November',
+                                            12 => 'Desember',
+                                        );
+                                        $bl = date('n', strtotime($waktu));
+                                        $bulan = $bulan_array[$bl];
+                                        $tahun = date('Y', strtotime($waktu));
+                                        
+                                        echo "$hari, $tanggal $bulan $tahun";
+                                    ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group mt-lg">

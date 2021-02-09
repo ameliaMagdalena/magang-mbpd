@@ -54,8 +54,44 @@
                 ?>
                     <tr>
                         <td class="col-1"><?php echo $x+1?> </td>
-                        <td class="col-lg-3"><?php echo $material[$x]['nama_jenis_material'] . ' ' . $material[$x]['nama_sub_jenis_material']?> </td>
-                        <td class="col-lg-2"><?php echo $material[$x]['tanggal_masuk']?> </td>
+                        <td class="col-lg-3"><?php echo $material[$x]['kode_sub_jenis_material'] . ' - ' . $material[$x]['nama_jenis_material'] . ' ' . $material[$x]['nama_sub_jenis_material']?> </td>
+                        <td class="col-lg-2">
+                            <?php
+                                $waktu = $material[$x]['tanggal_masuk'];
+
+                                $hari_array = array(
+                                    'Minggu',
+                                    'Senin',
+                                    'Selasa',
+                                    'Rabu',
+                                    'Kamis',
+                                    'Jumat',
+                                    'Sabtu'
+                                );
+                                $hr = date('w', strtotime($waktu));
+                                $hari = $hari_array[$hr];
+                                $tanggal = date('j', strtotime($waktu));
+                                $bulan_array = array(
+                                    1 => 'Januari',
+                                    2 => 'Februari',
+                                    3 => 'Maret',
+                                    4 => 'April',
+                                    5 => 'Mei',
+                                    6 => 'Juni',
+                                    7 => 'Juli',
+                                    8 => 'Agustus',
+                                    9 => 'September',
+                                    10 => 'Oktober',
+                                    11 => 'November',
+                                    12 => 'Desember',
+                                );
+                                $bl = date('n', strtotime($waktu));
+                                $bulan = $bulan_array[$bl];
+                                $tahun = date('Y', strtotime($waktu));
+                                
+                                echo "$hari, $tanggal $bulan $tahun";
+                            ?>
+                        </td>
                         <td class="col-lg-2">
                             <?php if ($material[$x]['status_keluar'] == 0){
                                 echo "Masih Di Gudang";
@@ -104,7 +140,41 @@
                                     <label class="col-sm-3 control-label">Tanggal Masuk</label>
                                     <div class="col-sm-9">
                                         <input type="text" name="tgl_masuk" class="form-control"
-                                        value="<?php echo $material[$x]['tanggal_masuk'] ?>" readonly>
+                                        value="<?php
+                                            $waktu = $material[$x]['tanggal_masuk'];
+
+                                            $hari_array = array(
+                                                'Minggu',
+                                                'Senin',
+                                                'Selasa',
+                                                'Rabu',
+                                                'Kamis',
+                                                'Jumat',
+                                                'Sabtu'
+                                            );
+                                            $hr = date('w', strtotime($waktu));
+                                            $hari = $hari_array[$hr];
+                                            $tanggal = date('j', strtotime($waktu));
+                                            $bulan_array = array(
+                                                1 => 'Januari',
+                                                2 => 'Februari',
+                                                3 => 'Maret',
+                                                4 => 'April',
+                                                5 => 'Mei',
+                                                6 => 'Juni',
+                                                7 => 'Juli',
+                                                8 => 'Agustus',
+                                                9 => 'September',
+                                                10 => 'Oktober',
+                                                11 => 'November',
+                                                12 => 'Desember',
+                                            );
+                                            $bl = date('n', strtotime($waktu));
+                                            $bulan = $bulan_array[$bl];
+                                            $tahun = date('Y', strtotime($waktu));
+                                            
+                                            echo "$hari, $tanggal $bulan $tahun";
+                                        ?>" readonly>
                                     </div>
                                 </div>
                                 <?php if ($material[$x]['sumber_material']==0){ 

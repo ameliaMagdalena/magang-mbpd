@@ -150,6 +150,7 @@
                     </tr>
                 </table>
 
+                <input type="hidden" id="adarow" class="form-control" value="0" readonly>
                 <br>
                 
                 <div>
@@ -210,29 +211,23 @@
 <?php //include('_rightbar.php');?>
 
 <script>
-    /* $(document).ready(function(){
+    $(document).ready(function(){
         $("#button_tambah").attr("disabled", true);
 
         //cek semua
-        var tgl_po = $("#tgl_po").val();
-        var no_po = $("#no_po").val();
-        var customer = $("#customer").val();
-        var id_so = $("#id_so").val();
-        var tgl_so = $("#tgl_so").val();
-        var tgl_antar = $("#tgl_antar").val();
-        var sebelum_pajak = $("#total_sebelum_pajak").val();
+        /* var sebelum_pajak = $("#total_sebelum_pajak").val();
         var ppn = $("#ppn").val();
         var total = $("#total_harga").val();
+        var adarow = $("#adarow").val();
 
-        if (tgl_po == "" || no_po == "" || customer == "" || id_so == "" || tgl_so == "" || tgl_antar == "" || 
-        sebelum_pajak == "" || ppn == "" || total == ""){
-            $("#button_tambah").attr("disabled", false);
-        }
-        else{
+        if (adarow == "0"){
             $("#button_tambah").attr("disabled", true);
         }
+        else{
+            $("#button_tambah").attr("disabled", false);
+        } */
         
-    }); */
+    });
 </script>
 
 <script>
@@ -325,6 +320,8 @@
                     '</td>'+
                 '</tr>';
                 $("#print_new_row").append(html);
+                $("#adarow").val(counter+1);
+                $("#button_tambah").attr("disabled", false);
 
             //}
             /* else{
@@ -427,53 +424,24 @@
         for(var y=0; y<counter; y++){
             total += parseInt($("#harga_total"+y).val());
         }
+        var totalnya = "Rp "+  new Number(total).toLocaleString("id-ID") + ",00";
         
         //$("#total_sebelum_pajak").html("Rp " + number_format(total, "", "", ".") + ",-");
-        $("#total_sebelum_pajak").val(total);
+        $("#total_sebelum_pajak").val(totalnya);
         $("#total_sebelum_pajaknya").val(total);
-        
+
         //***** PAJAK */
         var pajak = total*10/100;
-        $("#ppn").val(pajak);
+        var pajaknya = "Rp "+  new Number(pajak).toLocaleString("id-ID") + ",00";
+        $("#ppn").val(pajaknya);
         $("#ppnnya").val(pajak);
         
         //***** SETELAH PAJAK */
         var totalll = total+pajak;
+        var totalllnya = "Rp "+  new Number(totalll).toLocaleString("id-ID") + ",00";
         //$("#total_harga").html("Rp " + number_format(total, "", "", ".") + ",-");
-        $("#total_harga").val(totalll);
+        $("#total_harga").val(totalllnya);
         $("#total_harganya").val(totalll);
-    }
-</script>
-
-
-<script>
-    function number_format(number, decimals, dec_point, thousands_point){
-        if (number == null || !isFinite(number)) {
-            throw new TypeError("number is not valid");
-        }
-
-        if (!decimals) {
-            var len = number.toString().split('.').length;
-            decimals = len > 1 ? len : 0;
-        }
-
-        if (!dec_point) {
-            dec_point = '.';
-        }
-
-        if (!thousands_point) {
-            thousands_point = ',';
-        }
-
-        number = parseFloat(number).toFixed(decimals);
-
-        number = number.replace(".", dec_point);
-
-        var splitNum = number.split(dec_point);
-        splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands_point);
-        number = splitNum.join(dec_point);
-
-        return number;
     }
 </script>
 

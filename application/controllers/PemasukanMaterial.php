@@ -228,6 +228,15 @@ class PemasukanMaterial extends CI_Controller {
         //pilih: Supplier / Produksi / Lainlain
         $data['dn'] = $this->M_DeliveryNote->selectDeliveryNoteAktif()->result_array();
 
+        //notif material
+            $data['permat'] = $this->M_PerencanaanMaterial->selectPermintaanMaterialAktif()->result_array();
+            $data['ubpermat'] = $this->M_PerubahanPermintaan->selectPerubahanPermintaanAktif()->result_array();
+            $data['tbpermat'] = $this->M_PermintaanTambahan->selectPermintaanTambahanAktif()->result_array();
+            $data['ubharga'] = $this->M_PerubahanHarga->selectPerubahanHargaAktif()->result_array();
+            $data['sup'] = $this->M_PurchaseOrderSupplier->selectPOSupplierAktif()->result_array();
+            $data['cust'] = $this->M_PurchaseOrderCustomer->selectPOCustomerAktif()->result_array();
+        //tutup
+                
         //notif produksi
                 //notif permintaan material produksi
                 $data['jm_permat']   = $this->M_Dashboard->get_jm_permat()->result_array();
@@ -663,6 +672,7 @@ class PemasukanMaterial extends CI_Controller {
             );
             $this->M_DeliveryNote->editDeliveryNote($dataa, $wheree);
             
+            //insert ke pemasukan, ubah jumlah aktual, insert ke material
             $row = $this->input->post("row"); //jumlah row-1 / dimulai dari 0
             for($x=0; $x<=$row; $x++){
                 $aktual = $this->input->post("jlhakt".$x);
@@ -690,7 +700,7 @@ class PemasukanMaterial extends CI_Controller {
                     "waktu_edit"=>date('Y-m-d H:i:s')
                 );
                 $this->M_DeliveryNote->editDetailDeliveryNote($data1, $where1);
-                
+
                 for($y=0; $y<$aktual; $y++){
                     $data2 = array(
                         "id_material" => "MAT-".$material,
@@ -718,6 +728,23 @@ class PemasukanMaterial extends CI_Controller {
                 }
                 $id = $id+1;
             }
+
+            //ganti status detail po
+            $idnya = $this->input->post("id_dn");
+            $detaill = $this->M_DeliveryNote->selectDetailnyaDN($idnya)->result_array();
+            $rowz = count($detaill);
+            for($z=0; $z<$rowz; $z++){
+                $data4 = array(
+                    "status_detail_po" => "3",
+                    "user_edit"=>$_SESSION['id_user'],
+                    "waktu_edit"=>date('Y-m-d H:i:s')
+                );
+                $where4 = array(
+                    "id_detail_purchase_order_supplier" => $detaill[$z]['id_detail_purchase_order_supplier']
+                );
+                $this->M_PurchaseOrderSupplier->editDetailPOSupplier($data4, $where4);
+            }
+            
             redirect('PemasukanMaterial');
         }
         if($pilihan == 1){ //produksi

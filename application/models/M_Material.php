@@ -19,6 +19,24 @@ class M_Material extends CI_Model {
         JOIN jenis_material d ON c.id_jenis_material = d.id_jenis_material
         WHERE a.status_delete=0");
     }
+    
+    function selectMaterialMasihAda(){
+        return $this->db->query("SELECT * FROM material a
+        JOIN pemasukan_material b ON a.id_pemasukan_material = b.id_pemasukan_material
+        JOIN sub_jenis_material c ON b.id_sub_jenis_material = c.id_sub_jenis_material
+        JOIN jenis_material d ON c.id_jenis_material = d.id_jenis_material
+        WHERE a.status_delete=0 AND a.status_keluar=0
+        ORDER BY length(a.id_material),a.id_material");
+    }
+
+    function selectMaterialTersedia(){
+        return $this->db->query("SELECT * FROM material a
+        JOIN pemasukan_material b ON a.id_pemasukan_material = b.id_pemasukan_material
+        JOIN sub_jenis_material c ON b.id_sub_jenis_material = c.id_sub_jenis_material
+        JOIN jenis_material d ON c.id_jenis_material = d.id_jenis_material
+        WHERE a.status_delete=0 AND a.id_detail_permintaan_material IS NULL
+        ORDER BY length(a.id_material),a.id_material");
+    }
 
     function insertMaterial($data){
         $this->db->insert('material', $data);

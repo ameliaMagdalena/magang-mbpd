@@ -169,4 +169,27 @@ class M_PurchaseOrderCustomer extends CI_Model {
         WHERE a.status_delete=0");
     }
 
+    function pengambilanMaterial($id){
+        return $this->db->query("SELECT * FROM pengambilan_material a
+        JOIN detail_permintaan_material b ON a.id_detail_permintaan_material=b.id_detail_permintaan_material
+        JOIN permintaan_material d ON b.id_permintaan_material=d.id_permintaan_material
+        JOIN detail_purchase_order_customer e ON e.id_detail_purchase_order_customer=d.id_detail_purchase_order_customer
+        JOIN purchase_order_customer f ON e.id_purchase_order_customer=f.id_purchase_order_customer
+        JOIN konsumsi_material g ON g.id_konsumsi_material=b.id_konsumsi_material
+        JOIN sub_jenis_material h ON g.id_sub_jenis_material=h.id_sub_jenis_material
+        WHERE a.status_delete=0 AND f.id_purchase_order_customer='" . $id['id_purchase_order_customer'] . "'");
+    }
+    function persediaanLine($id){
+        return $this->db->query("SELECT * FROM persediaan_line_masuk a
+        JOIN detail_permintaan_material b ON a.id_detail_permintaan_material=b.id_detail_permintaan_material
+        JOIN permintaan_material d ON b.id_permintaan_material=d.id_permintaan_material
+        JOIN detail_purchase_order_customer e ON e.id_detail_purchase_order_customer=d.id_detail_purchase_order_customer
+        JOIN purchase_order_customer f ON e.id_purchase_order_customer=f.id_purchase_order_customer
+        WHERE a.status_delete=0 AND f.id_purchase_order_customer='" . $id['id_purchase_order_customer'] . "'");
+    }
+    function hargaMaterial(){
+        return $this->db->query("SELECT * FROM detail_supplier a
+        JOIN sub_jenis_material b ON a.id_sub_jenis_material=b.id_sub_jenis_material
+        WHERE a.status_delete=0");
+    }
 }

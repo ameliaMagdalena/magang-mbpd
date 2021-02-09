@@ -3536,61 +3536,6 @@
 					</section>
 				</div>
 			</div>
-			<div class="col-md-12 col-lg-12 col-xl-12">
-				<!-- MATERIAL COST -->
-				<div class="col-md-12 col-lg-12 col-xl-12">
-					<section class="panel">
-						<header class="panel-heading panel-heading-transparent">
-							<h2 class="panel-title">
-								<span class="va-middle">Laporan Material Cost Hari Ini</span>
-							</h2>
-						</header>
-						<div class="panel-body panel-featured-left panel-featured-danger">
-							<div class="content">
-								<div class="table-responsive" style="height:175px;overflow: scroll">
-										<table class="table table-hover mb-none">
-											<thead>
-												<tr>
-													<th style="text-align: center;vertical-align: middle;">No.</th>
-													<th style="text-align: center;vertical-align: middle;">Nama Produk</th>
-													<th style="text-align: center;vertical-align: middle;">Material Cost</th>
-													<th style="text-align: center;vertical-align: middle;">Detail</th>
-												</tr>
-											</thead>
-											<tbody>
-												<?php 
-													$no = 1;
-													//foreach($perencanaan_hari_ini as $phi){?>
-													<tr>
-														<td style="text-align: center;vertical-align: middle;">
-															<?= $no ?>
-														</td>
-														<td style="text-align: center;vertical-align: middle;">
-															<!-- memiliki ukuran & warna --> A/F Body Pillow Hard
-														</td>
-														<td style="text-align: center;vertical-align: middle;">
-														525000
-														</td>
-														<td style="text-align: center;vertical-align: middle;">
-														12 pcs
-															<!-- button aksi detail -->
-														</td>
-													</tr>
-												<?php //$no++; } ?>
-											</tbody>
-										</table>
-									
-								</div>
-
-								<hr class="dotted short">
-								<div class="text-right">
-									<a class="text-uppercase text-muted" href="<?= base_url()?>perencanaanProduksi/perencanaan_produksi_line">(Lihat Semua)</a>
-								</div>
-							</div>
-						</div>
-					</section>
-				</div>
-			</div>
 		</div>
 	<!-- -->
 		<?php } else if($_SESSION['nama_departemen'] == "Management" && $_SESSION['nama_jabatan'] == "Manager"){?>

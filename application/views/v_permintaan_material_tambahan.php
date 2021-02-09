@@ -211,8 +211,8 @@
                     <td>
                         <a class="col-lg-3 btn btn-primary fa fa-info-circle"
                             title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail_tambah/' . $tambahan[$x]['id_permintaan_tambahan'] ?>"></a>
-                        <a class="col-lg-3 btn btn-info fa fa-file-text" title="Perencanaan"
-                            href="<?php echo base_url() . 'PermintaanMaterial/proses_perencanaan_tambah/' . $tambahan[$x]['id_permintaan_tambahan']?>"></a>
+                        <!-- <a class="col-lg-3 btn btn-info fa fa-file-text" title="Perencanaan"
+                            href="<?php echo base_url() . 'PermintaanMaterial/proses_perencanaan_tambah/' . $tambahan[$x]['id_permintaan_tambahan']?>"></a> -->
                     </td>
                 </tr>
                 <?php $no=$no+1; } } } ?>
@@ -222,141 +222,9 @@
 </section>
 
 
-
 <!-- ----------------------------------------------- SELESAI ----------------------------------------- -->
-<?php }else if($status == '2'){ ?>
-<h1>Permintaan Material Tambahan - Selesai</h1>
-<hr>
-
-<section class="panel">
-    <header class="panel-heading">
-        <div class="panel-actions">
-            <a href="#" class="fa fa-caret-down"></a>
-            <a href="#" class="fa fa-times"></a>
-        </div>
-
-        <h2 class="panel-title">Permintaan Material - Selesai</h2>
-    </header>
-    <div class="panel-body">
-        <table class="table table-bordered table-striped mb-none" id="datatable-default">
-            <thead>
-                <tr>
-                    <th class="col-lg-1" style="text-align: center;vertical-align: middle;">No.</th>
-                    <th class="col-lg-1" style="text-align: center;vertical-align: middle;">Tanggal Permintaan</th>
-                    <th class="col-lg-1" style="text-align: center;vertical-align: middle;">Tanggal Produksi</th>
-                    <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Produk</th>
-                    <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Line</th>
-                    <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Status</th>
-                    <th class="col-lg-3" style="text-align: center;vertical-align: middle;">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php $no=1;
-                    for($x=0 ; $x<count($permintaan_material) ; $x++){
-                        if ($status == 2 || $status == 4){ 
-                            if($permintaan_material[$x]['status_permintaan'] == 3){
-                ?>
-                <tr>
-                    <td> <?php echo $no ?>
-                    <input type="hidden" id="idd<?= $x ?>" value="<?= $permintaan_material[$x]['id_permintaan_material'] ?>"> </td>
-                    <!-- <td style="text-align: center;vertical-align: middle;"></td> -->
-                    <td><?= $permintaan_material[$x]['tanggal_permintaan'] ?></td>
-                    <td><?= $permintaan_material[$x]['tanggal_produksi'] ?></td>
-                    <td><?= $permintaan_material[$x]['nama_produk'] ?></td>
-                    <td><?= $permintaan_material[$x]['nama_line'] ?></td>
-                    <td>Selesai </td>
-                    <td>
-                        <a class="col-lg-3 btn btn-primary fa fa-info-circle"
-                            title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail/' . $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
-                        <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
-                            value="<?php echo $x ?>" title="Hapus"></button>
-                    </td>
-                </tr>
-
-                <!-- <tr>
-                    <td class="col-2"> 1 </td>
-                    <td class="col-lg-2"> Compact Mattress </td>
-                    <td class="col-lg-3"> 13 Juni 2020 </td>
-                    <td class="col-lg-4">
-                        <a class="modal-with-form col-lg-3 btn btn-primary fa fa-info-circle"
-                            title="Detail" href="#modaldetail"></a>
-                        <a class="modal-with-form col-lg-3 btn btn-danger fa fa-shopping-cart"
-                            title="Beli Material" href="#modalbeli"></a>
-                    </td>
-                </tr> -->
-                <?php $no=$no+1;}}} ?>
-            </tbody>
-        </table>
-    </div>
-</section>
-
-
-
-
-<!-- ----------------------------------------------- BATAL ----------------------------------------- -->
-<?php }else if($status == '3'){ ?>
-<h1>Permintaan Material Tambahan - Batal / Ditolak</h1>
-<hr>
-
-<section class="panel">
-    <header class="panel-heading">
-        <div class="panel-actions">
-            <a href="#" class="fa fa-caret-down"></a>
-            <a href="#" class="fa fa-times"></a>
-        </div>
-
-        <h2 class="panel-title">Permintaan Material - Batal / Ditolak</h2>
-    </header>
-    <div class="panel-body">
-        <table class="table table-bordered table-striped mb-none" id="datatable-default">
-            <thead>
-                <tr>
-                    <th class="col-lg-1" style="text-align: center;vertical-align: middle;">No.</th>
-                    <th class="col-lg-1" style="text-align: center;vertical-align: middle;">Tanggal Permintaan</th>
-                    <th class="col-lg-1" style="text-align: center;vertical-align: middle;">Tanggal Produksi</th>
-                    <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Produk</th>
-                    <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Line</th>
-                    <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Status</th>
-                    <th class="col-lg-3" style="text-align: center;vertical-align: middle;">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php $no=1;
-                    for($x=0 ; $x<count($permintaan_material) ; $x++){
-                        if ($status == 3 || $status == 4){ 
-                            if($permintaan_material[$x]['status_permintaan'] == 4 || $permintaan_material[$x]['status_permintaan'] == 5){
-                ?>
-                <tr>
-                    <td> <?php echo $no ?>
-                    <input type="hidden" id="idd<?= $x ?>" value="<?= $permintaan_material[$x]['id_permintaan_material'] ?>"> </td>
-                    <!-- <td style="text-align: center;vertical-align: middle;"></td> -->
-                    <td><?= $permintaan_material[$x]['tanggal_permintaan'] ?></td>
-                    <td><?= $permintaan_material[$x]['tanggal_produksi'] ?></td>
-                    <td><?= $permintaan_material[$x]['nama_produk'] ?></td>
-                    <td><?= $permintaan_material[$x]['nama_line'] ?></td>
-                    <td><?php if($permintaan_material[$x]['status_permintaan']==4){
-                        echo "Batal";
-                    }else{
-                        echo "Ditolak";
-                    } ?></td>
-                    <td>
-                        <a class="col-lg-3 btn btn-primary fa fa-info-circle"
-                            title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail/' . $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
-                        <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
-                            value="<?php echo $x ?>" title="Hapus"></button>
-                    </td>
-                </tr>
-                <?php $no=$no+1;}}} ?>
-            </tbody>
-        </table>
-    </div>
-</section>
-
-
-
-<!-- ----------------------------------------------- SEMUA ----------------------------------------- -->
 <?php }else if($status == '4'){ ?>
-<h1>Permintaan Material Tambahan - Semua</h1>
+<h1>Permintaan Material Tambahan - Selesai</h1>
 <hr>
 
 <section class="panel">
@@ -373,68 +241,31 @@
             <thead>
                 <tr>
                     <th class="col-lg-1" style="text-align: center;vertical-align: middle;">No.</th>
-                    <th class="col-lg-1" style="text-align: center;vertical-align: middle;">Tanggal Permintaan</th>
-                    <th class="col-lg-1" style="text-align: center;vertical-align: middle;">Tanggal Produksi</th>
-                    <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Produk</th>
+                    <!-- <th class="col-lg-2">Kode Permintaan Material</th> -->
+                    <th class="col-lg-1" style="text-align: center;vertical-align: middle;">Permintaan Material</th>
+                    <th class="col-lg-1" style="text-align: center;vertical-align: middle;">Jumlah</th>
+                    <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Material</th>
                     <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Line</th>
                     <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Status</th>
-                    <th class="col-lg-3" style="text-align: center;vertical-align: middle;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php $no=1;
-                    for($x=0 ; $x<count($permintaan_material) ; $x++){
+                    for($x=0 ; $x<count($tambahan) ; $x++){
+                        if ($status == 4){ 
+                            if($tambahan[$x]['status'] == '3'){
                 ?>
                 <tr>
                     <td> <?php echo $no ?>
-                    <input type="hidden" id="idd<?= $x ?>" value="<?= $permintaan_material[$x]['id_permintaan_material'] ?>"> </td>
+                    <input type="hidden" id="idd<?= $x ?>" value="<?= $tambahan[$x]['id_permintaan_tambahan'] ?>"> </td>
                     <!-- <td style="text-align: center;vertical-align: middle;"></td> -->
-                    <td><?= $permintaan_material[$x]['tanggal_permintaan'] ?></td>
-                    <td><?= $permintaan_material[$x]['tanggal_produksi'] ?></td>
-                    <td><?= $permintaan_material[$x]['nama_produk'] ?></td>
-                    <td><?= $permintaan_material[$x]['nama_line'] ?></td>
-                    <td><?php if($permintaan_material[$x]['status_permintaan']==0){
-                        echo "Belum Ditindaklanjuti";
-                    }else if($permintaan_material[$x]['status_permintaan']==1){
-                        echo "Proses Pembelian";
-                    }else if($permintaan_material[$x]['status_permintaan']==2){
-                        echo "Material Tersedia";
-                    }else if($permintaan_material[$x]['status_permintaan']==3){
-                        echo "Selesai";
-                    }else if($permintaan_material[$x]['status_permintaan']==4){
-                        echo "Batal";
-                    }else{
-                        echo "Ditolak";
-                    } ?></td>
-                    <td>
-                        <a class="col-lg-3 btn btn-primary fa fa-info-circle"
-                            title="Detail" href="<?php echo base_url() . 'PermintaanMaterial/detail/' . $permintaan_material[$x]['id_permintaan_material'] ?>"></a>
-                        
-                        <?php if ($permintaan_material[$x]['status_permintaan'] == 1 &&
-                            (($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
-                            || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material"))){ ?>
-                            <button type="button" class="sediaz col-lg-3 btn btn-success fa fa-check" 
-                                value="<?php echo $x ?>" title="Tersedia"></button>
-                        <?php } ?>
-
-                        <?php if ($permintaan_material[$x]['status_permintaan'] == 2 &&
-                            (($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
-                            || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material"))){ ?>
-                            <button type="button" class="selesaiz col-lg-3 btn btn-success fa fa-check" 
-                                value="<?php echo $x ?>" title="Selesaikan"></button>
-                        <?php } ?>
-                        
-                        <?php if ((($_SESSION['nama_jabatan'] == "Direktur") && ($_SESSION['nama_departemen'] == "Management")
-                            || ($_SESSION['nama_jabatan'] == "PPIC") && ($_SESSION['nama_departemen'] == "Material"))){ ?>
-                            <button type="button" class="batalz col-lg-3 btn btn-danger fa fa-times" 
-                                value="<?php echo $x ?>" title="Batal"></button>
-                        <?php } ?>
-                        
-                        <button type="button" class="deletez col-lg-3 btn btn-danger fa fa-trash-o" 
-                            value="<?php echo $x ?>" title="Hapus"></button>
-                    </td>
+                    <td><?= $tambahan[$x]['id_permintaan_material'] ?></td>
+                    <td><?= $tambahan[$x]['jumlah_tambah'] ?></td>
+                    <td><?= $tambahan[$x]['kode_sub_jenis_material'] ." - ".$tambahan[$x]['nama_jenis_material'] ." ".$tambahan[$x]['nama_sub_jenis_material'] ?></td>
+                    <td><?= $tambahan[$x]['nama_line'] ?></td>
+                    <td>Selesai</td>
                 </tr>
-                <?php $no=$no+1;} ?>
+                <?php $no=$no+1;}}} ?>
             </tbody>
         </table>
     </div>
@@ -458,12 +289,7 @@
         var id      = $("#idd"+no).val();
         var tersedia = $("#ketersediaan"+no).val();
 
-        if(tersedia > 0){
-            $("#statusnyaa").val("1");
-        }
-        else{
-            $("#statusnyaa").val("2");
-        }
+        $("#statusnyaa").val("1");
 
         $.ajax({
             type:"post",    

@@ -64,7 +64,41 @@
         <div class="form-group mt-lg">
             <label class="col-sm-3 control-label">Tanggal Produksi</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" value="<?php echo $permintaan_material[0]['tanggal_produksi'] ?>" readonly>
+                <input type="text" class="form-control" value="<?php
+                    $waktu = $permintaan_material[0]['tanggal_produksi'];
+
+                    $hari_array = array(
+                        'Minggu',
+                        'Senin',
+                        'Selasa',
+                        'Rabu',
+                        'Kamis',
+                        'Jumat',
+                        'Sabtu'
+                    );
+                    $hr = date('w', strtotime($waktu));
+                    $hari = $hari_array[$hr];
+                    $tanggal = date('j', strtotime($waktu));
+                    $bulan_array = array(
+                        1 => 'Januari',
+                        2 => 'Februari',
+                        3 => 'Maret',
+                        4 => 'April',
+                        5 => 'Mei',
+                        6 => 'Juni',
+                        7 => 'Juli',
+                        8 => 'Agustus',
+                        9 => 'September',
+                        10 => 'Oktober',
+                        11 => 'November',
+                        12 => 'Desember',
+                    );
+                    $bl = date('n', strtotime($waktu));
+                    $bulan = $bulan_array[$bl];
+                    $tahun = date('Y', strtotime($waktu));
+                    
+                    echo "$hari, $tanggal $bulan $tahun";
+                ?>" readonly>
             </div>
         </div>
 
@@ -105,7 +139,7 @@
                         <input type="text" class="form-control" value="<?php echo $detail[$x]['satuan_ukuran'] ?>" readonly>
                     </div>
                 </div>
-                <div class="form-group mt-lg">
+                <!-- <div class="form-group mt-lg">
                     <label class="col-sm-3 control-label">Sudah Diambil</label>
                     <div class="col-sm-7">
                         <input type="text" class="form-control" value="<?php $diambil=0;
@@ -131,7 +165,7 @@
                         <input type="text" class="form-control" value="<?php $belumambil=$needs-$diambil; 
                             echo $belumambil?>" readonly>
                     </div>
-                </div>
+                </div> -->
                 <!--<div class="form-group mt-lg">
                     <label class="col-sm-3 control-label">Stok di Gudang</label>
                     <div class="col-sm-7">
@@ -167,7 +201,42 @@
                                         <input type="hidden" id="idd<?= $z ?>" value="<?php echo $pengambilan[$z]['id_pengambilan_material'] ?>" >
                                         <input type="hidden" id="uksatuan<?= $z ?>" value="<?php echo $detail[$x]['ukuran_satuan_keluar'] ?>" >
                             <tr>
-                                <td><?php echo $pengambilan[$z]['tanggal_ambil'] ?>
+                                <td>
+                                    <?php
+                                        $waktu = $pengambilan[$z]['tanggal_ambil'];
+
+                                        $hari_array = array(
+                                            'Minggu',
+                                            'Senin',
+                                            'Selasa',
+                                            'Rabu',
+                                            'Kamis',
+                                            'Jumat',
+                                            'Sabtu'
+                                        );
+                                        $hr = date('w', strtotime($waktu));
+                                        $hari = $hari_array[$hr];
+                                        $tanggal = date('j', strtotime($waktu));
+                                        $bulan_array = array(
+                                            1 => 'Januari',
+                                            2 => 'Februari',
+                                            3 => 'Maret',
+                                            4 => 'April',
+                                            5 => 'Mei',
+                                            6 => 'Juni',
+                                            7 => 'Juli',
+                                            8 => 'Agustus',
+                                            9 => 'September',
+                                            10 => 'Oktober',
+                                            11 => 'November',
+                                            12 => 'Desember',
+                                        );
+                                        $bl = date('n', strtotime($waktu));
+                                        $bulan = $bulan_array[$bl];
+                                        $tahun = date('Y', strtotime($waktu));
+                                        
+                                        echo "$hari, $tanggal $bulan $tahun";
+                                    ?>
                                 </td>
                                 <td><?php
                                     $jlhsatu = $pengambilan[$z]['jumlah_ambil'];
@@ -188,8 +257,8 @@
                                     <?php if ($pengambilan[$z]['status_keluar'] == 0){ ?>
                                         <button type="button" class="ambilz col-lg-3 btn btn-success fa fa-check" 
                                             value="<?php echo $z ?>" title="Ambil"></button>
-                                        <button type="button" class="batalz col-lg-3 btn btn-danger fa fa-times" 
-                                            value="<?php echo $z ?>" title="Tolak"></button>
+                                        <!-- <button type="button" class="batalz col-lg-3 btn btn-danger fa fa-times" 
+                                            value="<?php echo $z ?>" title="Tolak"></button> -->
                                     <?php } ?>
                                 </td>
                             </tr>
@@ -208,6 +277,7 @@
                                             <div class="modal-body">
                                                 <input type="hidden" name="id_permintaan" id="idminta" class="form-control" value="" readonly>
                                                 <input type="hidden" name="id_pengambilan" id="idambil" class="form-control" value="" readonly>
+                                                <input type="hidden" name="iddetaill" class="form-control" value="<?= $detail[$x]['id_detail_permintaan_material'] ?>" readonly>
                                                 <input type="hidden" name="status" class="form-control" value="1" readonly>
                                                 
                                                 <div class="form-group mt-lg">
@@ -225,7 +295,8 @@
                                                 <div class="form-group mt-lg">
                                                     <label class="col-sm-4 control-label">Tanggal Pengambilan</label>
                                                     <div class="col-sm-8">
-                                                        <input type="date" name="atgl_ambil" id="atgl_ambil" class="form-control" value="" readonly>
+                                                        <input type="hidden" name="atgl_ambil" id="atgl_ambil" class="form-control" value="" readonly>
+                                                        <input type="text" name="aatgl_ambil" id="aatgl_ambil" class="form-control" value="" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mt-lg">
@@ -398,6 +469,18 @@
                 $("#aline").val(respond['ambil'][0]['nama_line']);
                 $("#atgl_ambil").val(respond['ambil'][0]['tanggal_ambil']);
                 $("#asatuan").val(respond['ambil'][0]['satuan_ukuran']);
+
+                var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+                var tanggal = new Date(respond['ambil'][0]['tanggal_ambil']).getDate();
+                var xhari = new Date(respond['ambil'][0]['tanggal_ambil']).getDay();
+                var xbulan = new Date(respond['ambil'][0]['tanggal_ambil']).getMonth();
+                var xtahun = new Date(respond['ambil'][0]['tanggal_ambil']).getYear();
+                var hari = hari[xhari];
+                var bulan = bulan[xbulan];
+                var tahun = (xtahun < 1000)?xtahun + 1900 : xtahun;
+                $("#aatgl_ambil").val(hari +', ' + tanggal + ' ' + bulan + ' ' + tahun);
 
                 jlhsatu = respond['ambil'][0]['jumlah_ambil'];
                 uk=ukuran; //ukuran satuan keluar

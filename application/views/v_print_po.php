@@ -46,7 +46,7 @@
                 <tr>
                     <td style="text-align:center">
                         No : '.$detail_po_sup[0]['kode_purchase_order_supplier'].'<br>
-                        Tanggal/Date : '.$detail_po_sup[0]['tanggal_po'].'
+                        Tanggal/Date : '.date("d M Y",strtotime($detail_po_sup[0]['tanggal_po'])).'
                     </td>
                 </tr>
             </table>
@@ -94,7 +94,7 @@
                 </tr>
                 <tr>
                     <td>Keterangan</td>
-                    <td colspan="2"> : </td>
+                    <td colspan="2"> : '. $po_sup[0]['keterangan'] .'</td>
                     <td border="1" colspan="3">Total (Rp)</td>
                     <td style="border-bottom: 1px solid black" width="4%">Rp</td>
                     <td style="text-align:right; border-right: 1px solid black; border-bottom: 1px solid black" width="14%">' . $po_sup[0]['total_harga_akhir'] . '</td>

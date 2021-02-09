@@ -44,7 +44,6 @@
             <thead>
                 <tr>
                     <th class="col-lg-1" style="text-align: center;vertical-align: middle;">No.</th>
-                    <!-- <th class="col-lg-2">Kode Permintaan Material</th> -->
                     <th class="col-lg-1" style="text-align: center;vertical-align: middle;">Tanggal Permintaan</th>
                     <th class="col-lg-1" style="text-align: center;vertical-align: middle;">Tanggal Produksi</th>
                     <th class="col-lg-2" style="text-align: center;vertical-align: middle;">Produk</th>
@@ -63,8 +62,80 @@
                     <td> <?php echo $no ?>
                     <input type="hidden" id="idd<?= $x ?>" value="<?= $permintaan_material[$x]['id_permintaan_material'] ?>"> </td>
                     <!-- <td style="text-align: center;vertical-align: middle;"></td> -->
-                    <td><?= $permintaan_material[$x]['tanggal_permintaan'] ?></td>
-                    <td><?= $permintaan_material[$x]['tanggal_produksi'] ?></td>
+                    <td>
+                        <?php
+                            $waktu = $permintaan_material[$x]['tanggal_permintaan'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                            $waktu = $permintaan_material[$x]['tanggal_produksi'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
                     <td><?= $permintaan_material[$x]['nama_produk'] ?></td>
                     <td><?= $permintaan_material[$x]['nama_line'] ?></td>
                     <td>Belum Ditinjau / Menunggu Persetujuan
@@ -207,8 +278,80 @@
                     <td> <?php echo $no ?>
                     <input type="hidden" id="idd<?= $x ?>" value="<?= $permintaan_material[$x]['id_permintaan_material'] ?>"> </td>
                     <!-- <td style="text-align: center;vertical-align: middle;"></td> -->
-                    <td><?= $permintaan_material[$x]['tanggal_permintaan'] ?></td>
-                    <td><?= $permintaan_material[$x]['tanggal_produksi'] ?></td>
+                    <td>
+                        <?php
+                            $waktu = $permintaan_material[$x]['tanggal_permintaan'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                            $waktu = $permintaan_material[$x]['tanggal_produksi'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
                     <td><?= $permintaan_material[$x]['nama_produk'] ?></td>
                     <td> <?= $permintaan_material[$x]['nama_line'] ?> </td>
                     <td> <?php if ($permintaan_material[$x]['status_permintaan'] == 1){
@@ -402,8 +545,80 @@
                     <td> <?php echo $no ?>
                     <input type="hidden" id="idd<?= $x ?>" value="<?= $permintaan_material[$x]['id_permintaan_material'] ?>"> </td>
                     <!-- <td style="text-align: center;vertical-align: middle;"></td> -->
-                    <td><?= $permintaan_material[$x]['tanggal_permintaan'] ?></td>
-                    <td><?= $permintaan_material[$x]['tanggal_produksi'] ?></td>
+                    <td>
+                        <?php
+                            $waktu = $permintaan_material[$x]['tanggal_permintaan'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                            $waktu = $permintaan_material[$x]['tanggal_produksi'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
                     <td><?= $permintaan_material[$x]['nama_produk'] ?></td>
                     <td><?= $permintaan_material[$x]['nama_line'] ?></td>
                     <td>Selesai </td>
@@ -460,8 +675,80 @@
                     <td> <?php echo $no ?>
                     <input type="hidden" id="idd<?= $x ?>" value="<?= $permintaan_material[$x]['id_permintaan_material'] ?>"> </td>
                     <!-- <td style="text-align: center;vertical-align: middle;"></td> -->
-                    <td><?= $permintaan_material[$x]['tanggal_permintaan'] ?></td>
-                    <td><?= $permintaan_material[$x]['tanggal_produksi'] ?></td>
+                    <td>
+                        <?php
+                            $waktu = $permintaan_material[$x]['tanggal_permintaan'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                            $waktu = $permintaan_material[$x]['tanggal_produksi'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
                     <td><?= $permintaan_material[$x]['nama_produk'] ?></td>
                     <td><?= $permintaan_material[$x]['nama_line'] ?></td>
                     <td><?php if($permintaan_material[$x]['status_permintaan']==4){
@@ -519,8 +806,80 @@
                     <td> <?php echo $no ?>
                     <input type="hidden" id="idd<?= $x ?>" value="<?= $permintaan_material[$x]['id_permintaan_material'] ?>"> </td>
                     <!-- <td style="text-align: center;vertical-align: middle;"></td> -->
-                    <td><?= $permintaan_material[$x]['tanggal_permintaan'] ?></td>
-                    <td><?= $permintaan_material[$x]['tanggal_produksi'] ?></td>
+                    <td>
+                        <?php
+                            $waktu = $permintaan_material[$x]['tanggal_permintaan'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                            $waktu = $permintaan_material[$x]['tanggal_produksi'];
+
+                            $hari_array = array(
+                                'Minggu',
+                                'Senin',
+                                'Selasa',
+                                'Rabu',
+                                'Kamis',
+                                'Jumat',
+                                'Sabtu'
+                            );
+                            $hr = date('w', strtotime($waktu));
+                            $hari = $hari_array[$hr];
+                            $tanggal = date('j', strtotime($waktu));
+                            $bulan_array = array(
+                                1 => 'Januari',
+                                2 => 'Februari',
+                                3 => 'Maret',
+                                4 => 'April',
+                                5 => 'Mei',
+                                6 => 'Juni',
+                                7 => 'Juli',
+                                8 => 'Agustus',
+                                9 => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            );
+                            $bl = date('n', strtotime($waktu));
+                            $bulan = $bulan_array[$bl];
+                            $tahun = date('Y', strtotime($waktu));
+                            
+                            echo "$hari, $tanggal $bulan $tahun";
+                        ?>
+                    </td>
                     <td><?= $permintaan_material[$x]['nama_produk'] ?></td>
                     <td><?= $permintaan_material[$x]['nama_line'] ?></td>
                     <td><?php if($permintaan_material[$x]['status_permintaan']==0){
@@ -732,7 +1091,7 @@
             data: {id:id},
 
             success: function(respond){
-                $isi = 'Apakah semua material untuk Permintaan Material dengan No. Form <b>'+respond['permat'][0]['id_permintaan_material']+'</b> sudah tersedia?';
+                $isi = 'Apakah <b>semua material</b> untuk Permintaan Material dengan No. Form <b>'+respond['permat'][0]['id_permintaan_material']+'</b> sudah tersedia?';
                 $("#isisedia").html($isi);
                 $("#idsedia").val(id);
                 $("#sedia").modal();

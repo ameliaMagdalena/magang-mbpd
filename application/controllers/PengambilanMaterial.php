@@ -9,6 +9,7 @@ class PengambilanMaterial extends CI_Controller {
         $this->load->model('M_PengambilanMaterial');
         $this->load->model('M_PengeluaranMaterial');
         $this->load->model('M_Dashboard');
+        $this->load->model('M_Material');
         $this->load->model('M_PerencanaanMaterial');
         $this->load->model('M_PerubahanPermintaan');
         $this->load->model('M_PermintaanTambahan');
@@ -243,6 +244,30 @@ class PengambilanMaterial extends CI_Controller {
             "waktu_add"=>date('Y-m-d H:i:s'),
         );
         $this->M_PengambilanMaterial->editPengambilanMaterial($data, $where);
+
+        //edit status keluar di material
+        $iddet = $this->input->post("iddetaill");
+        $matt = $this->M_Material->selectMaterialMasihAda()->result_Array();
+        $butuh = $this->input->post("ajumlah");
+        $hitung = 0;
+
+        //loop tabel material
+        for($y=0; $y<count($matt); $y++){
+            if($matt[$y]['id_detail_permintaan_material'] == $iddet && $hitung<$butuh){
+
+                //edit id detail permintaan di tabel material
+                $data3 = array(
+                    "status_keluar" => "1",
+                    "user_edit"=>$_SESSION['id_user'],
+                    "waktu_edit"=>date('Y-m-d H:i:s')
+                );
+                $where3 = array(
+                    "id_material" => $matt[$y]['id_material']
+                );
+                $this->M_Material->editMaterial($data3,$where3);
+                $hitung++; //penanda harus stop kalau sudah memenuhi jumlah
+            }
+        }
 
         $permintaan = $this->input->post('id_permintaan');
         redirect('PermintaanMaterial/proses_perencanaan/' . $permintaan);
