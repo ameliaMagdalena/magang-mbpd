@@ -1607,6 +1607,21 @@ class SuratJalan extends CI_Controller {
 
                                 $capaian_pengurangan = $capaian_pengurangan + $max;
                             }
+
+                            //ubah status bpbj
+                            $id_bpbj_pengurangan = $this->M_SuratJalan->get_id_bpbj_pengurangan($id_dbpbj_tam)->result_array();
+
+                            $id_bpbjnya = $id_bpbj_pengurangan[0]['id_bpbj'];
+
+                            $data_bpbj = array(
+                                'status_bpbj' => 1
+                            );
+
+                            $where_bpbj = array(
+                                'id_bpbj' => $id_bpbjnya
+                            );
+
+                            $this->M_SuratJalan->edit('bpbj',$data_bpbj,$where_bpbj);
                         }
                     }
                 }

@@ -1107,7 +1107,8 @@ class PengambilanMaterialProduksi extends CI_Controller {
             'status_keluar'                 => 0,
             'status_permintaan'             => 1,
             'user_add'                      => $_SESSION['id_user'],
-            'waktu_add'                     => $now
+            'waktu_add'                     => $now,
+            'status_delete'                 => 0
           );
 
           $this->M_PengambilanMaterialProduksi->insert('pengambilan_material',$data);

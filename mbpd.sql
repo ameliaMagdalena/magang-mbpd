@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 21, 2021 at 04:04 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.3.13
+-- Generation Time: Jan 25, 2021 at 06:38 AM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -2138,6 +2138,64 @@ INSERT INTO `spesifikasi_jabatan` (`id_spesifikasi_jabatan`, `id_jabatan`, `id_d
 ('SJBT-8', 'JBT-4', 'DEPT-5', 'USER-1', '2020-12-21 14:08:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
 ('SJBT-9', 'JBT-4', 'DEPT-4', 'USER-1', '2020-12-21 14:08:42', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0);
 
+--
+-- Triggers `spesifikasi_jabatan`
+--
+DELIMITER $$
+CREATE TRIGGER `edit_spesifikasi_jabatan` AFTER UPDATE ON `spesifikasi_jabatan` FOR EACH ROW INSERT INTO `spesifikasi_jabatan_logs`(`id_spesifikasi_jabatan_logs`, `keterangan_log`, `id_spesifikasi_jabatan`, `id_jabatan`,`id_departemen`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES (null,'Edit Data',NEW.id_spesifikasi_jabatan,NEW.id_jabatan,NEW.id_departemen,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `insert_spesifikasi_jabatan` AFTER INSERT ON `spesifikasi_jabatan` FOR EACH ROW INSERT INTO `spesifikasi_jabatan_logs`(`id_spesifikasi_jabatan_logs`, `keterangan_log`, `id_spesifikasi_jabatan`, `id_jabatan`,`id_departemen`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES (null,'Insert Data',NEW.id_spesifikasi_jabatan,NEW.id_jabatan,NEW.id_departemen,NEW.user_add,NEW.waktu_add,NEW.user_edit,NEW.waktu_edit,NEW.user_delete,NEW.waktu_delete,NEW.status_delete)
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `spesifikasi_jabatan_logs`
+--
+
+CREATE TABLE `spesifikasi_jabatan_logs` (
+  `id_spesifikasi_jabatan_logs` int(11) NOT NULL,
+  `keterangan_log` varchar(15) NOT NULL,
+  `id_spesifikasi_jabatan` varchar(10) NOT NULL,
+  `id_jabatan` varchar(10) NOT NULL,
+  `id_departemen` varchar(10) NOT NULL,
+  `user_add` varchar(10) NOT NULL,
+  `waktu_add` datetime NOT NULL,
+  `user_edit` varchar(10) DEFAULT NULL,
+  `waktu_edit` datetime DEFAULT NULL,
+  `user_delete` varchar(10) DEFAULT NULL,
+  `waktu_delete` datetime DEFAULT NULL,
+  `status_delete` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `spesifikasi_jabatan_logs`
+--
+
+INSERT INTO `spesifikasi_jabatan_logs` (`id_spesifikasi_jabatan_logs`, `keterangan_log`, `id_spesifikasi_jabatan`, `id_jabatan`, `id_departemen`, `user_add`, `waktu_add`, `user_edit`, `waktu_edit`, `user_delete`, `waktu_delete`, `status_delete`) VALUES
+(1, 'Insert Data', 'SJBT-2', 'JBT-2', 'DEPT-2', 'USER-1', '2020-12-21 14:03:57', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(2, 'Insert Data', 'SJBT-3', 'JBT-3', 'DEPT-2', 'USER-1', '2020-12-21 14:07:06', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(3, 'Insert Data', 'SJBT-4', 'JBT-10', 'DEPT-3', 'USER-1', '2020-12-21 14:07:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(4, 'Insert Data', 'SJBT-5', 'JBT-4', 'DEPT-3', 'USER-1', '2020-12-21 14:07:36', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(5, 'Insert Data', 'SJBT-6', 'JBT-10', 'DEPT-7', 'USER-1', '2020-12-21 14:07:57', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(6, 'Insert Data', 'SJBT-7', 'JBT-5', 'DEPT-7', 'USER-1', '2020-12-21 14:08:10', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(7, 'Insert Data', 'SJBT-8', 'JBT-4', 'DEPT-5', 'USER-1', '2020-12-21 14:08:27', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(8, 'Insert Data', 'SJBT-9', 'JBT-4', 'DEPT-4', 'USER-1', '2020-12-21 14:08:42', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(9, 'Insert Data', 'SJBT-10', 'JBT-4', 'DEPT-6', 'USER-1', '2020-12-21 14:08:48', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(10, 'Insert Data', 'SJBT-11', 'JBT-6', 'DEPT-3', 'USER-1', '2020-12-21 14:10:05', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(11, 'Insert Data', 'SJBT-12', 'JBT-7', 'DEPT-3', 'USER-1', '2020-12-21 14:10:12', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(12, 'Insert Data', 'SJBT-13', 'JBT-8', 'DEPT-3', 'USER-1', '2020-12-21 14:10:17', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(13, 'Insert Data', 'SJBT-14', 'JBT-9', 'DEPT-3', 'USER-1', '2020-12-21 14:10:22', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(14, 'Insert Data', 'SJBT-15', 'JBT-11', 'DEPT-3', 'USER-1', '2020-12-21 14:10:28', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(15, 'Insert Data', 'SJBT-16', 'JBT-12', 'DEPT-3', 'USER-1', '2020-12-21 14:10:35', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(16, 'Insert Data', 'SJBT-17', 'JBT-13', 'DEPT-3', 'USER-1', '2020-12-21 14:10:41', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(17, 'Insert Data', 'SJBT-18', 'JBT-14', 'DEPT-3', 'USER-1', '2020-12-21 14:10:46', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0),
+(18, 'Edit Data', 'SJBT-10', 'JBT-15', 'DEPT-6', 'USER-1', '2020-12-21 14:08:48', 'USER-1', '2020-12-21 14:13:10', '', '0000-00-00 00:00:00', 0),
+(19, 'Edit Data', 'SJBT-10', 'JBT-4', 'DEPT-6', 'USER-1', '2020-12-21 14:08:48', 'USER-1', '2020-12-21 14:13:21', '', '0000-00-00 00:00:00', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -3075,6 +3133,12 @@ ALTER TABLE `spesifikasi_jabatan`
   ADD PRIMARY KEY (`id_spesifikasi_jabatan`);
 
 --
+-- Indexes for table `spesifikasi_jabatan_logs`
+--
+ALTER TABLE `spesifikasi_jabatan_logs`
+  ADD PRIMARY KEY (`id_spesifikasi_jabatan_logs`);
+
+--
 -- Indexes for table `sub_customer`
 --
 ALTER TABLE `sub_customer`
@@ -3203,6 +3267,12 @@ ALTER TABLE `produk_logs`
 --
 ALTER TABLE `rekening_logs`
   MODIFY `id_rekening_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `spesifikasi_jabatan_logs`
+--
+ALTER TABLE `spesifikasi_jabatan_logs`
+  MODIFY `id_spesifikasi_jabatan_logs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `tetapan_logs`

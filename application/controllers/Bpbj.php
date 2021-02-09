@@ -264,6 +264,12 @@ class Bpbj extends CI_Controller {
             //notif permohonan akses
                 $data['jm_peraks'] = $this->M_Dashboard->get_jm_peraks()->result_array();
             //tutup notif permohonan akses
+
+            //notif produksi tertunda
+                $data['jm_prodtun'] = $this->M_Dashboard->get_jm_prodtun()->result_array();
+                $data['jm_prodtun0'] = $this->M_Dashboard->get_jm_prodtun0()->result_array();
+                $data['jm_prodtun1'] = $this->M_Dashboard->get_jm_prodtun1()->result_array();
+            //tutup notif produksi tertunda
         //tutup
     
 		$this->load->view('v_bpbj_tambah',$data);
@@ -285,8 +291,6 @@ class Bpbj extends CI_Controller {
       'tanggal'        => $tanggal,
       'status_bpbj'    => 0,
       'keterangan'     => $keterangan,
-      'user_add'       => $user,
-      'waktu_add'      => $now,
       'status_delete'  => 0
     );
 
@@ -346,8 +350,6 @@ class Bpbj extends CI_Controller {
         'id_detail_produk' => $id_detail_produk,
         'status_detail_bpbj' => 0,
         'jumlah_produk'    => $jumlah_aktual,
-        'user_add'         => $user,
-        'waktu_add'        => $now,
         'status_delete'    => 0
       );
 
@@ -643,9 +645,7 @@ class Bpbj extends CI_Controller {
       //update jumlahnya
       if($jumlah_aktual != 0){
         $data_detail = array(
-          'jumlah_produk' => $jumlah_aktual,
-          'user_edit'     => $user,
-          'waktu_edit'    => $now
+          'jumlah_produk' => $jumlah_aktual
         );
 
         $where_detail = array (
@@ -660,9 +660,7 @@ class Bpbj extends CI_Controller {
 
         $data_detail = array(
           'jumlah_produk'   => $jumlah_aktual,
-          'status_delete'   => 1,
-          'user_delete'     => $user,
-          'waktu_delete'    => $now
+          'status_delete'   => 1
         );
 
         $where_detail = array (
@@ -677,9 +675,7 @@ class Bpbj extends CI_Controller {
     if($jumlah_kosong == $jumlah_produk){
       $data_bpbj = array (
         'keterangan'    => $keterangan,
-        'status_delete' => 1,
-        'user_delete'   => $user,
-        'waktu_delete'  => $now
+        'status_delete' => 1
       );
 
       $where_bpbj = array (
@@ -691,9 +687,7 @@ class Bpbj extends CI_Controller {
     //update bpbj
     else{
       $data_bpbj = array (
-        'keterangan'    => $keterangan,
-        'user_edit'   => $user,
-        'waktu_edit'  => $now
+        'keterangan'    => $keterangan
       );
 
       $where_bpbj = array (
@@ -714,9 +708,7 @@ class Bpbj extends CI_Controller {
     $now     = date('Y-m-d H:i:s');
 
     $data = array (
-      'status_delete' => 1,
-      'user_delete'   => $user,
-      'waktu_delete'  => $now
+      'status_delete' => 1
     );
 
     $where = array (
